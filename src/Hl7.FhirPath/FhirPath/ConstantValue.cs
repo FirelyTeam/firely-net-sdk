@@ -33,7 +33,7 @@ namespace Hl7.FhirPath
             else if (value is Uri)
                 Value = ((Uri)value).OriginalString;
             else if (value is char)
-                Value = new String((char)value,1);
+                Value = new String((char)value, 1);
             else if (value is Int32 || value is Int16 || value is UInt16 || value is UInt32 || value is Int64 || value is UInt64)
                 Value = Convert.ToInt64(value);
             else if (value is float || value is double || value is Decimal)
@@ -43,6 +43,8 @@ namespace Hl7.FhirPath
             else if (value is PartialDateTime)
                 Value = value;
             else if (value is PartialTime)
+                Value = value;
+            else if (value is Quantity)
                 Value = value;
             else
                 throw Error.NotSupported("Don't know how to convert an instance of .NET type {0} (with value '{1}') to a FhirPath constant"
@@ -90,6 +92,8 @@ namespace Hl7.FhirPath
                     return TypeInfo.DateTime.Name;
                 else if (Value is PartialTime)
                     return TypeInfo.Time.Name;
+                else if (Value is Quantity)
+                    return TypeInfo.Quantity.Name;
                 else
                     throw Error.NotSupported("Don't know how to derive the FhirPath typename for an instance of .NET type {0} (with value '{1}')"
                             .FormatWith(Value.GetType().Name, Value.ToString()));

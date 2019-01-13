@@ -16,6 +16,30 @@ namespace Hl7.FhirPath.Tests
     public class QuantityTests
     {
         [Fact]
+        public void QuantityParsing()
+        {
+            Assert.Equal(new Quantity(75.5m, "kg"), Quantity.Parse("75.5 'kg'"));
+            Assert.Equal(new Quantity(75.5m, "kg"), Quantity.Parse("75.5'kg'"));
+            Assert.Equal(new Quantity(75m, "kg"), Quantity.Parse("75 'kg'"));
+            Assert.Equal(new Quantity(40, "wk"), Quantity.Parse("40 weeks"));
+            Assert.Equal(new Quantity(40.0m, "1"), Quantity.Parse("40.0"));
+            Assert.Equal(new Quantity(1, "1"), Quantity.Parse("1 '1'"));
+            Assert.Equal(new Quantity(1, "m/s"), Quantity.Parse("1 'm/s'"));
+
+            Assert.Throws<FormatException>(() => Quantity.Parse("40,5 weeks"));
+            Assert.Throws<FormatException>(() => Quantity.Parse("40 decennia"));
+            Assert.Throws<FormatException>(() => Quantity.Parse("ab kg"));
+            Assert.Throws<FormatException>(() => Quantity.Parse("75 'kg"));
+            Assert.Throws<FormatException>(() => Quantity.Parse("'kg'"));
+        }
+
+        [Fact]
+        public void QuantityFormatting()
+        {
+            Assert.Equal("75.6 'kg'", new Quantity(75.6m, "kg").ToString());
+        }
+
+        [Fact]
         public void QuantityConstructor()
         {
             var newq = new Quantity(3.14m, "kg");

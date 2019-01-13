@@ -237,6 +237,46 @@ namespace Hl7.FhirPath.Functions
 
 
         /// <summary>
+        /// FhirPath toQuantity() function.
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static Quantity? ToQuantity(this ITypedElement focus)
+        {
+            var val = focus?.Value;
+            if (val == null) return null;
+
+            switch (val)
+            {
+                case Quantity q:
+                    return q;
+                case long l:
+                    return new Quantity(l);
+                case decimal d:
+                    return new Quantity(d);
+                case string s:
+                    return convertString(s);
+                case bool b:
+                    return b == true ? new Quantity(1.0) : new Quantity(0.0);
+                default:
+                    return null;
+            }
+
+            Quantity? convertString(string si) =>
+                Quantity.TryParse(si, out var result) ?
+                        result : (Quantity?)null;
+
+        }
+
+        /// <summary>
+        /// FhirPath convertsToQuantity() function.
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static bool ConvertsToQuantity(this ITypedElement focus) => ToQuantity(focus) != null;
+
+
+        /// <summary>
         /// FhirPath toString() function.
         /// </summary>
         /// <param name="focus"></param>
@@ -261,7 +301,7 @@ namespace Hl7.FhirPath.Functions
                 case bool b:
                     return b ? "true" : "false";
                 case Quantity q:
-                    throw Error.NotImplemented("Quantities are not yet supported");
+                    return q.ToString();
                 default:
                     return null;
             }

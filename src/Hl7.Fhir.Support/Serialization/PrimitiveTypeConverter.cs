@@ -102,6 +102,8 @@ namespace Hl7.Fhir.Serialization
                 return pdt.ToString();
             if (value is PartialTime pt)
                 return pt.ToString();
+            if (value is Quantity q)
+                return q.ToString();
             if (value is Enum en)
                 return en.GetLiteral();
             if (value is BigInteger bi)
@@ -154,6 +156,8 @@ namespace Hl7.Fhir.Serialization
                 return PartialDateTime.Parse(value);
             if (typeof(PartialTime) == to)
                 return PartialTime.Parse(value);
+            if (typeof(Quantity) == to)
+                return Quantity.Parse(value);
             if (typeof(BigInteger) == to)
                 return BigInteger.Parse(value);
             if (to.IsEnum())

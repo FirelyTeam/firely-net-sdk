@@ -60,6 +60,8 @@ namespace Hl7.FhirPath.Functions
                     return (PartialTime)l == (PartialTime)r;
                 else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
                     return (PartialDateTime)l == (PartialDateTime)r;
+                else if (l is Quantity ql && r is Quantity qr)
+                    return ql == qr;
                 else
                     return false;
             }
@@ -125,6 +127,8 @@ namespace Hl7.FhirPath.Functions
                     return ((PartialTime)l).IsEquivalentTo((PartialTime)r);
                 else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
                     return ((PartialDateTime)l).IsEquivalentTo((PartialDateTime)r);
+                else if (l is Quantity ql && r is Quantity qr)
+                    return ql == qr;
                 else
                     return false;
             }

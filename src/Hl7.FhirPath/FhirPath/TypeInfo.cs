@@ -8,12 +8,13 @@ namespace Hl7.FhirPath
 {
     public class TypeInfo
     {
-        public static readonly TypeInfo Boolean = new TypeInfo("boolean");
-        public static readonly TypeInfo String = new TypeInfo("string");
-        public static readonly TypeInfo Integer = new TypeInfo("integer");
-        public static readonly TypeInfo Decimal = new TypeInfo("decimal");
-        public static readonly TypeInfo DateTime = new TypeInfo("datetime");
-        public static readonly TypeInfo Time = new TypeInfo("time");
+        public static readonly TypeInfo Boolean = new TypeInfo("Boolean");
+        public static readonly TypeInfo String = new TypeInfo("String");
+        public static readonly TypeInfo Integer = new TypeInfo("Integer");
+        public static readonly TypeInfo Decimal = new TypeInfo("Decimal");
+        public static readonly TypeInfo DateTime = new TypeInfo("DateTime");
+        public static readonly TypeInfo Time = new TypeInfo("Time");
+        public static readonly TypeInfo Quantity = new TypeInfo("Quantity");
         public static readonly TypeInfo Any = new TypeInfo("any");
 
         private TypeInfo(string name)

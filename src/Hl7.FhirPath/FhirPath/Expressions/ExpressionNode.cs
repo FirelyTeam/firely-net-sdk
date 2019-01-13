@@ -71,6 +71,8 @@ namespace Hl7.FhirPath.Expressions
                 ExpressionType = TypeInfo.DateTime;
             else if (Value is PartialTime)
                 ExpressionType = TypeInfo.Time;
+            else if (Value is Quantity)
+                ExpressionType = TypeInfo.Quantity;
             else
                 throw Error.InvalidOperation("Internal logic error: encountered unmappable Value of type " + Value.GetType().Name);
         }

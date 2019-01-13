@@ -117,7 +117,7 @@ namespace Hl7.FhirPath.Tests
         {
             var type = expected.Attribute("type").Value;
             var tp = (ITypedElement)actual;
-            Assert.Equal(type, tp.InstanceType);
+            Assert.Equal(type.ToLower(), tp.InstanceType.ToLower());
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 

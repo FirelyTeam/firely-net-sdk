@@ -20,6 +20,7 @@ using Hl7.Fhir.FhirPath;
 using System.Diagnostics;
 using System.Threading.Tasks.Dataflow;
 using System.Collections.Generic;
+using Quantity = Hl7.Fhir.Model.Primitives.Quantity;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -80,6 +81,27 @@ namespace Hl7.FhirPath.Tests
             wrong.ForEach(c => Assert.IsNull(c.ToDecimal()));
             wrong.ForEach(c => Assert.IsFalse(c.ConvertsToDecimal()));
         }
+
+        [TestMethod]
+        public void ConvertToQuantity()
+        {
+            var inputs = ConstantValue.Create(75L, 75.6m, "30 'wk'", false, true,
+                            new Quantity(80.0m, "kg"));
+            var vals = new[] { new Quantity(75m, "1"), new Quantity(75.6m, "1"),
+                    new Quantity(30,"wk"), new Quantity(0.0, "1"),
+                        new Quantity(1.0, "1"), new Quantity(80m, "kg") };
+
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.v, c.i.ToQuantity()));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToQuantity()));
+
+            var wrong = ConstantValue.Create("hi", "++6", "2,6", "no", "false", 
+                DateTimeOffset.Now).ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToQuantity()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToQuantity()));
+        }
+
 
         [TestMethod]
         public void ConvertToDateTime()

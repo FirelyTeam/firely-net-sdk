@@ -33,12 +33,31 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "@T12:23:34Z", new ConstantExpression(PartialTime.Parse("12:23:34Z")));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(PartialDateTime.Parse("2014-12-13T12:00:00+02:00")));
+            AssertParser.SucceedsMatch(parser, "78 'kg'", new ConstantExpression(new Quantity(78m, "kg")));
+            AssertParser.SucceedsMatch(parser, "10.1 'mg'", new ConstantExpression(new Quantity(10.1m, "mg")));            
 
             AssertParser.FailsMatch(parser, "%constant");
             AssertParser.FailsMatch(parser, "\"quotedstring\"");
             AssertParser.FailsMatch(parser, "A23identifier");
         }
 
+        [Fact]
+        public void FhirPath_Gramm_Quantity()
+        {
+            var parser = Grammar.Quantity.End();
+
+            AssertParser.SucceedsMatch(parser, "78 'kg'", new Quantity(78m, "kg"));
+            AssertParser.SucceedsMatch(parser, "78.0 'kg'", new Quantity(78m, "kg"));
+            AssertParser.SucceedsMatch(parser, "78.0'kg'", new Quantity(78m, "kg"));
+            AssertParser.SucceedsMatch(parser, "4 months", new Quantity(4m, "mo"));
+            AssertParser.SucceedsMatch(parser, "1 '1'", new Quantity(1, "1"));
+
+            AssertParser.FailsMatch(parser, "78");   // still a integer
+            AssertParser.FailsMatch(parser, "78.0");   // still a decimal
+            AssertParser.FailsMatch(parser, "78 kg");
+            AssertParser.FailsMatch(parser, "four 'kg'");
+            AssertParser.FailsMatch(parser, "4 decennia");
+        }
         [Fact]
         public void FhirPath_Gramm_Invocation()
         {

@@ -1,33 +1,57 @@
-﻿/* 
+/* 
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Sprache;
+using System;
+using System.Linq;
 
 namespace Hl7.FhirPath.Parser
 {
     internal class Grammar
     {
-        // literal
-        //  : ('true' | 'false')                                    #booleanLiteral
+        //quantity
+        //   : NUMBER unit?
+        public static readonly Parser<Fhir.Model.Primitives.Quantity> Quantity = quantityParser;
+
+        private static IResult<Fhir.Model.Primitives.Quantity> quantityParser(IInput i)
+        {
+            var current = i;
+            var result = Lexer.Quantity.Token()(i);
+
+            if (result.WasSuccessful)
+            {
+                var success = Fhir.Model.Primitives.Quantity.TryParse(result.Value, out var quantity);
+                if (success)
+                    return Result.Success(quantity.Value, result.Remainder);
+            }
+
+            return Result.Failure<Fhir.Model.Primitives.Quantity>(i, $"Quantity is invalid",
+                new[] { "a quantity" });
+
+        }
+
+
+        //literal
+        //  : '{' '}'                                               #nullLiteral
+        //  | ('true' | 'false')                                    #booleanLiteral
         //  | STRING                                                #stringLiteral
         //  | NUMBER                                                #numberLiteral
         //  | DATETIME                                              #dateTimeLiteral
         //  | TIME                                                  #timeLiteral
-        //  ;
+        //  | quantity                                              #quantityLiteral
+        //;
         public static readonly Parser<ConstantExpression> Literal =
             Lexer.String.Select(v => new ConstantExpression(v, TypeInfo.String))
                 .XOr(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeInfo.DateTime)))
                 .XOr(Lexer.Time.Select(v => new ConstantExpression(v, TypeInfo.Time)))
                 .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeInfo.Boolean)))
+                .Or(Quantity.Select(v => new ConstantExpression(v, TypeInfo.Quantity)))
                 .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeInfo.Decimal)))
                 .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeInfo.Integer)));
 

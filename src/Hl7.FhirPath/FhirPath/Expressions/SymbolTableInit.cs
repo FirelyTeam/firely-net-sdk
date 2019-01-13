@@ -123,6 +123,8 @@ namespace Hl7.FhirPath.Expressions
             t.Add("convertsToTime", (ITypedElement f) => f.ConvertsToTime(), doNullProp: true);
             t.Add("toString", (ITypedElement f) => f.ToStringRepresentation(), doNullProp: true);
             t.Add("convertsToString", (ITypedElement f) => f.ConvertsToString(), doNullProp: true);
+            t.Add("toQuantity", (ITypedElement f) => f.ToQuantity(), doNullProp: true);
+            t.Add("convertsToQuantity", (ITypedElement f) => f.ConvertsToQuantity(), doNullProp: true);
 
             t.Add("substring", (string f, long a) => f.FpSubstring((int)a), doNullProp: true);
             t.Add("substring", (string f, long a, long b) => f.FpSubstring((int)a, (int)b), doNullProp: true);
