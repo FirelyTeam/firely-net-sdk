@@ -598,6 +598,7 @@
 		<test inputfile="patient-example.xml"><expression>name = name</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).first() | name.take(2).last()</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).last() | name.take(2).first()</expression><output type="boolean">false</output></test>
+    <test inputfile="observation-example.xml"><expression>Observation.value = 185 '[lb_av]'</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNEquality">
@@ -617,7 +618,8 @@
 		<test inputfile="patient-example.xml"><expression>name != name</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2) != name.take(2).first() | name.take(2).last()</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2) != name.take(2).last() | name.take(2).first()</expression><output type="boolean">true</output></test>
-	</group>
+    <test inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
+  </group>
 
 	<group name="testEquivalent">
 		<test inputfile="patient-example.xml"><expression>1 ~ 1</expression><output type="boolean">true</output></test>
@@ -637,6 +639,7 @@
 		<!--    <test inputfile="patient-example.xml"><expression>name ~ name</expression><output type="boolean">true</output></test> -->
 		<test inputfile="patient-example.xml"><expression>name.take(2).given ~ name.take(2).first().given | name.take(2).last().given</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2).given ~ name.take(2).last().given | name.take(2).first().given</expression><output type="boolean">true</output></test>
+    <test inputfile="observation-example.xml"><expression>Observation.value ~ 185 '[lb_av]'</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -657,7 +660,9 @@
 		<!--    <test inputfile="patient-example.xml"><expression>name !~ name</expression><output type="boolean">true</output></test> -->
 		<test inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).first().given | name.take(2).last().given</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).last().given | name.take(2).first().given</expression><output type="boolean">false</output></test>
-	</group>
+    <test inputfile="observation-example.xml"><expression>Observation.value !~ 185 'kg'</expression><output type="boolean">true</output></test>
+	
+  </group>
 
 	<group name="testLessThan">
 		<test inputfile="patient-example.xml"><expression>1 &lt; 2</expression><output type="boolean">true</output></test>
@@ -683,7 +688,9 @@
 		<test inputfile="patient-example.xml"><expression>@2014-12-13 &lt; @2014-12-12</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>@2014-12-13T12:00:01 &lt; @2014-12-13T12:00:00</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>@T12:00:01 &lt; @T12:00:00</expression><output type="boolean">false</output></test>
-	</group>
+	
+    <test inputfile="observation-example.xml"><expression>Observation.value &lt; 200 '[lb_av]'</expression><output type="boolean">true</output></test>
+  </group>
 
 	<group name="testLessOrEqual">
 		<test inputfile="patient-example.xml"><expression>1 &lt;= 2</expression><output type="boolean">true</output></test>
@@ -709,7 +716,8 @@
 		<test inputfile="patient-example.xml"><expression>@2014-12-13 &lt;= @2014-12-12</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>@2014-12-13T12:00:01 &lt;= @2014-12-13T12:00:00</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>@T12:00:01 &lt;= @T12:00:00</expression><output type="boolean">false</output></test>
-	</group>
+    <test inputfile="observation-example.xml"><expression>Observation.value &lt;= 200 '[lb_av]'</expression><output type="boolean">true</output></test>
+  </group>
 
 	<group name="testGreatorOrEqual">
 		<test inputfile="patient-example.xml"><expression>1 >= 2</expression><output type="boolean">false</output></test>
@@ -735,9 +743,11 @@
 		<test inputfile="patient-example.xml"><expression>@2014-12-13 >= @2014-12-12</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>@2014-12-13T12:00:01 >= @2014-12-13T12:00:00</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>@T12:00:01 >= @T12:00:00</expression><output type="boolean">true</output></test>
-	</group>
+    <test inputfile="observation-example.xml"><expression>Observation.value &gt;= 100 '[lb_av]'</expression><output type="boolean">true</output></test>
+	
+  </group>
 
-	<group name="testGreatorThan">
+	<group name="testGreaterThan">
 		<test inputfile="patient-example.xml"><expression>1 > 2</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>1.0 > 1.2</expression><output type="boolean">false</output></test>
 		<test inputfile="patient-example.xml"><expression>'a' > 'b'</expression><output type="boolean">false</output></test>
@@ -761,7 +771,8 @@
 		<test inputfile="patient-example.xml"><expression>@2014-12-13 > @2014-12-12</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>@2014-12-13T12:00:01 > @2014-12-13T12:00:00</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>@T12:00:01 > @T12:00:00</expression><output type="boolean">true</output></test>
-	</group>
+	  <test inputfile="observation-example.xml"><expression>Observation.value &gt; 100 '[lb_av]'</expression><output type="boolean">true</output></test>
+  </group>
 
 	<group name="testUnion">
 		<test inputfile="patient-example.xml"><expression>(1 | 2 | 3).count() = 3</expression><output type="boolean">true</output></test>
@@ -877,7 +888,7 @@
 		<test inputfile="patient-example.xml"><expression>1 - 1 = 0</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>1 - 0 = 1</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>1.8 - 1.2 = 0.6</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression  invalid="syntax">'a'-'b' = 'ab'</expression></test>
+		<test inputfile="patient-example.xml"><expression  invalid="semantic">'a'-'b' = 'ab'</expression></test>
 	</group>
 
 	<group name="testMultiply">
@@ -910,7 +921,12 @@
 	</group>
 
 	<group name="testPrecedence">
-		<test inputfile="patient-example.xml"><expression>1+2*3+4 = 11</expression><output type="boolean">true</output></test>
+    <test name="testUnaryPrecedence" inputfile="patient-example.xml">
+      <expression invalid="semantic">-1.convertsToInteger()</expression>
+      <!-- should error because unary does not work on boolean: -(1.convertsToInteger()) -->
+    </test>
+
+    <test inputfile="patient-example.xml"><expression>1+2*3+4 = 11</expression><output type="boolean">true</output></test>
     <test inputfile="patient-example.xml"><expression>1 > 2 is Boolean</expression><output type="boolean">true</output></test>
     <test inputfile="patient-example.xml"><expression>1 | 1 is Integer</expression><output type="boolean">true</output></test>
 	</group>

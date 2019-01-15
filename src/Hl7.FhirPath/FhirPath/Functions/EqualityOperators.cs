@@ -13,6 +13,7 @@ using System.Linq;
 using Hl7.FhirPath;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.FhirPath.Expressions;
 
 namespace Hl7.FhirPath.Functions
 {
@@ -62,6 +63,10 @@ namespace Hl7.FhirPath.Functions
                     return (PartialDateTime)l == (PartialDateTime)r;
                 else if (l is Quantity ql && r is Quantity qr)
                     return ql == qr;
+                else if (left.InstanceType == "Quantity" && r is Quantity qr2)
+                    return Typecasts.ParseQuantity(left) == qr2;
+                else if (l is Quantity ql2 &&  right.InstanceType == "Quantity")
+                    return ql2 == Typecasts.ParseQuantity(right);
                 else
                     return false;
             }

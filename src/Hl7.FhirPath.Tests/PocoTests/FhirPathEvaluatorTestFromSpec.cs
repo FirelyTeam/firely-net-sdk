@@ -244,7 +244,7 @@ namespace Hl7.FhirPath.Tests
             {
                 ErrorType errorType;
 
-                if (invalid == "syntax")
+                if (invalid == "syntax" || invalid == "true")
                     errorType = ErrorType.Syntax;
                 else if (invalid == "semantic")
                     errorType = ErrorType.Semantics;

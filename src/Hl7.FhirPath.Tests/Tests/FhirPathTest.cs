@@ -296,6 +296,12 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void TestImplicitQuantityCast()
+        {
+            var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
+        }
+        [TestMethod]
         [TestCategory("LongRunner")]
         public void TestFhirPathScalarInParallel()
         {

@@ -31,17 +31,17 @@ namespace Hl7.FhirPath.Tests
         public void TestUnbox()
         {
 
-            Assert.Null(Typecasts.Unbox(emptyColl, typeof(string)));
-            Assert.Equal(collection,Typecasts.Unbox(collection, typeof(IEnumerable<ITypedElement>)));
-            Assert.Equal(complex, Typecasts.Unbox(singleC, typeof(ITypedElement)));
+            Assert.Null(Typecasts.UnboxTo(emptyColl, typeof(string)));
+            Assert.Equal(collection,Typecasts.UnboxTo(collection, typeof(IEnumerable<ITypedElement>)));
+            Assert.Equal(complex, Typecasts.UnboxTo(singleC, typeof(ITypedElement)));
 
-            Assert.Equal(4L, Typecasts.Unbox(singleV, typeof(long)));
-            Assert.Equal(4L, Typecasts.Unbox(new ConstantValue(4), typeof(long)));
+            Assert.Equal(4L, Typecasts.UnboxTo(singleV, typeof(long)));
+            Assert.Equal(4L, Typecasts.UnboxTo(new ConstantValue(4), typeof(long)));
 
-            Assert.Equal(complex, Typecasts.Unbox(complex, typeof(ITypedElement)));
-            Assert.Null(Typecasts.Unbox(null, typeof(string)));
-            Assert.Equal(4L, Typecasts.Unbox(4L, typeof(long)));
-            Assert.Equal("hi!", Typecasts.Unbox("hi!", typeof(string)));
+            Assert.Equal(complex, Typecasts.UnboxTo(complex, typeof(ITypedElement)));
+            Assert.Null(Typecasts.UnboxTo(null, typeof(string)));
+            Assert.Equal(4L, Typecasts.UnboxTo(4L, typeof(long)));
+            Assert.Equal("hi!", Typecasts.UnboxTo("hi!", typeof(string)));
         }
 
         [Fact]
@@ -100,6 +100,10 @@ namespace Hl7.FhirPath.Tests
             checkCast<bool?>(true, true);
             checkCast<decimal?>(4L, 4m);
             checkCast<string>("hi", "hi");
+
+            var fhirQuantity = new Fhir.Model.Quantity(4.0m, "kg").ToTypedElement();
+            var fhirpathQuantity = new Fhir.Model.Primitives.Quantity(4.0m, "kg");
+            checkCast(fhirQuantity, fhirpathQuantity);
 
             Assert.False(Typecasts.CanCastTo(4, typeof(string)));
             Assert.False(Typecasts.CanCastTo(4m, typeof(long)));

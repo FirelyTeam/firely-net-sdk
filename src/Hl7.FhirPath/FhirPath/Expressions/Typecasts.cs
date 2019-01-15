@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Expressions
@@ -62,6 +63,21 @@ namespace Hl7.FhirPath.Expressions
             return FhirValueList.Create(source);
         }
 
+        private static object tryQuantity(object source)
+        {
+            if (source is ITypedElement element)
+            {
+                if (element.InstanceType == "Quantity")
+                {
+                    return ParseQuantity(element);
+                }
+                else
+                    throw new InvalidCastException($"Cannot convert from '{element.InstanceType}' to Quantity");
+            }
+
+            throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");
+        }
+
         private static Cast getImplicitCast(Type from, Type to)
         {
             if (to == typeof(object)) return id;
@@ -70,6 +86,8 @@ namespace Hl7.FhirPath.Expressions
             if (from.CanBeTreatedAsType(to)) return id;
 
             //if (to == typeof(bool)) return any2bool;
+            if (to == typeof(Quantity) && from.CanBeTreatedAsType(typeof(ITypedElement))) return tryQuantity;
+                    
             if (to == typeof(ITypedElement) && (!from.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))) return any2ValueProvider;
             if (to == typeof(IEnumerable<ITypedElement>)) return any2List;
              
@@ -78,31 +96,53 @@ namespace Hl7.FhirPath.Expressions
             return null;
         }
 
-        internal static object Unbox(object instance, Type to)
+        internal enum BoxingLevel
+        {
+            CollectionOfTypedElements,
+            TypedElement,
+            NativeValue                
+        }
+
+
+        /// <summary>
+        /// This will unpack the instance 
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="to">The level to unbox to.</param>
+        /// <returns></returns>
+        /// <remarks>The level of unboxing is specified using a type. The highest level
+        /// being an <see cref="IEnumerable{ITypedElement}"/> followed by 
+        /// <see cref="ITypedElement"/> followed by a primitive runtime type.
+        /// </remarks>
+        internal static object UnboxTo(object instance, Type to)
         {
             if (instance == null) return null;
-
-            if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return instance;
-
-            if (instance is IEnumerable<ITypedElement>)
+           
+            if (instance is IEnumerable<ITypedElement> list)
             {
-                var list = (IEnumerable<ITypedElement>)instance;
+                if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return instance;
+
                 if (!list.Any()) return null;
                 if (list.Count() == 1)
                     instance = list.Single();
             }
 
-            if (to.CanBeTreatedAsType(typeof(ITypedElement))) return instance;
-
-            if (instance is ITypedElement)
+            if (instance is ITypedElement element)
             {
-                var element = (ITypedElement)instance;
+                if (to.CanBeTreatedAsType(typeof(ITypedElement))) return instance;
 
                 if (element.Value != null)
-                    instance = element.Value;
+                    instance = element.Value;                   
             }
 
             return instance;
+        }
+
+        internal static Quantity? ParseQuantity(ITypedElement element)
+        {
+            var value = element.Children("value").SingleOrDefault()?.Value as decimal?;
+            var unit = element.Children("code").SingleOrDefault()?.Value as string;
+            return value == null ? null : (Quantity?)new Quantity(value.Value, unit);
         }
 
         public static bool CanCastTo(object source, Type to)
@@ -110,7 +150,7 @@ namespace Hl7.FhirPath.Expressions
             if (source == null)
                 return to.IsNullable();
 
-            var from = Unbox(source, to);
+            var from = UnboxTo(source, to);
             if (from == null)
                 return to.IsNullable();
 
@@ -135,7 +175,7 @@ namespace Hl7.FhirPath.Expressions
             {
                 if (source.GetType().CanBeTreatedAsType(to)) return source;  // for efficiency
 
-                source = Unbox(source, to);
+                source = UnboxTo(source, to);
 
                 if (source != null)
                 {
