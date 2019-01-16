@@ -185,19 +185,6 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        public void TypeInfoEquality()
-        {
-            Assert.AreEqual(TypeInfo.Boolean, TypeInfo.Boolean);
-            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.AreNotEqual(TypeInfo.Boolean, TypeInfo.String);
-            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.AreEqual(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
-            Assert.AreNotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
-            Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
-            Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
-        }
-
-        [TestMethod]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };

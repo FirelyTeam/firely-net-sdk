@@ -20,38 +20,27 @@ namespace Hl7.FhirPath.Functions
         {
             if (focus.InstanceType != null)
             {
-                return compareTypeNames(focus.InstanceType,type);     // I have no information about classes/subclasses
+                return Is(focus.InstanceType,type);     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on untyped data");
+        }
 
-            bool compareTypeNames(string instance, string declared)
+        public static bool Is(string instanceType, string declaredType)
+        {
+            // Bit of a hack, this hardwires the FhirPath implementation to FHIR
+            if (!instanceType.Contains(".")) instanceType = "FHIR." + instanceType;
+            if (declaredType.Contains("."))
+                return instanceType == declaredType;
+            else
             {
-                // Bit of a hack. I have no idea how to deal with all those
-                // System. and FHIR. prefixed names for now. Also, Fhir uses
-                // lower-cased primitives, and FhirPath upper-cased, so just
-                // ignore the differences for now.
-                return declared.Split('.').Last().ToLower() == instance.ToLower();
+                return instanceType == "System." + declaredType ||
+                        instanceType == "FHIR." + declaredType;
             }
         }
 
-        //public static bool Is(this IEnumerable<ITypedElement> f, string type)
-        //{
-        //    var focus = f.First();
-
-        //    if (focus.InstanceType == null)
-        //    {
-        //        return focus.InstanceType == type;     // I have no information about classes/subclasses
-        //    }
-        //    else
-        //        throw Error.InvalidOperation("Is operator is called on untyped data");
-        //}
-
-
-        public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName)
-        {
-            return focus.Where(item => item.Is(typeName));
-        }
+        public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName) 
+            => focus.Where(item => item.Is(typeName));
 
         public static ITypedElement CastAs(this ITypedElement focus, string typeName)
             => focus.Is(typeName) ? focus : null;

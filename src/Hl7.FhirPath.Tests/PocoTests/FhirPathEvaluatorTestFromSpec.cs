@@ -115,9 +115,12 @@ namespace Hl7.FhirPath.Tests
 
         private static bool compare(XElement expected, ITypedElement actual)
         {
-            var type = expected.Attribute("type").Value;
-            var tp = (ITypedElement)actual;
-            Assert.Equal(type.ToLower(), tp.InstanceType.ToLower());
+            var type = expected.Attribute("type").Value.ToLower();
+            var tp = actual.InstanceType.ToLower();
+
+            if (type.Contains(".")) type = type.Substring(type.IndexOf(".")+1);
+            if (tp.Contains(".")) tp = tp.Substring(tp.IndexOf(".")+1);
+            Assert.Equal(type, tp);
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 

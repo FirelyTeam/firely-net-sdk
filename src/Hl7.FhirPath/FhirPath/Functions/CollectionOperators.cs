@@ -63,6 +63,12 @@ namespace Hl7.FhirPath.Functions
         public static IEnumerable<ITypedElement> Exclude(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
             => focus.Where(f => !other.Contains(f));
 
+        public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> focus)
+    => focus.SelectMany(node => node.Children());
+
+        public static IEnumerable<ITypedElement> Descendants(this IEnumerable<ITypedElement> focus)
+            => focus.SelectMany(node => node.Descendants());
+
         public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name) 
             => elements.SelectMany(e => e.Navigate(name));
 

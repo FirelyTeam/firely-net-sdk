@@ -8,38 +8,20 @@ namespace Hl7.FhirPath
 {
     public class TypeInfo
     {
-        public static readonly TypeInfo Boolean = new TypeInfo("Boolean");
-        public static readonly TypeInfo String = new TypeInfo("String");
-        public static readonly TypeInfo Integer = new TypeInfo("Integer");
-        public static readonly TypeInfo Decimal = new TypeInfo("Decimal");
-        public static readonly TypeInfo DateTime = new TypeInfo("DateTime");
-        public static readonly TypeInfo Time = new TypeInfo("Time");
-        public static readonly TypeInfo Quantity = new TypeInfo("Quantity");
-        public static readonly TypeInfo Any = new TypeInfo("any");
+        public static readonly TypeInfo Boolean = new TypeInfo("System.Boolean");
+        public static readonly TypeInfo String = new TypeInfo("System.String");
+        public static readonly TypeInfo Integer = new TypeInfo("System.Integer");
+        public static readonly TypeInfo Decimal = new TypeInfo("System.Decimal");
+        public static readonly TypeInfo DateTime = new TypeInfo("System.DateTime");
+        public static readonly TypeInfo Time = new TypeInfo("System.Time");
+        public static readonly TypeInfo Quantity = new TypeInfo("System.Quantity");
+        public static readonly TypeInfo Any = new TypeInfo("System.Any");
 
         private TypeInfo(string name)
         {
             Name = name;
         }
-
-        public static TypeInfo ByName(string typeName)
-        {
-            switch (typeName)
-            {
-                case "boolean": return TypeInfo.Boolean;
-                case "string": return TypeInfo.String;
-                case "integer": return TypeInfo.Integer;
-                case "decimal": return TypeInfo.Decimal;
-                case "datetime": return TypeInfo.DateTime;
-                case "time": return TypeInfo.Time;
-                case "any": return TypeInfo.Any;
-                default:
-                    var result = new TypeInfo(typeName);
-                    result.IsBuiltin = true;
-                    return result;
-            }
-        }
-
+       
         public string Name { get; protected set; }
 
         public bool IsBuiltin { get; private set; }
