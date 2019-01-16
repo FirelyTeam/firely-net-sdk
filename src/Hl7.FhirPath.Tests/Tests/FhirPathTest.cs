@@ -210,6 +210,24 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void TestIntersect()
+        {
+            var left = ConstantValue.Create(1, 3, 3, 5, 6);
+            var right = ConstantValue.Create(3, 5, 5, 6, 8);
+            CollectionAssert.AreEqual(ConstantValue.Create(3, 5, 6),
+                    left.Intersect(right).ToList());
+        }
+
+        [TestMethod]
+        public void TestExclude()
+        {
+            var left = ConstantValue.Create(1, 3, 3, 5, 6);
+            var right = ConstantValue.Create(5, 6);
+            CollectionAssert.AreEqual(ConstantValue.Create(1,3,3),
+                    left.Exclude(right).ToList());
+        }
+
+        [TestMethod]
         public void TestFhirPathTrace()
         {
             var patient = new Hl7.Fhir.Model.Patient() { Id = "pat45", Active = false };
@@ -300,7 +318,10 @@ namespace Hl7.FhirPath.Tests
         {
             var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
             Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value = 75 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value ~ 75 'kg'"));
         }
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void TestFhirPathScalarInParallel()

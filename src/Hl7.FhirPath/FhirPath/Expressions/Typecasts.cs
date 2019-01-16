@@ -23,45 +23,13 @@ namespace Hl7.FhirPath.Expressions
             return source;
         }
 
-        //private static object any2bool(object source)
-        //{
-        //    if (source == null) return false;
 
-        //    if (source is IEnumerable<IValueProvider>)
-        //    {
-        //        var list = (IEnumerable<IValueProvider>)source;
-        //        if (!list.Any()) return false;
+        private static Cast makeNativeCast(Type to) => source =>
+                                              Convert.ChangeType(source, to);
 
-        //        if (list.Count() == 1)
-        //            source = list.Single();
-        //    }
+        private static object any2ValueProvider(object source) => new ConstantValue(source);
 
-        //    if (source is IValueProvider)
-        //    {
-        //        var vp = (IValueProvider)source;
-        //        if (vp.Value is bool)
-        //            return (bool)vp.Value;
-        //    }
-
-        //    // Otherwise, we have "some" content, which we'll consider "true"
-        //    return true;
-        //}
-
-        private static Cast makeNativeCast(Type to)
-        {
-            return source =>
-                Convert.ChangeType(source, to);
-        }
-
-        private static object any2ValueProvider(object source)
-        {
-            return new ConstantValue(source);
-        }
-
-        private static object any2List(object source)
-        {
-            return FhirValueList.Create(source);
-        }
+        private static object any2List(object source) => FhirValueList.Create(source);
 
         private static object tryQuantity(object source)
         {
@@ -183,8 +151,9 @@ namespace Hl7.FhirPath.Expressions
 
                     if (cast == null)
                     {
-                        throw new InvalidCastException("Cannot cast from '{0}' to '{1}'".FormatWith(Typecasts.ReadableFhirPathName(source.GetType()),
-                            Typecasts.ReadableFhirPathName(to)));
+                        var message = "Cannot cast from '{0}' to '{1}'".FormatWith(Typecasts.ReadableFhirPathName(source),
+                            Typecasts.ReadableTypeName(to));
+                        throw new InvalidCastException(message);
                     }
 
                     return cast(source);
@@ -207,10 +176,18 @@ namespace Hl7.FhirPath.Expressions
            return false; // value-type
         }
 
+
+        public static string ReadableTypeName(Type t)
+        {
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
+                return "collection";
+            else if (t.CanBeTreatedAsType(typeof(ITypedElement)))
+                return "any type";
+            else
+                return t.Name;
+        }
         public static string ReadableFhirPathName(object value)
         {
-            Type t = value.GetType();
-
             if (value is IEnumerable<ITypedElement> ete)
             {
                 var values = ete.ToList();
@@ -224,7 +201,7 @@ namespace Hl7.FhirPath.Expressions
             else if (value is ITypedElement te)
                 return te.InstanceType;
             else
-                return t.GetType().Name;
+                return value.GetType().Name;
         }
 
     }

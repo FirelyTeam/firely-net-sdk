@@ -30,62 +30,41 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        public static bool Not(this IEnumerable<ITypedElement> focus)
-        {
-            return !(focus.BooleanEval().Value);
-        }
+        public static bool Not(this IEnumerable<ITypedElement> focus) 
+            => !focus.BooleanEval().Value;
 
-        public static IEnumerable<ITypedElement> DistinctUnion(this IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b)
-        {
-            var result = a.Union(b, new EqualityOperators.ValueProviderEqualityComparer());
-            return result;
-        }
+        public static IEnumerable<ITypedElement> DistinctUnion(this IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) 
+            => a.Union(b, new EqualityOperators.ValueProviderEqualityComparer());
 
-        //public static IEnumerable<IValueProvider> ConcatUnion(this IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b)
-        //{
-        //    return a.Concat(b);
-        //}
+        public static IEnumerable<ITypedElement> Item(this IEnumerable<ITypedElement> focus, int index) 
+            => focus.Skip(index).Take(1);
 
+        public static ITypedElement Last(this IEnumerable<ITypedElement> focus) 
+            => focus.Reverse().First();
 
-        public static IEnumerable<ITypedElement> Item(this IEnumerable<ITypedElement> focus, int index)
-        {
-            return focus.Skip(index).Take(1);
-        }
+        public static IEnumerable<ITypedElement> Tail(this IEnumerable<ITypedElement> focus) 
+            => focus.Skip(1);
 
-        public static ITypedElement Last(this IEnumerable<ITypedElement> focus)
-        {
-            return focus.Reverse().First();
-        }
+        public static bool Contains(this IEnumerable<ITypedElement> focus, ITypedElement value) 
+            => focus.Contains(value, new EqualityOperators.ValueProviderEqualityComparer());
 
-        public static IEnumerable<ITypedElement> Tail(this IEnumerable<ITypedElement> focus)
-        {
-            return focus.Skip(1);
-        }
+        public static IEnumerable<ITypedElement> Distinct(this IEnumerable<ITypedElement> focus) 
+            => focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer());
 
-        public static bool Contains(this IEnumerable<ITypedElement> focus, ITypedElement value)
-        {
-            return focus.Contains(value, new EqualityOperators.ValueProviderEqualityComparer());
-        }
+        public static bool IsDistinct(this IEnumerable<ITypedElement> focus) 
+            => focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer()).Count() == focus.Count();
 
-        public static IEnumerable<ITypedElement> Distinct(this IEnumerable<ITypedElement> focus)
-        {
-            return focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer());
-        }
+        public static bool SubsetOf(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other) 
+            => focus.All(fitem => other.Contains(fitem));
 
-        public static bool IsDistinct(this IEnumerable<ITypedElement> focus)
-        {
-            return focus.Distinct(new EqualityOperators.ValueProviderEqualityComparer()).Count() == focus.Count();
-        }
+        public static IEnumerable<ITypedElement> Intersect(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
+            => focus.Intersect(other, new EqualityOperators.ValueProviderEqualityComparer());
 
-        public static bool SubsetOf(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
-        {
-            return focus.All(fitem => other.Contains(fitem));
-        }
+        public static IEnumerable<ITypedElement> Exclude(this IEnumerable<ITypedElement> focus, IEnumerable<ITypedElement> other)
+            => focus.Where(f => !other.Contains(f));
 
-        public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name)
-        {
-            return elements.SelectMany(e => e.Navigate(name));
-        }
+        public static IEnumerable<ITypedElement> Navigate(this IEnumerable<ITypedElement> elements, string name) 
+            => elements.SelectMany(e => e.Navigate(name));
 
         public static IEnumerable<ITypedElement> Navigate(this ITypedElement element, string name)
         {

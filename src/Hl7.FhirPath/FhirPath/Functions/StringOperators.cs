@@ -40,6 +40,9 @@ namespace Hl7.FhirPath.Functions
                 return new ConstantValue(result);
         }
 
+        public static IEnumerable<ITypedElement> ToChars(this string me) =>
+            me.ToCharArray().Select(c => new ConstantValue(c));
+        
         public static string FpReplace(this string me, string find, string replace)
         {
             if (find == String.Empty)

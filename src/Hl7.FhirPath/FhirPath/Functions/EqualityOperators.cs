@@ -42,6 +42,12 @@ namespace Hl7.FhirPath.Functions
             var l = left.Value;
             var r = right.Value;
 
+            // Convert quantities
+            if (left.InstanceType == "Quantity" && l == null)
+                l = Typecasts.ParseQuantity(left);
+            if (right.InstanceType == "Quantity" && r == null)
+                r = Typecasts.ParseQuantity(right);
+
             // Compare primitives (or extended primitives)
             if (l != null && r != null)
             {
@@ -63,10 +69,6 @@ namespace Hl7.FhirPath.Functions
                     return (PartialDateTime)l == (PartialDateTime)r;
                 else if (l is Quantity ql && r is Quantity qr)
                     return ql == qr;
-                else if (left.InstanceType == "Quantity" && r is Quantity qr2)
-                    return Typecasts.ParseQuantity(left) == qr2;
-                else if (l is Quantity ql2 &&  right.InstanceType == "Quantity")
-                    return ql2 == Typecasts.ParseQuantity(right);
                 else
                     return false;
             }
@@ -112,6 +114,12 @@ namespace Hl7.FhirPath.Functions
 
             var l = left.Value;
             var r = right.Value;
+
+            // Convert quantities
+            if (left.InstanceType == "Quantity" && l == null)
+                l = Typecasts.ParseQuantity(left);
+            if (right.InstanceType == "Quantity" && r == null)
+                r = Typecasts.ParseQuantity(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null)

@@ -171,6 +171,12 @@ namespace Hl7.Fhir.Model.Primitives
             return !Object.Equals(a, b);
         }
 
+        public static bool operator +(Quantity a, Quantity b) => throw Error.NotSupported("Adding two quantites is not yet supported");
+        public static bool operator -(Quantity a, Quantity b) => throw Error.NotSupported("Subtracting two quantites is not yet supported");
+
+        public static bool operator *(Quantity a, Quantity b) => throw Error.NotSupported("Multiplying two quantites is not yet supported");
+        public static bool operator /(Quantity a, Quantity b) => throw Error.NotSupported("Dividing two quantites is not yet supported");
+
 
         private static void enforceSameUnits(Quantity a, Quantity b)
         {

@@ -232,7 +232,7 @@
     <test name="testLiteralDateTZ" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 > @2017-11-05T01:15:00.0-05:00</expression><output type="boolean">false</output></test>    
     <test name="testLiteralDateTZ" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 &lt; @2017-11-05T01:15:00.0-05:00</expression><output type="boolean">true</output></test>
     <test name="testLiteralDateTZ" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 = @2017-11-05T01:15:00.0-05:00</expression><output type="boolean">false</output></test>
-    <test name="testLiteralDateTZ" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 = @2017-11-05T00:30:00.0-05:00</expression><output type="boolean">false</output></test>
+    <test name="testLiteralDateTZ" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 = @2017-11-05T00:30:00.0-05:00</expression><output type="boolean">true</output></test>
 
 		<test name="testLiteralUnicode" inputfile="patient-example.xml"><expression>Patient.name.given.first() = 'P\u0065ter'</expression><output type="boolean">true</output></test>
 
@@ -345,13 +345,17 @@
     <test name="test" inputfile="patient-example.xml"><expression>1.0.toString()</expression><output type="string">1.0</output></test>
     <test name="test" inputfile="patient-example.xml"><expression>'true'.toString()</expression><output type="string">true</output></test>
     <test name="test" inputfile="patient-example.xml"><expression>true.toString()</expression><output type="string">true</output></test>
-    <test name="test" inputfile="patient-example.xml"><expression>1 'wk'.toString()</expression><output type="string">1 week</output></test>
+    <test name="test" inputfile="patient-example.xml"><expression>1 'wk'.toString()</expression><output type="string">1 'wk'</output></test>
+    <test name="test" inputfile="patient-example.xml"><expression>1 week.toString()</expression><output type="string">1 'wk'</output></test>
+
   </group>
   
 	<group name="testAll">
-		<test inputfile="patient-example.xml"><expression>Patient.name.select(given.exists()).all()</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>Patient.name.select(family.exists()).all()</expression><output type="boolean">false</output></test>
-	</group>
+		<test inputfile="patient-example.xml"><expression>Patient.name.select(given.exists()).allTrue()</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.name.select(period.exists()).allTrue()</expression><output type="boolean">false</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.name.all(given.exists())</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.name.all(period.exists())</expression><output type="boolean">false</output></test>
+  </group>
 
 	<group name="testSubSetOf">
 		<test inputfile="patient-example.xml"><expression>Patient.name.first().subsetOf($this.name)</expression><output type="boolean">true</output></test>
@@ -382,6 +386,8 @@
     <test inputfile="patient-example.xml"><expression>iif({}, true, false)</expression><output type="boolean">false</output></test>
     <test inputfile="patient-example.xml"><expression>iif(true, true, false)</expression><output type="boolean">true</output></test>
     <test inputfile="patient-example.xml"><expression>iif({} | true, true, false)</expression><output type="boolean">true</output></test>
+    <test inputfile="patient-example.xml"><expression>iif(true, true, 1/0)</expression><output type="boolean">true</output></test>
+    <test inputfile="patient-example.xml"><expression>iif(false, 1/0, true)</expression><output type="boolean">true</output></test>
   </group>
 
   
@@ -796,7 +802,7 @@
     <test inputfile="patient-example.xml"><expression>(1 | 2 | 3).exclude(2 | 4) = 1 | 3</expression><output type="boolean">true</output></test>
     <test inputfile="patient-example.xml"><expression>(1 | 2).exclude(4) = 1 | 2</expression><output type="boolean">true</output></test> 
     <test inputfile="patient-example.xml"><expression>(1 | 2).exclude({}) = 1 | 2</expression><output type="boolean">true</output></test>
-    <test inputfile="patient-example.xml"><expression>1.combine(1).exclude(2).count() = 1</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
+    <test inputfile="patient-example.xml"><expression>1.combine(1).exclude(2).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 	</group>
 
 	<group name="testIn">
@@ -877,11 +883,10 @@
 	</group>
 
 	<group name="testConcatenate">
-		<test inputfile="patient-example.xml"><expression>1 &amp; 1 = '11'</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>1 &amp; 'a' = '1a'</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>'a' &amp; 'b' = 'ab'</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>'1' &amp; {} = '1'</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>{} &amp; 'b' = 'b'</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>(1 | 2 | 3) &amp; 'b' = '1,2,3b'</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>'a'&amp;'b' = 'ab'</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression invalid="semantic">(1 | 2 | 3) &amp; 'b' = '1,2,3b'</expression></test>
 	</group>
 
 	<group name="testMinus">
@@ -902,7 +907,7 @@
 		<test inputfile="patient-example.xml"><expression>4 / 2 = 2</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>4.0 / 2.0 = 2.0</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>1 / 2 = 0.5</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>1.2 / 1.8 = 0.67</expression><output type="boolean">true</output></test>
+  <test inputfile="patient-example.xml"><expression>1.2 / 1.8 = 1.2 / 1.8</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testDiv">
