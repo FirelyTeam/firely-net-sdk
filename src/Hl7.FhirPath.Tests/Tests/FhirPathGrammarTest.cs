@@ -63,20 +63,20 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.InvocationExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.That, "childname"));
+            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.Focus, "childname"));
            // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
 
-            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any));
-            AssertParser.SucceedsMatch(parser, "doSomething ( ) ", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any));
-            AssertParser.SucceedsMatch(parser, "doSomething ( 3.14 ) ", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any,
+            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.Focus, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething ( ) ", new FunctionCallExpression(AxisExpression.Focus, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething ( 3.14 ) ", new FunctionCallExpression(AxisExpression.Focus, "doSomething", TypeInfo.Any,
                                 new ConstantExpression(3.14m)));
 
-            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.That,"doSomething", TypeInfo.Any,
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.Focus,"doSomething", TypeInfo.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m), new ConstantExpression(3L),
                         AxisExpression.This,
-                        new FunctionCallExpression(AxisExpression.That, "somethingElse", TypeInfo.Any, new ConstantExpression(true))));
+                        new FunctionCallExpression(AxisExpression.Focus, "somethingElse", TypeInfo.Any, new ConstantExpression(true))));
 
-            AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.That, "as", TypeInfo.Any, new ConstantExpression("Patient")));
+            AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.Focus, "as", TypeInfo.Any, new ConstantExpression("Patient")));
 
             AssertParser.FailsMatch(parser, "$that");
        //     AssertParser.FailsMatch(parser, "as(Patient.identifier)");
@@ -110,11 +110,11 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.Term.End();
 
             AssertParser.SucceedsMatch(parser, "%`ext-11179-de-is-data-element-concept`",
-                new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeInfo.String,
+                new FunctionCallExpression(AxisExpression.Focus, "builtin.coreexturl", TypeInfo.String,
                             new ConstantExpression("11179-de-is-data-element-concept")));
 
             AssertParser.SucceedsMatch(parser, "%`vs-administrative-gender`",
-                new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String, 
+                new FunctionCallExpression(AxisExpression.Focus, "builtin.corevsurl", TypeInfo.String, 
                     new ConstantExpression("administrative-gender")));
         }
 

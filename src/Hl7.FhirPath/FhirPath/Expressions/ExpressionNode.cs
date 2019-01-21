@@ -101,6 +101,29 @@ namespace Hl7.FhirPath.Expressions
         }
     }
 
+    public class LambdaExpression : Expression
+    {
+        public LambdaExpression(string[] paramNames, Expression body): base(TypeInfo.Any)
+        {
+            ParamNames = paramNames ?? throw Error.ArgumentNull(nameof(paramNames));
+            Body = body ?? throw Error.ArgumentNull(nameof(body));
+        }
+
+        public string[] ParamNames { get; private set; }
+
+        public Expression Body { get; private set; }
+
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope) 
+            => visitor.VisitLambda(this, scope);
+
+        public override bool Equals(object obj) =>
+           (base.Equals(obj) && obj is LambdaExpression f) &&
+                ParamNames.SequenceEqual(f.ParamNames) && Body == f.Body;        
+
+        public override int GetHashCode() =>
+            base.GetHashCode() ^ ParamNames.GetHashCode() ^ Body.GetHashCode();
+    }
+
     public class FunctionCallExpression : Expression
     {
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
@@ -109,19 +132,18 @@ namespace Hl7.FhirPath.Expressions
 
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
-            if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
-            if (arguments == null) throw Error.ArgumentNull("arguments");
-
-            Focus = focus;
+            Focus = focus ?? throw Error.ArgumentNull("focus");
             FunctionName = name;
-            Arguments = arguments;
+            Arguments = arguments?.ToList() ?? throw Error.ArgumentNull("arguments");
+
+            throw new NotImplementedException("Should we introduce the implicit lambda's for where etc. here?");
         }
 
         public Expression Focus { get; private set; }
         public string FunctionName { get; private set; }
 
-        public IEnumerable<Expression> Arguments { get; private set; }
+        public IList<Expression> Arguments { get; private set; }
 
         public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
         {
@@ -185,7 +207,7 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.That, BIN_PREFIX + op, TypeInfo.Any, left, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.Focus, BIN_PREFIX + op, TypeInfo.Any, left, right)
         {
         }
         public string Op
@@ -223,7 +245,7 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(AxisExpression.That, URY_PREFIX + op, TypeInfo.Any, operand)
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.Focus, URY_PREFIX + op, TypeInfo.Any, operand)
         {
         }
         public string Op
@@ -361,6 +383,6 @@ namespace Hl7.FhirPath.Expressions
 
 
         public static readonly AxisExpression This = new AxisExpression("this");
-        public static readonly AxisExpression That = new AxisExpression("that");
+        public static readonly AxisExpression Focus = new AxisExpression("focus");
     }
 }

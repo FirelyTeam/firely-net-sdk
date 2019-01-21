@@ -34,7 +34,7 @@ namespace Hl7.FhirPath.Expressions
 
         public abstract T VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope);
 
-        //public abstract T VisitLambda(LambdaExpression expression);
+        public abstract T VisitLambda(LambdaExpression expression, SymbolTable scope);
 
         public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope);
 

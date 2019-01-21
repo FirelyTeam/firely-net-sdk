@@ -15,55 +15,81 @@ namespace Hl7.FhirPath.Expressions
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Invokee>
     {
-        public override Invokee VisitConstant(FP.ConstantExpression expression, SymbolTable scope)
-        {
-            return InvokeeFactory.Return(new ConstantValue(expression.Value));
-        }
+        public override Invokee VisitConstant(FP.ConstantExpression expression, SymbolTable scope) 
+            => InvokeeFactory.Return(new ConstantValue(expression.Value));
+
+        public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression, SymbolTable scope) 
+            => InvokeeFactory.Return(FhirValueList.Empty);
+
+        public override Invokee VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)
+            => resolve(scope, expression.Name, Enumerable.Empty<Type>());
+
+        // every expression is rooted in the focus - the parse tree should have
+        // $focus.A 
+        private static readonly string[] IMPLICIT_CALL_PARAMS = new[] { "focus" };
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
         {
             var focus = expression.Focus.ToEvaluator(scope);
+
             var arguments = new List<Invokee>() { focus };
-            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(scope)));
+            var argScope = new SymbolTable(scope);
+            argScope.Add(new CallSignature("focus", typeof(object)), focus);
+
+            //// Create a lambda for each argument introducing the $focus as the first
+            //// positional parameter. This will be picked up by the first expression in
+            //// the argument, which is the variable ref to $focus.  Also, the arguments
+            //// are evaluated in the context of the lambda expression, which includes
+            //// a new symbol scope including the aforementioned $focus.
+            //arguments.AddRange(expression.Arguments.Select(arg =>
+            //      new LambdaExpression(IMPLICIT_CALL_PARAMS, arg).ToEvaluator(scope)));
+            arguments.AddRange(expression.Arguments.Select(arg =>
+                    arg.ToEvaluator(argScope)));
 
             // We have no real type information, so just pass object as the type
-            var types = new List<Type>() { typeof(object) }; //   for the focus;
+            var types = new List<Type>() { typeof(object), typeof(object) }; //   for the focus and this;
             types.AddRange(expression.Arguments.Select(a => typeof(object)));   // for the arguments
 
             // Now locate the function based on the types and name
             Invokee boundFunction = resolve(scope, expression.FunctionName, types);
 
+            // The Invokee returned will execute the boundFunction, just catching
+            // exceptions when caught.
             return InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction);
         }
 
-        public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression, SymbolTable scope)
+        private class ParameterPlaceHolder
         {
-            return InvokeeFactory.Return(FhirValueList.Empty);
+            public Invokee Parameter;
         }
 
-        public override Invokee VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)
+
+        public override Invokee VisitLambda(LambdaExpression expression, SymbolTable scope)
         {
-            // HACK, for now, $this is special, and we handle in run-time, not compile time...
-            if(expression.Name == "builtin.this")
-                return InvokeeFactory.GetThis;
+            var lambdaScope = new SymbolTable(scope);
+            var stack = new ParameterPlaceHolder[expression.ParamNames.Length];
 
-            // HACK, for now, $this is special, and we handle in run-time, not compile time...
-            if (expression.Name == "builtin.that")
-                return InvokeeFactory.GetThat;
+            for (var position = 0; position < expression.ParamNames.Length; position++)
+            {
+                var paramName = expression.ParamNames[position];
+                lambdaScope.Add(new CallSignature(paramName, typeof(object)),
+                    (ctx, args) => stack[position].Parameter(ctx, args));
+            }
 
-            // HACK, for now, %context is special, and we handle in run-time, not compile time...
-            if (expression.Name == "context")
-                return InvokeeFactory.GetContext;
+            return (ctx, args) =>
+            {
+                var argsList = args.ToList();
+                if (args.Count != expression.ParamNames.Length)
+                    throw Error.InvalidOperation("Internal error: lambda invocation has mismatching number of args.");
 
-            // HACK, for now, %context is special, and we handle in run-time, not compile time...
-            if (expression.Name == "resource")
-                return InvokeeFactory.GetResource;
+                for (var position = 0; position < args.Count; position++)
+                    stack[position].Parameter = args[position];
 
-
-            // Variables are still functions without arguments. For now variables are treated separately here,
-            //Functions are handled elsewhere.
-            return resolve(scope, expression.Name, Enumerable.Empty<Type>());
+                return expression.Body.ToEvaluator(lambdaScope)(ctx, new List<Invokee>());
+            };           
         }
+
+
 
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
         {

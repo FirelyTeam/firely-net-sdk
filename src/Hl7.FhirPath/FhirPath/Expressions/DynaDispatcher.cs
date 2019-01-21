@@ -26,17 +26,15 @@ namespace Hl7.FhirPath.Expressions
         private string _name;
         private SymbolTable _scope;
 
-        public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<ITypedElement> Dispatcher(EvaluationContext ctx, IList<Invokee> args)
         {
             var actualArgs = new List<IEnumerable<ITypedElement>>();
 
-            var focus = args.First()(context, InvokeeFactory.EmptyArgs);
+            var focus = args[0](ctx,InvokeeFactory.EmptyArgs);
             if (!focus.Any()) return FhirValueList.Empty;
 
             actualArgs.Add(focus);
-            var newCtx = context.Nest(focus);
-
-            actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
+            actualArgs.AddRange(args.Skip(1).Select(a => a(ctx, InvokeeFactory.EmptyArgs)));
             if (actualArgs.Any(aa=>!aa.Any())) return FhirValueList.Empty;
 
             var entry = _scope.DynamicGet(_name, actualArgs);
@@ -47,7 +45,7 @@ namespace Hl7.FhirPath.Expressions
                 {
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
-                    return entry(context, args);
+                    return entry(ctx, args);
                 }
                 catch (TargetInvocationException tie)
                 {

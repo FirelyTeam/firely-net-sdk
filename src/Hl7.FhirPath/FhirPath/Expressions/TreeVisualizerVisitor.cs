@@ -38,17 +38,17 @@ namespace Hl7.FhirPath.Expressions
             return _result;
         }
 
-        //public override StringBuilder VisitLambda(LambdaExpression expression)
-        //{
-        //    append("lambda $this -> ");
-        //    appendType(expression);
+        public override StringBuilder VisitLambda(LambdaExpression expression, SymbolTable scope)
+        {
+            append($"lambda ({String.Join(",",expression.ParamNames)}) -> ");
+            appendType(expression);
 
-        //    incr();
-        //    expression.Body.Accept(this);
-        //    decr();
+            incr();
+            expression.Body.Accept(this,scope);
+            decr();
 
-        //    return _result;
-        //}
+            return _result;
+        }
 
         public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope)
         {

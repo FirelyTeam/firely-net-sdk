@@ -182,9 +182,9 @@ namespace Hl7.FhirPath.Expressions
             t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
 
 
-            t.AddVar("sct", "http://snomed.info/sct");
-            t.AddVar("loinc", "http://loinc.org");
-            t.AddVar("ucum", "http://unitsofmeasure.org");
+            t.AddConst("sct", "http://snomed.info/sct");
+            t.AddConst("loinc", "http://loinc.org");
+            t.AddConst("ucum", "http://unitsofmeasure.org");
 
             t.Add("builtin.coreexturl", (object f, string id) => getCoreExtensionUrl(id));
             t.Add("builtin.corevsurl", (object f, string id) => getCoreValueSetUrl(id));
@@ -203,7 +203,7 @@ namespace Hl7.FhirPath.Expressions
             return "http://hl7.org/fhir/ValueSet/" + id;
         }
 
-        private static IEnumerable<ITypedElement> Trace(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> Trace(EvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
@@ -212,48 +212,42 @@ namespace Hl7.FhirPath.Expressions
             selectArgs.Add(arguments.First());
             selectArgs.AddRange(arguments.Skip(2));
             var selectResults = runSelect(ctx, selectArgs);
-            ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
+            ctx?.Tracer?.Invoke(name, selectResults);
 
             return focus;
         }
 
-        private static IEnumerable<ITypedElement> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> runWhere(EvaluationContext ctx, IList<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            var lambda = arguments.Skip(1).First();
+            var focus = arguments[0](ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments[1];
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = FhirValueList.Create(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
-
-                if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
+                var newFocus = InvokeeFactory.Return(element);
+                if (lambda(ctx, new List<Invokee> { newFocus }).BooleanEval() == true)
                     yield return element;
             }
         }
 
-        private static IEnumerable<ITypedElement> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> runSelect(EvaluationContext ctx, IList<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            var lambda = arguments.Skip(1).First();
+            var focus = arguments[0](ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments[1];
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = FhirValueList.Create(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
-
-                var result = lambda(newContext, InvokeeFactory.EmptyArgs);
+                var newFocus = InvokeeFactory.Return(element);
+                var result = lambda(ctx, new List<Invokee> { newFocus } );
                 foreach (var resultElement in result)       // implement SelectMany()
                     yield return resultElement;
             }
         }
 
-        private static IEnumerable<ITypedElement> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> runRepeat(EvaluationContext ctx, IList<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            var lambda = arguments.Skip(1).First();
+            var focus = arguments[0](ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments[1];
 
             var fullResult = new List<ITypedElement>();
             List<ITypedElement> newNodes = new List<ITypedElement>(focus);
@@ -265,12 +259,8 @@ namespace Hl7.FhirPath.Expressions
 
                 foreach (ITypedElement element in current)
                 {
-                    var newFocus = FhirValueList.Create(element);
-                    var newContext = ctx.Nest(newFocus);
-                    newContext.SetThis(newFocus);
-
-
-                    newNodes.AddRange(lambda(newContext, InvokeeFactory.EmptyArgs));
+                    var newFocus = InvokeeFactory.Return(element);
+                    newNodes.AddRange(lambda(ctx, new List<Invokee> { newFocus }));
                 }
 
                 fullResult.AddRange(newNodes);
@@ -279,18 +269,16 @@ namespace Hl7.FhirPath.Expressions
             return fullResult;
         }
 
-        private static IEnumerable<ITypedElement> runAll(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> runAll(EvaluationContext ctx, IList<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            var lambda = arguments.Skip(1).First();
+            var focus = arguments[0](ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments[1];
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = FhirValueList.Create(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
+                var newFocus = InvokeeFactory.Return(element);
 
-                var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
+                var result = lambda(ctx, new List<Invokee> { newFocus }).BooleanEval();
                 if (result == null) return FhirValueList.Empty;
                 if (result == false) return FhirValueList.Create(false);
             }
@@ -298,19 +286,15 @@ namespace Hl7.FhirPath.Expressions
             return FhirValueList.Create(true);
         }
 
-        private static IEnumerable<ITypedElement> runAny(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<ITypedElement> runAny(EvaluationContext ctx, IList<Invokee> arguments)
         {
-            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            var lambda = arguments.Skip(1).First();
+            var focus = arguments[0](ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments[1];
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = FhirValueList.Create(element);
-                var newContext = ctx.Nest(newFocus);
-                newContext.SetThis(newFocus);
-
-
-                var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
+                var newFocus = InvokeeFactory.Return(element);
+                var result = lambda(ctx, new List<Invokee> { newFocus }).BooleanEval();
 
                 //if (result == null) return FhirValueList.Empty; -> otherwise this would not be where().exists()
                 //Patient.identifier.any(use = 'official') would return {} if ANY identifier has no 'use' element. Unexpected behaviour, I think

@@ -16,33 +16,11 @@ using System.Reflection;
 
 namespace Hl7.FhirPath.Expressions
 {
-    internal delegate IEnumerable<ITypedElement> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<ITypedElement> Invokee(EvaluationContext ctx, IList<Invokee> arguments);
 
     internal static class InvokeeFactory
     {
-        public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
-
-
-        public static IEnumerable<ITypedElement> GetThis(Closure context, IEnumerable<Invokee> args)
-        {
-            return context.GetThis();
-        }
-
-        public static IEnumerable<ITypedElement> GetContext(Closure context, IEnumerable<Invokee> arguments)
-        {
-            return context.GetOriginalContext();
-        }
-
-        public static IEnumerable<ITypedElement> GetResource(Closure context, IEnumerable<Invokee> arguments)
-        {
-            return context.GetResource();
-        }
-
-        public static IEnumerable<ITypedElement> GetThat(Closure context, IEnumerable<Invokee> args)
-        {
-            return context.GetThat();
-        }
-
+        public static readonly IList<Invokee> EmptyArgs = new List<Invokee>();
 
         public static Invokee Wrap<R>(Func<R> func)
         {
@@ -58,14 +36,14 @@ namespace Hl7.FhirPath.Expressions
             {
                 if (typeof(A) != typeof(EvaluationContext))
                 {
-                    var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                    var focus = args[0](ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !focus.Any()) return FhirValueList.Empty;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus)));
                 }
                 else
                 {
-                    A lastPar = (A)(object)ctx.EvaluationContext;
+                    A lastPar = (A)(object)ctx;
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(lastPar));
                 }
             };
@@ -75,20 +53,19 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                var focus = args[0](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
 
                 if (typeof(B) != typeof(EvaluationContext))
                 {
-                    var newCtx = ctx.Nest(focus);
-                    var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    var argA = args[1](ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argA.Any()) return FhirValueList.Empty;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
                 }
                 else
                 {
-                    B lastPar = (B)(object)ctx.EvaluationContext;
+                    B lastPar = (B)(object)ctx;
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), lastPar));
                 }
             };
@@ -98,15 +75,14 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                var focus = args[0](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
-                var newCtx = ctx.Nest(focus);
-                var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                var argA = args[1](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argA.Any()) return FhirValueList.Empty;
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
-                    var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    var argB = args[2](ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argB.Any()) return FhirValueList.Empty;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
@@ -114,7 +90,7 @@ namespace Hl7.FhirPath.Expressions
                 }
                 else
                 {
-                    C lastPar = (C)(object)ctx.EvaluationContext;
+                    C lastPar = (C)(object)ctx;
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA), lastPar));
                 }
@@ -125,18 +101,16 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                var focus = args[0](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
-
-                var newCtx = ctx.Nest(focus);
-                var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                var argA = args[1](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argA.Any()) return FhirValueList.Empty;
-                var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
+                var argB = args[2](ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argB.Any()) return FhirValueList.Empty;
 
                 if (typeof(D) != typeof(EvaluationContext))
                 {
-                    var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    var argC = args[3](ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argC.Any()) return FhirValueList.Empty;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
@@ -144,7 +118,7 @@ namespace Hl7.FhirPath.Expressions
                 }
                 else
                 {
-                    D lastPar = (D)(object)ctx.EvaluationContext;
+                    D lastPar = (D)(object)ctx;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                                 Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
@@ -157,13 +131,12 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                // Ignore focus
-                // NOT GOOD, arguments need to be evaluated in the context of the focus to give "$that" meaning.
-                var left = args.Skip(1).First();
-                var right = args.Skip(2).First();
+                var left = args[0];
+                var right = args[1];
 
                 // Return function that actually executes the Invokee at the last moment
-                return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<ITypedElement>>(
+                    func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
 
@@ -177,7 +150,7 @@ namespace Hl7.FhirPath.Expressions
             return (_, __) => value;
         }
 
-        public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
+        public static Invokee Invoke(string functionName, IList<Invokee> arguments, Invokee invokee)
         {
             return (ctx, _) =>
             {

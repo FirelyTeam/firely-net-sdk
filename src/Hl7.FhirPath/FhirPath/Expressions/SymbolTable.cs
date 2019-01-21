@@ -76,13 +76,18 @@ namespace Hl7.FhirPath.Expressions
                 return null;
             }
 
-            public CallSignature Signature { get; private set; }
-            public Invokee Body { get; private set; }
+            public readonly CallSignature Signature;
+            public readonly Invokee Body;
+            public readonly int? Position;
 
-            public TableEntry(CallSignature signature, Invokee body)
+            public TableEntry ForSignature(CallSignature sig, Invokee body)
+                => new TableEntry(sig,body,null);   
+
+            public TableEntry(CallSignature signature, Invokee body, int? position=null)
             {
                 Signature = signature;
                 Body = body;
+                Position = position;
             }
         }
 
@@ -176,14 +181,24 @@ namespace Hl7.FhirPath.Expressions
                 InvokeeFactory.WrapLogic(func));
         }
 
-        public static void AddVar(this SymbolTable table, string name, object value)
+        public static void AddConst(this SymbolTable table, string name, object value)
         {
-            table.AddVar(name, new ConstantValue(value));
+            table.AddConst(name, new ConstantValue(value));
         }
 
-        public static void AddVar(this SymbolTable table, string name, ITypedElement value)
+        public static void AddConst(this SymbolTable table, string name, ITypedElement value)
         {
-            table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
+            table.Add(new CallSignature(name, typeof(ITypedElement)), InvokeeFactory.Return(value));
+        }
+
+        internal static void AddPositional(this SymbolTable table, string name, int position, Invokee[] args2)
+        {
+            table.Add(new CallSignature(name, typeof(object)), makeParamRef );
+
+            IEnumerable<ITypedElement> makeParamRef(EvaluationContext ctx, IEnumerable<Invokee> args)
+            {
+                return args.Skip(position).First()(ctx,args2);
+            }
         }
 
         #region Obsolete members
