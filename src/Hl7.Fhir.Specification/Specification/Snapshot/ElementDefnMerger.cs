@@ -1,4 +1,9 @@
-﻿/* 
+﻿// [WMR 20190122] TODO: Actually merge diff (derived profile) constraints onto snap (base profile) constraints
+// Currently, diff constraints replace/overwrite snap constraints
+// See #827
+#define MERGE_ELEM_TYPE
+
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,15 +11,15 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.Reflection;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -116,11 +121,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Type collection has different semantics; any change replaces the inherited type (no item merging)
                 // i.e. derived profiles can remove inherited types
-                if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
-                {
-                    snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) { onConstraint(element); }
-                }
+                // [WMR 20190121] WRONG! Issue #827
+                //if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
+                //{
+                //    snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
+                //    foreach (var element in snap.Type) { onConstraint(element); }
+                //}
+                snap.Type = mergeElementTypes(diff.Type, snap.Type);
 
                 // ElementDefinition.contentReference cannot be overridden by a derived profile                
 
@@ -174,7 +181,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
 
                 // [WMR 20160817] TODO: Merge extensions
-                // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
+                // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() is null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
 
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
                 // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
@@ -205,9 +212,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <returns></returns>
             T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
             {
-                // [WMR 20160718] Handle snap == null
-                // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
-                // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
+                // [WMR 20160718] snap may be null
                 if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     var result = (T)diff.DeepCopy();
@@ -218,9 +223,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         if (diffText.StartsWith("..."))
                         {
-                            // [WMR 20160719] Handle snap == null
-                            // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
-                            var prefix = snap != null ? snap.ObjectValue as string : null;
+                            //var prefix = snap != null ? snap.ObjectValue as string : null;
+                            var prefix = snap?.ObjectValue as string;
                             if (string.IsNullOrEmpty(prefix))
                             {
                                 diffText = diffText.Substring(3);
@@ -258,6 +262,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // [WMR 20170227] Diff type is equal to or derived from snap type
                             // Clone base and recursively copy all non-null diff props over base props
                             // So effectively the result inherits all missing properties from base
+
+                            // [WMR 20190122] Problem: diff constraints overwrite/replace snap constraints
+                            // Actually, we want to merge, esp. extensions
+
                             result = (T)snap.DeepCopy();
                             diff.CopyTo(result);
                         }
@@ -273,11 +281,213 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
+            // [WMR 20190122] Specialized version to merge element type constraints
+            List<T> mergeElementTypes<T>(List<T> diff, List<T> snap) where T : ElementDefinition.TypeRefComponent
+            {
+                // Type collection has different semantics; any change replaces the inherited type (no item merging)
+                // i.e. derived profiles can remove inherited types
+                if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+#if MERGE_ELEM_TYPE
+                    // [WMR 20190121] FIX - Issue #827
+                    // Merge diff type with base type, so we inherit any custom type extensions
+                    // e.g. compiler magic type extensions for json/xml/rdf on primitive value
+                    var mergedTypes = new List<T>(diff.Count);
+                    foreach (var diffTypeRef in diff)
+                    {
+                        // Find matching type in snap
+                        var snapTypeRef = snap.FirstOrDefault(tr => tr.Code == diffTypeRef.Code);
+                        if (snapTypeRef is null && ModelInfo.IsPrimitive(diffTypeRef.Code))
+                        {
+                            // Primitive type profiles: ".value" ElementDefinition does not define a code (compiler magic)
+                            // However primitive elements in derived profiles _will_ define primitive type code
+                            // e.g.  HumanName.text : Code="string"
+                            // match string.value   : Code=<null>
+                            snapTypeRef = snap.FirstOrDefault(tr => tr.Code is null);
+                        }
+                        var mergedType = mergeElementType(snapTypeRef, diffTypeRef);
+                        onConstraint(mergedType);
+                        mergedTypes.Add(mergedType);
+                    }
+#else
+                    // [WMR 20190121] WRONG! Issue #827
+                    var mergedTypes = new List<T>(diff.DeepCopy());
+                    foreach (var element in mergedTypes) { onConstraint(element); }
+#endif
+                    return mergedTypes;
+                }
+                else
+                {
+                    return snap;
+                }
+            }
+
+#if MERGE_ELEM_TYPE
+            T mergeElementType<T>(T snap, T diff) where T : ElementDefinition.TypeRefComponent
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (T)diff.DeepCopy();
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        if (snap.GetType().GetTypeInfo().IsAssignableFrom(diff.GetType().GetTypeInfo()))
+                        {
+                            result = (T)snap.DeepCopy();
+
+                            // WRONG! diff extension lists replace/overwrite snap extension lists
+                            //diff.CopyTo(result);
+
+                            bool IsEqualUri(string u1, string u2) => StringComparer.Ordinal.Equals(u1, u2);
+                            bool IsEqualCanonical(Canonical c1, Canonical c2) => IsEqualUri(c1?.Value, c2?.Value); // c1.IsExactly(c2)
+
+                            // TODO: Copy diff annotations...?
+                            if (diff.ElementId != null) { result.ElementId = diff.ElementId; }
+                            result.Extension = mergeExtensions(snap.Extension, diff.Extension);
+                            result.CodeElement = mergePrimitiveElement(snap.CodeElement, diff.CodeElement);
+                            result.ProfileElement = mergeCollection(snap.ProfileElement, diff.ProfileElement, IsEqualCanonical);
+                            result.TargetProfileElement = mergeCollection(snap.TargetProfileElement, diff.TargetProfileElement, IsEqualCanonical);
+
+                            //if (diff.AggregationElement != null) result.AggregationElement = new List<Code<ElementDefinition.AggregationMode>>(diff.AggregationElement.DeepCopy());
+                            result.AggregationElement = mergePrimitiveCollection(snap.AggregationElement, diff.AggregationElement, (a1, a2) => a1.Value == a2.Value);
+
+                            result.VersioningElement = mergePrimitiveElement(snap.VersioningElement, diff.VersioningElement);
+                        }
+                        else
+                        {
+                            // [WMR 20170227] Diff type is incompatible with snap type (?)
+                            // diff fully replaces snap
+                            result = (T)diff.DeepCopy();
+                        }
+                    }
+                    onConstraint(result);
+                }
+                return result;
+            }
+
+            List<T> mergeExtensions<T>(List<T> snap, List<T> diff) where T : Extension
+            {
+                if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+                    // Inherit all extensions from snap
+                    var result = snap is null ? new List<T>(diff.Count) : new List<T>(snap.DeepCopy());
+
+                    foreach (var diffExtension in diff)
+                    {
+                        var mergedExtension = result.FirstOrDefault(e => e.Url == diffExtension.Url);
+                        if (mergedExtension is null)
+                        {
+                            mergedExtension = (T)diffExtension.DeepCopy();
+                            result.Add(mergedExtension);
+                        }
+                        else
+                        {
+                            // diff extension replaces/overwrites snap
+                            diffExtension.CopyTo(mergedExtension);
+                        }
+                        onConstraint(mergedExtension);
+                    }
+                    return result;
+                }
+                else
+                {
+                    return snap;
+                }
+            }
+
+            List<T> mergePrimitiveCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer)
+                where T : Primitive, new()
+            {
+                if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+                    // Paranoia... List elements are never null
+                    var result = snap is null ? new List<T>(diff.Count) : new List<T>(snap.DeepCopy());
+
+                    foreach (var diffItem in diff)
+                    {
+                        var idx = result.FindIndex(e => elemComparer(e, diffItem));
+                        T mergedItem;
+                        if (idx < 0)
+                        {
+                            mergedItem = (T)diffItem.DeepCopy();
+                            result.Add(mergedItem);
+                        }
+                        else
+                        {
+                            var snapItem = result[idx];
+                            mergedItem = mergePrimitiveElement(snapItem, diffItem, true);
+                            result[idx] = mergedItem;
+                        }
+                        onConstraint(mergedItem);
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return snap;
+                }
+            }
+
+            /// <summary>
+            /// Merges two FHIR primitives. Normally this means the diff overrides the snap, but if the diffd is a
+            /// string, and it start with ellipsis ('...'), the diff is appended to the snap.
+            /// </summary>
+            T mergePrimitiveElement<T>(T snap, T diff, bool allowAppend = false)
+                where T : Primitive, new()
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+                    if (!snap.IsNullOrEmpty())
+                    {
+                        result = (T)snap?.DeepCopy();
+
+                        var diffValue = diff.ObjectValue;
+                        if (allowAppend && diffValue is string diffText)
+                        {
+                            if (diffText.StartsWith("..."))
+                            {
+                                //var prefix = snap != null ? snap.ObjectValue as string : null;
+                                var prefix = snap?.ObjectValue as string;
+                                if (string.IsNullOrEmpty(prefix))
+                                {
+                                    diffText = diffText.Substring(3);
+                                }
+                                else
+                                {
+                                    diffText = prefix + "\r\n" + diffText.Substring(3);
+                                }
+                            }
+
+                            result.ObjectValue = diffText;
+                        }
+                        else
+                        {
+                            result.ObjectValue = diffValue;
+                        }
+                        // Also merge extensions on primitives
+                        result.Extension = mergeExtensions(snap.Extension, diff.Extension);
+                    }
+                    else
+                    {
+                        result = (T)diff?.DeepCopy();
+                    }
+
+                    onConstraint(result);
+                }
+                return result;
+            }
+#endif
+
             List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
             {
                 if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
-                    var result = snap == null ? new List<T>() : new List<T>(snap.DeepCopy());
+                    var result = snap is null ? new List<T>() : new List<T>(snap.DeepCopy());
 
                     // Just add new elements to the result, never replace existing ones
                     foreach (var element in diff)
@@ -293,7 +503,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return result;
                 }
                 else
+                {
                     return snap;
+                }
             }
 
             string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
@@ -338,7 +550,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Codes are empty or missing; compare display values instead
                 return c.Display == d.Display;
             }
-
         }
     }
 
