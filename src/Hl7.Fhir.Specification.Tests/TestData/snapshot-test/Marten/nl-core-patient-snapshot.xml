@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="nl-core-patient" />
   <meta>
@@ -34,8 +34,8 @@
     <name value="Zorginformatiebouwsteen Zorgverlener" />
   </mapping>
   <kind value="resource" />
-  <type value="Patient" />
   <abstract value="false" />
+  <type value="Patient" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
   <snapshot>
     <element>
@@ -385,7 +385,9 @@
     <element>
       <path value="Patient.identifier" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="An identifier for this patient" />
@@ -3373,7 +3375,9 @@
     <element>
       <path value="Patient.telecom" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="A contact detail for the individual" />
@@ -7055,7 +7059,9 @@
     <element>
       <path value="Patient.contact.relationship" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="The kind of relationship" />
@@ -9204,7 +9210,9 @@
     <element>
       <path value="Patient.contact.telecom" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="A contact detail for the person" />
@@ -15043,7 +15051,9 @@
     <element>
       <path value="Patient.identifier" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="An identifier for this patient" />
@@ -15087,7 +15097,9 @@
     <element>
       <path value="Patient.telecom" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="A contact detail for the individual" />
@@ -15250,7 +15262,9 @@
     <element>
       <path value="Patient.contact.relationship" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="The kind of relationship" />
@@ -15301,7 +15315,9 @@
     <element>
       <path value="Patient.contact.telecom" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="A contact detail for the person" />

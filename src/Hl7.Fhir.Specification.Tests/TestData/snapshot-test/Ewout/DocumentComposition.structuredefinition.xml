@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../../Svn/fhir/trunk/build/schema/fhir-all.xsd" xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-10-06T11:07:20.873+02:00" />
@@ -8,8 +8,8 @@
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <type value="Composition" />
   <abstract value="false" />
+  <type value="Composition" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Composition" />
   <derivation value="constraint" />
   <differential>
@@ -45,7 +45,6 @@
         <aggregation value="bundled" />
       </type>
     </element>
-    
     <!-- Slice intro on Composition.section with some child constraints -->
     <element>
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -53,10 +52,13 @@
       </extension>
       <path value="Composition.section" />
       <slicing>
-        <discriminator><type value="value" /><path value="code" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="code" />
+        </discriminator>
         <ordered value="false" />
         <rules value="open" />
-      </slicing>      
+      </slicing>
       <min value="1" />
     </element>
     <element>
@@ -71,7 +73,7 @@
         <strength value="required" />
         <valueSet value="http://example.org/ValueSet/SectionTitles" />
       </binding>
-    </element>    
+    </element>
     <element>
       <path value="Composition.section.entry" />
       <type>
@@ -89,7 +91,6 @@
       <path value="Composition.section.section" />
       <max value="0" />
     </element>
-    
     <!-- slice on Composition.section: vital signs, EXACTLY 1 -->
     <element>
       <path value="Composition.section" />
@@ -103,11 +104,10 @@
       <patternCodeableConcept>
         <coding>
           <system value="http://loinc.org" />
-          <code value="8716-3" />          
+          <code value="8716-3" />
         </coding>
       </patternCodeableConcept>
-    </element>        
-    
+    </element>
     <!-- slice on Composition.section: chief complaint, MAX 1 -->
     <element>
       <path value="Composition.section" />
@@ -121,7 +121,7 @@
       <patternCodeableConcept>
         <coding>
           <system value="http://loinc.org" />
-          <code value="10154-3" />          
+          <code value="10154-3" />
         </coding>
       </patternCodeableConcept>
     </element>

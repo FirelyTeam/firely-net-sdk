@@ -30,8 +30,8 @@ namespace Hl7.Fhir.ElementModel
                (T)element.ToPoco(settings);
 
 #pragma warning disable 612, 618
-        public static Base ToPoco(this IElementNavigator navigator, Type pocoType=null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(navigator.ToSourceNode(), pocoType);
+        public static Base ToPoco(this IElementNavigator navigator, Type pocoType = null,
+            PocoBuilderSettings settings = null) => navigator.ToSourceNode().ToPoco(pocoType, settings);
 
         public static T ToPoco<T>(this IElementNavigator navigator, PocoBuilderSettings settings = null) where T : Base =>
                (T)navigator.ToPoco(typeof(T), settings);

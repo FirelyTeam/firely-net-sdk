@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTestWebClient()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             // Do common tests for service
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWebClient()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var external = new ExternalTerminologyService(client);
             var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWithVSWebClient()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var service = new ExternalTerminologyService(client);
             var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);

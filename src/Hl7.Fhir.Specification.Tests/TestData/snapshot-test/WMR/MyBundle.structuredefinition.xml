@@ -8,8 +8,8 @@
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <type value="Bundle" />
   <abstract value="false" />
+  <type value="Bundle" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
   <derivation value="constraint" />
   <snapshot>
@@ -1884,7 +1884,7 @@
         <profile value="http://example.org/fhir/StructureDefinition/MyBundle" />
       </type>
     </element>
-	  <!-- [WMR 20160809] Causes infinite recursion in snapshot generator... -->
+    <!-- [WMR 20160809] Causes infinite recursion in snapshot generator... -->
     <element>
       <path value="Bundle.entry.resource.id" />
       <fixedString value="123" />
