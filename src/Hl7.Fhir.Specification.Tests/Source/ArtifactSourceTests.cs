@@ -15,6 +15,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using ssac = System.Security.AccessControl;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -71,6 +72,9 @@ namespace Hl7.Fhir.Specification.Tests
             var fourthRun = sw.ElapsedMilliseconds;
             Assert.IsTrue(fourthRun > secondRun);
 
+            // Something fishy going on here.
+            // if I do not wait before the statement File.SetLastWriteTimeUtc fa.IsActual returns true
+            Thread.Sleep(500);
             File.SetLastWriteTimeUtc(zipFile, DateTimeOffset.UtcNow.DateTime);
             Assert.IsFalse(fa.IsActual());
         }
@@ -284,7 +288,7 @@ namespace Hl7.Fhir.Specification.Tests
             var subPath3 = Path.Combine(testPath, "sub3");
             Directory.CreateDirectory(subPath3);
 
-            const string srcPath = @"TestData\snapshot-test\WMR\";
+            string srcPath = Path.Combine("TestData", "snapshot-test", "WMR");
             const string srcFile1 = "MyBasic.structuredefinition.xml";
             const string srcFile2 = "MyBundle.structuredefinition.xml";
 
