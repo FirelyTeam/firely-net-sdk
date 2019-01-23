@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public string ResourceType => JsonObject?.GetResourceTypeFromObject();
+        public string ResourceType => (JsonObject?.GetResourceTypePropertyFromObject(Name)?.Value as JValue)?.Value as string;
 
         public IEnumerable<ISourceNode> Children(string name = null)
         {
@@ -206,9 +206,11 @@ namespace Hl7.Fhir.Serialization
 
             var scanChildren = children.Where(n => n.Key.MatchesPrefix(name));
 
+            var resourceTypeChild = JsonObject.GetResourceTypePropertyFromObject(Name);
+
             foreach (var child in scanChildren)
             {
-                if (isResourceTypeIndicator(child)) continue;
+                if (child.First() == resourceTypeChild) continue;
                 if (processed.Contains(child.Key)) continue;
 
                 (JProperty main, JProperty shadow) = getNextElementPair(child);
@@ -234,12 +236,6 @@ namespace Hl7.Fhir.Serialization
                 return n[0] == '_' ? n.Substring(1) : n;
             }
         }
-
-        private bool isResourceTypeIndicator(IGrouping<string, JProperty> child) => 
-            child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME ?
-                false :
-                child.First().Value.Type == JTokenType.String 
-                    && (Name != "instance");        // Hack to support R4 ExampleScenario.instance.resourceType element
 
         private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
         {
