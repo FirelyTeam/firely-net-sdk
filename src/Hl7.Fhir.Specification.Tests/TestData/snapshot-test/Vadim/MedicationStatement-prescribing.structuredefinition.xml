@@ -5,18 +5,20 @@
     <lastUpdated value="2017-03-13T11:39:46.369+01:00" />
   </meta>
   <text>
-    <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml">
-  <p>--- SNIP ---</p>
-</div></text>
+    <status value="generated" />
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>--- SNIP ---</p>
+    </div>
+  </text>
   <url value="http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing" />
   <name value="Test MedicationStatement prescribing" />
   <status value="draft" />
   <experimental value="false" />
-  <publisher value="Test" />
   <date value="2017-01-27T13:11:14.8692835+01:00" />
+  <publisher value="Test" />
   <kind value="resource" />
-  <type value="MedicationStatement" />
   <abstract value="false" />
+  <type value="MedicationStatement" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationStatement" />
   <differential>
     <element>

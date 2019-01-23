@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="FHIRABENDSandbox-istNebenbetriebsstaette" />
   <meta>
@@ -21,7 +21,6 @@
   <copyright value="HL7 Deutschland e.V." />
   <fhirVersion value="1.0.2" />
   <kind value="primitive-type" />
-  <type value="Extension" />
   <abstract value="false" />
   <context>
     <type value="fhirpath" />
@@ -125,7 +124,9 @@
         <code value="boolean" />
       </type>
       <patternCode value="(H|N)" />
-      <example><valueCode value="H=Hauptbetriebsstätte oder N=Nebenbetriebsstätte" /></example>
+      <example>
+        <valueCode value="H=Hauptbetriebsstätte oder N=Nebenbetriebsstätte" />
+      </example>
       <mapping>
         <identity value="rim" />
         <map value="N/A" />

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-08-18T13:02:01.497+02:00" />
@@ -8,8 +8,8 @@
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <type value="Observation" />
   <abstract value="false" />
+  <type value="Observation" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
   <derivation value="constraint" />
   <differential>

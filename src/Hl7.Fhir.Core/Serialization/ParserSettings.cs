@@ -32,6 +32,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool AcceptUnknownMembers { get; set; }
 
+        /// <summary>
+        /// Do not raise exceptions for recoverable errors.
+        /// </summary>
+        public bool PermissiveParsing { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="ParserSettings"/> instance with default property values.</summary>
         public ParserSettings() { }
 
