@@ -6,74 +6,38 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Specification
 {
-    public class ElementDefinitionSummary : IElementDefinitionSummary
+    public class TypeRootDefinitionSummary : IElementDefinitionSummary
     {
-        private ElementDefinitionSummary() { }
-
-        public ElementDefinitionSummary(string elementName, bool isCollection, bool isChoice, 
-            bool isResource, XmlRepresentation representation, ITypeSerializationInfo[] type, 
-            int order, string nonDefaultNS, bool inSummary, bool isRequired)
+        public TypeRootDefinitionSummary(string elementName,  IStructureDefinitionSummary rootType)
         {
             ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
-            IsCollection = isCollection;
-            IsChoiceElement = isChoice;
-            IsResource = isResource;
-            Representation = representation;
-            Type = type ?? throw new ArgumentNullException(nameof(type));
-            Order = order;
-            NonDefaultNamespace = nonDefaultNS;
-            InSummary = inSummary;
-            IsRequired = isRequired;
-        }
 
-        public ElementDefinitionSummary(IElementDefinitionSummary source)
-        {
-            ElementName = source.ElementName;
-            IsCollection = source.IsCollection;
-            IsChoiceElement = source.IsChoiceElement;
-            IsResource = source.IsResource;
-            Representation = source.Representation;
-            Type = source.Type;
-            Order = source.Order;
-            NonDefaultNamespace = source.NonDefaultNamespace;
-            InSummary = source.InSummary;
-            IsRequired = source.IsRequired;
-        }
+            if(rootType == null) throw new ArgumentNullException(nameof(rootType));
 
-        public static ElementDefinitionSummary ForRoot(string rootName, IStructureDefinitionSummary rootType) =>
-            new ElementDefinitionSummary(rootName, isCollection: false, isChoice: false, 
-                isResource: rootType.IsResource, 
-                representation: XmlRepresentation.XmlElement, 
-                type: new[] { rootType }, order: 0, nonDefaultNS: null, inSummary: true, isRequired: false);
+            IsResource = rootType.IsResource;
+            Type = new[] { rootType };
+        }
 
         public string ElementName { get; private set; }
 
-        public bool IsCollection { get; private set; }
+        public bool IsCollection => false;
 
-        public bool IsChoiceElement { get; private set; }
+        public bool IsChoiceElement => false;
         public bool IsResource { get; private set; }
 
-        public bool IsRequired { get; private set; }
+        public bool IsRequired => false;
 
-        public bool InSummary { get; private set; }
-        public XmlRepresentation Representation { get; private set; }
+        public bool InSummary => true;
+        public XmlRepresentation Representation => XmlRepresentation.XmlElement;
 
-        public int Order { get; private set; }
+        public int Order => 0;
+
         public ITypeSerializationInfo[] Type { get; private set; }
 
-        public string NonDefaultNamespace { get; }
-
-    }
-
-
-    public static class ElementSerializationInfoExtensions
-    {
-        public static ElementDefinitionSummary GetElementDefinitionSummary(this IAnnotated ann) =>
-            ann.TryGetAnnotation<ElementDefinitionSummary>(out var rt) ? rt : null;
+        public string NonDefaultNamespace => null;
     }
 }

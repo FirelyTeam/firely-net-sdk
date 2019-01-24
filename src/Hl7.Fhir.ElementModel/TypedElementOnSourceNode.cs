@@ -16,54 +16,61 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class TypedElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
+    internal class TypedElementOnSourceNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator
     {
-        public TypedElementNode(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
+        public TypedElementOnSourceNode(ISourceNode source, string type, IStructureDefinitionSummaryProvider provider, TypedElementSettings settings = null)
         {
-            if (element == null) throw Error.ArgumentNull(nameof(element));
+            if (source == null) throw Error.ArgumentNull(nameof(source));
 
             Provider = provider ?? throw Error.ArgumentNull(nameof(provider));
             _settings = settings ?? new TypedElementSettings();
 
-            if (element is IExceptionSource ies && ies.ExceptionHandler == null)
+            if (source is IExceptionSource ies && ies.ExceptionHandler == null)
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
 
-            ShortPath = element.Name;
-            Current = buildRootPosition(element, type, provider);
+            ShortPath = source.Name;
+            Source = source;
+            (InstanceType, Definition) = buildRootPosition(type);
         }
 
-        private NavigatorPosition buildRootPosition(ISourceNode element, string type, IStructureDefinitionSummaryProvider provider)
+        private (string instanceType, IElementDefinitionSummary definition) buildRootPosition(string type)
         {
-            var rootType = type ?? element.GetResourceTypeIndicator();
+            var rootType = type ?? Source.GetResourceTypeIndicator();
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{element.Location}', " +
+                    throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
                         $"please supply a type argument.");
                 else
-                    return NavigatorPosition.ForRoot(element, null, element.Name);
+                    return (rootType, null);
             }
 
-            var elementType = provider.Provide(rootType);
+            var elementType = Provider.Provide(rootType);
 
             if (elementType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
                     throw Error.Argument(nameof(type), $"Cannot locate type information for type '{rootType}'");
                 else
-                    return NavigatorPosition.ForRoot(element, null, element.Name);
+                    return (rootType, null);
             }
 
-            return NavigatorPosition.ForRoot(element, elementType, element.Name);
+            if (elementType.IsAbstract)
+                throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
+
+            var rootTypeDefinition = new TypeRootDefinitionSummary(elementType.TypeName, elementType);
+            return (rootType, rootTypeDefinition);
         }
 
 
-        private TypedElementNode(TypedElementNode parent, NavigatorPosition position, string prettyPath)
+        private TypedElementOnSourceNode(TypedElementOnSourceNode parent, ISourceNode source, IElementDefinitionSummary definition, string instanceType, string prettyPath)
         {
-            Current = position;
+            Source = source;
             ShortPath = prettyPath;
             Provider = parent.Provider;
             ExceptionHandler = parent.ExceptionHandler;
+            Definition = definition;
+            InstanceType = instanceType;
             _settings = parent._settings;
         }
 
@@ -79,31 +86,33 @@ namespace Hl7.Fhir.ElementModel
             ExceptionHandler.NotifyOrThrow(source, notification);
         }
 
-        private readonly NavigatorPosition Current;
+        public string InstanceType { get; private set; }
+
+        private readonly ISourceNode Source;
 
         public readonly IStructureDefinitionSummaryProvider Provider;
 
         private readonly TypedElementSettings _settings;
 
-        public string Name => Current.Name;
+        public IElementDefinitionSummary Definition { get; private set; }
 
-        public string InstanceType => Current.InstanceType;
+        public string Name => Definition.ElementName ?? Source.Name;
 
         public object Value
         {
             get
             {
-                string sourceText = Current.Node.Text;
+                string sourceText = Source.Text;
 
                 if (sourceText == null) return null;
 
                 // If we don't have type information (no definition was found
                 // for current node), all we can do is return the underlying string value
-                if (!Current.IsTracking || Current.InstanceType == null) return sourceText;
+                if (InstanceType == null) return sourceText;
 
                 if (!Primitives.IsPrimitive(InstanceType))
                 {
-                    raiseTypeError($"Since type {InstanceType} is not a primitive, it cannot have a value", Current.Node);
+                    raiseTypeError($"Since type {InstanceType} is not a primitive, it cannot have a value", Source);
                     return null;
                 }
 
@@ -115,13 +124,13 @@ namespace Hl7.Fhir.ElementModel
                 }
                 catch (FormatException fe)
                 {
-                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {InstanceType}: '{fe.Message}'.", Current.Node);
+                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {InstanceType}: '{fe.Message}'.", Source);
                     return sourceText;
                 }
             }
         }
 
-        private NavigatorPosition deriveInstanceType(ISourceNode current, IElementDefinitionSummary info)
+        private string deriveInstanceType(ISourceNode current, IElementDefinitionSummary info)
         {
             string instanceType = null;
             var resourceTypeIndicator = current.GetResourceTypeIndicator();
@@ -159,10 +168,10 @@ namespace Hl7.Fhir.ElementModel
                 instanceType = tp.GetTypeName();
             }
 
-            return new NavigatorPosition(current, info, info?.ElementName ?? current.Name, instanceType);
+            return instanceType;
         }
 
-        private IEnumerable<TypedElementNode> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
+        private IEnumerable<TypedElementOnSourceNode> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
         {
             IEnumerable<ISourceNode> childSet = null;
 
@@ -183,12 +192,11 @@ namespace Hl7.Fhir.ElementModel
             foreach (var scan in childSet)
             {
                 var hit = dis.TryGetBySuffixedName(scan.Name, out var info);
-                NavigatorPosition match = info == null ? 
-                    new NavigatorPosition(scan, null, scan.Name, null) : 
+                string instanceType = info == null ? null :
                     deriveInstanceType(scan, info);
 
                 // If we found a type, but we don't know about the specific child, complain
-                if (dis != ElementDefinitionSummaryCache.Empty && !match.IsTracking)
+                if (dis != ElementDefinitionSummaryCache.Empty && info == null)
                 {
                     raiseTypeError($"Encountered unknown element '{scan.Name}'", this,
                             warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
@@ -207,22 +215,22 @@ namespace Hl7.Fhir.ElementModel
                 }
 
                 var prettyPath =
-                 hit && !info.IsCollection ? $"{ShortPath}.{match.Name}" : $"{ShortPath}.{match.Name}[{_nameIndex}]";
+                 hit && !info.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{info.ElementName}[{_nameIndex}]";
 
-                yield return new TypedElementNode(this, match, prettyPath);
+                yield return new TypedElementOnSourceNode(this, scan, info, instanceType, prettyPath);
             }
         }
 
         public IEnumerable<ITypedElement> Children(string name = null)
         {
-            var firstChildDef = down(Current);
+            var firstChildDef = down();
 
-            if (Current.IsTracking && firstChildDef == ElementDefinitionSummaryCache.Empty)
+            if (Definition != null && firstChildDef == ElementDefinitionSummaryCache.Empty)
             {
                 // No type information available for the type representing the children....
 
-                if (Current.InstanceType != null && _settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    raiseTypeError($"Encountered unknown type '{Current.InstanceType}'", Current.Node);
+                if (InstanceType != null && _settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
+                    raiseTypeError($"Encountered unknown type '{InstanceType}'", Source);
 
                 // Don't go on with the (untyped) children, unless explicitly told to do so
                 if (_settings.ErrorMode != TypedElementSettings.TypeErrorMode.Passthrough)
@@ -230,22 +238,22 @@ namespace Hl7.Fhir.ElementModel
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 
                     // don't bother to run the additional rules
-                    return enumerateElements(firstChildDef, Current.Node, name);
+                    return enumerateElements(firstChildDef, Source, name);
             }
             else
-                return runAdditionalRules(enumerateElements(firstChildDef, Current.Node, name));
+                return runAdditionalRules(enumerateElements(firstChildDef, Source, name));
         }
 
-        private ElementDefinitionSummaryCache down(NavigatorPosition current)
+        private ElementDefinitionSummaryCache down()
         {
-            if (!current.IsTracking || current.InstanceType == null) return ElementDefinitionSummaryCache.Empty;
+            if (InstanceType == null) return ElementDefinitionSummaryCache.Empty;
 
             // If this is a backbone element, the child type is the nested complex type
-            if (current.SerializationInfo.Type[0] is IStructureDefinitionSummary be)
+            if (Definition.Type[0] is IStructureDefinitionSummary be)
                 return ElementDefinitionSummaryCache.ForType(be);
             else
             {
-                var si = Provider.Provide(current.InstanceType);
+                var si = Provider.Provide(InstanceType);
 
                 return si == null ? ElementDefinitionSummaryCache.Empty : ElementDefinitionSummaryCache.ForType(si);
             }
@@ -254,7 +262,7 @@ namespace Hl7.Fhir.ElementModel
         private IEnumerable<ITypedElement> runAdditionalRules(IEnumerable<ITypedElement> children)
         {
 #pragma warning disable 612,618
-            var additionalRules = Current.Node.Annotations(typeof(AdditionalStructuralRule));
+            var additionalRules = Source.Annotations(typeof(AdditionalStructuralRule));
             var stateBag = new Dictionary<AdditionalStructuralRule, object>();
             foreach (var child in children)
             {
@@ -270,20 +278,19 @@ namespace Hl7.Fhir.ElementModel
 #pragma warning restore 612,618
         }
 
-        public string Location => Current.Node.Location;
+        public string Location => Source.Location;
 
         public string ShortPath { get; private set; }
 
-        public IElementDefinitionSummary Definition => Current.SerializationInfo;
-
-        public override string ToString() => $"{(Current.IsTracking ? ($"[{Current.InstanceType}] ") : "")}{Current.Node.ToString()}";
+        public override string ToString() => 
+            $"{(InstanceType != null ? ($"[{InstanceType}] ") : "")}{Source.ToString()}";
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(TypedElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
+            if (type == typeof(TypedElementOnSourceNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 return new[] { this };
             else
-                return Current.Node.Annotations(type);
+                return Source.Annotations(type);
 
         }
     }

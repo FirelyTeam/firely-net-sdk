@@ -191,10 +191,10 @@ namespace Hl7.Fhir.ElementModel
         /// <returns>An <see cref="ITypedElement"/> that represents the data in the node, with type information
         /// added to it.</returns>
         /// <remarks>This extension method decorates the <c>ISourceNode</c> with a new instance of
-        /// an <see cref="TypedElementNode"/>, passing on the parameters of this extension method.</remarks>
+        /// an <see cref="TypedElementOnSourceNode"/>, passing on the parameters of this extension method.</remarks>
         /// <seealso cref="ITypedElement"/>
         public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedElementSettings settings = null)
-            => new TypedElementNode(node, type, provider, settings: settings);
+            => new TypedElementOnSourceNode(node, type, provider, settings: settings);
 
 
         /// <summary>

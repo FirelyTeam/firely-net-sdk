@@ -29,8 +29,8 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = parent;
             InstanceType = parent.TypeName;
-            var typeInfo = provider.Provide(parent.GetType());
-            Definition = Specification.ElementDefinitionSummary.ForRoot(rootName ?? parent.TypeName, typeInfo);
+            var structureDefSummary = provider.Provide(parent.GetType());
+            Definition = new TypeRootDefinitionSummary(rootName ?? parent.TypeName, structureDefSummary);
             Location = InstanceType;
             ShortPath = InstanceType;
             ArrayIndex = 0;
