@@ -171,7 +171,7 @@ namespace Hl7.FhirPath.Tests
         int numFailed = 0;
         int totalTests = 0;
 
-        [Fact,Trait("Area", "FhirPathFromSpec")]
+        [Fact(Skip = "Does not yet implement all N1 features"),Trait("Area", "FhirPathFromSpec")]
         public void TestPublishedTests()
         {
             var path = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath");
