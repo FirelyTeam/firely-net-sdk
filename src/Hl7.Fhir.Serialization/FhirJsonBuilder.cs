@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Serialization
                             .Where(c => !(c.first == null && c.second == null)).ToList();
 
                 // Don't add empty nodes to the parent
-                if (!children.Any()) return;
+                if (!children.Any()) continue;
 
                 var needsMainProperty = children.Any(c => c.first != null);
                 var needsShadowProperty = children.Any(c => c.second != null);
