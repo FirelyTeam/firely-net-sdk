@@ -83,22 +83,32 @@ namespace Hl7.Fhir.ElementModel
             return new SourceNode(name, null, children);
         }
 
-        public static SourceNode FromNode(ISourceNode node)
+        public static SourceNode FromNode(ISourceNode node, bool recursive=true, IEnumerable<Type> annotationsToCopy = null)
         {
-            return buildNode(node);
+            return buildNode(node,recursive,annotationsToCopy);
         }
 
-        private static SourceNode buildNode(ISourceNode node)
+        private static SourceNode buildNode(ISourceNode node, bool recursive, IEnumerable<Type> annotationsToCopy)
         {
             var me = new SourceNode(node.Name, node.Text);
-            me.AddRange(node.Children().Select(c => buildNode(c)));
+
+            if(annotationsToCopy != null)
+            {
+                doe();
+            }
+
+            if(recursive)
+                me.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy)));
+
             return me;
         }
 
-
         public ISourceNode Clone()
         {
-            var copy = new SourceNode(Name, Text, _children, ResourceType);
+            var copy = new SourceNode(Name, Text, _children, ResourceType)
+            {
+                Parent = Parent
+            };
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);

@@ -171,7 +171,22 @@ namespace Hl7.Fhir.ElementModel
             return instanceType;
         }
 
-        private IEnumerable<TypedElementOnSourceNode> enumerateElements(ElementDefinitionSummaryCache dis, ISourceNode parent, string name)
+        private bool tryGetBySuffixedName(Dictionary<string,IElementDefinitionSummary> dis, string name, out IElementDefinitionSummary info)
+        {
+            // Simplest case, one on one match between name and element name
+            if (dis.TryGetValue(name, out info))
+                return true;
+
+            // Now, check the choice elements for a match
+            // (this should actually be the longest match, but that's kind of expensive,
+            // so as long as we don't add stupid ambiguous choices to a single type, this will work.
+            info = dis.Where(kvp => name.StartsWith(kvp.Key) && kvp.Value.IsChoiceElement)
+                .Select(kvp => kvp.Value).FirstOrDefault();
+
+            return info != null;
+        }
+
+        private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string,IElementDefinitionSummary> dis, ISourceNode parent, string name)
         {
             IEnumerable<ISourceNode> childSet = null;
 
@@ -180,7 +195,7 @@ namespace Hl7.Fhir.ElementModel
                 childSet = parent.Children();
             else
             {
-                var hit = dis.TryGetBySuffixedName(name, out var info);
+                var hit = tryGetBySuffixedName(dis, name, out var info);
                 childSet = hit && info.IsChoiceElement ? 
                     parent.Children(name + "*") :
                     parent.Children(name);
@@ -191,12 +206,13 @@ namespace Hl7.Fhir.ElementModel
 
             foreach (var scan in childSet)
             {
-                var hit = dis.TryGetBySuffixedName(scan.Name, out var info);
+                var hit = tryGetBySuffixedName(dis,scan.Name, out var info);
                 string instanceType = info == null ? null :
                     deriveInstanceType(scan, info);
 
-                // If we found a type, but we don't know about the specific child, complain
-                if (dis != ElementDefinitionSummaryCache.Empty && info == null)
+                // If we have definitions for the children, but we didn't find definitions for this 
+                // child in the instance, complain
+                if (dis.Any() && info == null)
                 {
                     raiseTypeError($"Encountered unknown element '{scan.Name}'", this,
                             warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
@@ -223,9 +239,9 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<ITypedElement> Children(string name = null)
         {
-            var firstChildDef = down();
+            var childElementDefs = this.ChildDefinitions(Provider).ToDictionary(c => c.ElementName);
 
-            if (Definition != null && firstChildDef == ElementDefinitionSummaryCache.Empty)
+            if (Definition != null && !childElementDefs.Any())
             {
                 // No type information available for the type representing the children....
 
@@ -238,25 +254,10 @@ namespace Hl7.Fhir.ElementModel
                 else
                     // Ok, pass through the untyped members, but since there is no type information, 
                     // don't bother to run the additional rules
-                    return enumerateElements(firstChildDef, Source, name);
+                    return enumerateElements(childElementDefs, Source, name);
             }
             else
-                return runAdditionalRules(enumerateElements(firstChildDef, Source, name));
-        }
-
-        private ElementDefinitionSummaryCache down()
-        {
-            if (InstanceType == null) return ElementDefinitionSummaryCache.Empty;
-
-            // If this is a backbone element, the child type is the nested complex type
-            if (Definition.Type[0] is IStructureDefinitionSummary be)
-                return ElementDefinitionSummaryCache.ForType(be);
-            else
-            {
-                var si = Provider.Provide(InstanceType);
-
-                return si == null ? ElementDefinitionSummaryCache.Empty : ElementDefinitionSummaryCache.ForType(si);
-            }
+                return runAdditionalRules(enumerateElements(childElementDefs, Source, name));
         }
 
         private IEnumerable<ITypedElement> runAdditionalRules(IEnumerable<ITypedElement> children)

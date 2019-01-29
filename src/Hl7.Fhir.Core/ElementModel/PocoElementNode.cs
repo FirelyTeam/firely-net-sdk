@@ -55,13 +55,6 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
-        private IStructureDefinitionSummary down() =>
-            // If this is a backbone element, the child type is the nested complex type
-            Definition.Type[0] is IStructureDefinitionSummary be ? 
-                    be : 
-                    Provider.Provide(InstanceType);
-
-
         public IEnumerable<ITypedElement> Children(string name)
         {
             if (!(Current is Base parentBase)) yield break;
@@ -70,13 +63,13 @@ namespace Hl7.Fhir.ElementModel
 
             string oldElementName = null;
             int arrayIndex = 0;
-            var childElementDefinitions = down().GetElements();
+            var childElementDefinitions = this.ChildDefinitions(Provider).ToDictionary(c => c.ElementName);
 
             foreach (var child in children)
             {
                 if (name == null || child.ElementName == name)
                 {
-                    var mySummary = childElementDefinitions.Single(c => c.ElementName == child.ElementName);
+                    var mySummary = childElementDefinitions[child.ElementName];
 
                     if (!mySummary.IsCollection || oldElementName != child.ElementName)
                         arrayIndex = 0;

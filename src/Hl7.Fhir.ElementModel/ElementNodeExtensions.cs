@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel.Adapters;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -82,5 +83,30 @@ namespace Hl7.Fhir.ElementModel
         public static IElementNavigator ToElementNavigator(this ITypedElement node) => new TypedElementToElementNavAdapter(node);
 
         public static ISourceNode ToSourceNode(this ITypedElement node) => new TypedElementToSourceNodeAdapter(node);
+
+        public static IReadOnlyCollection<IElementDefinitionSummary> ChildDefinitions(this ITypedElement me,
+            IStructureDefinitionSummaryProvider provider)
+        {
+            if (me.Definition != null)
+            {
+                // If this is a backbone element, the child type is the nested complex type
+                if (me.Definition.Type[0] is IStructureDefinitionSummary be)
+                    return be.GetElements();
+                else
+                {
+                    if (me.InstanceType != null)
+                    {
+                        var si = provider.Provide(me.InstanceType);
+                        if (si != null) return si.GetElements();
+                    }
+                }
+
+            }
+
+            // Note: fall-through in all failure cases - return empty collection
+            return new List<IElementDefinitionSummary>();
+        }
+
+
     }
 }
