@@ -2,11 +2,10 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>beta1</VersionSuffix>
+    <VersionPrefix>1.1.1</VersionPrefix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
-    <Copyright>Copyright 2018 Firely.  Contains materials (C) HL7 International</Copyright>
+    <Copyright>Copyright 2019 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
