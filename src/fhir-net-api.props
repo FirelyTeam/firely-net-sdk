@@ -5,8 +5,8 @@
     <VersionPrefix>1.2.0</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
-    <Company>Firely (http://fire.ly)</Company>
-    <Copyright>Copyright 2017 Firely.  Contains materials (C) HL7 International</Copyright>
+    <Company>Firely (https://fire.ly)</Company>
+    <Copyright>Copyright 2019 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
