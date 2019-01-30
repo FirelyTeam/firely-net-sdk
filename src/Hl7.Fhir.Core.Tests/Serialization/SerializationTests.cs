@@ -733,5 +733,24 @@ namespace Hl7.Fhir.Tests.Serialization
             json2 = new FhirJsonSerializer().SerializeToString(patient);
             Assert.AreEqual(json, json2, "5");
         }
+
+        [TestMethod]
+        public void SerializerHandlesEmptyChildObjects()
+        {
+            var fhirJsonParser = new FhirJsonParser();
+
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var poco = fhirJsonParser.Parse<Patient>(json);
+
+            Assert.AreEqual(1, poco.Name.Count);
+
+            poco.Meta = new Meta();
+
+            var reserialized = poco.ToJson();
+
+            var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
+
+            Assert.AreEqual(1, newPoco.Name.Count);
+        }
     }
 }
