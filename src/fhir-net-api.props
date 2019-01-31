@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
-    <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
+    <PackageReleaseNotes>See http://docs.simplifier.net/fhirnetapi/releasenotes.html</PackageReleaseNotes>
     <PackageLicenseUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/develop/LICENSE</PackageLicenseUrl>
     <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
