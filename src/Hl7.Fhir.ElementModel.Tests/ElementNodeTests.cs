@@ -22,7 +22,8 @@ namespace Hl7.FhirPath.Tests
 {
     public class ElementNodeTests
     {
-        SourceNode patient;
+        readonly SourceNode patient;
+        readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
         public ITypedElement getXmlNode(string xml) => 
             FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
@@ -30,7 +31,7 @@ namespace Hl7.FhirPath.Tests
         public ElementNodeTests()
         {
             var annotatedNode = SourceNode.Valued("id", "myId1");
-            (annotatedNode as IAnnotatable).AddAnnotation("a string annotation");
+            annotatedNode.AddAnnotation("a string annotation");
 
             patient = SourceNode.Node("Patient", 
                 SourceNode.Resource("contained", "Observation", SourceNode.Valued("valueBoolean", "true")),
@@ -41,6 +42,15 @@ namespace Hl7.FhirPath.Tests
                        SourceNode.Valued("value", "4")),
                    SourceNode.Node("extension",
                        SourceNode.Valued("value", "world!"))));
+        }
+
+        [Fact]
+        public void ClonesOk()
+        {
+            var patientClone = patient.Clone();
+
+            throw new NotImplementedException();
+            // Implement Equals() and compare
         }
 
         [Fact]
@@ -130,7 +140,7 @@ namespace Hl7.FhirPath.Tests
         {
             ISourceNode firstIdNode = patient[1][0];
             Assert.Equal("a string annotation", firstIdNode.Annotation<string>());
-            Assert.Equal("a string annotation", patient["active"]["id"].First().Annotation<string>());
+            Assert.Equal("a string annotation", (patient["active"]["id"].First() as IAnnotated).Annotation<string>());
         }
 
         // Test clone()
@@ -144,18 +154,46 @@ namespace Hl7.FhirPath.Tests
             Assert.True(nav.IsEqualTo(nodes).Success);
         }
 
+        [Fact]
+        public void FromNodeClonesCorrectly()
+        {
+            var child1 = SourceNode.Valued("child1", "a value");
+            child1.AddAnnotation("The first annotation");
+
+            var root = SourceNode.Node("TestRoot", child1);
+            root.ResourceType = "TestR";
+            var annotationTypes = new[] { typeof(string) };
+            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy:annotationTypes);
+
+            Assert.False(copiedRoot.Children().Any());
+            Assert.Equal(root.Name, copiedRoot.Name);
+            Assert.Equal(root.Location, copiedRoot.Location);
+            Assert.Equal(root.Text, copiedRoot.Text);
+            Assert.Equal(root.ResourceType, copiedRoot.ResourceType);
+            Assert.Null((root as IAnnotated).Annotation<string>());
+
+            copiedRoot = SourceNode.FromNode(root, recursive: true, annotationsToCopy: annotationTypes);
+            Assert.True(copiedRoot.Children().Any());
+            Assert.Null((root as IAnnotated).Annotation<string>());
+
+            var copiedChild = copiedRoot.Children().Single();
+            Assert.False(copiedChild.Children().Any());
+            Assert.Equal(child1.Name, copiedChild.Name);
+            Assert.Equal(child1.Location, copiedChild.Location);
+            Assert.Equal(child1.Text, copiedChild.Text);
+            Assert.Equal("The first annotation",(copiedChild as IAnnotated).Annotation<string>());
+        }
 
         //[Fact]
         //public void CanUseBackboneTypeForEntry()
         //{
-        //    var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
         //    var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
         //    var bundle = FhirJsonNode.Parse(bundleJson);
-        //    var typedBundle = bundle.ToTypedElement(_sdsProvider, "Bundle");
+        //    var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
         //    //Type of entry is BackboneElement, but you can't set that, see below.
         //    Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
-            
+
         //    var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
 
         //    //What DOES work:
@@ -165,7 +203,7 @@ namespace Hl7.FhirPath.Tests
         //    //But this leads to a System.ArgumentException: 
         //    //Type BackboneElement is not a mappable Fhir datatype or resource
         //    //Parameter name: type
-        //    typedEntry = entry.ToTypedElement(_sdsProvider, "BackboneElement");
+        //    typedEntry = entry.ToTypedElement(provider, "BackboneElement");
         //    Assert.Equal("BackboneElement", typedEntry.InstanceType);
         //    // Expected to be able to use BackboneElement as type for the entry SourceNode;
         //}
@@ -173,10 +211,9 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CannotUseAbstractType()
         {
-            var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
             var bundle = FhirJsonNode.Parse(bundleJson);
-            var typedBundle = bundle.ToTypedElement(_sdsProvider, "Bundle");
+            var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
             //Type of entry is BackboneElement, but you can't set that, see below.
             Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
@@ -186,12 +223,35 @@ namespace Hl7.FhirPath.Tests
             try
             {
                 var typedEntry =
-                    entry.ToTypedElement(_sdsProvider, "Element");
+                    entry.ToTypedElement(provider, "Element");
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
             }
             catch (ArgumentException)
             {
             }
+        }
+
+        [Fact]
+        public void CanCreateChildren()
+        {
+            var patientRoot = ElementNode.Root(provider, "Patient");
+
+            var contact = patientRoot.NewChild(provider, "contact")
+                    .Add(provider,"gender", "male");
+
+            patientRoot
+                .Add(provider, "active", true)
+                .Add(contact)
+                .Add(provider, "identifier");
+
+            patientRoot["identifier"].First()
+                .Add(provider, "system", "http://nu.nl")
+                .Add(provider, "value", "1234567");
+
+            // you really want to be able to either Add("contained") and then add subs
+            // or have an independently pre-created node and then add that. 
+            var containedOrganization = patientRoot.Add();
+                
         }
     }
 }

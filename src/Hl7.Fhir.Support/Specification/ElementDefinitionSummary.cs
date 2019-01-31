@@ -12,12 +12,11 @@ namespace Hl7.Fhir.Specification
 {
     public class TypeRootDefinitionSummary : IElementDefinitionSummary
     {
-        public TypeRootDefinitionSummary(string elementName,  IStructureDefinitionSummary rootType)
+        public TypeRootDefinitionSummary(IStructureDefinitionSummary rootType, string elementName=null)
         {
-            ElementName = elementName ?? throw new ArgumentNullException(nameof(elementName));
+            if (rootType == null) throw new ArgumentNullException(nameof(rootType));
 
-            if(rootType == null) throw new ArgumentNullException(nameof(rootType));
-
+            ElementName = elementName ?? rootType.TypeName;
             IsResource = rootType.IsResource;
             Type = new[] { rootType };
         }

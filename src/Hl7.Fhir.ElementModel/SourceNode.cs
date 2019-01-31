@@ -47,55 +47,53 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private SourceNode(string name, string text,  
-            IEnumerable<SourceNode> children=null, string resourceType=null)
+        private SourceNode(string name, string text, string resourceType=null)
         {
             Name = name;
             Text = text;
             ResourceType = resourceType;
-
-            if (children != null) AddRange(children);
         }
 
-        public void Add(SourceNode child)
-        {
-            AddRange(new[] { child });
-        }
+        public SourceNode Add(SourceNode child) => AddRange(new[] { child });
 
-        public void AddRange(IEnumerable<SourceNode> children)
+        public SourceNode AddRange(IEnumerable<SourceNode> children)
         {
             _children.AddRange(children);
             foreach (var c in _children) c.Parent = this;
+
+            return this;
         }
 
-        public static SourceNode Valued(string name, string value, params SourceNode[] children)
-        {
-            return new SourceNode(name, value, children);
-        }
+        public static SourceNode Valued(string name, string value, params SourceNode[] children) 
+            => new SourceNode(name, value).AddRange(children);
 
-        public static SourceNode Resource(string name, string type, params SourceNode[] children)
-        {
-            return new SourceNode(name, null, children, type);
-        }
+        public static SourceNode Resource(string name, string type, params SourceNode[] children) 
+            => new SourceNode(name, null, type).AddRange(children);
 
-        public static SourceNode Node(string name, params SourceNode[] children)
-        {
-            return new SourceNode(name, null, children);
-        }
+        public static SourceNode Node(string name, params SourceNode[] children) 
+            => new SourceNode(name, null).AddRange(children);
 
-        public static SourceNode FromNode(ISourceNode node, bool recursive=true, IEnumerable<Type> annotationsToCopy = null)
-        {
-            return buildNode(node,recursive,annotationsToCopy);
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="recursive"></param>
+        /// <param name="annotationsToCopy">Maybe: if null - copy all, if empty, copy none, else specifcy which</param>
+        /// <returns></returns>
+        public static SourceNode FromNode(ISourceNode node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null) 
+            => buildNode(node, recursive, annotationsToCopy);
 
         private static SourceNode buildNode(ISourceNode node, bool recursive, IEnumerable<Type> annotationsToCopy)
         {
             var me = new SourceNode(node.Name, node.Text);
 
-            if(annotationsToCopy != null)
-            {
-                doe();
-            }
+            var rts = node.Annotation<IResourceTypeSupplier>();
+            if (rts != null)
+                me.ResourceType = rts.ResourceType;
+
+            foreach (var t in annotationsToCopy ?? Enumerable.Empty<Type>())
+                foreach (var ann in node.Annotations(t))
+                        me.AddAnnotation(ann);
 
             if(recursive)
                 me.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy)));
@@ -103,12 +101,14 @@ namespace Hl7.Fhir.ElementModel
             return me;
         }
 
-        public ISourceNode Clone()
+        public SourceNode Clone()
         {
-            var copy = new SourceNode(Name, Text, _children, ResourceType)
+            var copy = new SourceNode(Name, Text, ResourceType)
             {
                 Parent = Parent
             };
+
+            copy.AddRange(Children().Cast<SourceNode>().Select(c => c.Clone()));
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.ElementModel
     }
 
 
-    public class ChildNodes : IEnumerable<ISourceNode>
+    public class ChildNodes : IEnumerable<SourceNode>
     {
         private IList<SourceNode> _wrapped;
 
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.ElementModel
 
         public void CopyTo(SourceNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
 
-        public IEnumerator<ISourceNode> GetEnumerator() => _wrapped.GetEnumerator();
+        public IEnumerator<SourceNode> GetEnumerator() => _wrapped.GetEnumerator();
 
         public int IndexOf(SourceNode item) => _wrapped.IndexOf(item);
 

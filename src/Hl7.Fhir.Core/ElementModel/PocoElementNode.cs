@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel
             Current = parent;
             InstanceType = parent.TypeName;
             var structureDefSummary = provider.Provide(parent.GetType());
-            Definition = new TypeRootDefinitionSummary(rootName ?? parent.TypeName, structureDefSummary);
+            Definition = new TypeRootDefinitionSummary(structureDefSummary, rootName ?? parent.TypeName);
             Location = InstanceType;
             ShortPath = InstanceType;
             ArrayIndex = 0;

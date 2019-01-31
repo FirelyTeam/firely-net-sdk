@@ -6,12 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
-using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -26,71 +26,82 @@ namespace Hl7.Fhir.ElementModel
 
         public string Name { get; set; }
 
-        private ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition,
-             IEnumerable<ElementNode> children = null)
+        internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
             Name = name;
             InstanceType = instanceType;
             Value = value;
             Definition = definition;
-
-            if (children != null) AddRange(children);
         }
 
-        public void Add(ElementNode child)
+        public ElementNode Add(ElementNode child) => AddRange(new[] { child });
+
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value, string instanceType = null)
         {
-            AddRange(new[] { child });
+            // TODO: cache the definitions somehow - this is very slow
+            // we need an internal method that does NewChild which caches the definitions of the children
+            // the extension method NewChild should call that when it detects the implementation is ElementNode
+            // we should call that internal method here too
+            var child = this.NewChild(provider, name, value, instanceType);
+            Add(child);
+
+            return this;
         }
 
-        public void AddRange(IEnumerable<ElementNode> children)
-        {
-            throw new NotImplementedException();
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, string instanceType = null)
+             => Add(provider, name, null, instanceType);
 
-            //_children.AddRange(children);
-            //foreach (var c in _children) c.Parent = this;
+        public ElementNode AddRange(IEnumerable<ElementNode> children)
+        {
+            // Not so fast....if we add a child, we better overwrite it's definition with what
+            // we think it should be - this way you can safely first create a node representing
+            // an independently created root for  a resource of datatype, and then add it to the tree.
+            _children.AddRange(children);
+            foreach (var c in _children) c.Parent = this;
+
+            return this;
         }
 
-        public static ElementNode Valued(string name, string value, params ElementNode[] children)
+        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null)
         {
-            throw new NotImplementedException();
-            //            return new ElementNode(name, value, children);
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+
+
+            var sd = provider.Provide(type);
+            IElementDefinitionSummary definition = null;
+
+            // Should we throw if type is not found?
+            if (sd != null)
+                definition = new TypeRootDefinitionSummary(sd);
+
+            return new ElementNode(name ?? type, null, type, definition);
         }
 
-        public static ElementNode Valued(string name, string value, string instanceType, params ElementNode[] children)
+        public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
+            => buildNode(node, recursive, annotationsToCopy);
+
+        private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy)
         {
-            throw new NotImplementedException();
-            //            return new ElementNode(name, value, children);
-        }
+            var me = new ElementNode(node.Name, node.Value, node.InstanceType, node.Definition);
 
-        public static ElementNode Node(string name, params SourceNode[] children)
-        {
-            throw new NotImplementedException();
-            //            return new SourceNode(name, null, children);
-        }
+            foreach (var t in annotationsToCopy ?? Enumerable.Empty<Type>())
+                foreach (var ann in node.Annotations(t))
+                    me.AddAnnotation(ann);
 
-        public static ElementNode Node(string name, string instanceType, params SourceNode[] children)
-        {
-            throw new NotImplementedException();
-            //            return new SourceNode(name, null, children);
-        }
+            if (recursive)
+                me.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy)));
 
-        public static ElementNode FromNode(ITypedElement node, bool justRoot = false) => buildNode(node, justRoot);
-        // base this in TypedElementOnSourceNode.NewChild("name",....) which creates a new typed child,
-        // probably making now-private code that connects the source+element world re-useable.
-
-        public static ElementNode FromElement(ITypedElement node, bool justRoot = false) => buildNode(node, justRoot);
-
-        private static ElementNode buildNode(ITypedElement node, bool justRoot)
-        {
-            throw new NotImplementedException();
-            //var me = new SourceNode(node.Name, node.Text);
-            //me.AddRange(node.Children().Select(c => buildNode(c)));
-            //return me;
+            return me;
         }
 
         public ElementNode Clone()
         {
-            var copy = new ElementNode(Name, Value, InstanceType, Definition, _children);
+            var copy = new ElementNode(Name, Value, InstanceType, Definition)
+            {
+                Parent = Parent,
+                _children = _children
+            };
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);
@@ -109,13 +120,13 @@ namespace Hl7.Fhir.ElementModel
 
         public string Location => throw new NotImplementedException();
 
-        public ChildElements this[string name] => new ChildElements(_children.Where(c=>c.Name == name).ToList());
+        public ChildElements this[string name] => new ChildElements(_children.Where(c => c.Name == name).ToList());
 
         public ElementNode this[int index] => _children[index];
 
         public IEnumerable<object> Annotations(Type type)
         {
-            return (type == typeof(ElementNode) || type == typeof(ITypedElement) )
+            return (type == typeof(ElementNode) || type == typeof(ITypedElement))
                 ? (new[] { this })
                 : annotations.OfType(type);
         }
@@ -126,7 +137,7 @@ namespace Hl7.Fhir.ElementModel
     }
 
 
-    public class ChildElements : IEnumerable<ITypedElement>
+    public class ChildElements : IEnumerable<ElementNode>
     {
         private IList<ElementNode> _wrapped;
 
@@ -143,11 +154,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool Contains(ElementNode item) => _wrapped.Contains(item);
 
-        public void CopyTo(ElementNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
-
-        public IEnumerator<ITypedElement> GetEnumerator() => _wrapped.GetEnumerator();
-
-        public int IndexOf(ElementNode item) => _wrapped.IndexOf(item);
+        public IEnumerator<ElementNode> GetEnumerator() => _wrapped.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
     }
