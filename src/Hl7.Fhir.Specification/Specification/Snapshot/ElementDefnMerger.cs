@@ -140,6 +140,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
+                // [WMR 20190131] TODO #295
                 snap.IsModifierElement = mergePrimitiveElement(snap.IsModifierElement, diff.IsModifierElement);
                 // [WMR 20181211] R4: Also merge ElementDefinition.IsModifierReason
                 snap.IsModifierReasonElement = mergePrimitiveElement(snap.IsModifierReasonElement, diff.IsModifierReasonElement);
@@ -197,16 +198,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                         result = new List<ElementDefinition.TypeRefComponent>(diff.Count);
                         foreach (var diffType in diff)
                         {
+                            // R4: ElementDefinition.type.code.value may be empty for certain elements:
+                            // - [Primitive].value
+                            // - Extension.url
+                            // => Match diff type without code to base type without code
+
                             // Find matching type in snap
                             var snapType = snap.FirstOrDefault(tr => matchTypeCodes(tr, diffType));
-                            if (snapType is null && ModelInfo.IsPrimitive(diffType.Code))
-                            {
-                                // Primitive type profiles: ".value" ElementDefinition does not define a code (compiler magic)
-                                // However primitive elements in derived profiles _will_ define primitive type code
-                                // e.g.  HumanName.text : Code="string"
-                                // match string.value   : Code=<null>
-                                snapType = snap.FirstOrDefault(matchNullTypeCode);
-                            }
+
                             // Merge diff type onto snap type
                             var mergedType = mergeElementType(snapType, diffType);
                             onConstraint(mergedType);
@@ -236,12 +235,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         result = (ElementDefinition.TypeRefComponent)snap.DeepCopy();
 
+                        // TODO: Move logic to MergeTo method on partial class TypeRefComponent
+
                         // TODO: Copy diff annotations...?
                         if (diff.ElementId != null) { result.ElementId = diff.ElementId; }
                         result.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         result.CodeElement = mergePrimitiveElement(snap.CodeElement, diff.CodeElement);
-                        result.ProfileElement = mergePrimitiveCollection(snap.ProfileElement, diff.ProfileElement, matchCanonicals);
-                        result.TargetProfileElement = mergePrimitiveCollection(snap.TargetProfileElement, diff.TargetProfileElement, matchCanonicals);
+                        result.ProfileElement = mergeCanonicals(snap.ProfileElement, diff.ProfileElement);
+                        result.TargetProfileElement = mergeCanonicals(snap.TargetProfileElement, diff.TargetProfileElement);
 
                         // diff aggregation flags replace/overwrite flags in snap
                         //result.AggregationElement = mergePrimitiveCollection(snap.AggregationElement, diff.AggregationElement, matchAggregationModes);
@@ -302,6 +303,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
+            // Merge list of canonical urls (e.g. profiles) in diff with snap
+            List<Canonical> mergeCanonicals(List<Canonical> snap, List<Canonical> diff)
+                => mergeCollection(snap, diff, matchCanonicals);
+
             // Merge differential extensions with snapshot extensions
             // Match extensions on url
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
@@ -322,7 +327,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         result = new List<T>(snap.DeepCopy());
-#if true
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
@@ -343,18 +347,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             onConstraint(mergedItem);
                         }
-#else
-                        // Just add new elements to the result, never replace existing ones
-                        foreach (var diffElem in diff)
-                        {
-                            if (!result.Any(e => matchItem(e, diffElem)))
-                            {
-                                var newElement = (T)diffElem.DeepCopy();
-                                onConstraint(newElement);
-                                result.Add(newElement);
-                            }
-                        }
-#endif
                     }
                 }
                 return result;
@@ -462,7 +454,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     // Newly introduced named slices NEVER inherit element id
                     // Must always regenerate new unique identifier for named slices
-                    else if (diff.SliceName != snap.SliceName)
+                    else if (!IsEqualName(diff.SliceName, snap.SliceName))
                     {
                         // Regenerate; don't inherit from snap
                         return null;
@@ -485,29 +477,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Compare codes, if specified
                 if (c.CodeElement != null || d.CodeElement != null)
                 {
-                    return c.System == d.System
-                        && c.Version == d.Version
-                        && c.Code == d.Code;
+                    return IsEqualString(c.System, d.System)
+                        && IsEqualString(c.Version, d.Version)
+                        && IsEqualString(c.Code, d.Code);
                 }
                 // Codes are empty or missing; compare display values instead
-                return c.Display == d.Display;
+                return IsEqualString(c.Display, d.Display);
             }
 
             //static bool matchExactly<T>(T x, T y) where T : class, IDeepComparable => !(x is null) && x.IsExactly(y);
             static bool matchExactly(IDeepComparable x, IDeepComparable y) => !(x is null) && x.IsExactly(y);
 
             //static bool matchExtensions<T>(T x, T y) where T : Extension => !(x is null) && !(y is null) && IsEqualString(x.Url, y.Url);
-            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && IsEqualString(x.Url, y.Url);
+            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && IsEqualUri(x.Url, y.Url);
 
-            static bool matchStringValues<T>(T x, T y) where T : Primitive<string>, IStringValue
-                => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
+            static bool matchTypeCodes(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
+                => !(x is null) && !(y is null) && IsEqualType(x.Code, y.Code);
 
             static bool matchCanonicals(Canonical x, Canonical y) => matchStringValues(x, y);
 
-            static bool matchTypeCodes(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
-                => !(x is null) && !(y is null) && IsEqualString(x.Code, y.Code);
-
-            static bool matchNullTypeCode(ElementDefinition.TypeRefComponent t) => t?.Code is null;
+            static bool matchStringValues<T>(T x, T y) where T : Primitive<string>, IStringValue
+                => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
 
             static bool IsEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);
         }
