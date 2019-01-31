@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -1650,7 +1650,7 @@ namespace Hl7.Fhir.Specification.Tests
                     // Verify that base element annotations reference the associated child element in Core Identifier profile
                     // [WMR 20170501] OBSOLETE
                     // Assert.AreEqual("Patient." + baseElem.Path.Uncapitalize(), elem.Path);
-                    Debug.WriteLine($"*** elem.Path = '{elem.Path}' baseElem.Path = '{baseElem.Path}' ");
+                    //Debug.WriteLine($"*** elem.Path = '{elem.Path}' baseElem.Path = '{baseElem.Path}' ");
                 }
 
             }
@@ -2202,10 +2202,17 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
         }
 
+        // [WMR 20190130] DEBUGGING
+        [TestMethod]
+        public void TestExpandQuestionnaireResource()
+        {
+            // TODO: Fix empty base for Questionnaire.item.item
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+        }
+
         [TestMethod]
         public void TestExpandCoreArtifacts()
         {
-
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
@@ -2284,7 +2291,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Core artifact snapshots are incorrect, e.g. url snapshot is missing extension element
-            //Assert.IsTrue(result);
+            Assert.IsTrue(result);
 
             return result;
         }
@@ -2409,7 +2416,10 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (rootElemName != "Element")
                     {
-                        verified &= verifyBasePath(expandedElems[0], originalElems[0], "Element");
+                        // [WMR 20190130] STU3
+                        //verified &= verifyBasePath(expandedElems[0], originalElems[0], "Element");
+                        // [WMR 20190130] R4
+                        verified &= verifyBasePath(expandedElems[0], originalElems[0], rootElemName);
                     }
 
                     if (rootElemName != "Element" && expandedElems.Count > 2)
@@ -2426,47 +2436,58 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
                 {
-                    if (rootElemName != "Resource")
-                    {
-                        verified &= verifyBasePath(expandedElems[0], originalElems[0], "Resource");
-                    }
+                    // [WMR 20190131] Fixed
+                    var baseDef = expanded.BaseDefinition;
+                    bool isDerivedFromResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
+                    bool isDerivedFromDomainResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
+                    bool isDomainResource = expanded.Name == "DomainResource";
 
-                    if (rootElemName != "Resource" && expandedElems.Count > 4)
+                    // [WMR 20190130] STU3
+                    //if (rootElemName != "Resource")
+                    //{
+                    //    verified &= verifyBasePath(expandedElems[0], originalElems[0], "Resource");
+                    //}
+
+                    // [WMR 20190130] R4
+                    // Root element base component always refers to self (.Base.Path = .Path)
+                    verified &= verifyBasePath(expandedElems[0], originalElems[0], rootElemName);
+
+                    if (isDerivedFromResource || isDerivedFromDomainResource && (expandedElems.Count > 4))
                     {
                         verified &= verifyBasePath(expandedElems[1], originalElems[1], "Resource.id");
                         verified &= verifyBasePath(expandedElems[2], originalElems[2], "Resource.meta");
                         verified &= verifyBasePath(expandedElems[3], originalElems[3], "Resource.implicitRules");
                         verified &= verifyBasePath(expandedElems[4], originalElems[4], "Resource.language");
                     }
-                    if (rootElemName != "DomainResource" && expandedElems.Count > 8)
+                    var startIdx = 5;
+                    if ((isDomainResource || isDerivedFromDomainResource) && (expandedElems.Count > 8))
                     {
                         verified &= verifyBasePath(expandedElems[5], originalElems[5], "DomainResource.text");
                         verified &= verifyBasePath(expandedElems[6], originalElems[6], "DomainResource.contained");
                         verified &= verifyBasePath(expandedElems[7], originalElems[7], "DomainResource.extension");
                         verified &= verifyBasePath(expandedElems[8], originalElems[8], "DomainResource.modifierExtension");
+                        startIdx = 9;
                     }
-                    for (int i = 9; i < expandedElems.Count; i++)
+                    if (!isDomainResource)
                     {
-                        var path = expandedElems[i].Path;
-                        if (path.EndsWith(".id"))
+                        for (int i = startIdx; i < expandedElems.Count; i++)
                         {
-                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.id");
-                        }
-                        else if (path.EndsWith(".extension"))
-                        {
-                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.extension");
-                        }
-                        else if (path.EndsWith(".modifierExtension"))
-                        {
-                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "BackboneElement.modifierExtension");
-                        }
-                        else
-                        {
-                            if (!isConstraint)
+                            var path = expandedElems[i].Path;
+                            if (path.EndsWith(".id"))
                             {
-                                // New resource element
-                                verified &= verifyBasePath(expandedElems[i], originalElems[i], isConstraint ? expandedElems[i].Path : null);
-                                verified &= verifyBasePath(originalElems[i], originalElems[i], isConstraint ? originalElems[i].Path : null);
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.id");
+                            }
+                            else if (path.EndsWith(".extension"))
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.extension");
+                            }
+                            else if (path.EndsWith(".modifierExtension"))
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "BackboneElement.modifierExtension");
+                            }
+                            else
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], expandedElems[i].Path);
                             }
                         }
                     }
@@ -2476,8 +2497,8 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     for (int i = 0; i < expandedElems.Count; i++)
                     {
-                        if (originalElems[i].Base == null) { verified = false; Debug.WriteLine("ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(originalElems[i].Path)); }
-                        if (expandedElems[i].Base == null) { verified = false; Debug.WriteLine("EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(expandedElems[i].Path)); }
+                        if (originalElems[i].Base == null) { verified = false; Debug.WriteLine($"ORIGINAL: Path = {originalElems[i].Path}  => BASE IS MISSING"); }
+                        if (expandedElems[i].Base == null) { verified = false; Debug.WriteLine($"EXPANDED: Path = {expandedElems[i].Path}  => BASE IS MISSING"); }
                     }
                 }
 
@@ -2489,34 +2510,37 @@ namespace Hl7.Fhir.Specification.Tests
         static bool verifyBasePath(ElementDefinition elem, ElementDefinition orgElem, string path = "")
         {
             bool result = false;
+
+            Debug.WriteLineIf(elem.Base == null, $"EXPANDED: Path = {elem.Path}  => BASE IS MISSING");
+            Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {orgElem.Path}  => BASE IS MISSING");
+
+            // R4: ElementDefinition.Base for newly introduced elements refers to self (.Base.Path == .Path)
             if (!string.IsNullOrEmpty(path))
             {
                 // Assert.IsNotNull(elem.Base);
                 // Assert.AreEqual(path, elem.Base.Path);
 
-                // Assert.IsNotNull(baseElem.Base);
-                // Assert.AreEqual(path, baseElem.Base.Path);
+                // Assert.IsNotNull(orgElem.Base);
+                // Assert.AreEqual(path, orgElem.Base.Path);
 
                 result = elem.Base != null && path == elem.Base.Path;
 
-                Debug.WriteLineIf(elem.Base == null, "EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(elem.Path));
-                Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(orgElem.Path));
-
-                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, $"EXPANDED: Path = {elem.Path} Base = {elem.Base?.Path} != {path} => INVALID BASE PATH");
+                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, $"ORIGINAL: Path = {orgElem.Path} Base = {orgElem.Base?.Path} != {path} => INVALID BASE PATH");
+                Debug.Assert(!(orgElem.Base != null && path != orgElem.Base.Path));
             }
-            else
-            {
-                // New resource element
-                // Assert.IsNull(elem.Base);
-                // Assert.IsNull(baseElem.Base);
+            // STU3: ElementDefinition.Base for newly introduced elements is empty
+            //else
+            //{
+            //    // New resource element
+            //    result = elem.Base == null;
+            //    Debug.WriteLineIf(elem.Base != null, $"EXPANDED: Path = {elem.Path} Base = {elem.Base?.Path} != '' => BASE SHOULD BE NULL");
+            //    Debug.WriteLineIf(orgElem.Base != null, $"ORIGINAL: Path = {orgElem.Path} Base = {orgElem.Base?.Path} != '' => BASE SHOULD BE NULL");
 
-                result = elem.Base == null;
+            //}
 
-                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+            Assert.IsTrue(result);
 
-            }
             return result;
         }
 
@@ -6779,5 +6803,94 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify profile inherits constraint from external targetProfile on Reference
             Assert.AreEqual(1, nav.Current.Min);
         }
+
+        // Issue #827
+        [TestMethod]
+        public void TestPrimitiveSnapshot()
+        {
+            // Expand core string profile
+            // Differential introduces three extensions on string.value:
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type = "string"
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type = "xsd:string"
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type = "xsd:string"
+            // Verify that these extensions are included in the snapshot
+
+            var src = _testResolver;
+            var generator = _generator = new SnapshotGenerator(src, _settings);
+            var stringProfile = src.FindStructureDefinitionForCoreType(FHIRAllTypes.String);
+            Assert.IsNotNull(stringProfile);
+            generateSnapshotAndCompare(stringProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsNotNull(nav);
+            Assert.IsTrue(nav.JumpToFirst("string.value"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+
+            // Verify default regular expression
+            Assert.IsNotNull(elem.Type[0].Extension);
+            Assert.AreEqual(1, elem.Type[0].Extension.Count);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
+            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.IsNotNull(extValue);
+            Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
+
+            // Verify json/xml/rdf type extensions
+            Assert.IsNull(elem.Type[0].Code); // Primitive value types are compiler magic...
+            Assert.IsNotNull(elem.Type[0].CodeElement);
+            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
+            // Expection extensions for json-type, xml-type & rdf-type
+            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+        }
+
+        // Issue #827
+        [TestMethod]
+        public void TestExtensionsOnPrimitiveValue()
+        {
+            // #827: Verify that derived profiles inherit extensions on value element of primitive types
+
+            var src = new Fhir.Validation.TestProfileArtifactSource();
+            var testResolver = new CachedResolver(
+                new MultiResolver(
+                    new ZipSource("specification.zip"),
+                    src));
+            var generator = _generator = new SnapshotGenerator(testResolver, _settings);
+
+            var obs = src.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+            Assert.IsNotNull(obs);
+            generateSnapshotAndCompare(obs, out StructureDefinition expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsNotNull(nav);
+            Assert.IsTrue(nav.JumpToFirst("Organization.name.value"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            // [Primitive].value elements have no type code
+            Assert.IsNull(elem.Type[0].Code);
+
+            // Verify constraint on regular expression extension value
+            Assert.IsNotNull(elem.Type[0].Extension);
+            Assert.AreEqual(1, elem.Type[0].Extension.Count);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
+            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.IsNotNull(extValue);
+            Assert.AreEqual("[A-Z].*", extValue.Value); // Constrained
+
+            // Verify that primitive type extensions are included
+            Assert.IsNotNull(elem.Type[0].CodeElement);
+            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
+            // Expection extensions for json-type, xml-type & rdf-type
+            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+        }
+
+
     }
 }
