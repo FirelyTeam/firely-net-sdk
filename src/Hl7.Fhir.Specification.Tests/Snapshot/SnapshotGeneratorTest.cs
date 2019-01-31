@@ -6849,7 +6849,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem);
             Assert.IsNotNull(elem.Type);
             Assert.AreEqual(1, elem.Type.Count);
-            Assert.AreEqual("string", elem.Type[0].Code);
+            // [WMR 20190131] WRONG! in R4, primitive value elements have no type code
+            //Assert.AreEqual("string", elem.Type[0].Code);
+            Assert.IsNull(elem.Type[0].Code);
 
             // Verify constraint on regular expression extension value
             Assert.IsNotNull(elem.Type[0].Extension);
