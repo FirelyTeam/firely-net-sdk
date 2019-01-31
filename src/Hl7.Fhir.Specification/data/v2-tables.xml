@@ -87838,7 +87838,6 @@
           <display value="Wrist" />
         </concept>
         <concept>
-          <code value=" " />
           <display value="External Jugular" />
           <property>
             <code value="deprecated" />
