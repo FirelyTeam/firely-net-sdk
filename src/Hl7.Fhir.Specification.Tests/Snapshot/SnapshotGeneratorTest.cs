@@ -6847,7 +6847,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Issue #827
-        [TestMethod]
+        // Enable this test after merging pull request #841
+        [TestMethod, Ignore]
         public void TestExtensionsOnPrimitiveValue()
         {
             // #827: Verify that derived profiles inherit extensions on value element of primitive types
