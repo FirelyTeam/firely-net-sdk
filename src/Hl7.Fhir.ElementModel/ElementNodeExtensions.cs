@@ -76,8 +76,8 @@ namespace Hl7.Fhir.ElementModel
 
         public static IEnumerable<object> Annotations(this ITypedElement nav, Type type) =>
         nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
-        public static T Annotation<T>(this ITypedElement nav) where T : class =>
-            nav is IAnnotated ann ? ann.Annotation<T>() : null;
+        public static T Annotation<T>(this ITypedElement nav) =>
+            nav is IAnnotated ann ? ann.Annotation<T>() : default;
 
         [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
         public static IElementNavigator ToElementNavigator(this ITypedElement node) => new TypedElementToElementNavAdapter(node);

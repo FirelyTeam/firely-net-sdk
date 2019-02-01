@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -34,30 +35,47 @@ namespace Hl7.Fhir.ElementModel
             Definition = definition;
         }
 
-        public ElementNode Add(ElementNode child) => AddRange(new[] { child });
+        private IReadOnlyCollection<IElementDefinitionSummary> _childDefinitions = null;
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value, string instanceType = null)
+        private IReadOnlyCollection<IElementDefinitionSummary> getChildDefinitions(IStructureDefinitionSummaryProvider provider)
         {
-            // TODO: cache the definitions somehow - this is very slow
-            // we need an internal method that does NewChild which caches the definitions of the children
-            // the extension method NewChild should call that when it detects the implementation is ElementNode
-            // we should call that internal method here too
-            var child = this.NewChild(provider, name, value, instanceType);
-            Add(child);
+            LazyInitializer.EnsureInitialized(ref _childDefinitions, () => this.ChildDefinitions(provider));
+
+            return _childDefinitions;
+        }
+
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child)
+        {
+            if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set.");
+
+            child.Parent = this;
+
+            // If we add a child, we better overwrite it's definition with what
+            // we think it should be - this way you can safely first create a node representing
+            // an independently created root for a resource of datatype, and then add it to the tree.
+            var childDefs = getChildDefinitions(provider ?? throw Error.ArgumentNull(nameof(provider)));
+            var childDef = childDefs.Where(cd => cd.ElementName == child.Name).SingleOrDefault();
+
+            child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
+            
+            if(child.InstanceType == null)
+            {
+                if (child.Definition.IsResource || child.Definition.Type.Length > 1)
+                    throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
+
+                child.InstanceType = child.Definition.Type.Single().GetTypeName();
+            }
+            _children.Add(child);
 
             return this;
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, string instanceType = null)
-             => Add(provider, name, null, instanceType);
-
-        public ElementNode AddRange(IEnumerable<ElementNode> children)
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value=null, string instanceType = null)
         {
-            // Not so fast....if we add a child, we better overwrite it's definition with what
-            // we think it should be - this way you can safely first create a node representing
-            // an independently created root for  a resource of datatype, and then add it to the tree.
-            _children.AddRange(children);
-            foreach (var c in _children) c.Parent = this;
+            var child = new ElementNode(name, value, instanceType, null);
+
+            // Add() will supply the definition and the instanceType (if necessary)
+            Add(provider, child); 
 
             return this;
         }
@@ -66,7 +84,6 @@ namespace Hl7.Fhir.ElementModel
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (type == null) throw Error.ArgumentNull(nameof(type));
-
 
             var sd = provider.Provide(type);
             IElementDefinitionSummary definition = null;
@@ -79,20 +96,29 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
-            => buildNode(node, recursive, annotationsToCopy);
+            => buildNode(node, recursive, annotationsToCopy, null);
 
-        private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy)
+        private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
         {
-            var me = new ElementNode(node.Name, node.Value, node.InstanceType, node.Definition);
+            var me = new ElementNode(node.Name, node.Value, node.InstanceType, node.Definition)
+            {
+                Parent = parent
+            };
 
             foreach (var t in annotationsToCopy ?? Enumerable.Empty<Type>())
                 foreach (var ann in node.Annotations(t))
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy)));
+                me._children.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
+        }
+
+        private static ElementNode buildNode(ISourceNode node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
+        {
+            // call some new method on TypedElementOnSourceNode to do the initial conversion 
+            throw new NotImplementedException();
         }
 
         public ElementNode Clone()
@@ -118,7 +144,7 @@ namespace Hl7.Fhir.ElementModel
 
         public object Value { get; set; }
 
-        public string Location => throw new NotImplementedException();
+        public string Location => "dummy";
 
         public ChildElements this[string name] => new ChildElements(_children.Where(c => c.Name == name).ToList());
 
