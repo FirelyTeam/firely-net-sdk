@@ -30,7 +30,8 @@ namespace Hl7.Fhir
                 {
                     object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
-                        return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
+                        //return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
+                        return i.Annotation<IShortPathGenerator>()?.ShortPath ?? "?";
                     }).ToArray();
                     return FhirValueList.Create(bits);
                 }
@@ -99,7 +100,7 @@ namespace Hl7.Fhir
 
             // Now check navigation bits
             Assert.AreEqual("Patient.telecom[0].system",
-                (p.ToTypedElement().Select("Patient.telecom.where(system='phone').system").First() as PocoElementNode).ShortPath);
+                (p.ToTypedElement().Select("Patient.telecom.where(system='phone').system").First().Annotation<IShortPathGenerator>()?.ShortPath));
             var v4 = new PocoNavigator(p);
             Assert.AreEqual("Patient.telecom[0].system[0]",
                 (v4.Select("Patient.telecom.where(system='phone').system").First()).Location);

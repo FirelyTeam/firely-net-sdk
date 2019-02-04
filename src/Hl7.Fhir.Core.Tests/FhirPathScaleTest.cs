@@ -49,8 +49,8 @@ namespace Hl7.Fhir
                 });
 
             var v4 = qr.ToTypedElement();
-            var v5 = v4.Select("group.group.where(linkId = 'Section-A').question.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault() as PocoElementNode;
-            Assert.AreEqual("QuestionnaireResponse.group.group[0].question[5].answer[0].value", v5.ShortPath);
+            var v5 = v4.Select("group.group.where(linkId = 'Section-A').question.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault();
+            Assert.AreEqual("QuestionnaireResponse.group.group[0].question[5].answer[0].value", v5.Annotation<IShortPathGenerator>()?.ShortPath);
             Assert.AreEqual("QuestionnaireResponse.group[0].group[0].question[5].answer[0].value[0]", v5.Location);
 
             // Now perform some FHIRpath operations on it

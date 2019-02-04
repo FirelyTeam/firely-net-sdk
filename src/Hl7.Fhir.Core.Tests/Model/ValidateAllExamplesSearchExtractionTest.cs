@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
+                            if (t2.Annotation<IFhirValueProvider>()?.FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
                                 //    Debug.Write(index.Resource + "." + index.Name + ": ");

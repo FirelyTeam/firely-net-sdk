@@ -16,12 +16,6 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Rest\Search\**" />
-    <EmbeddedResource Remove="Rest\Search\**" />
-    <None Remove="Rest\Search\**" />
-  </ItemGroup>
-
 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
@@ -47,6 +41,7 @@
     <ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Common\Hl7.Fhir.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -103,5 +98,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ElementModel\" />
+    <Folder Include="Serialization\" />
   </ItemGroup>
 </Project>

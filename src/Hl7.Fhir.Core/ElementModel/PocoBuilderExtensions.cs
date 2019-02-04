@@ -17,49 +17,28 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class PocoBuilderExtensions
     {
-        public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(source, pocoType);
+        //[Obsolete("Use ParseQuantity(this ITypedElement instance) instead")]
+        //public static Model.Quantity ParseQuantity(this IElementNavigator instance)
+        //{
+        //    return ParseQuantity(instance.ToTypedElement());
+        //}
 
-        public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
-               (T)source.ToPoco(typeof(T), settings);
+        //public static Model.Quantity ParseQuantity(this ITypedElement instance)
+        //{
+        //    var newQuantity = new Quantity
+        //    {
+        //        Value = instance.Children("value").SingleOrDefault()?.Value as decimal?,
+        //        Unit = instance.Children("unit").GetString(),
+        //        System = instance.Children("system").GetString(),
+        //        Code = instance.Children("code").GetString()
+        //    };
 
-        public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(element);
+        //    var comp = instance.Children("comparator").GetString();
+        //    if(comp != null)
+        //        newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
 
-        public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
-               (T)element.ToPoco(settings);
-
-#pragma warning disable 612, 618
-        public static Base ToPoco(this IElementNavigator navigator, Type pocoType = null,
-            PocoBuilderSettings settings = null) => navigator.ToSourceNode().ToPoco(pocoType, settings);
-
-        public static T ToPoco<T>(this IElementNavigator navigator, PocoBuilderSettings settings = null) where T : Base =>
-               (T)navigator.ToPoco(typeof(T), settings);
-#pragma warning restore 612, 618
-
-
-        [Obsolete("Use ParseQuantity(this ITypedElement instance) instead")]
-        public static Model.Quantity ParseQuantity(this IElementNavigator instance)
-        {
-            return ParseQuantity(instance.ToTypedElement());
-        }
-
-        public static Model.Quantity ParseQuantity(this ITypedElement instance)
-        {
-            var newQuantity = new Quantity
-            {
-                Value = instance.Children("value").SingleOrDefault()?.Value as decimal?,
-                Unit = instance.Children("unit").GetString(),
-                System = instance.Children("system").GetString(),
-                Code = instance.Children("code").GetString()
-            };
-
-            var comp = instance.Children("comparator").GetString();
-            if(comp != null)
-                newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
-
-            return newQuantity;
-        }
+        //    return newQuantity;
+        //}
 
         [Obsolete("Use ParseBindable(this ITypedElement instance) instead")]
         public static Element ParseBindable(this IElementNavigator instance)
@@ -136,56 +115,25 @@ namespace Hl7.Fhir.ElementModel
         public static T ParsePrimitive<T>(this ITypedElement instance) where T:Primitive, new()
                     => new T() { ObjectValue = instance.Value };
 
-        [Obsolete("Use ParseCoding(this ITypedElement instance) instead")]
-        public static Coding ParseCoding(this IElementNavigator instance)
-            => ParseCoding(instance.ToTypedElement());
+        //[Obsolete("Use ParseCoding(this ITypedElement instance) instead")]
+        //public static Coding ParseCoding(this IElementNavigator instance)
+        //    => ParseCoding(instance.ToTypedElement());
+        
 
-        public static Coding ParseCoding(this ITypedElement instance)
-        {
-            return new Coding()
-            {
-                System = instance.Children("system").GetString(),
-                Version = instance.Children("version").GetString(),
-                Code = instance.Children("code").GetString(),
-                Display = instance.Children("display").GetString(),
-                UserSelected = instance.Children("userSelected").SingleOrDefault()?.Value as bool?
-            };
-        }
 
-        [Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
-        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
-             => ParseResourceReference(instance.ToTypedElement());
+        //[Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
+        //public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+        //     => ParseResourceReference(instance.ToTypedElement());
+        
 
-        public static ResourceReference ParseResourceReference(this ITypedElement instance)
-        {
-            return new ResourceReference()
-            {
-                Reference = instance.Children("reference").GetString(),
-                Display = instance.Children("display").GetString()
-            };
-        }
-
-        [Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
-        public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
-            => ParseCodeableConcept(instance.ToTypedElement());
-
-        public static CodeableConcept ParseCodeableConcept(this ITypedElement instance)
-        {
-            return new CodeableConcept()
-            {
-                Coding =
-                    instance.Children("coding").Select(codingNav => codingNav.ParseCoding()).ToList(),
-                Text = instance.Children("text").GetString()
-            };
-        }
+        //[Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
+        //public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
+        //    => ParseCodeableConcept(instance.ToTypedElement());
+        
 
         [Obsolete("Use GetString(this IEnumerable<ITypedElement> instance) instead")]
         public static string GetString(this IEnumerable<IElementNavigator> instance)
             => instance.SingleOrDefault()?.Value as string;
         
-        public static string GetString(this IEnumerable<ITypedElement> instance)
-        {
-            return instance.SingleOrDefault()?.Value as string;
-        }
     }
 }
