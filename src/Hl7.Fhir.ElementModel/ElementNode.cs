@@ -16,16 +16,59 @@ using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ElementNode : ITypedElement, IAnnotated, IAnnotatable
+    public class DomNode<T> : IAnnotatable where T:DomNode<T>
     {
-        public ElementNode Parent { get; private set; }
-
-        private List<ElementNode> _children = new List<ElementNode>();
-
-        public IEnumerable<ITypedElement> Children(string name = null) =>
-            name == null ? _children : _children.Where(c => c.Name == name);
-
         public string Name { get; set; }
+
+        protected List<T> children = new List<T>();
+
+        internal IEnumerable<T> ChildrenByName(string name = null) =>
+            name == null ? children : children.Where(c => c.Name == name);
+
+        public T Parent { get; protected set; }
+
+        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenByName(name));
+
+        public T this[int index] => children[index];
+
+        public string Location
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.Location;
+                    int myIndex = Parent.children.IndexOf((T)this);
+                    return $"{basePath}.{Name}[{myIndex}]";
+                }
+                else
+                    return Name;
+            }
+        }
+
+        private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
+        protected List<object> annotations { get { return _annotations.Value; } }
+
+        protected bool HasAnnotations => _annotations.IsValueCreated;
+
+        public void AddAnnotation(object annotation)
+        {
+            annotations.Add(annotation);
+        }
+
+        public void RemoveAnnotations(Type type)
+        {
+            annotations.RemoveOfType(type);
+        }
+    }
+
+
+
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
+    {
+        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenByName(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
@@ -65,7 +108,7 @@ namespace Hl7.Fhir.ElementModel
 
                 child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
-            _children.Add(child);
+            children.Add(child);
 
             return this;
         }
@@ -110,7 +153,7 @@ namespace Hl7.Fhir.ElementModel
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me._children.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
+                me.children.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
         }
@@ -126,17 +169,14 @@ namespace Hl7.Fhir.ElementModel
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
                 Parent = Parent,
-                _children = _children
+                children = children
             };
 
-            if (_annotations.IsValueCreated)
+            if (HasAnnotations)
                 copy.annotations.AddRange(annotations);
 
             return copy;
         }
-
-        private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
-        private List<object> annotations { get { return _annotations.Value; } }
 
         public IElementDefinitionSummary Definition { get; private set; }
 
@@ -144,43 +184,34 @@ namespace Hl7.Fhir.ElementModel
 
         public object Value { get; set; }
 
-        public string Location => "dummy";
-
-        public ChildElements this[string name] => new ChildElements(_children.Where(c => c.Name == name).ToList());
-
-        public ElementNode this[int index] => _children[index];
-
         public IEnumerable<object> Annotations(Type type)
         {
             return (type == typeof(ElementNode) || type == typeof(ITypedElement))
                 ? (new[] { this })
                 : annotations.OfType(type);
         }
-
-        public void AddAnnotation(object annotation) => annotations.Add(annotation);
-
-        public void RemoveAnnotations(Type type) => annotations.RemoveOfType(type);
     }
 
 
-    public class ChildElements : IEnumerable<ElementNode>
+    public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
     {
-        private IList<ElementNode> _wrapped;
+        private IList<T> _wrapped;
 
-        internal ChildElements(IList<ElementNode> nodes)
+        internal DomNodeList(IEnumerable<T> nodes)
         {
-            _wrapped = nodes;
+            _wrapped = nodes.ToList();
         }
 
-        public ElementNode this[int index] => _wrapped[index];
+        public T this[int index] => _wrapped[index];
 
-        public ChildElements this[string name] => new ChildElements(_wrapped.Children(name).Cast<ElementNode>().ToList());
+        public DomNodeList<T> this[string name] => 
+            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenByName(name)));
 
         public int Count => _wrapped.Count;
 
-        public bool Contains(ElementNode item) => _wrapped.Contains(item);
+        public bool Contains(T item) => _wrapped.Contains(item);
 
-        public IEnumerator<ElementNode> GetEnumerator() => _wrapped.GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => _wrapped.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
     }
