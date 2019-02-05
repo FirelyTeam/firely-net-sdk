@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
             if (elementType.IsAbstract)
                 throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
 
-            var rootTypeDefinition = new TypeRootDefinitionSummary(elementType, elementType.TypeName);
+            var rootTypeDefinition = new TypeRootDefinitionSummary(elementType, Source.Name);
             return (rootType, rootTypeDefinition);
         }
 
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementDefinitionSummary Definition { get; private set; }
 
-        public string Name => Definition.ElementName ?? Source.Name;
+        public string Name => Definition?.ElementName ?? Source.Name;
 
         public object Value
         {
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.ElementModel
                 }
 
                 var prettyPath =
-                 hit && !info.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{info.ElementName}[{_nameIndex}]";
+                 hit && !info.IsCollection ? $"{ShortPath}.{info.ElementName}" : $"{ShortPath}.{scan.Name}[{_nameIndex}]";
 
                 yield return new TypedElementOnSourceNode(this, scan, info, instanceType, prettyPath);
             }
