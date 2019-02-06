@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                // The MoveNext()/MoveFirst() method will already have complained about empty attributes, 
+                // Children() will already have complained about empty attributes, 
                 // so make sure we nicely recover here by returning null.
                 var val = Current.GetValue();
                 return !String.IsNullOrWhiteSpace(val) ? val : null;
@@ -113,8 +113,6 @@ namespace Hl7.Fhir.Serialization
                         raiseFormatError(source, ies, $"The element '{xe.Name.LocalName}' uses the namespace '{xe.Name.NamespaceName}', which is not allowed.", node);
                 }
             }
-            else
-                raiseFormatError(source, ies, $"Xml node of type '{node.NodeType}' is unexpected at this point", node);
         }
 
         public string Location { get; private set; }
@@ -145,9 +143,13 @@ namespace Hl7.Fhir.Serialization
             // If the child is a contained resource (the element name looks like a Resource name)
             // move one level deeper
             var parent = contained ?? element;
-            var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
-            if (schemaAttr != null && DisallowSchemaLocation)
-                raiseFormatError(this, this, "The 'schemaLocation' attribute is disallowed.", schemaAttr);
+
+            if (!PermissiveParsing)
+            {
+                var schemaAttr = parent.Attribute(XmlNs.XSCHEMALOCATION);
+                if (schemaAttr != null && DisallowSchemaLocation)
+                    raiseFormatError(this, this, "The 'schemaLocation' attribute is disallowed.", schemaAttr);
+            }
 
             XObject firstChild = parent.FirstChildElementOrAttribute();
 
@@ -172,10 +174,13 @@ namespace Hl7.Fhir.Serialization
             do
             {
                 if (!PermissiveParsing) verifyXObject(scan, AllowedExternalNamespaces, this, this);
-                
-                if (scan.Name() != "value")
+
+                if (!(scan is XAttribute) && !(scan is XElement))
+                    throw Error.InvalidOperation($"Internal error: encountered unexpected xml node type '{scan.GetType().Name}'");
+
+                if (scan.Name() != "value")   // value attribute is handled elsewhere
                 {
-                    var scanName = scan.Name().LocalName;
+                    var scanName = scan.Name().LocalName;   // NB: ignores namespace
                     bool isMatch = scanName.MatchesPrefix(name);
 
                     if (isMatch)

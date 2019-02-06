@@ -124,12 +124,16 @@ namespace Hl7.Fhir.Serialization
                         break;
                     case JObject obj:
                         if (contents != null)
-                            raiseFormatError($"The '{name}' and '_{name}' properties cannot both contain complex data.", shadow);
+                        {
+                            if (!PermissiveParsing)
+                                raiseFormatError($"The '{name}' and '_{name}' properties cannot both contain complex data.", shadow);
+                        }
                         else
                             contents = validateObject(obj, $"_{name}");
                         break;
                     default:
-                        raiseFormatError($"The value for property '_{name}' must be an object, not a {shadow.Type}", shadow);
+                        if(!PermissiveParsing)
+                            raiseFormatError($"The value for property '_{name}' must be an object, not a {shadow.Type}", shadow);
                         break;
                 }
             }
