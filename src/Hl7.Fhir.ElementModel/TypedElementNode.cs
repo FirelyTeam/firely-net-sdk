@@ -71,7 +71,7 @@ namespace Hl7.Fhir.ElementModel
 
         private void raiseTypeError(string message, object source, bool warning = false)
         {
-            var exc = new StructuralTypeException(message);
+            var exc = new StructuralTypeException("Type checking the data: " + message);
             var notification = warning ?
                 ExceptionNotification.Warning(exc) :
                 ExceptionNotification.Error(exc);

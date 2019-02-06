@@ -7,14 +7,7 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
@@ -72,7 +65,8 @@ namespace Hl7.Fhir.Serialization
             }
 
             if (_current.InstanceType is null)
-                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+                ComplexTypeReader.RaiseFormatError(
+                    "Underlying data source was not able to provide the actual instance type of the resource.", _current.Location);
 
             ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
                 ? getMappingForType(prop, memberName, _current.InstanceType)
@@ -95,7 +89,8 @@ namespace Hl7.Fhir.Serialization
             result = _inspector.FindClassMappingForFhirDataType(typeName);
 
             if (result == null)
-                throw Error.Format("Encountered polymorph member {0}, which uses unknown datatype {1}".FormatWith(memberName, typeName), _current.Location);
+                ComplexTypeReader.RaiseFormatError(
+                    $"Encountered polymorph member {memberName}, which uses unknown datatype {typeName}", _current.Location);
 
             return result;
         }
