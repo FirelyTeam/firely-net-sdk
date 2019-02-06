@@ -20,6 +20,8 @@ using Hl7.Fhir.Specification;
 
 namespace Hl7.FhirPath.Tests
 {
+#if false
+    // Not yet ready - removed for 1.2
     public class ElementNodeTests
     {
         readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
@@ -191,4 +193,5 @@ namespace Hl7.FhirPath.Tests
         }
 
     }
+#endif
 }

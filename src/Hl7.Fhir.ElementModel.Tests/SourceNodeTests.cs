@@ -40,14 +40,14 @@ namespace Hl7.FhirPath.Tests
                        SourceNode.Valued("value", "world!"))));
         }
 
-        [Fact]
-        public void ClonesOk()
-        {
-            var patientClone = patient.Clone();
+        //[Fact]
+        //public void ClonesOk()
+        //{
+        //    var patientClone = patient.Clone();
 
-            throw new NotImplementedException();
-            // Implement Equals() and compare
-        }
+        //    throw new NotImplementedException();
+        //    // Implement Equals() and compare
+        //}
 
         [Fact]
         public void TestConstruction()
