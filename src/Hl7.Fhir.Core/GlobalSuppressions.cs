@@ -6,7 +6,7 @@
 // To add a suppression to this file, right-click the message in the 
 // Code Analysis results, point to "Suppress Message", and click 
 // "In Suppression File".
-// You do not need to add suppressions to this file manually.
+// You do not need to add suppressions to this file manually.    
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fhir")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fhir", Scope = "namespace", Target = "Hl7.Fhir.ModelBinding")]
