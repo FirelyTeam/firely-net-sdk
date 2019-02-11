@@ -6779,5 +6779,95 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify profile inherits constraint from external targetProfile on Reference
             Assert.AreEqual(1, nav.Current.Min);
         }
+
+        // Issue #827
+        [TestMethod]
+        public void TestPrimitiveSnapshot()
+        {
+            // Expand core string profile
+            // Differential introduces three extensions on string.value:
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type = "string"
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type = "xsd:string"
+            // http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type = "xsd:string"
+            // Verify that these extensions are included in the snapshot
+
+            var src = _testResolver;
+            var generator = _generator = new SnapshotGenerator(src, _settings);
+            var stringProfile = src.FindStructureDefinitionForCoreType(FHIRAllTypes.String);
+            Assert.IsNotNull(stringProfile);
+            generateSnapshotAndCompare(stringProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsNotNull(nav);
+            Assert.IsTrue(nav.JumpToFirst("string.value"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+
+            // Verify default regular expression
+            Assert.IsNotNull(elem.Type[0].Extension);
+            Assert.AreEqual(1, elem.Type[0].Extension.Count);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
+            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.IsNotNull(extValue);
+            Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
+
+            // Verify json/xml/rdf type extensions
+            Assert.IsNull(elem.Type[0].Code); // Primitive value types are compiler magic...
+            Assert.IsNotNull(elem.Type[0].CodeElement);
+            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
+            // Expection extensions for json-type, xml-type & rdf-type
+            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+        }
+
+        // Issue #827
+        [TestMethod]
+        public void TestExtensionsOnPrimitiveValue()
+        {
+            // #827: Verify that derived profiles inherit extensions on value element of primitive types
+
+            var src = new Fhir.Validation.TestProfileArtifactSource();
+            var testResolver = new CachedResolver(
+                new MultiResolver(
+                    new ZipSource("specification.zip"),
+                    src));
+            var generator = _generator = new SnapshotGenerator(testResolver, _settings);
+
+            var obs = src.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/MyOrganization2");
+            Assert.IsNotNull(obs);
+            generateSnapshotAndCompare(obs, out StructureDefinition expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsNotNull(nav);
+            Assert.IsTrue(nav.JumpToFirst("Organization.name.value"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            // [WMR 20190131] WRONG! in R4, primitive value elements have no type code
+            //Assert.AreEqual("string", elem.Type[0].Code);
+            Assert.IsNull(elem.Type[0].Code);
+
+            // Verify constraint on regular expression extension value
+            Assert.IsNotNull(elem.Type[0].Extension);
+            Assert.AreEqual(1, elem.Type[0].Extension.Count);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
+            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.IsNotNull(extValue);
+            Assert.AreEqual("[A-Z].*", extValue.Value); // Constrained
+
+            // Verify that primitive type extensions are included
+            Assert.IsNotNull(elem.Type[0].CodeElement);
+            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
+            // Expection extensions for json-type, xml-type & rdf-type
+            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count); // FAIL...!
+        }
+
+
     }
 }

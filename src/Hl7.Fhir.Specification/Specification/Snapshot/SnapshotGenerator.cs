@@ -1912,5 +1912,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Determine if the specified uri strings are equal. Performs an ordinal comparison.</summary>
         internal static bool IsEqualUri(string uri, string other) => StringComparer.Ordinal.Equals(uri, other);
+
+        /// <summary>Determine if the specified type codes are equal. Performs an ordinal comparison.</summary>
+        internal static bool IsEqualType(string type, string other) => StringComparer.Ordinal.Equals(type, other);
     }
 }

@@ -58,9 +58,12 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Organization").OfType(FHIRAllTypes.Organization));
 
-            var nameDef = new ElementDefinition("Organization.name.value").OfType(FHIRAllTypes.String);
+            var nameDef = new ElementDefinition("Organization.name.value")
+                .OfType(FHIRAllTypes.String);
             nameDef.Type.Single().SetStringExtension("http://hl7.org/fhir/StructureDefinition/regex", "[A-Z].*");
-            //nameDef.Type.Single().Code = null;
+            // R4: [Primitive].value elements have no type code
+            nameDef.Type.Single().Code = null;
+
             cons.Add(nameDef);
 
             return result;
