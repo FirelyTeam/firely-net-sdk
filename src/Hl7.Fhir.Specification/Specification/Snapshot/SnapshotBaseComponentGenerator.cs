@@ -137,23 +137,25 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             Debug.Assert(elem != null);
 
-            // [WMR 20161004] HL7 WGM Baltimore: ElementDefinition.Base should be fully normalized
-            // i.e. ElementDefinition.Base references the element definition that originally introduces the element
-            // e.g. Patient.meta => Base.Path = Resource.meta
-
-            // var normalizeElementBase = _settings.NormalizeElementBase;
-            // if (force || elem.Base == null || (normalizeElementBase && !elem.Base.isCreatedBySnapshotGenerator()))
-            if (force || elem.Base == null || !elem.Base.IsCreatedBySnapshotGenerator())
+            // [WMR 20190130] R4: Root element base refers to self (.Path = .Base.Path)
+            if (elem.IsRootElement())
             {
+                // Base component references self
+                elem.Base = createBaseComponent(
+                    elem.MaxElement,
+                    elem.MinElement,
+                    elem.PathElement
+                );
+            }
+            else if (force || elem.Base == null || !elem.Base.IsCreatedBySnapshotGenerator())
+            {
+                // [WMR 20190130] STU3
                 // [WMR 20160903] Explicitly exclude root types (Resource and Element), they have no base
-                if (isRootTypeElementPath(elem.Path))
-                {
-                    return;
-                }
+                //if (isRootTypeElementPath(elem.Path))
+                //{
+                //    return;
+                //}
 
-                Debug.Assert(baseElem != null);
-
-                // if (normalizeElementBase && baseElem.Base != null)
                 if (baseElem.Base != null)
                 {
                     // Inherit Base component from base element
@@ -178,12 +180,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        static bool isRootTypeElementPath(string path)
-        {
-            var root = ElementDefinitionNavigator.GetPathRoot(path);
-            // Note: the API could provide a utility method to determine if a type name represents a root type (StructureDef.Base == null)
-            return root == "Resource" || root == "Element";
-        }
+        //static bool isRootTypeElementPath(string path)
+        //{
+        //    var root = ElementDefinitionNavigator.GetPathRoot(path);
+        //    // Note: the API could provide a utility method to determine if a type name represents a root type (StructureDef.Base == null)
+        //    return root == "Resource" || root == "Element";
+        //}
 
         static ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, UnsignedInt minElement, FhirString pathElement)
         {

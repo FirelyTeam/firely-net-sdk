@@ -637,15 +637,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            ElementDefinition baseElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
-            if (baseElement != null)
+            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
+            if (targetElement != null)
             {
-                var newElement = (ElementDefinition)baseElement.DeepCopy();
+                // New element with type profile
+                var newElement = (ElementDefinition)targetElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-                newElement.Base = null;
+
+                // [WMR 20190130] STU3: Base component of new elements is empty
+                // [WMR 20190130] R4: Base components of new elements refers to self (.Base.Path = .Path)
+                newElement.Base = new ElementDefinition.BaseComponent()
+                {
+                    Path = newElement.Path,
+                    Min = newElement.Min,
+                    Max = newElement.Max
+                };
 
                 // [WMR 20160915] NEW: Notify subscribers
-                OnPrepareElement(newElement, typeStructure, baseElement);
+                OnPrepareElement(newElement, typeStructure, targetElement);
 
                 // [WMR 20170421] Merge custom element Id from diff
                 mergeElementDefinition(newElement, diff.Current, true);
@@ -654,7 +663,20 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             else
             {
+                // New element w/o type profile
+                // [WMR 20190131] Also for contentReferences, e.g. Questionnaire.item.item
+                // Only inherits structure, not constraints, from referenced item (e.g. Questionnaire.item)
+                // For example, constraint on .item.type does NOT apply to .item.item.type
+
                 var clonedElem = (ElementDefinition)diff.Current.DeepCopy();
+
+                // [WMR 20190131] R4: For new elements, base component should refer to element itself (.Base.Path = .Path)
+                clonedElem.Base = new ElementDefinition.BaseComponent()
+                {
+                    Path = clonedElem.Path,
+                    Min = clonedElem.Min,
+                    Max = clonedElem.Max
+                };
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(clonedElem, null, null);
