@@ -6846,9 +6846,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
-        // Issue #827
-        // Enable this test after merging pull request #841
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestExtensionsOnPrimitiveValue()
         {
             // #827: Verify that derived profiles inherit extensions on value element of primitive types
@@ -6874,7 +6872,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem);
             Assert.IsNotNull(elem.Type);
             Assert.AreEqual(1, elem.Type.Count);
-            // [Primitive].value elements have no type code
+            // [WMR 20190131] WRONG! in R4, primitive value elements have no type code
+            //Assert.AreEqual("string", elem.Type[0].Code);
             Assert.IsNull(elem.Type[0].Code);
 
             // Verify constraint on regular expression extension value
@@ -6888,7 +6887,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that primitive type extensions are included
             Assert.IsNotNull(elem.Type[0].CodeElement);
             Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expection extensions for json-type, xml-type & rdf-type
+            // Expecting extensions for json-type, xml-type & rdf-type
             Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
