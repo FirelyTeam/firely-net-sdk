@@ -7,7 +7,7 @@
  */
 
 // DEBUGGING
-//#define DUMPMATCHES
+#define DUMPMATCHES
 
 // Cache pre-generated snapshot root ElementDefinition instance as an annotation on the associated differential root ElementDefinition
 // When subsequently expanding the full type profile snapshot, re-use the cached root ElementDefinition instance
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // by the differential
 
                     // Note that since we merged the parent, a (shorthand) typeslice will already
-                    // have reduced the numer of types to 1. Still, if you don't do that, we cannot
+                    // have reduced the number of types to 1. Still, if you don't do that, we cannot
                     // accept constraints on children, need to select a single type first...
 
                     // [WMR 20170227] REDUNDANT; checked by expandElement
@@ -1544,29 +1544,54 @@ namespace Hl7.Fhir.Specification.Snapshot
             var bm = snap.Bookmark();
             var name = snap.PathName;
             var sliceName = diff.Current.SliceName;
-            //Debug.Assert(sliceName != null);
-            var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
-            do
+
+            // [WMR 20190211] R4: Allow multiple renamed choice type element constraints
+            // e.g. value[x], valueString, valueInteger
+            if (string.IsNullOrEmpty(sliceName) //&& snap.IsRenamedChoiceTypeElement(diff.PathName))
+                && ElementDefinitionNavigator.IsRenamedChoiceTypeElement(snap.PathName, diff.PathName))
             {
-                var snapSliceName = snap.Current.SliceName;
-                if (baseSliceName != null && StringComparer.Ordinal.Equals(baseSliceName, snapSliceName))
+                // snap is positioned at a choice type element, e.g. "value[x]"
+                // diff is positioned at a renamed choice type element constraint, e.g. "valueString"
+                // Append new diff constraint after existing renamed choice type element constraints in snap
+                var choiceName = snap.PathName;
+                var bm2 = snap.Bookmark();
+                while (snap.MoveToNext())
                 {
-                    // Found a matching base slice; skip any children and reslices
-                    var bm2 = snap.Bookmark();
-                    while (snap.MoveToNext(name))
+                    if (!ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, snap.PathName))
                     {
-                        var snapSliceName2 = snap.Current.SliceName;
-                        if (!ElementDefinitionNavigator.IsResliceOf(snapSliceName2, snapSliceName))
-                        {
-                            // Not a reslice; add diff slice after the previous match
-                            break;
-                        }
-                        bm2 = snap.Bookmark();
+                        // Not a choice type element constraint; rewind to last match
+                        snap.ReturnToBookmark(bm2);
+                        break;
                     }
-                    snap.ReturnToBookmark(bm2);
-                    break;
+                    bm2 = snap.Bookmark();
                 }
-            } while (snap.MoveToNext(name));
+            }
+            else
+            {
+                //Debug.Assert(sliceName != null);
+                var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+                do
+                {
+                    var snapSliceName = snap.Current.SliceName;
+                    if (baseSliceName != null && StringComparer.Ordinal.Equals(baseSliceName, snapSliceName))
+                    {
+                        // Found a matching base slice; skip any children and reslices
+                        var bm2 = snap.Bookmark();
+                        while (snap.MoveToNext(name))
+                        {
+                            var snapSliceName2 = snap.Current.SliceName;
+                            if (!ElementDefinitionNavigator.IsResliceOf(snapSliceName2, snapSliceName))
+                            {
+                                // Not a reslice; add diff slice after the previous match
+                                break;
+                            }
+                            bm2 = snap.Bookmark();
+                        }
+                        snap.ReturnToBookmark(bm2);
+                        break;
+                    }
+                } while (snap.MoveToNext(name));
+            }
             var result = snap.Bookmark();
             snap.ReturnToBookmark(bm);
             return result;
