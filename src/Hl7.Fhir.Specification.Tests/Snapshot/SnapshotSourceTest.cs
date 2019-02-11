@@ -8,7 +8,7 @@ using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    [TestClass]
+    [TestClass, TestCategory("Snapshot")]
     public class SnapshotSourceTest
     {
         [TestMethod]

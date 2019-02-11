@@ -6,9 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-// Accept multiple renamed choice type elements (Chris Grenz)
-#define MULTIPLE_RENAMED_CHOICE_TYPES
-
 // [WMR 20181212] Match type slice on all specified profiles
 #define MULTIPLE_SLICE_PROFILES
 
@@ -220,46 +217,114 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Verify type slice constraints (e.g. value[x] => valueString)
             // - base element has a type choice (value[x])
             // - Single derived element is constrained to single type and renamed (valueString)
-            // - This is NOT a type slice => derived profile cannot contain multiple renamed elements!
+            // - This is NOT a type slice
+            //   STU3: derived profile cannot contain multiple renamed elements!
+            //   R4: derived profile can contain multiple renamed elements
             var result = new List<MatchInfo>() { match };
 
             if (snapNav.Current.IsChoice())
             {
-                var bm = diffNav.Bookmark();
+                constructChoiceTypeMatch(snapNav, diffNav, result);
+            }
+            return result;
+        }
 
-                // [WMR 20170308] NEW - Clone slice base element
-                var sliceBase = initSliceBase(snapNav);
+        private static List<MatchInfo> constructChoiceTypeMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<MatchInfo> matches)
+        {
+            var bm = diffNav.Bookmark();
 
-                while (diffNav.MoveToNext())
+            // [WMR 20170308] NEW - Clone slice base element
+            var sliceBase = initSliceBase(snapNav);
+            var match = matches[0];
+
+            // [WMR 20190204] NEW
+            // STU3: rename "[x]" element in snapshot if constrained to single type
+            // R4: Always include original "[x]" element in snapshot, followed by type constraints
+            // * Accept multiple renamed elements in diff
+            // * Accept diff constraint on "value[x]" element (must be first, before renamed elements)
+            // * Match renamed diff element to renamed base element, if exist, otherwise [x] base element
+
+            if (SnapshotGenerator.IsEqualName(snapNav.PathName, diffNav.PathName))
+            {
+                // Diff and snap both represent common constraints for all types ("value[x]"); merge
+            }
+            else if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
+            {
+                // diff is renamed choice type constraint for specific choice type ("valueString")
+
+                // STU3:
+                // Fix first match in result[0]
+                // Don't merge with original "value[x]" from snap
+                // Instead, append to snap as renamed type constraint
+                //match.Action = MatchAction.Add;
+                //match.SliceBase = sliceBase;
+
+                // R4: try to find matching renamed base element
+                var bmSnap = snapNav.Bookmark();
+                if (snapNav.MoveToNext(diffNav.PathName))
                 {
-                    if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
+                    match.BaseBookmark = snapNav.Bookmark();
+                    match.Action = MatchAction.Merge;
+                    snapNav.ReturnToBookmark(bmSnap);
+                }
+                else
+                {
+                    // Otherwise, match to "[x]" element
+                    match.Action = MatchAction.Add;
+                    match.SliceBase = sliceBase;
+                }
+
+            }
+            else
+            {
+                // diff is neither match for snap ("value[x]") nor rename ("valueString")
+                // Shouldn't happen...
+                Debug.Fail("SHOULDN'T HAPPEN...");
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructMatch)}): invalid choice type match, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
+            }
+
+            // Also consume and match all following associated renamed element constraints
+            // [WMR 20190204] R4 allows multiple renamed type-specific constraints
+            // e.g. both valueString and valueBoolean element constraints
+            while (diffNav.MoveToNext())
+            {
+                if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
+                {
+                    match = new MatchInfo()
                     {
-                        match = new MatchInfo()
-                        {
-#if MULTIPLE_RENAMED_CHOICE_TYPES
-                            Action = MatchAction.Add,
-#else
-                            Action = MatchAction.Invalid,
-#endif
-                            BaseBookmark = snapNav.Bookmark(),
-                            DiffBookmark = diffNav.Bookmark(),
+                        DiffBookmark = diffNav.Bookmark(),
+                        // [WMR 20190211] STU3
+                        //Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current)
+                    };
 
-                            // [WMR 20170308] NEW - Slice base element
-                            SliceBase = sliceBase,
-
-                            Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current)
-                        };
-                        result.Add(match);
-                        bm = diffNav.Bookmark();
+                    // R4: try to find matching renamed base element
+                    var bmSnap = snapNav.Bookmark();
+                    if (snapNav.MoveToNext(diffNav.PathName))
+                    {
+                        match.Action = MatchAction.Merge;
+                        match.BaseBookmark = snapNav.Bookmark();
+                        snapNav.ReturnToBookmark(bmSnap);
                     }
                     else
                     {
-                        diffNav.ReturnToBookmark(bm);
-                        break;
+                        // Otherwise, match to "[x]" element
+                        match.Action = MatchAction.Add;
+                        // [WMR 20170308] NEW - Slice base element
+                        match.SliceBase = sliceBase;
+                        match.BaseBookmark = snapNav.Bookmark();
                     }
+
+                    matches.Add(match);
+                    bm = diffNav.Bookmark();
+                }
+                else
+                {
+                    diffNav.ReturnToBookmark(bm);
+                    break;
                 }
             }
-            return result;
+
+            return matches;
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)

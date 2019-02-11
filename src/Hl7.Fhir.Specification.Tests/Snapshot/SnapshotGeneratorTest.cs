@@ -31,7 +31,7 @@ using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    [TestClass]
+    [TestClass, TestCategory("Snapshot")]
 #if PORTABLE45
 	public class PortableSnapshotGeneratorTest
 #else
@@ -86,13 +86,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(_generator.Outcome);
 
             var elems = expanded.Snapshot.Element;
-            Assert.AreEqual(5, elems.Count);
+
+            // [WMR 20190211] FIXED
+            // STU3: "valueBoolean" replaces "value[x]" in snapshot
+            //Assert.AreEqual(5, elems.Count);
+            // R4: snapshot contains both "value[x]" and "valueBoolean" 
+            Assert.AreEqual(6, elems.Count);
+
             Assert.AreEqual("Extension", elems[0].Path);
             Assert.AreEqual("Extension.id", elems[1].Path);
             Assert.AreEqual("Extension.extension", elems[2].Path);
             Assert.AreEqual("Extension.url", elems[3].Path);
             Assert.AreEqual(expanded.Url, (elems[3].Fixed as FhirUri)?.Value);
-            Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
+
+            // STU3
+            //Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
+            // R4
+            Assert.AreEqual("Extension.value[x]", elems[4].Path);
+            Assert.AreEqual("Extension.valueBoolean", elems[5].Path);
         }
 
 
@@ -391,7 +402,18 @@ namespace Hl7.Fhir.Specification.Tests
                 // +1 Organization.endpoint.type
                 // +8 in total
                 //Assert.AreEqual(347, fullElems.Count);
-                Assert.AreEqual(355, fullElems.Count);
+                //Assert.AreEqual(355, fullElems.Count);
+                
+                // [WMR 20190211] Fixed
+                // R4: snapshot now includes both "value[x]" and "valueString" constraints
+                // +1 Organization.address.extension.value[x]
+                // +1 Organization.address.line.extension:streetName.value[x]
+                // +1 Organization.address.line.extension:houseNumber.value[x]
+                // +1 Organization.address.line.extension:buildingNumberSuffix.value[x]
+                // +1 Organization.address.line.extension:unitID.value[x]
+                // +1 Organization.address.line.extension:additionalLocator.value[x]
+                Assert.AreEqual(361, fullElems.Count);
+
                 Assert.AreEqual(0, issues.Count);
 
                 // Verify
@@ -1406,7 +1428,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                     return be != null ?
                         $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path} <== #{be.GetHashCode(),-8} {formatElementPathName(be)} | {be.Base?.Path}"
-                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}"; 
+                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}";
                 })
             ));
         }
@@ -2112,7 +2134,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.Definition)
                 || hasChanges(elem.Example)
                 || hasChanges(elem.Extension)
-             //   || hasChanges(elem.FhirCommentsElement)
+                //   || hasChanges(elem.FhirCommentsElement)
                 || isChanged(elem.Fixed)
                 || isChanged(elem.IsModifierElement)
                 || isChanged(elem.IsSummaryElement)
@@ -2893,7 +2915,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Element = new List<ElementDefinition>()
                 {
                     // No slicing introduction
-                    // Only single element is allowed (this is NOT a slice!)
+                    // STU3: Only single element is allowed (this is NOT a slice!)
                     // Element is renamed
                     new ElementDefinition("Observation.valueString")
                     {
@@ -2925,17 +2947,25 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual(nav.Path, "Observation");
-            Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
-            Assert.IsTrue(nav.MoveToChild("valueString"));
+
+            // [WMR 20190204] STU3: "value[x]" should be renamed to valueString in snapshot
+            //Assert.IsFalse(nav.MoveToChild("value[x]")); // 
+            //Assert.IsTrue(nav.MoveToChild("valueString"));
+            // [WMR 20190204] R4: snapshot should include both "value[x]" and "valueString"
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
         }
 
-        [Ignore("TODO: Fix choice type constraints for R4")]
+        //[Ignore("TODO: Fix choice type constraints for R4")]
         [TestMethod]
         public void TestInvalidChoiceTypeConstraints()
         {
-            // Create a profile with multiple (invalid!) choice type constraint: value[x] => { valueString, valueInteger }
+            // Create a profile with multiple choice type constraint: value[x] => { valueString, valueInteger }
+            // STU3: multiple renamed choice type constraints are invalid
+            // R4: multiple renamed choice type constraints are allowed
             var profile = ObservationTypeConstraintProfile;
             profile.Differential.Element.Add(
                     new ElementDefinition("Observation.valueInteger")
@@ -2962,8 +2992,14 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual(nav.Path, "Observation");
-            Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
-            Assert.IsTrue(nav.MoveToChild("valueString"));
+
+            // [WMR 20190204] STU3: "value[x]" should be renamed to valueString in snapshot
+            //Assert.IsFalse(nav.MoveToChild("value[x]"));
+            //Assert.IsTrue(nav.MoveToChild("valueString"));
+            // [WMR 20190204] R4: snapshot should include "value[x]" "valueString", and "valueInteger"
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
@@ -2971,16 +3007,284 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
-            Assert.IsNotNull(outcome);
-            //Assert.AreEqual(2, outcome.Issue.Count);
-            //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
-            //assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            // [WMR 20190211] STU3: Disallow multiple renamed choice type constraints
+            //Assert.IsNotNull(outcome);
+            //Assert.AreEqual(1, outcome.Issue.Count);
+            //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            
+            // [WMR 20190211] R4: Allow multiple renamed choice type constraints
+            Assert.IsNull(outcome);
+        }
 
-            // [WMR 20181212] R4 TODO
-            Assert.Fail("TODO: Fix choice type constraints for R4");
+        // [WMR 20190204] #824
+        // Support R4 choice type shortcut syntax
+        // Example: http://hl7.org/fhir/bmi.profile.xml.html
+
+        // Generic type slicing:
+        // - Slicing Introduction: Slicing { Discriminator = { "Type", "$this" } }
+        // - Named slices:
+        //     - Limit the list of allowed types (defined by intro element)
+        //     - Specify additional constraints for specific type(s)
+        //       Override common constraints inherited from slicing introduction
+        //
+        // Choice type elements:
+        // - Constraints on "value[x]" apply to all allowed types
+        //   - Constraints on "value[x].type" limit the list of allowed types
+        //     Note: cannot introduce new (incompatible) types!
+        //   - Slicing component is optional, but allowed
+        //     If present, first Discriminator in list should be { "Type", "$this" }
+        //     Note: derived profiles can reslice and add additional discriminator components
+        // - Shortcut: allow constraint on single type w/o slicing introduction
+        //     - Rename element, e.g. "value[x]" => "valueString"
+        //     - Element.type is optional
+        //       Matching type is implied from element name
+        //       e.g. "valueString" specifies constraints for type choice "string"
+        //     - Allow multiple, e.g. "valueString" and "valueBoolean"
+        // - Also allow regular type slicing (with slicing intro)
+        //     - e.g. named slice with constraints for a subset of allowed types
+        //     - Rename element path if constraints apply to *single* type
+        //
+        // Snapshot component in R4:
+        // - Always include original choice type element (e.g. "value[x]")
+        // - Also include concrete type slices and/or renamed single type constraints
+        //
+        // Snapshot component in STU3:
+        // - Choice type element is renamed if constrained to a single type
+        //   e.g. snapshot only includes "valueString", but not "value[x]"
+        // - Otherwise, if multiple types are allowed, do not rename the element(s)
+        //   Generate a unique slice name that includes the renamed element name
+        //   e.g. choice type constrained to string and boolean
+        //   => snapshot includes "value[x]" (slicing intro), "value[x]:valueString" and "value[x]:valueBoolean"
+
+        [TestMethod]
+        public void TestChoiceTypeCommonConstraint()
+        {
+            var obsProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = "ChoiceTypeObservation",
+                Url = "http://example.org/fhir/StructureDefinition/ChoiceTypeObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Specify common constraints that apply to all choice types
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            Min = 1,
+                            // Limit the list of allowed types
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = "string" },
+                                new ElementDefinition.TypeRefComponent() { Code = "boolean" },
+                            }
+                        },
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(obsProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(obsProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Should be allowed
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual(2, nav.Current.Type.Count);
+            Assert.AreEqual("string", nav.Current.Type[0].Code);
+            Assert.AreEqual("boolean", nav.Current.Type[1].Code);
+        }
+
+        [TestMethod]
+
+        public void TestChoiceTypeWithTypeSlice()
+        {
+            var obsProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = "ChoiceTypeObservation",
+                Url = "http://example.org/fhir/StructureDefinition/ChoiceTypeObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Type slicing introduction
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    ForTypeSlice()
+                                }
+                            },
+                        },
+                        // Concrete type slice
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            SliceName = "FirstTypeSlice",
+                            MaxLength = 100,
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                            }
+                        },
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(obsProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(obsProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Should be allowed
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            Assert.IsNull(nav.Current.MaxLengthElement);
+            Assert.AreNotEqual(1, nav.Current.Type.Count);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("value[x]", nav.PathName);
+            Assert.AreEqual("FirstTypeSlice", nav.Current.SliceName);
+            Assert.AreEqual(100, nav.Current.MaxLength);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+        }
+
+        [TestMethod]
+
+        public void TestChoiceTypeSingleTypeConstraint()
+        {
+            var obsProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = "ChoiceTypeObservation",
+                Url = "http://example.org/fhir/StructureDefinition/ChoiceTypeObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Type-specific constraint
+                        new ElementDefinition("Observation.valueString")
+                        {
+                            MaxLength = 100
+                        },
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(obsProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(obsProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Should be allowed
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            // Verify: MaxLength constraint only applies to valueString
+            Assert.IsNull(nav.Current.MaxLengthElement);
+            // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
+            Assert.AreNotEqual(1, nav.Current.Type.Count);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+            Assert.AreEqual(100, nav.Current.MaxLength);
+        }
+
+        [TestMethod]
+
+        public void TestChoiceTypeMultipleTypeConstraints()
+        {
+            var obsProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = "ChoiceTypeObservation",
+                Url = "http://example.org/fhir/StructureDefinition/ChoiceTypeObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.valueString")
+                        {
+                            MaxLength = 100
+                        },
+                        new ElementDefinition("Observation.valueInteger")
+                        {
+                            MinValue = new Integer(0)
+                        },
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(obsProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(obsProfile, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // Should be allowed
+            // Specifically, should not return "PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT" issues (STU3 only)
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            // Verify: MaxLength constraint only applies to valueString
+            Assert.IsNull(nav.Current.MaxLengthElement);
+            // Verify: MinValue constraint only applies to valueInteger
+            Assert.IsNull(nav.Current.MinValue);
+            // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
+            Assert.AreNotEqual(1, nav.Current.Type.Count);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+            Assert.AreEqual(100, nav.Current.MaxLength);
+
+            Assert.IsTrue(nav.JumpToFirst("Observation.valueInteger"));
+            Assert.IsTrue(nav.Current.MinValue is Integer i && i.Value == 0);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -4265,8 +4569,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
-            // Snapshot should not contain elements with original name
-            Assert.IsFalse(nav.JumpToFirst("Observation.value[x]"));
+
+            // [WMR 20190211] FIXED
+            // STU3: Snapshot should not contain elements with original name
+            // Assert.IsFalse(nav.JumpToFirst("Observation.value[x]"));
+            // R4: Snapshot may contain both "[x]" and also renamed element constraints
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+
             // Snapshot should contain renamed elements
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
             Assert.IsNotNull(nav.Current.Type);
@@ -5662,8 +5971,13 @@ namespace Hl7.Fhir.Specification.Tests
             var url = nav.Current.Fixed as FhirUri;
             Assert.IsNotNull(url);
             Assert.AreEqual(SL_HumanNameTitleSuffixUri, url.Value);
-            // Verify there are no constraints on value[x]
-            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            
+            // [WMR 20190211] FIXED
+            // STU3: Verify there are no constraints on value[x]
+            //Assert.IsFalse(nav.MoveToNext("value[x]"));
+            // R4: snapshot includes both "value[x]" and "valueString"
+            Assert.IsTrue(nav.MoveToNext("value[x]"));
+
             // Verify merged constraints on valueString
             Assert.IsTrue(nav.MoveToNext("valueString"));
             Assert.AreEqual("NameSuffix", nav.Current.Short);
@@ -6247,7 +6561,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(nav.JumpToFirst("Patient.generalPractitioner"));
             Assert.IsTrue(hasChanges(nav.Current));
-            Assert.IsFalse(isChanged(nav.Current)); 
+            Assert.IsFalse(isChanged(nav.Current));
             Assert.IsTrue(hasChanges(nav.Current.Type));
             foreach (var type in nav.Current.Type)
             {
@@ -6448,7 +6762,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
-            Assert.AreEqual("level 1" ,nav.Current.Short);
+            Assert.AreEqual("level 1", nav.Current.Short);
 
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
             // [WMR 20181212] R4 - Comment type changed from string to markdown
@@ -6754,7 +7068,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            // Expecting single issue about invalid slice name on SimpleQuantity root element
             var outcome = generator.Outcome;
             Assert.IsNull(outcome);
 
