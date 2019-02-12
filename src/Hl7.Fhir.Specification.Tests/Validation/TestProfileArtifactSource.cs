@@ -84,8 +84,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
             cons.Add(new ElementDefinition("Patient.identifier").Required(max: "*")
-                        .OfType(FHIRAllTypes.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")
-                        .OrType(FHIRAllTypes.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL"));
+                        .OfType(FHIRAllTypes.Identifier, new[] { "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL" }));
 
             return result;
         }
@@ -168,8 +167,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Observation").OfType(FHIRAllTypes.Observation));
             cons.Add(new ElementDefinition("Observation.value[x]")
-                .OfType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/WeightQuantity")
-                .OrType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
+                .OfType(FHIRAllTypes.Quantity,new[] { "http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "http://validationtest.org/fhir/StructureDefinition/HeightQuantity" })
                 .OrType(FHIRAllTypes.String));
 
             Debug.WriteLine(new FhirXmlSerializer().SerializeToString(result));
@@ -187,7 +185,7 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Bundle").OfType(FHIRAllTypes.Bundle));
             cons.Add(new ElementDefinition("Bundle.entry.resource")
                 .OfType(FHIRAllTypes.Organization)
-                .OrType(FHIRAllTypes.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
+                .OrType(FHIRAllTypes.Patient, new[] { $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization" }));
 
             return result;
         }
@@ -216,7 +214,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
             cons.Add(new ElementDefinition("Patient.managingOrganization")
-                .OfReference(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization), aggregation));
+                .OfReference(new[] { (string)ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization) }, aggregation));
 
             return result;
         }

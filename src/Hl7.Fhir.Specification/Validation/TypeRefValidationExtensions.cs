@@ -99,13 +99,24 @@ namespace Hl7.Fhir.Validation
             OperationOutcome validate()
             {
                 // First, call Validate() for the current element (the reference itself) against the profile
-                var result = validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
+                var validations = tr.GetDeclaredProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile));
+                var result = validator.Combine(BatchValidationMode.Any, instance, validations);
 
                 // If this is a reference, also validate the reference against the targetProfile
                 if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
                     result.Add( validator.ValidateResourceReference(instance, tr) );
 
                 return result;
+            }
+        }
+
+        private static Func<OperationOutcome> createValidatorForDeclaredProfile(Validator validator, ScopedNode instance, string declaredProfile)
+        {
+            return validate; 
+
+            OperationOutcome validate()
+            {
+                return validator.Validate(instance, declaredProfile, statedCanonicals: null, statedProfiles: null);
             }
         }
 
@@ -162,12 +173,12 @@ namespace Hl7.Fhir.Validation
                 //              we be permitting more than one target profile here.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
+                    childResult = validator.ValidateReferences(referencedResource, typeRef.TargetProfile);
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile.FirstOrDefault(), statedProfiles: null, statedCanonicals: null);
+                    childResult = newValidator.ValidateReferences(referencedResource, typeRef.TargetProfile);
                 }
 
                 // Prefix each path with the referring resource's path to keep the locations
@@ -181,6 +192,21 @@ namespace Hl7.Fhir.Validation
                 validator.Trace(outcome, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
 
             return outcome;
+        }
+
+       
+        private static OperationOutcome ValidateReferences(this Validator validator, ITypedElement referencedResource, IEnumerable<string> targetProfiles)
+        {
+            IEnumerable<Func<OperationOutcome>> validations = targetProfiles.Select(tp => createValidatorForReferenceResource(tp));
+            return validator.Combine(BatchValidationMode.Any, referencedResource, validations);
+
+            Func<OperationOutcome> createValidatorForReferenceResource(string targetProfile)
+            {
+                return () =>
+                {
+                    return validator.Validate(referencedResource, targetProfile, statedProfiles: null, statedCanonicals: null);
+                };
+            }
         }
 
         private static ITypedElement resolveReference(this Validator validator, ScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
