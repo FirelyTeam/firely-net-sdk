@@ -12,6 +12,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Common parser configuration settings for <see cref="BaseFhirParser"/> and subclasses.</summary>
     public class ParserSettings
     {
         [Obsolete("Due to a bug, the Default has always been ignored, so it is now officially deprecated")]
