@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            var dirSource = new DirectorySource(@"TestData\validation");
+            var dirSource = new DirectorySource(Path.Combine("TestData", "validation"));
             extDefn = dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0");
 
             Assert.ThrowsException<ArgumentException>(() => dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));

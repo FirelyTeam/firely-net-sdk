@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonParser : BaseFhirParser
     {
-        public FhirJsonParser(ParserSettings settings=null) : base(settings)
+        public FhirJsonParser(ParserSettings settings = null) : base(settings)
         {
             //
         }
@@ -48,5 +48,4 @@ namespace Hl7.Fhir.Serialization
             return Parse(jsonReader, dataType);
         }
     }
-
 }
