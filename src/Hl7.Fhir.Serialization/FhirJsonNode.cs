@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Serialization
         private void raiseFormatError(string message, JToken node)
         {
             var (lineNumber, linePosition) = getPosition(node);
-            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format("Parser: " + message, lineNumber, linePosition)));
         }
 
         private (int lineNumber, int linePosition) getPosition(JToken node) => 
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Serialization
 
                 if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
                     ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                        new StructuralTypeException($"Since element '{nav.Name}' repeats, an array must be used here.")));
+                        new StructuralTypeException($"Parser: Since element '{nav.Name}' repeats, an array must be used here.")));
 
                 if (!sdSummary.IsCollection && serializationDetails.ArrayIndex != null)
                 {
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Serialization
                     if (serializationDetails.ArrayIndex == 0)
                     {
                         ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                            new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
+                            new StructuralTypeException($"Parser: Element '{nav.Name}' does not repeat, so an array must not be used here.")));
                     }
                 }
 

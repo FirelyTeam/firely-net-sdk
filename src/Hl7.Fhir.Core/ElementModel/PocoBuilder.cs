@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
                 {
                     ExceptionHandler.NotifyOrThrow(this,
                         ExceptionNotification.Error(
-                            new StructuralTypeException($"The .NET type '{dataType.Name}' does not represent a FHIR type.")));
+                            new StructuralTypeException($"While building a POCO: The .NET type '{dataType.Name}' does not represent a FHIR type.")));
 
                     return null;
                 }
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization
                 {
                     ExceptionHandler.NotifyOrThrow(this,
                         ExceptionNotification.Error(
-                            new StructuralTypeException($"There is no .NET type representing the FHIR type '{source.InstanceType}'.")));
+                            new StructuralTypeException($"While building a POCO: There is no .NET type representing the FHIR type '{source.InstanceType}'.")));
 
                     return null;
                 }
