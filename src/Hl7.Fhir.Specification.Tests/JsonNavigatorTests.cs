@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static JsonXPathNavigator buildNav()
         {
-            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "TestPatient.json"));
             var reader = new StringReader(json);
             return new JsonXPathNavigator(new JsonTextReader(reader));
         }
