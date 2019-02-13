@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanSerializeThroughNavigatorAndCompare()
         {
-            var json = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
 
             var nav = getJsonElement(json);
             var output = nav.ToJson();
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void TestPruneEmptyNodes()
         {
-            var tp = File.ReadAllText(@"TestData\test-empty-nodes.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "test-empty-nodes.json"));
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
             var nav = getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanSerializeFromPoco()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
             var pat = pser.Parse<Patient>(tp);
 
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void DoesPretty()
         {
-            var json = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
 
             var nav = getJsonElement(json);
             var output = nav.ToJson();
