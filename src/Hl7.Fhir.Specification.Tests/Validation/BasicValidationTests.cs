@@ -916,6 +916,31 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ValidateContainedPatient()
+        {
+            var content = "<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"3b405ba5f8ce411fa7f285beb20de018\" /><text><status value=\"generated\" /><div xmlns=\"http://www.w3.org/1999/xhtml\"><b>Cococinski, Ms Natalia</b><hr /><span style=\"color: gray;\">address home:</span> 121 Cadles Road, CARRUM DOWNS, 3201<br /><span style=\"color: gray;\">dob:</span> 30/04/1930<br /><span style=\"color: gray;\">gender:</span> Female<br /><span style=\"color: gray;\">home phone:</span> 9782 9999<br /><span style=\"color: gray;\">urno:</span> 88365<br /><span style=\"color: gray;\">managing organisation:</span> Banksia Respite Centre <i style=\"color:blue;\">(TCM)</i></div></text><identifier><use value=\"usual\" /><value value=\"88365\" /></identifier><active value=\"true\" /><name><text value=\"Cococinski, Ms Natalia\" /><family value=\"Cococinski\" /><given value=\"Natalia\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><gender value=\"female\" /><birthDate value=\"1930-04-30\" /><address><use value=\"home\" /><text value=\"99 Cadles Road, CARRUM DOWNS, 3201\" /><line value=\"99 Cadles Road\" /><city value=\"CARRUM DOWNS\" /><state value=\"Victoria\" /><postalCode value=\"3201\" /><period><start value=\"2006-06-16\" /></period></address><contact><name><text value=\"Sutcliffe, Ms Pat\" /><family value=\"Sutcliffe\" /><given value=\"Pat\" /></name><telecom><system value=\"phone\" /><value value=\"9784 8800\" /><use value=\"home\" /></telecom></contact><contact><name><text value=\"Cococinski, Ms Erica\" /><family value=\"Cococinski\" /><given value=\"Erica\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><telecom><system value=\"phone\" /><value value=\"9609 9999\" /><use value=\"work\" /></telecom></contact><managingOrganization id=\"5d3eb74c957411d2b2740020182a459e\"><reference value=\"Organization/54d83d08e01d43738d1eab06d2223629\" /><display value=\"tcmdemo fhir (Brian - CTH)\" /></managingOrganization></Patient>";
+
+            Patient p = new Hl7.Fhir.Serialization.FhirXmlParser().Parse<Patient>(content);
+            // Contained resources must have the 
+            Practitioner rp = new Practitioner { Id = "pat1" };
+            rp.Name.Add(new HumanName().WithGiven("Brian").AndFamily("Pos"));
+            p.Contained = new List<Resource> { rp };
+            p.GeneralPractitioner.Add(new ResourceReference() { Reference = "#" + rp.Id, Display = "Brian Pos" });
+
+            // Add a value that is not marked as summary
+            p.MaritalStatus = new CodeableConcept
+            {
+                Coding = new System.Collections.Generic.List<Coding>()
+            };
+            p.MaritalStatus.Coding.Add(new Coding() { Code = "c", Display = "display", System = "http://example.org/system" });
+
+            var patientSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            var report = _validator.Validate(p, patientSd);
+            Assert.True(report.Success);
+            Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
+        }
+
         // Verify aggregated element constraints
         private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
