@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSchemaCollectionValidation()
         {
-            var s = File.ReadAllText(@"TestData\TestPatient.xml");
+            var s = File.ReadAllText(Path.Combine("TestData", "TestPatient.xml"));
             var doc = SerializationUtil.XDocumentFromXmlText(s);
 
             string message = null;
