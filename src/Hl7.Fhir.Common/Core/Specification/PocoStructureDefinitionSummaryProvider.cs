@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification
                 return null;
             }
 
-            Type csType = BaseFhirParser.Inspector.FindClassMappingForFhirDataType(typeName)?.NativeType;
+            Type csType = BaseFhirParser.Inspector.FindClassMappingByType(typeName)?.NativeType;
             if (csType == null) return null;
 
             return Provide(csType);
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification
 
         public static ClassMapping GetMappingForType(Type elementType)
         {
-            var inspector = Serialization.BaseFhirParser.Inspector;
+            var inspector = BaseFhirParser.Inspector;
             return inspector.ImportType(elementType);
         }
     }

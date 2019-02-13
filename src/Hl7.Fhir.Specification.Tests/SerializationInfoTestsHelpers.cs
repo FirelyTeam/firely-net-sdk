@@ -36,8 +36,8 @@ namespace Hl7.Fhir.Serialization.Tests
             tryGetType("string");
 
             // Try constrained quantities
-            tryGetType("SimpleQuantity", "Quantity");
-            tryGetType("Distance", "Quantity");
+            //tryGetType("SimpleQuantity", "Quantity");
+            //tryGetType("Distance", "Quantity");
 
             // The weird xhtml datatype
             tryGetType("xhtml");

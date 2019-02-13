@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.Integer), typeof(Hl7.Fhir.Model.FhirDecimal), typeof(Hl7.Fhir.Model.Base64Binary), typeof(Hl7.Fhir.Model.Instant), typeof(Hl7.Fhir.Model.FhirString), typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.FhirDateTime), typeof(Hl7.Fhir.Model.Time), typeof(Hl7.Fhir.Model.Code), typeof(Hl7.Fhir.Model.Oid), typeof(Hl7.Fhir.Model.Id), typeof(Hl7.Fhir.Model.UnsignedInt), typeof(Hl7.Fhir.Model.PositiveInt), typeof(Hl7.Fhir.Model.Markdown), typeof(Hl7.Fhir.Model.Identifier), typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.Coding), typeof(Quantity), typeof(Hl7.Fhir.Model.Period), typeof(Hl7.Fhir.Model.Signature), typeof(Hl7.Fhir.Model.Address), typeof(Hl7.Fhir.Model.ContactPoint), typeof(Hl7.Fhir.Model.ResourceReference), typeof(Hl7.Fhir.Model.Meta))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {

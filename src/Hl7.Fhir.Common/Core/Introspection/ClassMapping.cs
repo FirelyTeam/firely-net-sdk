@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Introspection
                 // Skip properties that are marked as NotMapped
                 if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
 
-                var propMapping = PropertyMapping.Create(property);      
+                var propMapping = PropertyMapping.Create(property);
                 var propKey = propMapping.Name.ToUpperInvariant();
 
                 if (me._propMappings.ContainsKey(propKey))
@@ -166,14 +166,16 @@ namespace Hl7.Fhir.Introspection
         private static string collectTypeName(Type type)
         {
             var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-            string name = attr?.Name ?? type.Name;
-           
-            if(ReflectionHelper.IsClosedGenericType(type))
+            string name = null;
+
+            name = attr?.Name ?? type.Name;
+            
+            if (ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
                 name += String.Join(",", type.GetTypeInfo().GenericTypeArguments.Select(arg => arg.FullName));
-				name += ">";
-			}
+                name += ">";
+            }
 
             return name;
         }
@@ -191,13 +193,9 @@ namespace Hl7.Fhir.Introspection
         public static bool IsProfiledQuantity(Type type)
         {
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type.GetTypeInfo());
-            var test = typeof(Quantity).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
-            return true;
-            //return typeof(Quantity).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
-            //       || (attr != null && attr.IsResource);
-            //var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-            //return typeof(Resource).IsAssignableFrom(type)
-            //       || (attr != null && attr.IsResource);
+
+            return typeof(Quantity).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
+                   || (attr != null && attr.IsQuantity);
         }
         
         public static bool IsMappableType(Type type)

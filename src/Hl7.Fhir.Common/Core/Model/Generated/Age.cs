@@ -41,7 +41,7 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Quantity")]
+    [FhirType("Age", IsQuantity = true)]
     public partial class Age : Quantity
     {
         [NotMapped]

@@ -92,6 +92,24 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
         }
 
+
+        [TestMethod]
+        public void TestTest()
+        {
+            Range range = new Range
+            {
+                High = new SimpleQuantity
+                {
+                    Value = 5m,
+                    Unit = "testUnit"
+                }
+            };
+            var ser = FhirXmlSerializer.SerializeToString(range);
+            var des = new FhirXmlParser().Parse<Range>(ser);
+
+            Assert.AreEqual(((Quantity)des.High).Value, range.High.Value);
+        }
+
         [TestMethod]
         public void AvoidBOMUse()
         {

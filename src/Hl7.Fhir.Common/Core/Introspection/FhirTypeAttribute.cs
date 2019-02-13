@@ -60,5 +60,6 @@ namespace Hl7.Fhir.Introspection
         public string Profile { get; set; }
 
         public bool IsResource { get; set; }
+        public bool IsQuantity { get; set; }
     }
 }

@@ -162,6 +162,7 @@ namespace Hl7.Fhir.ElementModel
                         summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
 
             var typeFound = BaseFhirParser.Inspector.FindClassMappingByType(typeName)?.NativeType;
+
             return ClassMapping.IsProfiledQuantity(typeFound) ? "Quantity" : typeName;
         }
 

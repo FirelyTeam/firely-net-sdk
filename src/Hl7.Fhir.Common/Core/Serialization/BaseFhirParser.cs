@@ -11,14 +11,15 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Reflection;
-
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization
 {
     public class BaseFhirParser
     {
         public readonly ParserSettings Settings;
-        public static Assembly PocoAssembly;
+        private static List<string> _assemblies = new List<string> { "Hl7.Fhir.DSTU2.Core", "Hl7.Fhir.STU3.Core", "Hl7.Fhir.R4.Core" };
 
         public BaseFhirParser(ParserSettings settings = null)
         {
@@ -32,12 +33,24 @@ namespace Hl7.Fhir.Serialization
             return new Lazy<ModelInspector>(() =>
             {
                 var result = new ModelInspector();
-
                 result.Import(typeof(Resource).GetTypeInfo().Assembly);
-                if (PocoAssembly != null)
+                //var coreAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name.Contains("Hl7.Fhir.DSTU2.Core"));
+                //var coreAssembly = Assembly.GetExecutingAssembly()
+                //    .GetReferencedAssemblies().SingleOrDefault(a => a.Name.Contains("Hl7.Fhir.DSTU2.Core"));
+                
+                foreach (var assemblyName in _assemblies)
                 {
-                    result.Import(PocoAssembly);
+                    try
+                    {
+                        Assembly coreAssembly = Assembly.Load(new AssemblyName(assemblyName));
+                        result.Import(coreAssembly);
+                        break;
+                    }
+                    catch
+                    {
+                    }
                 }
+
                 return result;
             });
 
