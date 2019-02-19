@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Specification.Source
         public FhirXmlParsingSettings XmlParserSettings
         {
             get => _xmlParserSettings;
-            set => _xmlParserSettings = value ?? FhirXmlParsingSettings.CreateDefault();
+            set => _xmlParserSettings = value?.Clone() ?? FhirXmlParsingSettings.CreateDefault();
         }
 
 
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Specification.Source
         public FhirJsonParsingSettings JsonParserSettings
         {
             get => _jsonParserSettings;
-            set => _jsonParserSettings = value ?? FhirJsonParsingSettings.CreateDefault();
+            set => _jsonParserSettings = value?.Clone() ?? FhirJsonParsingSettings.CreateDefault();
         }
 
         

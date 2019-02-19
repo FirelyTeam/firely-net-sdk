@@ -907,12 +907,8 @@ namespace Hl7.Fhir.Specification.Source
             settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
 
             // Also use the current PoCo parser settings
-            var pocoSettings = new PocoBuilderSettings();
-            if (settings.ParserSettings != null)
-            {
-                pocoSettings.AllowUnrecognizedEnums = settings.ParserSettings.AllowUnrecognizedEnums;
-                pocoSettings.IgnoreUnknownMembers = settings.ParserSettings.AllowUnrecognizedEnums;
-            };
+            var pocoSettings = PocoBuilderSettings.CreateDefault();
+            settings.ParserSettings?.CopyTo(pocoSettings);
 
             T result = null;
 

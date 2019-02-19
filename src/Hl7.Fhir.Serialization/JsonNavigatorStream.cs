@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Serialization
             _stream = stream ?? throw Error.ArgumentNull(nameof(stream));
             _reader = SerializationUtil.JsonReaderFromStream(stream);
             _disposeStream = disposeStream;
-            ParserSettings = settings ?? FhirJsonParsingSettings.CreateDefault();
+            ParserSettings = settings?.Clone() ?? FhirJsonParsingSettings.CreateDefault();
 
             // [WMR 20181026] TODO: Don't reset stream by default!
             // cf. XmlNavigatorStream

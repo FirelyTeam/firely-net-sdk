@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Serialization
         {
             _stream = stream ?? throw Error.ArgumentNull(nameof(stream));
             _disposeStream = disposeStream;
-            ParserSettings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            ParserSettings = settings?.Clone() ?? FhirXmlParsingSettings.CreateDefault();
 
             // Don't reset stream by default!
             // Relies on Stream.Seek() method, not supported by forward-only readers (e.g. zip archive)

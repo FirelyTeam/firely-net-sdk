@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Validation
         public SnapshotGeneratorSettings GenerateSnapshotSettings
         {
             get => _generateSnapshotSettings;
-            set => _generateSnapshotSettings = value ?? SnapshotGeneratorSettings.CreateDefault();
+            set => _generateSnapshotSettings = value?.Clone() ?? SnapshotGeneratorSettings.CreateDefault();
         }
 
         /// <summary>

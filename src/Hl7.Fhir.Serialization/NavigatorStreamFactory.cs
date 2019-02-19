@@ -113,8 +113,8 @@ namespace Hl7.Fhir.Serialization
         /// <param name="jsonParsingSettings">Configuration settings that control the behavior of the internal JSON parser.</param>
         public ConfigurableNavigatorStreamFactory(FhirXmlParsingSettings xmlParsingSettings, FhirJsonParsingSettings jsonParsingSettings)
         {
-            XmlParsingSettings = xmlParsingSettings ?? FhirXmlParsingSettings.CreateDefault();
-            JsonParsingSettings = jsonParsingSettings ?? FhirJsonParsingSettings.CreateDefault();
+            XmlParsingSettings = xmlParsingSettings?.Clone() ?? FhirXmlParsingSettings.CreateDefault();
+            JsonParsingSettings = jsonParsingSettings?.Clone() ?? FhirJsonParsingSettings.CreateDefault();
         }
 
         /// <summary>Create a new <see cref="ConfigurableNavigatorStreamFactory"/> instance.</summary>

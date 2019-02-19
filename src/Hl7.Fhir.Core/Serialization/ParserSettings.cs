@@ -62,6 +62,18 @@ namespace Hl7.Fhir.Serialization
             other.PermissiveParsing = PermissiveParsing;
         }
 
+        /// <summary>
+        /// Copy the necessary settings to PocoBuilderSettings
+        /// </summary>
+        /// <param name="settings">The instance where the settings are copied to.</param>
+        public void CopyTo(PocoBuilderSettings settings)
+        {
+            if (settings == null) throw Error.ArgumentNull(nameof(settings));
+
+            settings.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
+            settings.IgnoreUnknownMembers = AcceptUnknownMembers;
+        }
+
         /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>
         public ParserSettings Clone() => new ParserSettings(this);
 
