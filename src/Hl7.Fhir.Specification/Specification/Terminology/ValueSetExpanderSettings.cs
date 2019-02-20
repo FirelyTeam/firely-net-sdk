@@ -12,8 +12,12 @@ using System;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
+    /// <summary>Configuration settings for the <see cref="ValueSetExpander"/> class.</summary>
     public class ValueSetExpanderSettings
     {
+        /// <summary>Default value of the <see cref="MaxExpansionSize"/> property.</summary>
+        public const int DefaultMaxExpansionSize = 500;
+
         [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         public static ValueSetExpanderSettings Default = new ValueSetExpanderSettings();
 
@@ -25,7 +29,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// The maximum number of concepts to include in an expansion before the expander raises an error.
         /// </summary>
-        public int MaxExpansionSize { get; set; } = 500;
+        public int MaxExpansionSize { get; set; } = DefaultMaxExpansionSize;
 
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }

@@ -15,6 +15,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -479,6 +481,52 @@ namespace Hl7.Fhir.Specification.Tests
             finally
             {
                 Directory.Delete(tmpFolderPath, true);
+            }
+        }
+
+        [TestMethod]
+        public void TestParserSettings()
+        {
+            // Create an invalid patient resource on disk
+            var obs = new Observation()
+            {
+                Id = "1",
+                Comments = " " // Illegal empty value
+            };
+            var nav = obs.ToTypedElement();
+            var xml = nav.ToXml();
+
+            var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
+            var filePath = Path.Combine(folderPath, "TestPatient.xml");
+
+            try
+            {
+
+                Directory.CreateDirectory(folderPath);
+                File.WriteAllText(filePath, xml);
+
+                // Try to access using DirectorySource with default settings
+                var src = new DirectorySource(folderPath);
+
+                var uri = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(obs.TypeName, obs.Id);
+                Assert.AreEqual(@"http://example.org/Observation/1", uri);
+
+                // Expecting resolving to fail, because of illegal empty value
+                Assert.ThrowsException<FormatException>(() => { src.ResolveByUri(uri); });
+
+                // Bypass all verification; specifically, accept empty values
+                src.XmlParserSettings.PermissiveParsing = true;
+
+                // Expecting resolving to succeed
+                var result = src.ResolveByUri(uri);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOfType(result, typeof(Observation));
+
+            }
+            finally
+            {
+                // Clean up temporary files
+                Directory.Delete(folderPath, true);
             }
         }
     }

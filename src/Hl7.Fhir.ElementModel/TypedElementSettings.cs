@@ -38,7 +38,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Determines how to proceed when an element is encountered for which there is no type information available.
         /// </summary>
-        public TypeErrorMode ErrorMode;
+        public TypeErrorMode ErrorMode { get; set; } // = TypeErrorMode.Report;
 
         /// <summary>Default constructor. Creates a new <see cref="TypedElementSettings"/> instance with default property values.</summary>
         public TypedElementSettings() { }
