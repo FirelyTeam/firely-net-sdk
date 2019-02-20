@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Build a POCO from an IElementNode.
+        /// Build a POCO from an ITypedElement.
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>

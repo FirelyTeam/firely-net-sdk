@@ -207,7 +207,7 @@ namespace Hl7.Fhir.ElementModel
         /// it. This is used internally in a few places in the API, where the component using the <c>ITypedNode</c> is aware it
         /// cannot depend on type information being present, but should normally not be used.
         /// </remarks>
-        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into a typed ElementNode without providing" +
+        [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into an ITypedElement without providing" +
 "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
 "missing type information. Please don't use this overload unless you know what you are doing.")]
         public static ITypedElement ToTypedElement(this ISourceNode node) =>
