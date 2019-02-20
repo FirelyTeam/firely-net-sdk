@@ -552,7 +552,7 @@ namespace Hl7.FhirPath.Tests
 
             fixture.IsTrue("Patient.contained.name[0].family.indexOf('ywo') = 4");
             fixture.IsTrue("Patient.contained.name[0].family.indexOf('') = 0");
-            fixture.IsTrue("Patient.contained.name[0].family.indexOf('qq').empty()");
+            fixture.IsTrue("Patient.contained.name[0].family.indexOf('qq') = -1");
 
             fixture.IsTrue("Patient.contained.name[0].family.contains('ywo')");
             fixture.IsTrue("Patient.contained.name[0].family.contains('ywox')=false");

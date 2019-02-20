@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/SD/patient-slice-by-profile" />
   <name value="patient-identifier-profile-slice" />
   <title value="Slice Patient identifiers by profile" />
   <status value="draft" />
   <description value="An example profile where an element is sliced by profile (discriminator:&quot;@profile&quot;). Type profiles are created (outside this profile) by constraining the FHIR type. They are then applied to a named slice using the elementdefinition.type.profile element." />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="rim" />
@@ -33,8 +32,8 @@
     <name value="LOINC" />
   </mapping>
   <kind value="resource" />
-  <type value="Patient" />
   <abstract value="false" />
+  <type value="Patient" />
   <baseDefinition value="http://example.com/fhir/SD/patient-careprovider-type-reslice" />
   <snapshot>
     <element>
@@ -9334,14 +9333,12 @@
         <profile value="http://example.com/fhir/SD/patient-mrn-id" />
       </type>
     </element>
-
     <!-- [WMR 20161010] Added required slicing entry
     <element>
       <path value="Patient.identifier" />
       <name value="mrn/officialMRN" />
     </element>
     -->
-
     <element>
       <path value="Patient.identifier.use" />
       <!--sliceName value="mrn/officialMRN.use" -->

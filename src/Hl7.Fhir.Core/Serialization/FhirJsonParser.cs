@@ -9,6 +9,8 @@
 using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using System;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 
 
 namespace Hl7.Fhir.Serialization
@@ -23,7 +25,7 @@ namespace Hl7.Fhir.Serialization
         public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
-
+        
         private FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>
                 new FhirJsonParsingSettings
                 {

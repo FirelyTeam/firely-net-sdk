@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Serialization
         {
             JsonObject = root ?? throw Error.ArgumentNull(nameof(root));
 
-            var rootName = nodeName ?? JsonObject.GetResourceTypeFromObject();
+            var rootName = nodeName ?? ResourceType;
             Name = rootName ?? throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct an FhirJsonNode. " +
                     $"Alternatively, specify a {nameof(nodeName)} using the parameter.");
             Location = Name;
@@ -354,9 +355,28 @@ namespace Hl7.Fhir.Serialization
 
             object checkXhtml(ITypedElement nav, IExceptionSource ies, object _)
             {
-                if (nav.InstanceType == "xhtml" && _settings.ValidateFhirXhtml)
-                    FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
+                if (!_settings.PermissiveParsing)
+                {
+                    XDocument doc = null;
 
+                    if (nav.InstanceType == "xhtml")
+                    {
+                        try
+                        {
+                            doc = SerializationUtil.XDocumentFromXmlText((string) nav.Value);
+                        }
+                        catch (FormatException ex)
+                        {
+                            ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
+                                new StructuralTypeException(ex.Message)));
+                        }
+                    }
+
+                    if (doc != null && _settings.ValidateFhirXhtml)
+                    {
+                        FhirXmlNode.ValidateXhtml(doc, ies, nav);
+                    }
+                }
                 return null;
             }
 #endif

@@ -13,6 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -286,6 +287,23 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
             Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
+        }
+
+        [TestMethod]
+        public void NarrativeMustBeValidXml()
+        {
+            try
+            {
+                var json =
+                    "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
+                var patient = new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).Parse<Patient>(json);
+
+                Assert.Fail("Should have thrown on invalid Div format");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+            }
         }
     }
 }

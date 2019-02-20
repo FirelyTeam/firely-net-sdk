@@ -17,7 +17,7 @@
         <meta>
           <profile value="http://example.org/StructureDefinition/DocumentComposition"/>
         </meta>
-        <date value="2016-10-06"/>
+        <status value="final"/>
         <type>
           <coding>
             <system value="http://loinc.org"/>
@@ -28,14 +28,14 @@
             <code value="8716-3"/>
           </coding>
         </type>
-        <title value="A document with observations"/>
-        <status value="final"/>
         <subject>
           <reference value="http://example.org/fhir/Patient/Levin"/>
         </subject>
+        <date value="2016-10-06"/>   
         <author>
           <reference value="http://example.org/fhir/Practitioner/Hippocrates"/>
         </author>
+        <title value="A document with observations"/>
         <section>
           <title value="List of observations"/>
           <code>

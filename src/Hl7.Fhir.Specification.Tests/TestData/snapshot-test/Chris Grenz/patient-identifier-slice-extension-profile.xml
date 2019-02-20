@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/SD/patient-identifier-subslice" />
   <name value="patient-identifier-slice-extension" />
   <title value="Patient with Subslice" />
   <status value="draft" />
   <description value="This profile demonstrates a profile with an extension applicable to only one slice of an element.  Here, issuingSite is applicable only to MRNs (as sliced by identifier.system)." />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="rim" />
@@ -33,8 +32,8 @@
     <name value="LOINC" />
   </mapping>
   <kind value="resource" />
-  <type value="Patient" />
   <abstract value="false" />
+  <type value="Patient" />
   <baseDefinition value="http://example.com/fhir/SD/patient-slice-by-profile" />
   <snapshot>
     <element>
@@ -9164,7 +9163,6 @@
         <map value="n/a" />
       </mapping>
     </element>
-
     <!-- [WMR 20170411] TODO: Element is obsolete... -->
     <element>
       <path value="Patient.careProvider" />
@@ -9687,14 +9685,12 @@
       </slicing>
       <max value="2" />
     </element>
-
     <!-- [WMR 20161010] Added required slicing entry
     <element>
       <path value="Patient.identifier" />
       <name value="mrn" />
     </element>
     -->
-
     <element>
       <path value="Patient.identifier.extension" />
       <!-- [WMR 20170421] Fixed -->
