@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Condition"; } }
         
-        [FhirType("StageComponent")]
+        [FhirType("StageComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -170,9 +170,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Summary != null) yield return new ElementValue("summary", false, Summary);
-                    foreach (var elem in Assessment) { if (elem != null) yield return new ElementValue("assessment", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Summary != null) yield return new ElementValue("summary", Summary);
+                    foreach (var elem in Assessment) { if (elem != null) yield return new ElementValue("assessment", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
                 }
             }
 
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EvidenceComponent")]
+        [FhirType("EvidenceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -279,8 +279,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
                 }
             }
 
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | recurrence | relapse | well-controlled | poorly-controlled | inactive | remission | resolved
+        /// active | recurrence | relapse | inactive | remission | resolved
         /// </summary>
         [FhirElement("clinicalStatus", InSummary=true, Order=100)]
         [DataMember]
@@ -399,19 +399,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter or episode when condition first asserted
+        /// Encounter created as part of
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=170)]
+        [FhirElement("encounter", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Estimated or actual date,  date-time, or age
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("recorder", InSummary=true, Order=210)]
         [CLSCompliant(false)]
-		[References("Practitioner","Patient","RelatedPerson")]
+		[References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Recorder
         {
@@ -568,11 +568,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+            Expression = "clinicalStatus.exists() or verificationStatus='entered-in-error' or category.select($this='problem-list-item').empty()",
             Key = "con-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item",
+            Xpath = "exists(f:clinicalStatus) or f:verificationStatus/@value='entered-in-error' or not(exists(category[@value='problem-list-item']))"
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                 if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.Element)Abatement.DeepCopy();
                 if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Onset, otherT.Onset)) return false;
             if( !DeepComparable.Matches(Abatement, otherT.Abatement)) return false;
             if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Onset, otherT.Onset)) return false;
             if( !DeepComparable.IsExactly(Abatement, otherT.Abatement)) return false;
             if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (Onset != null) yield return Onset;
 				if (Abatement != null) yield return Abatement;
 				if (RecordedDateElement != null) yield return RecordedDateElement;
@@ -725,23 +725,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ClinicalStatus != null) yield return new ElementValue("clinicalStatus", false, ClinicalStatus);
-                if (VerificationStatus != null) yield return new ElementValue("verificationStatus", false, VerificationStatus);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Severity != null) yield return new ElementValue("severity", false, Severity);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                if (Abatement != null) yield return new ElementValue("abatement", false, Abatement);
-                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
-                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                if (Asserter != null) yield return new ElementValue("asserter", false, Asserter);
-                foreach (var elem in Stage) { if (elem != null) yield return new ElementValue("stage", true, elem); }
-                foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ClinicalStatus != null) yield return new ElementValue("clinicalStatus", ClinicalStatus);
+                if (VerificationStatus != null) yield return new ElementValue("verificationStatus", VerificationStatus);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Severity != null) yield return new ElementValue("severity", Severity);
+                if (Code != null) yield return new ElementValue("code", Code);
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Onset != null) yield return new ElementValue("onset", Onset);
+                if (Abatement != null) yield return new ElementValue("abatement", Abatement);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+                if (Asserter != null) yield return new ElementValue("asserter", Asserter);
+                foreach (var elem in Stage) { if (elem != null) yield return new ElementValue("stage", elem); }
+                foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

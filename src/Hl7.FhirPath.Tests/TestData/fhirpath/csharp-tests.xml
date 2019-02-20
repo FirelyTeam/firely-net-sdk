@@ -69,7 +69,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0018" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.name[0].family.indexOf('qq').empty()</expression>
+    <expression>Patient.contained.name[0].family.indexOf('qq') = -1</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0019" inputfile="fp-test-patient.xml">
@@ -153,35 +153,15 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0039" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group).count() = 4</expression>
-    <output type="boolean">true</output>
-  </test>
-  <test name="CSharpTest0040" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group|question).count() = 11</expression>
-    <output type="boolean">true</output>
-  </test>
-  <test name="CSharpTest0041" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group | question).count() = 11</expression>
-    <output type="boolean">true</output>
-  </test>
-  <test name="CSharpTest0042" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group|question).count() = 11</expression>
-    <output type="boolean">true</output>
+    <expression>Patient.contained.skip(1).repeat(item).count()</expression>
+    <output type="integer">10</output>
   </test>
   <test name="CSharpTest0043" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'</expression>
-    <output type="boolean">true</output>
-  </test>
-  <test name="CSharpTest0044" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')</expression>
-    <output type="boolean">true</output>
-  </test>
-  <test name="CSharpTest0045" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false</expression>
+    <expression>Patient.contained.skip(1).repeat(item).select(code.code) contains 'COMORBIDITY'</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0046" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')</expression>
+    <expression>Patient.contained.skip(1).repeat(item).any(code.code = 'CARDIAL')</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0047" inputfile="fp-test-patient.xml">
@@ -515,7 +495,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0130" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')</expression>
+    <expression>Patient.contained.skip(1).item.item.any(code.code = 'COMORB')</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0131" inputfile="fp-test-patient.xml">

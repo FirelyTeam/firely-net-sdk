@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             DataCollection,
         }
 
-        [FhirType("GroupComponent")]
+        [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -246,10 +246,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
-                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", MeasureScore);
+                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", elem); }
                 }
             }
 
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent")]
+        [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -390,9 +390,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", SubjectResults);
                 }
             }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent")]
+        [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -411,17 +411,18 @@ namespace Hl7.Fhir.Model
             /// What stratifier of the group
             /// </summary>
             [FhirElement("code", Order=40)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
             {
-                get { return _Code; }
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
             
             /// <summary>
-            /// Stratum results, one for each unique value in the stratifier
+            /// Stratum results, one for each unique value, or set of values, in the stratifier, or stratifier components
             /// </summary>
             [FhirElement("stratum", Order=50)]
             [Cardinality(Min=0,Max=-1)]
@@ -441,7 +442,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Stratum != null) dest.Stratum = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>(Stratum.DeepCopy());
                     return dest;
                 }
@@ -485,7 +486,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Code != null) yield return Code;
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
                     foreach (var elem in Stratum) { if (elem != null) yield return elem; }
                 }
             }
@@ -496,8 +497,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", true, elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", elem); }
                 }
             }
 
@@ -505,7 +506,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupComponent")]
+        [FhirType("StratifierGroupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -516,7 +517,6 @@ namespace Hl7.Fhir.Model
             /// The stratum value, e.g. male
             /// </summary>
             [FhirElement("value", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Value
             {
@@ -527,9 +527,23 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Value;
             
             /// <summary>
+            /// Stratifier component values
+            /// </summary>
+            [FhirElement("component", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> Component
+            {
+                get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(); return _Component; }
+                set { _Component = value; OnPropertyChanged("Component"); }
+            }
+            
+            private List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> _Component;
+            
+            /// <summary>
             /// Population results in this stratum
             /// </summary>
-            [FhirElement("population", Order=50)]
+            [FhirElement("population", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
@@ -543,7 +557,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What score this stratum achieved
             /// </summary>
-            [FhirElement("measureScore", Order=60)]
+            [FhirElement("measureScore", Order=70)]
             [DataMember]
             public Quantity MeasureScore
             {
@@ -561,6 +575,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    if(Component != null) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopy());
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
                     if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
                     return dest;
@@ -581,6 +596,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Component, otherT.Component)) return false;
                 if( !DeepComparable.Matches(Population, otherT.Population)) return false;
                 if( !DeepComparable.Matches(MeasureScore, otherT.MeasureScore)) return false;
                 
@@ -594,6 +610,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
                 if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
                 if( !DeepComparable.IsExactly(MeasureScore, otherT.MeasureScore)) return false;
                 
@@ -608,6 +625,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Value != null) yield return Value;
+                    foreach (var elem in Component) { if (elem != null) yield return elem; }
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
                     if (MeasureScore != null) yield return MeasureScore;
                 }
@@ -619,9 +637,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
-                    if (MeasureScore != null) yield return new ElementValue("measureScore", false, MeasureScore);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+                    if (MeasureScore != null) yield return new ElementValue("measureScore", MeasureScore);
                 }
             }
 
@@ -629,7 +648,113 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupPopulationComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ComponentComponent"; } }
+            
+            /// <summary>
+            /// What stratifier component of the group
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// The stratum component value, e.g. male
+            /// </summary>
+            [FhirElement("value", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Value;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ComponentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ComponentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
+                }
+            }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("StratifierGroupPopulationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -762,9 +887,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
-                    if (SubjectResults != null) yield return new ElementValue("subjectResults", false, SubjectResults);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CountElement != null) yield return new ElementValue("count", CountElement);
+                    if (SubjectResults != null) yield return new ElementValue("subjectResults", SubjectResults);
                 }
             }
 
@@ -966,32 +1091,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("improvementNotation", InSummary=true, Order=170)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MeasureImprovementNotation> ImprovementNotationElement
+        public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
         {
-            get { return _ImprovementNotationElement; }
-            set { _ImprovementNotationElement = value; OnPropertyChanged("ImprovementNotationElement"); }
+            get { return _ImprovementNotation; }
+            set { _ImprovementNotation = value; OnPropertyChanged("ImprovementNotation"); }
         }
         
-        private Code<Hl7.Fhir.Model.MeasureImprovementNotation> _ImprovementNotationElement;
-        
-        /// <summary>
-        /// increase | decrease
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MeasureImprovementNotation? ImprovementNotation
-        {
-            get { return ImprovementNotationElement != null ? ImprovementNotationElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ImprovementNotationElement = null; 
-                else
-                  ImprovementNotationElement = new Code<Hl7.Fhir.Model.MeasureImprovementNotation>(value);
-                OnPropertyChanged("ImprovementNotation");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _ImprovementNotation;
         
         /// <summary>
         /// Measure results for each group
@@ -1024,6 +1130,15 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
         
 
+        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "group.stratifier.stratum.all(value.exists() xor component.exists())",
+            Key = "mrp-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Stratifiers SHALL be either a single criteria or a set of criteria components",
+            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
+        };
+
         public static ElementDefinition.ConstraintComponent MeasureReport_MRP_1 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "(type != 'data-collection') or group.exists().not()",
@@ -1037,6 +1152,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(MeasureReport_MRP_2);
             InvariantConstraints.Add(MeasureReport_MRP_1);
         }
 
@@ -1055,7 +1171,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(ImprovementNotationElement != null) dest.ImprovementNotationElement = (Code<Hl7.Fhir.Model.MeasureImprovementNotation>)ImprovementNotationElement.DeepCopy();
+                if(ImprovementNotation != null) dest.ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)ImprovementNotation.DeepCopy();
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
                 if(EvaluatedResource != null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopy());
                 return dest;
@@ -1083,7 +1199,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
+            if( !DeepComparable.Matches(ImprovementNotation, otherT.ImprovementNotation)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
             if( !DeepComparable.Matches(EvaluatedResource, otherT.EvaluatedResource)) return false;
             
@@ -1104,7 +1220,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
+            if( !DeepComparable.IsExactly(ImprovementNotation, otherT.ImprovementNotation)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
             if( !DeepComparable.IsExactly(EvaluatedResource, otherT.EvaluatedResource)) return false;
             
@@ -1125,7 +1241,7 @@ namespace Hl7.Fhir.Model
 				if (DateElement != null) yield return DateElement;
 				if (Reporter != null) yield return Reporter;
 				if (Period != null) yield return Period;
-				if (ImprovementNotationElement != null) yield return ImprovementNotationElement;
+				if (ImprovementNotation != null) yield return ImprovementNotation;
 				foreach (var elem in Group) { if (elem != null) yield return elem; }
 				foreach (var elem in EvaluatedResource) { if (elem != null) yield return elem; }
             }
@@ -1137,17 +1253,17 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (MeasureElement != null) yield return new ElementValue("measure", false, MeasureElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (ImprovementNotationElement != null) yield return new ElementValue("improvementNotation", false, ImprovementNotationElement);
-                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
-                foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (MeasureElement != null) yield return new ElementValue("measure", MeasureElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Reporter != null) yield return new ElementValue("reporter", Reporter);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (ImprovementNotation != null) yield return new ElementValue("improvementNotation", ImprovementNotation);
+                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
+                foreach (var elem in EvaluatedResource) { if (elem != null) yield return new ElementValue("evaluatedResource", elem); }
             }
         }
 

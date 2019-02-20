@@ -99,9 +99,9 @@ namespace Hl7.Fhir.Specification.Tests
             if (!DeepComparable.IsExactly(elem.Code, other.Code)) { l.Add(nameof(ElementDefinition.Code)); }
             if (!DeepComparable.IsExactly(elem.Slicing, other.Slicing)) { l.Add(nameof(ElementDefinition.Slicing)); }
             if (!DeepComparable.IsExactly(elem.ShortElement, other.ShortElement)) { l.Add(nameof(ElementDefinition.Short)); }
-            if (!DeepComparable.IsExactly(elem.DefinitionElement, other.DefinitionElement)) { l.Add(nameof(ElementDefinition.Definition)); }
-            if (!DeepComparable.IsExactly(elem.CommentElement, other.CommentElement)) { l.Add(nameof(ElementDefinition.Comment)); }
-            if (!DeepComparable.IsExactly(elem.RequirementsElement, other.RequirementsElement)) { l.Add(nameof(ElementDefinition.Requirements)); }
+            if (!DeepComparable.IsExactly(elem.Definition, other.Definition)) { l.Add(nameof(ElementDefinition.Definition)); }
+            if (!DeepComparable.IsExactly(elem.Comment, other.Comment)) { l.Add(nameof(ElementDefinition.Comment)); }
+            if (!DeepComparable.IsExactly(elem.Requirements, other.Requirements)) { l.Add(nameof(ElementDefinition.Requirements)); }
             if (!DeepComparable.IsExactly(elem.AliasElement, other.AliasElement)) { l.Add(nameof(ElementDefinition.Alias)); }
             if (!DeepComparable.IsExactly(elem.MinElement, other.MinElement)) { l.Add(nameof(ElementDefinition.Min)); }
             if (!DeepComparable.IsExactly(elem.MaxElement, other.MaxElement)) { l.Add(nameof(ElementDefinition.Max)); }
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!DeepComparable.IsExactly(elem.ContentReferenceElement, other.ContentReferenceElement)) { l.Add(nameof(ElementDefinition.ContentReference)); }
             if (!DeepComparable.IsExactly(elem.Type, other.Type)) { l.Add(nameof(ElementDefinition.Type)); }
             if (!DeepComparable.IsExactly(elem.DefaultValue, other.DefaultValue)) { l.Add(nameof(ElementDefinition.DefaultValue)); }
-            if (!DeepComparable.IsExactly(elem.MeaningWhenMissingElement, other.MeaningWhenMissingElement)) { l.Add(nameof(ElementDefinition.MeaningWhenMissing)); }
+            if (!DeepComparable.IsExactly(elem.MeaningWhenMissing, other.MeaningWhenMissing)) { l.Add(nameof(ElementDefinition.MeaningWhenMissing)); }
             if (!DeepComparable.IsExactly(elem.OrderMeaningElement, other.OrderMeaningElement)) { l.Add(nameof(ElementDefinition.OrderMeaning)); }
             if (!DeepComparable.IsExactly(elem.Fixed, other.Fixed)) { l.Add(nameof(ElementDefinition.Fixed)); }
             if (!DeepComparable.IsExactly(elem.Pattern, other.Pattern)) { l.Add(nameof(ElementDefinition.Pattern)); }
@@ -121,6 +121,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!DeepComparable.IsExactly(elem.Constraint, other.Constraint)) { l.Add(nameof(ElementDefinition.Constraint)); }
             if (!DeepComparable.IsExactly(elem.MustSupportElement, other.MustSupportElement)) { l.Add(nameof(ElementDefinition.MustSupport)); }
             if (!DeepComparable.IsExactly(elem.IsModifierElement, other.IsModifierElement)) { l.Add(nameof(ElementDefinition.IsModifier)); }
+            if (!DeepComparable.IsExactly(elem.IsModifierReasonElement, other.IsModifierReasonElement)) { l.Add(nameof(ElementDefinition.IsModifier)); }
             if (!DeepComparable.IsExactly(elem.IsSummaryElement, other.IsSummaryElement)) { l.Add(nameof(ElementDefinition.IsSummary)); }
             if (!DeepComparable.IsExactly(elem.Binding, other.Binding)) { l.Add(nameof(ElementDefinition.Binding)); }
             if (!DeepComparable.IsExactly(elem.Mapping, other.Mapping)) { l.Add(nameof(ElementDefinition.Mapping)); }

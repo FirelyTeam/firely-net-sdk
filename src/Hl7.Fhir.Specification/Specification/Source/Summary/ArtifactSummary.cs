@@ -6,8 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-#if NET_FILESYSTEM
-
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
@@ -102,6 +100,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>If <c>true</c>, then the <see cref="Error"/> property returns detailed error information.</remarks>
         public bool IsFaulted => Error != null; // cf. Task
 
+        /// <summary>Indicates if the summary describes a valid FHIR resource.</summary>
+        /// <value>Returns <c>true</c> if <see cref="ResourceType"/> is known (not <c>null</c>), or <c>false</c> otherwise.</value>
+        public bool IsFhirResource => ResourceType != null;
+
         /// <summary>Gets the original location of the associated artifact.</summary>
         public string Origin => properties.GetOrigin();
 
@@ -109,7 +111,7 @@ namespace Hl7.Fhir.Specification.Source
         public long? FileSize => properties.GetFileSize();
 
         /// <summary>Gets the last modified date of the original artifact file.</summary>
-        public DateTime? LastModified => properties.GetLastModified();
+        public DateTimeOffset? LastModified => properties.GetLastModified();
 
         /// <summary>
         /// Get a string value that represents the artifact serialization format,
@@ -178,5 +180,3 @@ namespace Hl7.Fhir.Specification.Source
              + (IsFaulted ? " | Error: " + Error.Message : string.Empty);
     }
 }
-
-#endif

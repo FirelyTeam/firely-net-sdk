@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AdverseEvent"; } }
         
         /// <summary>
-        /// Overall nature of the event, e.g. real or potential.
+        /// Overall nature of the adverse event, e.g. real or potential.
         /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
         /// </summary>
         [FhirEnumeration("AdverseEventActuality")]
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             Potential,
         }
 
-        [FhirType("SuspectEntityComponent")]
+        [FhirType("SuspectEntityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -175,8 +175,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Instance != null) yield return new ElementValue("instance", false, Instance);
-                    foreach (var elem in Causality) { if (elem != null) yield return new ElementValue("causality", true, elem); }
+                    if (Instance != null) yield return new ElementValue("instance", Instance);
+                    foreach (var elem in Causality) { if (elem != null) yield return new ElementValue("causality", elem); }
                 }
             }
 
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CausalityComponent")]
+        [FhirType("CausalityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -334,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Assessment != null) yield return new ElementValue("assessment", false, Assessment);
-                    if (ProductRelatednessElement != null) yield return new ElementValue("productRelatedness", false, ProductRelatednessElement);
-                    if (Author != null) yield return new ElementValue("author", false, Author);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
+                    if (Assessment != null) yield return new ElementValue("assessment", Assessment);
+                    if (ProductRelatednessElement != null) yield return new ElementValue("productRelatedness", ProductRelatednessElement);
+                    if (Author != null) yield return new ElementValue("author", Author);
+                    if (Method != null) yield return new ElementValue("method", Method);
                 }
             }
 
@@ -435,19 +435,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter or episode of care that establishes the context for this AdverseEvent
+        /// Encounter created as part of
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=140)]
+        [FhirElement("encounter", InSummary=true, Order=140)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When the event occurred
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("recorder", InSummary=true, Order=230)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","RelatedPerson")]
+		[References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Recorder
         {
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("contributor", InSummary=true, Order=240)]
         [CLSCompliant(false)]
-		[References("Practitioner","Device")]
+		[References("Practitioner","PractitionerRole","Device")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Contributor
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.CodeableConcept)Event.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DetectedElement != null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)DetectedElement.DeepCopy();
                 if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(DetectedElement, otherT.DetectedElement)) return false;
             if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(DetectedElement, otherT.DetectedElement)) return false;
             if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Event != null) yield return Event;
 				if (Subject != null) yield return Subject;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (DateElement != null) yield return DateElement;
 				if (DetectedElement != null) yield return DetectedElement;
 				if (RecordedDateElement != null) yield return RecordedDateElement;
@@ -848,26 +848,26 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (ActualityElement != null) yield return new ElementValue("actuality", false, ActualityElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Event != null) yield return new ElementValue("event", false, Event);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (DetectedElement != null) yield return new ElementValue("detected", false, DetectedElement);
-                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
-                foreach (var elem in ResultingCondition) { if (elem != null) yield return new ElementValue("resultingCondition", true, elem); }
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (Seriousness != null) yield return new ElementValue("seriousness", false, Seriousness);
-                if (Severity != null) yield return new ElementValue("severity", false, Severity);
-                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
-                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", true, elem); }
-                foreach (var elem in SuspectEntity) { if (elem != null) yield return new ElementValue("suspectEntity", true, elem); }
-                foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return new ElementValue("subjectMedicalHistory", true, elem); }
-                foreach (var elem in ReferenceDocument) { if (elem != null) yield return new ElementValue("referenceDocument", true, elem); }
-                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (ActualityElement != null) yield return new ElementValue("actuality", ActualityElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Event != null) yield return new ElementValue("event", Event);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (DetectedElement != null) yield return new ElementValue("detected", DetectedElement);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+                foreach (var elem in ResultingCondition) { if (elem != null) yield return new ElementValue("resultingCondition", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (Seriousness != null) yield return new ElementValue("seriousness", Seriousness);
+                if (Severity != null) yield return new ElementValue("severity", Severity);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", elem); }
+                foreach (var elem in SuspectEntity) { if (elem != null) yield return new ElementValue("suspectEntity", elem); }
+                foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return new ElementValue("subjectMedicalHistory", elem); }
+                foreach (var elem in ReferenceDocument) { if (elem != null) yield return new ElementValue("referenceDocument", elem); }
+                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", elem); }
             }
         }
 

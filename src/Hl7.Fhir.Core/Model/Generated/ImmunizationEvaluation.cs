@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,15 +64,15 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-admin-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
             /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/medication-admin-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-admin-status)
+            /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-admin-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
@@ -450,19 +450,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
-                if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", false, ImmunizationEvent);
-                if (DoseStatus != null) yield return new ElementValue("doseStatus", false, DoseStatus);
-                foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
-                if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Authority != null) yield return new ElementValue("authority", Authority);
+                if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
+                if (ImmunizationEvent != null) yield return new ElementValue("immunizationEvent", ImmunizationEvent);
+                if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
+                foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+                if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
+                if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
             }
         }
 

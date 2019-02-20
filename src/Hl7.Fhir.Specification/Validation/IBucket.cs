@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
         /// <param name="candidate"></param>
         /// <remarks><paramref value='sequential' /> ensures the slice only tries to match the list of candidates in order: the first non-matching candidate
         /// ends further evaluation of the list of canidates. This improves performance for ordered slices.</remarks>
-        bool Add(ScopedNavigator candidate);
+        bool Add(ITypedElement candidate);
 
         /// <summary>
         /// The results of the last call to Receive().
@@ -33,8 +33,8 @@ namespace Hl7.Fhir.Validation
 
         string Name { get; }
 
-        IList<ScopedNavigator> Members { get; }
+        IList<ITypedElement> Members { get; }
 
-        OperationOutcome Validate(Validator validator, IElementNavigator errorLocation);
+        OperationOutcome Validate(Validator validator, ITypedElement errorLocation);
     }
 }

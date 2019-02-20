@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Information summarized from a list of other resources
+    /// A list is a curated collection of resources
     /// </summary>
     [FhirType("List", IsResource=true)]
     [DataContract]
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("EntryComponent")]
+        [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -252,10 +252,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Flag != null) yield return new ElementValue("flag", false, Flag);
-                    if (DeletedElement != null) yield return new ElementValue("deleted", false, DeletedElement);
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (Flag != null) yield return new ElementValue("flag", Flag);
+                    if (DeletedElement != null) yield return new ElementValue("deleted", DeletedElement);
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (Item != null) yield return new ElementValue("item", Item);
                 }
             }
 
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
             Expression = "mode = 'working' or entry.date.empty()",
             Key = "lst-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A date can only be used if the mode of the list is \"working\"",
+            Human = "An entry date can only be used if the mode of the list is \"working\"",
             Xpath = "(f:mode/@value = 'working') or not(exists(f:entry/f:date))"
         };
 
@@ -661,19 +661,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
-                if (EmptyReason != null) yield return new ElementValue("emptyReason", false, EmptyReason);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (OrderedBy != null) yield return new ElementValue("orderedBy", OrderedBy);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
+                if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
             }
         }
 

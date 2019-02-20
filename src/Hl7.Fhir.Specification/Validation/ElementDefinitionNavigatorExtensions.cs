@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
@@ -24,21 +25,71 @@ namespace Hl7.Fhir.Validation
             return cc.Expression;
         }
 
+        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed) =>
+                   ed.Path.EndsWith(".value") && IsPrimitiveConstraint(ed);
 
-//#if NETSTANDARD1_1
-//        public static int Count(this string s, Func<char, bool> predicate)
-//        {
-//            return s.ToCharArray().Where(predicate).Count();
-//        }
-//#endif
+        // EK 20190109 BUG: Our snapshot generator, when constraining .value elements, does not bring in the
+        // original extensions/empty code element - so in profiles that constraint .value, this check does not
+        // recognize primitive constraints anymore. The commented out code is what I would like to have when
+        // this gets fixed.
+#if true
 
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
+        public static bool IsPrimitiveConstraint(this ElementDefinition ed)
         {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
+            // [WMR 20190124] #827
+            // R4: ElementDefinition.type.code.value is empty for primitive core element definitions:
+            // - [Primitive].value
+            // - Extension.url
+            var isPrimitive = ed.Type.Count == 1 && ed.Type[0].Code is null;
 
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
+#if DEBUG
+            // DEBUGGING
+
+            // Assuming that ed is fully specified (originates from a snapshot component), then
+            // we only expect to find empty type code in combination with special "compiler magic" extensions
+            if (isPrimitive)
+            {
+                Debug.Assert(ed.Type[0].CodeElement.Extension.Count >= 3);
+                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null);
+                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type") != null);
+                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type") != null);
+
+                // Elements represented as XmlAttr (and Xhtml) are always primitives
+                Debug.Assert(
+                    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr) ||
+                    // For xhtml.value
+                    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.Xhtml)
+                );
+
+            }
+
+#endif
+
+            return isPrimitive;
+
+            //var result = ed.Type.Any() 
+            //    && ed.Type.First().CodeElement != null 
+            //    && ed.Type.First().CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null;
+
+            //var result2 = ed.Representation.Any() ?
+            //    (ed.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr) ||
+            //     ed.Representation.Contains(ElementDefinition.PropertyRepresentation.Xhtml))
+            //: false;
+
+            ////System.Diagnostics.Debug.Assert(result == result2);
+            //return result;
         }
+#else
+        public static bool IsPrimitiveConstraint(this ElementDefinition ed)
+            => ed.Representation.Any() ?
+                (ed.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr) ||
+                 ed.Representation.Contains(ElementDefinition.PropertyRepresentation.Xhtml))
+            : false;
+            // ed.Type.Any() 
+            //&& ed.Type.First().CodeElement != null 
+            //&& ed.Type.First().CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null;
+#endif
+
 
         internal static bool IsResourcePlaceholder(this ElementDefinition ed)
         {

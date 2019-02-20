@@ -1,136 +1,179 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <CarePlan xmlns="http://hl7.org/fhir">
   <id value="integrate"/>
   <text>
     <status value="generated"/>
     <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Patient family is not ready to commit to goal setting at this time.  Goal setting will be addressed in the future</p>
+      <p>
+        Patient family is not ready to commit to goal setting at this time.  Goal setting will
+        be addressed in the future
+      </p>
       <table>
         <thead>
           <tr>
-            <th>Start Date</th>
-            <th>Goal</th>
-            <th>Action Steps</th>
-            <th>Status</th>
-            <th>Date Last Updated</th>
-            <th>Comments</th>
+            <th> Start Date</th>
+            <th> Goal</th>
+            <th> Action Steps</th>
+            <th> Status</th>
+            <th> Date Last Updated</th>
+            <th> Comments</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>10 Sep 2012</td>
-            <td>Eve will lose weight and reduce her GERDS symptoms by improving her diet</td>
-            <td>Eve will review photos of high and low density foods and share with her parents</td>
-            <td>New Goal</td>
-            <td>10 Sep 2012</td>
-            <td>9/10/12 Eve eats one meal a day with her parents</td>
+            <td> 10 Sep 2012</td>
+            <td> Eve will lose weight and reduce her GERDS symptoms by improving her diet</td>
+            <td> Eve will review photos of high and low density foods and share with her parents</td>
+            <td> New Goal</td>
+            <td> 10 Sep 2012</td>
+            <td> 9/10/12 Eve eats one meal a day with her parents</td>
           </tr>
           <tr>
-            <td>10 Sep 2012</td>
-            <td>Eve will lose weight and reduce her GERDS symptoms by improving her diet</td>
-            <td>Eve will ask her dad to asist her to put the head of her bed on blocks</td>
-            <td>New Goal</td>
-            <td>10 Sep 2012</td>
-            <td>9/10/12 Eve will sleep in her bed more often than the couch</td>
+            <td> 10 Sep 2012</td>
+            <td> Eve will lose weight and reduce her GERDS symptoms by improving her diet</td>
+            <td> Eve will ask her dad to asist her to put the head of her bed on blocks</td>
+            <td> New Goal</td>
+            <td> 10 Sep 2012</td>
+            <td> 9/10/12 Eve will sleep in her bed more often than the couch</td>
           </tr>
           <tr>
-            <td>10 Sep 2012</td>
-            <td>Eve will improve her GERDS symptoms</td>
-            <td>Eve will reduce her intake of coffee and chocolate</td>
-            <td>In Process</td>
-            <td>10 Sep 2012</td>
+            <td> 10 Sep 2012</td>
+            <td> Eve will improve her GERDS symptoms</td>
+            <td> Eve will reduce her intake of coffee and chocolate</td>
+            <td> In Process</td>
+            <td> 10 Sep 2012</td>
             <td/>
           </tr>
           <tr>
-            <td>27 Aug 2012</td>
-            <td>Eve will increase her energy by being more active</td>
-            <td>Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week</td>
-            <td>In Process</td>
-            <td>10 Sep 2012</td>
-            <td>8/27/12 Eve would like to try for 5 days a week.  9/10/12 Eve is still walking the dogs.</td>
+            <td> 27 Aug 2012</td>
+            <td> Eve will increase her energy by being more active</td>
+            <td> Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week</td>
+            <td> In Process</td>
+            <td> 10 Sep 2012</td>
+            <td> 8/27/12 Eve would like to try for 5 days a week.  9/10/12 Eve is still walking the dogs.</td>
           </tr>
           <tr>
-            <td>23 Jul 2012</td>
-            <td>Eve will increase her energy by being more active</td>
-            <td>Eve will walk 3 blocks to her parents house twice a week</td>
-            <td>In Process</td>
-            <td>10 Sep 2012</td>
-            <td>8/13/12 Eve walked 4 times the last week.  9/10/12 Eve did not walk to her parents the last week, but has plans to start again</td>
+            <td> 23 Jul 2012</td>
+            <td> Eve will increase her energy by being more active</td>
+            <td> Eve will walk 3 blocks to her parents house twice a week</td>
+            <td> In Process</td>
+            <td> 10 Sep 2012</td>
+            <td>
+              8/13/12 Eve walked 4 times the last week.  9/10/12 Eve did not walk to her parents the
+              last week, but has plans to start again
+            </td>
           </tr>
           <tr>
-            <td>23 Jul 2012</td>
-            <td>Eve will set up her medications and take as prescribed</td>
-            <td>Eve will us a calendar to check off after medications are taken</td>
-            <td>In Process</td>
-            <td>13 Aug 2012</td>
+            <td> 23 Jul 2012</td>
+            <td> Eve will set up her medications and take as prescribed</td>
+            <td> Eve will us a calendar to check off after medications are taken</td>
+            <td> In Process</td>
+            <td> 13 Aug 2012</td>
             <td/>
           </tr>
           <tr>
-            <td>23 Jul 2012</td>
-            <td>Eve will restart her light treatments</td>
-            <td>Eve will use her lights MWF after her shower for 3 minutes</td>
-            <td>In Process</td>
-            <td>27 Aug 2012</td>
-            <td>8/13/12 After restarting the vinegar soaks the psoriasis is improved and Eve plans to treat the remainder with light treatments.  She plans to start this week.  8/27/12 Since her skin is improved Eve has not been using the light treatment as often, maybe once a week.  She would like to increase to 3 times a week again</td>
+            <td> 23 Jul 2012</td>
+            <td> Eve will restart her light treatments</td>
+            <td> Eve will use her lights MWF after her shower for 3 minutes</td>
+            <td> In Process</td>
+            <td> 27 Aug 2012</td>
+            <td>
+              8/13/12 After restarting the vinegar soaks the psoriasis is improved and Eve plans to
+              treat the remainder with light treatments.  She plans to start this week.  8/27/12 Since
+              her skin is improved Eve has not been using the light treatment as often, maybe once a
+              week.  She would like to increase to 3 times a week again
+            </td>
           </tr>
           <tr>
-            <td>10 Jul 2012</td>
-            <td>Eve will set up her medications and take as prescribed</td>
-            <td>Eve will use a calendar of a chart to help her remember when to take her medications</td>
-            <td>In Process</td>
-            <td>10 Sep 2012</td>
-            <td>7/23/12 Eve created a chart as a reminer to take the medications that do not fit in her pill box</td>
+            <td> 10 Jul 2012</td>
+            <td> Eve will set up her medications and take as prescribed</td>
+            <td> Eve will use a calendar of a chart to help her remember when to take her medications</td>
+            <td> In Process</td>
+            <td> 10 Sep 2012</td>
+            <td>
+              7/23/12 Eve created a chart as a reminer to take the medications that do not fit in her
+              pill box
+            </td>
           </tr>
           <tr>
-            <td>23 Jul 2012</td>
-            <td>Eve will increase her energy by being more active</td>
-            <td>Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe Friday afternoon</td>
-            <td>On-Hold</td>
-            <td>23 Aug 2012</td>
-            <td>7/30/12 will be able to esume exercise.  8/13/12 Eve prefers to focus on walking at this time</td>
+            <td> 23 Jul 2012</td>
+            <td> Eve will increase her energy by being more active</td>
+            <td>
+              Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe
+              Friday afternoon
+            </td>
+            <td> On-Hold</td>
+            <td> 23 Aug 2012</td>
+            <td>
+              7/30/12 will be able to esume exercise.  8/13/12 Eve prefers to focus on walking at this
+              time
+            </td>
           </tr>
           <tr>
-            <td>10 Jul 2012</td>
-            <td>Eve will set up her medications and take as prescribed</td>
-            <td>Eve will match a printed medication worksheet with the medication bottles at home</td>
-            <td>Completed</td>
-            <td>23 Jul 2012</td>
+            <td> 10 Jul 2012</td>
+            <td> Eve will set up her medications and take as prescribed</td>
+            <td> Eve will match a printed medication worksheet with the medication bottles at home</td>
+            <td> Completed</td>
+            <td> 23 Jul 2012</td>
             <td/>
           </tr>
           <tr>
-            <td>10 Jul 2012</td>
-            <td>Eve will set up her medications and take as prescribed</td>
-            <td>Eve will get a medication box to sort her pills.  She will have one for scheduled medications and one for as needed</td>
-            <td>Completed</td>
-            <td>16 Jul 2012</td>
-            <td>7/16/12 Eve now has some of her medications set up in pill packs by her pharmacist</td>
+            <td> 10 Jul 2012</td>
+            <td> Eve will set up her medications and take as prescribed</td>
+            <td>
+              Eve will get a medication box to sort her pills.  She will have one for scheduled medications
+              and one for as needed
+            </td>
+            <td> Completed</td>
+            <td> 16 Jul 2012</td>
+            <td> 7/16/12 Eve now has some of her medications set up in pill packs by her pharmacist</td>
           </tr>
           <tr>
-            <td>23 Jul 2012</td>
-            <td>Eve will increase her energy by being more active</td>
-            <td>Eve will open &quot;The Firm&quot; DVD workout package and listen to it</td>
-            <td>Discontinued</td>
-            <td>13 Aug 2012</td>
-            <td>7/30/12 Eve will be able to resume exercise on 7/30/12.  8/13/12 -hold until &quot;less busy&quot;</td>
+            <td> 23 Jul 2012</td>
+            <td> Eve will increase her energy by being more active</td>
+            <td> Eve will open &quot;The Firm&quot; DVD workout package and listen to it</td>
+            <td> Discontinued</td>
+            <td> 13 Aug 2012</td>
+            <td>
+              7/30/12 Eve will be able to resume exercise on 7/30/12.  8/13/12 -hold until &quot;less
+              busy&quot;
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </text>
   <contained>
-    <!--  Conditions could be further encoded and detailed.  
+      <Patient>
+        <id value="pat1"/>
+      </Patient>
+  </contained>
+
+  <contained>
+    <!--   Conditions could be further encoded and detailed.  
       Could also be handled as references to external resources.
       And not essential to have them captured at all.
-      For purposes of example, will represent this way.  -->
+      For purposes of example, will represent this way.   -->
     <Condition>
       <id value="p1"/>
-      <clinicalStatus value="active"/>
-      <verificationStatus value="confirmed"/>
+      <clinicalStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+          <code value="active"/>
+        </coding>
+      </clinicalStatus>
+
+      <verificationStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+          <code value="confirmed"/>
+        </coding>
+      </verificationStatus>
       <code>
         <text value="GERDS"/>
       </code>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -138,13 +181,24 @@
   <contained>
     <Condition>
       <id value="p2"/>
-      <clinicalStatus value="active"/>
-      <verificationStatus value="confirmed"/>
+      <clinicalStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+          <code value="active"/>
+        </coding>
+      </clinicalStatus>
+
+      <verificationStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+          <code value="confirmed"/>
+        </coding>
+      </verificationStatus>
       <code>
         <text value="Obesity"/>
       </code>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -152,13 +206,24 @@
   <contained>
     <Condition>
       <id value="p3"/>
-      <clinicalStatus value="active"/>
-      <verificationStatus value="confirmed"/>
+      <clinicalStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+          <code value="active"/>
+        </coding>
+      </clinicalStatus>
+
+      <verificationStatus>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+          <code value="confirmed"/>
+        </coding>
+      </verificationStatus>
       <code>
         <text value="Psoriasis"/>
       </code>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -166,12 +231,12 @@
   <contained>
     <Goal>
       <id value="g1"/>
-      <status value="in-progress"/>
+      <lifecycleStatus value="active"/>
       <description>
         <text value="Eve will lose weight and reduce her GERDS symptoms by improving her diet"/>
       </description>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -179,12 +244,12 @@
   <contained>
     <Goal>
       <id value="g2"/>
-      <status value="in-progress"/>
+      <lifecycleStatus value="active"/>
       <description>
         <text value="Eve will improve her GERDS symptoms"/>
       </description>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -192,12 +257,12 @@
   <contained>
     <Goal>
       <id value="g3"/>
-      <status value="in-progress"/>
+      <lifecycleStatus value="active"/>
       <description>
         <text value="Eve will increase her energy by being more active"/>
       </description>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -205,12 +270,12 @@
   <contained>
     <Goal>
       <id value="g4"/>
-      <status value="in-progress"/>
+      <lifecycleStatus value="active"/>
       <description>
         <text value="Eve will set up her medications and take as prescribed"/>
       </description>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -218,12 +283,12 @@
   <contained>
     <Goal>
       <id value="g5"/>
-      <status value="in-progress"/>
+      <lifecycleStatus value="active"/>
       <description>
         <text value="Eve will restart her light treatments"/>
       </description>
       <subject>
-        <reference value="Patient/Levin"/>
+        <reference value="#pat1"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -231,22 +296,22 @@
   <status value="active"/>
   <intent value="plan"/>
   <subject>
-    <reference value="Patient/Levin"/>
+    <reference value="#pat1"/>
     <display value="Eve Everywoman"/>
   </subject>
   <addresses>
     <reference value="#p1"/>
-    <!--  Local reference  -->
+    <!--   Local reference   -->
     <display value="GERDS"/>
   </addresses>
   <addresses>
     <reference value="#p2"/>
-    <!--  Local reference  -->
+    <!--   Local reference   -->
     <display value="Obesity"/>
   </addresses>
   <addresses>
     <reference value="#p3"/>
-    <!--  Local reference  -->
+    <!--   Local reference   -->
     <display value="Psoriasis"/>
   </addresses>
   <goal>
@@ -270,17 +335,11 @@
       <text value="Eve eats one meal a day with her parents"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g1"/>
       </goal>
       <status value="not-started"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-09-10"/>
       </scheduledPeriod>
@@ -293,17 +352,12 @@
       <text value="Eve will sleep in her bed more often than the couch"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
+      <kind value="CommunicationRequest"/>
       <goal>
         <reference value="#g1"/>
       </goal>
       <status value="not-started"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-09-10"/>
       </scheduledPeriod>
@@ -312,17 +366,11 @@
   </activity>
   <activity>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g2"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-09-10"/>
       </scheduledPeriod>
@@ -339,21 +387,15 @@
       <text value="Eve is still walking the dogs."/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g3"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-08-27"/>
       </scheduledPeriod>
-      <description value="Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week"/>
+      <description value="Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week"/>
     </detail>
   </activity>
   <activity>
@@ -366,17 +408,11 @@
       <text value="Eve did not walk to her parents the last week, but has plans to start again"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g3"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-23"/>
       </scheduledPeriod>
@@ -385,44 +421,34 @@
   </activity>
   <activity>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g4"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-23"/>
       </scheduledPeriod>
-      <description value="Eve will us a calendar to check off after medications are taken"/>
+      <description value="Eve will use a calendar to check off after medications are taken"/>
     </detail>
   </activity>
   <activity>
     <progress>
       <time value="2012-08-13"/>
-      <text value="After restarting the vinegar soaks the psoriasis is improved and Eve plans to treat the remainder with light treatments.  She plans to start this week."/>
+      <text value="After restarting the vinegar soaks the psoriasis is improved and Eve plans to treat the
+       remainder with light treatments.  She plans to start this week."/>
     </progress>
     <progress>
       <time value="2012-08-27"/>
-      <text value="Since her skin is improved Eve has not been using the light treatment as often, maybe once a week.  She would like to increase to 3 times a week again"/>
+      <text value="Since her skin is improved Eve has not been using the light treatment as often, maybe
+       once a week.  She would like to increase to 3 times a week again"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g5"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-23"/>
       </scheduledPeriod>
@@ -435,17 +461,11 @@
       <text value="Eve created a chart as a reminer to take the medications that do not fit in her pill box"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g4"/>
       </goal>
       <status value="in-progress"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-10"/>
       </scheduledPeriod>
@@ -462,36 +482,25 @@
       <text value="Eve prefers to focus on walking at this time"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g3"/>
       </goal>
       <status value="on-hold"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-23"/>
       </scheduledPeriod>
-      <description value="Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe Friday afternoon"/>
+      <description value="Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe
+       Friday afternoon"/>
     </detail>
   </activity>
   <activity>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g4"/>
       </goal>
       <status value="completed"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-10"/>
       </scheduledPeriod>
@@ -504,21 +513,16 @@
       <text value="Eve now has some of her medications set up in pill packs by her pharmacist"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g4"/>
       </goal>
       <status value="completed"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-10"/>
       </scheduledPeriod>
-      <description value="Eve will get a medication box to sort her pills.  She will have one for scheduled medications and one for as needed"/>
+      <description value="Eve will get a medication box to sort her pills.  She will have one for scheduled medications
+       and one for as needed"/>
     </detail>
   </activity>
   <activity>
@@ -531,17 +535,11 @@
       <text value="hold until &quot;less busy&quot;"/>
     </progress>
     <detail>
-      <category>
-        <coding>
-          <system value="http://hl7.org/fhir/care-plan-activity-category"/>
-          <code value="other"/>
-        </coding>
-      </category>
       <goal>
         <reference value="#g3"/>
       </goal>
       <status value="on-hold"/>
-      <prohibited value="false"/>
+      <doNotPerform value="false"/>
       <scheduledPeriod>
         <start value="2012-07-23"/>
       </scheduledPeriod>
@@ -549,6 +547,7 @@
     </detail>
   </activity>
   <note>
-    <text value="Patient family is not ready to commit to goal setting at this time.  Goal setting will be addressed in the future"/>
+    <text value="Patient family is not ready to commit to goal setting at this time.  Goal setting will
+     be addressed in the future"/>
   </note>
 </CarePlan>

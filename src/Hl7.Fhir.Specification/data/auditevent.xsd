@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -64,9 +64,14 @@
               <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the audit.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The period during which the activity occurred.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="recorded" minOccurs="1" maxOccurs="1" type="instant">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The time when the event occurred on the source.</xs:documentation>
+              <xs:documentation xml:lang="en">The time when the event was recorded.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="AuditEventOutcome">
@@ -110,19 +115,19 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specification of the participation type the user plays when performing the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The security role that the user was acting under, that come from local codes defined by the access control security system (e.g. RBAC, ABAC) used in the local context.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reference" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="who" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Direct reference to a resource that identifies the agent.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="userId" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Unique identifier for the user actively participating in the event.</xs:documentation>
+              <xs:documentation xml:lang="en">Reference to who this agent is that was involved in the event.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="altId" minOccurs="0" maxOccurs="1" type="string">
@@ -202,7 +207,7 @@
               <xs:documentation xml:lang="en">Logical source location within the healthcare enterprise network.  For example, a hospital or other provider location within a multi-entity provider group.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="observer" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifier of the source where the event was detected.</xs:documentation>
            </xs:annotation>
@@ -223,12 +228,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies a specific instance of the entity. The reference should always be version specific.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reference" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="what" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies a specific instance of the entity. The reference should be version specific.</xs:documentation>
            </xs:annotation>
@@ -289,11 +289,13 @@
               <xs:documentation xml:lang="en">The type of extra detail provided in the value.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="value" minOccurs="1" maxOccurs="1" type="base64Binary">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The details, base64 encoded. Used to carry bulk information.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">The  value of the extra detail.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="valueString" type="string"/>
+            <xs:element name="valueBase64Binary" type="base64Binary"/>
+          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -324,7 +326,7 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventOutcome">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed</xs:documentation>
+      <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -364,7 +366,7 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventAction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the event</xs:documentation>
+      <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the event.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -404,7 +406,7 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventAgentNetworkType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The type of network access point of this agent in the audit event</xs:documentation>
+      <xs:documentation xml:lang="en">The type of network access point of this agent in the audit event.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

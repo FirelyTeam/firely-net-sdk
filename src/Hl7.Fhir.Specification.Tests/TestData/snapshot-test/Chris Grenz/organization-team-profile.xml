@@ -1,34 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-	<url value="http://example.com/fhir/SD/organization-team" />
-	<name value="organization-team" />
-	<status value="draft" />
-	<description value="An organization of type &quot;team&quot;." />
-  <!-- [WMR 20170412 Fixed -->
+  <url value="http://example.com/fhir/SD/organization-team" />
+  <name value="organization-team" />
+  <status value="draft" />
+  <description value="An organization of type &quot;team&quot;." />
   <fhirVersion value="3.0.0" />
   <mapping>
-		<identity value="v2" />
-		<uri value="http://hl7.org/v2" />
-		<name value="HL7 v2" />
-	</mapping>
-	<mapping>
-		<identity value="rim" />
-		<uri value="http://hl7.org/v3" />
-		<name value="RIM" />
-	</mapping>
-	<mapping>
-		<identity value="servd" />
-		<uri value="http://www.omg.org/spec/ServD/1.0/" />
-		<name value="ServD" />
-	</mapping>
-	<mapping>
-		<identity value="w5" />
-		<uri value="http://hl7.org/fhir/w5" />
-		<name value="W5 Mapping" />
-	</mapping>
-	<kind value="resource" />
-	<type value="Organization" />
-	<abstract value="false" />
-	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2" />
+  </mapping>
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM" />
+  </mapping>
+  <mapping>
+    <identity value="servd" />
+    <uri value="http://www.omg.org/spec/ServD/1.0/" />
+    <name value="ServD" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/w5" />
+    <name value="W5 Mapping" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Organization" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
   <derivation value="constraint" />
 	<snapshot>
 		<element>

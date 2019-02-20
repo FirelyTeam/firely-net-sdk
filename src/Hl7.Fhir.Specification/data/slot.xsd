@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,9 +54,9 @@
               <xs:documentation xml:lang="en">External Ids for this item.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="serviceCategory" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="serviceCategory" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A broad categorisation of the service that is to be performed during this appointment.</xs:documentation>
+              <xs:documentation xml:lang="en">A broad categorization of the service that is to be performed during this appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="serviceType" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">

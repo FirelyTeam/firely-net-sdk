@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 
         public Validator Validator { get; private set; }
 
-        public override bool Add(ScopedNavigator instance)
+        public override bool Add(ITypedElement instance)
         {
             // Membership of an "element bucket" should be determined by element name
             //var matches = ChildNameMatcher.NameMatches(Root.PathName, candidate);
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public override OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
+        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             var outcome = base.Validate(validator, errorLocation);
 

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MedicinalProductContraindication"; } }
         
-        [FhirType("OtherTherapyComponent")]
+        [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -154,150 +154,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TherapyRelationshipType != null) yield return new ElementValue("therapyRelationshipType", false, TherapyRelationshipType);
-                    if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("PopulationComponent")]
-        [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PopulationComponent"; } }
-            
-            /// <summary>
-            /// The age of the specific population
-            /// </summary>
-            [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Age
-            {
-                get { return _Age; }
-                set { _Age = value; OnPropertyChanged("Age"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Age;
-            
-            /// <summary>
-            /// The gender of the specific population
-            /// </summary>
-            [FhirElement("gender", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Gender
-            {
-                get { return _Gender; }
-                set { _Gender = value; OnPropertyChanged("Gender"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Gender;
-            
-            /// <summary>
-            /// Race of the specific population
-            /// </summary>
-            [FhirElement("race", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Race
-            {
-                get { return _Race; }
-                set { _Race = value; OnPropertyChanged("Race"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Race;
-            
-            /// <summary>
-            /// The existing physiological conditions of the specific population to which this applies
-            /// </summary>
-            [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
-            {
-                get { return _PhysiologicalCondition; }
-                set { _PhysiologicalCondition = value; OnPropertyChanged("PhysiologicalCondition"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _PhysiologicalCondition;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as PopulationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
-                    if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
-                    if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopy();
-                    if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new PopulationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as PopulationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Age, otherT.Age)) return false;
-                if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
-                if( !DeepComparable.Matches(Race, otherT.Race)) return false;
-                if( !DeepComparable.Matches(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as PopulationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
-                if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
-                if( !DeepComparable.IsExactly(Race, otherT.Race)) return false;
-                if( !DeepComparable.IsExactly(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Age != null) yield return Age;
-                    if (Gender != null) yield return Gender;
-                    if (Race != null) yield return Race;
-                    if (PhysiologicalCondition != null) yield return PhysiologicalCondition;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (Gender != null) yield return new ElementValue("gender", false, Gender);
-                    if (Race != null) yield return new ElementValue("race", false, Race);
-                    if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", false, PhysiologicalCondition);
+                    if (TherapyRelationshipType != null) yield return new ElementValue("therapyRelationshipType", TherapyRelationshipType);
+                    if (Medication != null) yield return new ElementValue("medication", Medication);
                 }
             }
 
@@ -397,13 +255,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("population", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicinalProductContraindication.PopulationComponent> Population
+        public List<Population> Population
         {
-            get { if(_Population==null) _Population = new List<Hl7.Fhir.Model.MedicinalProductContraindication.PopulationComponent>(); return _Population; }
+            get { if(_Population==null) _Population = new List<Population>(); return _Population; }
             set { _Population = value; OnPropertyChanged("Population"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicinalProductContraindication.PopulationComponent> _Population;
+        private List<Population> _Population;
         
 
         public override void AddDefaultConstraints()
@@ -425,7 +283,7 @@ namespace Hl7.Fhir.Model
                 if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
                 if(TherapeuticIndication != null) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(TherapeuticIndication.DeepCopy());
                 if(OtherTherapy != null) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
-                if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MedicinalProductContraindication.PopulationComponent>(Population.DeepCopy());
+                if(Population != null) dest.Population = new List<Population>(Population.DeepCopy());
                 return dest;
             }
             else
@@ -493,13 +351,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", true, elem); }
-                if (Disease != null) yield return new ElementValue("disease", false, Disease);
-                if (DiseaseStatus != null) yield return new ElementValue("diseaseStatus", false, DiseaseStatus);
-                foreach (var elem in Comorbidity) { if (elem != null) yield return new ElementValue("comorbidity", true, elem); }
-                foreach (var elem in TherapeuticIndication) { if (elem != null) yield return new ElementValue("therapeuticIndication", true, elem); }
-                foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", true, elem); }
-                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+                if (Disease != null) yield return new ElementValue("disease", Disease);
+                if (DiseaseStatus != null) yield return new ElementValue("diseaseStatus", DiseaseStatus);
+                foreach (var elem in Comorbidity) { if (elem != null) yield return new ElementValue("comorbidity", elem); }
+                foreach (var elem in TherapeuticIndication) { if (elem != null) yield return new ElementValue("therapeuticIndication", elem); }
+                foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", elem); }
+                foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
             }
         }
 

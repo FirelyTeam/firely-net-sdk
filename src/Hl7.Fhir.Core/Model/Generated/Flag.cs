@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Flag"; } }
         
         /// <summary>
-        /// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or entered in error.
+        /// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or was entered in error.
         /// (url: http://hl7.org/fhir/ValueSet/flag-status)
         /// </summary>
         [FhirEnumeration("FlagStatus")]
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=160)]
         [CLSCompliant(false)]
-		[References("Device","Organization","Patient","Practitioner")]
+		[References("Device","Organization","Patient","Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -308,14 +308,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Author != null) yield return new ElementValue("author", false, Author);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Author != null) yield return new ElementValue("author", Author);
             }
         }
 

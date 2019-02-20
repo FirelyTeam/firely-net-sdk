@@ -91,14 +91,14 @@ namespace Hl7.Fhir.Validation
 
         public string Name => Entry.Name;
 
-        public IList<ScopedNavigator> Members => Entry.Members;
+        public IList<ITypedElement> Members => Entry.Members;
 
-        public bool Add(ScopedNavigator candidate)
+        public bool Add(ITypedElement candidate)
         {
             return Entry.Add(candidate);
         }
 
-        public OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
+        public OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             var outcome = Entry.Validate(validator, errorLocation);   // Validate against entry slice, e.g. cardinality
 

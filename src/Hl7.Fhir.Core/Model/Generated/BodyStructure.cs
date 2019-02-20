@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -295,14 +295,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Morphology != null) yield return new ElementValue("morphology", false, Morphology);
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                foreach (var elem in LocationQualifier) { if (elem != null) yield return new ElementValue("locationQualifier", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Morphology != null) yield return new ElementValue("morphology", Morphology);
+                if (Location != null) yield return new ElementValue("location", Location);
+                foreach (var elem in LocationQualifier) { if (elem != null) yield return new ElementValue("locationQualifier", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
             }
         }
 

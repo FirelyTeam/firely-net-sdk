@@ -6,49 +6,47 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Xml;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
+using System.IO;
 using System.IO.Compression;
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.FhirPath;
-using Hl7.FhirPath;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.ElementModel;
+using System.Linq;
+using System.Xml;
 
-namespace HealthConnex.Fhir.Server.Tests
+namespace Hl7.Fhir.Test.Validation
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableValidateSearchExtractionAllExamplesTest
-#else
     public class ValidateSearchExtractionAllExamplesTest
-#endif
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+        }
+
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
-
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int parserErrorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-            var zip = ZipFile.OpenRead(examplesZip);
+
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -58,9 +56,9 @@ namespace HealthConnex.Fhir.Server.Tests
                     {
                         // Verified examples that fail validations
 
-                        //// vsd-3, vsd-8
-                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                        //    continue;
+                        if (entry.Name.Contains("v2-tables"))
+                            continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                      // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         testFileCount++;
 
@@ -83,7 +81,7 @@ namespace HealthConnex.Fhir.Server.Tests
                                 }
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
                             parserErrorCount++;
@@ -138,32 +136,42 @@ namespace HealthConnex.Fhir.Server.Tests
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var nav = new PocoNavigator(resource);
-            var results = nav.Select(index.Expression, new FhirEvaluationContext(nav));
+            var resourceModel = resource.ToTypedElement();
+
+            IEnumerable<ITypedElement> results;
+            try
+            {
+                results = resourceModel.Select(index.Expression, new FhirEvaluationContext(resourceModel) { ElementResolver = mockResolver} );
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
+                throw ex;
+            }
             if (results.Count() > 0)
             {
                 foreach (var t2 in results)
                 {
                     if (t2 != null)
                     {
-                        if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
+                        var fhirval = t2.Annotation<IFhirValueProvider>();
+                        if (fhirval?.FhirValue != null)
                         {
                             // Validate the type of data returned against the type of search parameter
-                            //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //     Debug.WriteLine((t2 as FluentPath.PocoNavigator).FhirValue.ToString());// + "\r\n";
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
                             exampleSearchValues[key]++;
-                            // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
                         }
                         else if (t2.Value is Hl7.FhirPath.ConstantValue)
                         {
-                            //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //     Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
                             exampleSearchValues[key]++;
                         }
                         else if (t2.Value is bool)
                         {
-                            //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //     Debug.WriteLine((bool)t2.Value);
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((bool)t2.Value);
                             exampleSearchValues[key]++;
                         }
                         else
@@ -175,6 +183,20 @@ namespace HealthConnex.Fhir.Server.Tests
                     }
                 }
             }
+        }
+
+        private static ITypedElement mockResolver(string url)
+        {
+            ResourceIdentity ri = new ResourceIdentity(url);
+            if (!string.IsNullOrEmpty(ri.ResourceType))
+            {
+                var fac = new Hl7.Fhir.Serialization.DefaultModelFactory();
+                var type = ModelInfo.GetTypeForFhirType(ri.ResourceType);
+                DomainResource res = fac.Create(type) as DomainResource;
+                res.Id = ri.Id;
+                return res.ToTypedElement();
+            }
+            return null;
         }
     }
 }

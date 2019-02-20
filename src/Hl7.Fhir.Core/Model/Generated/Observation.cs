@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
         
-        [FhirType("ReferenceRangeComponent")]
+        [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -238,12 +238,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Low != null) yield return new ElementValue("low", false, Low);
-                    if (High != null) yield return new ElementValue("high", false, High);
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", true, elem); }
-                    if (Age != null) yield return new ElementValue("age", false, Age);
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Low != null) yield return new ElementValue("low", Low);
+                    if (High != null) yield return new ElementValue("high", High);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in AppliesTo) { if (elem != null) yield return new ElementValue("appliesTo", elem); }
+                    if (Age != null) yield return new ElementValue("age", Age);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
                 }
             }
 
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent")]
+        [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -402,11 +402,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                    foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
-                    foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
+                    foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", elem); }
+                    foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
                 }
             }
 
@@ -673,36 +673,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Interpretation;
         
         /// <summary>
-        /// Comments about the test result value
+        /// Comments about the observation
         /// </summary>
-        [FhirElement("comment", Order=240)]
+        [FhirElement("note", Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CommentElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _CommentElement; }
-            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CommentElement;
-        
-        /// <summary>
-        /// Comments about the test result value
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Comment
-        {
-            get { return CommentElement != null ? CommentElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CommentElement = null; 
-                else
-                  CommentElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Comment");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
         /// Observed body part
@@ -779,7 +761,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("hasMember", InSummary=true, Order=300)]
         [CLSCompliant(false)]
-		[References("Observation","QuestionnaireResponse","Sequence")]
+		[References("Observation","QuestionnaireResponse","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> HasMember
@@ -795,7 +777,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("derivedFrom", InSummary=true, Order=310)]
         [CLSCompliant(false)]
-		[References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","Sequence")]
+		[References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
@@ -826,7 +808,7 @@ namespace Hl7.Fhir.Model
             Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If Observation.code is the same as a Observation.component.code then the value element associated with the code SHALL NOT be present",
+            Human = "If Observation.code is the same as an Observation.component.code then the value element associated with the code SHALL NOT be present",
             Xpath = "not(f:*[starts-with(local-name(.), 'value')] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"
         };
 
@@ -879,7 +861,7 @@ namespace Hl7.Fhir.Model
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(Interpretation.DeepCopy());
-                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
@@ -920,7 +902,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
             if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
@@ -954,7 +936,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
             if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
@@ -988,7 +970,7 @@ namespace Hl7.Fhir.Model
 				if (Value != null) yield return Value;
 				if (DataAbsentReason != null) yield return DataAbsentReason;
 				foreach (var elem in Interpretation) { if (elem != null) yield return elem; }
-				if (CommentElement != null) yield return CommentElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				if (BodySite != null) yield return BodySite;
 				if (Method != null) yield return Method;
 				if (Specimen != null) yield return Specimen;
@@ -1006,30 +988,30 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                if (IssuedElement != null) yield return new ElementValue("issued", false, IssuedElement);
-                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
-                if (Value != null) yield return new ElementValue("value", false, Value);
-                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", false, DataAbsentReason);
-                foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", true, elem); }
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
-                if (Method != null) yield return new ElementValue("method", false, Method);
-                if (Specimen != null) yield return new ElementValue("specimen", false, Specimen);
-                if (Device != null) yield return new ElementValue("device", false, Device);
-                foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", true, elem); }
-                foreach (var elem in HasMember) { if (elem != null) yield return new ElementValue("hasMember", true, elem); }
-                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
-                foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
+                if (Value != null) yield return new ElementValue("value", Value);
+                if (DataAbsentReason != null) yield return new ElementValue("dataAbsentReason", DataAbsentReason);
+                foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                if (Method != null) yield return new ElementValue("method", Method);
+                if (Specimen != null) yield return new ElementValue("specimen", Specimen);
+                if (Device != null) yield return new ElementValue("device", Device);
+                foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
+                foreach (var elem in HasMember) { if (elem != null) yield return new ElementValue("hasMember", elem); }
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+                foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
             }
         }
 

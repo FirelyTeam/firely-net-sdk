@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             PreferredReturn = Rest.Prefer.ReturnRepresentation;
             PreferredParameterHandling = null;
-            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
+            ParserSettings = ParserSettings.CreateDefault();
         }
 
 
@@ -73,9 +73,10 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if DOTNETFW
+            var request = interaction.ToHttpRequest(BaseUrl, this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+
+#if !NETSTANDARD1_1
             request.Timeout = Timeout;
 #endif
 
@@ -152,7 +153,7 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if !DOTNETFW
+#if NETSTANDARD1_1
                 var contentEncoding = response.Headers["Content-Encoding"];
 #else
                 var contentEncoding = response.ContentEncoding;

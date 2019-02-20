@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-07T18:07:01.362+01:00" />
@@ -9,8 +9,8 @@
   <date value="2017-02-07T18:04:39.7382141+01:00" />
   <description value="StructureDefinition for custom Identifier Type" />
   <kind value="primitive-type" />
-  <type value="Identifier" />
   <abstract value="false" />
+  <type value="Identifier" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Identifier" />
   <differential>
     <element>

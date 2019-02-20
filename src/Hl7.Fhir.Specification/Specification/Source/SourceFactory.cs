@@ -21,7 +21,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static IResourceResolver CreateDefault()
         {
-            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource(), new WebResolver());
+            return new MultiResolver(new DirectorySource(new DirectorySourceSettings { IncludeSubDirectories = true } ), 
+                ZipSource.CreateValidationSource(), new WebResolver());
         }
 
         /// <summary>
@@ -31,7 +32,8 @@ namespace Hl7.Fhir.Specification.Source
         public static IResourceResolver CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource());
+            return new MultiResolver(new DirectorySource(new DirectorySourceSettings { IncludeSubDirectories = true }), 
+                ZipSource.CreateValidationSource());
         }
 
         /// <summary>

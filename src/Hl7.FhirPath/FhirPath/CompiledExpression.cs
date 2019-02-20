@@ -1,47 +1,16 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Hl7.FhirPath.Parser;
-using Hl7.FhirPath;
-using Hl7.FhirPath.Expressions;
-using Sprache;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.FhirPath.Functions;
+using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.FhirPath.Functions;
 
 namespace Hl7.FhirPath
 {
-    public class EvaluationContext
-    {
-        public static readonly EvaluationContext Default = new EvaluationContext();
-
-        public EvaluationContext()
-        {
-            // no defaults yet
-        }
-
-        public EvaluationContext(IElementNavigator container)
-        {
-            Container = container;
-        }
-
-        public IElementNavigator Container { get; set; }
-    }
-
-
-
-    public delegate IEnumerable<IElementNavigator> CompiledExpression(IElementNavigator root, EvaluationContext ctx);
+    public delegate IEnumerable<ITypedElement> CompiledExpression(ITypedElement root, EvaluationContext ctx);
 
     public static class CompiledExpressionExtensions
     {
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
-        {
-            return Scalar(evaluator, input, new EvaluationContext(container));
-        }
-
-        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        public static object Scalar(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx);
             if (result.Any())
@@ -50,15 +19,8 @@ namespace Hl7.FhirPath
                 return null;
         }
 
-
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
-        {
-            return Predicate(evaluator, input, new EvaluationContext(container));
-        }
-
         // For predicates, Empty is considered true
-        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        public static bool Predicate(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
 
@@ -68,13 +30,7 @@ namespace Hl7.FhirPath
                 return result.Value;
         }
 
-        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, IElementNavigator container)
-        {
-            return IsBoolean(evaluator, value, input, new EvaluationContext(container));
-        }
-
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, EvaluationContext ctx)
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, ITypedElement input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx).BooleanEval();
 
@@ -83,7 +39,25 @@ namespace Hl7.FhirPath
             else
                 return result.Value == value;
         }
+
+        #region Obsolete members
+        [Obsolete("Use Scalar(this CompiledExpression evaluator, ITypedElement input, EvaluationContext ctx) instead. Obsolete since 2018-10-17")]
+        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        {
+            return evaluator.Scalar(input.ToTypedElement(), ctx);
+        }
+
+        [Obsolete("Use Predicate(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx) instead. Obsolete since 2018-10-17")]
+        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
+        {
+            return evaluator.Predicate(input.ToTypedElement(), ctx);
+        }
+
+        [Obsolete("Use IsBoolean(this CompiledExpression evaluator, bool value, ITypedElement input, EvaluationContext ctx) instead. Obsolete since 2018-10-17")]
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, EvaluationContext ctx)
+        {
+            return evaluator.IsBoolean(value, input.ToTypedElement(), ctx);
+        }
+        #endregion
     }
-
-
 }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("RecommendationComponent")]
+        [FhirType("RecommendationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -373,18 +373,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", true, elem); }
-                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
-                    foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", true, elem); }
-                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, ForecastStatus);
-                    foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", true, elem); }
-                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
-                    if (DoseNumber != null) yield return new ElementValue("doseNumber", false, DoseNumber);
-                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", false, SeriesDoses);
-                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", true, elem); }
-                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", true, elem); }
+                    foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", elem); }
+                    if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
+                    foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", elem); }
+                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
+                    foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", elem); }
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+                    if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
+                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", elem); }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", elem); }
                 }
             }
 
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DateCriterionComponent")]
+        [FhirType("DateCriterionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -508,8 +508,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -699,11 +699,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (Authority != null) yield return new ElementValue("authority", Authority);
+                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
             }
         }
 

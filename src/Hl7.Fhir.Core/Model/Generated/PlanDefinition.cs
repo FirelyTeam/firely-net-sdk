@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "PlanDefinition"; } }
         
-        [FhirType("GoalComponent")]
+        [FhirType("GoalComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -239,13 +239,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Category != null) yield return new ElementValue("category", false, Category);
-                    if (Description != null) yield return new ElementValue("description", false, Description);
-                    if (Priority != null) yield return new ElementValue("priority", false, Priority);
-                    if (Start != null) yield return new ElementValue("start", false, Start);
-                    foreach (var elem in Addresses) { if (elem != null) yield return new ElementValue("addresses", true, elem); }
-                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
-                    foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
+                    if (Category != null) yield return new ElementValue("category", Category);
+                    if (Description != null) yield return new ElementValue("description", Description);
+                    if (Priority != null) yield return new ElementValue("priority", Priority);
+                    if (Start != null) yield return new ElementValue("start", Start);
+                    foreach (var elem in Addresses) { if (elem != null) yield return new ElementValue("addresses", elem); }
+                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", elem); }
+                    foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
                 }
             }
 
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent")]
+        [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -367,9 +367,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Measure != null) yield return new ElementValue("measure", false, Measure);
-                    if (Detail != null) yield return new ElementValue("detail", false, Detail);
-                    if (Due != null) yield return new ElementValue("due", false, Due);
+                    if (Measure != null) yield return new ElementValue("measure", Measure);
+                    if (Detail != null) yield return new ElementValue("detail", Detail);
+                    if (Due != null) yield return new ElementValue("due", Due);
                 }
             }
 
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionComponent")]
+        [FhirType("ActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -620,9 +620,24 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Type of individual the action is focused on
+            /// </summary>
+            [FhirElement("subject", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Subject
+            {
+                get { return _Subject; }
+                set { _Subject = value; OnPropertyChanged("Subject"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Subject;
+            
+            /// <summary>
             /// When the action should be triggered
             /// </summary>
-            [FhirElement("trigger", Order=130)]
+            [FhirElement("trigger", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<TriggerDefinition> Trigger
@@ -636,7 +651,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether or not the action is applicable
             /// </summary>
-            [FhirElement("condition", Order=140)]
+            [FhirElement("condition", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent> Condition
@@ -650,7 +665,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Input data requirements
             /// </summary>
-            [FhirElement("input", Order=150)]
+            [FhirElement("input", Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<DataRequirement> Input
@@ -664,7 +679,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Output data definition
             /// </summary>
-            [FhirElement("output", Order=160)]
+            [FhirElement("output", Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<DataRequirement> Output
@@ -678,7 +693,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship to another action
             /// </summary>
-            [FhirElement("relatedAction", Order=170)]
+            [FhirElement("relatedAction", Order=180)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent> RelatedAction
@@ -692,7 +707,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=180, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=190, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -707,7 +722,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who should participate in the action
             /// </summary>
-            [FhirElement("participant", Order=190)]
+            [FhirElement("participant", Order=200)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent> Participant
@@ -721,7 +736,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// create | update | remove | fire-event
             /// </summary>
-            [FhirElement("type", Order=200)]
+            [FhirElement("type", Order=210)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -734,7 +749,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// visual-group | logical-group | sentence-group
             /// </summary>
-            [FhirElement("groupingBehavior", Order=210)]
+            [FhirElement("groupingBehavior", Order=220)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
@@ -766,7 +781,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
             /// </summary>
-            [FhirElement("selectionBehavior", Order=220)]
+            [FhirElement("selectionBehavior", Order=230)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
             {
@@ -798,7 +813,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// must | could | must-unless-documented
             /// </summary>
-            [FhirElement("requiredBehavior", Order=230)]
+            [FhirElement("requiredBehavior", Order=240)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
             {
@@ -830,7 +845,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// yes | no
             /// </summary>
-            [FhirElement("precheckBehavior", Order=240)]
+            [FhirElement("precheckBehavior", Order=250)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
             {
@@ -862,7 +877,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// single | multiple
             /// </summary>
-            [FhirElement("cardinalityBehavior", Order=250)]
+            [FhirElement("cardinalityBehavior", Order=260)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
             {
@@ -894,39 +909,22 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the activity to be performed
             /// </summary>
-            [FhirElement("definition", Order=260)]
+            [FhirElement("definition", Order=270, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
             [DataMember]
-            public Hl7.Fhir.Model.Canonical DefinitionElement
+            public Hl7.Fhir.Model.Element Definition
             {
-                get { return _DefinitionElement; }
-                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+                get { return _Definition; }
+                set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.Canonical _DefinitionElement;
-            
-            /// <summary>
-            /// Description of the activity to be performed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Definition
-            {
-                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        DefinitionElement = null; 
-                    else
-                        DefinitionElement = new Hl7.Fhir.Model.Canonical(value);
-                    OnPropertyChanged("Definition");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Definition;
             
             /// <summary>
             /// Transform to apply the template
             /// </summary>
-            [FhirElement("transform", Order=270)]
+            [FhirElement("transform", Order=280)]
             [DataMember]
             public Hl7.Fhir.Model.Canonical TransformElement
             {
@@ -958,7 +956,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dynamic aspects of the definition
             /// </summary>
-            [FhirElement("dynamicValue", Order=280)]
+            [FhirElement("dynamicValue", Order=290)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> DynamicValue
@@ -972,7 +970,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A sub-action
             /// </summary>
-            [FhirElement("action", Order=290)]
+            [FhirElement("action", Order=300)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
@@ -999,6 +997,7 @@ namespace Hl7.Fhir.Model
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                     if(Documentation != null) dest.Documentation = new List<RelatedArtifact>(Documentation.DeepCopy());
                     if(GoalIdElement != null) dest.GoalIdElement = new List<Hl7.Fhir.Model.Id>(GoalIdElement.DeepCopy());
+                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
                     if(Trigger != null) dest.Trigger = new List<TriggerDefinition>(Trigger.DeepCopy());
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent>(Condition.DeepCopy());
                     if(Input != null) dest.Input = new List<DataRequirement>(Input.DeepCopy());
@@ -1012,7 +1011,7 @@ namespace Hl7.Fhir.Model
                     if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
                     if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
                     if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
-                    if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Canonical)DefinitionElement.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
                     if(TransformElement != null) dest.TransformElement = (Hl7.Fhir.Model.Canonical)TransformElement.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                     if(Action != null) dest.Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(Action.DeepCopy());
@@ -1042,6 +1041,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.Matches(GoalIdElement, otherT.GoalIdElement)) return false;
+                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(Trigger, otherT.Trigger)) return false;
                 if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
                 if( !DeepComparable.Matches(Input, otherT.Input)) return false;
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
                 if( !DeepComparable.Matches(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
                 if( !DeepComparable.Matches(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
-                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.Matches(TransformElement, otherT.TransformElement)) return false;
                 if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.Matches(Action, otherT.Action)) return false;
@@ -1078,6 +1078,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.IsExactly(GoalIdElement, otherT.GoalIdElement)) return false;
+                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(Trigger, otherT.Trigger)) return false;
                 if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
                 if( !DeepComparable.IsExactly(Input, otherT.Input)) return false;
@@ -1091,7 +1092,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
                 if( !DeepComparable.IsExactly(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
                 if( !DeepComparable.IsExactly(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
-                if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.IsExactly(TransformElement, otherT.TransformElement)) return false;
                 if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
@@ -1115,6 +1116,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in Documentation) { if (elem != null) yield return elem; }
                     foreach (var elem in GoalIdElement) { if (elem != null) yield return elem; }
+                    if (Subject != null) yield return Subject;
                     foreach (var elem in Trigger) { if (elem != null) yield return elem; }
                     foreach (var elem in Condition) { if (elem != null) yield return elem; }
                     foreach (var elem in Input) { if (elem != null) yield return elem; }
@@ -1128,7 +1130,7 @@ namespace Hl7.Fhir.Model
                     if (RequiredBehaviorElement != null) yield return RequiredBehaviorElement;
                     if (PrecheckBehaviorElement != null) yield return PrecheckBehaviorElement;
                     if (CardinalityBehaviorElement != null) yield return CardinalityBehaviorElement;
-                    if (DefinitionElement != null) yield return DefinitionElement;
+                    if (Definition != null) yield return Definition;
                     if (TransformElement != null) yield return TransformElement;
                     foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
                     foreach (var elem in Action) { if (elem != null) yield return elem; }
@@ -1141,32 +1143,33 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (PrefixElement != null) yield return new ElementValue("prefix", false, PrefixElement);
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (TextEquivalentElement != null) yield return new ElementValue("textEquivalent", false, TextEquivalentElement);
-                    if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
-                    foreach (var elem in GoalIdElement) { if (elem != null) yield return new ElementValue("goalId", true, elem); }
-                    foreach (var elem in Trigger) { if (elem != null) yield return new ElementValue("trigger", true, elem); }
-                    foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-                    foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", true, elem); }
-                    foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", true, elem); }
-                    foreach (var elem in RelatedAction) { if (elem != null) yield return new ElementValue("relatedAction", true, elem); }
-                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                    foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (GroupingBehaviorElement != null) yield return new ElementValue("groupingBehavior", false, GroupingBehaviorElement);
-                    if (SelectionBehaviorElement != null) yield return new ElementValue("selectionBehavior", false, SelectionBehaviorElement);
-                    if (RequiredBehaviorElement != null) yield return new ElementValue("requiredBehavior", false, RequiredBehaviorElement);
-                    if (PrecheckBehaviorElement != null) yield return new ElementValue("precheckBehavior", false, PrecheckBehaviorElement);
-                    if (CardinalityBehaviorElement != null) yield return new ElementValue("cardinalityBehavior", false, CardinalityBehaviorElement);
-                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
-                    if (TransformElement != null) yield return new ElementValue("transform", false, TransformElement);
-                    foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", true, elem); }
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                    if (PrefixElement != null) yield return new ElementValue("prefix", PrefixElement);
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (TextEquivalentElement != null) yield return new ElementValue("textEquivalent", TextEquivalentElement);
+                    if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", elem); }
+                    foreach (var elem in GoalIdElement) { if (elem != null) yield return new ElementValue("goalId", elem); }
+                    if (Subject != null) yield return new ElementValue("subject", Subject);
+                    foreach (var elem in Trigger) { if (elem != null) yield return new ElementValue("trigger", elem); }
+                    foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
+                    foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", elem); }
+                    foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", elem); }
+                    foreach (var elem in RelatedAction) { if (elem != null) yield return new ElementValue("relatedAction", elem); }
+                    if (Timing != null) yield return new ElementValue("timing", Timing);
+                    foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (GroupingBehaviorElement != null) yield return new ElementValue("groupingBehavior", GroupingBehaviorElement);
+                    if (SelectionBehaviorElement != null) yield return new ElementValue("selectionBehavior", SelectionBehaviorElement);
+                    if (RequiredBehaviorElement != null) yield return new ElementValue("requiredBehavior", RequiredBehaviorElement);
+                    if (PrecheckBehaviorElement != null) yield return new ElementValue("precheckBehavior", PrecheckBehaviorElement);
+                    if (CardinalityBehaviorElement != null) yield return new ElementValue("cardinalityBehavior", CardinalityBehaviorElement);
+                    if (Definition != null) yield return new ElementValue("definition", Definition);
+                    if (TransformElement != null) yield return new ElementValue("transform", TransformElement);
+                    foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
                 }
             }
 
@@ -1174,7 +1177,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionComponent")]
+        [FhirType("ConditionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1289,8 +1292,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                    if (Expression != null) yield return new ElementValue("expression", false, Expression);
+                    if (KindElement != null) yield return new ElementValue("kind", KindElement);
+                    if (Expression != null) yield return new ElementValue("expression", Expression);
                 }
             }
 
@@ -1298,7 +1301,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedActionComponent")]
+        [FhirType("RelatedActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1452,9 +1455,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ActionIdElement != null) yield return new ElementValue("actionId", false, ActionIdElement);
-                    if (RelationshipElement != null) yield return new ElementValue("relationship", false, RelationshipElement);
-                    if (Offset != null) yield return new ElementValue("offset", false, Offset);
+                    if (ActionIdElement != null) yield return new ElementValue("actionId", ActionIdElement);
+                    if (RelationshipElement != null) yield return new ElementValue("relationship", RelationshipElement);
+                    if (Offset != null) yield return new ElementValue("offset", Offset);
                 }
             }
 
@@ -1462,7 +1465,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent")]
+        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1577,8 +1580,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Role != null) yield return new ElementValue("role", Role);
                 }
             }
 
@@ -1586,7 +1589,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent")]
+        [FhirType("DynamicValueComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1700,8 +1703,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (Expression != null) yield return new ElementValue("expression", false, Expression);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (Expression != null) yield return new ElementValue("expression", Expression);
                 }
             }
 
@@ -2569,37 +2572,37 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (SubtitleElement != null) yield return new ElementValue("subtitle", false, SubtitleElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", false, ApprovalDateElement);
-                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", false, LastReviewDateElement);
-                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", false, EffectivePeriod);
-                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", true, elem); }
-                foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", true, elem); }
-                foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", true, elem); }
-                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
-                foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", true, elem); }
-                foreach (var elem in Goal) { if (elem != null) yield return new ElementValue("goal", true, elem); }
-                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (UsageElement != null) yield return new ElementValue("usage", UsageElement);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", ApprovalDateElement);
+                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", LastReviewDateElement);
+                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", EffectivePeriod);
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
+                foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", elem); }
+                foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", elem); }
+                foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
+                foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", elem); }
+                foreach (var elem in Goal) { if (elem != null) yield return new ElementValue("goal", elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
             }
         }
 

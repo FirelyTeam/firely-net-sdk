@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -16,12 +17,14 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSummaryTests
     {
+        // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
+        static readonly string ApiFhirVersion = "4.0.0"; // ModelInfo.Version;
 
         [TestMethod]
-        public void TestPatientXmlSummary() => TestPatientSummary(@"TestData\TestPatient.xml");
+        public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
 
         [TestMethod]
-        public void TestPatientJsonSummary() => TestPatientSummary(@"TestData\TestPatient.json");
+        public void TestPatientJsonSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.json"));
 
         void TestPatientSummary(string path)
         {
@@ -31,11 +34,11 @@ namespace Hl7.Fhir.Specification.Tests
 
         [TestMethod]
         public void TestPatientXmlSummaryWithCustomHarvester()
-            => TestPatientSummaryWithCustomHarvester(@"TestData\TestPatient.xml", "Donald");
+            => TestPatientSummaryWithCustomHarvester(Path.Combine("TestData", "TestPatient.xml"), "Donald");
 
         [TestMethod]
         public void TestPatientJsonSummaryWithCustomHarvester()
-            => TestPatientSummaryWithCustomHarvester(@"TestData\TestPatient.json", "Chalmers");
+            => TestPatientSummaryWithCustomHarvester(Path.Combine("TestData", "TestPatient.json"), "Chalmers");
 
         void TestPatientSummaryWithCustomHarvester(string path, params string[] expectedNames)
         {
@@ -46,15 +49,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             var summary = assertSummary(path, harvesters);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
-            var familyNames = summary.GetValueOrDefault<string[]>(PatientFamilyNameKey);
+            var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
-            Assert.AreEqual(1, familyNames.Length);
+            Assert.AreEqual(1, familyNames.Count);
             Assert.IsTrue(expectedNames.SequenceEqual(familyNames));
         }
 
         // Custom artifact summary harvester implementation to extract family name(s) from Patient resources
         const string PatientFamilyNameKey = "Patient.name.family";
-        static bool HarvestPatientSummary(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        static bool HarvestPatientSummary(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (properties.GetTypeName() == ResourceType.Patient.GetLiteral())
             {
@@ -67,7 +70,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestValueSetXmlSummary()
         {
-            const string path = @"TestData\validation\SectionTitles.valueset.xml";
+            string path =  Path.Combine("TestData", "validation", "SectionTitles.valueset.xml");
+            const string url = "http://example.org/ValueSet/SectionTitles";
             var summary = assertSummary(path);
 
             // Common properties
@@ -76,17 +80,49 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
-            Assert.AreEqual(@"http://example.org/ValueSet/SectionTitles", summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
             Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
-            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetPublicationStatus());
         }
+
+
+        [TestMethod]
+        public void TestExtensionDefinitionSummary()
+        {
+            string path = Path.Combine("TestData", "snapshot-test", "extensions", "extension-patient-religion.xml");
+            const string url = @"http://hl7.org/fhir/StructureDefinition/patient-religion";
+            var summary = assertSummary(path);
+            // Common properties
+            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
+            Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+            // Conformance resource properties
+            Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual("religion", summary.GetConformanceName());
+            Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetPublicationStatus());
+            // StructureDefinition properties
+
+            //[WMR 20181218] STU3 OBSOLETE
+            //var context = summary.GetStructureDefinitionContext();
+            //Assert.IsNotNull(context);
+            //Assert.AreEqual(1, context.Length);
+            //Assert.AreEqual("Patient", context[0]);
+
+            //[WMR 20181218] R4 NEW
+            var contexts = summary.GetStructureDefinitionContext();
+            Assert.IsNotNull(contexts);
+            var context = contexts.FirstOrDefault();
+            Assert.AreEqual(StructureDefinition.ExtensionContextType.Fhirpath.GetLiteral(), context.Type); // "fhirpath"
+            Assert.AreEqual(ModelInfo.ResourceTypeToFhirTypeName(ResourceType.Patient), context.Expression); // "Patient"
+        }
+
 
         [TestMethod]
         public void TestProfilesTypesJson()
         {
-            const string path = @"TestData\profiles-types.json";
+            string path = Path.Combine("TestData", "profiles-types.json");
 
-            var summaries = ArtifactSummaryGenerator.Generate(path);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -107,16 +143,34 @@ namespace Hl7.Fhir.Specification.Tests
                 // Conformance resource properties
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                 Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
-                Assert.IsNotNull(summary.GetConformanceName());
-                Assert.IsNotNull(summary.GetConformanceStatus());
-                Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                var name = summary.GetConformanceName();
+                Assert.IsNotNull(name);
+                Assert.IsNotNull(summary.GetPublicationStatus());
+
+                // [WMR 20181213] R4 NEW - Also harvest core extensions:
+                var standardsStatus = summary.GetStructureDefinitionStandardsStatus();
+                Assert.IsNotNull(standardsStatus);
+                var isNormative = standardsStatus == "normative";
+                var normativeVersion = summary.GetStructureDefinitionNormativeVersion();
+                if (isNormative)
+                {
+                    Assert.IsNotNull(normativeVersion);
+                }
+                var expectedStatus =
+                    isNormative
+                    // [WMR 20181213] R4 HACK - These 2 datatypes still define status="draft" ?
+                    && name != "MoneyQuantity"
+                    && name != "SimpleQuantity"
+                    ? PublicationStatus.Active : PublicationStatus.Draft;
+                Assert.AreEqual(expectedStatus.GetLiteral(), summary.GetPublicationStatus());
 
                 //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                 // StructureDefinition properties
 
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
-                Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+
+                Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
 
                 // For profiles-types, we expect Kind = ComplexType | PrimitiveType
                 Assert.IsNotNull(summary.GetStructureDefinitionKind());
@@ -131,15 +185,20 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsTrue(
                     summary.GetStructureDefinitionDerivation() != StructureDefinition.TypeDerivationRule.Specialization.GetLiteral()
                     || summary.GetStructureDefinitionBaseDefinition() != null);
+
+
+                // [WMR 20180725] Also harvest root element definition text
+                var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                Assert.IsNotNull(rootDefinition);
             }
         }
 
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            const string path = @"TestData\profiles-resources.xml";
+            string path = Path.Combine("TestData", "profiles-resources.xml");
 
-            var summaries = ArtifactSummaryGenerator.Generate(path);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -161,16 +220,27 @@ namespace Hl7.Fhir.Specification.Tests
                     // Conformance resource properties
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
                     Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
-                    Assert.IsNotNull(summary.GetConformanceName());
-                    Assert.IsNotNull(summary.GetConformanceStatus());
-                    Assert.AreEqual(PublicationStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+                    var name = summary.GetConformanceName();
+                    Assert.IsNotNull(name);
+                    Assert.IsNotNull(summary.GetPublicationStatus());
 
+                    // [WMR 20181213] R4 NEW - Also harvest core extensions:
+                    var standardsStatus = summary.GetStructureDefinitionStandardsStatus();
+                    Assert.IsNotNull(standardsStatus);
+                    var isNormative = standardsStatus == "normative";
+                    var normativeVersion = summary.GetStructureDefinitionNormativeVersion();
+                    if (isNormative)
+                    {
+                        Assert.IsNotNull(normativeVersion);
+                    }
+                    var expectedStatus = isNormative ? PublicationStatus.Active : PublicationStatus.Draft;
+                    Assert.AreEqual(expectedStatus.GetLiteral(), summary.GetPublicationStatus());
 
                     //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                     // StructureDefinition properties
                     Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
-                    Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+                    Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
 
                     // For profiles-resources, we expect Kind = Resource | Logical
                     var kind = summary.GetStructureDefinitionKind();
@@ -198,6 +268,10 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsNotNull(summary.GetStructureDefinitionMaturityLevel());
                         Assert.IsNotNull(summary.GetStructureDefinitionWorkingGroup());
                     }
+
+                    // [WMR 20180725] Also harvest root element definition text
+                    var rootDefinition = summary.GetStructureDefinitionRootDefinition();
+                    Assert.IsNotNull(rootDefinition);
                 }
 
             }
@@ -205,11 +279,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
-            if (harvesters == null || harvesters.Length == 0)
-            {
-                harvesters = ArtifactSummaryGenerator.ConformanceHarvesters;
-            }
-            var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);
+            var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
             var summary = summaries[0];
@@ -223,17 +293,16 @@ namespace Hl7.Fhir.Specification.Tests
             return summary;
         }
 
-#if NET_COMPRESSION
-
         [TestMethod]
         public void TestZipSummary()
         {
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(7670, summaries.Count);
-            Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
-            Assert.IsTrue(!summaries.Errors().Any());
+            // [WMR 20181213] R4 NEW
+            Assert.AreEqual(5105, summaries.Count); // STU3: 7941
+            Assert.AreEqual(924, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            //Assert.IsTrue(!summaries.Errors().Any());
         }
 
         [TestMethod]
@@ -244,7 +313,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries();
-            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient).Value;
             var patientSummary = summaries.FindConformanceResources(patientUrl).FirstOrDefault();
             Assert.IsNotNull(patientSummary);
             Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
@@ -266,7 +335,7 @@ namespace Hl7.Fhir.Specification.Tests
             // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
 
             ArtifactSummary corePatientSummary;
-            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient).Value;
             string zipEntryName = "profiles-resources.xml";
 
             // Generate summaries from core ZIP resource definitions (extract in memory)
@@ -278,7 +347,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var entryStream = entry.Open())
                 using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(navStream);
+                    var summaries = ArtifactSummaryGenerator.Default.Generate(navStream);
                     Assert.IsNotNull(summaries);
                     corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
                 }
@@ -309,8 +378,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
         }
-
-#endif
 
     }
 }

@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Determines if the specified element path represents a root element.</summary>
-        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains('.');
+        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains(".");
 
         /// <summary>Determines if the specified element path represents a (modifier) extension element.</summary>
         /// <returns><c>true</c> if <paramref name="path"/> ends with <c>.extension</c> or <c>.modifierExtension</c>, or <c>false</c> otherwise.</returns>

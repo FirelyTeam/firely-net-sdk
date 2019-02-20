@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
             PATCH,
         }
 
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -325,8 +325,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RelationElement != null) yield return new ElementValue("relation", false, RelationElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (RelationElement != null) yield return new ElementValue("relation", RelationElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 }
             }
 
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntryComponent")]
+        [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -519,12 +519,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", false, FullUrlElement);
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
-                    if (Search != null) yield return new ElementValue("search", false, Search);
-                    if (Request != null) yield return new ElementValue("request", false, Request);
-                    if (Response != null) yield return new ElementValue("response", false, Response);
+                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                    if (FullUrlElement != null) yield return new ElementValue("fullUrl", FullUrlElement);
+                    if (Resource != null) yield return new ElementValue("resource", Resource);
+                    if (Search != null) yield return new ElementValue("search", Search);
+                    if (Request != null) yield return new ElementValue("request", Request);
+                    if (Response != null) yield return new ElementValue("response", Response);
                 }
             }
 
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SearchComponent")]
+        [FhirType("SearchComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -665,8 +665,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (ScoreElement != null) yield return new ElementValue("score", false, ScoreElement);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (ScoreElement != null) yield return new ElementValue("score", ScoreElement);
                 }
             }
 
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestComponent")]
+        [FhirType("RequestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -953,12 +953,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MethodElement != null) yield return new ElementValue("method", false, MethodElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", false, IfNoneMatchElement);
-                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", false, IfModifiedSinceElement);
-                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", false, IfMatchElement);
-                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", false, IfNoneExistElement);
+                    if (MethodElement != null) yield return new ElementValue("method", MethodElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (IfNoneMatchElement != null) yield return new ElementValue("ifNoneMatch", IfNoneMatchElement);
+                    if (IfModifiedSinceElement != null) yield return new ElementValue("ifModifiedSince", IfModifiedSinceElement);
+                    if (IfMatchElement != null) yield return new ElementValue("ifMatch", IfMatchElement);
+                    if (IfNoneExistElement != null) yield return new ElementValue("ifNoneExist", IfNoneExistElement);
                 }
             }
 
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent")]
+        [FhirType("ResponseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1191,11 +1191,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                    if (LocationElement != null) yield return new ElementValue("location", false, LocationElement);
-                    if (EtagElement != null) yield return new ElementValue("etag", false, EtagElement);
-                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", false, LastModifiedElement);
-                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                    if (LocationElement != null) yield return new ElementValue("location", LocationElement);
+                    if (EtagElement != null) yield return new ElementValue("etag", EtagElement);
+                    if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
                 }
             }
 
@@ -1357,11 +1357,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "entry.where(fullUrl.exists()).select(fullUrl&resource.meta.versionId).isDistinct()",
+            Expression = "(type = 'history') or entry.where(fullUrl.exists()).select(fullUrl&resource.meta.versionId).isDistinct()",
             Key = "bdl-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
-            Xpath = "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
+            Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)",
+            Xpath = "(f:type/@value = 'history') or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)"
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_9 = new ElementDefinition.ConstraintComponent()
@@ -1552,13 +1552,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
-                if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
-                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
-                if (Signature != null) yield return new ElementValue("signature", false, Signature);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (TimestampElement != null) yield return new ElementValue("timestamp", TimestampElement);
+                if (TotalElement != null) yield return new ElementValue("total", TotalElement);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
+                if (Signature != null) yield return new ElementValue("signature", Signature);
             }
         }
 

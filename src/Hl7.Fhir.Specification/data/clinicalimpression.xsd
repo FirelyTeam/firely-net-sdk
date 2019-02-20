@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,12 +51,17 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier assigned to the clinical impression that remains consistent regardless of what server the impression is stored on.</xs:documentation>
+              <xs:documentation xml:lang="en">Business identifiers assigned to this clinical impression by the performer or other systems which remain constant as the resource is updated and propagates from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ClinicalImpressionStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the workflow status of the assessment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="statusReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Captures the reason for the current state of the ClinicalImpression.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -66,7 +71,7 @@
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A summary of the context and/or cause of the assessment - why / where was it performed, and what patient events/status prompted it.</xs:documentation>
+              <xs:documentation xml:lang="en">A summary of the context and/or cause of the assessment - why / where it was performed, and what patient events/status prompted it.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
@@ -74,9 +79,9 @@
               <xs:documentation xml:lang="en">The patient or group of individuals assessed as part of this record.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The encounter or episode of care this impression was created as part of.</xs:documentation>
+              <xs:documentation xml:lang="en">The Encounter during which this ClinicalImpression was created or to which the creation of this record is tightly associated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -98,17 +103,17 @@
           </xs:element>
           <xs:element name="previous" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the last assesment that was conducted bon this patient. Assessments are often/usually ongoing in nature; a care provider (practitioner or team) will make new assessments on an ongoing basis as new data arises or the patient's conditions changes.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to the last assessment that was conducted on this patient. Assessments are often/usually ongoing in nature; a care provider (practitioner or team) will make new assessments on an ongoing basis as new data arises or the patient's conditions changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="problem" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">This a list of the relevant problems/conditions for a patient.</xs:documentation>
+              <xs:documentation xml:lang="en">A list of the relevant problems/conditions for a patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="investigation" type="ClinicalImpression.Investigation" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">One or more sets of investigations (signs, symptions, etc.). The actual grouping of investigations vary greatly depending on the type and context of the assessment. These investigations may include data generated during the assessment process, or data previously generated and recorded that is pertinent to the outcomes.</xs:documentation>
+              <xs:documentation xml:lang="en">One or more sets of investigations (signs, symptoms, etc.). The actual grouping of investigations varies greatly depending on the type and context of the assessment. These investigations may include data generated during the assessment process, or data previously generated and recorded that is pertinent to the outcomes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="protocol" minOccurs="0" maxOccurs="unbounded" type="uri">
@@ -123,7 +128,7 @@
           </xs:element>
           <xs:element name="finding" type="ClinicalImpression.Finding" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specific findings or diagnoses that was considered likely or relevant to ongoing treatment.</xs:documentation>
+              <xs:documentation xml:lang="en">Specific findings or diagnoses that were considered likely or relevant to ongoing treatment.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="prognosisCodeableConcept" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -136,9 +141,9 @@
               <xs:documentation xml:lang="en">RiskAssessment expressing likely outcome.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="action" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="supportingInfo" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Action taken as part of assessment procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">Information supporting the clinical impression.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -159,7 +164,7 @@
         <xs:sequence>
           <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A name/code for the group (&quot;set&quot;) of investigations. Typically, this will be something like &quot;signs&quot;, &quot;symptoms&quot;, &quot;clinical&quot;, &quot;diagnostic&quot;, but the list is not constrained, and others such groups such as (exposure|family|travel|nutitirional) history may be used.</xs:documentation>
+              <xs:documentation xml:lang="en">A name/code for the group (&quot;set&quot;) of investigations. Typically, this will be something like &quot;signs&quot;, &quot;symptoms&quot;, &quot;clinical&quot;, &quot;diagnostic&quot;, but the list is not constrained, and others such groups such as (exposure|family|travel|nutritional) history may be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -178,13 +183,16 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:element name="itemCodeableConcept" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specific text, code or reference for finding or diagnosis, which may include ruled-out or resolved conditions.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="itemCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="itemReference" type="Reference"/>
-          </xs:choice>
+              <xs:documentation xml:lang="en">Specific text or code for finding or diagnosis, which may include ruled-out or resolved conditions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="itemReference" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specific reference for finding or diagnosis, which may include ruled-out or resolved conditions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="basis" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Which investigations support finding or diagnosis.</xs:documentation>
@@ -196,9 +204,9 @@
   </xs:complexType>
   <xs:simpleType name="ClinicalImpressionStatus-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="draft">
+      <xs:enumeration value="in-progress">
         <xs:annotation>
-          <xs:documentation xml:lang="en">In progress</xs:documentation>
+          <xs:documentation xml:lang="en">In Progress</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="completed">

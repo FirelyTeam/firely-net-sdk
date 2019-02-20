@@ -2,8 +2,8 @@
 <Questionnaire xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../../../schema/fhir-single.xsd">
 	<id value="questionnaire-sdc-profile-example-cap"/>
 	<url value="http://hl7.org/fhir/Questionnaire/questionnaire-sdc-profile-example-cap"/>
-	<status value="active"/>
 	<title value="(Ask Richard)"/>
+  <status value="active"/>
 	<item>
 		<linkId value="1"/>
 		<text value="MARGINS"/>

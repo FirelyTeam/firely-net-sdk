@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,10 +51,10 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The notice business identifier.</xs:documentation>
+              <xs:documentation xml:lang="en">A unique identifier assigned to this payment notice.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="FinancialResourceStatusCodes">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="FinancialResourceStatusCodes">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
            </xs:annotation>
@@ -69,19 +69,9 @@
               <xs:documentation xml:lang="en">Reference of response to resource for which payment is being made.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="statusDate" minOccurs="0" maxOccurs="1" type="date">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date when the above payment action occurrred.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
+          <xs:element name="created" minOccurs="1" maxOccurs="1" type="dateTime">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date when this resource was created.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="target" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The Insurer who is target  of the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="provider" minOccurs="0" maxOccurs="1" type="Reference">
@@ -89,14 +79,34 @@
               <xs:documentation xml:lang="en">The practitioner who is responsible for the services rendered to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="organization" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="payment" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The organization which is responsible for the services rendered to the patient.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to the payment which is the subject of this notice.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="paymentDate" minOccurs="0" maxOccurs="1" type="date">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date when the above payment action occurred.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="payee" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The party who will receive or has received payment that is the subject of this notification.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="recipient" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The party who is notified of the payment status.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" minOccurs="1" maxOccurs="1" type="Money">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The amount sent to the payee.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="paymentStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The payment status, typically paid: payment sent, cleared: payment received.</xs:documentation>
+              <xs:documentation xml:lang="en">A code indicating whether payment has been sent or cleared.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

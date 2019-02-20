@@ -1,30 +1,29 @@
-﻿using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
-using Hl7.Fhir.Rest;
-using System.Collections.Generic;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
-using Xunit;
-using Hl7.Fhir.Specification.Terminology;
-using System;
-using Hl7.Fhir.Validation;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using System.Xml.Linq;
+using Xunit;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
     {
-        IResourceResolver _source;
-        Validator _validator;
+        private IResourceResolver _source;
+        private Validator _validator;
         private readonly Xunit.Abstractions.ITestOutputHelper output;
 
         public BasicValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
@@ -32,6 +31,9 @@ namespace Hl7.Fhir.Specification.Tests
             _source = fixture.Resolver;
             _validator = fixture.Validator;
             this.output = output;
+
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+
         }
 
         //[TestInitialize]
@@ -42,8 +44,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         //    _source = new CachedResolver(
         //        new MultiResolver(
-        //            new BundleExampleResolver(@"TestData\validation"),
-        //            new DirectorySource(@"TestData\validation"),
+        //            new BundleExampleResolver(Path.Combine("TestData", "validation")),
+        //            new DirectorySource(Path.Combine("TestData", "validation")),
         //            new TestProfileArtifactSource(),
         //            new ZipSource("specification.zip")));
 
@@ -64,18 +66,19 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
-            var data = ElementNode.Node("active").ToNavigator();
+            var data = SourceNode.Node("active").ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var result = _validator.Validate(data, boolSd);
             Assert.False(result.Success);
-            Assert.True(result.ToString().Contains("must not be empty"));
+            Assert.Contains("must not be empty", result.ToString());
         }
 
 
         [Fact]
         public void NameMatching()
         {
-            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral()).ToNavigator();
+            var data = SourceNode.Valued("active", "true")
+                .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             Assert.True(ChildNameMatcher.NameMatches("active", data));
             Assert.True(ChildNameMatcher.NameMatches("activeBoolean", data));
@@ -91,18 +94,18 @@ namespace Hl7.Fhir.Specification.Tests
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
-            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral(),
-                    ElementNode.Node("extension",
-                        ElementNode.Valued("value", 4, "integer")),
-                    ElementNode.Node("nonExistant")
-                        ).ToNavigator();
+            var data = SourceNode.Valued("active", "true",
+                    SourceNode.Node("extension",
+                        SourceNode.Valued("value", "4")),
+                    SourceNode.Node("nonExistant")
+                        ).ToTypedElement(new PocoStructureDefinitionSummaryProvider(), type: "boolean", settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
 
-            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
-            Assert.Equal(1, matches.UnmatchedInstanceElements.Count);
+            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNode(data));
+            Assert.Single(matches.UnmatchedInstanceElements);
             Assert.Equal(3, matches.Matches.Count());        // id, extension, value
-            Assert.Equal(0, matches.Matches[0].InstanceElements.Count()); // id
-            Assert.Equal(1, matches.Matches[1].InstanceElements.Count()); // extension
-            Assert.Equal(1, matches.Matches[2].InstanceElements.Count()); // value
+            Assert.Empty(matches.Matches[0].InstanceElements); // id
+            Assert.Single(matches.Matches[1].InstanceElements); // extension
+            Assert.Single(matches.Matches[2].InstanceElements); // value
 
             Assert.Equal("extension", matches.Matches[1].InstanceElements.First().Name);
             Assert.Equal("extension", matches.Matches[1].Definition.PathName);
@@ -129,21 +132,42 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+        /// <summary>
+        /// This unit test proves issue 552: https://github.com/ewoutkramer/fhir-net-api/issues/552
+        /// </summary>
+        [Fact]
+        public void ValidateOidType()
+        {
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
+
+            var instance = new Oid("urn:oid:213.2.840.113674.514.212.200");
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success);
+            Assert.Equal(1, report.Errors);
+            Assert.Equal(0, report.Warnings);
+
+            instance = new Oid("urn:oid:2.2.840.113674.514.212.200");
+            report = _validator.Validate(instance, def);
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Errors);
+            Assert.Equal(0, report.Warnings);
+        }
 
         [Fact]
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
-            var data = ElementNode.Valued("active", true, FHIRAllTypes.Boolean.GetLiteral(),
-                        ElementNode.Valued("id", "myId1"),
-                        ElementNode.Valued("id", "myId2"),
-                        ElementNode.Node("extension",
-                            ElementNode.Valued("value", 4L, "integer")),
-                        ElementNode.Node("extension",
-                            ElementNode.Valued("value", "world!", "string"))).ToNavigator();
+            var data = SourceNode.Valued("active", "true",
+                        SourceNode.Valued("id", "myId1"),
+                        SourceNode.Valued("id", "myId2"),
+                        SourceNode.Node("extension",
+                            SourceNode.Valued("valueInteger", "4")))
+                            .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var report = _validator.Validate(data, boolSd);
-            Assert.Equal(3, report.Errors);
+            output.WriteLine(report.ToString());
+            Assert.Equal(0, report.Fatals);
+            Assert.Equal(3, report.Errors); // boolean.id [0..1], extension.url [1..1], ext-1
             Assert.Equal(0, report.Warnings);
         }
 
@@ -178,15 +202,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
-            var validationContext = new ValidationSettings { ResourceResolver = _source, GenerateSnapshot = false };
-            var automatedValidator = new Validator(validationContext);
+            var settingsNoSnapshot = new ValidationSettings { ResourceResolver = _source, GenerateSnapshot = false };
+            var validator = new Validator(settingsNoSnapshot);
 
-            var report = automatedValidator.Validate(instance, identifierBsn);
-            Assert.True(report.ToString().Contains("does not include a snapshot"));
+            var report = validator.Validate(instance, identifierBsn);
+            Assert.Contains("does not include a snapshot", report.ToString());
 
-            validationContext.GenerateSnapshot = true;
-            report = automatedValidator.Validate(instance, identifierBsn);
-            Assert.False(report.ToString().Contains("does not include a snapshot"));
+            var settingsSnapshot = new ValidationSettings(settingsNoSnapshot) { GenerateSnapshot = true };
+            validator = new Validator(settingsSnapshot);
+            report = validator.Validate(instance, identifierBsn);
+            Assert.DoesNotContain("does not include a snapshot", report.ToString());
 
             bool snapshotNeedCalled = false;
 
@@ -194,11 +219,11 @@ namespace Hl7.Fhir.Specification.Tests
             // to our local identifierBSN
             identifierBsn.Snapshot = null;
 
-            automatedValidator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
+            validator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
 
-            report = automatedValidator.Validate(instance, identifierBsn);
+            report = validator.Validate(instance, identifierBsn);
             Assert.True(snapshotNeedCalled);
-            Assert.True(report.ToString().Contains("does not include a snapshot"));
+            Assert.Contains("does not include a snapshot", report.ToString());
         }
 
 
@@ -207,14 +232,18 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
-            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
-            instance1.Text = "This is fixed too";
+            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
+            {
+                Text = "This is fixed too"
+            };
 
             var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Fixed = (CodeableConcept)instance1.DeepCopy();
 
-            var patient = new Patient();
-            patient.MaritalStatus = instance1;
+            var patient = new Patient
+            {
+                MaritalStatus = instance1
+            };
 
             var report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
@@ -227,7 +256,7 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Add(new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
+            patient.MaritalStatus.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(1, report.Errors);
 
@@ -244,13 +273,15 @@ namespace Hl7.Fhir.Specification.Tests
             // Instead, clone the core def and modify the clone
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
-            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
+            var instance1 = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "U");
 
             var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
 
-            var patient = new Patient();
-            patient.MaritalStatus = instance1;
+            var patient = new Patient
+            {
+                MaritalStatus = instance1
+            };
 
             var report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
@@ -267,7 +298,7 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Insert(0, new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
+            patient.MaritalStatus.Coding.Insert(0, new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
 
@@ -281,8 +312,10 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Try adding a period
 
-            Patient p = new Patient();
-            p.Active = true;
+            Patient p = new Patient
+            {
+                Active = true
+            };
 
             var identifierBsn = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.3", "1234");
             var identifierDl = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.12", "5678");
@@ -355,9 +388,11 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExteralReferences = true });
 
-            Patient p = new Patient();
-            p.Active = true;
-            p.ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1");
+            Patient p = new Patient
+            {
+                Active = true,
+                ManagingOrganization = new ResourceReference("http://reference.cannot.be.found.nl/fhir/Patient/1")
+            };
 
             var result = validator.Validate(p);
             Assert.True(result.Success);
@@ -374,7 +409,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateOverNameRef()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-with-incorrect-fixed-type.xml");
+            var questionnaireXml = File.ReadAllText(Path.Combine("TestData", "validation", "questionnaire-with-incorrect-fixed-type.xml"));
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
@@ -426,25 +461,30 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
-
         [Fact]
         public void ValidateContained()
         {
-            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
+            if (!report.Success)
+            {
+                report.Issue.RemoveAll(i => i.Severity == OperationOutcome.IssueSeverity.Warning);
+                output.WriteLine(report.ToString());
+            }
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x invariant
+
         }
 
 
         [Fact]
         public void MeasureDeepCopyPerformance()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+            var questionnaireXml = File.ReadAllText(Path.Combine("TestData", "validation", "questionnaire-sdc-profile-example-cap.xml"));
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
@@ -464,9 +504,10 @@ namespace Hl7.Fhir.Specification.Tests
         public void TriggerFpValidationError()
         {
             // pat-1: SHALL at least contain a contact's details or a reference to an organization (xpath: f:name or f:telecom or f:address or f:organization)
-            var p = new Patient();
-
-            p.Active = true;
+            var p = new Patient
+            {
+                Active = true
+            };
 
             var report = _validator.Validate(p);
             Assert.True(report.Success);
@@ -492,7 +533,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateBundle()
         {
-            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+            var bundleXml = File.ReadAllText(Path.Combine("TestData", "validation", "bundle-contained-references.xml"));
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.NotNull(bundle);
@@ -532,7 +573,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void RunXsdValidation()
         {
-            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
             var report = _validator.Validate(cpDoc.CreateReader());
@@ -543,16 +584,22 @@ namespace Hl7.Fhir.Specification.Tests
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
 
             report = _validator.Validate(cpDoc.CreateReader());
+            if (!report.Success)
+            {
+                report.Issue.RemoveAll(i => i.Severity == OperationOutcome.IssueSeverity.Warning);
+                output.WriteLine(report.ToString());
+            }
             Assert.False(report.Success);
-            Assert.True(report.ToString().Contains(".NET Xsd validation"));
+            Assert.Contains(".NET Xsd validation", report.ToString());
         }
 
         [Fact]
         public void TestBindingValidation()
         {
-            var p = new Patient();
-
-            p.MaritalStatus = new CodeableConcept("http://hl7.org/fhir/v3/MaritalStatus", "S");
+            var p = new Patient
+            {
+                MaritalStatus = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "S")
+            };
 
             var report = _validator.Validate(p);
             Assert.True(report.Success);
@@ -571,12 +618,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = "http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams";
             var cc = new CodeableConcept();
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "not-asked"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-asked"));
 
             var p = new Parameters();
             p.Add("cc", cc);
-            p.Add("c", new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
+            p.Add("c", new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));
             p.Add("s", new FhirString("not-asked"));
 
             var report = _validator.Validate(p, profile);
@@ -587,7 +634,7 @@ namespace Hl7.Fhir.Specification.Tests
             p.Add("s", new FhirString("not-a-member"));
             report = _validator.Validate(p, profile);
             Assert.False(report.Success);
-            Assert.True(report.ToString().Contains("not-a-member"));
+            Assert.Contains("not-a-member", report.ToString());
             Assert.Equal(0, report.Warnings);
         }
 
@@ -603,28 +650,22 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateExtensionExamples()
         {
-            var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
+            var levinXml = File.ReadAllText(Path.Combine("TestData", "validation", "Levin.patient.xml"));
             var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
             DebugDumpOutputXml(levin);
             Assert.NotNull(levin);
 
             var report = _validator.Validate(levin);
+            DebugDumpOutputXml(report);
 
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);
 
-            // Now, rename the mandatory NCT sub-extension
-            levin.Extension[1].Extension[0].Url = "NCTX";
-            report = _validator.Validate(levin);
-            Assert.False(report.Success);
-            Assert.True(report.ToString().Contains("Instance count for 'Extension.extension:NCT' is 0"));
-
-            levin.Extension[1].Extension[0].Url = "NCT";
             levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
             report = _validator.Validate(levin);
             DebugDumpOutputXml(report);
             Assert.False(report.Success);
-            Assert.True(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
+            Assert.Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')", report.ToString());
         }
 
         [Fact]
@@ -642,7 +683,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         internal class BundleExampleResolver : IResourceResolver
         {
-            private string _path;
+            private readonly string _path;
 
             public BundleExampleResolver(string path)
             {
@@ -657,7 +698,7 @@ namespace Hl7.Fhir.Specification.Tests
             public Resource ResolveByUri(string uri)
             {
                 ResourceIdentity reference = new ResourceIdentity(uri);
-                var filename = $"{reference.Id}.{reference.ResourceType}.xml";
+                var filename = $"{reference.Id}.{reference.ResourceType.ToLower()}.xml";
                 var path = Path.Combine(_path, filename);
 
                 if (File.Exists(path))
@@ -675,9 +716,10 @@ namespace Hl7.Fhir.Specification.Tests
         public void HandlesParentElementOfCoreAbstractType()
         {
             var sd = "http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained";
-            Bundle b = new Bundle();
-
-            b.Type = Bundle.BundleType.Message;
+            Bundle b = new Bundle
+            {
+                Type = Bundle.BundleType.Message
+            };
             b.Entry.Add(new Bundle.EntryComponent
             {
                 FullUrl = "http://somewhere.org/",
@@ -696,16 +738,9 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void TriggerEscapingValidationError()
+        public void ValidateAStructureDefinition()
         {
-            // This unit-test is here to trigger because of an escaping mistake in the FHIR spec 3.0.1.
-            // The cause is the escaped \\_ character in eld-16. I have manually corrected profiles-types.xml
-            // in the /data directory for this invariant, so this unit-test will normally pass.
-            // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
-            // still contains this mistake.
             var sd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
-            sd.Snapshot.Element[0].SliceName = "dummy";
-
             var result = _validator.Validate(sd);
             Assert.True(result.Success);
         }
@@ -718,15 +753,15 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...
-            // var source = new DirectorySource(@"TestData\validation");
+            // var source = new DirectorySource(Path.Combine("TestData", "validation"));
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
-            var jsonPatient = File.ReadAllText(@"TestData\validation\patient-ck.json");
+            var jsonPatient = File.ReadAllText(Path.Combine("TestData", "validation", "patient-ck.json"));
             var parser = new FhirJsonParser();
             var patient = parser.Parse<Patient>(jsonPatient);
             Assert.NotNull(patient);
 
-            var jsonOrganization = File.ReadAllText(@"TestData\validation\organization-ck.json");
+            var jsonOrganization = File.ReadAllText(Path.Combine("TestData", "validation", "organization-ck.json"));
             var organization = parser.Parse<Organization>(jsonOrganization);
             Assert.NotNull(organization);
 
@@ -746,8 +781,8 @@ namespace Hl7.Fhir.Specification.Tests
                 // This will force the validator to regenerate all snapshots
                 new ClearSnapshotResolver(
                     new MultiResolver(
-                        // new BundleExampleResolver(@"TestData\validation"),
-                        // new DirectorySource(@"TestData\validation"),
+                        // new BundleExampleResolver(Path.Combine("TestData", "validation")),
+                        // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
                         new ZipSource("specification.zip"))));
@@ -782,7 +817,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateInternalReferenceWithinContainedResources()
         {
-            var obsOverview = File.ReadAllText(@"TestData\validation\observation-list.xml");
+            var obsOverview = File.ReadAllText(Path.Combine("TestData", "validation", "observation-list.xml"));
             var parser = new FhirXmlParser();
 
             var obsList = parser.Parse<List>(obsOverview);
@@ -793,18 +828,40 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, result.Errors);
         }
 
+        private Validator buildValidator(CachedResolver cr)
+        {
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = cr,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            return new Validator(ctx);
+        }
+
         /// <summary>
         /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
         {
+            var cr = new CachedResolver(
+                    new MultiResolver(
+                    new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
+                    new DirectorySource(@"TestData\validation"),
+                    new TestProfileArtifactSource(),
+                    new ZipSource("specification.zip")));
+
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
             var buffer = new BufferBlock<XDocument>();
             var processor = new ActionBlock<XDocument>(d =>
                 {
-                    var outcome = _validator.Validate(d.CreateReader());
+                    var v = buildValidator(cr);
+                    var outcome = v.Validate(d.CreateReader());
                     results.Add(outcome);
                 }
                 ,
@@ -814,7 +871,7 @@ namespace Hl7.Fhir.Specification.Tests
                 });
             buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
 
-            var careplanXml = File.ReadAllText(@"TestData\validation\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
             for (int i = 0; i < nrOfParrallelTasks; i++)
@@ -829,8 +886,63 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(nrOfParrallelTasks, successes);
         }
 
+        /// <summary>
+        /// This test proves issue https://github.com/ewoutkramer/fhir-net-api/issues/617
+        /// </summary>
+        [Fact]
+        public void ValidateConditionalResourceInBundle()
+        {
+            TransactionBuilder tb = new TransactionBuilder("http://example.fhir.org");
+
+            var obs = new Observation()
+            {
+                Status = ObservationStatus.Preliminary,
+                Code = new CodeableConcept("system", "P"),
+                Subject = new ResourceReference("Patient?identifier=system|12345")
+            };
+
+            var patient = new Patient();
+            patient.Identifier.Add(new Identifier("system", "12345"));
+
+            tb.Create(patient);
+            tb.Create(obs);
+            var bundle = tb.ToBundle();
+            // fill in the FullUrl to make the DSTU2 validation happy
+            bundle.Entry[0].FullUrl = "http://example.fhir.org/Observation";
+            bundle.Entry[1].FullUrl = "http://example.fhir.org/Patient";
+
+            var result = _validator.Validate(bundle);
+
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void ValidateContainedPatient()
+        {
+            var content = "<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"3b405ba5f8ce411fa7f285beb20de018\" /><text><status value=\"generated\" /><div xmlns=\"http://www.w3.org/1999/xhtml\"><b>Cococinski, Ms Natalia</b><hr /><span style=\"color: gray;\">address home:</span> 121 Cadles Road, CARRUM DOWNS, 3201<br /><span style=\"color: gray;\">dob:</span> 30/04/1930<br /><span style=\"color: gray;\">gender:</span> Female<br /><span style=\"color: gray;\">home phone:</span> 9782 9999<br /><span style=\"color: gray;\">urno:</span> 88365<br /><span style=\"color: gray;\">managing organisation:</span> Banksia Respite Centre <i style=\"color:blue;\">(TCM)</i></div></text><identifier><use value=\"usual\" /><value value=\"88365\" /></identifier><active value=\"true\" /><name><text value=\"Cococinski, Ms Natalia\" /><family value=\"Cococinski\" /><given value=\"Natalia\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><gender value=\"female\" /><birthDate value=\"1930-04-30\" /><address><use value=\"home\" /><text value=\"99 Cadles Road, CARRUM DOWNS, 3201\" /><line value=\"99 Cadles Road\" /><city value=\"CARRUM DOWNS\" /><state value=\"Victoria\" /><postalCode value=\"3201\" /><period><start value=\"2006-06-16\" /></period></address><contact><name><text value=\"Sutcliffe, Ms Pat\" /><family value=\"Sutcliffe\" /><given value=\"Pat\" /></name><telecom><system value=\"phone\" /><value value=\"9784 8800\" /><use value=\"home\" /></telecom></contact><contact><name><text value=\"Cococinski, Ms Erica\" /><family value=\"Cococinski\" /><given value=\"Erica\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><telecom><system value=\"phone\" /><value value=\"9609 9999\" /><use value=\"work\" /></telecom></contact><managingOrganization id=\"5d3eb74c957411d2b2740020182a459e\"><reference value=\"Organization/54d83d08e01d43738d1eab06d2223629\" /><display value=\"tcmdemo fhir (Brian - CTH)\" /></managingOrganization></Patient>";
+
+            Patient p = new Hl7.Fhir.Serialization.FhirXmlParser().Parse<Patient>(content);
+            // Contained resources must have the 
+            Practitioner rp = new Practitioner { Id = "pat1" };
+            rp.Name.Add(new HumanName().WithGiven("Brian").AndFamily("Pos"));
+            p.Contained = new List<Resource> { rp };
+            p.GeneralPractitioner.Add(new ResourceReference() { Reference = "#" + rp.Id, Display = "Brian Pos" });
+
+            // Add a value that is not marked as summary
+            p.MaritalStatus = new CodeableConcept
+            {
+                Coding = new System.Collections.Generic.List<Coding>()
+            };
+            p.MaritalStatus.Coding.Add(new Coding() { Code = "c", Display = "display", System = "http://example.org/system" });
+
+            var patientSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            var report = _validator.Validate(p, patientSd);
+            Assert.True(report.Success);
+            Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
+        }
+
         // Verify aggregated element constraints
-        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
             foreach (var elem in patientElems)
             {
@@ -839,10 +951,10 @@ namespace Hl7.Fhir.Specification.Tests
                     // DomainResource constraints dom-1 ... dom-4 are defined in reversed order (specification.zip/profile-resources.xml)
                     // Assert.Equal("dom-4", elem.Constraint.FirstOrDefault()?.Key);
                     var constraintKeys = elem.Constraint.Select(c => c.Key).ToList();
-                    Assert.True(constraintKeys.Contains("dom-1"));
-                    Assert.True(constraintKeys.Contains("dom-2"));
-                    Assert.True(constraintKeys.Contains("dom-3"));
-                    Assert.True(constraintKeys.Contains("dom-4"));
+                    Assert.Contains("dom-1", constraintKeys);
+                    Assert.Contains("dom-2", constraintKeys);
+                    Assert.Contains("dom-3", constraintKeys);
+                    Assert.Contains("dom-4", constraintKeys);
                 }
                 else if (!elem.Path.EndsWith(".contained"))
                 {
@@ -852,9 +964,9 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        class ClearSnapshotResolver : IResourceResolver
+        private class ClearSnapshotResolver : IResourceResolver
         {
-            IResourceResolver _resolver;
+            private IResourceResolver _resolver;
             public ClearSnapshotResolver(IResourceResolver resolver)
             {
                 _resolver = resolver;
@@ -884,9 +996,9 @@ namespace Hl7.Fhir.Specification.Tests
 
     }
 
-    class InMemoryResourceResolver : IResourceResolver
+    internal class InMemoryResourceResolver : IResourceResolver
     {
-        ILookup<string, Resource> _resources;
+        private readonly ILookup<string, Resource> _resources;
 
         public InMemoryResourceResolver(IEnumerable<Resource> profiles)
         {
@@ -900,7 +1012,7 @@ namespace Hl7.Fhir.Specification.Tests
         public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
 
         // cf. ResourceStreamScanner.StreamResources
-        static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+        private static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
     }
 
 

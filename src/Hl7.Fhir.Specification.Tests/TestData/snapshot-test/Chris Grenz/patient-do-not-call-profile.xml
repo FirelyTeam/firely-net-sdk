@@ -19,8 +19,10 @@
   <kind value="resource" />
 
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Patient" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Patient" />
+  </context>
 
   <!-- [WMR 20160810] Fixed
 	<baseType value="Extension" />

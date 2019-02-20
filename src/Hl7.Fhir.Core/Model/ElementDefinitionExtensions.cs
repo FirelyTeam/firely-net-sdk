@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string profile=null)
+        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string[] profile=null)
         {
             ed.Type.Clear();
             ed.OrType(type, profile);
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OfReference(this ElementDefinition ed, string targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string profile=null)
+        public static ElementDefinition OfReference(this ElementDefinition ed, string[] targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string[] profile=null)
         {
             ed.Type.Clear();
             ed.OrReference(targetProfile, aggregation, profile);
@@ -56,16 +56,19 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string profile = null)
+        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string[] profiles = null)
         {
             if (type == FHIRAllTypes.Reference)
                 throw Error.InvalidOperation("Use OfReference/OrReference instead of OfType/OrType for references");
 
             var newType = new ElementDefinition.TypeRefComponent { Code = type.GetLiteral() };
-            if (profile != null)
+
+            if (profiles != null)
             {
-                // TODO: BRIAN: Should this be TargetProfile for the reference?
-                newType.ProfileElement.Add(new Canonical(profile));
+                foreach (var profile in profiles)
+                {
+                    newType.ProfileElement.Add(new Canonical(profile));
+                }
             }
 
             ed.Type.Add(newType);
@@ -73,14 +76,24 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OrReference(this ElementDefinition ed, string targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string profile = null)
+        public static ElementDefinition OrReference(this ElementDefinition ed, string[] targetProfiles, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string[] profiles = null)
         {
             var newType = new ElementDefinition.TypeRefComponent { Code = FHIRAllTypes.Reference.GetLiteral() };
 
-            if (targetProfile != null)
-                newType.TargetProfileElement.Add(new Canonical(targetProfile));
-            if (profile != null)
-                newType.ProfileElement.Add(new Canonical(profile));
+            if (targetProfiles != null)
+            {
+                foreach (var targetProfile in targetProfiles)
+                {
+                    newType.TargetProfileElement.Add(new Canonical(targetProfile));
+                }
+            }
+            if (profiles != null)
+            {
+                foreach (var profile in profiles)
+                {
+                    newType.ProfileElement.Add(new Canonical(profile));
+                }
+            }
             if (aggregation != null) newType.Aggregation = aggregation.Cast<ElementDefinition.AggregationMode?>();
 
             ed.Type.Add(newType);

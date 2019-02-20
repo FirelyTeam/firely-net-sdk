@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
         
-        [FhirType("ComposeComponent")]
+        [FhirType("ComposeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -224,10 +224,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LockedDateElement != null) yield return new ElementValue("lockedDate", false, LockedDateElement);
-                    if (InactiveElement != null) yield return new ElementValue("inactive", false, InactiveElement);
-                    foreach (var elem in Include) { if (elem != null) yield return new ElementValue("include", true, elem); }
-                    foreach (var elem in Exclude) { if (elem != null) yield return new ElementValue("exclude", true, elem); }
+                    if (LockedDateElement != null) yield return new ElementValue("lockedDate", LockedDateElement);
+                    if (InactiveElement != null) yield return new ElementValue("inactive", InactiveElement);
+                    foreach (var elem in Include) { if (elem != null) yield return new ElementValue("include", elem); }
+                    foreach (var elem in Exclude) { if (elem != null) yield return new ElementValue("exclude", elem); }
                 }
             }
 
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptSetComponent")]
+        [FhirType("ConceptSetComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -441,11 +441,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, elem); }
-                    foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", true, elem); }
-                    foreach (var elem in ValueSetElement) { if (elem != null) yield return new ElementValue("valueSet", true, elem); }
+                    if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", elem); }
+                    foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", elem); }
+                    foreach (var elem in ValueSetElement) { if (elem != null) yield return new ElementValue("valueSet", elem); }
                 }
             }
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptReferenceComponent")]
+        [FhirType("ConceptReferenceComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -605,9 +605,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
-                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", elem); }
                 }
             }
 
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DesignationComponent")]
+        [FhirType("DesignationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -766,9 +766,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (Use != null) yield return new ElementValue("use", false, Use);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                    if (Use != null) yield return new ElementValue("use", Use);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FilterComponent")]
+        [FhirType("FilterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "FilterComponent"; } }
             
             /// <summary>
-            /// A property defined by the code system
+            /// A property/filter defined by the code system
             /// </summary>
             [FhirElement("property", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _PropertyElement;
             
             /// <summary>
-            /// A property defined by the code system
+            /// A property/filter defined by the code system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -948,9 +948,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (PropertyElement != null) yield return new ElementValue("property", false, PropertyElement);
-                    if (OpElement != null) yield return new ElementValue("op", false, OpElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (PropertyElement != null) yield return new ElementValue("property", PropertyElement);
+                    if (OpElement != null) yield return new ElementValue("op", OpElement);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -958,7 +958,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionComponent")]
+        [FhirType("ExpansionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1200,12 +1200,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IdentifierElement != null) yield return new ElementValue("identifier", false, IdentifierElement);
-                    if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
-                    if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
-                    if (OffsetElement != null) yield return new ElementValue("offset", false, OffsetElement);
-                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
-                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", true, elem); }
+                    if (IdentifierElement != null) yield return new ElementValue("identifier", IdentifierElement);
+                    if (TimestampElement != null) yield return new ElementValue("timestamp", TimestampElement);
+                    if (TotalElement != null) yield return new ElementValue("total", TotalElement);
+                    if (OffsetElement != null) yield return new ElementValue("offset", OffsetElement);
+                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
+                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", elem); }
                 }
             }
 
@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1330,8 +1330,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1339,7 +1339,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainsComponent")]
+        [FhirType("ContainsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1652,14 +1652,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (AbstractElement != null) yield return new ElementValue("abstract", false, AbstractElement);
-                    if (InactiveElement != null) yield return new ElementValue("inactive", false, InactiveElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
-                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
-                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", true, elem); }
+                    if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                    if (AbstractElement != null) yield return new ElementValue("abstract", AbstractElement);
+                    if (InactiveElement != null) yield return new ElementValue("inactive", InactiveElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", elem); }
+                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", elem); }
                 }
             }
 
@@ -2078,15 +2078,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
 
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_11 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "status='active' or compose.exists() or expansion.empty()",
-            Key = "vsd-11",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Status must = 'active' if expansion is present and compose is absent",
-            Xpath = "f:status/@value='active' or exists(f:compose) or not(exists(f:expansion)"
-        };
-
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_0 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
@@ -2154,7 +2145,6 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(ValueSet_VSD_11);
             InvariantConstraints.Add(ValueSet_VSD_0);
             InvariantConstraints.Add(ValueSet_VSD_2);
             InvariantConstraints.Add(ValueSet_VSD_3);
@@ -2289,24 +2279,24 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (ImmutableElement != null) yield return new ElementValue("immutable", false, ImmutableElement);
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (Compose != null) yield return new ElementValue("compose", false, Compose);
-                if (Expansion != null) yield return new ElementValue("expansion", false, Expansion);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (ImmutableElement != null) yield return new ElementValue("immutable", ImmutableElement);
+                if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                if (Compose != null) yield return new ElementValue("compose", Compose);
+                if (Expansion != null) yield return new ElementValue("expansion", Expansion);
             }
         }
 

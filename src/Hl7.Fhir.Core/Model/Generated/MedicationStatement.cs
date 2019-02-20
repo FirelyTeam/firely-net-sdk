@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,59 +56,59 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "MedicationStatement"; } }
         
         /// <summary>
-        /// A coded concept indicating the current status of a MedicationStatement.
+        /// Medication Status Codes
         /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
         /// </summary>
-        [FhirEnumeration("MedicationStatementStatus")]
-        public enum MedicationStatementStatus
+        [FhirEnumeration("MedicationStatusCodes")]
+        public enum MedicationStatusCodes
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/medication-statement-status"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("completed", "http://hl7.org/fhir/medication-statement-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-statement-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("intended", "http://hl7.org/fhir/medication-statement-status"), Description("Intended")]
+            [EnumLiteral("intended", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Intended")]
             Intended,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("stopped", "http://hl7.org/fhir/medication-statement-status"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-statement-status"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("unknown", "http://hl7.org/fhir/medication-statement-status"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Unknown")]
             Unknown,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-statement-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
             /// </summary>
-            [EnumLiteral("not-taken", "http://hl7.org/fhir/medication-statement-status"), Description("Not Taken")]
+            [EnumLiteral("not-taken", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Not Taken")]
             NotTaken,
         }
 
@@ -164,13 +164,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus> StatusElement
+        public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus? Status
+        public Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
-        /// The date/time or interval when the medication is/was/will taken
+        /// The date/time or interval when the medication is/was/will be taken
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("informationSource", Order=200)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","RelatedPerson","Organization")]
+		[References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference InformationSource
         {
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes>)StatusElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
@@ -529,23 +529,23 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", true, elem); }
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (Effective != null) yield return new ElementValue("effective", false, Effective);
-                if (DateAssertedElement != null) yield return new ElementValue("dateAsserted", false, DateAssertedElement);
-                if (InformationSource != null) yield return new ElementValue("informationSource", false, InformationSource);
-                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", elem); }
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Context != null) yield return new ElementValue("context", Context);
+                if (Effective != null) yield return new ElementValue("effective", Effective);
+                if (DateAssertedElement != null) yield return new ElementValue("dateAsserted", DateAssertedElement);
+                if (InformationSource != null) yield return new ElementValue("informationSource", InformationSource);
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
             }
         }
 

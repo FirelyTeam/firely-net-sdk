@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-01-04T19:42:38.927+01:00" />
@@ -9,8 +9,8 @@
   <date value="2017-01-04T19:13:35.4169804+01:00" />
   <description value="StructureDefinition for Custom Observation Resource" />
   <kind value="resource" />
-  <type value="Observation" />
   <abstract value="false" />
+  <type value="Observation" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
   <derivation value="constraint" />
   <differential>
@@ -20,7 +20,10 @@
     <element>
       <path value="Observation.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>

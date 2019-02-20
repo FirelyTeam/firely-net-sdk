@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 
     internal static class FpConstraintValidationExtensions
     {
-        public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNavigator instance)
+        public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
 
@@ -36,12 +36,15 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
+                // Skip any best practice constraints until that setting is available
+                if (constraintElement.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") == true)
+                    continue;
                 bool success = false;
                
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance, new FhirEvaluationContext(context) { Resolver = callExternalResolver } );
+                    success = compiled.Predicate(instance, new FhirEvaluationContext(context) { ElementResolver = callExternalResolver } );
                 }
                 catch (Exception e)
                 {
@@ -61,7 +64,7 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            IElementNavigator callExternalResolver(string url)
+            ITypedElement callExternalResolver(string url)
             {
                 OperationOutcome o = new OperationOutcome();
                 var result = v.ExternalReferenceResolutionNeeded(url, o, "dummy");
@@ -73,7 +76,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static CompiledExpression getExecutableConstraint(Validator v, OperationOutcome outcome, IElementNavigator instance,
+        private static CompiledExpression getExecutableConstraint(Validator v, OperationOutcome outcome, ITypedElement instance,
                         ElementDefinition.ConstraintComponent constraintElement)
         {
             var compiledExpression = constraintElement.Annotation<CompiledConstraintAnnotation>()?.Expression;

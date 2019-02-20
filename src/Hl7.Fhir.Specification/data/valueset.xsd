@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ValueSet" type="ValueSet">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ValueSet">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URI that is used to identify this value set when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this value set is (or will be) published. The URL SHOULD include the major version of the value set. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URI that is used to identify this value set when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this value set is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the value set is stored on different servers.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
@@ -76,22 +76,22 @@
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of this value set. Enables tracking the life-cycle of the content.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this value set. Enables tracking the life-cycle of the content. The status of the value set applies to the value set definition (ValueSet.compose) and the associated ValueSet metadata. Expansions do not have a state.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A boolean value to indicate that this value set is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
+              <xs:documentation xml:lang="en">A Boolean value to indicate that this value set is authored for testing purposes (or education/evaluation/marketing) and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the value set was published. The date must change if and when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the value set changes. (e.g. the 'content logical definition').</xs:documentation>
+              <xs:documentation xml:lang="en">The date (and optionally time) when the value set was created or revised (e.g. the 'content logical definition').</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the value set.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the organization or individual that published the value set.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
@@ -101,12 +101,12 @@
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the value set from a consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the value set from a consumer's perspective. The textual description specifies the span of meanings for concepts to be included within the Value Set Expansion, and also may specify the intended use and limitations of the Value Set.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching for appropriate value set instances.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These contexts may be general categories (gender, age, ...) or may be references to specific programs (insurance plans, studies, ...) and may be used to assist with indexing and searching for appropriate value set instances.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -121,7 +121,7 @@
           </xs:element>
           <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Explaination of why this value set is needed and why it has been designed as it has.</xs:documentation>
+              <xs:documentation xml:lang="en">Explanation of why this value set is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
@@ -129,14 +129,9 @@
               <xs:documentation xml:lang="en">A copyright statement relating to the value set and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the value set.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="extensible" minOccurs="0" maxOccurs="1" type="boolean">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this is intended to be used with an extensible binding or not.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="compose" type="ValueSet.Compose" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A set of criteria that define the content logical definition of the value set by including or excluding codes from outside this value set. This I also known as the &quot;Content Logical Definition&quot; (CLD).</xs:documentation>
+              <xs:documentation xml:lang="en">A set of criteria that define the contents of the value set by including or excluding codes selected from the specified code system(s) that the value set draws from. This is also known as the Content Logical Definition (CLD).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="expansion" type="ValueSet.Expansion" minOccurs="0" maxOccurs="1">
@@ -150,19 +145,19 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Compose">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="lockedDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If a locked date is defined, then the Content Logical Definition must be evaluated using the current version as of the locked date for referenced code system(s) and value set instances where ValueSet.compose.include.version is not defined.</xs:documentation>
+              <xs:documentation xml:lang="en">The Locked Date is  the effective date that is used to determine the version of all referenced Code Systems and Value Set Definitions included in the compose that are not already tied to a specific version.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="inactive" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether inactive codes - codes that are not approved for current use - are in the value set. If inactive = true, inactive codes are to be included in the expansion, if inactive = false, the inactive codes will not be included in the expansion. If absent, the behavior is determined by the implementation, or by the applicable ExpansionProfile (but generally, inactive codes would be expected to be included).</xs:documentation>
+              <xs:documentation xml:lang="en">Whether inactive codes - codes that are not approved for current use - are in the value set. If inactive = true, inactive codes are to be included in the expansion, if inactive = false, the inactive codes will not be included in the expansion. If absent, the behavior is determined by the implementation, or by the applicable $expand parameters (but generally, inactive codes would be expected to be included).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="include" type="ValueSet.Include" minOccurs="1" maxOccurs="unbounded">
@@ -181,7 +176,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Include">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -193,7 +188,7 @@
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the code system that the codes are selected from.</xs:documentation>
+              <xs:documentation xml:lang="en">The version of the code system that the codes are selected from, or the special version '*' for all versions.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="concept" type="ValueSet.Concept" minOccurs="0" maxOccurs="unbounded">
@@ -203,12 +198,12 @@
           </xs:element>
           <xs:element name="filter" type="ValueSet.Filter" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Select concepts by specify a matching criteria based on the properties (including relationships) defined by the system. If multiple filters are specified, they SHALL all be true.</xs:documentation>
+              <xs:documentation xml:lang="en">Select concepts by specify a matching criterion based on the properties (including relationships) defined by the system, or on filters defined by the system. If multiple filters are specified, they SHALL all be true.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="valueSet" minOccurs="0" maxOccurs="unbounded" type="uri">
+          <xs:element name="valueSet" minOccurs="0" maxOccurs="unbounded" type="canonical">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Selects concepts found in this value set. This is an absolute URI that is a reference to ValueSet.url.</xs:documentation>
+              <xs:documentation xml:lang="en">Selects the concepts found in this value set (based on its value set definition). This is an absolute URI that is a reference to ValueSet.url.  If multiple value sets are specified this includes the union of the contents of all of the referenced value sets.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -217,7 +212,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Concept">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -243,7 +238,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Designation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -255,7 +250,7 @@
           </xs:element>
           <xs:element name="use" minOccurs="0" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code that details how this designation would be used.</xs:documentation>
+              <xs:documentation xml:lang="en">A code that represents types of uses of designations.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="value" minOccurs="1" maxOccurs="1" type="string">
@@ -269,14 +264,14 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Filter">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="property" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code that identifies a property defined in the code system.</xs:documentation>
+              <xs:documentation xml:lang="en">A code that identifies a property or a filter defined in the code system.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="op" minOccurs="1" maxOccurs="1" type="FilterOperator">
@@ -284,9 +279,9 @@
               <xs:documentation xml:lang="en">The kind of operation to perform as a part of the filter criteria.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="value" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="value" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The match value may be either a code defined by the system, or a string value, which is a regex match on the literal string of the property value when the operation is 'regex', or one of the values (true and false), when the operation is 'exists'.</xs:documentation>
+              <xs:documentation xml:lang="en">The match value may be either a code defined by the system, or a string value, which is a regex match on the literal string of the property value  (if the filter represents a property defined in CodeSystem) or of the system filter value (if the filter represents a filter defined in CodeSystem) when the operation is 'regex', or one of the values (true and false), when the operation is 'exists'.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -295,14 +290,14 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Expansion">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="uri">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An identifier that uniquely identifies this expansion of the valueset. Systems may re-use the same identifier as long as the expansion and the definition remain the same, but are not required to do so.</xs:documentation>
+              <xs:documentation xml:lang="en">An identifier that uniquely identifies this expansion of the valueset, based on a unique combination of the provided parameters, the system default parameters, and the underlying system code system versions etc. Systems may re-use the same identifier as long as those factors remain the same, and the expansion is the same, but are not required to do so. This is a business identifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="timestamp" minOccurs="1" maxOccurs="1" type="dateTime">
@@ -317,7 +312,7 @@
           </xs:element>
           <xs:element name="offset" minOccurs="0" maxOccurs="1" type="integer">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If paging is being used, the offset at which this resource starts.  I.e. this resource is a partial view into the expansion. If paging is not being used, this element SHALL not be present.</xs:documentation>
+              <xs:documentation xml:lang="en">If paging is being used, the offset at which this resource starts.  I.e. this resource is a partial view into the expansion. If paging is not being used, this element SHALL NOT be present.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="parameter" type="ValueSet.Parameter" minOccurs="0" maxOccurs="unbounded">
@@ -336,14 +331,14 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Parameter">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the parameter.</xs:documentation>
+              <xs:documentation xml:lang="en">Name of the input parameter to the $expand operation; may be a server-assigned name for additional default or other server-supplied parameters used to control the expansion process.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -356,6 +351,7 @@
             <xs:element name="valueDecimal" type="decimal"/>
             <xs:element name="valueUri" type="uri"/>
             <xs:element name="valueCode" type="code"/>
+            <xs:element name="valueDateTime" type="dateTime"/>
           </xs:choice>
         </xs:sequence>
       </xs:extension>
@@ -363,7 +359,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Contains">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A value set specifies a set of codes drawn from one or more code systems.</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -380,12 +376,12 @@
           </xs:element>
           <xs:element name="inactive" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If the concept is inactive in the code system that defines it. Inactive codes are those that are no longer to be used, but are maintained by the code system for understanding legacy data.</xs:documentation>
+              <xs:documentation xml:lang="en">If the concept is inactive in the code system that defines it. Inactive codes are those that are no longer to be used, but are maintained by the code system for understanding legacy data. It might not be known or specified whether an concept is inactive (and it may depend on the context of use).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of this code system that defined this code and/or display. This should only be used with code systems that do not enforce concept permanence.</xs:documentation>
+              <xs:documentation xml:lang="en">The version of the code system from this code was taken. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="code">

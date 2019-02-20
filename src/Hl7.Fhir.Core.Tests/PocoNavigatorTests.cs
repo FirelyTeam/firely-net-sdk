@@ -1,24 +1,23 @@
-﻿using Hl7.Fhir.FhirPath;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Hl7.FhirPath.Expressions;
-using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath;
-using System.IO;
+using Hl7.FhirPath.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir
 {
     [TestClass]
     public class PocoNavigatorTests
     {
-
+#pragma warning disable 612,618
         [TestMethod]
         public void TestPocoPath()
         {
@@ -27,34 +26,32 @@ namespace Hl7.Fhir
             FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
             (object f) =>
             {
-                if (f is IEnumerable<IElementNavigator>)
+                if (f is IEnumerable<ITypedElement>)
                 {
-                    object[] bits = (f as IEnumerable<IElementNavigator>).Select(i =>
+                    object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
-                        if (i is PocoNavigator)
-                        {
-                            return (i as PocoNavigator).ShortPath;
-                        }
-                        return "?";
+                        return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
                     }).ToArray();
                     return FhirValueList.Create(bits);
                 }
                 return FhirValueList.Create(new object[] { "?" });
             });
 
-            Patient p = new Patient();
-            p.Active = true;
+            Patient p = new Patient
+            {
+                Active = true
+            };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
-            p.Telecom = new List<ContactPoint>();
-            p.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone"));
+            p.Telecom = new List<ContactPoint>
+            {
+                new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone")
+            };
             p.Telecom[0].Rank = 1;
 
-            foreach (var item in p.Select("descendants().shortpathname()"))
-            {
-                System.Diagnostics.Trace.WriteLine(item.ToString());
-            }
+            Assert.IsTrue(new FhirString("Patient.active").IsExactly(p.Select("descendants().shortpathname()").FirstOrDefault()));
+
             var patient = new PocoNavigator(p);
 
             Assert.AreEqual("Patient", patient.Location);
@@ -101,29 +98,21 @@ namespace Hl7.Fhir
             Assert.AreEqual("Patient.telecom.where(system='phone').system", v3.CommonPath);
 
             // Now check navigation bits
-            var v4 = new PocoNavigator(p);
-            Assert.AreEqual("Patient.telecom.where(system='phone').system", 
-                (v4.Select("Patient.telecom.where(system='phone').system").First() as PocoNavigator).CommonPath);
-            v4 = new PocoNavigator(p);
             Assert.AreEqual("Patient.telecom[0].system",
-                (v4.Select("Patient.telecom.where(system='phone').system").First() as PocoNavigator).ShortPath);
-            v4 = new PocoNavigator(p);
+                (p.ToTypedElement().Select("Patient.telecom.where(system='phone').system").First() as PocoElementNode).ShortPath);
+            var v4 = new PocoNavigator(p);
             Assert.AreEqual("Patient.telecom[0].system[0]",
-                (v4.Select("Patient.telecom.where(system='phone').system").First() as PocoNavigator).Location);
-            v4 = new PocoNavigator(p);
-            Assert.AreEqual("Patient.telecom.where(system='phone').system", 
-                (v4.Select("Patient.telecom[0].system").First() as PocoNavigator).CommonPath);
-            v4 = new PocoNavigator(p);
-            Assert.AreEqual("Patient.telecom[0].system", 
-                (v4.Select("Patient.telecom[0].system").First() as PocoNavigator).ShortPath);
+                (v4.Select("Patient.telecom.where(system='phone').system").First()).Location);
         }
+#pragma warning restore 612,618
 
         [TestMethod]
         public void PocoExtensionTest()
         {
-            Patient p = new Patient();
-
-            p.Active = true;
+            Patient p = new Patient
+            {
+                Active = true
+            };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
@@ -165,34 +154,119 @@ namespace Hl7.Fhir
         public void CompareToOtherElementNavigator()
         {
             var json = TestDataHelper.ReadTestData("TestPatient.json");
+            var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pocoP = new PocoNavigator((new FhirJsonParser()).Parse<Patient>(json));
-            var jsonP = JsonDomFhirNavigator.Create(json);
+            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToTypedElement();
+            var jsonP = FhirJsonNode.Parse(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true })
+                .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+            var xmlP = FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
-            var compare = pocoP.IsEqualTo(jsonP);
+            doCompare(pocoP, jsonP, "poco<->json");
+            doCompare(pocoP, xmlP, "poco<->xml");
 
-            if (compare.Success == false)
+            void doCompare(ITypedElement one, ITypedElement two, string what)
             {
-                Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
-                Assert.Fail();
-            }           
+                var compare = one.IsEqualTo(two);
+
+                if (compare.Success == false)
+                {
+                    Debug.WriteLine($"{what}: Difference in {compare.Details} at {compare.FailureLocation}");
+                    Assert.Fail();
+                }
+            }
         }
 
         [TestMethod]
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
-            var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
+            var xml = File.ReadAllText(Path.Combine("TestData", "issue-444-testdata.xml"));
             var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
-            var nav = new PocoNavigator(cs);
+            var nav = cs.ToTypedElement();
 
-            nav.MoveToFirstChild();
+            var rest = nav.Children().Where(c => c.Name == "rest").FirstOrDefault();
 
-            Assert.IsTrue(nav.MoveToNext("format"));
-            nav.MoveToNext(); // format[1] again
-            nav.MoveToNext();   // rest[0]
-            
-            Assert.IsTrue(nav.Location.Contains("CapabilityStatement.rest[0]"));
+            Assert.IsNotNull(rest);
+
+            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
         }
+
+
+        [TestMethod]
+        public void PocoTypedElementPerformance()
+        {
+            var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
+            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+            var nav = cs.ToTypedElement();
+
+            TypedElementPerformance(nav);
+        }
+
+        private static void TypedElementPerformance(ITypedElement nav)
+        {
+            // run extraction once to allow for caching
+            extract();
+
+            //System.Threading.Thread.Sleep(20000);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 5_000; i++)
+            {
+                extract();
+            }
+            sw.Stop();
+
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5 } micros");
+
+            void extract()
+            {
+                var usual = nav.Children("identifier").First().Children("use").First().Value;
+                var phone = nav.Children("telecom").First().Children("system").First().Value;
+                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Value is string s && s == "true")).Count();
+                var link = nav.Children("link").Children("other").Children("reference");
+            }
+        }
+
+        [TestMethod]
+        public void PocoNavPerformance()
+        {
+            var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
+            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+#pragma warning disable CS0618 // Type or member is obsolete
+            var nav = cs.ToElementNavigator();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            ElementNavPerformance(nav);
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        private static void ElementNavPerformance(IElementNavigator nav)
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            // run extraction once to allow for caching
+            extract();
+
+            //System.Threading.Thread.Sleep(20000);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 5_000; i++)
+            {
+                extract();
+            }
+            sw.Stop();
+
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5 } micros");
+
+            void extract()
+            {
+                var usual = nav.Children("identifier").First().Children("use").First().Value;
+                var phone = nav.Children("telecom").First().Children("system").First().Value;
+                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Value is string s && s == "true")).Count();
+                var link = nav.Children("link").Children("other").Children("reference");
+            }
+        }
+
 
     }
 

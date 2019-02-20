@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -52,6 +53,19 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(metaXml, xml);
         }
 
+        [TestMethod]
+        public void ParsePatientXmlNullType()
+        {
+            string xmlPacientTest = TestDataHelper.ReadTestData("TestPatient.xml");
+            
+            var poco = new FhirXmlParser().Parse(xmlPacientTest);
+            
+            Assert.AreEqual(((Patient)poco).Id, "pat1");
+            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
+            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
+            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+        }
+
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
 
@@ -65,11 +79,23 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(metaJson, json);
         }
 
+        [TestMethod]
+        public void ParsePatientJsonNullType()
+        {
+            string jsonPatient = TestDataHelper.ReadTestData("TestPatient.json");
+
+            var poco = new FhirJsonParser().Parse(jsonPatient);
+
+            Assert.AreEqual(((Patient)poco).Id, "pat1");
+            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
+            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
+            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+        }
 
         [TestMethod]
         public void AvoidBOMUse()
         {
-            Bundle b = new Bundle();
+            Bundle b = new Bundle() { Total = 1000 };
 
             var data = FhirJsonSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
@@ -77,7 +103,7 @@ namespace Hl7.Fhir.Tests.Serialization
             data = FhirXmlSerializer.SerializeToBytes(b);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
 
-            Patient p = new Patient();
+            Patient p = new Patient() { Active = true };
 
             data = FhirJsonSerializer.SerializeToBytes(p);
             Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
@@ -102,13 +128,14 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
-        [TestMethod, Ignore] // Old tests, I'm note sure we need them anymore
+        [TestMethod]
         public void TestSummary()
         {
-            var p = new Patient();
-
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
 
             var full = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("<birthDate"));
@@ -179,8 +206,35 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
-            var qInflate = FhirXmlParser.Parse<Questionnaire>(qText);
+            // make sure we accept the crappy output with empty groups
+            var nav = FhirXmlNode.Parse(qText, new FhirXmlParsingSettings { PermissiveParsing = true });
+
+            var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+        }
+
+        [TestMethod]
+        public void TestElements()
+        {
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+            var elements = new[] { "photo" };
+
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
+            Assert.IsFalse(summaryElements.Contains("<birthDate"));
+            Assert.IsTrue(summaryElements.Contains("<photo"));
+
+            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, elements: elements);
+            Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
+            Assert.IsTrue(noSummarySpecified.Contains("<photo"));
+
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
         }
 
         [TestMethod]
@@ -207,14 +261,16 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestBundleSummary()
         {
-            var p = new Patient();
-
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
 
             var b = new Bundle();
             b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
             b.Total = 1;
+            b.Type = Bundle.BundleType.Searchset;
 
             var full = FhirXmlSerializer.SerializeToString(b);
             Assert.IsTrue(full.Contains("<entry"));
@@ -233,6 +289,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsTrue(summ.Contains("<total"));
+            Assert.IsTrue(summ.Contains("<type"));
         }
 
 
@@ -243,7 +300,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Div = "A great blues player" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { VersionId = "eric-clapton" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -257,7 +314,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-two",
                 Active = true,
-                Text = new Narrative { Div = "<div>Another great blues player</div>" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>" },
                 Meta = new Meta { VersionId = "bb-king" },
                 Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
             };
@@ -273,15 +330,15 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var textBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
-            var dataBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
-            var countBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
             var trueBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.True);
+            var dataBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
+            var textBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
+            var countBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
             var falseBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.False);
 
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.json");
-            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
             var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\bundle-summary-data.json");
+            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
             var shouldBeSummaryCount = TestDataHelper.ReadTestData("summary\\bundle-summary-count.json");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.json");
 
@@ -298,7 +355,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var patientOne = new Patient
             {
                 Id = "patient-one",
-                Text = new Narrative { Div = "<div>A great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "eric-clapton" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -312,7 +369,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-two",
                 Active = true,
-                Text = new Narrative { Div = "<div>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "bb-king" },
                 Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
             };
@@ -340,11 +397,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.xml");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.xml");
 
-            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
-            Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
-            Assert.AreEqual(dataBundle, shouldBeSummaryData);
-            Assert.AreEqual(countBundle, shouldBeSummaryCount);
-            Assert.AreEqual(textBundle, shouldBeSummaryText);
+            Assert.AreEqual(shouldBeSummaryFalse, falseBundle);
+            Assert.AreEqual(shouldBeSummaryTrue, trueBundle);
+            Assert.AreEqual(shouldBeSummaryData, dataBundle);
+            Assert.AreEqual(shouldBeSummaryCount, countBundle);
+            Assert.AreEqual(shouldBeSummaryText, textBundle);
 
         }
 
@@ -355,7 +412,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Div = "A great blues player" },
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -377,12 +434,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             var shouldBePatientOneText =
-                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"text\":{\"div\":\"A great blues player\"}}";
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"text\":{\"div\":\"<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>\"}}";
 
             var shouldBePationeOneData =
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
-            var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+            var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             Assert.AreEqual(summaryTrue, shouldBePatientOneTrue);
             Assert.AreEqual(summaryText, shouldBePatientOneText);
@@ -397,7 +454,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -425,52 +482,53 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(shouldBeSummaryFalse, summaryFalse);
         }
 
-        [TestMethod]
-        public void HandleCommentsJson()
-        {
-            string json = TestDataHelper.ReadTestData("TestPatient.json");
+        //[TestMethod]
+        //public void HandleCommentsJson()
+        //{
+        //    string json = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var pat = FhirJsonParser.Parse<Patient>(json);
+        //    var pat = FhirJsonParser.Parse<Patient>(json);
 
-            Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
-            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+        //    Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
 
-            pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
+        //    pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            json = FhirJsonSerializer.SerializeToString(pat);
-            pat = FhirJsonParser.Parse<Patient>(json);
+        //    json = FhirJsonSerializer.SerializeToString(pat);
+        //    pat = FhirJsonParser.Parse<Patient>(json);
 
-            Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
-            Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
-            Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
-        }
+        //    Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
+        //    Assert.AreEqual("A second line", pat.Telecom[0].FhirComments.Skip(1).First());
+        //}
 
-        [TestMethod, Ignore]
-        public void HandleCommentsXml()
-        {
-            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
+        //[TestMethod, Ignore]
+        //public void HandleCommentsXml()
+        //{
+        //    string xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pat = FhirXmlParser.Parse<Patient>(xml);
+        //    var pat = FhirXmlParser.Parse<Patient>(xml);
 
-            Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
-            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+        //    Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
 
-            pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
+        //    pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
-            xml = FhirXmlSerializer.SerializeToString(pat);
+        //    xml = FhirXmlSerializer.SerializeToString(pat);
 
-            Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
-            Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
-            Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
-        }
+        //    Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
+        //    Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
+        //    Assert.AreEqual("A second line", pat.Name[0].FhirComments.Skip(1).First());
+        //}
 
 
         [TestMethod]
         public void BundleLinksUnaltered()
         {
-            var b = new Bundle();
-
-            b.NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative);
+            var b = new Bundle
+            {
+                NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative)
+            };
 
             var xml = new FhirXmlSerializer().SerializeToString(b);
 
@@ -482,17 +540,25 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestIdInSummary()
         {
-            var p = new Patient();
-            p.Text = new Narrative();
-            p.Text.Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>";
-            p.Meta = new Meta();
-            p.Contained = new List<Resource>();
-            p.Contained.Add(new Organization() { Id = "temp", Name = "temp org", Active = true });
+            var p = new Patient
+            {
+                Id = "test-id-1",
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } },
+                ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" },
+
+                Text = new Narrative
+                {
+                    Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>"
+                },
+                Meta = new Meta(),
+                Contained = new List<Resource>
+                {
+                    new Organization() { Id = "temp", Name = "temp org", Active = true }
+                }
+            };
+
             p.AddExtension("http://example.org/ext", new FhirString("dud"));
-            p.Id = "test-id-1";
-            p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } };
-            p.ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" };
 
             var full = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(full.Contains("narrative"));
@@ -537,26 +603,55 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var dec6 = 6m;
             var dec60 = 6.0m;
-
-            var obs = new Observation { Value = new FhirDecimal(dec6) };
+            var ext = new FhirDecimal(dec6);
+            var obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+            
             var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual("6", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
-            obs = new Observation { Value = new FhirDecimal(dec60) };
+            Assert.AreEqual("6", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            ext = new FhirDecimal(dec60);
+            obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+
             json = FhirJsonSerializer.SerializeToString(obs);
             obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual("6.0", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         [TestMethod]
         public void TestLongDecimalSerialization()
         {
             var dec = 3.1415926535897932384626433833m;
-            var obs = new Observation { Value = new FhirDecimal(dec) };
+            var ext = new FhirDecimal(dec);
+            var obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+
             var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        [TestMethod]
+        public void TestParseUnkownPolymorphPropertyInJson()
+        {
+            var dec6 = 6m;
+            var ext = new FhirDecimal(dec6);
+            var obs = new Observation{ Value = new FhirDecimal(dec6) };
+            var json = FhirJsonSerializer.SerializeToString(obs);
+            try
+            {
+                var obs2 = FhirJsonParser.Parse<Observation>(json);
+                Assert.Fail("valueDecimal is not a known type for Observation");
+            }
+            catch (FormatException)
+            {
+
+            }
         }
 
         [TestMethod]
@@ -591,9 +686,10 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 FhirXmlParser.Parse<Resource>(input);
+
                 Assert.Fail();
             }
-            catch (Exception e)
+            catch (FormatException e)
             {
                 Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }
@@ -642,29 +738,25 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(1, p2.Contact.Count);
         }
 
-        [TestMethod]
-        public void SerializeEmptyParams()
-        {
-            var par = new Parameters();
-            var xml = FhirXmlSerializer.SerializeToString(par);
+        //An empty object is not allowed
+        //[TestMethod]
+        //public void SerializeEmptyParams()
+        //{
+        //    var par = new Parameters();
+        //    var xml = FhirXmlSerializer.SerializeToString(par);
 
-            var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
-            Assert.AreEqual(0, par2.Parameter.Count);
-        }
+        //    var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
+        //    Assert.AreEqual(0, par2.Parameter.Count);
+        //}
 
-        // [WMR 20161222] Richard Kavanagh: serializing ValueSet (to XML) throws an exception...?
-        // Cause: { ... "text" { ... "div" = "removed" } ... }
-        // => "removed" is not valid Xhtml contents (no root)! Should be e.g. "<p>removed</p>"
-        // However: http://www.hl7.org/implement/standards/fhir/narrative.html#Narrative
-        // => div SHOULD accept plain text!
         [TestMethod]
-        public void SerializeValueSet()
+        public void SerializeJsonWithPlainDiv()
         {
             // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
 
             string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
             Assert.IsNotNull(json);
-            var parser = new FhirJsonParser();
+            var parser = new FhirJsonParser { Settings = { PermissiveParsing = true} };
             var vs = parser.Parse<ValueSet>(json);
             Assert.IsNotNull(vs);
 
@@ -672,20 +764,24 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(xml);
         }
 
+        /// <summary>
+        /// This test verifies that the parser can handle a backbone element that has a property of resourceType
+        /// (only found in the ExampleScenario resource in R4 - used to be in Claim)
+        /// </summary>
         [TestMethod]
-        public void TestClaimJsonSerialization()
+        public void TestExampleScenarioJsonSerialization()
         {
-            var c = new Claim();
-            c.Payee = new Claim.PayeeComponent();
-            c.Payee.Type = new CodeableConcept(null, "test");
-            c.Payee.Resource = new Coding(null, "test2");
-            c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
+            var es = new ExampleScenario();
+            es.Instance.Add(new ExampleScenario.InstanceComponent()
+            {
+                ResourceType = ResourceType.ExampleScenario,
+                Name = "brian"
+            });
 
-            string json = FhirJsonSerializer.SerializeToString(c);
-            var c2 = new FhirJsonParser().Parse<Claim>(json);
-            Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
-            Assert.AreEqual("test2", c2.Payee.Resource.Code);
-            Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
+            string json = FhirJsonSerializer.SerializeToString(es);
+            var c2 = new FhirJsonParser().Parse<ExampleScenario>(json);
+            Assert.AreEqual("brian", c2.Instance[0].Name);
+            Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }
 
         [FhirType("Bundle", IsResource = true)]
@@ -713,7 +809,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(json);
         }
 
-// #if NET45
+        // #if NET45
         // [WMR 20180409] NEW: Serialize to XmlDocument
         [TestMethod]
         public void TestSerializeToXmlDocument()
@@ -722,7 +818,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
 
                 Id = "patient-one",
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -740,7 +836,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(root.HasElements);
             Assert.AreEqual(7, root.Elements().Count());
         }
-// #endif
+        // #endif
 
         // [WMR 20180409] NEW: Serialize to JObject
         [TestMethod]
@@ -750,21 +846,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var patientOne = new Patient
             {
-
                 Id = "patient-one",
                 Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
                 Active = true,
                 Name = new List<HumanName> { new HumanName { Use = HumanName.NameUse.Official, Family = "Clapton" } },
                 Gender = AdministrativeGender.Male,
                 BirthDate = "2015-07-09",
             };
 
-            var doc = FhirJsonSerializer.SerializeToDocument(patientOne);
-            Assert.IsNotNull(doc);
+            var serializer = new FhirJsonSerializer();
+            var jsonText = serializer.SerializeToString(patientOne);
+            Assert.IsNotNull(jsonText);
 
-            System.Diagnostics.Debug.Print(doc.ToString());
-
+            var doc = JObject.Parse(jsonText);
             Assert.AreEqual(8, doc.Count); // Including resourceType
 
             JToken assertProperty(JToken t, string expectedName)
@@ -820,6 +915,74 @@ namespace Hl7.Fhir.Tests.Serialization
 
         }
 
-    }
+        /// <summary>
+        /// This test proves issue 583: https://github.com/ewoutkramer/fhir-net-api/issues/583
+        /// </summary>
+        [TestMethod]
+        public void SummarizeSerializingTest()
+        {
+            var patient = new Patient();
+            var telecom = new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Work, "0471 144 099");
+            telecom.AddExtension("http://healthconnex.com.au/hcxd/Phone/IsMain", new FhirBoolean(true));
+            patient.Telecom.Add(telecom);
 
+            var doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.True);
+
+            Assert.IsFalse(doc.Contains("<extension"), "In the summary there must be no extension section.");
+
+            doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(doc.Contains("<extension"), "Extension exists when Summary = false");
+        }
+
+        /// <summary>
+        /// This test proves issue 657: https://github.com/ewoutkramer/fhir-net-api/issues/657
+        /// </summary>
+        [TestMethod]
+        public void DateTimeOffsetAccuracyTest()
+        {
+            var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
+            var json = new FhirJsonSerializer().SerializeToString(patient);
+            var res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "1");
+
+            // Is the parsing still correct without milliseconds?
+            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero)} };
+            json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
+            res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "2");
+
+            // Is the serialization still correct without milliseconds?
+            var json2 = new FhirJsonSerializer().SerializeToString(patient);
+            Assert.AreEqual(json, json2, "3");
+
+            // Is the parsing still correct with a few milliseconds and TimeZone?
+            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, 12, TimeSpan.Zero) } };
+            json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56.012+00:00\"}}";
+            res = new FhirJsonParser().Parse<Patient>(json);
+            Assert.IsTrue(patient.IsExactly(res), "4");
+
+            // Is the serialization still correct with a few milliseconds?
+            json2 = new FhirJsonSerializer().SerializeToString(patient);
+            Assert.AreEqual(json, json2, "5");
+        }
+
+        [TestMethod]
+        public void SerializerHandlesEmptyChildObjects()
+        {
+            var fhirJsonParser = new FhirJsonParser();
+
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var poco = fhirJsonParser.Parse<Patient>(json);
+
+            Assert.AreEqual(1, poco.Name.Count);
+
+            poco.Meta = new Meta();
+
+            var reserialized = poco.ToJson();
+
+            var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
+
+            Assert.AreEqual(1, newPoco.Name.Count);
+        }
+    }
 }

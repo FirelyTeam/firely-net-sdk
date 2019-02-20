@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceUseStatement"; } }
         
         /// <summary>
-        /// A coded concept indicating the current status of a the Device Usage.
+        /// A coded concept indicating the current status of the Device Usage.
         /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
         /// </summary>
         [FhirEnumeration("DeviceUseStatementStatus")]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("source", InSummary=true, Order=160)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","RelatedPerson")]
+		[References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -442,19 +442,19 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", true, elem); }
-                if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", false, RecordedOnElement);
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                if (Device != null) yield return new ElementValue("device", false, Device);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+                if (Timing != null) yield return new ElementValue("timing", Timing);
+                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", RecordedOnElement);
+                if (Source != null) yield return new ElementValue("source", Source);
+                if (Device != null) yield return new ElementValue("device", Device);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 
