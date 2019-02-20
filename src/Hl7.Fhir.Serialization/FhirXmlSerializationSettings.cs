@@ -11,6 +11,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Configuration settings for the <see cref="FhirXmlBuilder"/> class.</summary>
     public class FhirXmlSerializationSettings
     {
         /// <summary>
@@ -36,7 +37,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Format the xml output when converted to a string.
         /// </summary>
-        public bool Pretty;
+        public bool Pretty { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="FhirXmlSerializationSettings"/> instance with default property values.</summary>
         public FhirXmlSerializationSettings() { }

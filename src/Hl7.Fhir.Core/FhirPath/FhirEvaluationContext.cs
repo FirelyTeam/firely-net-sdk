@@ -15,10 +15,10 @@ namespace Hl7.Fhir.FhirPath
 {
     public class FhirEvaluationContext : EvaluationContext
     {
-       
-
+        /// <summary>Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
         public static new FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
 
+        /// <summary>Default constructor. Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
         public FhirEvaluationContext() : base()
         {
         }
