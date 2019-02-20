@@ -179,7 +179,7 @@ namespace Hl7.Fhir
         [TestMethod]
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
-            var xml = File.ReadAllText(@"TestData\issue-444-testdata.xml");
+            var xml = File.ReadAllText(Path.Combine("TestData", "issue-444-testdata.xml"));
             var cs = (new FhirXmlParser()).Parse<Conformance>(xml);
             var nav = cs.ToTypedElement();
 
@@ -194,7 +194,7 @@ namespace Hl7.Fhir
         [TestMethod]
         public void PocoTypedElementPerformance()
         {
-            var xml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var cs = (new FhirXmlParser()).Parse<Patient>(xml);
             var nav = cs.ToTypedElement();
 
@@ -230,7 +230,7 @@ namespace Hl7.Fhir
         [TestMethod]
         public void PocoNavPerformance()
         {
-            var xml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var cs = (new FhirXmlParser()).Parse<Patient>(xml);
 #pragma warning disable CS0618 // Type or member is obsolete
             var nav = cs.ToElementNavigator();

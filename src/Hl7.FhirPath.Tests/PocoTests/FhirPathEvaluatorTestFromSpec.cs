@@ -211,7 +211,7 @@ namespace Hl7.FhirPath.Tests
 
                 // Now perform this unit test
                 Model.DomainResource resource = null;
-                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath", "input");
 
                 if (!_cache.ContainsKey(inputfile))
                 {
@@ -330,7 +330,7 @@ namespace Hl7.FhirPath.Tests
         public void testExtensionDefinitions()
         {
             // obsolete:
-            // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
+            // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText(Path.Combine(TestData", "extension-definitions.xml")));
             var parser = new FhirXmlParser();
             Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 

@@ -9,6 +9,7 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
+using System;
 using Xunit;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
@@ -137,15 +138,40 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void ReadsFromNav()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlNode(tpXml).ToSourceNode();
             var nodes = SourceNode.FromNode(nav);
             Assert.True(nav.IsEqualTo(nodes).Success);
         }
 
 
+        //[Fact]
+        //public void CanUseBackboneTypeForEntry()
+        //{
+        //    var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
+        //    var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
+        //    var bundle = FhirJsonNode.Parse(bundleJson);
+        //    var typedBundle = bundle.ToTypedElement(_sdsProvider, "Bundle");
+
+        //    //Type of entry is BackboneElement, but you can't set that, see below.
+        //    Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
+            
+        //    var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
+
+        //    //What DOES work:
+        //    var typedEntry = entry.ToTypedElement(_sdsProvider, "Element"); //But you can't use BackboneElement here, see below.
+        //    Assert.Equal("Element", typedEntry.InstanceType);
+
+        //    //But this leads to a System.ArgumentException: 
+        //    //Type BackboneElement is not a mappable Fhir datatype or resource
+        //    //Parameter name: type
+        //    typedEntry = entry.ToTypedElement(_sdsProvider, "BackboneElement");
+        //    Assert.Equal("BackboneElement", typedEntry.InstanceType);
+        //    // Expected to be able to use BackboneElement as type for the entry SourceNode;
+        //}
+
         [Fact]
-        public void CanUseBackboneTypeForEntry()
+        public void CannotUseAbstractType()
         {
             var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
@@ -154,20 +180,18 @@ namespace Hl7.FhirPath.Tests
 
             //Type of entry is BackboneElement, but you can't set that, see below.
             Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
-            
+
             var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
 
-            //What DOES work:
-            var typedEntry = entry.ToTypedElement(_sdsProvider, "Element"); //But you can't use BackboneElement here, see below.
-            Assert.Equal("Element", typedEntry.InstanceType);
-
-            //But this leads to a System.ArgumentException: 
-            //Type BackboneElement is not a mappable Fhir datatype or resource
-            //Parameter name: type
-            typedEntry = entry.ToTypedElement(_sdsProvider, "BackboneElement");
-            Assert.Equal("BackboneElement", typedEntry.InstanceType);
-            // Expected to be able to use BackboneElement as type for the entry SourceNode;
+            try
+            {
+                var typedEntry =
+                    entry.ToTypedElement(_sdsProvider, "Element");
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
+            }
+            catch (ArgumentException)
+            {
+            }
         }
-
     }
 }
