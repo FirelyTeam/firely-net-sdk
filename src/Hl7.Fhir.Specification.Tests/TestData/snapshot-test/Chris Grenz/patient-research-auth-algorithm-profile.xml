@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/StructureDefinition/patient-research-auth-algorithm" />
   <name value="patient-research-auth-algorithm" />
   <status value="draft" />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="rim" />
@@ -11,7 +10,6 @@
     <name value="RIM" />
   </mapping>
   <kind value="primitive-type" />
-  <type value="Extension" />
   <abstract value="false" />
   <context>
     <type value="element" />

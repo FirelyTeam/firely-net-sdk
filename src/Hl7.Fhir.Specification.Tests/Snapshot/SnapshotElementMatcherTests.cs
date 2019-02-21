@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Tests
 {
     // Unit tests for ElementMatcher
 
-    [TestClass]
+    [TestClass, TestCategory("Snapshot")]
     public class SnapshotElementMatcherTests
     {
         IResourceResolver _testResolver;
@@ -724,7 +724,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.AreEqual("value[x]", snapNav.PathName);
             Assert.AreEqual("valueCoding", diffNav.PathName);
-            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element valueCoding
+
+            // STU3: renamed element implies constraint to a single type (0...1)
+            //assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element valueCoding
+            // R4: renamed element only applies to specified type (0...*)
+            // Add as separate constraint; do not merge with base [x] element definition
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);
         }
 
         [TestMethod]
@@ -999,7 +1004,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1052,7 +1057,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Patient root
@@ -1087,7 +1092,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1146,7 +1151,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Patient root
@@ -1195,7 +1200,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1244,7 +1249,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Patient root
@@ -1284,7 +1289,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1306,7 +1311,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Observation root
@@ -1332,7 +1337,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1354,7 +1359,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Observation root
@@ -1380,7 +1385,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1404,7 +1409,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // 2. Verify: match value[x] in derived profile to valueString in base profile
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Observation root
@@ -1421,15 +1426,27 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToFirstChild());
-            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // STU3: renamed element implies constraint to a single type (0...1)
+            //assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+            // R4: renamed element only applies to specified type (0...*)
+            // Add as separate constraint; do not merge with base [x] element definition
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);
         }
 
-        [TestMethod]
+        // [WMR 20190211] For STU3
+        [TestMethod, Ignore]
         public void TestElementMatcher_ChoiceType4()
         {
+            // Base profile renames value[x] to valueString
+            // Derived profile refers to value[x] - WRONG! SHALL refer to valueString
+            // Expected behavior: add new constraint for value[x] next to existing valueString constraint
+            // This actually creates a profile that is invalid in STU3, but the validator will handle that
+            // STU3: only rename choice type elements if constrained to a single type
+
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1453,7 +1470,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Observation root
@@ -1461,13 +1478,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
-
-            // Base profile renames value[x] to valueString
-            // Derived profile refers to value[x] - WRONG! SHALL refer to valueString
-            // Expected behavior: add new constraint for value[x] next to existing valueString constraint
-            // This actually creates a profile that is invalid in STU3, but the validator will handle that
-            // STU3: only rename choice type elements if constrained to a single type
-            // R4: allow combinations of constraints on both value[x] and on renamed type slices
 
             // Add: Observation.value[x]
             matches = ElementMatcher.Match(snapNav, diffNav);
@@ -1485,6 +1495,80 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME.Code, code);
         }
 
+        // [WMR 20190211] For R4
+        [TestMethod]
+        public void TestElementMatcher_ChoiceType5()
+        {
+            // Base profile renames value[x] to valueString
+            // Derived profile refers to value[x]
+            // R4: allow combinations of constraints on both value[x] and on renamed type slices
+
+            var baseProfile = new StructureDefinition()
+            {
+                Snapshot = new StructureDefinition.SnapshotComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.value[x]"),
+                        new ElementDefinition("Observation.valueString")
+                    }
+                }
+            };
+
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.value[x]"),      // Match to base:value[x]
+                        new ElementDefinition("Observation.valueString"),   // Match to base:valueString
+                        new ElementDefinition("Observation.valueBoolean")   // Match to base:value[x]
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Observation root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Merge: Observation.value[x]
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            Assert.AreEqual(3, matches.Count);
+
+            // Verify: B:Observation.value[x] <-- merge --> D:value[x]
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            var match = matches[0];
+            assertMatch(match, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+            Assert.IsNull(match.Issue); // Valid in R4
+            var bmSnapValueX = snapNav.Bookmark();
+
+            // Verify: B:Observation.valueString <-- merge --> D:valueString
+            match = matches[1];
+            Assert.IsTrue(snapNav.MoveToNext());
+            Assert.IsTrue(diffNav.MoveToNext());
+            assertMatch(match, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+            Assert.IsNull(match.Issue); // Valid in R4
+
+            // Verify: B:Observation.value[x] <-- merge --> D:valueBoolean
+            match = matches[2];
+            Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsTrue(snapNav.ReturnToBookmark(bmSnapValueX));
+            assertMatch(match, ElementMatcher.MatchAction.Add, snapNav, diffNav);
+            Assert.IsNull(match.Issue); // Valid in R4
+
+        }
+
         // [WMR 20181211] R4: NEW
         // Test handling of invalid ElementDefinition.SliceIsConstraining flag values
         // If SliceIsConstraining flag is explicitly specified (not null),
@@ -1498,7 +1582,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
@@ -1549,7 +1633,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Observation root

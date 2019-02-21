@@ -121,6 +121,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!DeepComparable.IsExactly(elem.Constraint, other.Constraint)) { l.Add(nameof(ElementDefinition.Constraint)); }
             if (!DeepComparable.IsExactly(elem.MustSupportElement, other.MustSupportElement)) { l.Add(nameof(ElementDefinition.MustSupport)); }
             if (!DeepComparable.IsExactly(elem.IsModifierElement, other.IsModifierElement)) { l.Add(nameof(ElementDefinition.IsModifier)); }
+            if (!DeepComparable.IsExactly(elem.IsModifierReasonElement, other.IsModifierReasonElement)) { l.Add(nameof(ElementDefinition.IsModifier)); }
             if (!DeepComparable.IsExactly(elem.IsSummaryElement, other.IsSummaryElement)) { l.Add(nameof(ElementDefinition.IsSummary)); }
             if (!DeepComparable.IsExactly(elem.Binding, other.Binding)) { l.Add(nameof(ElementDefinition.Binding)); }
             if (!DeepComparable.IsExactly(elem.Mapping, other.Mapping)) { l.Add(nameof(ElementDefinition.Mapping)); }

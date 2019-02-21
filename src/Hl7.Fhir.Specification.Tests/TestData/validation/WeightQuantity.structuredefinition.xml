@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2016-10-05T18:18:15.871+02:00" />
   </meta>
   <text>
-    <status value="empty" /><div xmlns="http://www.w3.org/1999/xhtml" /></text>
+    <status value="empty" />
+    <div xmlns="http://www.w3.org/1999/xhtml" />
+  </text>
   <url value="http://example.org/StructureDefinition/WeightQuantity" />
   <name value="WeightQuantity" />
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="primitive-type" />
-  <type value="Quantity" />
   <abstract value="false" />
+  <type value="Quantity" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Quantity" />
   <derivation value="constraint" />
   <differential>

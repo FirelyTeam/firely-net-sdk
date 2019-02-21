@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/SD/patient-careprovider-type-slice" />
   <name value="patient-careprovider-type-slice" />
   <status value="draft" />
   <description value="Slice a reference by type." />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="rim" />
@@ -32,8 +31,8 @@
     <name value="LOINC" />
   </mapping>
   <kind value="resource" />
-  <type value="Patient" />
   <abstract value="false" />
+  <type value="Patient" />
   <baseDefinition value="http://example.com/fhir/SD/patient-deceasedDatetime-slice" />
   <snapshot>
     <element>

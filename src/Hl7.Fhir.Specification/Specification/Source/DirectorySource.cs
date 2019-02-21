@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -39,6 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         // Instance fields
         private readonly DirectorySourceSettings _settings;
         private readonly ArtifactSummaryGenerator _summaryGenerator;
+        private readonly ConfigurableNavigatorStreamFactory _navigatorFactory;
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
@@ -53,7 +55,8 @@ namespace Hl7.Fhir.Specification.Source
         /// collect the artifact summaries, while any other threads will block.
         /// </para>
         /// </summary>
-        public DirectorySource() : this(SpecificationDirectory) { }
+        public DirectorySource()
+            : this(SpecificationDirectory, null, false) { }
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
@@ -66,46 +69,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </para>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         public DirectorySource(string contentDirectory)
-        {
-            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-            _settings = new DirectorySourceSettings();
-            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
-            // Initialize Lazy
-            Refresh();
-        }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified <paramref name="contentDirectory"/>
-        /// and using the specified <see cref="DirectorySourceSettings"/>.
-        /// <para>
-        /// Initialization is thread-safe. The source ensures that only a single thread will
-        /// collect the artifact summaries, while any other threads will block.
-        /// </para>
-        /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
-        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
-        {
-            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-            // [WMR 20171023] Always copy the specified settings, to prevent shared state
-            _settings = new DirectorySourceSettings(settings);
-            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
-            // Initialize Lazy
-            Refresh();
-        }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// using the specified <see cref="DirectorySourceSettings"/>.
-        /// </summary>
-        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
-        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
-        public DirectorySource(DirectorySourceSettings settings) : this(SpecificationDirectory, settings)
-        {
-            //
-        }
-
+            : this(contentDirectory, null, false) { }
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
@@ -116,10 +80,8 @@ namespace Hl7.Fhir.Specification.Source
         /// recursively scan all subdirectories of the specified content directory.
         /// </param>
         [Obsolete("Instead, use DirectorySource(DirectorySourceSettings settings)")]
-        public DirectorySource(bool includeSubdirectories) : this(SpecificationDirectory, includeSubdirectories)
-        {
-            //
-        }
+        public DirectorySource(bool includeSubdirectories)
+            : this(SpecificationDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
@@ -132,10 +94,47 @@ namespace Hl7.Fhir.Specification.Source
         /// </param>
         [Obsolete("Instead, use DirectorySource(string contentDirectory, DirectorySourceSettings settings)")]
         public DirectorySource(string contentDirectory, bool includeSubdirectories)
-            : this(contentDirectory,
-                  new DirectorySourceSettings() { IncludeSubDirectories = includeSubdirectories })
+            : this(contentDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// using the specified <see cref="DirectorySourceSettings"/>.
+        /// </summary>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public DirectorySource(DirectorySourceSettings settings)
+            : this(SpecificationDirectory, settings, true) { }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the specified <paramref name="contentDirectory"/>
+        /// and using the specified <see cref="DirectorySourceSettings"/>.
+        /// <para>
+        /// Initialization is thread-safe. The source ensures that only a single thread will
+        /// collect the artifact summaries, while any other threads will block.
+        /// </para>
+        /// </summary>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
+            : this(contentDirectory, settings, true) { }
+
+        // Internal ctor
+        DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
-            //
+            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            // [WMR 20171023] Clone specified settings to prevent shared state
+            _settings = settings != null 
+                ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
+                : DirectorySourceSettings.CreateDefault();
+            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
+            _navigatorFactory = new ConfigurableNavigatorStreamFactory(_settings.XmlParserSettings, _settings.JsonParserSettings)
+            {
+                ThrowOnUnsupportedFormat = false
+            };
+            // Initialize Lazy
+            Refresh();
         }
 
         /// <summary>Returns the content directory as specified to the constructor.</summary>
@@ -369,6 +368,16 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
+        /// <summary>Gets the configuration settings that the behavior of the PoCo parser.</summary>
+        public ParserSettings ParserSettings => _settings.ParserSettings;
+
+        /// <summary>Gets the configuration settings that control the behavior of the XML parser.</summary>
+        public FhirXmlParsingSettings XmlParserSettings => _settings.XmlParserSettings;
+
+        /// <summary>Gets the configuration settings that control the behavior of the JSON parser.</summary>
+        public FhirJsonParsingSettings JsonParserSettings => _settings.JsonParserSettings;
+
+
         #region Refresh
 
         /// <summary>
@@ -530,7 +539,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (sourceUri == null && targetUri == null)
             {
-                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} cannot both be null.");
+                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} arguments cannot both be null");
             }
             var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
             return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
@@ -545,7 +554,6 @@ namespace Hl7.Fhir.Specification.Source
             var summary = GetSummaries().ResolveNamingSystem(uniqueId);
             return loadResourceInternal<NamingSystem>(summary);
         }
-
 
         #endregion
 
@@ -897,19 +905,29 @@ namespace Hl7.Fhir.Specification.Source
             var origin = summary.Origin;
             if (string.IsNullOrEmpty(origin))
             {
-                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Origin)} information is empty or missing.");
+                throw Error.Argument($"Unable to load resource from summary. The '{nameof(ArtifactSummary.Origin)}' information is unavailable.");
             }
 
             var pos = summary.Position;
             if (string.IsNullOrEmpty(pos))
             {
-                throw Error.Argument($"Cannot load resource from summary. The {nameof(ArtifactSummary.Position)} information is empty or missing.");
+                throw Error.Argument($"Unable to load resource from summary. The '{nameof(ArtifactSummary.Position)}' information is unavailable.");
             }
 
-            T result = null;
-            using (var navStream = DefaultNavigatorStreamFactory.Create(origin))
-            {
+            // Always use the current Xml/Json parser settings
+            var settings = _settings;
+            var factory = _navigatorFactory;
+            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
+            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
 
+            // Also use the current PoCo parser settings
+            var pocoSettings = PocoBuilderSettings.CreateDefault();
+            settings.ParserSettings?.CopyTo(pocoSettings);
+
+            T result = null;
+
+            using (var navStream = factory.Create(origin))
+            {
                 // Handle exceptions & null return values?
                 // e.g. file may have been deleted/renamed since last scan
 
@@ -917,12 +935,13 @@ namespace Hl7.Fhir.Specification.Source
                 if (navStream != null && navStream.Seek(pos))
                 {
                     // Create navigator for the target resource
+                    // Current property uses the specified Xml/JsonParsingSettings for parsing
                     var nav = navStream.Current;
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
-                        result = parser.Parse<T>(nav);
+                        result = nav.ToPoco<T>(pocoSettings);
+
                         // Add origin annotation
                         result?.SetOrigin(origin);
                     }

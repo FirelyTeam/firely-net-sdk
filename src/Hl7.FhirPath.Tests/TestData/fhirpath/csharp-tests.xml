@@ -69,7 +69,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0018" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained.name[0].family.indexOf('qq').empty()</expression>
+    <expression>Patient.contained.name[0].family.indexOf('qq') = -1</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0019" inputfile="fp-test-patient.xml">

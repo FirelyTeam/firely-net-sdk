@@ -1,8 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-	<url value="http://example.com/fhir/SD/encounter-with-type-profile" />
-	<name value="encounter-with-type-profile" />
-	<status value="draft" />
-  <!-- [WMR 20170412 Fixed -->
+  <url value="http://example.com/fhir/SD/encounter-with-type-profile" />
+  <name value="encounter-with-type-profile" />
+  <status value="draft" />
   <fhirVersion value="3.0.0" />
   <mapping>
 		<identity value="rim" />
@@ -20,8 +20,8 @@
 		<name value="HL7 v2" />
 	</mapping>
 	<kind value="resource" />
-	<type value="Encounter" />
 	<abstract value="false" />
+  <type value="Encounter" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Encounter" />
 	<snapshot>
 		<element>

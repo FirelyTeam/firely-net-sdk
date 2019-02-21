@@ -1,8 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="sdc-questionnaire" />
   <url value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire" />
   <name value="Profile sdc-questionnaire" />
   <status value="draft" />
+  <date value="2014-04-21" />
   <publisher value="Health Level Seven International (Orders and Observations - Structured Data Capture)" />
   <contact>
     <telecom>
@@ -10,7 +12,6 @@
       <value value="http://wiki.siframework.org/Structured+Data+Capture+Initiative" />
     </telecom>
   </contact>
-  <date value="2014-04-21" />
   <mapping>
     <identity value="ihesdc" />
     <uri value="http://wiki.siframework.org/IHE+SDC+Profile" />

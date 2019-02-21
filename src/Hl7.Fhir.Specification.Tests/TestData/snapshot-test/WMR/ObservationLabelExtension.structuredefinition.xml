@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-01-04T19:28:16.248+01:00" />
@@ -9,7 +9,6 @@
   <date value="2017-01-04T19:15:48.127084+01:00" />
   <description value="StructureDefinition for Observation Label Extension Type" />
   <kind value="primitive-type" />
-  <type value="Extension" />
   <abstract value="false" />
   <context>
     <type value="fhirpath" />
@@ -21,8 +20,8 @@
     <element>
       <path value="Extension" />
       <!-- Inherited by referencing profile extension element -->
-      <max value="1" />
       <comment value="ObservationLabelExtension" />
+      <max value="1" />
     </element>
     <element>
       <path value="Extension.url" />

@@ -36,7 +36,7 @@
   "extension": [
     {
       "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
-      "valueResource": {
+      "valueReference": {
         "reference": "#pic1",
         "display": "Duck image"
       }

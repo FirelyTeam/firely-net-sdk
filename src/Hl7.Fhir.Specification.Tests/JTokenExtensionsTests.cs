@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
         private Newtonsoft.Json.Linq.JObject getPatientExample()
         {
             //var reader = new StringReader(Properties.TestResources.TestPatientJson);
-            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "TestPatient.json"));
 
             return (JObject)JObject.Parse(json);
         }

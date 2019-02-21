@@ -11,6 +11,7 @@
   <name value="GroupTypeHuman"/>
   <status value="draft"/>
   <experimental value="false"/>
+  <date value="2015-11-04"/>
   <publisher value="HL7 (FHIR Project)"/>
   <contact>
     <telecom>
@@ -22,7 +23,6 @@
       <value value="fhir@lists.hl7.org"/>
     </telecom>
   </contact>
-  <date value="2015-11-04"/>
   <description value="Types of resources that are part of group"/>
   <compose>
     <include>

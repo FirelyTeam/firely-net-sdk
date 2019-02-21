@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -298,27 +298,26 @@ namespace Hl7.Fhir.Serialization
         }
 
 #if !NETSTANDARD1_1
-        public static void ValidateXhtml(string xmlText, IExceptionSource ies, object source)
-        {
-            reportOnValidation(() =>
-               SerializationUtil.RunFhirXhtmlSchemaValidation(xmlText), ies, source);
-        }
+        //public static void ValidateXhtml(string xmlText, IExceptionSource ies, object source)
+        //{
+        //    reportOnValidation(() =>
+        //       SerializationUtil.RunFhirXhtmlSchemaValidation(xmlText), ies, source);
+        //}
 
         public static void ValidateXhtml(XDocument doc, IExceptionSource ies, object source)
         {
-            reportOnValidation(() =>
-                   SerializationUtil.RunFhirXhtmlSchemaValidation(doc), ies, source);
-        }
+            // TODO: When this is moved out of FhirXmlNode to a later validation phase,
+            // update the error reporting too.
+            string[] messages = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
 
-
-        private static void reportOnValidation(Func<string[]> validator, IExceptionSource ies, object source)
-        {
-            var messages = validator();
             if (messages.Any())
             {
                 var problems = String.Join(", ", messages);
-                ies.NotifyOrThrow(source, ExceptionNotification.Error(
-                    Error.Format("The XHTML for the narrative is not valid. XSD validation reported: " + problems)));
+                if (source is XObject xo)
+                    raiseFormatError(source, ies, "Encountered narrative with incorrect Xhtml. Xsd validation reported: " + problems, xo);
+                else
+                    ies.NotifyOrThrow(source, ExceptionNotification.Error(
+                        Error.Format("Parser: Encountered narrative with incorrect Xhtml. Xsd validation reported: " + problems)));
             }
         }
 #endif
@@ -326,7 +325,7 @@ namespace Hl7.Fhir.Serialization
         private static void raiseFormatError(object source, IExceptionSource ies, string message, XObject position)
         {
             var (lineNumber, linePosition) = getPosition(position);
-            ies.NotifyOrThrow(source, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
+            ies.NotifyOrThrow(source, ExceptionNotification.Error(Error.Format("Parser: " + message, lineNumber, linePosition)));
         }
 
         private static (int lineNumber, int linePosition) getPosition(XObject node) => 
@@ -432,6 +431,6 @@ namespace Hl7.Fhir.Serialization
         }
 
         private ExceptionNotification buildException(string message) => ExceptionNotification.Error(
-                new StructuralTypeException(message));
+                new StructuralTypeException("Parser: " + message));
     }
 }

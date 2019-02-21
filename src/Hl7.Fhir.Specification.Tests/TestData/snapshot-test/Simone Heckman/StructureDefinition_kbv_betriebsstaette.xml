@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="FHIRABENDSandbox-KBV-Betriebsstaette" />
   <meta>
@@ -20,8 +20,8 @@
   <copyright value="HL7 Deutschland e.V." />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <type value="Organization" />
   <abstract value="false" />
+  <type value="Organization" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
   <derivation value="constraint" />
   <differential>
@@ -34,7 +34,10 @@
     <element>
       <path value="Organization.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
@@ -54,7 +57,10 @@
     <element>
       <path value="Organization.identifier" />
       <slicing>
-        <discriminator><type value="value" /><path value="system" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
         <description value="nach Indentifier.type" />
         <rules value="openAtEnd" />
       </slicing>
@@ -84,13 +90,17 @@
       <sliceName value="BSNR Namespace" />
       <min value="1" />
       <fixedUri value="http://kbv.de/BSNR" />
-      <example><valueUri value="http://www.acme.com/identifiers/patient or urn:ietf:rfc:3986 if the Identifier.value itself is a full uri" /></example>
+      <example>
+        <valueUri value="http://www.acme.com/identifiers/patient or urn:ietf:rfc:3986 if the Identifier.value itself is a full uri" />
+      </example>
     </element>
     <element>
       <path value="Organization.identifier.value" />
       <sliceName value="Betriebsstättennummer der Organisation" />
       <min value="1" />
-      <example><valueString value="123456" /></example>
+      <example>
+        <valueString value="123456" />
+      </example>
     </element>
     <element>
       <path value="Organization.identifier.period" />

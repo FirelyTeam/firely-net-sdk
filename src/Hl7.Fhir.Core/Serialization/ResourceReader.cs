@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -24,12 +24,12 @@ namespace Hl7.Fhir.Serialization
     internal class ResourceReader
     {
 #pragma warning disable 612, 618
-        private ISourceNode _reader;
+        private ITypedElement _reader;
         private ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        internal ResourceReader(ISourceNode reader, ParserSettings settings)
+        internal ResourceReader(ITypedElement reader, ParserSettings settings)
         {
             _reader = reader;
             _inspector = BaseFhirParser.Inspector;
@@ -39,13 +39,14 @@ namespace Hl7.Fhir.Serialization
 
         public Resource Deserialize(Resource existing=null)
         {
-            // If there's no a priori knowledge of the type of Resource we will encounter,
-            // we'll have to determine from the data itself. 
-            var resourceTypeName = _reader.GetResourceTypeIndicator();
-            var mapping = _inspector.FindClassMappingForResource(resourceTypeName);
+            if(_reader.InstanceType is null)
+                ComplexTypeReader.RaiseFormatError(
+                    "Underlying data source was not able to provide the actual instance type of the resource.", _reader.Location);
+
+            var mapping = _inspector.FindClassMappingForResource(_reader.InstanceType);
 
             if (mapping == null)
-                throw Error.Format("Asked to deserialize unknown resource '" + resourceTypeName + "'", _reader.Location);
+                ComplexTypeReader.RaiseFormatError($"Asked to deserialize unknown resource '{_reader.InstanceType}'", _reader.Location);
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same

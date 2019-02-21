@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-01-04T19:30:41.413+01:00" />
@@ -9,7 +9,6 @@
   <date value="2017-01-04T19:29:05.959222+01:00" />
   <description value="StructureDefinition for Observation Location Extension Type" />
   <kind value="primitive-type" />
-  <type value="Extension" />
   <abstract value="false" />
   <context>
     <type value="fhirpath" />
@@ -26,7 +25,10 @@
     <element>
       <path value="Extension.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="url" /></discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>

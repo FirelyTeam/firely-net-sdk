@@ -2,9 +2,9 @@
 <Questionnaire xmlns="http://hl7.org/fhir">
 	<id value="questionnaire-with-incorrect-fixed-type"/>
 	<url value="http://example.org/fhir/Questionnaire/questionnaire-with-incorrect-fixed-type"/>
-	<status value="active"/>
 	<title value="This questionnaire has a fixed type of 'integer' in Q.item.item.type"/>
-	<item>
+  <status value="active"/>
+  <item>
 		<linkId value="1"/>
 		<type value="group"/>
 		<required value="true"/>

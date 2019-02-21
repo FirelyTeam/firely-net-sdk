@@ -32,12 +32,7 @@ namespace Hl7.FhirPath.Functions
 
         public static ITypedElement FpIndexOf(this string me, string fragment)
         {
-            var result = me.IndexOf(fragment);
-
-            if (result == -1)
-                return null;
-            else
-                return new ConstantValue(result);
+            return new ConstantValue(me.IndexOf(fragment));
         }
 
         public static IEnumerable<ITypedElement> ToChars(this string me) =>

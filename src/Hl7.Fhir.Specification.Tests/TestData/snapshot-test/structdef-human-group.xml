@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="human-group" />
   <url value="http://example.org/fhir/StructureDefinition/human-group" />
@@ -6,6 +6,7 @@
   <name value="Human Group" />
   <title value="Group with just humans" />
   <status value="draft" />
+  <date value="2015-11-04T10:14:00+01:00" />
   <publisher value="HL7 (FHIR Project)" />
   <contact>
     <telecom>
@@ -17,12 +18,11 @@
       <value value="fhir@lists.hl7.org" />
     </telecom>
   </contact>
-  <date value="2015-11-04T10:14:00+01:00" />
   <description value="A group with just humans, i.e. member.entity.reference types are limited to Patient and Practitioner." />
   <fhirVersion value="1.0.1" />
   <kind value="resource" />
-  <type value="Group" />
   <abstract value="false" />
+  <type value="Group" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Group" />
   <snapshot>
     <element>
@@ -362,7 +362,9 @@
     <element>
       <path value="Group.name.extension" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <ordered value="false" />
         <rules value="open" />
       </slicing>
@@ -434,7 +436,9 @@
     <element>
       <path value="Group.characteristic" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="Trait of group members" />
@@ -976,7 +980,9 @@
     <element>
       <path value="Group.characteristic" />
       <slicing>
-        <discriminator><type value="value" /></discriminator>
+        <discriminator>
+          <type value="value" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <short value="Trait of group members" />

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-07T14:32:48.036+01:00" />
@@ -9,7 +9,6 @@
   <date value="2017-02-07T14:31:53.4148237+01:00" />
   <description value="Example StructureDefinition for Patient Extension" />
   <kind value="primitive-type" />
-  <type value="Extension" />
   <abstract value="false" />
   <context>
     <type value="fhirpath" />
