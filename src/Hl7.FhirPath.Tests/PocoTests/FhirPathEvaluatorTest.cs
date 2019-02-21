@@ -306,7 +306,7 @@ namespace Hl7.FhirPath.Tests
         public void TestExtension()
         {
             fixture.IsTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()");
-            fixture.IsTrue(@"Patient.birthDate.extension(%""ext-patient-birthTime"").exists()");
+            fixture.IsTrue(@"Patient.birthDate.extension(%`ext-patient-birthTime`).exists()");
             fixture.IsTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()");
         }
 

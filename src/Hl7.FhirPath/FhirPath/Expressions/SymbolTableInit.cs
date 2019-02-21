@@ -174,12 +174,12 @@ namespace Hl7.FhirPath.Expressions
             t.AddLogic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            t.Add(new CallSignature("where", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runWhere);
-            t.Add(new CallSignature("select", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runSelect);
-            t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
-            t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
-            t.Add(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
-            t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+            t.AddFunction(new CallSignature("where", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runWhere);
+            t.AddFunction(new CallSignature("select", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runSelect);
+            t.AddFunction(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
+            t.AddFunction(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
+            t.AddFunction(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
+            t.AddFunction(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
 
 
             t.AddConst("sct", "http://snomed.info/sct");

@@ -34,7 +34,7 @@ namespace Hl7.FhirPath.Expressions
 
             var arguments = new List<Invokee>() { focus };
             var argScope = new SymbolTable(scope);
-            argScope.Add(new CallSignature("focus", typeof(object)), focus);
+            argScope.AddValue("focus", focus);
 
             //// Create a lambda for each argument introducing the $focus as the first
             //// positional parameter. This will be picked up by the first expression in
@@ -47,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
                     arg.ToEvaluator(argScope)));
 
             // We have no real type information, so just pass object as the type
-            var types = new List<Type>() { typeof(object), typeof(object) }; //   for the focus and this;
+            var types = new List<Type>() { typeof(object) }; // for the focus
             types.AddRange(expression.Arguments.Select(a => typeof(object)));   // for the arguments
 
             // Now locate the function based on the types and name
@@ -72,9 +72,13 @@ namespace Hl7.FhirPath.Expressions
             for (var position = 0; position < expression.ParamNames.Length; position++)
             {
                 var paramName = expression.ParamNames[position];
-                lambdaScope.Add(new CallSignature(paramName, typeof(object)),
-                    (ctx, args) => stack[position].Parameter(ctx, args));
+                stack[position] = new ParameterPlaceHolder();
+                var paramRef = stack[position];
+                lambdaScope.AddFunction(new CallSignature(paramName, typeof(object)),
+                    (ctx, args) => paramRef.Parameter(ctx, args));
             }
+
+            var body = expression.Body.ToEvaluator(lambdaScope);
 
             return (ctx, args) =>
             {
@@ -85,7 +89,7 @@ namespace Hl7.FhirPath.Expressions
                 for (var position = 0; position < args.Count; position++)
                     stack[position].Parameter = args[position];
 
-                return expression.Body.ToEvaluator(lambdaScope)(ctx, new List<Invokee>());
+                return body(ctx, new List<Invokee>());
             };           
         }
 
@@ -131,6 +135,8 @@ namespace Hl7.FhirPath.Expressions
             var compiler = new EvaluatorVisitor();
             return expr.Accept<Invokee>(compiler, scope);
         }
+
+        public static Invokee ToEvaluator(this FP.Expression expr) => expr.ToEvaluator(new SymbolTable());
     }
 
 }

@@ -93,10 +93,13 @@ namespace Hl7.FhirPath.Expressions
 
         private List<TableEntry> _entries = new List<TableEntry>();
 
-        internal void Add(CallSignature signature, Invokee body)
+        internal void AddFunction(CallSignature signature, Invokee body)
         {
             _entries.Add(new TableEntry(signature, body));
         }
+
+        internal void AddValue(string name, Invokee value) 
+            => AddFunction(new CallSignature(name, typeof(object)), value);
 
         public SymbolTable Filter(string name, int argCount)
         {
@@ -139,45 +142,45 @@ namespace Hl7.FhirPath.Expressions
 
         public static void Add<R>(this SymbolTable table, string name, Func<R> func)
         {
-            table.Add(new CallSignature(name, typeof(R)), InvokeeFactory.Wrap(func));
+            table.AddFunction(new CallSignature(name, typeof(R)), InvokeeFactory.Wrap(func));
         }
 
         public static void Add<A,R>(this SymbolTable table, string name, Func<A,R> func, bool doNullProp = false)
         {
             if(typeof(A) != typeof(EvaluationContext))
-                table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
             else
-                table.Add(new CallSignature(name, typeof(R)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A,B,R>(this SymbolTable table, string name, Func<A,B,R> func, bool doNullProp = false)
         {
             if (typeof(B) != typeof(EvaluationContext))
-                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
             else
-                table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A, B, C, R>(this SymbolTable table, string name, Func<A, B,C, R> func, bool doNullProp = false)
         {
             if (typeof(C) != typeof(EvaluationContext))
-                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
             else
-                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A, B, C, D, R>(this SymbolTable table, string name, Func<A,B,C,D,R> func, bool doNullProp = false)
         {
             if (typeof(D) != typeof(EvaluationContext))
-                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)), InvokeeFactory.Wrap(func, doNullProp));
             else
-                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
+                table.AddFunction(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
 
         }
 
         public static void AddLogic(this SymbolTable table, string name, Func<Func<bool?>, Func<bool?>, bool?> func)
         {
-            table.Add(new CallSignature(name, typeof(bool?), typeof(object), typeof(Func<bool?>), typeof(Func<bool?>)),
+            table.AddFunction(new CallSignature(name, typeof(bool?), typeof(object), typeof(Func<bool?>), typeof(Func<bool?>)),
                 InvokeeFactory.WrapLogic(func));
         }
 
@@ -188,24 +191,14 @@ namespace Hl7.FhirPath.Expressions
 
         public static void AddConst(this SymbolTable table, string name, ITypedElement value)
         {
-            table.Add(new CallSignature(name, typeof(ITypedElement)), InvokeeFactory.Return(value));
-        }
-
-        internal static void AddPositional(this SymbolTable table, string name, int position, Invokee[] args2)
-        {
-            table.Add(new CallSignature(name, typeof(object)), makeParamRef );
-
-            IEnumerable<ITypedElement> makeParamRef(EvaluationContext ctx, IEnumerable<Invokee> args)
-            {
-                return args.Skip(position).First()(ctx,args2);
-            }
+            table.AddFunction(new CallSignature(name, typeof(ITypedElement)), InvokeeFactory.Return(value));
         }
 
         #region Obsolete members
         [Obsolete("Use AddVar(this SymbolTable table, string name, ITypedElement value) instead. Obsolete since 2018-10-17")]
         public static void AddVar(this SymbolTable table, string name, IElementNavigator value)
         {
-            table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value.ToTypedElement()));
+            table.AddFunction(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value.ToTypedElement()));
         }
         #endregion
     }

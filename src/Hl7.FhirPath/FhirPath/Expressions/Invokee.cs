@@ -131,8 +131,8 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var left = args[0];
-                var right = args[1];
+                var left = args[1];
+                var right = args[2];
 
                 // Return function that actually executes the Invokee at the last moment
                 return Typecasts.CastTo<IEnumerable<ITypedElement>>(

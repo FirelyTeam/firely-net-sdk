@@ -20,19 +20,25 @@ namespace Hl7.FhirPath.Expressions
         {
             append("const {0}".FormatWith(expression.Value));
             appendType(expression);
+            nl();           
+
             return _result;
         }
 
         public override StringBuilder VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope)
         {
-            append("func {0}".FormatWith(expression.FunctionName));
+            append("call {0}".FormatWith(expression.FunctionName));
             appendType(expression);
+            nl();
 
             incr();
             expression.Focus.Accept(this, scope);
 
-            foreach (var arg in expression.Arguments)
-                arg.Accept(this, scope);
+            for (int argpos = 0; argpos < expression.Arguments.Count; argpos++)
+            {
+                append($"arg {argpos}: ");
+                expression.Arguments[argpos].Accept(this, scope);
+            }
             decr();
 
             return _result;
@@ -40,11 +46,12 @@ namespace Hl7.FhirPath.Expressions
 
         public override StringBuilder VisitLambda(LambdaExpression expression, SymbolTable scope)
         {
-            append($"lambda ({String.Join(",",expression.ParamNames)}) -> ");
+            append($"lambda ({String.Join(",", expression.ParamNames)}) -> ");
             appendType(expression);
+            nl();
 
             incr();
-            expression.Body.Accept(this,scope);
+            expression.Body.Accept(this, scope);
             decr();
 
             return _result;
@@ -54,6 +61,7 @@ namespace Hl7.FhirPath.Expressions
         {
             append("new NodeSet");
             appendType(expression);
+            nl();
 
             incr();
             foreach (var element in expression.Contents)
@@ -65,10 +73,11 @@ namespace Hl7.FhirPath.Expressions
 
         public override StringBuilder VisitVariableRef(VariableRefExpression expression, SymbolTable scope)
         {
-            append("var {0}".FormatWith(expression.Name));
+            append("varref {0}".FormatWith(expression.Name));
             appendType(expression);
+            nl();
 
-            return _result;              
+            return _result;
         }
 
         //public override StringBuilder VisitTypeBinaryExpression(TypeBinaryExpression expression)
@@ -82,23 +91,20 @@ namespace Hl7.FhirPath.Expressions
         private void appendType(Expression expr)
         {
             if (expr.ExpressionType != TypeInfo.Any)
-                append(" : {0}".FormatWith(expr.ExpressionType), newLine: false);
+                append(" : {0}".FormatWith(expr.ExpressionType));
         }
 
-        private void append(string text, bool newLine = true)
+        private void append(string text)
         {
-            if (newLine)
-            {
-                _result.AppendLine();
-                _result.Append(new String(' ', _indent * 4));
-            }
-
+            _result.Append(new String(' ', _indent * 4));
             _result.Append(text);
         }
 
+        private void nl() => _result.AppendLine();
+
         private void incr()
-        {           
-            _indent += 1;        
+        {
+            _indent += 1;
         }
 
         private void decr()

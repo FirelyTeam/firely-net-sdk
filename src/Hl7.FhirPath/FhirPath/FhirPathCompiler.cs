@@ -56,7 +56,7 @@ namespace Hl7.FhirPath
 
         public CompiledExpression Compile(Expression expression)
         {
-            var le = new LambdaExpression(new[] { "focus" }, expression).ToEvaluator(Symbols);
+            var le = new LambdaExpression(new[] { "builtin.focus" }, expression).ToEvaluator(Symbols);
 
             return (ITypedElement focus, EvaluationContext ctx) =>
             {
