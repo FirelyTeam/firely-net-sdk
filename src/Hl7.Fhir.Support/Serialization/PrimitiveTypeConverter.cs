@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
-        static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", ".", "00" };
+        private static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", ".", "00" };
 
         public static object FromSerializedValue(string value, string primitiveType)
         {
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (FORBIDDEN_DECIMAL_PREFIXES.Any(prefix => value.StartsWith(prefix)) || value.EndsWith("."))
                 {
-                    // decimal cannot start with '+', '-' or '00' and cannot end with '-'
+                    // decimal cannot start with '+', '-' or '00' and cannot end with '.'
                     throw new FormatException("Input string was not in a correct format.");
                 }
                 return decimal.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
