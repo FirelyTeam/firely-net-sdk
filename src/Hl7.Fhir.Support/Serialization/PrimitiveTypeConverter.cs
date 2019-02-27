@@ -12,6 +12,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
 using System.Numerics;
+using System.Globalization;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -120,7 +121,14 @@ namespace Hl7.Fhir.Serialization
             if (typeof(DateTime) == to)
                 return ConvertToDatetimeOffset(value).UtcDateTime;  // Obsolete: use DateTimeOffset instead!!
             if (typeof(Decimal) == to)
-                return XmlConvert.ToDecimal(value);
+            {
+                if (Array.Exists(new[] { "+", ".", "00" }, c => value.StartsWith(c)) || value.EndsWith("."))
+                {
+                    // decimal cannot start with '+', '-' or '00' and cannot end with '-'
+                    throw new FormatException("Input string was not in a correct format.");
+                }
+                return decimal.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
+            }
             if (typeof(Double) == to)
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
             if (typeof(Int16) == to)
