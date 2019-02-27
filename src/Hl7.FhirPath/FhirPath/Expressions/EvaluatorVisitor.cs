@@ -22,11 +22,12 @@ namespace Hl7.FhirPath.Expressions
             => InvokeeFactory.Return(FhirValueList.Empty);
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)
-            => resolve(scope, expression.Name, Enumerable.Empty<Type>());
-
-        // every expression is rooted in the focus - the parse tree should have
-        // $focus.A 
-        private static readonly string[] IMPLICIT_CALL_PARAMS = new[] { "focus" };
+        {
+            if (expression.Name == "context")
+                return (ctx, _) => FhirValueList.Create(ctx.Container);
+            else
+                return resolve(scope, expression.Name, Enumerable.Empty<Type>());
+        }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
         {
@@ -34,7 +35,7 @@ namespace Hl7.FhirPath.Expressions
 
             var arguments = new List<Invokee>() { focus };
             var argScope = new SymbolTable(scope);
-            argScope.AddValue("focus", focus);
+            argScope.AddValue("builtin.focus", focus);
 
             //// Create a lambda for each argument introducing the $focus as the first
             //// positional parameter. This will be picked up by the first expression in

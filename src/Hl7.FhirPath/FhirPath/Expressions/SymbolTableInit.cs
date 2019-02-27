@@ -177,10 +177,9 @@ namespace Hl7.FhirPath.Expressions
             t.AddFunction(new CallSignature("where", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runWhere);
             t.AddFunction(new CallSignature("select", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runSelect);
             t.AddFunction(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
-            t.AddFunction(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
+            t.AddFunction(new CallSignature("exists", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.AddFunction(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
             t.AddFunction(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
-
 
             t.AddConst("sct", "http://snomed.info/sct");
             t.AddConst("loinc", "http://loinc.org");

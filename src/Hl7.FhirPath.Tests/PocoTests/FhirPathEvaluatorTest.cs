@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -9,11 +9,6 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
@@ -21,6 +16,11 @@ using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -92,7 +92,7 @@ namespace Hl7.FhirPath.Tests
 
     public class FhirPathEvaluatorTest : IClassFixture<PatientFixture>
     {
-        PatientFixture fixture;
+        private PatientFixture fixture;
 
         private readonly ITestOutputHelper output;
 
@@ -146,7 +146,7 @@ namespace Hl7.FhirPath.Tests
                     SourceNode.Valued("child", "4")).ToTypedElement();
 #pragma warning restore CS0618 // Type or member is internal
 
-            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
+            Assert.Equal("ello", input.Scalar(@"child[0].substring(1,%context.child[1].toInteger())"));
         }
 
 
@@ -181,7 +181,6 @@ namespace Hl7.FhirPath.Tests
             }
         }
 
-
         [Fact]
         public void TestGreaterThan()
         {
@@ -191,10 +190,6 @@ namespace Hl7.FhirPath.Tests
             fixture.IsTrue(@"5 > 6 = false");
             fixture.IsTrue(@"(5 > {}).empty()");
         }
-
-
-
-
 
         [Fact]
         public void TestMath()
@@ -409,8 +404,10 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestWhere()
         {
-            fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
+            var tree = new FhirPathCompiler().Parse("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
+            var outp = tree.Dump();
 
+            fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
             fixture.IsTrue(@"(5 | 'hi' | 4).where($this = 'hi').count()=1");
             fixture.IsTrue(@"{}.where($this = 'hi').count()=0");
         }

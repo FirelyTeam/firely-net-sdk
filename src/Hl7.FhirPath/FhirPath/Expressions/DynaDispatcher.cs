@@ -30,12 +30,18 @@ namespace Hl7.FhirPath.Expressions
         {
             var actualArgs = new List<IEnumerable<ITypedElement>>();
 
-            var focus = args[0](ctx,InvokeeFactory.EmptyArgs);
-            if (!focus.Any()) return FhirValueList.Empty;
+            if (args.Count > 1)
+            {
+                var focus = args[0](ctx, InvokeeFactory.EmptyArgs);
+                if (!focus.Any()) return FhirValueList.Empty;
 
-            actualArgs.Add(focus);
-            actualArgs.AddRange(args.Skip(1).Select(a => a(ctx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa=>!aa.Any())) return FhirValueList.Empty;
+                // HACK! Run all arguments just to get the type and select the right method,
+                // which will then run the arguments again :-(
+                // Need to fix this!!!
+                actualArgs.Add(focus);
+                actualArgs.AddRange(args.Skip(1).Select(a => a(ctx, InvokeeFactory.EmptyArgs)));
+                if (actualArgs.Any(aa => !aa.Any())) return FhirValueList.Empty;
+            }
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 

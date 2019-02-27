@@ -54,6 +54,6 @@ namespace Hl7.FhirPath.Expressions
         public override int GetHashCode()
         {
             return base.GetHashCode() ^ FunctionName.GetHashCode() ^ Arguments.GetHashCode();
-        }
+        }      
     }
 }

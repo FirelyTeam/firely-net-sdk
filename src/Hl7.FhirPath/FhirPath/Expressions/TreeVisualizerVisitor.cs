@@ -7,110 +7,114 @@
  */
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hl7.FhirPath.Expressions
 {
-    public class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
+    internal class FormattedUnit
     {
-        private StringBuilder _result = new StringBuilder();
-        private int _indent = 0;
-
-        public override StringBuilder VisitConstant(ConstantExpression expression, SymbolTable scope)
+        public FormattedUnit(IEnumerable<string> content)
         {
-            append("const {0}".FormatWith(expression.Value));
-            appendType(expression);
-            nl();           
-
-            return _result;
+            Lines = content.ToArray();
+            MaxLength = Lines.Aggregate(0, (max, l) => Math.Max(l.Length, max));
         }
 
-        public override StringBuilder VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope)
+        public FormattedUnit(string content) : this(new[] { content })
         {
-            append("call {0}".FormatWith(expression.FunctionName));
-            appendType(expression);
-            nl();
-
-            incr();
-            expression.Focus.Accept(this, scope);
-
-            for (int argpos = 0; argpos < expression.Arguments.Count; argpos++)
-            {
-                append($"arg {argpos}: ");
-                expression.Arguments[argpos].Accept(this, scope);
-            }
-            decr();
-
-            return _result;
+            //
         }
 
-        public override StringBuilder VisitLambda(LambdaExpression expression, SymbolTable scope)
+        public readonly string[] Lines;
+        public readonly int MaxLength;
+
+        bool IsMultiline => Lines.Length > 1;
+
+        public string SingleLine => IsMultiline ?
+            throw new InvalidOperationException("Must not be multiline") : Lines[0];
+
+        public FormattedUnit Indent() => new FormattedUnit(Lines.Select(l => "   " + l));
+
+        public static FormattedUnit Compose(FormattedUnit unit, string sep = "") =>
+            Compose(new[] { unit }, sep);
+
+        public static FormattedUnit Enclose(FormattedUnit open, FormattedUnit inner, FormattedUnit close) => 
+            inner.IsMultiline
+                ? new FormattedUnit(open.Lines.Union(inner.Indent().Lines).Union(close.Lines))
+                : new FormattedUnit(open.ToString() + inner.ToString() + close.ToString());
+
+        public static FormattedUnit Enclose(FormattedUnit open, FormattedUnit inner) =>
+            inner.IsMultiline
+                ? new FormattedUnit(open.Lines.Union(inner.Indent().Lines))
+                : new FormattedUnit(open.ToString() + inner.ToString());
+
+        public FormattedUnit Append(FormattedUnit appendee) => 
+            new FormattedUnit(
+                Lines.Take(Lines.Length - 1).Union(new[] { Lines.Last() + appendee.ToString() }));
+
+        public static FormattedUnit Compose(IEnumerable<FormattedUnit> units, string sep = "")
         {
-            append($"lambda ({String.Join(",", expression.ParamNames)}) -> ");
-            appendType(expression);
-            nl();
+            var unitsList = units.ToArray();
+            
+            bool multiLine = unitsList.Any(u => u.IsMultiline) ||
+                    unitsList.Sum(u => u.MaxLength) > 60;
 
-            incr();
-            expression.Body.Accept(this, scope);
-            decr();
+            if (!multiLine)
+                return new FormattedUnit(String.Join(sep, unitsList.Select(u => u.SingleLine)));
 
-            return _result;
+            var enclosed = unitsList.SelectMany((unit,ix) => 
+                ix == unitsList.Length - 1 ?
+                    unit.Lines :
+                    unit.Append(new FormattedUnit(sep)).Lines);
+
+            return new FormattedUnit(enclosed);
         }
 
-        public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope)
+        public override string ToString() => String.Join(Environment.NewLine, Lines);
+    }
+
+    internal class TreeVisualizerVisitor : ExpressionVisitor<FormattedUnit>
+    {
+
+        public override FormattedUnit VisitConstant(ConstantExpression expression, SymbolTable scope) =>
+             new FormattedUnit($"'{expression.Value}'" + formatType(expression));
+
+        public override FormattedUnit VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope)
         {
-            append("new NodeSet");
-            appendType(expression);
-            nl();
+            var funcf = new FormattedUnit($"{expression.FunctionName}(");
 
-            incr();
-            foreach (var element in expression.Contents)
-                element.Accept(this, scope);
-            decr();
+            var args = new[] { expression.Focus.Accept(this, scope) }
+                .Union(expression.Arguments.Select(a => a.Accept(this, scope)));
 
-            return _result;
+            var argsf = FormattedUnit.Compose(args, ", ");
+            var typef = new FormattedUnit(")" + formatType(expression));
+
+            return FormattedUnit.Enclose(funcf, argsf.Append(typef));
         }
 
-        public override StringBuilder VisitVariableRef(VariableRefExpression expression, SymbolTable scope)
+        public override FormattedUnit VisitLambda(LambdaExpression expression, SymbolTable scope)
         {
-            append("varref {0}".FormatWith(expression.Name));
-            appendType(expression);
-            nl();
+            var lambda = new FormattedUnit($"({String.Join(",", expression.ParamNames)}) => ");
+            var body = expression.Body.Accept(this, scope);
+            var typef = new FormattedUnit(formatType(expression));
 
-            return _result;
+            return FormattedUnit.Enclose(lambda, body.Append(typef));
         }
 
-        //public override StringBuilder VisitTypeBinaryExpression(TypeBinaryExpression expression)
-        //{
-        //    append("{0} {1}".FormatWith(expression.Op, expression.Type.Name));
-        //    appendType(expression);
-
-        //    return _result;
-        //}
-
-        private void appendType(Expression expr)
+        public override FormattedUnit VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope)
         {
-            if (expr.ExpressionType != TypeInfo.Any)
-                append(" : {0}".FormatWith(expr.ExpressionType));
+            var contents = FormattedUnit.Compose(expression.Contents.Select(a => a.Accept(this, scope)), ", ");
+
+            return FormattedUnit.Enclose(new FormattedUnit("["), contents.Append(new FormattedUnit("]")));
         }
 
-        private void append(string text)
-        {
-            _result.Append(new String(' ', _indent * 4));
-            _result.Append(text);
-        }
+        public override FormattedUnit VisitVariableRef(VariableRefExpression expression, SymbolTable scope) =>
+            new FormattedUnit($"{expression.Name}");
 
-        private void nl() => _result.AppendLine();
 
-        private void incr()
-        {
-            _indent += 1;
-        }
-
-        private void decr()
-        {
-            _indent -= 1;
-        }
+        private string formatType(Expression expr) 
+            => expr.ExpressionType != TypeInfo.Any ? $"::{expr.ExpressionType.Name}" : "";
     }
 
     public static class TreeVisualizerExpressionExtensions

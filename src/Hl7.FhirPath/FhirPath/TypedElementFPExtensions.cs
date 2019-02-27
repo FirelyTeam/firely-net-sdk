@@ -35,25 +35,25 @@ namespace Hl7.FhirPath
         public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator(input, ctx ?? new EvaluationContext(input));
         }
 
         public static object Scalar(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Scalar(input, ctx ?? new EvaluationContext(input));
         }
 
         public static bool Predicate(this ITypedElement input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Predicate(input, ctx ?? new EvaluationContext(input));
         }
 
         public static bool IsBoolean(this ITypedElement input, string expression, bool value, EvaluationContext ctx = null)
         {
             var evaluator = getCompiledExpression(expression);
-            return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.IsBoolean(value, input, ctx ?? new EvaluationContext(input));
         }
 
         #region Obsolete members
