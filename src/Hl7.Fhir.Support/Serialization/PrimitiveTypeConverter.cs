@@ -13,11 +13,14 @@ using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
 using System.Numerics;
 using System.Globalization;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
+        static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", ".", "00" };
+
         public static object FromSerializedValue(string value, string primitiveType)
         {
             var type = Primitives.GetNativeRepresentation(primitiveType);
@@ -122,7 +125,7 @@ namespace Hl7.Fhir.Serialization
                 return ConvertToDatetimeOffset(value).UtcDateTime;  // Obsolete: use DateTimeOffset instead!!
             if (typeof(Decimal) == to)
             {
-                if (Array.Exists(new[] { "+", ".", "00" }, c => value.StartsWith(c)) || value.EndsWith("."))
+                if (FORBIDDEN_DECIMAL_PREFIXES.Any(prefix => value.StartsWith(prefix)) || value.EndsWith("."))
                 {
                     // decimal cannot start with '+', '-' or '00' and cannot end with '-'
                     throw new FormatException("Input string was not in a correct format.");
