@@ -404,7 +404,9 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestWhere()
         {
-            var tree = new FhirPathCompiler().Parse("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
+            var tree = new FhirPathCompiler()
+                .Parse("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2")
+                .Rewrite();
             var outp = tree.Dump();
 
             fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");

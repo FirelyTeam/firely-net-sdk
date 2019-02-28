@@ -19,74 +19,63 @@ namespace Hl7.FhirPath.Expressions
             => expression;
 
         public override Expression VisitNewNodeListInit(FP.NewNodeListInitExpression expression, SymbolTable scope)
-            => expression;
+            => new NewNodeListInitExpression(expression.Contents.Select(c=>c.Accept(this, null)));
 
         public override Expression VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)
             => expression;
 
         public override Expression VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
-            => constructFhirFunc(expression.Focus, expression.FunctionName, expression.Arguments);
+            => rewriteImplicitLambdas(expression);
 
         public override Expression VisitLambda(LambdaExpression expression, SymbolTable scope)
-            => expression;
+            => new LambdaExpression(expression.ParamNames, expression.Body.Accept(this, null));
 
-        private static FunctionCallExpression constructFhirFunc(Expression focus, string name, IList<Expression> paramList)
-        {
-            // for backwards compatibility, accept 'any' as an equivalent for 'exists'
-            if (name == "any") name = "exists";
 
-            // Rewriting the args is only required for some functions defined in the spec, that
-            // are using lambdas implicitly. What this code does is turn these arguments into
-            // explicit lambdas.
-            var numArgs = paramList.Count;
+        private static readonly string[] FOCUS_LAMBDA = new[] { "builtin.focus" };
+        private static readonly string[] FOCUS_THIS_LAMBDA = new[] { "builtin.focus", "this" };
+        private static readonly string[] FOCUS_THIS_INDEX_LAMBDA = new[] { "builtin.focus", "this", "index" };
+        private static readonly string[] FOCUS_THIS_INDEX_TOTAL_LAMBDA = new[] { "builtin.focus", "this", "index", "total" };
 
-            switch (name)
+        private static readonly Dictionary<string,Func<Expression[],Expression[]>> lambdaReplacementTable = new Dictionary<string,Func<Expression[], Expression[]>>
             {
-                case "where" when numArgs == 1:
-                    // where(criteria : expression) : collection
-                    return singleArgLambda();
-                case "select" when numArgs == 1:
-                    //   select(projection: expression)
-                    return singleArgLambda();
-                case "all" when numArgs == 1:
-                    // all(criteria: expression) : Boolean
-                    return singleArgLambda();
-                case "repeat" when numArgs == 1:
-                    // repeat(projection: expression) : collection
-                    return singleArgLambda();
-                case "trace" when numArgs == 2:
-                    //trace(name: string; selector: expression) : collection
-                    return new FunctionCallExpression(focus, name, TypeInfo.Any,
-                            new[] { paramList[0], new LambdaExpression(new[] { "this", "index" }, paramList[1]) });
-                case "exists" when numArgs == 1:
-                    // exists(criteria: expression) : Boolean  (without optional criteria this falls through to default)
-                    return singleArgLambda();
-                case "aggregate" when numArgs == 1:
-                    // aggregate(aggregator: expression) : value
-                    return new FunctionCallExpression(focus, name, TypeInfo.Any,
-                        new[] { new LambdaExpression(new[] { "this", "total", "index" }, paramList[0]) });
-                case "aggregate" when numArgs == 2:
-                    // aggregate(aggregator: expression, init: value) : value
-                    return new FunctionCallExpression(focus, name, TypeInfo.Any,
-                        new[] { new LambdaExpression(new[] { "this", "total", "index" }, paramList[0]), paramList[1] });
-                case "iif" when numArgs == 2:
-                    // iif(criterion: expression, true-result: collection) : collection                    
-                    return new FunctionCallExpression(focus, name, TypeInfo.Any,
-                        new[] { new LambdaExpression(new[] { "this", "index" }, paramList[0]), paramList[1] });
-                case "iif" when numArgs == 3:
-                    // iif(criterion: expression, true - result: collection, otherwise-result: collection) : collection                    
-                    return new FunctionCallExpression(focus, name, TypeInfo.Any,
-                        new[] { new LambdaExpression(new[] { "this", "index" }, paramList[0]), paramList[1], paramList[2] });
-                default:
-                    return unchanged();
-            }
+                {"where", argtf(0, FOCUS_THIS_LAMBDA) },
+                {"select", argtf(0, FOCUS_THIS_LAMBDA) },
+                {"all", argtf(0, FOCUS_THIS_LAMBDA) },
+                {"repeat", argtf(0, FOCUS_THIS_LAMBDA) },
+                {"exists", argtf(0, FOCUS_THIS_LAMBDA) },
+                {"trace", argtf(1, FOCUS_THIS_INDEX_LAMBDA) },
+                {"aggregate", argtf(0, FOCUS_THIS_INDEX_TOTAL_LAMBDA) },
+                {"iif", argtf(0, FOCUS_LAMBDA) },
+            };
 
-            FunctionCallExpression singleArgLambda() =>
-                new FunctionCallExpression(focus, name, TypeInfo.Any,
-                        new[] { new LambdaExpression(new[] { "this", "index" }, paramList[0]) });
+        private static Func<Expression[], Expression[]> argtf(int index, string[] lambdaArgs) =>
+            (args) => args
+                .Select((e, i) => i == index ? new LambdaExpression(lambdaArgs, e) : e)
+                .ToArray();
 
-            FunctionCallExpression unchanged() =>
-                new FunctionCallExpression(focus, name, TypeInfo.Any, paramList);
+        private FunctionCallExpression rewriteImplicitLambdas(FunctionCallExpression original)
+        {
+            // First, recursively rewrite the focus
+            var rewrittenFocus = original.Focus.Accept(this, null);
+
+            // Then, recursively rewrite the arguments to the function call, before (eventually) wrapping the lambdas around them
+            var rewrittenArgs = original.Arguments.Select(a => a.Accept(this, null)).ToArray();
+
+            // For backwards compatibility, we accept 'any' as an equivalent for 'exists'
+            var rewrittenName = original.FunctionName == "any" ? "exists" : original.FunctionName;
+
+            // Now, for some specific functions in the spec, we need to turn specific arguments into lambda's. 
+            // E.g. while($this > 4) is actually while(\$this => $this > 4), since the while gets passed a function
+            // that is invoked over all elements in its focus. The lambdaReplacementTable specifies exactly which 
+            // functions and which args need to be replaced.
+            var wrappedArgs = findTransformerForFunc(rewrittenName)(rewrittenArgs);
+
+            return new FunctionCallExpression(rewrittenFocus, rewrittenName, TypeInfo.Any, (IEnumerable<Expression>)wrappedArgs);
+
+            Func<Expression[], Expression[]> findTransformerForFunc(string name) =>
+                lambdaReplacementTable.TryGetValue(name, out var transformer) ? transformer : identity;
+
+            Expression[] identity(Expression[] args) => args;
         }
     }
 
