@@ -18,12 +18,18 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             {
                 var result = PrimitiveTypeConverter.ConvertTo<T>(input);
                 Assert.IsNotNull(result);
-                Assert.AreEqual(expected, result);
+                Assert.AreEqual(expected, result, $"Input [{input}] was not expected [{expected.ToString()}]");
+            }
+            catch (AssertFailedException ae)
+            {
+                throw ae;
             }
             catch (Exception ex)
             {
-                if (!expectException) Assert.IsTrue(false, ex.Message);
+                if (!expectException) Assert.IsTrue(false, $"[{input}] gave an exception: {ex.Message} ");
+                return;
             }
+            if (expectException) Assert.Fail($"[{input}] should give an exception");
         }
 
         private IEnumerable<(string input, DateTimeOffset expected, bool expectException)> GetDateTimeOffsetTestdata()
@@ -36,7 +42,8 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             yield return ("0001-01-32", new DateTimeOffset(), true);
             yield return ("0001-01-02", new DateTimeOffset(1, 1, 2, 0, 0, 0, new TimeSpan()), false);
             yield return ("0001-01-02T00:00:00", new DateTimeOffset(new DateTime(1, 1, 2, 0, 0, 0)), false); // use localTime 
-            yield return ("0001-01-02T00:00:00Z", new DateTimeOffset(1, 1, 2, 0, 0, 0, new TimeSpan()), true);
+            yield return ("0001-01-02T00:00:00Z", new DateTimeOffset(1, 1, 2, 0, 0, 0, new TimeSpan()), false);
+            yield return ("0001-01-01T00:00:00Z", new DateTimeOffset(1, 1, 1, 0, 0, 0, new TimeSpan()), false);
             yield return ("0001-01-01T00:00:00+01:00", new DateTimeOffset(), true);
         }
 
@@ -62,6 +69,49 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ConvertToDateTimeTest()
         {
             foreach (var (input, expected, expectException) in GetDateTimeTestdata())
+            {
+                AssertConvertToType(input, expected, expectException);
+            }
+        }
+
+        private IEnumerable<(string input, decimal expected, bool expectException)> GetDecimalTestdata()
+        {
+            // The following regex should be accepted for a decimal (comes from R4)
+            // -?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?
+
+            yield return ("0", 0m, false);
+            yield return ("-0", 0m, false);
+            yield return ("-0.00", 0m, false);
+            yield return ("1.2", 1.2m, false);
+            yield return ("1.2000", 1.2m, false);
+            yield return ("1.2e0", 1.2m, false);
+            yield return ("1.2E0", 1.2m, false);
+            yield return ("1.2e+10", 12000000000m, false);
+            yield return ("1.2e10", 12000000000m, false);
+            yield return ("1.2e-10", 0.00000000012m, false);
+            yield return ("1.2000e0", 1.2m, false);
+            yield return ("1e2", 100m, false);
+
+            yield return ("1.2ee-00", 0m, true);
+            yield return ("1.2eE0", 1.2m, true);
+            yield return ("(8)", 8m, true);
+            yield return ("1.6-", 1.6m, true);
+            yield return ("NotANumber", 0m, true);
+            yield return ("    8", 8m, true);
+            yield return ("1,200.00", 0m, true);
+
+            yield return ("+1.2", 1.2m, true);
+            yield return (".2", 0.2m, true);
+            yield return ("-0.", 0m, true);
+            yield return ("0000078", 78m, true);
+            yield return ("000000.5", 0.5m, true);
+            //yield return ("08", 8m, true);  // Unfortunately this will be accepted by decimal.Parse(). 
+        }
+
+        [TestMethod]
+        public void ConvertToDecimalTest()
+        {
+            foreach (var (input, expected, expectException) in GetDecimalTestdata())
             {
                 AssertConvertToType(input, expected, expectException);
             }
