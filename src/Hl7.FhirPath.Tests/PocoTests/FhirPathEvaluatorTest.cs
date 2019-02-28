@@ -405,9 +405,11 @@ namespace Hl7.FhirPath.Tests
         public void TestWhere()
         {
             var tree = new FhirPathCompiler()
-                .Parse("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2")
-                .Rewrite();
+                .Parse("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
             var outp = tree.Dump();
+            
+            var rewrittenTree = tree.Rewrite();
+            outp = rewrittenTree.Dump();
 
             fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
             fixture.IsTrue(@"(5 | 'hi' | 4).where($this = 'hi').count()=1");

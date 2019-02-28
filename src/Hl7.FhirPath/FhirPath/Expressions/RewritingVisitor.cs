@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -92,13 +92,13 @@ namespace Hl7.FhirPath.Expressions
 
             Expression root = expr;
 
-            if (expr is FunctionCallExpression f)
-                root = new FunctionCallExpression(new AxisExpression("context"), f.FunctionName, f.ExpressionType, f.Arguments);
-            else
-                throw new InvalidOperationException("Root of expression was expected to be a FunctionCallExpression");
+            //if (expr is FunctionCallExpression f)
+            //    root = new FunctionCallExpression(new AxisExpression("context"), f.FunctionName, f.ExpressionType, f.Arguments);
+            //else
+            //    throw new InvalidOperationException("Root of expression was expected to be a FunctionCallExpression");
 
-            var rootExpression = new LambdaExpression(new[] { "builtin.context" }, root);
-            return rootExpression.Accept<Expression>(visitor, null);
+            var rootExpression = root.Accept<Expression>(visitor, null);
+            return new LambdaExpression(new[] { "builtin.context" }, rootExpression);
         }
     }
 
