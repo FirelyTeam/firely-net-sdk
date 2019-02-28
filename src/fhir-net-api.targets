@@ -9,6 +9,7 @@
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).symbols.nupkg" DestinationFolder="$(PackageOutputDirectory)" />
   </Target>
 -->
+
     <Choose>  
         <When Condition="$(APPVEYOR)=='True' ">
           <PropertyGroup>
@@ -16,12 +17,14 @@
             <TestCaseFilter>/TestCaseFilter:"TestCategory!=IntegrationTest&amp;TestCategory!=FhirClient"</TestCaseFilter>
           </PropertyGroup>
         </When>
+        <!--
         <Otherwise>
           <PropertyGroup>
             <VSTestLogger>/logger:Console</VSTestLogger>
             <TestCaseFilter />
           </PropertyGroup>
         </Otherwise>
+        -->
     </Choose>
 
   <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">

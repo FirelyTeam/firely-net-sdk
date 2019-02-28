@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -21,8 +22,11 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanSerializeSubtree()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
+            var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            // If on a Unix platform replace \\r\\n in json strings to \\n.
+            if(Environment.NewLine == "\n")
+                tpJson = tpJson.Replace(@"\r\n", @"\n");
             var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
 
             // Should work on the parent resource

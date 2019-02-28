@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Format the serialized xml or json output.
         /// </summary>
-        public bool Pretty;
+        public bool Pretty { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="SerializerSettings"/> instance with default property values.</summary>
         public SerializerSettings() { }

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void Summary()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("Patient");
             var inSummary = typeinfo.GetElements().Where(e => e.InSummary).ToList();
 
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void SummaryText()
         {
-            var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "mask-text.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNode(getXmlNode(tpXml));
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void SummaryData()
         {
-            var tpXml = File.ReadAllText(@"TestData\mask-text.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "mask-text.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNode(getXmlNode(tpXml));
