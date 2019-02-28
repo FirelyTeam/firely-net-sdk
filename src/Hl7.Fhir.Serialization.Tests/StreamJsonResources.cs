@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanThroughBundle()
         {
-            var jsonBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.json");
+            var jsonBundle = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "profiles-types.json"));
             using (var stream = JsonNavigatorStream.FromPath(jsonBundle))
             {
                 Assert.IsTrue(stream.IsBundle);
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanThroughSingle()
         {
-            var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\fp-test-patient.json");
+            var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "fp-test-patient.json"));
             using (var stream = JsonNavigatorStream.FromPath(xmlPatient))
             {
                 Assert.IsFalse(stream.IsBundle);
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ReadCrap()
         {
             // Try a random other xml file
-            var jsonfile = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\project.assets.json");
+            var jsonfile = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "source-test", "project.assets.json"));
 
             using (var stream = JsonNavigatorStream.FromPath(jsonfile))
             {
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanPerformance()
         {
-            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.json");
+            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "profiles-types.json"));
 
             var sw = new Stopwatch();
             sw.Start();

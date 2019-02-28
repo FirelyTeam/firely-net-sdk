@@ -305,5 +305,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
             }
         }
+
+        [TestMethod]
+        public void ParseEmptyContained()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><contained></contained></Patient>";
+            var parser = new FhirXmlParser();
+
+            Assert.ThrowsException<FormatException>(() => parser.Parse<Patient>(xml));
+        }
     }
 }

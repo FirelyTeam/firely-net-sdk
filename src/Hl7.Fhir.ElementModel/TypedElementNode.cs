@@ -71,7 +71,7 @@ namespace Hl7.Fhir.ElementModel
 
         private void raiseTypeError(string message, object source, bool warning = false)
         {
-            var exc = new StructuralTypeException(message);
+            var exc = new StructuralTypeException("Type checking the data: " + message);
             var notification = warning ?
                 ExceptionNotification.Warning(exc) :
                 ExceptionNotification.Error(exc);
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.ElementModel
                 // If we found a type, but we don't know about the specific child, complain
                 if (dis != ElementDefinitionSummaryCache.Empty && !match.IsTracking)
                 {
-                    raiseTypeError($"Encountered unknown element '{scan.Name}'", this,
+                    raiseTypeError($"Encountered unknown element '{scan.Name}' while parsing", this,
                             warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
 
                     // don't include member, unless we are explicitly told to let it pass

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public string ResourceType => JsonObject?.GetResourceTypeFromObject();
+        public string ResourceType => (JsonObject?.GetResourceTypePropertyFromObject(Name)?.Value as JValue)?.Value as string;
 
         public IEnumerable<ISourceNode> Children(string name = null)
         {
@@ -206,9 +206,11 @@ namespace Hl7.Fhir.Serialization
 
             var scanChildren = children.Where(n => n.Key.MatchesPrefix(name));
 
+            var resourceTypeChild = JsonObject.GetResourceTypePropertyFromObject(Name);
+
             foreach (var child in scanChildren)
             {
-                if (isResourceTypeIndicator(child)) continue;
+                if (child.First() == resourceTypeChild) continue;
                 if (processed.Contains(child.Key)) continue;
 
                 (JProperty main, JProperty shadow) = getNextElementPair(child);
@@ -234,10 +236,6 @@ namespace Hl7.Fhir.Serialization
                 return n[0] == '_' ? n.Substring(1) : n;
             }
         }
-
-        private bool isResourceTypeIndicator(IGrouping<string, JProperty> child) => 
-            child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME ?
-                false : child.First().Value.Type == JTokenType.String;
 
         private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
         {
@@ -311,7 +309,7 @@ namespace Hl7.Fhir.Serialization
         private void raiseFormatError(string message, JToken node)
         {
             var (lineNumber, linePosition) = getPosition(node);
-            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format("Parser: " + message, lineNumber, linePosition)));
         }
 
         private (int lineNumber, int linePosition) getPosition(JToken node) => 
@@ -389,7 +387,7 @@ namespace Hl7.Fhir.Serialization
 
                 if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
                     ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                        new StructuralTypeException($"Since element '{nav.Name}' repeats, an array must be used here.")));
+                        new StructuralTypeException($"Parser: Since element '{nav.Name}' repeats, an array must be used here.")));
 
                 if (!sdSummary.IsCollection && serializationDetails.ArrayIndex != null)
                 {
@@ -397,7 +395,7 @@ namespace Hl7.Fhir.Serialization
                     if (serializationDetails.ArrayIndex == 0)
                     {
                         ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                            new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
+                            new StructuralTypeException($"Parser: Element '{nav.Name}' does not repeat, so an array must not be used here.")));
                     }
                 }
 

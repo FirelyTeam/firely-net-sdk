@@ -19,15 +19,15 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanReadThroughTypedNavigator()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNode(tp);
             ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
         }
-
+        
         [TestMethod]
         public void ElementNavPerformanceTypedJson()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNode(tp);
             ParseDemoPatient.ElementNavPerformance(nav.ToSourceNode());
         }
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectTypedLocations()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var patient = getJsonNode(tp);
             ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbersTypedJson()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNode(tp);
             ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.ToSourceNode());
         }
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = getJsonNode(bundle);
             ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void PingpongJson()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             // will allow whitespace and comments to come through      
             var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var xml = navJson.ToXml();
@@ -86,6 +86,18 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = navXml.ToJson();
 
             JsonAssert.AreSame(tp, json);
+        }
+
+        [TestMethod]
+        public void IgnoreElements()
+        {
+            var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
+            var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson(new FhirJsonSerializationSettings { IgnoreUnknownElements = false });
+            Assert.IsTrue(jsonBare.Contains("pat1"));
+
+            patient.Add(SourceNode.Valued("unknownElement", "someValue"));
+            var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson(new FhirJsonSerializationSettings { IgnoreUnknownElements = true });
+            Assert.IsFalse(jsonUnknown.Contains("unknownElement"));
         }
 
         [TestMethod]

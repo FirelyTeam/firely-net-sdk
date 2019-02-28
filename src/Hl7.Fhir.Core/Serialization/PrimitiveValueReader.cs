@@ -46,7 +46,8 @@ namespace Hl7.Fhir.Serialization
             catch (NotSupportedException exc)
             {
                 // thrown when an unsupported conversion was required
-                throw Error.Format(exc.Message, _current.Location);
+                ComplexTypeReader.RaiseFormatError("Not supported - " + exc.Message, _current.Location);
+                throw;  // just to satisfy the compiler - RaiseFormatError throws.
             }
         }
     }

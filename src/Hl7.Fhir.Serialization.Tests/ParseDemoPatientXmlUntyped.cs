@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanReadThroughUntypedNavigator()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
 #pragma warning disable 612,618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToTypedElement(), typed: false);
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ElementNavPerformanceUntypedXml()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
             ParseDemoPatient.ElementNavPerformance(nav);
         }
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectUntypedLocations()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var patient = getXmlUntyped(tpXml);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbers()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
 
             ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void TestPermissiveParsing()
         {
-            var tpXml = File.ReadAllText(@"TestData\all-xml-features.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "all-xml-features.xml"));
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
             var node = getXmlUntyped(bundle);
 #pragma warning disable 612, 618
             ParseDemoPatient.CheckBundleEntryNavigation(node.ToTypedElement());
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesLowLevelErrors()
         {
-            var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "with-errors.xml"));
             var patient = getXmlUntyped(tpXml);
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;

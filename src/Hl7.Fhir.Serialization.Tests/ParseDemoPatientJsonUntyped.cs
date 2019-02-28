@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanReadThroughUntypedNavigator()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
 #pragma warning disable 612, 618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToTypedElement(), typed: false);
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ElementNavPerformanceUntypedJson()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
             ParseDemoPatient.ElementNavPerformance(nav);
         }
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectUntypedLocations()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var patient = getJsonNodeU(tp);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbers()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
 
             ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav);
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = getJsonNodeU(bundle);
 #pragma warning disable 612,618
             ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanReadEdgeCases()
         {
-            var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
+            var tpJson = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
             var patient = getJsonNodeU(tpJson, new FhirJsonParsingSettings { AllowJsonComments = true });
 
             Assert.AreEqual("Patient", patient.Name);
