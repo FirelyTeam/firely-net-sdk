@@ -16,9 +16,6 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public string ChildName
-        {
-            get { return (string)((ConstantExpression)Arguments.First()).Value; }
-        }
+        public string ChildName => (string)((ConstantExpression)Arguments.First()).Value;
     }
 }

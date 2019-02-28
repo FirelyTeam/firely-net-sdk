@@ -22,20 +22,8 @@ namespace Hl7.FhirPath.Expressions
         public UnaryExpression(string op, Expression operand) : base(AxisExpression.Focus, URY_PREFIX + op, TypeInfo.Any, operand)
         {
         }
-        public string Op
-        {
-            get
-            {
-                return FunctionName.Substring(URY_PREFIX_LEN);
-            }
-        }
+        public string Op => FunctionName.Substring(URY_PREFIX_LEN);
 
-        public Expression Operand
-        {
-            get
-            {
-                return Focus;
-            }
-        }
+        public Expression Operand => Focus;
     }
 }

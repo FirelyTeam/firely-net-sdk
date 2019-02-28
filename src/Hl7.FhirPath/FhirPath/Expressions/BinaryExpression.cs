@@ -24,28 +24,10 @@ namespace Hl7.FhirPath.Expressions
         public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.Focus, BIN_PREFIX + op, TypeInfo.Any, left, right)
         {
         }
-        public string Op
-        {
-            get
-            {
-                return FunctionName.Substring(BIN_PREFIX_LEN);
-            }
-        }
+        public string Op => FunctionName.Substring(BIN_PREFIX_LEN);
 
-        public Expression Left
-        {
-            get
-            {
-                return Focus;
-            }
-        }
+        public Expression Left => Focus;
 
-        public Expression Right
-        {
-            get
-            {
-                return Arguments.First();
-            }
-        }
+        public Expression Right => Arguments.First();
     }
 }

@@ -16,12 +16,6 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public Expression Index
-        {
-            get
-            {
-                return Arguments.First();
-            }
-        }
+        public Expression Index => Arguments.First();
     }
 }

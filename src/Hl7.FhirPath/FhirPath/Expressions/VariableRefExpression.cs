@@ -14,32 +14,14 @@ namespace Hl7.FhirPath.Expressions
     {
         public VariableRefExpression(string name) : base(TypeInfo.Any)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-
-            Name = name;
+            Name = name ?? throw Error.ArgumentNull("name");
         }
 
         public string Name { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
-        {
-            return visitor.VisitVariableRef(this, scope);
-        }
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj) && obj is VariableRefExpression)
-            {
-                var f = (VariableRefExpression)obj;
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope) => visitor.VisitVariableRef(this, scope);
+        public override bool Equals(object obj) => base.Equals(obj) && obj is VariableRefExpression f ? f.Name == Name : false;
 
-                return f.Name == Name;
-            }
-            else
-                return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ Name.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode() ^ Name.GetHashCode();
     }
 }

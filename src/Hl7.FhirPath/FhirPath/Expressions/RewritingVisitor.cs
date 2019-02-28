@@ -30,6 +30,8 @@ namespace Hl7.FhirPath.Expressions
         public override Expression VisitLambda(LambdaExpression expression, SymbolTable scope)
             => new LambdaExpression(expression.ParamNames, expression.Body.Accept(this, null));
 
+        public override Expression VisitLet(LetExpression expression, SymbolTable scope)
+            => new LetExpression(expression.Name, expression.Expression.Accept(this,null), expression.Body.Accept(this, null));
 
         private static readonly string[] FOCUS_LAMBDA = new[] { "builtin.focus" };
         private static readonly string[] FOCUS_THIS_LAMBDA = new[] { "builtin.focus", "this" };
@@ -53,7 +55,7 @@ namespace Hl7.FhirPath.Expressions
                 .Select((e, i) => i == index ? new LambdaExpression(lambdaArgs, e) : e)
                 .ToArray();
 
-        private FunctionCallExpression rewriteImplicitLambdas(FunctionCallExpression original)
+        private Expression rewriteImplicitLambdas(FunctionCallExpression original)
         {
             // First, recursively rewrite the focus
             var rewrittenFocus = original.Focus.Accept(this, null);
@@ -70,7 +72,10 @@ namespace Hl7.FhirPath.Expressions
             // functions and which args need to be replaced.
             var wrappedArgs = findTransformerForFunc(rewrittenName)(rewrittenArgs);
 
-            return new FunctionCallExpression(rewrittenFocus, rewrittenName, TypeInfo.Any, (IEnumerable<Expression>)wrappedArgs);
+            // Lastly, the whole function call should be turned into a let expression which assigns the label $focus 
+            // to the body expression
+            var rewrittenFunction = new FunctionCallExpression(null, rewrittenName, TypeInfo.Any, (IEnumerable<Expression>)wrappedArgs);
+            return new LetExpression("builtin.focus", rewrittenFocus, rewrittenFunction);
 
             Func<Expression[], Expression[]> findTransformerForFunc(string name) =>
                 lambdaReplacementTable.TryGetValue(name, out var transformer) ? transformer : identity;
@@ -84,7 +89,16 @@ namespace Hl7.FhirPath.Expressions
         public static Expression Rewrite(this FP.Expression expr)
         {
             var visitor = new RewritingVisitor();
-            return expr.Accept<Expression>(visitor, null);
+
+            Expression root = expr;
+
+            if (expr is FunctionCallExpression f)
+                root = new FunctionCallExpression(new AxisExpression("context"), f.FunctionName, f.ExpressionType, f.Arguments);
+            else
+                throw new InvalidOperationException("Root of expression was expected to be a FunctionCallExpression");
+
+            var rootExpression = new LambdaExpression(new[] { "builtin.context" }, root);
+            return rootExpression.Accept<Expression>(visitor, null);
         }
     }
 

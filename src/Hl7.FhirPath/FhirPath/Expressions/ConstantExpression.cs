@@ -16,9 +16,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public ConstantExpression(object value, TypeInfo type) : base(type)
         {
-            if (value == null) Error.ArgumentNull("value");
-
-            Value = value;
+            Value = value ?? Error.ArgumentNull("value");
         }
 
         public ConstantExpression(object value) : base(TypeInfo.Any)
@@ -47,25 +45,10 @@ namespace Hl7.FhirPath.Expressions
 
         public object Value { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
-        {
-            return visitor.VisitConstant(this, scope);
-        }
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope) => visitor.VisitConstant(this, scope);
 
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj) && obj is ConstantExpression)
-            {
-                var c = (ConstantExpression)obj;
-                return Object.Equals(c.Value, Value);
-            }
-            else
-                return false;
-        }
+        public override bool Equals(object obj) => base.Equals(obj) && obj is ConstantExpression c ? Equals(c.Value, Value) : false;
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ Value.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode() ^ Value.GetHashCode();
     }
 }

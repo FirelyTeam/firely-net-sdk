@@ -22,11 +22,9 @@ namespace Hl7.FhirPath.Expressions
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
-            Focus = focus ?? throw Error.ArgumentNull("focus");
+            Focus = focus;
             FunctionName = name;
             Arguments = arguments?.ToList() ?? throw Error.ArgumentNull("arguments");
-
-        //    throw new NotImplementedException("Should we introduce the implicit lambda's for where etc. here?");
         }
 
         public Expression Focus { get; private set; }
@@ -34,26 +32,13 @@ namespace Hl7.FhirPath.Expressions
 
         public IList<Expression> Arguments { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
-        {
-            return visitor.VisitFunctionCall(this, scope);
-        }
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope) => visitor.VisitFunctionCall(this, scope);
 
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj) && obj is FunctionCallExpression)
-            {
-                var f = (FunctionCallExpression)obj;
+        public override bool Equals(object obj) => 
+            base.Equals(obj) && obj is FunctionCallExpression f
+                ? f.FunctionName == FunctionName && Arguments.SequenceEqual(f.Arguments)
+                : false;
 
-                return f.FunctionName == FunctionName && Arguments.SequenceEqual(f.Arguments);
-            }
-            else
-                return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ FunctionName.GetHashCode() ^ Arguments.GetHashCode();
-        }      
+        public override int GetHashCode() => base.GetHashCode() ^ FunctionName.GetHashCode() ^ Arguments.GetHashCode();
     }
 }

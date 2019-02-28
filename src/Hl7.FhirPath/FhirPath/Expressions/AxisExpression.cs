@@ -22,14 +22,7 @@ namespace Hl7.FhirPath.Expressions
             if (axisName == null) throw Error.ArgumentNull("axisName");
         }
 
-        public string AxisName
-        {
-            get
-            {
-                return Name.Substring(OP_PREFIX_LEN);
-            }
-        }
-
+        public string AxisName => Name.Substring(OP_PREFIX_LEN);
 
         public static readonly AxisExpression This = new AxisExpression("this");
         public static readonly AxisExpression Focus = new AxisExpression("focus");

@@ -25,5 +25,8 @@ namespace Hl7.FhirPath.Expressions
         public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope);
 
         public abstract T VisitVariableRef(VariableRefExpression expression, SymbolTable scope);
+
+        // Should have been abstract, but that would break existing code in 1.x. Maybe change to abstract in 2.x
+        public virtual T VisitLet(LetExpression expression, SymbolTable scope) => throw new NotImplementedException("Visitor does not implement VisitLet");
     }
 }

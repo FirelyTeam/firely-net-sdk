@@ -29,7 +29,7 @@ namespace Hl7.FhirPath.Expressions
         public readonly string[] Lines;
         public readonly int MaxLength;
 
-        bool IsMultiline => Lines.Length > 1;
+        public bool IsMultiline => Lines.Length > 1;
 
         public string SingleLine => IsMultiline ?
             throw new InvalidOperationException("Must not be multiline") : Lines[0];
@@ -84,8 +84,11 @@ namespace Hl7.FhirPath.Expressions
         {
             var funcf = new FormattedUnit($"{expression.FunctionName}(");
 
-            var args = new[] { expression.Focus.Accept(this, scope) }
-                .Union(expression.Arguments.Select(a => a.Accept(this, scope)));
+            var args = expression.Focus != null 
+                    ? new[] { FormattedUnit.Enclose(
+                                new FormattedUnit("|"), expression.Focus.Accept(this, scope), new FormattedUnit("|")) } 
+                    : Enumerable.Empty<FormattedUnit>();
+            args = args.Union(expression.Arguments.Select(a => a.Accept(this, scope)));
 
             var argsf = FormattedUnit.Compose(args, ", ");
             var typef = new FormattedUnit(")" + formatType(expression));
@@ -112,6 +115,18 @@ namespace Hl7.FhirPath.Expressions
         public override FormattedUnit VisitVariableRef(VariableRefExpression expression, SymbolTable scope) =>
             new FormattedUnit($"{expression.Name}");
 
+        public override FormattedUnit VisitLet(LetExpression expression, SymbolTable scope)
+        {
+            var formattedExpr = expression.Expression.Accept(this, null);
+            var formattedBody = expression.Body.Accept(this, null).Indent();
+
+        //   if (formattedExpr.IsMultiline) formattedExpr = formattedExpr.Indent(); // add extra indent to make the "in" stand out
+            var formattedLet = FormattedUnit.Enclose(new FormattedUnit($"let {expression.Name}="), formattedExpr);
+
+            var inu = new FormattedUnit("  in");
+
+            return FormattedUnit.Compose(new[] { formattedLet, inu, formattedBody });
+        }
 
         private string formatType(Expression expr) 
             => expr.ExpressionType != TypeInfo.Any ? $"::{expr.ExpressionType.Name}" : "";
