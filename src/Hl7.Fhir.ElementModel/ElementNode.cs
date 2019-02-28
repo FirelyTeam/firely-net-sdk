@@ -101,7 +101,7 @@ namespace Hl7.Fhir.ElementModel
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
             
-            if(child.InstanceType == null)
+            if(child.InstanceType == null && child.Definition != null)
             {
                 if (child.Definition.IsResource || child.Definition.Type.Length > 1)
                     throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.ElementModel
             }
             children.Add(child);
 
-            return this;
+            return child;
         }
 
         public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value=null, string instanceType = null)
@@ -118,9 +118,7 @@ namespace Hl7.Fhir.ElementModel
             var child = new ElementNode(name, value, instanceType, null);
 
             // Add() will supply the definition and the instanceType (if necessary)
-            Add(provider, child); 
-
-            return this;
+            return Add(provider, child); 
         }
 
         public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null)
