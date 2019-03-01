@@ -18,4 +18,9 @@
   <ItemGroup>    
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
 </Project>

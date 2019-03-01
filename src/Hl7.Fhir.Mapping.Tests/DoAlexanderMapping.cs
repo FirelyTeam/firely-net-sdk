@@ -7,17 +7,23 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Mapping;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Hl7.Fhir.Tests.Mapping
 {
+
+    public delegate Expression ManualBuilder();
+
     [TestClass]
     public class MappingTest
     {
@@ -52,7 +58,7 @@ namespace Hl7.Fhir.Tests.Mapping
 
             var mapper = new CtsTransportMapper(sourceDefinitionProvider, targetDefinitionProvider);
             mapper.Main(source, target);
-
+            var json = target.ToJson();
         }
 
 
@@ -72,50 +78,63 @@ namespace Hl7.Fhir.Tests.Mapping
             {
                 Patient(src, tgt);
             }
+            
+            private static readonly MethodInfo ELEMENTNODE_ADD_MI = typeof(ElementNode).GetMethod("Add", new[] {
+                typeof(IStructureDefinitionSummaryProvider), typeof(string), typeof(object), typeof(string) });
+
+            private static readonly PropertyInfo TYPEDELEMENT_VALUE_PI = typeof(ITypedElement).GetProperty("Value");
+
+            public MethodCallExpression makePrimitiveAdder(Expression source, Expression target, string element)
+            {
+                return Expression.Call(target, ELEMENTNODE_ADD_MI,
+                        Expression.Constant(TargetProvider),
+                        Expression.Constant(element),
+                        Expression.Property(source, TYPEDELEMENT_VALUE_PI),
+                        Expression.Constant(null, typeof(string)));
+            }
+
+            public Expression buildSourceStatement(Expression source, ParameterExpression focus, ManualBuilder body)
+            {
+                var lambda = Expression.Lambda<Action<ITypedElement>>(body(), focus);
+                var method = typeof(EnumerableExtensions).GetMethod("ForEach");
+                return Expression.Call(null, method, source, lambda);
+            }
 
             public void Patient(ITypedElement src, ElementNode tgt)
             {
-                //src.patid as id -> tgt.id = id;  This is a "shorthand" copy, based on primitive values
-                //TODO: we need a delayed & cachine "ToList()", that runs the enumerable the first time and then just returns
-                //the cached copy
-                var patid_ = src.Children("patid").ToList();
-                foreach (var patid in patid_)
-                    tgt.Add(TargetProvider, "id", patid.Value);
+                src.Children("patid").ForEach(patid => tgt.Add(TargetProvider, "id", patid.Value));
 
-                var operations_ = src.Children("operations").ToList();
-                foreach (var operations in operations_)
+                src.Children("operations").ForEach(operations =>
                 {
-                    var data_ = operations.Children("data").ToList();
-                    foreach (var data in data_)
+                    operations.Children("data").ForEach(data =>
                     {
-                        //NB: Notice how the FhirPath works on the "context" (=data), not data.values
                         if (data.IsBoolean("blockindex = 1 and groupindex = 0 and itemid = 'id_1131'", true))
                         {
-                            var values_ = data.Children("values").ToList();
-                            foreach(var values in values_)
+                            data.Children("values").ForEach(values =>
                             {
-                                var value_ = values.Children("value").ToList();
-                                foreach(var value in value_)
-                                    tgt.Add(TargetProvider, "gender", value.Value);
-                            }
+                                var value_ = values.Children("value");
+
+                                var valParam = Expression.Parameter(typeof(ITypedElement), "value");
+                                var valueE = buildSourceStatement(Expression.Constant(value_), valParam, () =>
+                                        makePrimitiveAdder(valParam, Expression.Constant(tgt), "gender"));
+                                var valuesMaker = Expression.Lambda<Action>(valueE).Compile();
+                                valuesMaker();
+                            });
                         }
 
                         if (data.IsBoolean("blockindex = 1 and groupindex = 0 and itemid = 'id_1128'", true))
                         {
-                            var values_ = data.Children("values").ToList();
-                            foreach (var values in values_)
+                            data.Children("values").ForEach(values =>
                             {
-                                var value_ = values.Children("value").ToList();
-                                foreach (var value in value_)
+                                values.Children("value").ForEach(value =>
                                 {
                                     var address = tgt.Add(TargetProvider, "address");
                                     address.Add(TargetProvider, "postalCode", value.Value);
-                                }
-                            }
+                                });
+                            });
                         }
-
-                    }
-                }
+                    });
+                });
             }
         }
     }

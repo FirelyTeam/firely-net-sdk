@@ -5,7 +5,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Patient" as target
 uses "http://hl7.org/fhir/StructureDefinition/Coverage" as target
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" as produced // How to specify that all generated instances are put into a bundle?
 
-group Main(source src: CTS_Transport, target tgt: Patient)
+group TransformPatient(source src: CTS_Transport, target tgt: Patient)
 {
 	src.patid -> tgt.id;
 
@@ -20,11 +20,19 @@ group Main(source src: CTS_Transport, target tgt: Patient)
 
             data.values as values where (blockindex = '1' and groupindex = '0' and itemid = 'id_1128') then
 			{
-                values.value as value -> target.address as adress, address.postalCode = value "rule_make_postalCode";
+                values.value as value -> target.address as address then
+				{
+					value -> address.postalCode "rule_make_postalCode";
+				};
             } "rule_select_postalCode";
 
-            data.values as values where index = "1_0_id_1125" {
-               values.value as value -> target.name.given = value "rule_make_name"
+            data.values as values where (blockindex = '1' and groupindex = '0' and itemid = '1_0_id_1125') then
+			{
+				values.value as value -> target.name as name then
+				{
+					value -> name.given "rule_make_name";
+				}
+
             } "rule_select_name";
         }
     }
