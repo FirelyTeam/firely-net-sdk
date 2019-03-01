@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Mapping
 {
     public static class EnumerableExtensions
     {
-        public static void ForEach(this IEnumerable<ITypedElement> list, Action<ITypedElement> body)
+        public static void Apply(this IEnumerable<ITypedElement> list, Action<ITypedElement> body)
         {
             foreach (var elem in list) body(elem);
         }

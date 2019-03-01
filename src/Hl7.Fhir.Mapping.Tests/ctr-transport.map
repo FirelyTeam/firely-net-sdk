@@ -1,4 +1,4 @@
-﻿map "http://uk-koeln.de/fhir/StructureMap/CTSTransportMap" = CTSTransportMap
+map "http://uk-koeln.de/fhir/StructureMap/CTSTransportMap" = CTSTransportMap
 
 uses "http://uk-koeln.de/fhir/StructureDefinition/CTS_Transport" as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" as target

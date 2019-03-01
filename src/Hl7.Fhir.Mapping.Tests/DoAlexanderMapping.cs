@@ -11,6 +11,7 @@ using Hl7.Fhir.Mapping;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -22,7 +23,7 @@ using System.Reflection;
 namespace Hl7.Fhir.Tests.Mapping
 {
 
-    public delegate Expression ManualBuilder();
+    public delegate Expression ManualBuilder(MappingSymbols sym);
 
     [TestClass]
     public class MappingTest
@@ -79,44 +80,53 @@ namespace Hl7.Fhir.Tests.Mapping
                 Patient(src, tgt);
             }
             
-            private static readonly MethodInfo ELEMENTNODE_ADD_MI = typeof(ElementNode).GetMethod("Add", new[] {
+            private static readonly MethodInfo ELEMENTNODE_ADD_MI = typeof(ElementNode).GetMethod(nameof(ElementNode.Add), new[] {
                 typeof(IStructureDefinitionSummaryProvider), typeof(string), typeof(object), typeof(string) });
+            private static readonly PropertyInfo TYPEDELEMENT_VALUE_PI = typeof(ITypedElement).GetProperty(nameof(ITypedElement.Value));
+            private static readonly MethodInfo ENUMEXT_APPLY_MI = typeof(EnumerableExtensions).GetMethod(nameof(EnumerableExtensions.Apply));
 
-            private static readonly PropertyInfo TYPEDELEMENT_VALUE_PI = typeof(ITypedElement).GetProperty("Value");
 
-            public MethodCallExpression makePrimitiveAdder(Expression source, Expression target, string element)
+            // -> target.element = source
+            public MethodCallExpression makePrimitiveAdder(MappingSymbols sym, string source, Expression target, string element)
             {
+                var sourceExpr = sym[source] ?? throw Error.Argument($"Cannot resolve symbol '{source}'");
+
                 return Expression.Call(target, ELEMENTNODE_ADD_MI,
                         Expression.Constant(TargetProvider),
                         Expression.Constant(element),
-                        Expression.Property(source, TYPEDELEMENT_VALUE_PI),
+                        Expression.Property(sourceExpr, TYPEDELEMENT_VALUE_PI),
                         Expression.Constant(null, typeof(string)));
             }
 
-            public Expression buildSourceStatement(Expression source, ParameterExpression focus, ManualBuilder body)
+            // source as label -> body
+            public Expression buildSourceStatement(MappingSymbols sym, Expression source, string label, ManualBuilder body)
             {
-                var lambda = Expression.Lambda<Action<ITypedElement>>(body(), focus);
-                var method = typeof(EnumerableExtensions).GetMethod("ForEach");
-                return Expression.Call(null, method, source, lambda);
+                var valParam = Expression.Parameter(typeof(ITypedElement), label);
+                var bodySym = sym.Nest();
+                bodySym[label] = valParam;
+
+                var lambda = Expression.Lambda<Action<ITypedElement>>(body(bodySym),valParam);
+                return Expression.Call(null, ENUMEXT_APPLY_MI, source, lambda);
             }
 
             public void Patient(ITypedElement src, ElementNode tgt)
             {
-                src.Children("patid").ForEach(patid => tgt.Add(TargetProvider, "id", patid.Value));
+                src.Children("patid").Apply(patid => tgt.Add(TargetProvider, "id", patid.Value));
 
-                src.Children("operations").ForEach(operations =>
+                src.Children("operations").Apply(operations =>
                 {
-                    operations.Children("data").ForEach(data =>
+                    operations.Children("data").Apply(data =>
                     {
                         if (data.IsBoolean("blockindex = 1 and groupindex = 0 and itemid = 'id_1131'", true))
                         {
-                            data.Children("values").ForEach(values =>
+                            data.Children("values").Apply(values =>
                             {
                                 var value_ = values.Children("value");
+               
+                                var valueE = buildSourceStatement(new MappingSymbols(), Expression.Constant(value_), "value", 
+                                    (sym) =>
+                                        makePrimitiveAdder(sym,"value", Expression.Constant(tgt), "gender"));
 
-                                var valParam = Expression.Parameter(typeof(ITypedElement), "value");
-                                var valueE = buildSourceStatement(Expression.Constant(value_), valParam, () =>
-                                        makePrimitiveAdder(valParam, Expression.Constant(tgt), "gender"));
                                 var valuesMaker = Expression.Lambda<Action>(valueE).Compile();
                                 valuesMaker();
                             });
@@ -124,9 +134,9 @@ namespace Hl7.Fhir.Tests.Mapping
 
                         if (data.IsBoolean("blockindex = 1 and groupindex = 0 and itemid = 'id_1128'", true))
                         {
-                            data.Children("values").ForEach(values =>
+                            data.Children("values").Apply(values =>
                             {
-                                values.Children("value").ForEach(value =>
+                                values.Children("value").Apply(value =>
                                 {
                                     var address = tgt.Add(TargetProvider, "address");
                                     address.Add(TargetProvider, "postalCode", value.Value);

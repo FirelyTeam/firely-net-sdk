@@ -18,13 +18,13 @@ namespace Hl7.Fhir.Mapping
         {
         }
 
-        private Dictionary<string, ParameterExpression> _symbols = new Dictionary<string, ParameterExpression>();
+        private Dictionary<string, Expression> _symbols = new Dictionary<string, Expression>();
 
         public MappingSymbols Parent { get; private set; }
 
         public MappingSymbols Nest() => new MappingSymbols() { Parent = this };
 
-        public ParameterExpression this[string label]
+        public Expression this[string label]
         {
             get => _symbols.TryGetValue(label, out var symbol) ? symbol : Parent?[label];
             set => _symbols[label] = value;
