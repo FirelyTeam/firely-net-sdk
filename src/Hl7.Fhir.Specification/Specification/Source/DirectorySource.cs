@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Specification.Source
             return summaries;
         }
 
-        private List<ArtifactSummary> harvestSummaries(List<string> paths)
+        List<ArtifactSummary> harvestSummaries(List<string> paths)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -836,7 +836,10 @@ namespace Hl7.Fhir.Specification.Source
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = _summaryGenerator.Generate(filePath, harvesters);
+                    // [WMR 20190304] Inject INavigatorStream factory method with custom configuration settings
+                    // Always use the current Xml/Json parser settings
+                    var factory = GetNavigatorStreamFactory();
+                    var summaries = _summaryGenerator.Generate(filePath, factory.Create, harvesters);
 
                     // [WMR 20180423] Generate may return null, e.g. if specified file has unknown extension
                     if (summaries != null)
@@ -915,14 +918,11 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             // Always use the current Xml/Json parser settings
-            var settings = _settings;
-            var factory = _navigatorFactory;
-            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
-            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
+            var factory = GetNavigatorStreamFactory();
 
             // Also use the current PoCo parser settings
             var pocoSettings = PocoBuilderSettings.CreateDefault();
-            settings.ParserSettings?.CopyTo(pocoSettings);
+            _settings.ParserSettings?.CopyTo(pocoSettings);
 
             T result = null;
 
@@ -949,6 +949,16 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             return result;
+        }
+
+        /// <summary>Return <see cref="ConfigurableNavigatorStreamFactory"/> instance, updated with current Xml/Json parser settings.</summary>
+        ConfigurableNavigatorStreamFactory GetNavigatorStreamFactory()
+        {
+            var settings = _settings;
+            var factory = _navigatorFactory;
+            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
+            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
+            return factory;
         }
 
         #endregion

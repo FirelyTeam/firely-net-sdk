@@ -337,5 +337,49 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public void TestSummarizeAnonymousResources()
+        {
+            // Parse anonymous resources & bundles entries (w/o ResourceId)
+            string path = @"TestData\snapshot-test\Nictiz";
+
+            Console.WriteLine("Extracting summaries from path: " + path);
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
+            {
+                IncludeSubDirectories = true,
+                Mask = "*.xml|*.json",
+                // Enable PermissiveParsing to include anonymous resources w/o ResourceId
+                // Note: must inject all desired settings into ctor; child classes clone the relevant subsettings
+                // XmlNavigatorStream does not "see" updates to DirectorySource.XmlParseSettings
+                XmlParserSettings = new FhirXmlParsingSettings() { PermissiveParsing = true },
+                JsonParserSettings = new FhirJsonParsingSettings() { PermissiveParsing = true }
+            });
+
+            var summaries = dirSource.ListSummaries().ToList();
+            Debug.Print($"Found {summaries.Count} artifacts:");
+            foreach (var summary in summaries)
+            {
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+            }
+
+            // Expecting *all* artifacts to be recognized, including entries w/o ResourceId
+            var UnknownArtefacts = summaries.Where(s => s.ResourceType is null);
+            Console.WriteLine("Unrecognized artefacts:");
+            foreach (var summary in UnknownArtefacts)
+            {
+                Console.WriteLine(Path.GetFileName(summary.Origin) + (summary.IsFaulted ? " - " + summary.Error?.Message : ""));
+            }
+            Assert.IsTrue(!UnknownArtefacts.Any());
+
+            // Expecting to find some artifacts w/o ResourceId
+            var AnonymousArtefacts = summaries.Where(s => s.ResourceUri is null);
+            Console.WriteLine("Anonymous artefacts:");
+            foreach (var summary in AnonymousArtefacts)
+            {
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+            }
+            Assert.AreEqual(6, AnonymousArtefacts.Count());
+        }
+
     }
 }

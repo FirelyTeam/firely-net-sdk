@@ -14,6 +14,11 @@ using System.IO;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Delegate to create an <see cref="INavigatorStream"/> instance for the specified file path specification.</summary>
+    /// <param name="filePath">The full path to a FHIR resource.</param>
+    /// <returns>An <see cref="INavigatorStream"/> instance, or <c>null</c> if the file format is not recognized.</returns>
+    public delegate INavigatorStream NavigatorStreamFactory(string filePath);
+
     /// <summary>
     /// Factory to create new <see cref="INavigatorStream"/> instances for navigating
     /// serialized resources, independent of the underlying resource serialization format.

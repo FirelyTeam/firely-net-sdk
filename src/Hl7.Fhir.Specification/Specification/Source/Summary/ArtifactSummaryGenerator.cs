@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -115,6 +116,8 @@ namespace Hl7.Fhir.Specification.Summary
             return Generate(filePath, ConformanceHarvesters);
         }
 
+        // [WMR 20190304] For backwards compatibility
+
         /// <summary>
         /// Generate a list of artifact summary information for a resource file on disk,
         /// using the specified list of <see cref="ArtifactSummaryHarvester"/> instances.
@@ -138,6 +141,34 @@ namespace Hl7.Fhir.Specification.Summary
         /// </remarks>
         public List<ArtifactSummary> Generate(
             string filePath,
+            params ArtifactSummaryHarvester[] harvesters)
+            => Generate(filePath, DefaultNavigatorStreamFactory.Create, harvesters);
+
+        /// <summary>
+        /// Generate a list of artifact summary information for a resource file on disk,
+        /// using the specified list of <see cref="ArtifactSummaryHarvester"/> instances.
+        /// <para>
+        /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
+        /// returns a list of summaries for all resource entries contained in the bundle.
+        /// </para>
+        /// </summary>
+        /// <param name="filePath">The file path of the target artifact (or the containing Bundle).</param>
+        /// <param name="navigatorStreamFactory">Function to create an <see cref="INavigatorStream"/> instance for the specified file path.</param>
+        /// <param name="harvesters">
+        /// A list of <see cref="ArtifactSummaryHarvester"/> delegates that the
+        /// generator calls to harvest summary information from each artifact.
+        /// If the harvester list equals <c>null</c> or empty, then the generator will
+        /// harvest only the common default summary properties.
+        /// </param>
+        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </remarks>
+        public List<ArtifactSummary> Generate(
+            string filePath,
+            NavigatorStreamFactory navigatorStreamFactory,
             params ArtifactSummaryHarvester[] harvesters)
         {
             List<ArtifactSummary> result = null;
@@ -170,7 +201,11 @@ namespace Hl7.Fhir.Specification.Summary
                 }
 
                 // Factory returns null for unknown file formats
-                navStream = DefaultNavigatorStreamFactory.Create(filePath);
+                // [WMR 20190304] Allow DirectorySource to inject ConfigurableNavigatorStreamFactory instance
+                //navStream = DefaultNavigatorStreamFactory.Create(filePath);
+                navStream = navigatorStreamFactory?.Invoke(filePath)
+                         ?? DefaultNavigatorStreamFactory.Create(filePath);
+
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }
             catch (Exception ex)

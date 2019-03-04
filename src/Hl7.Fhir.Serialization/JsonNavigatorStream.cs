@@ -176,25 +176,61 @@ namespace Hl7.Fhir.Serialization
             throwIfDisposed();
             if (ResourceType == null) return false;
 
+            var reader = _reader;
             if (IsBundle)
             {
-                while (_reader.Read())
+                while (reader.Read())
                 {
-                    if (_reader.TokenType == JsonToken.StartObject && _reader.Path.StartsWith("entry["))
+                    if (reader.TokenType == JsonToken.StartObject && reader.Path.StartsWith("entry["))
                     {
-                        if (skipTo(_reader, "fullUrl"))
+#if true
+                        // [WMR 20190304] #890 Also return entries with missing fullUrl property
+                        string entryUrl = null;
+                        while (reader.Read())
                         {
-                            var entryUrl = _reader.ReadAsString();
+                            if (reader.TokenType == JsonToken.PropertyName)
+                            {
+                                if (reader.Value.Equals("fullUrl"))
+                                {
+                                    entryUrl = reader.ReadAsString();
+                                }
+                                else if (reader.Value.Equals("resource"))
+                                {
+                                    // To be on the safe side, only include anonymous
+                                    // resources w/o id if PermissiveParsing equals true
+                                    if (entryUrl is null && !ParserSettings.PermissiveParsing)
+                                    {
+                                        return false;
+                                    }
+                                    if (fullUrl is null || fullUrl == entryUrl)
+                                    {
+                                        if (reader.Read())
+                                        {
+                                            var resourceNode = (JObject)JObject.ReadFrom(reader);
+                                            _current = (resourceNode, entryUrl);
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+#else
+                        // [WMR 20190304] Original logic skips entries w/o fullUrl
+
+                        if (skipTo(reader, "fullUrl"))
+                        {
+                            var entryUrl = reader.ReadAsString();
                             if (entryUrl != null && (fullUrl == null || entryUrl == fullUrl))
                             {
-                                if (skipTo(_reader, "resource") && _reader.Read())
+                                if (skipTo(reader, "resource") && reader.Read())
                                 {
-                                    var resourceNode = (JObject)JObject.ReadFrom(_reader);
+                                    var resourceNode = (JObject)JObject.ReadFrom(reader);
                                     _current = (resourceNode, entryUrl);
                                     return true;
                                 }
                             }
                         }
+#endif
                     }
                 }
 
@@ -203,9 +239,9 @@ namespace Hl7.Fhir.Serialization
 
             else
             {
-                if (_reader.TokenType != JsonToken.EndObject)
+                if (reader.TokenType != JsonToken.EndObject)
                 {
-                    var resource = (JObject)JObject.ReadFrom(_reader);
+                    var resource = (JObject)JObject.ReadFrom(reader);
 
                     if (resource != null)
                     {
@@ -224,8 +260,12 @@ namespace Hl7.Fhir.Serialization
                             }
                         }
 
-                        if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
+                        // [WMR 20190304] return instances w/o Resource Id
+                        //if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
+                        if (fullUrl is null || canonicalUrl == fullUrl)
+                        {
                             _current = (resource, canonicalUrl);
+                        }
                         return true;
                     }
                 }
@@ -271,7 +311,7 @@ namespace Hl7.Fhir.Serialization
         /// <value>Returns a (non-<c>null</c>) <see cref="FhirJsonParsingSettings"/> instance.</value>
         public FhirJsonParsingSettings ParserSettings { get; }
 
-        #region private helpers
+#region private helpers
 
         string scanForResourceType(JsonReader reader) => skipTo(reader, "resourceType") ? reader.ReadAsString() : null;
 
@@ -291,7 +331,7 @@ namespace Hl7.Fhir.Serialization
             if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
         }
 
-        #endregion
+#endregion
 
     }
 }
