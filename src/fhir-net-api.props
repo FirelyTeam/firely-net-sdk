@@ -7,10 +7,10 @@
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2013-2019 Firely.  Contains materials (C) HL7 International</Copyright>
-    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ewoutkramer/fhir-net-api</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/FirelyTeam/fhir-net-api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FirelyTeam/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://docs.simplifier.net/fhirnetapi/releasenotes.html</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
