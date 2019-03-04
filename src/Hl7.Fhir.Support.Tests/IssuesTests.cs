@@ -9,7 +9,7 @@ namespace Hl7.Fhir.Support.Tests.Model
     public class IssuesTests
     {
         /// <summary>
-        /// See https://github.com/ewoutkramer/fhir-net-api/issues/474
+        /// See https://github.com/FirelyTeam/fhir-net-api/issues/474
         /// </summary>
         [TestMethod]
         public void Issue474StartdateIs0001_01_01()
