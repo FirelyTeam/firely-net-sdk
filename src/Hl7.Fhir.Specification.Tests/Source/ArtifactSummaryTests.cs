@@ -337,5 +337,23 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public void TestListSummariesWithExcludeFilter()
+        {
+            string path = "TestData";
+
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
+            {
+                IncludeSubDirectories = true,
+                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/" }
+            });
+
+            var summaries = dirSource.ListSummaries().ToList();
+            Assert.IsNotNull(summaries);
+
+            // Verify invalid files in folder 'grahame-validation-examples' are excluded
+            var errors = dirSource.ListSummaryErrors().ToList();
+            Assert.AreEqual(0, errors.Count);
+        }
     }
 }

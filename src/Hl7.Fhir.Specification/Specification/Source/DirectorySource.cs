@@ -123,7 +123,11 @@ namespace Hl7.Fhir.Specification.Source
         // Internal ctor
         DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
-            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
+            //ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            if (contentDirectory is null) { throw Error.ArgumentNull(nameof(contentDirectory)); }
+            ContentDirectory = Path.GetFullPath(contentDirectory);
+
             // [WMR 20171023] Clone specified settings to prevent shared state
             _settings = settings != null 
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
@@ -137,7 +141,7 @@ namespace Hl7.Fhir.Specification.Source
             Refresh();
         }
 
-        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        /// <summary>Returns the full path to the content directory.</summary>
         public string ContentDirectory { get; }
 
         /// <summary>
