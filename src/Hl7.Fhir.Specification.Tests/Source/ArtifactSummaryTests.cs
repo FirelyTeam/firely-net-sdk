@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesTypesJson()
         {
-            string path = Path.Combine("TestData", "profiles-types.json");
+            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-types.json"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            string path = Path.Combine("TestData", "profiles-resources.xml");
+            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-resources.xml"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
@@ -238,6 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
+            path = Path.GetFullPath(path);
             var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
@@ -337,11 +338,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-        [TestMethod]
+        // [WMR 20190305] Belongs to pull request #890
+        [TestMethod, Ignore]
         public void TestSummarizeAnonymousResources()
         {
             // Parse anonymous resources & bundles entries (w/o ResourceId)
-            string path = @"TestData\summary-test";
+            string path = Path.GetFullPath(@"TestData\summary-test");
 
             Console.WriteLine("Extracting summaries from path: " + path);
             var dirSource = new DirectorySource(path, new DirectorySourceSettings()
