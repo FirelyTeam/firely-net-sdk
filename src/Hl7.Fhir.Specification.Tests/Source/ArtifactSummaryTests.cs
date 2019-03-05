@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSummarizeAnonymousResources()
         {
             // Parse anonymous resources & bundles entries (w/o ResourceId)
-            string path = @"TestData\snapshot-test\Nictiz";
+            string path = @"TestData\summary-test";
 
             Console.WriteLine("Extracting summaries from path: " + path);
             var dirSource = new DirectorySource(path, new DirectorySourceSettings()

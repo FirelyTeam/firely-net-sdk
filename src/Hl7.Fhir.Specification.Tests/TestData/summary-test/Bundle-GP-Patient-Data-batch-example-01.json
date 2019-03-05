@@ -5,7 +5,6 @@
   "total": 71,
   "entry": [
     {
-      "DEBUG_fullUrl": "urn:oid:2.16.840.1.113883.2.4.6.6.90000258.4.6.525",
       "resource": {
         "resourceType": "EpisodeOfCare",
         "meta": {
