@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Serialization
             var shadows = makeList(shadow, out var wasArrayShadow);
             bool isArrayElement = wasArrayMain | wasArrayShadow;
 
-            int length = Math.Max(mains.Length, shadows.Length);
+            int length = Math.Max(mains.Count, shadows.Count);
 
             for (var index = 0; index < length; index++)
             {
@@ -263,9 +263,9 @@ namespace Hl7.Fhir.Serialization
                 if (result != null) yield return result;
             }
 
-            JToken at(JToken[] list, int i) => list.Length > i ? list[i] : null;
+            JToken at(IList<JToken> list, int i) => list.Count > i ? list[i] : null;
 
-            JToken[] makeList(JProperty prop, out bool wasArray)
+            IList<JToken> makeList(JProperty prop, out bool wasArray)
             {
                 wasArray = false;
 
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Serialization
                 else if (prop.Value is JArray array)
                 {
                     wasArray = true;
-                    return array.ToArray();
+                    return array;
                 }
                 else
                     return new[] { prop.Value };
@@ -381,6 +381,8 @@ namespace Hl7.Fhir.Serialization
 
             object checkArrayUse(ITypedElement nav, IExceptionSource ies, object _)
             {
+                if (_settings.PermissiveParsing) return null;
+
                 var sdSummary = nav.Definition;
                 var serializationDetails = nav.GetJsonSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;

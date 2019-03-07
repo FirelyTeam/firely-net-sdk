@@ -21,7 +21,7 @@ namespace Hl7.Fhir.ElementModel
     internal class ElementDefinitionSummaryCache : Dictionary<string, IElementDefinitionSummary>
     {
         public static ElementDefinitionSummaryCache ForType(IStructureDefinitionSummary type)
-            => new ElementDefinitionSummaryCache(type.GetElements().ToDictionary(c => c.ElementName));
+            => new ElementDefinitionSummaryCache(type.GetElements());
 
         public static ElementDefinitionSummaryCache Empty = new ElementDefinitionSummaryCache();
 
@@ -29,8 +29,7 @@ namespace Hl7.Fhir.ElementModel
         {
             if (rootInfo == null) throw new ArgumentNullException(nameof(rootInfo));
 
-            return new ElementDefinitionSummaryCache(new Dictionary<string, IElementDefinitionSummary>
-                { { rootInfo.ElementName, rootInfo } });
+            return new ElementDefinitionSummaryCache(new[] { rootInfo });
         }
 
         public bool TryGetBySuffixedName(string name, out IElementDefinitionSummary info)
@@ -48,11 +47,12 @@ namespace Hl7.Fhir.ElementModel
             return info != null;
         }
 
-        private ElementDefinitionSummaryCache() : base(new Dictionary<string, IElementDefinitionSummary>())
+        private ElementDefinitionSummaryCache() : base()
         {
         }
 
-        private ElementDefinitionSummaryCache(IDictionary<string, IElementDefinitionSummary> elements) : base(elements)
+        private ElementDefinitionSummaryCache(IEnumerable<IElementDefinitionSummary> elements) 
+            : base(elements.ToDictionary( eds => eds.ElementName))
         {
         }
     }

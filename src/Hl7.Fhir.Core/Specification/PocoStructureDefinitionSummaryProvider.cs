@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification
 {
     public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
-        public IStructureDefinitionSummary Provide(Type type)
+        public static IStructureDefinitionSummary Provide(Type type)
         {
             var classMapping = GetMappingForType(type);
             if (classMapping == null) return null;
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification
     }
 
 
-    internal struct PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
+    public class PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ClassMapping _classMapping;
 
@@ -74,6 +74,10 @@ namespace Hl7.Fhir.Specification
         public IEnumerable<IElementDefinitionSummary> GetElements() =>
             _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement).Select(pm =>
             (IElementDefinitionSummary)new PocoElementSerializationInfo(pm));
+
+        public IElementDefinitionSummary GetElement(string name) =>
+            _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement && pm.Name == name)
+                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();                
     }
 
     internal struct PocoTypeReferenceInfo : IStructureDefinitionReference
@@ -113,8 +117,8 @@ namespace Hl7.Fhir.Specification
 
             if (pm.IsBackboneElement)
             {
-                var mapping = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.ImplementingType);
-                return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(mapping) };
+                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ImplementingType);
+                return new ITypeSerializationInfo[] { info };
             }
             else
             {              

@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser().Parse<Resource>(xml);
+                var resource = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<Resource>(xml);
 
                 var r2 = resource.DeepCopy();
                 Assert.IsTrue(resource.Matches(r2 as Resource), "Serialization of " + inputFile + " did not match output - Matches test");
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser().Parse<Resource>(json);
+                var resource = new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).Parse<Resource>(json);
                 var xml = new FhirXmlSerializer().SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var nav = XmlParsingHelpers.ParseToTypedElement(xml, provider);
+                var nav = XmlParsingHelpers.ParseToTypedElement(xml, provider, new FhirXmlParsingSettings { PermissiveParsing = true });
                 var json = nav.ToJson();
                 File.WriteAllText(outputFile, json);
             }
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var json = File.ReadAllText(inputFile);
                 var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
-                    settings: new FhirJsonParsingSettings { AllowJsonComments = true } );
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }
