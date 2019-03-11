@@ -53,9 +53,7 @@ namespace Hl7.Fhir.Specification.Source
             ZipPath = zipPath;
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
-            settings = settings.Clone();
-            settings.IncludeSubDirectories = false;
-            _settings = settings;
+            _settings = settings.Clone();
             _lazySource = new Lazy<DirectorySource>(createSource);
         }
 
