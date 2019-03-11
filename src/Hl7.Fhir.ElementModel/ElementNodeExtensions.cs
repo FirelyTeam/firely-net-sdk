@@ -78,7 +78,7 @@ namespace Hl7.Fhir.ElementModel
         public static T Annotation<T>(this ITypedElement nav) where T : class =>
             nav is IAnnotated ann ? ann.Annotation<T>() : null;
 
-        [Obsolete("IElementNavigator should be replaced by the IElementNode interface, which is returned by the parsers")]
+        [Obsolete("IElementNavigator should be replaced by the ITypedElement interface, which is returned by the parsers")]
         public static IElementNavigator ToElementNavigator(this ITypedElement node) => new TypedElementToElementNavAdapter(node);
 
         public static ISourceNode ToSourceNode(this ITypedElement node) => new TypedElementToSourceNodeAdapter(node);
