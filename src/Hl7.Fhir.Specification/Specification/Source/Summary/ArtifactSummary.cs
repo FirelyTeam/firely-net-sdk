@@ -135,6 +135,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
 
+        /// <summary>Returns <c>true</c> if the summary describes a Bundle entry resource.</summary>
+        public bool IsBundleEntry => properties.IsBundleEntry();
+
         #endregion
 
         #region IEnumerable

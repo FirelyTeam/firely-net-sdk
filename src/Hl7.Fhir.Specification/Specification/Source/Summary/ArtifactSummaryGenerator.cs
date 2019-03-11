@@ -288,6 +288,7 @@ namespace Hl7.Fhir.Specification.Summary
                             properties.SetPosition(navStream.Position);
                             properties.SetTypeName(current.GetResourceTypeIndicator());
                             properties.SetResourceUri(navStream.Position);
+                            properties.SetIsBundleEntry(navStream.IsBundle);
 
                             // Allow caller to modify/enrich harvested properties
                             customPropertyInitializer?.Invoke(properties);
