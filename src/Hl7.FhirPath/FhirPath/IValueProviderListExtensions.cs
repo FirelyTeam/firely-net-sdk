@@ -11,31 +11,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
-using Hl7.FhirPath.Functions;
 
 namespace Hl7.FhirPath
 {
     internal static class IValueProviderListExtensions
     {
-        public static IEnumerable<IElementNavigator> JustElements(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<ITypedElement> JustElements(this IEnumerable<ITypedElement> focus)
         {
             // todo: this is a tautology now --mh
-            return focus.OfType<IElementNavigator>();
+            return focus.OfType<ITypedElement>();
         }
 
-
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> focus)
         {
             // todo: this is now a tautology --mh
             // return focus.JustElements().SelectMany(node => node.Children());
             return focus.SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<IElementNavigator> Descendants(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<ITypedElement> Descendants(this IEnumerable<ITypedElement> focus)
         {
             return focus.JustElements().SelectMany(node => node.Descendants());
         }
- 
     }
 }
 

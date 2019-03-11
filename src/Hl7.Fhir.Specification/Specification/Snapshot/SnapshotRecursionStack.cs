@@ -142,11 +142,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public int RecursionDepth => _stack.Count;
 
-#if DOTNETFW
         void validateStackIsNotEmpty([CallerMemberName] string memberName = "")
-#else
-        void validateStackIsNotEmpty(string memberName)
-#endif
         {
             if (_stack == null || _stack.Count == 0)
             {

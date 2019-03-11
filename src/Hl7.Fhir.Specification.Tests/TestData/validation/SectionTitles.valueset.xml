@@ -17,8 +17,8 @@
   <name value="MainBundle Section title codes"/>
   <status value="draft"/>
   <experimental value="true"/>
-  <publisher value="Furore Health Informatics"/>
   <date value="2016-10-20T17:32:00+02:00" />
+  <publisher value="Furore Health Informatics"/>
   <description value=" This is a demo valueset with codes for the sections in the MainBundle example."/>
   <!-- Add some codes of our own -->
   <!-- And compose in some additional codes for e.g. the vital signs section -->

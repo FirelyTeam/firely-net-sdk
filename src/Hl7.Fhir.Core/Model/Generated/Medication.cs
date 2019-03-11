@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,33 +56,33 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Medication"; } }
         
         /// <summary>
-        /// A coded concept defining if the medication is in active use.
+        /// Medication Status Codes
         /// (url: http://hl7.org/fhir/ValueSet/medication-status)
         /// </summary>
-        [FhirEnumeration("MedicationStatus")]
-        public enum MedicationStatus
+        [FhirEnumeration("MedicationStatusCodes")]
+        public enum MedicationStatusCodes
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
             /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/medication-status"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
             /// </summary>
-            [EnumLiteral("inactive", "http://hl7.org/fhir/medication-status"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/medication-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
-        [FhirType("IngredientComponent")]
+        [FhirType("IngredientComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -140,15 +140,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of ingredient present
             /// </summary>
-            [FhirElement("amount", Order=60)]
+            [FhirElement("strength", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Amount
+            public Hl7.Fhir.Model.Ratio Strength
             {
-                get { return _Amount; }
-                set { _Amount = value; OnPropertyChanged("Amount"); }
+                get { return _Strength; }
+                set { _Strength = value; OnPropertyChanged("Strength"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _Amount;
+            private Hl7.Fhir.Model.Ratio _Strength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
+                    if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
                     return dest;
                 }
                 else
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Item, otherT.Item)) return false;
                 if( !DeepComparable.Matches(IsActiveElement, otherT.IsActiveElement)) return false;
-                if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
                 
                 return true;
             }
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 if( !DeepComparable.IsExactly(IsActiveElement, otherT.IsActiveElement)) return false;
-                if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
                 
                 return true;
             }
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Item != null) yield return Item;
                     if (IsActiveElement != null) yield return IsActiveElement;
-                    if (Amount != null) yield return Amount;
+                    if (Strength != null) yield return Strength;
                 }
             }
 
@@ -216,9 +216,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (IsActiveElement != null) yield return new ElementValue("isActive", false, IsActiveElement);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (IsActiveElement != null) yield return new ElementValue("isActive", IsActiveElement);
+                    if (Strength != null) yield return new ElementValue("strength", Strength);
                 }
             }
 
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BatchComponent")]
+        [FhirType("BatchComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -297,38 +297,6 @@ namespace Hl7.Fhir.Model
                 }
             }
             
-            /// <summary>
-            /// Identifier assigned to a drug at the time of manufacture
-            /// </summary>
-            [FhirElement("serialNumber", Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString SerialNumberElement
-            {
-                get { return _SerialNumberElement; }
-                set { _SerialNumberElement = value; OnPropertyChanged("SerialNumberElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _SerialNumberElement;
-            
-            /// <summary>
-            /// Identifier assigned to a drug at the time of manufacture
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string SerialNumber
-            {
-                get { return SerialNumberElement != null ? SerialNumberElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        SerialNumberElement = null; 
-                    else
-                        SerialNumberElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("SerialNumber");
-                }
-            }
-            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BatchComponent;
@@ -338,7 +306,6 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
                     if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
-                    if(SerialNumberElement != null) dest.SerialNumberElement = (Hl7.Fhir.Model.FhirString)SerialNumberElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -358,7 +325,6 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
                 if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
-                if( !DeepComparable.Matches(SerialNumberElement, otherT.SerialNumberElement)) return false;
                 
                 return true;
             }
@@ -371,7 +337,6 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
                 if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
-                if( !DeepComparable.IsExactly(SerialNumberElement, otherT.SerialNumberElement)) return false;
                 
                 return true;
             }
@@ -385,7 +350,6 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (LotNumberElement != null) yield return LotNumberElement;
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
-                    if (SerialNumberElement != null) yield return SerialNumberElement;
                 }
             }
 
@@ -395,9 +359,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
-                    if (SerialNumberElement != null) yield return new ElementValue("serialNumber", false, SerialNumberElement);
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
                 }
             }
 
@@ -406,9 +369,23 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Business identifier for this medication
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=90)]
+        [FhirElement("code", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -421,15 +398,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Medication.MedicationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Medication.MedicationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error
@@ -437,7 +414,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Medication.MedicationStatus? Status
+        public Hl7.Fhir.Model.Medication.MedicationStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -445,7 +422,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Medication.MedicationStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -453,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=110)]
+        [FhirElement("manufacturer", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -468,7 +445,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// powder | tablets | capsule +
         /// </summary>
-        [FhirElement("form", Order=120)]
+        [FhirElement("form", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Form
         {
@@ -481,20 +458,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of drug in package
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=130)]
+        [FhirElement("amount", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Amount
+        public Hl7.Fhir.Model.Ratio Amount
         {
             get { return _Amount; }
             set { _Amount = value; OnPropertyChanged("Amount"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Amount;
+        private Hl7.Fhir.Model.Ratio _Amount;
         
         /// <summary>
         /// Active or inactive ingredient
         /// </summary>
-        [FhirElement("ingredient", Order=140)]
+        [FhirElement("ingredient", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Medication.IngredientComponent> Ingredient
@@ -508,7 +485,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("batch", Order=150)]
+        [FhirElement("batch", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Medication.BatchComponent Batch
         {
@@ -532,11 +509,12 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Medication.MedicationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Medication.IngredientComponent>(Ingredient.DeepCopy());
                 if(Batch != null) dest.Batch = (Hl7.Fhir.Model.Medication.BatchComponent)Batch.DeepCopy();
                 return dest;
@@ -556,6 +534,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
@@ -573,6 +552,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
@@ -590,6 +570,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
 				if (StatusElement != null) yield return StatusElement;
 				if (Manufacturer != null) yield return Manufacturer;
@@ -606,13 +587,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (Form != null) yield return new ElementValue("form", false, Form);
-                if (Amount != null) yield return new ElementValue("amount", false, Amount);
-                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
-                if (Batch != null) yield return new ElementValue("batch", false, Batch);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (Form != null) yield return new ElementValue("form", Form);
+                if (Amount != null) yield return new ElementValue("amount", Amount);
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                if (Batch != null) yield return new ElementValue("batch", Batch);
             }
         }
 

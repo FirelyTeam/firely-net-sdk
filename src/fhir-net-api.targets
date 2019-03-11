@@ -1,10 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="CleanBinObj" AfterTargets="Clean">
-    <!-- <RemoveDir Directories="$(OutputPath);$(IntermediateOutputPath)" /> -->
-    <RemoveDir Directories="$(MSBuildProjectDirectory)\bin;$(MSBuildProjectDirectory)\obj" />
-  </Target>
-
+<!-- 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <PropertyGroup>
       <PackageOutputDirectory>..\..\dist</PackageOutputDirectory>
@@ -12,6 +8,7 @@
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(PackageOutputDirectory)" />
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).symbols.nupkg" DestinationFolder="$(PackageOutputDirectory)" />
   </Target>
+-->
 
     <Choose>  
         <When Condition="$(APPVEYOR)=='True' ">
@@ -20,12 +17,14 @@
             <TestCaseFilter>/TestCaseFilter:"TestCategory!=IntegrationTest&amp;TestCategory!=FhirClient"</TestCaseFilter>
           </PropertyGroup>
         </When>
+        <!--
         <Otherwise>
           <PropertyGroup>
             <VSTestLogger>/logger:Console</VSTestLogger>
             <TestCaseFilter />
           </PropertyGroup>
         </Otherwise>
+        -->
     </Choose>
 
   <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">
@@ -109,4 +108,4 @@
     </Task>
   </UsingTask>
 
-  </Project>
+</Project>

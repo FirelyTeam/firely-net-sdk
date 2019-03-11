@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -91,12 +91,12 @@
           </xs:element>
           <xs:element name="qualification" type="Practitioner.Qualification" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Qualifications obtained by training and certification.</xs:documentation>
+              <xs:documentation xml:lang="en">The official certifications, training, and licenses that authorize or otherwise pertain to the provision of care by the practitioner.  For example, a medical license issued by a medical board authorizing the practitioner to practice medicine within a certian locality.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="communication" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A language the practitioner is able to use in patient communication.</xs:documentation>
+              <xs:documentation xml:lang="en">A language the practitioner can use in patient communication.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

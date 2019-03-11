@@ -11,7 +11,7 @@ using System.Linq;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Parser;
 using Hl7.FhirPath.Expressions;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 
 using Xunit;
 using Hl7.Fhir.Model.Primitives;

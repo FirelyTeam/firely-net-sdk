@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-#if NET_XSD_SCHEMA
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -240,7 +239,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("image/gif", result.Value);
 
             // Test special text node of Binary
-            result = nav.SelectSingleNode("/f:Patient/f:contained/f:Binary/text()", mgr);
+            result = nav.SelectSingleNode("/f:Patient/f:contained/f:Binary/f:data/@value", mgr);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Value.StartsWith("R0lGODlhEwARAPcAAAAAAAAA"));
         }
@@ -276,10 +275,9 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static JsonXPathNavigator buildNav()
         {
-            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "TestPatient.json"));
             var reader = new StringReader(json);
             return new JsonXPathNavigator(new JsonTextReader(reader));
         }
     }
 }
-#endif

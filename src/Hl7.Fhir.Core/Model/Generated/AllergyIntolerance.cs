@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,66 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
-        /// <summary>
-        /// The clinical status of the allergy or intolerance.
-        /// (url: http://hl7.org/fhir/ValueSet/allergy-clinical-status)
-        /// </summary>
-        [FhirEnumeration("AllergyIntoleranceClinicalStatus")]
-        public enum AllergyIntoleranceClinicalStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-clinical-status)
-            /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/allergy-clinical-status"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-clinical-status)
-            /// </summary>
-            [EnumLiteral("inactive", "http://hl7.org/fhir/allergy-clinical-status"), Description("Inactive")]
-            Inactive,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-clinical-status)
-            /// </summary>
-            [EnumLiteral("resolved", "http://hl7.org/fhir/allergy-clinical-status"), Description("Resolved")]
-            Resolved,
-        }
-
-        /// <summary>
-        /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified substance.
-        /// (url: http://hl7.org/fhir/ValueSet/allergy-verification-status)
-        /// </summary>
-        [FhirEnumeration("AllergyIntoleranceVerificationStatus")]
-        public enum AllergyIntoleranceVerificationStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-verification-status)
-            /// </summary>
-            [EnumLiteral("unconfirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Unconfirmed")]
-            Unconfirmed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-verification-status)
-            /// </summary>
-            [EnumLiteral("confirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Confirmed")]
-            Confirmed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-verification-status)
-            /// </summary>
-            [EnumLiteral("refuted", "http://hl7.org/fhir/allergy-verification-status"), Description("Refuted")]
-            Refuted,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-verification-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/allergy-verification-status"), Description("Entered In Error")]
-            EnteredInError,
-        }
-
         /// <summary>
         /// Identification of the underlying physiological mechanism for a Reaction Risk.
         /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-type)
@@ -137,7 +77,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Category of an identified substance.
+        /// Category of an identified substance associated with allergies or intolerances.
         /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCategory")]
@@ -223,7 +163,7 @@ namespace Hl7.Fhir.Model
             Severe,
         }
 
-        [FhirType("ReactionComponent")]
+        [FhirType("ReactionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -462,13 +402,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
-                    foreach (var elem in Manifestation) { if (elem != null) yield return new ElementValue("manifestation", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (OnsetElement != null) yield return new ElementValue("onset", false, OnsetElement);
-                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                    if (ExposureRoute != null) yield return new ElementValue("exposureRoute", false, ExposureRoute);
-                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                    if (Substance != null) yield return new ElementValue("substance", Substance);
+                    foreach (var elem in Manifestation) { if (elem != null) yield return new ElementValue("manifestation", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (OnsetElement != null) yield return new ElementValue("onset", OnsetElement);
+                    if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
+                    if (ExposureRoute != null) yield return new ElementValue("exposureRoute", ExposureRoute);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 }
             }
 
@@ -495,64 +435,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("clinicalStatus", InSummary=true, Order=100)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus> ClinicalStatusElement
+        public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
         {
-            get { return _ClinicalStatusElement; }
-            set { _ClinicalStatusElement = value; OnPropertyChanged("ClinicalStatusElement"); }
+            get { return _ClinicalStatus; }
+            set { _ClinicalStatus = value; OnPropertyChanged("ClinicalStatus"); }
         }
         
-        private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus> _ClinicalStatusElement;
-        
-        /// <summary>
-        /// active | inactive | resolved
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus? ClinicalStatus
-        {
-            get { return ClinicalStatusElement != null ? ClinicalStatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ClinicalStatusElement = null; 
-                else
-                  ClinicalStatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>(value);
-                OnPropertyChanged("ClinicalStatus");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _ClinicalStatus;
         
         /// <summary>
         /// unconfirmed | confirmed | refuted | entered-in-error
         /// </summary>
         [FhirElement("verificationStatus", InSummary=true, Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus> VerificationStatusElement
+        public Hl7.Fhir.Model.CodeableConcept VerificationStatus
         {
-            get { return _VerificationStatusElement; }
-            set { _VerificationStatusElement = value; OnPropertyChanged("VerificationStatusElement"); }
+            get { return _VerificationStatus; }
+            set { _VerificationStatus = value; OnPropertyChanged("VerificationStatus"); }
         }
         
-        private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus> _VerificationStatusElement;
-        
-        /// <summary>
-        /// unconfirmed | confirmed | refuted | entered-in-error
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus? VerificationStatus
-        {
-            get { return VerificationStatusElement != null ? VerificationStatusElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  VerificationStatusElement = null; 
-                else
-                  VerificationStatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>(value);
-                OnPropertyChanged("VerificationStatus");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _VerificationStatus;
         
         /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
@@ -711,7 +613,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Onset;
         
         /// <summary>
-        /// Date record was first recorded
+        /// Date first version of the resource instance was recorded
         /// </summary>
         [FhirElement("recordedDate", Order=190)]
         [DataMember]
@@ -724,7 +626,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
         
         /// <summary>
-        /// Date record was first recorded
+        /// Date first version of the resource instance was recorded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -747,7 +649,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("recorder", Order=200)]
         [CLSCompliant(false)]
-		[References("Practitioner","Patient","RelatedPerson")]
+		[References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Recorder
         {
@@ -762,7 +664,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("asserter", InSummary=true, Order=210)]
         [CLSCompliant(false)]
-		[References("Patient","RelatedPerson","Practitioner")]
+		[References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
         {
@@ -867,8 +769,8 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(ClinicalStatusElement != null) dest.ClinicalStatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>)ClinicalStatusElement.DeepCopy();
-                if(VerificationStatusElement != null) dest.VerificationStatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>)VerificationStatusElement.DeepCopy();
+                if(ClinicalStatus != null) dest.ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept)ClinicalStatus.DeepCopy();
+                if(VerificationStatus != null) dest.VerificationStatus = (Hl7.Fhir.Model.CodeableConcept)VerificationStatus.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>)TypeElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>(CategoryElement.DeepCopy());
                 if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
@@ -900,8 +802,8 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(ClinicalStatusElement, otherT.ClinicalStatusElement)) return false;
-            if( !DeepComparable.Matches(VerificationStatusElement, otherT.VerificationStatusElement)) return false;
+            if( !DeepComparable.Matches(ClinicalStatus, otherT.ClinicalStatus)) return false;
+            if( !DeepComparable.Matches(VerificationStatus, otherT.VerificationStatus)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(CriticalityElement, otherT.CriticalityElement)) return false;
@@ -926,8 +828,8 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(ClinicalStatusElement, otherT.ClinicalStatusElement)) return false;
-            if( !DeepComparable.IsExactly(VerificationStatusElement, otherT.VerificationStatusElement)) return false;
+            if( !DeepComparable.IsExactly(ClinicalStatus, otherT.ClinicalStatus)) return false;
+            if( !DeepComparable.IsExactly(VerificationStatus, otherT.VerificationStatus)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(CriticalityElement, otherT.CriticalityElement)) return false;
@@ -952,8 +854,8 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (ClinicalStatusElement != null) yield return ClinicalStatusElement;
-				if (VerificationStatusElement != null) yield return VerificationStatusElement;
+				if (ClinicalStatus != null) yield return ClinicalStatus;
+				if (VerificationStatus != null) yield return VerificationStatus;
 				if (TypeElement != null) yield return TypeElement;
 				foreach (var elem in CategoryElement) { if (elem != null) yield return elem; }
 				if (CriticalityElement != null) yield return CriticalityElement;
@@ -976,22 +878,22 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ClinicalStatusElement != null) yield return new ElementValue("clinicalStatus", false, ClinicalStatusElement);
-                if (VerificationStatusElement != null) yield return new ElementValue("verificationStatus", false, VerificationStatusElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                foreach (var elem in CategoryElement) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (CriticalityElement != null) yield return new ElementValue("criticality", false, CriticalityElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (Onset != null) yield return new ElementValue("onset", false, Onset);
-                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
-                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
-                if (Asserter != null) yield return new ElementValue("asserter", false, Asserter);
-                if (LastOccurrenceElement != null) yield return new ElementValue("lastOccurrence", false, LastOccurrenceElement);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ClinicalStatus != null) yield return new ElementValue("clinicalStatus", ClinicalStatus);
+                if (VerificationStatus != null) yield return new ElementValue("verificationStatus", VerificationStatus);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                foreach (var elem in CategoryElement) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (CriticalityElement != null) yield return new ElementValue("criticality", CriticalityElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (Onset != null) yield return new ElementValue("onset", Onset);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+                if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+                if (Asserter != null) yield return new ElementValue("asserter", Asserter);
+                if (LastOccurrenceElement != null) yield return new ElementValue("lastOccurrence", LastOccurrenceElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
             }
         }
 

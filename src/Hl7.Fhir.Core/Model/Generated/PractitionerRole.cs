@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "PractitionerRole"; } }
         
-        [FhirType("AvailableTimeComponent")]
+        [FhirType("AvailableTimeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -261,10 +261,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
-                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
-                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", false, AvailableStartTimeElement);
-                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", false, AvailableEndTimeElement);
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", AvailableEndTimeElement);
                 }
             }
 
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NotAvailableComponent")]
+        [FhirType("NotAvailableComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -387,8 +387,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (During != null) yield return new ElementValue("during", false, During);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (During != null) yield return new ElementValue("during", During);
                 }
             }
 
@@ -751,20 +751,20 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Practitioner != null) yield return new ElementValue("practitioner", false, Practitioner);
-                if (Organization != null) yield return new ElementValue("organization", false, Organization);
-                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
-                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
-                foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", true, elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", true, elem); }
-                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", true, elem); }
-                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
-                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Practitioner != null) yield return new ElementValue("practitioner", Practitioner);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
+                foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", AvailabilityExceptionsElement);
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
             }
         }
 

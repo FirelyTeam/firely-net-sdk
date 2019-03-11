@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             Official,
         }
 
-        [FhirType("AttesterComponent")]
+        [FhirType("AttesterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -286,9 +286,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
-                    if (Party != null) yield return new ElementValue("party", false, Party);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (TimeElement != null) yield return new ElementValue("time", TimeElement);
+                    if (Party != null) yield return new ElementValue("party", Party);
                 }
             }
 
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatesToComponent")]
+        [FhirType("RelatesToComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -414,8 +414,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (Target != null) yield return new ElementValue("target", false, Target);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (Target != null) yield return new ElementValue("target", Target);
                 }
             }
 
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EventComponent")]
+        [FhirType("EventComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -539,9 +539,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", true, elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
                 }
             }
 
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SectionComponent")]
+        [FhirType("SectionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -618,9 +618,24 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ResourceReference> _Author;
             
             /// <summary>
+            /// Who/what the section is about, when it is not about the subject of composition
+            /// </summary>
+            [FhirElement("focus", Order=70)]
+            [CLSCompliant(false)]
+			[References()]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Focus
+            {
+                get { return _Focus; }
+                set { _Focus = value; OnPropertyChanged("Focus"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Focus;
+            
+            /// <summary>
             /// Text summary of the section, for human interpretation
             /// </summary>
-            [FhirElement("text", Order=70)]
+            [FhirElement("text", Order=80)]
             [DataMember]
             public Narrative Text
             {
@@ -633,7 +648,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// working | snapshot | changes
             /// </summary>
-            [FhirElement("mode", Order=80)]
+            [FhirElement("mode", Order=90)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ListMode> ModeElement
             {
@@ -665,7 +680,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Order of section entries
             /// </summary>
-            [FhirElement("orderedBy", Order=90)]
+            [FhirElement("orderedBy", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrderedBy
             {
@@ -678,7 +693,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A reference to data that supports this section
             /// </summary>
-            [FhirElement("entry", Order=100)]
+            [FhirElement("entry", Order=110)]
             [CLSCompliant(false)]
 			[References()]
             [Cardinality(Min=0,Max=-1)]
@@ -694,7 +709,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why the section is empty
             /// </summary>
-            [FhirElement("emptyReason", Order=110)]
+            [FhirElement("emptyReason", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept EmptyReason
             {
@@ -707,7 +722,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested Section
             /// </summary>
-            [FhirElement("section", Order=120)]
+            [FhirElement("section", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -728,6 +743,7 @@ namespace Hl7.Fhir.Model
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
+                    if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
                     if(Text != null) dest.Text = (Narrative)Text.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
                     if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
@@ -754,6 +770,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+                if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
                 if( !DeepComparable.Matches(Text, otherT.Text)) return false;
                 if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
@@ -773,6 +790,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+                if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
                 if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
                 if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
                 if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
@@ -793,6 +811,7 @@ namespace Hl7.Fhir.Model
                     if (TitleElement != null) yield return TitleElement;
                     if (Code != null) yield return Code;
                     foreach (var elem in Author) { if (elem != null) yield return elem; }
+                    if (Focus != null) yield return Focus;
                     if (Text != null) yield return Text;
                     if (ModeElement != null) yield return ModeElement;
                     if (OrderedBy != null) yield return OrderedBy;
@@ -808,15 +827,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                    if (Text != null) yield return new ElementValue("text", false, Text);
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);
-                    foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
-                    if (EmptyReason != null) yield return new ElementValue("emptyReason", false, EmptyReason);
-                    foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", true, elem); }
+                    if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
+                    if (Focus != null) yield return new ElementValue("focus", Focus);
+                    if (Text != null) yield return new ElementValue("text", Text);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (OrderedBy != null) yield return new ElementValue("orderedBy", OrderedBy);
+                    foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
+                    if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
+                    foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", elem); }
                 }
             }
 
@@ -1253,21 +1273,21 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (ConfidentialityElement != null) yield return new ElementValue("confidentiality", false, ConfidentialityElement);
-                foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", true, elem); }
-                if (Custodian != null) yield return new ElementValue("custodian", false, Custodian);
-                foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", true, elem); }
-                foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", true, elem); }
-                foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (ConfidentialityElement != null) yield return new ElementValue("confidentiality", ConfidentialityElement);
+                foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", elem); }
+                if (Custodian != null) yield return new ElementValue("custodian", Custodian);
+                foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", elem); }
+                foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", elem); }
+                foreach (var elem in Section) { if (elem != null) yield return new ElementValue("section", elem); }
             }
         }
 

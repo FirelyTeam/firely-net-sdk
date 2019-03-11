@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CommunicationRequest"; } }
         
-        [FhirType("PayloadComponent")]
+        [FhirType("PayloadComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return new ElementValue("content", false, Content);
+                    if (Content != null) yield return new ElementValue("content", Content);
                 }
             }
 
@@ -373,19 +373,19 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _About;
         
         /// <summary>
-        /// Encounter or episode leading to message
+        /// Encounter created as part of
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=210)]
+        [FhirElement("encounter", InSummary=true, Order=210)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Message payload
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(About != null) dest.About = new List<Hl7.Fhir.Model.ResourceReference>(About.DeepCopy());
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(Payload.DeepCopy());
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(About, otherT.About)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(About, otherT.About)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Medium) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;
 				foreach (var elem in About) { if (elem != null) yield return elem; }
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				foreach (var elem in Payload) { if (elem != null) yield return elem; }
 				if (Occurrence != null) yield return Occurrence;
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
@@ -686,28 +686,28 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
-                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", false, GroupIdentifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", false, DoNotPerformElement);
-                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                foreach (var elem in About) { if (elem != null) yield return new ElementValue("about", true, elem); }
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
-                if (Requester != null) yield return new ElementValue("requester", false, Requester);
-                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
-                if (Sender != null) yield return new ElementValue("sender", false, Sender);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", DoNotPerformElement);
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", elem); }
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                foreach (var elem in About) { if (elem != null) yield return new ElementValue("about", elem); }
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
+                if (Sender != null) yield return new ElementValue("sender", Sender);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }
         }
 

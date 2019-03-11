@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             OnSuccess,
         }
 
-        [FhirType("FocusComponent")]
+        [FhirType("FocusComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -322,10 +322,10 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
-                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (ProfileElement != null) yield return new ElementValue("profile", ProfileElement);
+                    if (MinElement != null) yield return new ElementValue("min", MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", MaxElement);
                 }
             }
 
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AllowedResponseComponent")]
+        [FhirType("AllowedResponseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -448,8 +448,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MessageElement != null) yield return new ElementValue("message", false, MessageElement);
-                    if (Situation != null) yield return new ElementValue("situation", false, Situation);
+                    if (MessageElement != null) yield return new ElementValue("message", MessageElement);
+                    if (Situation != null) yield return new ElementValue("situation", Situation);
                 }
             }
 
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> _AllowedResponse;
         
         /// <summary>
-        /// Canonical URL for a GraphDefinition
+        /// Canonical reference to a GraphDefinition
         /// </summary>
         [FhirElement("graph", Order=320)]
         [Cardinality(Min=0,Max=-1)]
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Canonical> _GraphElement;
         
         /// <summary>
-        /// Canonical URL for a GraphDefinition
+        /// Canonical reference to a GraphDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1225,30 +1225,30 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                foreach (var elem in ReplacesElement) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
-                foreach (var elem in ParentElement) { if (elem != null) yield return new ElementValue("parent", true, elem); }
-                if (Event != null) yield return new ElementValue("event", false, Event);
-                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
-                if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);
-                foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", true, elem); }
-                foreach (var elem in GraphElement) { if (elem != null) yield return new ElementValue("graph", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                foreach (var elem in ReplacesElement) { if (elem != null) yield return new ElementValue("replaces", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                if (BaseElement != null) yield return new ElementValue("base", BaseElement);
+                foreach (var elem in ParentElement) { if (elem != null) yield return new ElementValue("parent", elem); }
+                if (Event != null) yield return new ElementValue("event", Event);
+                if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", ResponseRequiredElement);
+                foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", elem); }
+                foreach (var elem in GraphElement) { if (elem != null) yield return new ElementValue("graph", elem); }
             }
         }
 

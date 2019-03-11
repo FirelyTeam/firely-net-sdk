@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Sprache
+namespace Hl7.FhirPath.Sprache
 {
     /// <summary>
     /// Parsers and combinators.

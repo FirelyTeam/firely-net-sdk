@@ -13,6 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Cannot derive type"));
+                Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("unsupported namespace"));
+                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
             }
         }
 
@@ -107,7 +108,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void AcceptXsiStuffOnRoot()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
-                            "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
+                            "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'><active value='true' /></Patient>";
             var parser = new FhirXmlParser();
 
             // By default, parser will accept xsi: elements
@@ -257,7 +258,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content\r\n" + String.Join("\r\n", errors));
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -287,6 +289,32 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
             Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
+        }
+
+        [TestMethod]
+        public void NarrativeMustBeValidXml()
+        {
+            try
+            {
+                var json =
+                    "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
+                var patient = new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).Parse<Patient>(json);
+
+                Assert.Fail("Should have thrown on invalid Div format");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+            }
+        }
+
+        [TestMethod]
+        public void ParseEmptyContained()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><contained></contained></Patient>";
+            var parser = new FhirXmlParser();
+
+            Assert.ThrowsException<FormatException>(() => parser.Parse<Patient>(xml));
         }
     }
 }

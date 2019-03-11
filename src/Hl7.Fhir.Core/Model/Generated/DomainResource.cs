@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Resource> _Contained;
         
         /// <summary>
-        /// Additional Content defined by implementations
+        /// Additional content defined by implementations
         /// </summary>
         [FhirElement("extension", Order=70)]
         [Cardinality(Min=0,Max=-1)]
@@ -232,10 +232,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Text != null) yield return new ElementValue("text", false, Text);
-                foreach (var elem in Contained) { if (elem != null) yield return new ElementValue("contained", true, elem); }
-                foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", true, elem); }
-                foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", true, elem); }
+                if (Text != null) yield return new ElementValue("text", Text);
+                foreach (var elem in Contained) { if (elem != null) yield return new ElementValue("contained", elem); }
+                foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", elem); }
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", elem); }
             }
         }
 

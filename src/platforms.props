@@ -8,6 +8,7 @@
     <NetStandard15>$(NetStandard14);NET_ASSEMBLY_LOAD_CTX</NetStandard15>
     <!-- [WMR 20170823] TODO: Add feature flag(s) for NetStandard 1.6 ? -->
     <NetStandard16>$(NetStandard15)</NetStandard16>
+    <NetStandard20>$(NetStandard16);NET_XSD_SCHEMA</NetStandard20>
     <NetFramework40>NET_FILESYSTEM</NetFramework40>
     <NetFramework45>$(NetStandard11);NET_REGEX_COMPILE;NET_FILESYSTEM;NET_CONSOLE;NET_THREADPOOL;NET_CRYPTO;NET_WEBSOCK;NET_PROCESS;NET_DRAWING;NET_SYSTEM_WEB;NET_WPF;NET_WINFORMS;NET_WCF;NET_XSD_SCHEMA</NetFramework45>
     <NetFramework451>$(NetStandard12);$(NetFramework45)</NetFramework451>
@@ -16,8 +17,17 @@
     <NetFramework461>$(NetStandard14);$(NetFramework46)</NetFramework461>
     <NetFramework462>$(NetStandard15);$(NetFramework461)</NetFramework462>
     <NetFramework47>$(NetStandard16);$(NetFramework462)</NetFramework47>
+    <NetFramework471>$(NetStandard20);$(NetFramework47)</NetFramework471>
+    <NetFramework472>$(NetStandard20);$(NetFramework471)</NetFramework472>
     <WindowsUP>$(NetStandard13);NET_GPS;NET_XAML</WindowsUP>
     <NetCoreApp10>$(NetStandard15)</NetCoreApp10>
+    <NetCoreApp20>$(NetStandard20)</NetCoreApp20>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard20)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard20)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
     <DefineConstants>$(DefineConstants);$(NetStandard10);NETSTANDARD</DefineConstants>
@@ -40,8 +50,11 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <DefineConstants>$(DefineConstants);$(NetStandard16);NETSTANDARD</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard20);NETSTANDARD</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <DefineConstants>$(DefineConstants);$(NetFramework40);DOTNETFW</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetFramework40);DOTNETFW;NET40</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>$(DefineConstants);$(NetFramework45);DOTNETFW</DefineConstants>
@@ -63,6 +76,12 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <DefineConstants>$(DefineConstants);$(NetFramework47);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework471);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework472);DOTNETFW</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'uap' ">
     <DefineConstants>$(DefineConstants);$(WindowsUP)</DefineConstants>

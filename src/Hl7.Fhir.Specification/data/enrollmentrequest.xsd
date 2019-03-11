@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,12 +74,7 @@
               <xs:documentation xml:lang="en">The practitioner who is responsible for the services rendered to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="organization" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The organization which is responsible for the services rendered to the patient.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="candidate" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Patient Resource.</xs:documentation>
            </xs:annotation>

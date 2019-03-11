@@ -18,10 +18,8 @@ namespace Hl7.Fhir.FhirPath
             {
                 for (int n = 0; n < 10; n++)
                 {
-                    if (item == "Binary" || item == "Bundle" || item == "Parameters")
-                        continue;
                     Type rt = ModelInfo.GetTypeForFhirType(item);
-                    DomainResource dr = (DomainResource)Activator.CreateInstance(rt);
+                    Resource dr = (Resource)Activator.CreateInstance(rt);
                     dr.AddDefaultConstraints();
                     if (dr.InvariantConstraints == null || dr.InvariantConstraints.Count == 0)
                         continue;

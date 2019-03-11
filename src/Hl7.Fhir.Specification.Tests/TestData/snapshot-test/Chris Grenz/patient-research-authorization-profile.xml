@@ -14,8 +14,10 @@
   <kind value="complex-type" />
 
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Patient" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Patient" />
+  </context>
 
   <type value="Extension" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />

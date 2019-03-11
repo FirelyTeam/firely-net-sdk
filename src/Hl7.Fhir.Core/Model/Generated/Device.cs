@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("UdiCarrierComponent")]
+        [FhirType("UdiCarrierComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -410,12 +410,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", false, DeviceIdentifierElement);
-                    if (IssuerElement != null) yield return new ElementValue("issuer", false, IssuerElement);
-                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", false, JurisdictionElement);
-                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", false, CarrierAIDCElement);
-                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", false, CarrierHRFElement);
-                    if (EntryTypeElement != null) yield return new ElementValue("entryType", false, EntryTypeElement);
+                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", DeviceIdentifierElement);
+                    if (IssuerElement != null) yield return new ElementValue("issuer", IssuerElement);
+                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", JurisdictionElement);
+                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", CarrierAIDCElement);
+                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", CarrierHRFElement);
+                    if (EntryTypeElement != null) yield return new ElementValue("entryType", EntryTypeElement);
                 }
             }
 
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DeviceNameComponent")]
+        [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -558,8 +558,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 }
             }
 
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecializationComponent")]
+        [FhirType("SpecializationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -682,8 +682,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemType != null) yield return new ElementValue("systemType", false, SystemType);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (SystemType != null) yield return new ElementValue("systemType", SystemType);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 }
             }
 
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent")]
+        [FhirType("VersionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -823,9 +823,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Component != null) yield return new ElementValue("component", false, Component);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Component != null) yield return new ElementValue("component", Component);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent")]
+        [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -857,16 +857,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Property value as a quantity
             /// </summary>
-            [FhirElement("valueQuanity", Order=50)]
+            [FhirElement("valueQuantity", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Quantity> ValueQuanity
+            public List<Quantity> ValueQuantity
             {
-                get { if(_ValueQuanity==null) _ValueQuanity = new List<Quantity>(); return _ValueQuanity; }
-                set { _ValueQuanity = value; OnPropertyChanged("ValueQuanity"); }
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
             }
             
-            private List<Quantity> _ValueQuanity;
+            private List<Quantity> _ValueQuantity;
             
             /// <summary>
             /// Property value as a code, e.g., NTP4 (synced to NTP)
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(ValueQuanity != null) dest.ValueQuanity = new List<Quantity>(ValueQuanity.DeepCopy());
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
                     if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
                     return dest;
                 }
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(ValueQuanity, otherT.ValueQuanity)) return false;
+                if( !DeepComparable.Matches(ValueQuantity, otherT.ValueQuantity)) return false;
                 if( !DeepComparable.Matches(ValueCode, otherT.ValueCode)) return false;
                 
                 return true;
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(ValueQuanity, otherT.ValueQuanity)) return false;
+                if( !DeepComparable.IsExactly(ValueQuantity, otherT.ValueQuantity)) return false;
                 if( !DeepComparable.IsExactly(ValueCode, otherT.ValueCode)) return false;
                 
                 return true;
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
-                    foreach (var elem in ValueQuanity) { if (elem != null) yield return elem; }
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return elem; }
                     foreach (var elem in ValueCode) { if (elem != null) yield return elem; }
                 }
             }
@@ -948,9 +948,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in ValueQuanity) { if (elem != null) yield return new ElementValue("valueQuanity", true, elem); }
-                    foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in ValueQuantity) { if (elem != null) yield return new ElementValue("valueQuantity", elem); }
+                    foreach (var elem in ValueCode) { if (elem != null) yield return new ElementValue("valueCode", elem); }
                 }
             }
 
@@ -1048,34 +1048,34 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
         
         /// <summary>
-        /// The distinct identification code for a biological product regulated as a device
+        /// The distinct identification string
         /// </summary>
-        [FhirElement("distinctIdentificationCode", Order=140)]
+        [FhirElement("distinctIdentifier", Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DistinctIdentificationCodeElement
+        public Hl7.Fhir.Model.FhirString DistinctIdentifierElement
         {
-            get { return _DistinctIdentificationCodeElement; }
-            set { _DistinctIdentificationCodeElement = value; OnPropertyChanged("DistinctIdentificationCodeElement"); }
+            get { return _DistinctIdentifierElement; }
+            set { _DistinctIdentifierElement = value; OnPropertyChanged("DistinctIdentifierElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _DistinctIdentificationCodeElement;
+        private Hl7.Fhir.Model.FhirString _DistinctIdentifierElement;
         
         /// <summary>
-        /// The distinct identification code for a biological product regulated as a device
+        /// The distinct identification string
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string DistinctIdentificationCode
+        public string DistinctIdentifier
         {
-            get { return DistinctIdentificationCodeElement != null ? DistinctIdentificationCodeElement.Value : null; }
+            get { return DistinctIdentifierElement != null ? DistinctIdentifierElement.Value : null; }
             set
             {
                 if (value == null)
-                  DistinctIdentificationCodeElement = null; 
+                  DistinctIdentifierElement = null; 
                 else
-                  DistinctIdentificationCodeElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("DistinctIdentificationCode");
+                  DistinctIdentifierElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("DistinctIdentifier");
             }
         }
         
@@ -1525,7 +1525,7 @@ namespace Hl7.Fhir.Model
                 if(UdiCarrier != null) dest.UdiCarrier = new List<Hl7.Fhir.Model.Device.UdiCarrierComponent>(UdiCarrier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)StatusElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
-                if(DistinctIdentificationCodeElement != null) dest.DistinctIdentificationCodeElement = (Hl7.Fhir.Model.FhirString)DistinctIdentificationCodeElement.DeepCopy();
+                if(DistinctIdentifierElement != null) dest.DistinctIdentifierElement = (Hl7.Fhir.Model.FhirString)DistinctIdentifierElement.DeepCopy();
                 if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopy();
                 if(ManufactureDateElement != null) dest.ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)ManufactureDateElement.DeepCopy();
                 if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusReason, otherT.StatusReason)) return false;
-            if( !DeepComparable.Matches(DistinctIdentificationCodeElement, otherT.DistinctIdentificationCodeElement)) return false;
+            if( !DeepComparable.Matches(DistinctIdentifierElement, otherT.DistinctIdentifierElement)) return false;
             if( !DeepComparable.Matches(ManufacturerElement, otherT.ManufacturerElement)) return false;
             if( !DeepComparable.Matches(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
             if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusReason, otherT.StatusReason)) return false;
-            if( !DeepComparable.IsExactly(DistinctIdentificationCodeElement, otherT.DistinctIdentificationCodeElement)) return false;
+            if( !DeepComparable.IsExactly(DistinctIdentifierElement, otherT.DistinctIdentifierElement)) return false;
             if( !DeepComparable.IsExactly(ManufacturerElement, otherT.ManufacturerElement)) return false;
             if( !DeepComparable.IsExactly(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
             if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
@@ -1640,7 +1640,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in UdiCarrier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in StatusReason) { if (elem != null) yield return elem; }
-				if (DistinctIdentificationCodeElement != null) yield return DistinctIdentificationCodeElement;
+				if (DistinctIdentifierElement != null) yield return DistinctIdentifierElement;
 				if (ManufacturerElement != null) yield return ManufacturerElement;
 				if (ManufactureDateElement != null) yield return ManufactureDateElement;
 				if (ExpirationDateElement != null) yield return ExpirationDateElement;
@@ -1670,32 +1670,32 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Definition != null) yield return new ElementValue("definition", false, Definition);
-                foreach (var elem in UdiCarrier) { if (elem != null) yield return new ElementValue("udiCarrier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", true, elem); }
-                if (DistinctIdentificationCodeElement != null) yield return new ElementValue("distinctIdentificationCode", false, DistinctIdentificationCodeElement);
-                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
-                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
-                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
-                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                if (SerialNumberElement != null) yield return new ElementValue("serialNumber", false, SerialNumberElement);
-                foreach (var elem in DeviceName) { if (elem != null) yield return new ElementValue("deviceName", true, elem); }
-                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", false, ModelNumberElement);
-                if (PartNumberElement != null) yield return new ElementValue("partNumber", false, PartNumberElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                foreach (var elem in Specialization) { if (elem != null) yield return new ElementValue("specialization", true, elem); }
-                foreach (var elem in Version) { if (elem != null) yield return new ElementValue("version", true, elem); }
-                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", true, elem); }
-                if (Parent != null) yield return new ElementValue("parent", false, Parent);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Definition != null) yield return new ElementValue("definition", Definition);
+                foreach (var elem in UdiCarrier) { if (elem != null) yield return new ElementValue("udiCarrier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in StatusReason) { if (elem != null) yield return new ElementValue("statusReason", elem); }
+                if (DistinctIdentifierElement != null) yield return new ElementValue("distinctIdentifier", DistinctIdentifierElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", ManufacturerElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", ManufactureDateElement);
+                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                if (SerialNumberElement != null) yield return new ElementValue("serialNumber", SerialNumberElement);
+                foreach (var elem in DeviceName) { if (elem != null) yield return new ElementValue("deviceName", elem); }
+                if (ModelNumberElement != null) yield return new ElementValue("modelNumber", ModelNumberElement);
+                if (PartNumberElement != null) yield return new ElementValue("partNumber", PartNumberElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Specialization) { if (elem != null) yield return new ElementValue("specialization", elem); }
+                foreach (var elem in Version) { if (elem != null) yield return new ElementValue("version", elem); }
+                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", elem); }
+                if (Parent != null) yield return new ElementValue("parent", Parent);
             }
         }
 

@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -37,7 +39,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -231,9 +233,9 @@ namespace Hl7.Fhir.Model
             Warning,
         }
 
-        [FhirType("SlicingComponent")]
+        [FhirType("SlicingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SlicingComponent"; } }
@@ -418,18 +420,18 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    foreach (var elem in Discriminator) { if (elem != null) yield return new ElementValue("discriminator", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (OrderedElement != null) yield return new ElementValue("ordered", false, OrderedElement);
-                    if (RulesElement != null) yield return new ElementValue("rules", false, RulesElement);
+                    foreach (var elem in Discriminator) { if (elem != null) yield return new ElementValue("discriminator", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (OrderedElement != null) yield return new ElementValue("ordered", OrderedElement);
+                    if (RulesElement != null) yield return new ElementValue("rules", RulesElement);
  
                 } 
             } 
             
         }                
-        [FhirType("DiscriminatorComponent")]
+        [FhirType("DiscriminatorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DiscriminatorComponent"; } }
@@ -561,16 +563,16 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
  
                 } 
             } 
             
         }                
-        [FhirType("BaseComponent")]
+        [FhirType("BaseComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BaseComponent"; } }
@@ -739,17 +741,17 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (MinElement != null) yield return new ElementValue("min", MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", MaxElement);
  
                 } 
             } 
             
         }                
-        [FhirType("TypeRefComponent")]
+        [FhirType("TypeRefComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TypeRefComponent"; } }
@@ -991,19 +993,19 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                    foreach (var elem in TargetProfileElement) { if (elem != null) yield return new ElementValue("targetProfile", true, elem); }
-                    foreach (var elem in AggregationElement) { if (elem != null) yield return new ElementValue("aggregation", true, elem); }
-                    if (VersioningElement != null) yield return new ElementValue("versioning", false, VersioningElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", elem); }
+                    foreach (var elem in TargetProfileElement) { if (elem != null) yield return new ElementValue("targetProfile", elem); }
+                    foreach (var elem in AggregationElement) { if (elem != null) yield return new ElementValue("aggregation", elem); }
+                    if (VersioningElement != null) yield return new ElementValue("versioning", VersioningElement);
  
                 } 
             } 
             
         }                
-        [FhirType("ExampleComponent")]
+        [FhirType("ExampleComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExampleComponent"; } }
@@ -1046,7 +1048,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -1118,16 +1120,16 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+                    if (Value != null) yield return new ElementValue("value", Value);
  
                 } 
             } 
             
         }                
-        [FhirType("ConstraintComponent")]
+        [FhirType("ConstraintComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConstraintComponent"; } }
@@ -1440,21 +1442,21 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (KeyElement != null) yield return new ElementValue("key", false, KeyElement);
-                    if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
-                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                    if (HumanElement != null) yield return new ElementValue("human", false, HumanElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                    if (XpathElement != null) yield return new ElementValue("xpath", false, XpathElement);
-                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+                    if (KeyElement != null) yield return new ElementValue("key", KeyElement);
+                    if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
+                    if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
+                    if (HumanElement != null) yield return new ElementValue("human", HumanElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+                    if (XpathElement != null) yield return new ElementValue("xpath", XpathElement);
+                    if (SourceElement != null) yield return new ElementValue("source", SourceElement);
  
                 } 
             } 
             
         }                
-        [FhirType("ElementDefinitionBindingComponent")]
+        [FhirType("ElementDefinitionBindingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ElementDefinitionBindingComponent"; } }
@@ -1621,17 +1623,17 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (StrengthElement != null) yield return new ElementValue("strength", false, StrengthElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (ValueSetElement != null) yield return new ElementValue("valueSet", false, ValueSetElement);
+                    if (StrengthElement != null) yield return new ElementValue("strength", StrengthElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (ValueSetElement != null) yield return new ElementValue("valueSet", ValueSetElement);
  
                 } 
             } 
             
         }                
-        [FhirType("MappingComponent")]
+        [FhirType("MappingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }
@@ -1835,10 +1837,10 @@ namespace Hl7.Fhir.Model
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (IdentityElement != null) yield return new ElementValue("identity", false, IdentityElement);
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (MapElement != null) yield return new ElementValue("map", false, MapElement);
-                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                    if (IdentityElement != null) yield return new ElementValue("identity", IdentityElement);
+                    if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                    if (MapElement != null) yield return new ElementValue("map", MapElement);
+                    if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
  
                 } 
             } 
@@ -2070,96 +2072,39 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("definition", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown DefinitionElement
+        public Hl7.Fhir.Model.Markdown Definition
         {
-            get { return _DefinitionElement; }
-            set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            get { return _Definition; }
+            set { _Definition = value; OnPropertyChanged("Definition"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _DefinitionElement;
-        
-        /// <summary>
-        /// Full formal definition as narrative text
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Definition
-        {
-            get { return DefinitionElement != null ? DefinitionElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DefinitionElement = null; 
-                else
-                  DefinitionElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Definition");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Definition;
         
         /// <summary>
         /// Comments about the use of this element
         /// </summary>
         [FhirElement("comment", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown CommentElement
+        public Hl7.Fhir.Model.Markdown Comment
         {
-            get { return _CommentElement; }
-            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            get { return _Comment; }
+            set { _Comment = value; OnPropertyChanged("Comment"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _CommentElement;
-        
-        /// <summary>
-        /// Comments about the use of this element
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Comment
-        {
-            get { return CommentElement != null ? CommentElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CommentElement = null; 
-                else
-                  CommentElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Comment");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Comment;
         
         /// <summary>
         /// Why this resource has been created
         /// </summary>
         [FhirElement("requirements", InSummary=true, Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown RequirementsElement
+        public Hl7.Fhir.Model.Markdown Requirements
         {
-            get { return _RequirementsElement; }
-            set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
+            get { return _Requirements; }
+            set { _Requirements = value; OnPropertyChanged("Requirements"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _RequirementsElement;
-        
-        /// <summary>
-        /// Why this resource has been created
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Requirements
-        {
-            get { return RequirementsElement != null ? RequirementsElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  RequirementsElement = null; 
-                else
-                  RequirementsElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Requirements");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Requirements;
         
         /// <summary>
         /// Other names
@@ -2322,7 +2267,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("defaultValue", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
         [DataMember]
         public Hl7.Fhir.Model.Element DefaultValue
         {
@@ -2337,32 +2282,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("meaningWhenMissing", InSummary=true, Order=270)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown MeaningWhenMissingElement
+        public Hl7.Fhir.Model.Markdown MeaningWhenMissing
         {
-            get { return _MeaningWhenMissingElement; }
-            set { _MeaningWhenMissingElement = value; OnPropertyChanged("MeaningWhenMissingElement"); }
+            get { return _MeaningWhenMissing; }
+            set { _MeaningWhenMissing = value; OnPropertyChanged("MeaningWhenMissing"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _MeaningWhenMissingElement;
-        
-        /// <summary>
-        /// Implicit meaning when this element is missing
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string MeaningWhenMissing
-        {
-            get { return MeaningWhenMissingElement != null ? MeaningWhenMissingElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  MeaningWhenMissingElement = null; 
-                else
-                  MeaningWhenMissingElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("MeaningWhenMissing");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _MeaningWhenMissing;
         
         /// <summary>
         /// What the order of the elements means
@@ -2401,7 +2327,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("fixed", InSummary=true, Order=290, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
         [DataMember]
         public Hl7.Fhir.Model.Element Fixed
         {
@@ -2416,7 +2342,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("pattern", InSummary=true, Order=300, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
         [DataMember]
         public Hl7.Fhir.Model.Element Pattern
         {
@@ -2720,9 +2646,9 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                 if(Slicing != null) dest.Slicing = (Hl7.Fhir.Model.ElementDefinition.SlicingComponent)Slicing.DeepCopy();
                 if(ShortElement != null) dest.ShortElement = (Hl7.Fhir.Model.FhirString)ShortElement.DeepCopy();
-                if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Markdown)DefinitionElement.DeepCopy();
-                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
-                if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.Markdown)RequirementsElement.DeepCopy();
+                if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Markdown)Definition.DeepCopy();
+                if(Comment != null) dest.Comment = (Hl7.Fhir.Model.Markdown)Comment.DeepCopy();
+                if(Requirements != null) dest.Requirements = (Hl7.Fhir.Model.Markdown)Requirements.DeepCopy();
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
@@ -2730,7 +2656,7 @@ namespace Hl7.Fhir.Model
                 if(ContentReferenceElement != null) dest.ContentReferenceElement = (Hl7.Fhir.Model.FhirUri)ContentReferenceElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent>(Type.DeepCopy());
                 if(DefaultValue != null) dest.DefaultValue = (Hl7.Fhir.Model.Element)DefaultValue.DeepCopy();
-                if(MeaningWhenMissingElement != null) dest.MeaningWhenMissingElement = (Hl7.Fhir.Model.Markdown)MeaningWhenMissingElement.DeepCopy();
+                if(MeaningWhenMissing != null) dest.MeaningWhenMissing = (Hl7.Fhir.Model.Markdown)MeaningWhenMissing.DeepCopy();
                 if(OrderMeaningElement != null) dest.OrderMeaningElement = (Hl7.Fhir.Model.FhirString)OrderMeaningElement.DeepCopy();
                 if(Fixed != null) dest.Fixed = (Hl7.Fhir.Model.Element)Fixed.DeepCopy();
                 if(Pattern != null) dest.Pattern = (Hl7.Fhir.Model.Element)Pattern.DeepCopy();
@@ -2771,9 +2697,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
-            if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
-            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.Matches(Comment, otherT.Comment)) return false;
+            if( !DeepComparable.Matches(Requirements, otherT.Requirements)) return false;
             if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
@@ -2781,7 +2707,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(DefaultValue, otherT.DefaultValue)) return false;
-            if( !DeepComparable.Matches(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
+            if( !DeepComparable.Matches(MeaningWhenMissing, otherT.MeaningWhenMissing)) return false;
             if( !DeepComparable.Matches(OrderMeaningElement, otherT.OrderMeaningElement)) return false;
             if( !DeepComparable.Matches(Fixed, otherT.Fixed)) return false;
             if( !DeepComparable.Matches(Pattern, otherT.Pattern)) return false;
@@ -2815,9 +2741,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
-            if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
-            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-            if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
+            if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+            if( !DeepComparable.IsExactly(Comment, otherT.Comment)) return false;
+            if( !DeepComparable.IsExactly(Requirements, otherT.Requirements)) return false;
             if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
@@ -2825,7 +2751,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(DefaultValue, otherT.DefaultValue)) return false;
-            if( !DeepComparable.IsExactly(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
+            if( !DeepComparable.IsExactly(MeaningWhenMissing, otherT.MeaningWhenMissing)) return false;
             if( !DeepComparable.IsExactly(OrderMeaningElement, otherT.OrderMeaningElement)) return false;
             if( !DeepComparable.IsExactly(Fixed, otherT.Fixed)) return false;
             if( !DeepComparable.IsExactly(Pattern, otherT.Pattern)) return false;
@@ -2859,9 +2785,9 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Code) { if (elem != null) yield return elem; }
                 if (Slicing != null) yield return Slicing;
                 if (ShortElement != null) yield return ShortElement;
-                if (DefinitionElement != null) yield return DefinitionElement;
-                if (CommentElement != null) yield return CommentElement;
-                if (RequirementsElement != null) yield return RequirementsElement;
+                if (Definition != null) yield return Definition;
+                if (Comment != null) yield return Comment;
+                if (Requirements != null) yield return Requirements;
                 foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
                 if (MinElement != null) yield return MinElement;
                 if (MaxElement != null) yield return MaxElement;
@@ -2869,7 +2795,7 @@ namespace Hl7.Fhir.Model
                 if (ContentReferenceElement != null) yield return ContentReferenceElement;
                 foreach (var elem in Type) { if (elem != null) yield return elem; }
                 if (DefaultValue != null) yield return DefaultValue;
-                if (MeaningWhenMissingElement != null) yield return MeaningWhenMissingElement;
+                if (MeaningWhenMissing != null) yield return MeaningWhenMissing;
                 if (OrderMeaningElement != null) yield return OrderMeaningElement;
                 if (Fixed != null) yield return Fixed;
                 if (Pattern != null) yield return Pattern;
@@ -2894,40 +2820,40 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                foreach (var elem in RepresentationElement) { if (elem != null) yield return new ElementValue("representation", true, elem); }
-                if (SliceNameElement != null) yield return new ElementValue("sliceName", false, SliceNameElement);
-                if (SliceIsConstrainingElement != null) yield return new ElementValue("sliceIsConstraining", false, SliceIsConstrainingElement);
-                if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                if (Slicing != null) yield return new ElementValue("slicing", false, Slicing);
-                if (ShortElement != null) yield return new ElementValue("short", false, ShortElement);
-                if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
-                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
-                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
-                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
-                if (MinElement != null) yield return new ElementValue("min", false, MinElement);
-                if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
-                if (Base != null) yield return new ElementValue("base", false, Base);
-                if (ContentReferenceElement != null) yield return new ElementValue("contentReference", false, ContentReferenceElement);
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                if (DefaultValue != null) yield return new ElementValue("defaultValue", false, DefaultValue);
-                if (MeaningWhenMissingElement != null) yield return new ElementValue("meaningWhenMissing", false, MeaningWhenMissingElement);
-                if (OrderMeaningElement != null) yield return new ElementValue("orderMeaning", false, OrderMeaningElement);
-                if (Fixed != null) yield return new ElementValue("fixed", false, Fixed);
-                if (Pattern != null) yield return new ElementValue("pattern", false, Pattern);
-                foreach (var elem in Example) { if (elem != null) yield return new ElementValue("example", true, elem); }
-                if (MinValue != null) yield return new ElementValue("minValue", false, MinValue);
-                if (MaxValue != null) yield return new ElementValue("maxValue", false, MaxValue);
-                if (MaxLengthElement != null) yield return new ElementValue("maxLength", false, MaxLengthElement);
-                foreach (var elem in ConditionElement) { if (elem != null) yield return new ElementValue("condition", true, elem); }
-                foreach (var elem in Constraint) { if (elem != null) yield return new ElementValue("constraint", true, elem); }
-                if (MustSupportElement != null) yield return new ElementValue("mustSupport", false, MustSupportElement);
-                if (IsModifierElement != null) yield return new ElementValue("isModifier", false, IsModifierElement);
-                if (IsModifierReasonElement != null) yield return new ElementValue("isModifierReason", false, IsModifierReasonElement);
-                if (IsSummaryElement != null) yield return new ElementValue("isSummary", false, IsSummaryElement);
-                if (Binding != null) yield return new ElementValue("binding", false, Binding);
-                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
+                if (PathElement != null) yield return new ElementValue("path", PathElement);
+                foreach (var elem in RepresentationElement) { if (elem != null) yield return new ElementValue("representation", elem); }
+                if (SliceNameElement != null) yield return new ElementValue("sliceName", SliceNameElement);
+                if (SliceIsConstrainingElement != null) yield return new ElementValue("sliceIsConstraining", SliceIsConstrainingElement);
+                if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                if (Slicing != null) yield return new ElementValue("slicing", Slicing);
+                if (ShortElement != null) yield return new ElementValue("short", ShortElement);
+                if (Definition != null) yield return new ElementValue("definition", Definition);
+                if (Comment != null) yield return new ElementValue("comment", Comment);
+                if (Requirements != null) yield return new ElementValue("requirements", Requirements);
+                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", elem); }
+                if (MinElement != null) yield return new ElementValue("min", MinElement);
+                if (MaxElement != null) yield return new ElementValue("max", MaxElement);
+                if (Base != null) yield return new ElementValue("base", Base);
+                if (ContentReferenceElement != null) yield return new ElementValue("contentReference", ContentReferenceElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                if (DefaultValue != null) yield return new ElementValue("defaultValue", DefaultValue);
+                if (MeaningWhenMissing != null) yield return new ElementValue("meaningWhenMissing", MeaningWhenMissing);
+                if (OrderMeaningElement != null) yield return new ElementValue("orderMeaning", OrderMeaningElement);
+                if (Fixed != null) yield return new ElementValue("fixed", Fixed);
+                if (Pattern != null) yield return new ElementValue("pattern", Pattern);
+                foreach (var elem in Example) { if (elem != null) yield return new ElementValue("example", elem); }
+                if (MinValue != null) yield return new ElementValue("minValue", MinValue);
+                if (MaxValue != null) yield return new ElementValue("maxValue", MaxValue);
+                if (MaxLengthElement != null) yield return new ElementValue("maxLength", MaxLengthElement);
+                foreach (var elem in ConditionElement) { if (elem != null) yield return new ElementValue("condition", elem); }
+                foreach (var elem in Constraint) { if (elem != null) yield return new ElementValue("constraint", elem); }
+                if (MustSupportElement != null) yield return new ElementValue("mustSupport", MustSupportElement);
+                if (IsModifierElement != null) yield return new ElementValue("isModifier", IsModifierElement);
+                if (IsModifierReasonElement != null) yield return new ElementValue("isModifierReason", IsModifierReasonElement);
+                if (IsSummaryElement != null) yield return new ElementValue("isSummary", IsSummaryElement);
+                if (Binding != null) yield return new ElementValue("binding", Binding);
+                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", elem); }
  
             } 
         } 

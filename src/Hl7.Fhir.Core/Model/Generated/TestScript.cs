@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -234,6 +234,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("Population", "http://hl7.org/fhir/data-types"), Description("Population")]
+            Population,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("ProdCharacteristic", "http://hl7.org/fhir/data-types"), Description("ProdCharacteristic")]
             ProdCharacteristic,
             /// <summary>
@@ -296,12 +302,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("SubstanceAmount", "http://hl7.org/fhir/data-types"), Description("SubstanceAmount")]
             SubstanceAmount,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/data-types)
-            /// </summary>
-            [EnumLiteral("SubstanceMoiety", "http://hl7.org/fhir/data-types"), Description("SubstanceMoiety")]
-            SubstanceMoiety,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -534,6 +534,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("CatalogEntry", "http://hl7.org/fhir/resource-types"), Description("CatalogEntry")]
+            CatalogEntry,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("ChargeItem", "http://hl7.org/fhir/resource-types"), Description("ChargeItem")]
             ChargeItem,
             /// <summary>
@@ -696,6 +702,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("EffectEvidenceSynthesis", "http://hl7.org/fhir/resource-types"), Description("EffectEvidenceSynthesis")]
+            EffectEvidenceSynthesis,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Encounter", "http://hl7.org/fhir/resource-types"), Description("Encounter")]
             Encounter,
             /// <summary>
@@ -720,12 +732,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EntryDefinition", "http://hl7.org/fhir/resource-types"), Description("EntryDefinition")]
-            EntryDefinition,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/resource-types"), Description("EpisodeOfCare")]
             EpisodeOfCare,
             /// <summary>
@@ -734,6 +740,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("EventDefinition", "http://hl7.org/fhir/resource-types"), Description("EventDefinition")]
             EventDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("Evidence", "http://hl7.org/fhir/resource-types"), Description("Evidence")]
+            Evidence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("EvidenceVariable", "http://hl7.org/fhir/resource-types"), Description("EvidenceVariable")]
+            EvidenceVariable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -834,12 +852,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ItemInstance", "http://hl7.org/fhir/resource-types"), Description("ItemInstance")]
-            ItemInstance,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("Library", "http://hl7.org/fhir/resource-types"), Description("Library")]
             Library,
             /// <summary>
@@ -930,20 +942,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicinalProductClinicals", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductClinicals")]
-            MedicinalProductClinicals,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("MedicinalProductContraindication", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductContraindication")]
             MedicinalProductContraindication,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductDeviceSpec", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductDeviceSpec")]
-            MedicinalProductDeviceSpec,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -998,6 +998,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("MessageHeader", "http://hl7.org/fhir/resource-types"), Description("MessageHeader")]
             MessageHeader,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("MolecularSequence", "http://hl7.org/fhir/resource-types"), Description("MolecularSequence")]
+            MolecularSequence,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1104,18 +1110,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ProcessRequest", "http://hl7.org/fhir/resource-types"), Description("ProcessRequest")]
-            ProcessRequest,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ProcessResponse", "http://hl7.org/fhir/resource-types"), Description("ProcessResponse")]
-            ProcessResponse,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("Provenance", "http://hl7.org/fhir/resource-types"), Description("Provenance")]
             Provenance,
             /// <summary>
@@ -1146,6 +1140,18 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ResearchDefinition", "http://hl7.org/fhir/resource-types"), Description("ResearchDefinition")]
+            ResearchDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ResearchElementDefinition", "http://hl7.org/fhir/resource-types"), Description("ResearchElementDefinition")]
+            ResearchElementDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/resource-types"), Description("ResearchStudy")]
             ResearchStudy,
             /// <summary>
@@ -1170,6 +1176,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("RiskEvidenceSynthesis", "http://hl7.org/fhir/resource-types"), Description("RiskEvidenceSynthesis")]
+            RiskEvidenceSynthesis,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Schedule", "http://hl7.org/fhir/resource-types"), Description("Schedule")]
             Schedule,
             /// <summary>
@@ -1178,12 +1190,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("SearchParameter", "http://hl7.org/fhir/resource-types"), Description("SearchParameter")]
             SearchParameter,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("Sequence", "http://hl7.org/fhir/resource-types"), Description("Sequence")]
-            Sequence,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1236,14 +1242,32 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/resource-types"), Description("SubstanceNucleicAcid")]
+            SubstanceNucleicAcid,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/resource-types"), Description("SubstancePolymer")]
             SubstancePolymer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("SubstanceProtein", "http://hl7.org/fhir/resource-types"), Description("SubstanceProtein")]
+            SubstanceProtein,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/resource-types"), Description("SubstanceReferenceInformation")]
             SubstanceReferenceInformation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/resource-types"), Description("SubstanceSourceMaterial")]
+            SubstanceSourceMaterial,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1290,12 +1314,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("UserSession", "http://hl7.org/fhir/resource-types"), Description("UserSession")]
-            UserSession,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("ValueSet", "http://hl7.org/fhir/resource-types"), Description("ValueSet")]
             ValueSet,
             /// <summary>
@@ -1310,6 +1328,57 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
             VisionPrescription,
+        }
+
+        /// <summary>
+        /// The allowable request method or HTTP operation codes.
+        /// (url: http://hl7.org/fhir/ValueSet/http-operations)
+        /// </summary>
+        [FhirEnumeration("TestScriptRequestMethodCode")]
+        public enum TestScriptRequestMethodCode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("delete", "http://hl7.org/fhir/http-operations"), Description("DELETE")]
+            Delete,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("get", "http://hl7.org/fhir/http-operations"), Description("GET")]
+            Get,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("options", "http://hl7.org/fhir/http-operations"), Description("OPTIONS")]
+            Options,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("patch", "http://hl7.org/fhir/http-operations"), Description("PATCH")]
+            Patch,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("post", "http://hl7.org/fhir/http-operations"), Description("POST")]
+            Post,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("put", "http://hl7.org/fhir/http-operations"), Description("PUT")]
+            Put,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("head", "http://hl7.org/fhir/http-operations"), Description("HEAD")]
+            Head,
         }
 
         /// <summary>
@@ -1409,51 +1478,6 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The allowable request method or HTTP operation codes.
-        /// (url: http://hl7.org/fhir/ValueSet/http-operations)
-        /// </summary>
-        [FhirEnumeration("TestScriptRequestMethodCode")]
-        public enum TestScriptRequestMethodCode
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("delete", "http://hl7.org/fhir/http-operations"), Description("DELETE")]
-            Delete,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("get", "http://hl7.org/fhir/http-operations"), Description("GET")]
-            Get,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("options", "http://hl7.org/fhir/http-operations"), Description("OPTIONS")]
-            Options,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("patch", "http://hl7.org/fhir/http-operations"), Description("PATCH")]
-            Patch,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("post", "http://hl7.org/fhir/http-operations"), Description("POST")]
-            Post,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/http-operations)
-            /// </summary>
-            [EnumLiteral("put", "http://hl7.org/fhir/http-operations"), Description("PUT")]
-            Put,
-        }
-
-        /// <summary>
         /// The type of response code to use for assertion.
         /// (url: http://hl7.org/fhir/ValueSet/assert-response-code-types)
         /// </summary>
@@ -1534,7 +1558,7 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
 
-        [FhirType("OriginComponent")]
+        [FhirType("OriginComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1650,8 +1674,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IndexElement != null) yield return new ElementValue("index", false, IndexElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                    if (IndexElement != null) yield return new ElementValue("index", IndexElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
                 }
             }
 
@@ -1659,7 +1683,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DestinationComponent")]
+        [FhirType("DestinationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1775,8 +1799,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IndexElement != null) yield return new ElementValue("index", false, IndexElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                    if (IndexElement != null) yield return new ElementValue("index", IndexElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
                 }
             }
 
@@ -1784,7 +1808,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MetadataComponent")]
+        [FhirType("MetadataComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -1881,8 +1905,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                    foreach (var elem in Capability) { if (elem != null) yield return new ElementValue("capability", true, elem); }
+                    foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
+                    foreach (var elem in Capability) { if (elem != null) yield return new ElementValue("capability", elem); }
                 }
             }
 
@@ -1890,7 +1914,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkComponent")]
+        [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2024,8 +2048,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 }
             }
 
@@ -2033,7 +2057,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityComponent")]
+        [FhirType("CapabilityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2351,13 +2375,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
-                    if (ValidatedElement != null) yield return new ElementValue("validated", false, ValidatedElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    foreach (var elem in OriginElement) { if (elem != null) yield return new ElementValue("origin", true, elem); }
-                    if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
-                    foreach (var elem in LinkElement) { if (elem != null) yield return new ElementValue("link", true, elem); }
-                    if (CapabilitiesElement != null) yield return new ElementValue("capabilities", false, CapabilitiesElement);
+                    if (RequiredElement != null) yield return new ElementValue("required", RequiredElement);
+                    if (ValidatedElement != null) yield return new ElementValue("validated", ValidatedElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    foreach (var elem in OriginElement) { if (elem != null) yield return new ElementValue("origin", elem); }
+                    if (DestinationElement != null) yield return new ElementValue("destination", DestinationElement);
+                    foreach (var elem in LinkElement) { if (elem != null) yield return new ElementValue("link", elem); }
+                    if (CapabilitiesElement != null) yield return new ElementValue("capabilities", CapabilitiesElement);
                 }
             }
 
@@ -2365,7 +2389,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FixtureComponent")]
+        [FhirType("FixtureComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2519,9 +2543,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AutocreateElement != null) yield return new ElementValue("autocreate", false, AutocreateElement);
-                    if (AutodeleteElement != null) yield return new ElementValue("autodelete", false, AutodeleteElement);
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
+                    if (AutocreateElement != null) yield return new ElementValue("autocreate", AutocreateElement);
+                    if (AutodeleteElement != null) yield return new ElementValue("autodelete", AutodeleteElement);
+                    if (Resource != null) yield return new ElementValue("resource", Resource);
                 }
             }
 
@@ -2529,7 +2553,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VariableComponent")]
+        [FhirType("VariableComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -2879,14 +2903,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DefaultValueElement != null) yield return new ElementValue("defaultValue", false, DefaultValueElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                    if (HeaderFieldElement != null) yield return new ElementValue("headerField", false, HeaderFieldElement);
-                    if (HintElement != null) yield return new ElementValue("hint", false, HintElement);
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (SourceIdElement != null) yield return new ElementValue("sourceId", false, SourceIdElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DefaultValueElement != null) yield return new ElementValue("defaultValue", DefaultValueElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+                    if (HeaderFieldElement != null) yield return new ElementValue("headerField", HeaderFieldElement);
+                    if (HintElement != null) yield return new ElementValue("hint", HintElement);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (SourceIdElement != null) yield return new ElementValue("sourceId", SourceIdElement);
                 }
             }
 
@@ -2894,634 +2918,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RuleComponent")]
-        [DataContract]
-        public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RuleComponent"; } }
-            
-            /// <summary>
-            /// Assert rule resource reference
-            /// </summary>
-            [FhirElement("resource", Order=40)]
-            [CLSCompliant(false)]
-			[References()]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Resource
-            {
-                get { return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Resource;
-            
-            /// <summary>
-            /// Rule parameter template
-            /// </summary>
-            [FhirElement("param", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.RuleParamComponent> Param
-            {
-                get { if(_Param==null) _Param = new List<Hl7.Fhir.Model.TestScript.RuleParamComponent>(); return _Param; }
-                set { _Param = value; OnPropertyChanged("Param"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.RuleParamComponent> _Param;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RuleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
-                    if(Param != null) dest.Param = new List<Hl7.Fhir.Model.TestScript.RuleParamComponent>(Param.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RuleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                if( !DeepComparable.Matches(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-                if( !DeepComparable.IsExactly(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Resource != null) yield return Resource;
-                    foreach (var elem in Param) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
-                    foreach (var elem in Param) { if (elem != null) yield return new ElementValue("param", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RuleParamComponent")]
-        [DataContract]
-        public partial class RuleParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RuleParamComponent"; } }
-            
-            /// <summary>
-            /// Parameter name matching external assert rule parameter
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Parameter name matching external assert rule parameter
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ValueElement
-            {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ValueElement;
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Value");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RuleParamComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RuleParamComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (ValueElement != null) yield return ValueElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RulesetComponent")]
-        [DataContract]
-        public partial class RulesetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RulesetComponent"; } }
-            
-            /// <summary>
-            /// Assert ruleset resource reference
-            /// </summary>
-            [FhirElement("resource", Order=40)]
-            [CLSCompliant(false)]
-			[References()]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Resource
-            {
-                get { return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Resource;
-            
-            /// <summary>
-            /// The referenced rule within the ruleset
-            /// </summary>
-            [FhirElement("rule", Order=50)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent> Rule
-            {
-                get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent>(); return _Rule; }
-                set { _Rule = value; OnPropertyChanged("Rule"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent> _Rule;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RulesetComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
-                    if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent>(Rule.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RulesetComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RulesetComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RulesetComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-                if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Resource != null) yield return Resource;
-                    foreach (var elem in Rule) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Resource != null) yield return new ElementValue("resource", false, Resource);
-                    foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RulesetRuleComponent")]
-        [DataContract]
-        public partial class RulesetRuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RulesetRuleComponent"; } }
-            
-            /// <summary>
-            /// Id of referenced rule within the ruleset
-            /// </summary>
-            [FhirElement("ruleId", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RuleIdElement
-            {
-                get { return _RuleIdElement; }
-                set { _RuleIdElement = value; OnPropertyChanged("RuleIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RuleIdElement;
-            
-            /// <summary>
-            /// Id of referenced rule within the ruleset
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RuleId
-            {
-                get { return RuleIdElement != null ? RuleIdElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        RuleIdElement = null; 
-                    else
-                        RuleIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RuleId");
-                }
-            }
-            
-            /// <summary>
-            /// Ruleset rule parameter template
-            /// </summary>
-            [FhirElement("param", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent> Param
-            {
-                get { if(_Param==null) _Param = new List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent>(); return _Param; }
-                set { _Param = value; OnPropertyChanged("Param"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent> _Param;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RulesetRuleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(RuleIdElement != null) dest.RuleIdElement = (Hl7.Fhir.Model.Id)RuleIdElement.DeepCopy();
-                    if(Param != null) dest.Param = new List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent>(Param.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RulesetRuleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RulesetRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.Matches(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RulesetRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.IsExactly(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (RuleIdElement != null) yield return RuleIdElement;
-                    foreach (var elem in Param) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (RuleIdElement != null) yield return new ElementValue("ruleId", false, RuleIdElement);
-                    foreach (var elem in Param) { if (elem != null) yield return new ElementValue("param", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("RulesetRuleParamComponent")]
-        [DataContract]
-        public partial class RulesetRuleParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RulesetRuleParamComponent"; } }
-            
-            /// <summary>
-            /// Parameter name matching external assert ruleset rule parameter
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Parameter name matching external assert ruleset rule parameter
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ValueElement
-            {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ValueElement;
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Value");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RulesetRuleParamComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RulesetRuleParamComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RulesetRuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RulesetRuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (ValueElement != null) yield return ValueElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("SetupComponent")]
+        [FhirType("SetupComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3600,7 +2997,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
                 }
             }
 
@@ -3608,7 +3005,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SetupActionComponent")]
+        [FhirType("SetupActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3703,8 +3100,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Operation != null) yield return new ElementValue("operation", false, Operation);
-                    if (Assert != null) yield return new ElementValue("assert", false, Assert);
+                    if (Operation != null) yield return new ElementValue("operation", Operation);
+                    if (Assert != null) yield return new ElementValue("assert", Assert);
                 }
             }
 
@@ -3712,7 +3109,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationComponent")]
+        [FhirType("OperationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -3958,9 +3355,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// delete | get | options | patch | post | put | head
+            /// </summary>
+            [FhirElement("method", Order=120)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> MethodElement
+            {
+                get { return _MethodElement; }
+                set { _MethodElement = value; OnPropertyChanged("MethodElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> _MethodElement;
+            
+            /// <summary>
+            /// delete | get | options | patch | post | put | head
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode? Method
+            {
+                get { return MethodElement != null ? MethodElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        MethodElement = null; 
+                    else
+                        MethodElement = new Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>(value);
+                    OnPropertyChanged("Method");
+                }
+            }
+            
+            /// <summary>
             /// Server initiating the request
             /// </summary>
-            [FhirElement("origin", Order=120)]
+            [FhirElement("origin", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.Integer OriginElement
             {
@@ -3992,7 +3421,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Explicitly defined path parameters
             /// </summary>
-            [FhirElement("params", Order=130)]
+            [FhirElement("params", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ParamsElement
             {
@@ -4024,7 +3453,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Each operation can have one or more header elements
             /// </summary>
-            [FhirElement("requestHeader", Order=140)]
+            [FhirElement("requestHeader", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> RequestHeader
@@ -4038,7 +3467,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of mapped request
             /// </summary>
-            [FhirElement("requestId", Order=150)]
+            [FhirElement("requestId", Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.Id RequestIdElement
             {
@@ -4070,7 +3499,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of mapped response
             /// </summary>
-            [FhirElement("responseId", Order=160)]
+            [FhirElement("responseId", Order=170)]
             [DataMember]
             public Hl7.Fhir.Model.Id ResponseIdElement
             {
@@ -4102,7 +3531,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of body for PUT and POST requests
             /// </summary>
-            [FhirElement("sourceId", Order=170)]
+            [FhirElement("sourceId", Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -4134,7 +3563,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Id of fixture used for extracting the [id],  [type], and [vid] for GET requests
             /// </summary>
-            [FhirElement("targetId", Order=180)]
+            [FhirElement("targetId", Order=190)]
             [DataMember]
             public Hl7.Fhir.Model.Id TargetIdElement
             {
@@ -4166,7 +3595,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Request URL
             /// </summary>
-            [FhirElement("url", Order=190)]
+            [FhirElement("url", Order=200)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString UrlElement
             {
@@ -4210,6 +3639,7 @@ namespace Hl7.Fhir.Model
                     if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(EncodeRequestUrlElement != null) dest.EncodeRequestUrlElement = (Hl7.Fhir.Model.FhirBoolean)EncodeRequestUrlElement.DeepCopy();
+                    if(MethodElement != null) dest.MethodElement = (Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>)MethodElement.DeepCopy();
                     if(OriginElement != null) dest.OriginElement = (Hl7.Fhir.Model.Integer)OriginElement.DeepCopy();
                     if(ParamsElement != null) dest.ParamsElement = (Hl7.Fhir.Model.FhirString)ParamsElement.DeepCopy();
                     if(RequestHeader != null) dest.RequestHeader = new List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>(RequestHeader.DeepCopy());
@@ -4243,6 +3673,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.Matches(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.Matches(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
+                if( !DeepComparable.Matches(MethodElement, otherT.MethodElement)) return false;
                 if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.Matches(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.Matches(RequestHeader, otherT.RequestHeader)) return false;
@@ -4269,6 +3700,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
                 if( !DeepComparable.IsExactly(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.IsExactly(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
+                if( !DeepComparable.IsExactly(MethodElement, otherT.MethodElement)) return false;
                 if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.IsExactly(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.IsExactly(RequestHeader, otherT.RequestHeader)) return false;
@@ -4296,6 +3728,7 @@ namespace Hl7.Fhir.Model
                     if (ContentTypeElement != null) yield return ContentTypeElement;
                     if (DestinationElement != null) yield return DestinationElement;
                     if (EncodeRequestUrlElement != null) yield return EncodeRequestUrlElement;
+                    if (MethodElement != null) yield return MethodElement;
                     if (OriginElement != null) yield return OriginElement;
                     if (ParamsElement != null) yield return ParamsElement;
                     foreach (var elem in RequestHeader) { if (elem != null) yield return elem; }
@@ -4313,22 +3746,23 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (ResourceElement != null) yield return new ElementValue("resource", false, ResourceElement);
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (AcceptElement != null) yield return new ElementValue("accept", false, AcceptElement);
-                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                    if (DestinationElement != null) yield return new ElementValue("destination", false, DestinationElement);
-                    if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", false, EncodeRequestUrlElement);
-                    if (OriginElement != null) yield return new ElementValue("origin", false, OriginElement);
-                    if (ParamsElement != null) yield return new ElementValue("params", false, ParamsElement);
-                    foreach (var elem in RequestHeader) { if (elem != null) yield return new ElementValue("requestHeader", true, elem); }
-                    if (RequestIdElement != null) yield return new ElementValue("requestId", false, RequestIdElement);
-                    if (ResponseIdElement != null) yield return new ElementValue("responseId", false, ResponseIdElement);
-                    if (SourceIdElement != null) yield return new ElementValue("sourceId", false, SourceIdElement);
-                    if (TargetIdElement != null) yield return new ElementValue("targetId", false, TargetIdElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
+                    if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (AcceptElement != null) yield return new ElementValue("accept", AcceptElement);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                    if (DestinationElement != null) yield return new ElementValue("destination", DestinationElement);
+                    if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", EncodeRequestUrlElement);
+                    if (MethodElement != null) yield return new ElementValue("method", MethodElement);
+                    if (OriginElement != null) yield return new ElementValue("origin", OriginElement);
+                    if (ParamsElement != null) yield return new ElementValue("params", ParamsElement);
+                    foreach (var elem in RequestHeader) { if (elem != null) yield return new ElementValue("requestHeader", elem); }
+                    if (RequestIdElement != null) yield return new ElementValue("requestId", RequestIdElement);
+                    if (ResponseIdElement != null) yield return new ElementValue("responseId", ResponseIdElement);
+                    if (SourceIdElement != null) yield return new ElementValue("sourceId", SourceIdElement);
+                    if (TargetIdElement != null) yield return new ElementValue("targetId", TargetIdElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 }
             }
 
@@ -4336,7 +3770,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestHeaderComponent")]
+        [FhirType("RequestHeaderComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -4471,8 +3905,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (FieldElement != null) yield return new ElementValue("field", false, FieldElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (FieldElement != null) yield return new ElementValue("field", FieldElement);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
 
@@ -4480,7 +3914,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AssertComponent")]
+        [FhirType("AssertComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -4904,7 +4338,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// delete | get | options | patch | post | put
+            /// delete | get | options | patch | post | put | head
             /// </summary>
             [FhirElement("requestMethod", Order=170)]
             [DataMember]
@@ -4917,7 +4351,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> _RequestMethodElement;
             
             /// <summary>
-            /// delete | get | options | patch | post | put
+            /// delete | get | options | patch | post | put | head
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -5064,35 +4498,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The reference to a TestScript.rule
-            /// </summary>
-            [FhirElement("rule", Order=220)]
-            [DataMember]
-            public Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent Rule
-            {
-                get { return _Rule; }
-                set { _Rule = value; OnPropertyChanged("Rule"); }
-            }
-            
-            private Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent _Rule;
-            
-            /// <summary>
-            /// The reference to a TestScript.ruleset
-            /// </summary>
-            [FhirElement("ruleset", Order=230)]
-            [DataMember]
-            public Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent Ruleset
-            {
-                get { return _Ruleset; }
-                set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
-            }
-            
-            private Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent _Ruleset;
-            
-            /// <summary>
             /// Fixture Id of source expression or headerField
             /// </summary>
-            [FhirElement("sourceId", Order=240)]
+            [FhirElement("sourceId", Order=220)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -5124,7 +4532,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile Id of validation profile reference
             /// </summary>
-            [FhirElement("validateProfileId", Order=250)]
+            [FhirElement("validateProfileId", Order=230)]
             [DataMember]
             public Hl7.Fhir.Model.Id ValidateProfileIdElement
             {
@@ -5156,7 +4564,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The value to compare to
             /// </summary>
-            [FhirElement("value", Order=260)]
+            [FhirElement("value", Order=240)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
             {
@@ -5188,7 +4596,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Will this assert produce a warning only on error?
             /// </summary>
-            [FhirElement("warningOnly", Order=270)]
+            [FhirElement("warningOnly", Order=250)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean WarningOnlyElement
@@ -5243,8 +4651,6 @@ namespace Hl7.Fhir.Model
                     if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.TestScript.FHIRDefinedType>)ResourceElement.DeepCopy();
                     if(ResponseElement != null) dest.ResponseElement = (Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>)ResponseElement.DeepCopy();
                     if(ResponseCodeElement != null) dest.ResponseCodeElement = (Hl7.Fhir.Model.FhirString)ResponseCodeElement.DeepCopy();
-                    if(Rule != null) dest.Rule = (Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent)Rule.DeepCopy();
-                    if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent)Ruleset.DeepCopy();
                     if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
                     if(ValidateProfileIdElement != null) dest.ValidateProfileIdElement = (Hl7.Fhir.Model.Id)ValidateProfileIdElement.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
@@ -5284,8 +4690,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
                 if( !DeepComparable.Matches(ResponseElement, otherT.ResponseElement)) return false;
                 if( !DeepComparable.Matches(ResponseCodeElement, otherT.ResponseCodeElement)) return false;
-                if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
-                if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
                 if( !DeepComparable.Matches(SourceIdElement, otherT.SourceIdElement)) return false;
                 if( !DeepComparable.Matches(ValidateProfileIdElement, otherT.ValidateProfileIdElement)) return false;
                 if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
@@ -5318,8 +4722,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
                 if( !DeepComparable.IsExactly(ResponseElement, otherT.ResponseElement)) return false;
                 if( !DeepComparable.IsExactly(ResponseCodeElement, otherT.ResponseCodeElement)) return false;
-                if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
-                if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
                 if( !DeepComparable.IsExactly(SourceIdElement, otherT.SourceIdElement)) return false;
                 if( !DeepComparable.IsExactly(ValidateProfileIdElement, otherT.ValidateProfileIdElement)) return false;
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
@@ -5353,8 +4755,6 @@ namespace Hl7.Fhir.Model
                     if (ResourceElement != null) yield return ResourceElement;
                     if (ResponseElement != null) yield return ResponseElement;
                     if (ResponseCodeElement != null) yield return ResponseCodeElement;
-                    if (Rule != null) yield return Rule;
-                    if (Ruleset != null) yield return Ruleset;
                     if (SourceIdElement != null) yield return SourceIdElement;
                     if (ValidateProfileIdElement != null) yield return ValidateProfileIdElement;
                     if (ValueElement != null) yield return ValueElement;
@@ -5368,30 +4768,28 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (DirectionElement != null) yield return new ElementValue("direction", false, DirectionElement);
-                    if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", false, CompareToSourceIdElement);
-                    if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", false, CompareToSourceExpressionElement);
-                    if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", false, CompareToSourcePathElement);
-                    if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
-                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
-                    if (HeaderFieldElement != null) yield return new ElementValue("headerField", false, HeaderFieldElement);
-                    if (MinimumIdElement != null) yield return new ElementValue("minimumId", false, MinimumIdElement);
-                    if (NavigationLinksElement != null) yield return new ElementValue("navigationLinks", false, NavigationLinksElement);
-                    if (OperatorElement != null) yield return new ElementValue("operator", false, OperatorElement);
-                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
-                    if (RequestMethodElement != null) yield return new ElementValue("requestMethod", false, RequestMethodElement);
-                    if (RequestURLElement != null) yield return new ElementValue("requestURL", false, RequestURLElement);
-                    if (ResourceElement != null) yield return new ElementValue("resource", false, ResourceElement);
-                    if (ResponseElement != null) yield return new ElementValue("response", false, ResponseElement);
-                    if (ResponseCodeElement != null) yield return new ElementValue("responseCode", false, ResponseCodeElement);
-                    if (Rule != null) yield return new ElementValue("rule", false, Rule);
-                    if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
-                    if (SourceIdElement != null) yield return new ElementValue("sourceId", false, SourceIdElement);
-                    if (ValidateProfileIdElement != null) yield return new ElementValue("validateProfileId", false, ValidateProfileIdElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                    if (WarningOnlyElement != null) yield return new ElementValue("warningOnly", false, WarningOnlyElement);
+                    if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (DirectionElement != null) yield return new ElementValue("direction", DirectionElement);
+                    if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", CompareToSourceIdElement);
+                    if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", CompareToSourceExpressionElement);
+                    if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", CompareToSourcePathElement);
+                    if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+                    if (HeaderFieldElement != null) yield return new ElementValue("headerField", HeaderFieldElement);
+                    if (MinimumIdElement != null) yield return new ElementValue("minimumId", MinimumIdElement);
+                    if (NavigationLinksElement != null) yield return new ElementValue("navigationLinks", NavigationLinksElement);
+                    if (OperatorElement != null) yield return new ElementValue("operator", OperatorElement);
+                    if (PathElement != null) yield return new ElementValue("path", PathElement);
+                    if (RequestMethodElement != null) yield return new ElementValue("requestMethod", RequestMethodElement);
+                    if (RequestURLElement != null) yield return new ElementValue("requestURL", RequestURLElement);
+                    if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
+                    if (ResponseElement != null) yield return new ElementValue("response", ResponseElement);
+                    if (ResponseCodeElement != null) yield return new ElementValue("responseCode", ResponseCodeElement);
+                    if (SourceIdElement != null) yield return new ElementValue("sourceId", SourceIdElement);
+                    if (ValidateProfileIdElement != null) yield return new ElementValue("validateProfileId", ValidateProfileIdElement);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                    if (WarningOnlyElement != null) yield return new ElementValue("warningOnly", WarningOnlyElement);
                 }
             }
 
@@ -5399,670 +4797,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionAssertRuleComponent")]
-        [DataContract]
-        public partial class ActionAssertRuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ActionAssertRuleComponent"; } }
-            
-            /// <summary>
-            /// Id of the TestScript.rule
-            /// </summary>
-            [FhirElement("ruleId", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RuleIdElement
-            {
-                get { return _RuleIdElement; }
-                set { _RuleIdElement = value; OnPropertyChanged("RuleIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RuleIdElement;
-            
-            /// <summary>
-            /// Id of the TestScript.rule
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RuleId
-            {
-                get { return RuleIdElement != null ? RuleIdElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        RuleIdElement = null; 
-                    else
-                        RuleIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RuleId");
-                }
-            }
-            
-            /// <summary>
-            /// Rule parameter template
-            /// </summary>
-            [FhirElement("param", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent> Param
-            {
-                get { if(_Param==null) _Param = new List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent>(); return _Param; }
-                set { _Param = value; OnPropertyChanged("Param"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent> _Param;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ActionAssertRuleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(RuleIdElement != null) dest.RuleIdElement = (Hl7.Fhir.Model.Id)RuleIdElement.DeepCopy();
-                    if(Param != null) dest.Param = new List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent>(Param.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ActionAssertRuleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.Matches(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.IsExactly(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (RuleIdElement != null) yield return RuleIdElement;
-                    foreach (var elem in Param) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (RuleIdElement != null) yield return new ElementValue("ruleId", false, RuleIdElement);
-                    foreach (var elem in Param) { if (elem != null) yield return new ElementValue("param", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ActionAssertRuleParamComponent")]
-        [DataContract]
-        public partial class ActionAssertRuleParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ActionAssertRuleParamComponent"; } }
-            
-            /// <summary>
-            /// Parameter name matching external assert rule parameter
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Parameter name matching external assert rule parameter
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ValueElement
-            {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ValueElement;
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Value");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ActionAssertRuleParamComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ActionAssertRuleParamComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRuleParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (ValueElement != null) yield return ValueElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ActionAssertRulesetComponent")]
-        [DataContract]
-        public partial class ActionAssertRulesetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ActionAssertRulesetComponent"; } }
-            
-            /// <summary>
-            /// Id of the TestScript.ruleset
-            /// </summary>
-            [FhirElement("rulesetId", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RulesetIdElement
-            {
-                get { return _RulesetIdElement; }
-                set { _RulesetIdElement = value; OnPropertyChanged("RulesetIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RulesetIdElement;
-            
-            /// <summary>
-            /// Id of the TestScript.ruleset
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RulesetId
-            {
-                get { return RulesetIdElement != null ? RulesetIdElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        RulesetIdElement = null; 
-                    else
-                        RulesetIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RulesetId");
-                }
-            }
-            
-            /// <summary>
-            /// The referenced rule within the ruleset
-            /// </summary>
-            [FhirElement("rule", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent> Rule
-            {
-                get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent>(); return _Rule; }
-                set { _Rule = value; OnPropertyChanged("Rule"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent> _Rule;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ActionAssertRulesetComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(RulesetIdElement != null) dest.RulesetIdElement = (Hl7.Fhir.Model.Id)RulesetIdElement.DeepCopy();
-                    if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent>(Rule.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ActionAssertRulesetComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRulesetComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RulesetIdElement, otherT.RulesetIdElement)) return false;
-                if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRulesetComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RulesetIdElement, otherT.RulesetIdElement)) return false;
-                if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (RulesetIdElement != null) yield return RulesetIdElement;
-                    foreach (var elem in Rule) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (RulesetIdElement != null) yield return new ElementValue("rulesetId", false, RulesetIdElement);
-                    foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ActionAssertRulesetRuleComponent")]
-        [DataContract]
-        public partial class ActionAssertRulesetRuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ActionAssertRulesetRuleComponent"; } }
-            
-            /// <summary>
-            /// Id of referenced rule within the ruleset
-            /// </summary>
-            [FhirElement("ruleId", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Id RuleIdElement
-            {
-                get { return _RuleIdElement; }
-                set { _RuleIdElement = value; OnPropertyChanged("RuleIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Id _RuleIdElement;
-            
-            /// <summary>
-            /// Id of referenced rule within the ruleset
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string RuleId
-            {
-                get { return RuleIdElement != null ? RuleIdElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        RuleIdElement = null; 
-                    else
-                        RuleIdElement = new Hl7.Fhir.Model.Id(value);
-                    OnPropertyChanged("RuleId");
-                }
-            }
-            
-            /// <summary>
-            /// Rule parameter template
-            /// </summary>
-            [FhirElement("param", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.ParamComponent> Param
-            {
-                get { if(_Param==null) _Param = new List<Hl7.Fhir.Model.TestScript.ParamComponent>(); return _Param; }
-                set { _Param = value; OnPropertyChanged("Param"); }
-            }
-            
-            private List<Hl7.Fhir.Model.TestScript.ParamComponent> _Param;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ActionAssertRulesetRuleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(RuleIdElement != null) dest.RuleIdElement = (Hl7.Fhir.Model.Id)RuleIdElement.DeepCopy();
-                    if(Param != null) dest.Param = new List<Hl7.Fhir.Model.TestScript.ParamComponent>(Param.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ActionAssertRulesetRuleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRulesetRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.Matches(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ActionAssertRulesetRuleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RuleIdElement, otherT.RuleIdElement)) return false;
-                if( !DeepComparable.IsExactly(Param, otherT.Param)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (RuleIdElement != null) yield return RuleIdElement;
-                    foreach (var elem in Param) { if (elem != null) yield return elem; }
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (RuleIdElement != null) yield return new ElementValue("ruleId", false, RuleIdElement);
-                    foreach (var elem in Param) { if (elem != null) yield return new ElementValue("param", true, elem); }
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ParamComponent")]
-        [DataContract]
-        public partial class ParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ParamComponent"; } }
-            
-            /// <summary>
-            /// Parameter name matching external assert ruleset rule parameter
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Parameter name matching external assert ruleset rule parameter
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString ValueElement
-            {
-                get { return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _ValueElement;
-            
-            /// <summary>
-            /// Parameter value defined either explicitly or dynamically
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Value
-            {
-                get { return ValueElement != null ? ValueElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Value");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ParamComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ParamComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ParamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (ValueElement != null) yield return ValueElement;
-                }
-            }
-
-            [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("TestComponent")]
+        [FhirType("TestComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -6213,9 +4948,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
                 }
             }
 
@@ -6223,7 +4958,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestActionComponent")]
+        [FhirType("TestActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -6318,8 +5053,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Operation != null) yield return new ElementValue("operation", false, Operation);
-                    if (Assert != null) yield return new ElementValue("assert", false, Assert);
+                    if (Operation != null) yield return new ElementValue("operation", Operation);
+                    if (Assert != null) yield return new ElementValue("assert", Assert);
                 }
             }
 
@@ -6327,7 +5062,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownComponent")]
+        [FhirType("TeardownComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -6406,7 +5141,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
                 }
             }
 
@@ -6414,7 +5149,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownActionComponent")]
+        [FhirType("TeardownActionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -6493,7 +5228,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Operation != null) yield return new ElementValue("operation", false, Operation);
+                    if (Operation != null) yield return new ElementValue("operation", Operation);
                 }
             }
 
@@ -6940,37 +5675,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.TestScript.VariableComponent> _Variable;
         
         /// <summary>
-        /// Assert rule used within the test script
-        /// </summary>
-        [FhirElement("rule", Order=300)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.RuleComponent> Rule
-        {
-            get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.TestScript.RuleComponent>(); return _Rule; }
-            set { _Rule = value; OnPropertyChanged("Rule"); }
-        }
-        
-        private List<Hl7.Fhir.Model.TestScript.RuleComponent> _Rule;
-        
-        /// <summary>
-        /// Assert ruleset used within the test script
-        /// </summary>
-        [FhirElement("ruleset", Order=310)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.RulesetComponent> Ruleset
-        {
-            get { if(_Ruleset==null) _Ruleset = new List<Hl7.Fhir.Model.TestScript.RulesetComponent>(); return _Ruleset; }
-            set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
-        }
-        
-        private List<Hl7.Fhir.Model.TestScript.RulesetComponent> _Ruleset;
-        
-        /// <summary>
         /// A series of required setup operations before tests are executed
         /// </summary>
-        [FhirElement("setup", Order=320)]
+        [FhirElement("setup", Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.SetupComponent Setup
         {
@@ -6983,7 +5690,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A test in this script
         /// </summary>
-        [FhirElement("test", Order=330)]
+        [FhirElement("test", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestComponent> Test
@@ -6997,7 +5704,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A series of required clean up steps
         /// </summary>
-        [FhirElement("teardown", Order=340)]
+        [FhirElement("teardown", Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.TeardownComponent Teardown
         {
@@ -7064,7 +5771,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_TST_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Expression = "setup.action.assert.all(extension.exists() or (contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count()  + validateProfileId.count() <=1))",
             Key = "tst-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within setup action assert element.",
@@ -7118,7 +5825,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_TST_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Expression = "test.action.assert.all(extension.exists() or (contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + validateProfileId.count() <=1))",
             Key = "tst-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within test action assert element.",
@@ -7182,8 +5889,6 @@ namespace Hl7.Fhir.Model
                 if(Fixture != null) dest.Fixture = new List<Hl7.Fhir.Model.TestScript.FixtureComponent>(Fixture.DeepCopy());
                 if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
                 if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.TestScript.VariableComponent>(Variable.DeepCopy());
-                if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.TestScript.RuleComponent>(Rule.DeepCopy());
-                if(Ruleset != null) dest.Ruleset = new List<Hl7.Fhir.Model.TestScript.RulesetComponent>(Ruleset.DeepCopy());
                 if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestScript.SetupComponent)Setup.DeepCopy();
                 if(Test != null) dest.Test = new List<Hl7.Fhir.Model.TestScript.TestComponent>(Test.DeepCopy());
                 if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestScript.TeardownComponent)Teardown.DeepCopy();
@@ -7225,8 +5930,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Fixture, otherT.Fixture)) return false;
             if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
             if( !DeepComparable.Matches(Variable, otherT.Variable)) return false;
-            if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
-            if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.Matches(Setup, otherT.Setup)) return false;
             if( !DeepComparable.Matches(Test, otherT.Test)) return false;
             if( !DeepComparable.Matches(Teardown, otherT.Teardown)) return false;
@@ -7261,8 +5964,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Fixture, otherT.Fixture)) return false;
             if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
             if( !DeepComparable.IsExactly(Variable, otherT.Variable)) return false;
-            if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
-            if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.IsExactly(Setup, otherT.Setup)) return false;
             if( !DeepComparable.IsExactly(Test, otherT.Test)) return false;
             if( !DeepComparable.IsExactly(Teardown, otherT.Teardown)) return false;
@@ -7297,8 +5998,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Fixture) { if (elem != null) yield return elem; }
 				foreach (var elem in Profile) { if (elem != null) yield return elem; }
 				foreach (var elem in Variable) { if (elem != null) yield return elem; }
-				foreach (var elem in Rule) { if (elem != null) yield return elem; }
-				foreach (var elem in Ruleset) { if (elem != null) yield return elem; }
 				if (Setup != null) yield return Setup;
 				foreach (var elem in Test) { if (elem != null) yield return elem; }
 				if (Teardown != null) yield return Teardown;
@@ -7311,32 +6010,30 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (Description != null) yield return new ElementValue("description", false, Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
-                foreach (var elem in Origin) { if (elem != null) yield return new ElementValue("origin", true, elem); }
-                foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", true, elem); }
-                if (Metadata != null) yield return new ElementValue("metadata", false, Metadata);
-                foreach (var elem in Fixture) { if (elem != null) yield return new ElementValue("fixture", true, elem); }
-                foreach (var elem in Profile) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                foreach (var elem in Variable) { if (elem != null) yield return new ElementValue("variable", true, elem); }
-                foreach (var elem in Rule) { if (elem != null) yield return new ElementValue("rule", true, elem); }
-                foreach (var elem in Ruleset) { if (elem != null) yield return new ElementValue("ruleset", true, elem); }
-                if (Setup != null) yield return new ElementValue("setup", false, Setup);
-                foreach (var elem in Test) { if (elem != null) yield return new ElementValue("test", true, elem); }
-                if (Teardown != null) yield return new ElementValue("teardown", false, Teardown);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+                foreach (var elem in Origin) { if (elem != null) yield return new ElementValue("origin", elem); }
+                foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", elem); }
+                if (Metadata != null) yield return new ElementValue("metadata", Metadata);
+                foreach (var elem in Fixture) { if (elem != null) yield return new ElementValue("fixture", elem); }
+                foreach (var elem in Profile) { if (elem != null) yield return new ElementValue("profile", elem); }
+                foreach (var elem in Variable) { if (elem != null) yield return new ElementValue("variable", elem); }
+                if (Setup != null) yield return new ElementValue("setup", Setup);
+                foreach (var elem in Test) { if (elem != null) yield return new ElementValue("test", elem); }
+                if (Teardown != null) yield return new ElementValue("teardown", Teardown);
             }
         }
 

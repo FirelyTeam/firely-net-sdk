@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("RestrictionComponent")]
+        [FhirType("RestrictionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("recipient", Order=60)]
             [CLSCompliant(false)]
-			[References("Patient","Practitioner","RelatedPerson","Group","Organization")]
+			[References("Patient","Practitioner","PractitionerRole","RelatedPerson","Group","Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -333,9 +333,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RepetitionsElement != null) yield return new ElementValue("repetitions", false, RepetitionsElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                    if (RepetitionsElement != null) yield return new ElementValue("repetitions", RepetitionsElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
                 }
             }
 
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -442,8 +442,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OutputComponent")]
+        [FhirType("OutputComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ParameterDefinition),typeof(DataRequirement),typeof(RelatedArtifact),typeof(ContactDetail),typeof(Contributor),typeof(TriggerDefinition),typeof(Expression),typeof(UsageContext),typeof(Dosage))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(ContactDetail),typeof(Contributor),typeof(DataRequirement),typeof(Expression),typeof(ParameterDefinition),typeof(RelatedArtifact),typeof(TriggerDefinition),typeof(UsageContext),typeof(Dosage))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -550,8 +550,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -884,17 +884,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Healthcare event during which this task originated
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=240)]
+        [FhirElement("encounter", InSummary=true, Order=240)]
         [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
+		[References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Start and end time of execution
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
-        /// requester | dispatcher | scheduler | performer | monitor | manager | acquirer | reviewer
+        /// Requested performer
         /// </summary>
         [FhirElement("performerType", Order=290)]
         [Cardinality(Min=0,Max=-1)]
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Focus != null) dest.Focus = (Hl7.Fhir.Model.ResourceReference)Focus.DeepCopy();
                 if(For != null) dest.For = (Hl7.Fhir.Model.ResourceReference)For.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(ExecutionPeriod != null) dest.ExecutionPeriod = (Hl7.Fhir.Model.Period)ExecutionPeriod.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
                 if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.FhirDateTime)LastModifiedElement.DeepCopy();
@@ -1234,7 +1234,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
             if( !DeepComparable.Matches(For, otherT.For)) return false;
-            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(ExecutionPeriod, otherT.ExecutionPeriod)) return false;
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
             if( !DeepComparable.IsExactly(For, otherT.For)) return false;
-            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(ExecutionPeriod, otherT.ExecutionPeriod)) return false;
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
@@ -1316,7 +1316,7 @@ namespace Hl7.Fhir.Model
 				if (DescriptionElement != null) yield return DescriptionElement;
 				if (Focus != null) yield return Focus;
 				if (For != null) yield return For;
-				if (Context != null) yield return Context;
+				if (Encounter != null) yield return Encounter;
 				if (ExecutionPeriod != null) yield return ExecutionPeriod;
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
 				if (LastModifiedElement != null) yield return LastModifiedElement;
@@ -1341,37 +1341,37 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (InstantiatesCanonicalElement != null) yield return new ElementValue("instantiatesCanonical", false, InstantiatesCanonicalElement);
-                if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", false, InstantiatesUriElement);
-                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
-                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", false, GroupIdentifier);
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
-                if (BusinessStatus != null) yield return new ElementValue("businessStatus", false, BusinessStatus);
-                if (IntentElement != null) yield return new ElementValue("intent", false, IntentElement);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (Focus != null) yield return new ElementValue("focus", false, Focus);
-                if (For != null) yield return new ElementValue("for", false, For);
-                if (Context != null) yield return new ElementValue("context", false, Context);
-                if (ExecutionPeriod != null) yield return new ElementValue("executionPeriod", false, ExecutionPeriod);
-                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
-                if (LastModifiedElement != null) yield return new ElementValue("lastModified", false, LastModifiedElement);
-                if (Requester != null) yield return new ElementValue("requester", false, Requester);
-                foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", true, elem); }
-                if (Owner != null) yield return new ElementValue("owner", false, Owner);
-                if (Location != null) yield return new ElementValue("location", false, Location);
-                if (ReasonCode != null) yield return new ElementValue("reasonCode", false, ReasonCode);
-                if (ReasonReference != null) yield return new ElementValue("reasonReference", false, ReasonReference);
-                foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", true, elem); }
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", true, elem); }
-                if (Restriction != null) yield return new ElementValue("restriction", false, Restriction);
-                foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", true, elem); }
-                foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (InstantiatesCanonicalElement != null) yield return new ElementValue("instantiatesCanonical", InstantiatesCanonicalElement);
+                if (InstantiatesUriElement != null) yield return new ElementValue("instantiatesUri", InstantiatesUriElement);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", StatusReason);
+                if (BusinessStatus != null) yield return new ElementValue("businessStatus", BusinessStatus);
+                if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (Focus != null) yield return new ElementValue("focus", Focus);
+                if (For != null) yield return new ElementValue("for", For);
+                if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+                if (ExecutionPeriod != null) yield return new ElementValue("executionPeriod", ExecutionPeriod);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (LastModifiedElement != null) yield return new ElementValue("lastModified", LastModifiedElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                foreach (var elem in PerformerType) { if (elem != null) yield return new ElementValue("performerType", elem); }
+                if (Owner != null) yield return new ElementValue("owner", Owner);
+                if (Location != null) yield return new ElementValue("location", Location);
+                if (ReasonCode != null) yield return new ElementValue("reasonCode", ReasonCode);
+                if (ReasonReference != null) yield return new ElementValue("reasonReference", ReasonReference);
+                foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", elem); }
+                if (Restriction != null) yield return new ElementValue("restriction", Restriction);
+                foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", elem); }
+                foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", elem); }
             }
         }
 

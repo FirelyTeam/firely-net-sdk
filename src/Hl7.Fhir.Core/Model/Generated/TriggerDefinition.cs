@@ -4,7 +4,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -37,7 +39,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated for FHIR v3.5.0
+// Generated for FHIR v4.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -189,17 +191,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Timing;
         
         /// <summary>
-        /// Triggering data of the event
+        /// Triggering data of the event (multiple = 'and')
         /// </summary>
         [FhirElement("data", InSummary=true, Order=60)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public DataRequirement Data
+        public List<DataRequirement> Data
         {
-            get { return _Data; }
+            get { if(_Data==null) _Data = new List<DataRequirement>(); return _Data; }
             set { _Data = value; OnPropertyChanged("Data"); }
         }
         
-        private DataRequirement _Data;
+        private List<DataRequirement> _Data;
         
         /// <summary>
         /// Whether the event triggers (boolean expression)
@@ -225,7 +228,7 @@ namespace Hl7.Fhir.Model
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
-                if(Data != null) dest.Data = (DataRequirement)Data.DeepCopy();
+                if(Data != null) dest.Data = new List<DataRequirement>(Data.DeepCopy());
                 if(Condition != null) dest.Condition = (Expression)Condition.DeepCopy();
                 return dest;
             }
@@ -277,7 +280,7 @@ namespace Hl7.Fhir.Model
                 if (TypeElement != null) yield return TypeElement;
                 if (NameElement != null) yield return NameElement;
                 if (Timing != null) yield return Timing;
-                if (Data != null) yield return Data;
+                foreach (var elem in Data) { if (elem != null) yield return elem; }
                 if (Condition != null) yield return Condition;
             }
         }
@@ -288,11 +291,11 @@ namespace Hl7.Fhir.Model
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                if (Data != null) yield return new ElementValue("data", false, Data);
-                if (Condition != null) yield return new ElementValue("condition", false, Condition);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (Timing != null) yield return new ElementValue("timing", Timing);
+                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
+                if (Condition != null) yield return new ElementValue("condition", Condition);
  
             } 
         } 

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Rest
 
             result.Response.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
-#if !DOTNETFW
+#if NETSTANDARD1_1
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
                     result.Response.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else
@@ -142,12 +142,15 @@ namespace Hl7.Fhir.Rest
                 else
                     result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
             }
-            catch(FormatException fe)
+            catch (FormatException fe) when (!throwOnFormatException)
             {
-                if (throwOnFormatException) throw fe;
+                // if (throwOnFormatException) throw fe;
+
+                // [WMR 20181029] TODO...
+                // ExceptionHandler.NotifyOrThrow(...)_
+
                 return null;
             }
-
             return result;
         }
 
@@ -217,11 +220,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.Annotation<Body>();
-            return body != null ? body.Data : null;
-        }
+        public static byte[] GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {

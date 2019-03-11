@@ -1,6 +1,6 @@
-|DSTU2|STU3|
-|---|---|
-|[![DSTU2](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop)|[![STU3](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop-stu3?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop-stu3)|
+|DSTU2|STU3|R4|Released|
+|---|---|---|---|
+|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop-stu3)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop-r4)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Release status](https://vsrm.dev.azure.com/firely/_apis/public/Release/badge/d27985be-1c61-41fd-82e7-23e7a2f06dc3/1/2)](https://dev.azure.com/firely/fhir-net-api/_releaseDefinition?definitionId=1&_a=definition-pipeline)|
 
 ## Introduction ##
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
@@ -26,7 +26,7 @@ each with breaking changes - so you need to ensure you use the version that is r
 * [DSTU1][dstu1-spec] (published September 2014) is mostly obsolete, and the .NET version for this publication is not maintained anymore.
 * [DSTU2][dstu2-spec] (published October 2015) in widespread use, and still supported by this library and other tooling on the market.
 * [STU3][stu3-spec] (published March 2017) latest release, mature support by this library and most other tooling on the market.
-* [R4][r4-spec] (not yet published), support in alpha by this library. Would not be supported by production systems, since this release is still in development. Expected publication in Q3 2018.
+* [R4][r4-spec] (published December 2018), support in alpha by this library. Beta will be released in Q1 2019.
 
 
 Planned release DSTU2.1 was never published by HL7, but you will still find traces of it, in particular we still keep the NuGet package for it available.
@@ -37,7 +37,7 @@ and develop branches in this repository below:
 
 |Spec version|Git branch|Core NuGet|Specification NuGet|
 |---|---|---|---|
-|R4|https://github.com/ewoutkramer/fhir-net-api/tree/develop-r4|https://www.nuget.org/packages/Hl7.Fhir.R4/|https://www.nuget.org/packages/Hl7.Fhir.Specification.R4/|
+|R4|https://github.com/ewoutkramer/fhir-net-api/tree/develop-r4|https://www.myget.org/feed/fhir-net-api/package/nuget/Hl7.Fhir.R4/|https://www.myget.org/feed/fhir-net-api/package/nuget/Hl7.Fhir.Specification.R4/|
 |STU3|https://github.com/ewoutkramer/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
 |DSTU 2.1|N/A|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
 |DSTU2| https://github.com/ewoutkramer/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
@@ -57,8 +57,8 @@ If you want to participate in this project, we're using [Git Flow][nvie] for our
 [fhir-spec]: http://www.hl7.org/fhir
 [dstu1-spec]: http://hl7.org/fhir/DSTU1/index.html
 [dstu2-spec]: http://hl7.org/fhir/DSTU2/index.html
-[stu3-spec]: http://www.hl7.org/fhir
-[r4-spec]: http://build.fhir.org
+[stu3-spec]: http://hl7.org/fhir/stu3/index.html
+[r4-spec]: http://www.hl7.org/fhir
 [fhirpath-spec]: http://hl7.org/fhirpath/
 
 ### GIT branching strategy 

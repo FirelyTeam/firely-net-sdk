@@ -121,13 +121,58 @@ namespace Hl7.Fhir.Specification.Navigation
             return null;
         }
 
-        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+        /// <summary>Returns the type profile reference(s) of the primary element type code, if available.</summary>
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
+        {
+            return elem.Type.FirstOrDefault()?.Profile ?? Enumerable.Empty<string>();
+        }
+
+        /// <summary>
+        /// Returns the only element of a sequence,
+        /// or the default value if the sequence is empty or contains multiple elements.
+        /// <para>
+        /// If the specified sequence contains multiple elements, then this method returns the default value.
+        /// The standard LINQ method <see cref="Enumerable.SingleOrDefault{TSource}(IEnumerable{TSource})"/>
+        /// would throw an exception.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of <paramref name="sequence"/></typeparam>
+        /// <param name="sequence">An <see cref="IEnumerable{T}"/> to return the single element of.</param>
+        /// <returns>A value of type <typeparamref name="T"/>.</returns>
+        internal static T SafeSingleOrDefault<T>(this IEnumerable<T> sequence)
+        {
+            using (var e = sequence.GetEnumerator())
+            {
+                if (e.MoveNext())
+                {
+                    var first = e.Current;
+                    if (!e.MoveNext())
+                    {
+                        // Return single element
+                        return first;
+                    }
+                }
+            }
+            // Zero or multiple elements
+            return default(T);
+        }
+
+        // <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+
+        /// <summary>
+        /// If the specified type reference specifies a single profile url, then return it.
+        /// Otherwise return the core profile url for the specified type code.
+        /// </summary>
+        /// <param name="elemType">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>
+        /// <returns>An profile uri string, or <c>null</c>.</returns>
         public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
         {
             string profile = null;
             if (elemType != null)
             {
-                profile = elemType.Profile.FirstOrDefault();
+                // [WMR 20181212] R4 NEW
+                //profile = elemType.Profile.FirstOrDefault();
+                profile = elemType.Profile.SafeSingleOrDefault();
                 if (profile == null && elemType.Code != null)
                 {
                     profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code);
@@ -216,6 +261,18 @@ namespace Hl7.Fhir.Specification.Navigation
             // return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
             return primaryType != null && IsReference(primaryType);
         }
+
+        /// <summary>
+        /// Determines if the specified element is a backbone element
+        /// </summary>
+        /// <param name="defn"></param>
+        /// <returns></returns>
+        /// <remarks>Backbone elements are nested groups of elements, that appear within resources (of type BackboneElement) or as
+        /// within datatypes (of type Element).
+        ///</remarks>
+        public static bool IsBackboneElement(this ElementDefinition defn) => defn.Path.Contains('.') && defn.Type.Count == 1 && 
+            (defn.Type[0].Code == "BackboneElement" || defn.Type[0].Code == "Element");
+
 
         /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
         /// <param name="typeRef">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>

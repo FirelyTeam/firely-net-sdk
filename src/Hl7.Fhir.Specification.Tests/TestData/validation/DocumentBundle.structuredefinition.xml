@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.org/StructureDefinition/DocumentBundle" />
   <name value="DocumentBundle" />
   <status value="draft" />
   <fhirVersion value="1.0.2" />
   <kind value="resource" />
-  <type value="Bundle" />
   <abstract value="false" />
+  <type value="Bundle" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
   <derivation value="constraint" />
   <differential>

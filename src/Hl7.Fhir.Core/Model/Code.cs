@@ -30,20 +30,17 @@
 
 
 using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Model
 {
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -65,7 +62,7 @@ namespace Hl7.Fhir.Model
         string Code { get; }
     }
 
-#if NET45
+#if !NETSTANDARD1_1
     [Serializable]
 #endif
     [FhirType("codeOfT")]
@@ -81,7 +78,7 @@ namespace Hl7.Fhir.Model
 
 
         // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
         [DataMember]
         public T? Value
         {

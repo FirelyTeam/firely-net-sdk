@@ -6,29 +6,22 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-
 
 namespace Hl7.Fhir.Serialization
 {
 #pragma warning disable 612, 618
     internal class PrimitiveValueReader
     {
-        private IFhirReader _current;
-        private ModelInspector _inspector;
+        private readonly ITypedElement _current;
+        private readonly ModelInspector _inspector;
 
-        public PrimitiveValueReader(IFhirReader data)
+        public PrimitiveValueReader(ITypedElement data)
         {
             _current = data;
             _inspector = BaseFhirParser.Inspector;
@@ -38,23 +31,23 @@ namespace Hl7.Fhir.Serialization
         internal object Deserialize(Type nativeType)
         {
             if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
-                 
-            object primitiveValue = _current.GetPrimitiveValue();
-            
-            if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
-            {
-                // Don't try to parse enums in the parser -> it's been moved to the Code<T> type
-                return primitiveValue;
-            }
+
+            object primitiveValue = _current.Value;
+
+            if (nativeType.IsEnum()) return primitiveValue;
 
             try
             {
-                return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);
+                if (primitiveValue is PartialDateTime || primitiveValue is PartialTime)
+                    return PrimitiveTypeConverter.ConvertTo(primitiveValue.ToString(), nativeType);                    
+                else
+                    return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);
             }
             catch (NotSupportedException exc)
             {
                 // thrown when an unsupported conversion was required
-                throw Error.Format(exc.Message, _current);
+                ComplexTypeReader.RaiseFormatError("Not supported - " + exc.Message, _current.Location);
+                throw;  // just to satisfy the compiler - RaiseFormatError throws.
             }
         }
     }

@@ -54,6 +54,8 @@ namespace Hl7.FhirPath.Tests
                         continue;
                     if (item.EndsWith(".exe"))
                         continue;
+                    if (item.EndsWith(".zip"))
+                        continue;
                     if (item.EndsWith(".pdb"))
                         continue;
                     if (item.EndsWith("manifest.json"))

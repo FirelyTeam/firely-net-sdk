@@ -299,9 +299,9 @@ namespace Hl7.Fhir.Validation
                     // Remove redundant bases, since the snapshots will contain their constraints anyway.
                     // Note: we're not doing a full closure by resolving all bases for performance sake 
                     var result = StatedProfiles.ToList();
-                    var bases = StatedProfiles.Where(sp => sp.BaseDefinitionElement != null).Select(sp => sp.BaseDefinitionElement).Distinct().ToList();
+                    var bases = StatedProfiles.Where(sp => sp.BaseDefinitionElement?.Value != null).Select(sp => sp.BaseDefinitionElement.Value).Distinct().ToList();
                     bases.AddRange(StatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
+                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
                     result.RemoveAll(r => bases.Contains(r.Url));
                     _lastMinimalSet = result;
                 }

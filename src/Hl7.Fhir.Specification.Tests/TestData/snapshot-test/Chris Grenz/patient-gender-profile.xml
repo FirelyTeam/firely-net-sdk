@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <url value="http://example.com/fhir/SD/patient-gender" />
   <name value="patient-gender" />
   <status value="draft" />
-  <!-- [WMR 20170412 Fixed -->
   <fhirVersion value="3.0.0" />
   <mapping>
     <identity value="rim" />
@@ -31,8 +30,8 @@
     <name value="LOINC" />
   </mapping>
   <kind value="resource" />
-  <type value="Patient" />
   <abstract value="false" />
+  <type value="Patient" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
   <derivation value="constraint" />
   <snapshot>

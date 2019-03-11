@@ -31,8 +31,10 @@
   </mapping>
   <kind value="complex-type" />
   <abstract value="false" />
-  <contextType value="resource" />
-  <context value="Address" />
+  <context>
+    <type value="fhirpath" />
+    <expression value="Address" />
+  </context>
   <type value="Extension" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
   <derivation value="constraint" />

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
+  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,22 +51,32 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier(s) of this adverse event that are assigned by business processes and/or used to refer to it when a direct URL reference to the resource itsefl is not appropriate.</xs:documentation>
+              <xs:documentation xml:lang="en">Business identifiers assigned to this adverse event by the performer or other systems which remain constant as the resource is updated and propagates from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="1" type="AdverseEventCategory">
+          <xs:element name="actuality" minOccurs="1" maxOccurs="1" type="AdverseEventActuality">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of event which is important to characterize what occurred and caused harm to the subject, or had the potential to cause harm to the subject.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether the event actually happened, or just had the potential to. Note that this is independent of whether anyone was affected or harmed or how severely.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The overall type of event, intended for search and filtering purposes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="event" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">This element defines the specific type of event that occurred or that was prevented from occurring.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">This subject or group impacted by the event.  With a prospective adverse event, there will be no subject as the adverse event was prevented.</xs:documentation>
+              <xs:documentation xml:lang="en">This subject or group impacted by the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The Encounter during which AdverseEvent was created or to which the creation of this record is tightly associated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -74,7 +84,17 @@
               <xs:documentation xml:lang="en">The date (and perhaps time) when the adverse event occurred.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reaction" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="detected" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Estimated or actual date the AdverseEvent began, in the opinion of the reporter.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="recordedDate" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date on which the existence of the AdverseEvent was first recorded.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="resultingCondition" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Includes information about the reaction that occurred as a result of exposure to a substance (for example, a drug or a chemical).</xs:documentation>
            </xs:annotation>
@@ -86,7 +106,12 @@
           </xs:element>
           <xs:element name="seriousness" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the seriousness or severity of the adverse event.</xs:documentation>
+              <xs:documentation xml:lang="en">Assessment whether this event was of real importance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="severity" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the severity of the adverse event, in relation to the subject. Contrast to AdverseEvent.seriousness - a severe rash might not be serious, but a mild heart problem is.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -99,14 +124,9 @@
               <xs:documentation xml:lang="en">Information on who recorded the adverse event.  May be the patient or a practitioner.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="eventParticipant" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="contributor" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Parties that may or should contribute or have contributed information to the Act. Such information includes information leading to the decision to perform the Act and how to perform the Act (e.g. consultant), information that the Act itself seeks to reveal (e.g. informant of clinical history), or information about what Act was performed (e.g. informant witness).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the adverse event in text.</xs:documentation>
+              <xs:documentation xml:lang="en">Parties that may or should contribute or have contributed information to the adverse event, which can consist of one or more activities.  Such information includes information leading to the decision to perform the activity and how to perform the activity (e.g. consultant), information that the activity itself seeks to reveal (e.g. informant of clinical history), or information about what activity was performed (e.g. informant witness).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="suspectEntity" type="AdverseEvent.SuspectEntity" minOccurs="0" maxOccurs="unbounded">
@@ -145,87 +165,68 @@
               <xs:documentation xml:lang="en">Identifies the actual instance of what caused the adverse event.  May be a substance, medication, medication administration, medication statement or a device.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="causality" minOccurs="0" maxOccurs="1" type="AdverseEventCausality">
+          <xs:element name="causality" type="AdverseEvent.Causality" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">causality1 | causality2.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="causalityAssessment" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">assess1 | assess2.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="causalityProductRelatedness" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">AdverseEvent.suspectEntity.causalityProductRelatedness.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="causalityMethod" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">method1 | method2.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="causalityAuthor" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">AdverseEvent.suspectEntity.causalityAuthor.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="causalityResult" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">result1 | result2.</xs:documentation>
+              <xs:documentation xml:lang="en">Information on the possible cause of the event.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AdverseEventCausality-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="causality1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">causality1 placeholder</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="causality2">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">causality2 placeholder</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="AdverseEventCausality">
+  <xs:complexType name="AdverseEvent.Causality">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TODO</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+      <xs:documentation xml:lang="en">Actual or  potential/avoided event causing unintended physical injury resulting from or contributed to by medical care, a research study or other healthcare setting factors that requires additional monitoring, treatment, or hospitalization, or that results in death.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="AdverseEventCausality-list" use="optional"/>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="assessment" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Assessment of if the entity caused the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="productRelatedness" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">AdverseEvent.suspectEntity.causalityProductRelatedness.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="author" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">AdverseEvent.suspectEntity.causalityAuthor.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="method" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">ProbabilityScale | Bayesian | Checklist.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AdverseEventCategory-list">
+  <xs:simpleType name="AdverseEventActuality-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="AE">
+      <xs:enumeration value="actual">
         <xs:annotation>
           <xs:documentation xml:lang="en">Adverse Event</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="PAE">
+      <xs:enumeration value="potential">
         <xs:annotation>
           <xs:documentation xml:lang="en">Potential Adverse Event</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="AdverseEventCategory">
+  <xs:complexType name="AdverseEventActuality">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Overall categorization of the event, e.g. real or potential</xs:documentation>
+      <xs:documentation xml:lang="en">Overall nature of the adverse event, e.g. real or potential.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AdverseEventCategory-list" use="optional"/>
+        <xs:attribute name="value" type="AdverseEventActuality-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
