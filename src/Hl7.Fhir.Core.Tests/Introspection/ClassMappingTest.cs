@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
         public void TestMixedDataTypeDetection()
         {
-            Assert.ThrowsException<ArgumentException>(() => ClassMapping.Create(typeof(ComplexNumber)));
+            TestHelper.AssertThrows<ArgumentException>(() => ClassMapping.Create(typeof(ComplexNumber)));
             // cannot have a datatype with a profile....
         }
 

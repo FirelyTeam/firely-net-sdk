@@ -28,7 +28,11 @@ namespace Hl7.Fhir.FhirPath
 
                     Debug.WriteLine(String.Format("Testing Validation: {0} ({1} rules)", item, (dr.InvariantConstraints != null ? dr.InvariantConstraints.Count : 0)));
 
+#if NET40
+                    var results = dr.Validate(new System.ComponentModel.DataAnnotations.ValidationContext(dr, null, null));
+#else
                     var results = dr.Validate(new System.ComponentModel.DataAnnotations.ValidationContext(dr));
+#endif
                     foreach (var result in results)
                     {
                         if (result.ErrorMessage.Contains("FATAL"))

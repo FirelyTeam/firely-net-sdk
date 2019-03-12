@@ -28,9 +28,13 @@
     </Choose>
 
   <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">
+    <ItemGroup>
+      <_TestTargetFramework Include="$(TargetFrameworks)" />
+    </ItemGroup>
     <Message Text="Appveyor = $(APPVEYOR)" Importance="high" />  
     <Message Text="Logger = $(VSTestLogger), Filter = $(TestCaseFilter)" Importance="high" />
-    <Exec Command='vstest.console.exe $(VSTestLogger) $(TestCaseFilter) $(OutputPath)$(AssemblyName).dll' />
+    <Exec Command='vstest.console.exe $(VSTestLogger) $(TestCaseFilter) $(OutputPath)$(AssemblyName).dll' Condition="'$(TargetFrameworks)' == ''" />
+    <Exec Command='vstest.console.exe $(VSTestLogger) $(TestCaseFilter) $(OutputPath)%(_TestTargetFramework.Identity)\$(AssemblyName).dll' IgnoreExitCode='true' Condition="'$(TargetFrameworks)' != ''" />
   </Target>
 
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
