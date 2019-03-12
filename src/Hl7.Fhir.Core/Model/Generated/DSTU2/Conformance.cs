@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -172,8 +172,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
                 }
             }
         
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SoftwareComponent")]
         [DataContract]
-        public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SoftwareComponent"; } }
@@ -354,9 +354,9 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                    if (ReleaseDateElement != null) yield return new ElementValue("releaseDate", false, ReleaseDateElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                    if (ReleaseDateElement != null) yield return new ElementValue("releaseDate", ReleaseDateElement);
                 }
             }
         
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ImplementationComponent")]
         [DataContract]
-        public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ImplementationComponent"; } }
@@ -500,8 +500,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 }
             }
         
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RestComponent")]
         [DataContract]
-        public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RestComponent"; } }
@@ -807,15 +807,15 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
-                    if (Security != null) yield return new ElementValue("security", false, Security);
-                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }
-                    foreach (var elem in Interaction) { if (elem != null) yield return new ElementValue("interaction", true, elem); }
-                    if (TransactionModeElement != null) yield return new ElementValue("transactionMode", false, TransactionModeElement);
-                    foreach (var elem in SearchParam) { if (elem != null) yield return new ElementValue("searchParam", true, elem); }
-                    foreach (var elem in Operation) { if (elem != null) yield return new ElementValue("operation", true, elem); }
-                    foreach (var elem in CompartmentElement) { if (elem != null) yield return new ElementValue("compartment", true, elem); }
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
+                    if (Security != null) yield return new ElementValue("security", Security);
+                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", elem); }
+                    foreach (var elem in Interaction) { if (elem != null) yield return new ElementValue("interaction", elem); }
+                    if (TransactionModeElement != null) yield return new ElementValue("transactionMode", TransactionModeElement);
+                    foreach (var elem in SearchParam) { if (elem != null) yield return new ElementValue("searchParam", elem); }
+                    foreach (var elem in Operation) { if (elem != null) yield return new ElementValue("operation", elem); }
+                    foreach (var elem in CompartmentElement) { if (elem != null) yield return new ElementValue("compartment", elem); }
                 }
             }
         
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SecurityComponent")]
         [DataContract]
-        public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SecurityComponent"; } }
@@ -992,10 +992,10 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CorsElement != null) yield return new ElementValue("cors", false, CorsElement);
-                    foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", true, elem); }
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    foreach (var elem in Certificate) { if (elem != null) yield return new ElementValue("certificate", true, elem); }
+                    if (CorsElement != null) yield return new ElementValue("cors", CorsElement);
+                    foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    foreach (var elem in Certificate) { if (elem != null) yield return new ElementValue("certificate", elem); }
                 }
             }
         
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CertificateComponent")]
         [DataContract]
-        public partial class CertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CertificateComponent"; } }
@@ -1136,8 +1136,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (BlobElement != null) yield return new ElementValue("blob", false, BlobElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
                 }
             }
         
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ResourceComponent")]
         [DataContract]
-        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
@@ -1589,18 +1589,18 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
-                    foreach (var elem in Interaction) { if (elem != null) yield return new ElementValue("interaction", true, elem); }
-                    if (VersioningElement != null) yield return new ElementValue("versioning", false, VersioningElement);
-                    if (ReadHistoryElement != null) yield return new ElementValue("readHistory", false, ReadHistoryElement);
-                    if (UpdateCreateElement != null) yield return new ElementValue("updateCreate", false, UpdateCreateElement);
-                    if (ConditionalCreateElement != null) yield return new ElementValue("conditionalCreate", false, ConditionalCreateElement);
-                    if (ConditionalUpdateElement != null) yield return new ElementValue("conditionalUpdate", false, ConditionalUpdateElement);
-                    if (ConditionalDeleteElement != null) yield return new ElementValue("conditionalDelete", false, ConditionalDeleteElement);
-                    foreach (var elem in SearchIncludeElement) { if (elem != null) yield return new ElementValue("searchInclude", true, elem); }
-                    foreach (var elem in SearchRevIncludeElement) { if (elem != null) yield return new ElementValue("searchRevInclude", true, elem); }
-                    foreach (var elem in SearchParam) { if (elem != null) yield return new ElementValue("searchParam", true, elem); }
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
+                    foreach (var elem in Interaction) { if (elem != null) yield return new ElementValue("interaction", elem); }
+                    if (VersioningElement != null) yield return new ElementValue("versioning", VersioningElement);
+                    if (ReadHistoryElement != null) yield return new ElementValue("readHistory", ReadHistoryElement);
+                    if (UpdateCreateElement != null) yield return new ElementValue("updateCreate", UpdateCreateElement);
+                    if (ConditionalCreateElement != null) yield return new ElementValue("conditionalCreate", ConditionalCreateElement);
+                    if (ConditionalUpdateElement != null) yield return new ElementValue("conditionalUpdate", ConditionalUpdateElement);
+                    if (ConditionalDeleteElement != null) yield return new ElementValue("conditionalDelete", ConditionalDeleteElement);
+                    foreach (var elem in SearchIncludeElement) { if (elem != null) yield return new ElementValue("searchInclude", elem); }
+                    foreach (var elem in SearchRevIncludeElement) { if (elem != null) yield return new ElementValue("searchRevInclude", elem); }
+                    foreach (var elem in SearchParam) { if (elem != null) yield return new ElementValue("searchParam", elem); }
                 }
             }
         
@@ -1610,7 +1610,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ResourceInteractionComponent")]
         [DataContract]
-        public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceInteractionComponent"; } }
@@ -1742,8 +1742,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
                 }
             }
         
@@ -1753,7 +1753,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SearchParamComponent")]
         [DataContract]
-        public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SearchParamComponent"; } }
@@ -2069,13 +2069,13 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
-                    foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", true, elem); }
-                    foreach (var elem in ModifierElement) { if (elem != null) yield return new ElementValue("modifier", true, elem); }
-                    foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", true, elem); }
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (DefinitionElement != null) yield return new ElementValue("definition", DefinitionElement);
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
+                    foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", elem); }
+                    foreach (var elem in ModifierElement) { if (elem != null) yield return new ElementValue("modifier", elem); }
+                    foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", elem); }
                 }
             }
         
@@ -2085,7 +2085,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SystemInteractionComponent")]
         [DataContract]
-        public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SystemInteractionComponent"; } }
@@ -2217,8 +2217,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
                 }
             }
         
@@ -2228,7 +2228,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OperationComponent")]
         [DataContract]
-        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
@@ -2344,8 +2344,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (Definition != null) yield return new ElementValue("definition", false, Definition);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (Definition != null) yield return new ElementValue("definition", Definition);
                 }
             }
         
@@ -2355,7 +2355,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MessagingComponent")]
         [DataContract]
-        public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MessagingComponent"; } }
@@ -2522,10 +2522,10 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
-                    if (ReliableCacheElement != null) yield return new ElementValue("reliableCache", false, ReliableCacheElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
-                    foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
+                    if (ReliableCacheElement != null) yield return new ElementValue("reliableCache", ReliableCacheElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
+                    foreach (var elem in Event) { if (elem != null) yield return new ElementValue("event", elem); }
                 }
             }
         
@@ -2535,7 +2535,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EndpointComponent")]
         [DataContract]
-        public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EndpointComponent"; } }
@@ -2649,8 +2649,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Protocol != null) yield return new ElementValue("protocol", false, Protocol);
-                    if (AddressElement != null) yield return new ElementValue("address", false, AddressElement);
+                    if (Protocol != null) yield return new ElementValue("protocol", Protocol);
+                    if (AddressElement != null) yield return new ElementValue("address", AddressElement);
                 }
             }
         
@@ -2660,7 +2660,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EventComponent")]
         [DataContract]
-        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EventComponent"; } }
@@ -2923,13 +2923,13 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (FocusElement != null) yield return new ElementValue("focus", false, FocusElement);
-                    if (Request != null) yield return new ElementValue("request", false, Request);
-                    if (Response != null) yield return new ElementValue("response", false, Response);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (CategoryElement != null) yield return new ElementValue("category", CategoryElement);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (FocusElement != null) yield return new ElementValue("focus", FocusElement);
+                    if (Request != null) yield return new ElementValue("request", Request);
+                    if (Response != null) yield return new ElementValue("response", Response);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
                 }
             }
         
@@ -2939,7 +2939,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DocumentComponent")]
         [DataContract]
-        public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DocumentComponent"; } }
@@ -3091,9 +3091,9 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
-                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
-                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
+                    if (Profile != null) yield return new ElementValue("profile", Profile);
                 }
             }
         
@@ -3912,27 +3912,27 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
-                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
-                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
-                if (Software != null) yield return new ElementValue("software", false, Software);
-                if (Implementation != null) yield return new ElementValue("implementation", false, Implementation);
-                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
-                if (AcceptUnknownElement != null) yield return new ElementValue("acceptUnknown", false, AcceptUnknownElement);
-                foreach (var elem in FormatElement) { if (elem != null) yield return new ElementValue("format", true, elem); }
-                foreach (var elem in Profile) { if (elem != null) yield return new ElementValue("profile", true, elem); }
-                foreach (var elem in Rest) { if (elem != null) yield return new ElementValue("rest", true, elem); }
-                foreach (var elem in Messaging) { if (elem != null) yield return new ElementValue("messaging", true, elem); }
-                foreach (var elem in Document) { if (elem != null) yield return new ElementValue("document", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
+                if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
+                if (KindElement != null) yield return new ElementValue("kind", KindElement);
+                if (Software != null) yield return new ElementValue("software", Software);
+                if (Implementation != null) yield return new ElementValue("implementation", Implementation);
+                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", FhirVersionElement);
+                if (AcceptUnknownElement != null) yield return new ElementValue("acceptUnknown", AcceptUnknownElement);
+                foreach (var elem in FormatElement) { if (elem != null) yield return new ElementValue("format", elem); }
+                foreach (var elem in Profile) { if (elem != null) yield return new ElementValue("profile", elem); }
+                foreach (var elem in Rest) { if (elem != null) yield return new ElementValue("rest", elem); }
+                foreach (var elem in Messaging) { if (elem != null) yield return new ElementValue("messaging", elem); }
+                foreach (var elem in Document) { if (elem != null) yield return new ElementValue("document", elem); }
             }
         }
     

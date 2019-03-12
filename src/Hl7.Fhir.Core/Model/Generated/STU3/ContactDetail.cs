@@ -163,8 +163,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
             }
         }
     

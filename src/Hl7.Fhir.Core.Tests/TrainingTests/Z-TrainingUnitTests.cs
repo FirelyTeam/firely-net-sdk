@@ -21,7 +21,7 @@ namespace FHIR.Server.Tests
             pat.Name.Add(new HumanName().WithGiven("Brian").AndFamily("Postlethwaite"));
             pat.Name[0].Use = NameUse.Usual;
             pat.Name[0].Prefix = new string[] { "Mr" };
-            DateTime nativeBirthTime = new DateTime(2016, 6, 16, 15, 23, 0);
+            DateTimeOffset nativeBirthTime = new DateTimeOffset(2016, 6, 16, 15, 23, 0, TimeSpan.Zero);
             pat.BirthDate = nativeBirthTime.ToFhirDate();
 
             // Note that there is a pat.BirthDateElement
@@ -87,7 +87,7 @@ namespace FHIR.Server.Tests
             ResourceIdentity ri = ResourceIdentity.Build(
                     new Uri("http://sqlonfhir.azurewebsites.net/fhir"),
                     "Patient", "45", "1");
-#if NET_CONSOLE
+#if !NETSTANDARD1_1
             Trace.WriteLine(ri.WithoutVersion().OriginalString);
 #endif
         }

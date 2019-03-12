@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -55,10 +55,12 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public ElementDefinitionNavigator ShallowCopy()
         {
-            var result = new ElementDefinitionNavigator();
-            result.Elements = this.Elements;
-            result.OrdinalPosition = this.OrdinalPosition;
-            result.StructureDefinition = this.StructureDefinition;
+            var result = new ElementDefinitionNavigator
+            {
+                Elements = this.Elements,
+                OrdinalPosition = this.OrdinalPosition,
+                StructureDefinition = this.StructureDefinition
+            };
 
             return result;
         }

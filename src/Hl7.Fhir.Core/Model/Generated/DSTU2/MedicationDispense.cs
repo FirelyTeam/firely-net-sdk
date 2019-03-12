@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DosageInstructionComponent")]
         [DataContract]
-        public partial class DosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DosageInstructionComponent"; } }
@@ -319,16 +319,16 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", false, AdditionalInstructions);
-                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
-                    if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
-                    if (Site != null) yield return new ElementValue("site", false, Site);
-                    if (Route != null) yield return new ElementValue("route", false, Route);
-                    if (Method != null) yield return new ElementValue("method", false, Method);
-                    if (Dose != null) yield return new ElementValue("dose", false, Dose);
-                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
-                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
+                    if (TextElement != null) yield return new ElementValue("text", TextElement);
+                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", AdditionalInstructions);
+                    if (Timing != null) yield return new ElementValue("timing", Timing);
+                    if (AsNeeded != null) yield return new ElementValue("asNeeded", AsNeeded);
+                    if (Site != null) yield return new ElementValue("site", Site);
+                    if (Route != null) yield return new ElementValue("route", Route);
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (Dose != null) yield return new ElementValue("dose", Dose);
+                    if (Rate != null) yield return new ElementValue("rate", Rate);
+                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", MaxDosePerPeriod);
                 }
             }
         
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SubstitutionComponent")]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
@@ -455,9 +455,9 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", false, Type);
-                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
-                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", elem); }
                 }
             }
         
@@ -909,22 +909,22 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Dispenser != null) yield return new ElementValue("dispenser", false, Dispenser);
-                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", true, elem); }
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                if (DaysSupply != null) yield return new ElementValue("daysSupply", false, DaysSupply);
-                if (Medication != null) yield return new ElementValue("medication", false, Medication);
-                if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", false, WhenPreparedElement);
-                if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", false, WhenHandedOverElement);
-                if (Destination != null) yield return new ElementValue("destination", false, Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
-                if (NoteElement != null) yield return new ElementValue("note", false, NoteElement);
-                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, elem); }
-                if (Substitution != null) yield return new ElementValue("substitution", false, Substitution);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Dispenser != null) yield return new ElementValue("dispenser", Dispenser);
+                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", elem); }
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                if (DaysSupply != null) yield return new ElementValue("daysSupply", DaysSupply);
+                if (Medication != null) yield return new ElementValue("medication", Medication);
+                if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", WhenPreparedElement);
+                if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", WhenHandedOverElement);
+                if (Destination != null) yield return new ElementValue("destination", Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
+                if (NoteElement != null) yield return new ElementValue("note", NoteElement);
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", elem); }
+                if (Substitution != null) yield return new ElementValue("substitution", Substitution);
             }
         }
     

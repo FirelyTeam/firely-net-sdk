@@ -1,9 +1,9 @@
 /* 
- * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.FhirPath.Functions;
@@ -16,29 +16,29 @@ using System.Reflection;
 
 namespace Hl7.FhirPath.Expressions
 {
-    internal delegate IEnumerable<IElementNavigator> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<ITypedElement> Invokee(Closure context, IEnumerable<Invokee> arguments);
 
     internal static class InvokeeFactory
     {
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
 
 
-        public static IEnumerable<IElementNavigator> GetThis(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<ITypedElement> GetThis(Closure context, IEnumerable<Invokee> args)
         {
             return context.GetThis();
         }
 
-        public static IEnumerable<IElementNavigator> GetContext(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<ITypedElement> GetContext(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetOriginalContext();
         }
 
-        public static IEnumerable<IElementNavigator> GetResource(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<ITypedElement> GetResource(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetResource();
         }
 
-        public static IEnumerable<IElementNavigator> GetThat(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<ITypedElement> GetThat(Closure context, IEnumerable<Invokee> args)
         {
             return context.GetThat();
         }
@@ -48,7 +48,7 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func());
+                return Typecasts.CastTo<IEnumerable<ITypedElement>>(func());
             };
         }
 
@@ -61,12 +61,12 @@ namespace Hl7.FhirPath.Expressions
                     var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !focus.Any()) return FhirValueList.Empty;
 
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus)));
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus)));
                 }
                 else
                 {
                     A lastPar = (A)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(lastPar));
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(lastPar));
                 }
             };
         }
@@ -84,12 +84,12 @@ namespace Hl7.FhirPath.Expressions
                     var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argA.Any()) return FhirValueList.Empty;
 
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
                 }
                 else
                 {
                     B lastPar = (B)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), lastPar));
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), lastPar));
                 }
             };
         }
@@ -109,13 +109,13 @@ namespace Hl7.FhirPath.Expressions
                     var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argB.Any()) return FhirValueList.Empty;
 
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
                         Typecasts.CastTo<C>(argB)));
                 }
                 else
                 {
                     C lastPar = (C)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA), lastPar));
                 }
             };
@@ -139,14 +139,14 @@ namespace Hl7.FhirPath.Expressions
                     var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argC.Any()) return FhirValueList.Empty;
 
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                                  Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
                 }
                 else
                 {
                     D lastPar = (D)(object)ctx.EvaluationContext;
 
-                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                                 Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
 
                 }
@@ -163,33 +163,27 @@ namespace Hl7.FhirPath.Expressions
                 var right = args.Skip(2).First();
 
                 // Return function that actually executes the Invokee at the last moment
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
 
-        public static Invokee Return(IElementNavigator value)
+        public static Invokee Return(ITypedElement value)
         {
-            return (_, __) => (new[] { (IElementNavigator)value });
+            return (_, __) => (new[] { (ITypedElement)value });
         }
 
-        public static Invokee Return(IEnumerable<IElementNavigator> value)
+        public static Invokee Return(IEnumerable<ITypedElement> value)
         {
             return (_, __) => value;
         }
 
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            Func<Closure, IEnumerable<IElementNavigator>> boundFunc = (ctx) => invokee(ctx, arguments);
-            IEnumerable<IElementNavigator> lastResult = null;
-
             return (ctx, _) =>
             {
-                //  if (lastResult != null) return lastResult;
-
                 try
                 {
-                    lastResult = boundFunc(ctx);
-                    return lastResult;
+                    return invokee(ctx, arguments);
                 }
                 catch (Exception e)
                 {

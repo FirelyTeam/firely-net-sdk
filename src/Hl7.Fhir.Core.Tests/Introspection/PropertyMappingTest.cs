@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var mapping = ClassMapping.Create(typeof(Base64Binary));
             Assert.AreEqual("base64Binary", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
+            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             var valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.AreEqual("value", valueProp.Name);
@@ -36,22 +36,22 @@ namespace Hl7.Fhir.Tests.Introspection
             mapping = ClassMapping.Create(typeof(Code<AddressUse>));
             Assert.AreEqual("codeOfT<Hl7.Fhir.Model.AddressUse>", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
+            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection);
             Assert.IsTrue(valueProp.RepresentsValueElement);
-            Assert.AreEqual(typeof(AddressUse),valueProp.ElementType);
+            Assert.AreEqual(typeof(AddressUse),valueProp.ImplementingType);
 
             mapping = ClassMapping.Create(typeof(FhirUri));
             Assert.AreEqual("uri", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
-            Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
+            Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             valueProp = mapping.PrimitiveValueProperty;
             Assert.IsNotNull(valueProp);
             Assert.IsFalse(valueProp.IsCollection); 
             Assert.IsTrue(valueProp.RepresentsValueElement);
-            Assert.AreEqual(typeof(string),valueProp.ElementType);
+            Assert.AreEqual(typeof(string),valueProp.ImplementingType);
         }
     }
 }

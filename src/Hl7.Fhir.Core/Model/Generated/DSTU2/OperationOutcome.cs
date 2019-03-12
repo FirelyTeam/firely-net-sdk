@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IssueComponent")]
         [DataContract]
-        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "IssueComponent"; } }
@@ -285,11 +285,11 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
-                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
-                    if (Details != null) yield return new ElementValue("details", false, Details);
-                    if (DiagnosticsElement != null) yield return new ElementValue("diagnostics", false, DiagnosticsElement);
-                    foreach (var elem in LocationElement) { if (elem != null) yield return new ElementValue("location", true, elem); }
+                    if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
+                    if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+                    if (Details != null) yield return new ElementValue("details", Details);
+                    if (DiagnosticsElement != null) yield return new ElementValue("diagnostics", DiagnosticsElement);
+                    foreach (var elem in LocationElement) { if (elem != null) yield return new ElementValue("location", elem); }
                 }
             }
         
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Issue) { if (elem != null) yield return new ElementValue("issue", true, elem); }
+                foreach (var elem in Issue) { if (elem != null) yield return new ElementValue("issue", elem); }
             }
         }
     

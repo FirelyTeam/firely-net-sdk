@@ -350,13 +350,13 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
-                if (FamilyElement != null) yield return new ElementValue("family", false, FamilyElement);
-                foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", true, elem); }
-                foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", true, elem); }
-                foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", true, elem); }
-                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (UseElement != null) yield return new ElementValue("use", UseElement);
+                if (TextElement != null) yield return new ElementValue("text", TextElement);
+                if (FamilyElement != null) yield return new ElementValue("family", FamilyElement);
+                foreach (var elem in GivenElement) { if (elem != null) yield return new ElementValue("given", elem); }
+                foreach (var elem in PrefixElement) { if (elem != null) yield return new ElementValue("prefix", elem); }
+                foreach (var elem in SuffixElement) { if (elem != null) yield return new ElementValue("suffix", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
             }
         }
     

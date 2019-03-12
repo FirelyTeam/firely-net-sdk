@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 
@@ -21,7 +21,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static IResourceResolver CreateDefault()
         {
-            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource(), new WebResolver());
+            return new MultiResolver(new DirectorySource(new DirectorySourceSettings { IncludeSubDirectories = true } ), 
+                ZipSource.CreateValidationSource(), new WebResolver());
         }
 
         /// <summary>
@@ -31,7 +32,8 @@ namespace Hl7.Fhir.Specification.Source
         public static IResourceResolver CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource());
+            return new MultiResolver(new DirectorySource(new DirectorySourceSettings { IncludeSubDirectories = true }), 
+                ZipSource.CreateValidationSource());
         }
 
         /// <summary>

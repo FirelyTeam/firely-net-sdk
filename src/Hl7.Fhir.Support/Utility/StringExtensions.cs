@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -129,6 +129,24 @@ namespace Hl7.Fhir.Utility
 
                 return Tuple.Create(key, value);
             }
+        }
+
+        /// <summary>
+        /// See if text matches prefix, where the prefix can be either a
+        /// string, or string ending in '*'. In the latter case a prefix match
+        /// is done, otherwise the full strings are compared.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        public static bool MatchesPrefix(this string text, string prefix)
+        {
+            var prefixMatch = prefix?.EndsWith("*") ?? false;
+
+            return prefix == null ||
+                text == prefix ||
+                (prefixMatch && text.StartsWith(prefix.TrimEnd('*')));     // prefix scan (choice types)
+
         }
     }
 }

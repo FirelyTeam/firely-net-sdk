@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -71,7 +71,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
 
                 // Codes are cumulative based on the code value
-                snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                // [WMR 20180611] WRONG! Invalid elementComparer
+                // snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
+                snap.Code = mergeCollection(snap.Code, diff.Code, isEqualCoding);
 
                 // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
                 // In case the diff doesn't have these, give some generic defaults.
@@ -108,7 +110,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) { onConstraint(snap); }
+                    foreach (var element in snap.Type) { onConstraint(element); }
                 }
 
                 // ElementDefinition.nameReference cannot be overridden by a derived profile
@@ -309,6 +311,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Don't merge elementId, e.g. for type profiles
                     return null;
                 }
+            }
+
+            // [WMR 20180611] NEW
+            static bool isEqualCoding(Coding c, Coding d)
+            {
+                // Compare codes, if specified
+                if (c.CodeElement != null || d.CodeElement != null)
+                {
+                    return c.System == d.System
+                        && c.Version == d.Version
+                        && c.Code == d.Code;
+                }
+                // Codes are empty or missing; compare display values instead
+                return c.Display == d.Display;
             }
 
         }

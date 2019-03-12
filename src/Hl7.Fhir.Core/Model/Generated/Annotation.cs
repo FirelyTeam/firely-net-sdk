@@ -202,9 +202,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (TimeElement != null) yield return new ElementValue("time", TimeElement);
+                if (TextElement != null) yield return new ElementValue("text", TextElement);
             }
         }
     

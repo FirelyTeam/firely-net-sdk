@@ -49,8 +49,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "oid"; } }
     
-        // Must conform to the pattern "urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*"
-        public const string PATTERN = @"urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*";
+        // Must conform to the pattern "urn:oid:[0-2](\.(0|[1-9]\d*))+"
+        public const string PATTERN = @"urn:oid:[0-2](\.(0|[1-9]\d*))+";
     
         public Oid(string value)
         {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=Specification.XmlRepresentation.XmlAttr, InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
         [CLSCompliant(false)]
         [OidPattern]
         [DataMember]

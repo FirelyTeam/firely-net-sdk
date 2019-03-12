@@ -284,11 +284,11 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
-                if (UseElement != null) yield return new ElementValue("use", false, UseElement);
-                if (RankElement != null) yield return new ElementValue("rank", false, RankElement);
-                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+                if (UseElement != null) yield return new ElementValue("use", UseElement);
+                if (RankElement != null) yield return new ElementValue("rank", RankElement);
+                if (Period != null) yield return new ElementValue("period", Period);
             }
         }
     

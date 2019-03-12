@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -21,12 +21,9 @@ namespace Hl7.Fhir.Validation
 
         public static ValidationContext BuildContext(Model.Version version, object value=null)
         {
-            if (version == Model.Version.All) throw new ArgumentException("Must be a specific version", nameof(version));
-#if NET40
-            var result = new ValidationContext(value, null, null);
-#else
+            if (version == Model.Version.All) throw Utility.Error.Argument(nameof(version), "Must be a specific version");
+
             var result = new ValidationContext(value);
-#endif
             result.Items[ValidationContextVersionKey] = version;
             return result;
         }

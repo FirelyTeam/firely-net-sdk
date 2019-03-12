@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "FixedVersionComponent")]
         [DataContract]
-        public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FixedVersionComponent"; } }
@@ -230,9 +230,9 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                    if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                    if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                    if (ModeElement != null) yield return new ElementValue("mode", ModeElement);
                 }
             }
         
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ExcludedSystemComponent")]
         [DataContract]
-        public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExcludedSystemComponent"; } }
@@ -376,8 +376,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
-                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+                    if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 }
             }
         
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationComponent")]
         [DataContract]
-        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
@@ -482,8 +482,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Include != null) yield return new ElementValue("include", false, Include);
-                    if (Exclude != null) yield return new ElementValue("exclude", false, Exclude);
+                    if (Include != null) yield return new ElementValue("include", Include);
+                    if (Exclude != null) yield return new ElementValue("exclude", Exclude);
                 }
             }
         
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationIncludeComponent")]
         [DataContract]
-        public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationIncludeComponent"; } }
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", elem); }
                 }
             }
         
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationIncludeDesignationComponent")]
         [DataContract]
-        public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationIncludeDesignationComponent"; } }
@@ -695,8 +695,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (Use != null) yield return new ElementValue("use", false, Use);
+                    if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                    if (Use != null) yield return new ElementValue("use", Use);
                 }
             }
         
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationExcludeComponent")]
         [DataContract]
-        public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationExcludeComponent"; } }
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", elem); }
                 }
             }
         
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationExcludeDesignationComponent")]
         [DataContract]
-        public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationExcludeDesignationComponent"; } }
@@ -908,8 +908,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
-                    if (Use != null) yield return new ElementValue("use", false, Use);
+                    if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
+                    if (Use != null) yield return new ElementValue("use", Use);
                 }
             }
         
@@ -1719,29 +1719,29 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
-                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                foreach (var elem in FixedVersion) { if (elem != null) yield return new ElementValue("fixedVersion", true, elem); }
-                if (ExcludedSystem != null) yield return new ElementValue("excludedSystem", false, ExcludedSystem);
-                if (IncludeDesignationsElement != null) yield return new ElementValue("includeDesignations", false, IncludeDesignationsElement);
-                if (Designation != null) yield return new ElementValue("designation", false, Designation);
-                if (IncludeDefinitionElement != null) yield return new ElementValue("includeDefinition", false, IncludeDefinitionElement);
-                if (ActiveOnlyElement != null) yield return new ElementValue("activeOnly", false, ActiveOnlyElement);
-                if (ExcludeNestedElement != null) yield return new ElementValue("excludeNested", false, ExcludeNestedElement);
-                if (ExcludeNotForUIElement != null) yield return new ElementValue("excludeNotForUI", false, ExcludeNotForUIElement);
-                if (ExcludePostCoordinatedElement != null) yield return new ElementValue("excludePostCoordinated", false, ExcludePostCoordinatedElement);
-                if (DisplayLanguageElement != null) yield return new ElementValue("displayLanguage", false, DisplayLanguageElement);
-                if (LimitedExpansionElement != null) yield return new ElementValue("limitedExpansion", false, LimitedExpansionElement);
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                foreach (var elem in FixedVersion) { if (elem != null) yield return new ElementValue("fixedVersion", elem); }
+                if (ExcludedSystem != null) yield return new ElementValue("excludedSystem", ExcludedSystem);
+                if (IncludeDesignationsElement != null) yield return new ElementValue("includeDesignations", IncludeDesignationsElement);
+                if (Designation != null) yield return new ElementValue("designation", Designation);
+                if (IncludeDefinitionElement != null) yield return new ElementValue("includeDefinition", IncludeDefinitionElement);
+                if (ActiveOnlyElement != null) yield return new ElementValue("activeOnly", ActiveOnlyElement);
+                if (ExcludeNestedElement != null) yield return new ElementValue("excludeNested", ExcludeNestedElement);
+                if (ExcludeNotForUIElement != null) yield return new ElementValue("excludeNotForUI", ExcludeNotForUIElement);
+                if (ExcludePostCoordinatedElement != null) yield return new ElementValue("excludePostCoordinated", ExcludePostCoordinatedElement);
+                if (DisplayLanguageElement != null) yield return new ElementValue("displayLanguage", DisplayLanguageElement);
+                if (LimitedExpansionElement != null) yield return new ElementValue("limitedExpansion", LimitedExpansionElement);
             }
         }
     

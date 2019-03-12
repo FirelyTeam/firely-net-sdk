@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 // Accept multiple renamed choice type elements (Chris Grenz)
@@ -406,6 +406,23 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
+                // [WMR 20180604] Fix for issue #611
+                // "Bug: Snapshot Generator fails for derived profiles with sparse constraints on _some_ existing named slices"
+                // => First advance to matching named slice in snap;
+                // skip (consume) all preceding (unconstrained) named slices in snap
+                // Match => Merge named slice in diff to existing named slice in snap
+                // No match => Add new named slice (after all existing slices in snap)
+                // Only try to match named slices; always add unnamed (extension) slices in-order
+                if (diffNav.Current.Name != null)
+                {
+                    while (!StringComparer.Ordinal.Equals(snapNav.Current.Name, diffNav.Current.Name)
+                           && snapNav.MoveToNextSlice())
+                    {
+                        // Skip unconstrained base profile slice entry
+                    }
+                }
+
+
                 // Named slice with a slice entry introduces a re-slice
                 if (diffNav.Current.Slicing != null)
                 {

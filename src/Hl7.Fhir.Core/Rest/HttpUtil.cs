@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -84,7 +84,6 @@ namespace Hl7.Fhir.Rest
             return buffer.ToArray();
         }
 
-
         public static Uri MakeAbsoluteToBase(Uri location, Uri baseUrl)
         {
             // If called without a location, just return the base endpoint
@@ -109,6 +108,29 @@ namespace Hl7.Fhir.Rest
             return location;
         }
 
+        public static Uri MakeRelativeFromBase(Uri location, Uri baseUrl)
+        {
+            if (location == null) return null;
+
+            if (!location.IsAbsoluteUri)
+            {
+                throw Error.Argument(nameof(location), "Url is not an absolute uri");
+            }
+
+            if (!baseUrl.IsAbsoluteUri)
+            {
+                throw Error.Argument(nameof(baseUrl), "Url is not an absolute uri");
+            }
+
+            var endp = location.ToString();
+            var bUrl = baseUrl.ToString();
+            if (endp.StartsWith(bUrl))
+            {
+                return new Uri(endp.Substring(bUrl.Length).TrimStart('/'), UriKind.Relative);
+            }
+
+            return location;
+        }
 
         public static bool IsWithin(this Uri me, Uri other)
         {

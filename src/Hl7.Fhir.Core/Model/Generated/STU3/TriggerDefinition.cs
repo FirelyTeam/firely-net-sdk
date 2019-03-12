@@ -219,10 +219,10 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (EventNameElement != null) yield return new ElementValue("eventName", false, EventNameElement);
-                if (EventTiming != null) yield return new ElementValue("eventTiming", false, EventTiming);
-                if (EventData != null) yield return new ElementValue("eventData", false, EventData);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (EventNameElement != null) yield return new ElementValue("eventName", EventNameElement);
+                if (EventTiming != null) yield return new ElementValue("eventTiming", EventTiming);
+                if (EventData != null) yield return new ElementValue("eventData", EventData);
             }
         }
     

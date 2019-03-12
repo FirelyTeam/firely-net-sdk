@@ -202,9 +202,9 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
             }
         }
     

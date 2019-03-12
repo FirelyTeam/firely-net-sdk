@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (c) 2014, Furore (info@furore.com) and contributors
+* Copyright (c) 2014, Firely (info@fire.ly) and contributors
 * See the file CONTRIBUTORS for details.
 *
 * This file is licensed under the BSD 3-Clause license
@@ -10,9 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-
-#if NET_XSD_SCHEMA
-
 using System.Xml.XPath;
 
 namespace Hl7.Fhir.XPath
@@ -47,4 +44,3 @@ namespace Hl7.Fhir.XPath
         }
     }
 }
-#endif

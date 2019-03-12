@@ -200,6 +200,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 { "unsignedInt", typeof(Hl7.Fhir.Model.UnsignedInt) },
                 { "uri", typeof(Hl7.Fhir.Model.FhirUri) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
+                { "xhtml", typeof(Hl7.Fhir.Model.XHtml) },
         
                 { "Account", typeof(Hl7.Fhir.Model.DSTU2.Account) },
                 { "AllergyIntolerance", typeof(Hl7.Fhir.Model.DSTU2.AllergyIntolerance) },
@@ -347,6 +348,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 { typeof(Hl7.Fhir.Model.UnsignedInt), "unsignedInt" },
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
+                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
         
                 { typeof(Hl7.Fhir.Model.DSTU2.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.DSTU2.AllergyIntolerance), "AllergyIntolerance" },

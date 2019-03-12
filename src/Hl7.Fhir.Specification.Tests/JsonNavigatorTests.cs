@@ -1,12 +1,11 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-#if NET_XSD_SCHEMA
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -278,10 +277,9 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static JsonXPathNavigator buildNav()
         {
-            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "TestPatient.json"));
             var reader = new StringReader(json);
             return new JsonXPathNavigator(new JsonTextReader(reader));
         }
     }
 }
-#endif

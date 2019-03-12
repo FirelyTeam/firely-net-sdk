@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (c) 2014, Furore (info@furore.com) and contributors
+* Copyright (c) 2014, Firely (info@fire.ly) and contributors
 * See the file CONTRIBUTORS for details.
 *
 * This file is licensed under the BSD 3-Clause license
@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.XPath
 {
-#if NET_XSD_SCHEMA
     public static class JsonReaderExtensions
     {
         public static JsonXPathNavigator GetNavigator(this JsonReader reader)
@@ -24,5 +23,4 @@ namespace Hl7.Fhir.XPath
             return new JsonXPathNavigator(reader);
         }            
     }
-#endif
 }

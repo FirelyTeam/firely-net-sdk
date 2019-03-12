@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Specification.Source;
@@ -15,22 +15,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
     public sealed class SnapshotGeneratorSettings
-#if DOTNETFW
-        : ICloneable
-#endif
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-        [Obsolete("Use the CreateDefault() method")]
+        [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings();
-        //{
-        //    GenerateSnapshotForExternalProfiles = true,
-        //    ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
-        //    GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
-        //    GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
-        //    GenerateElementIds = false                  // for STU3
-        //    // MergeTypeProfiles = true
-        //};
 
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> instance with default property values.</summary>
         public static SnapshotGeneratorSettings CreateDefault() => new SnapshotGeneratorSettings();
@@ -51,11 +40,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
         public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
-
-#if DOTNETFW
-        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
-        object ICloneable.Clone() => Clone();
-#endif
 
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="SnapshotGeneratorSettings"/> instance.</param>

@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model.DSTU2;
@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Validation;
 
 namespace Hl7.Fhir.Validation
 {
@@ -45,7 +46,7 @@ namespace Hl7.Fhir.Validation
         private List<OperationOutcome> _successes = new List<OperationOutcome>();
         private List<OperationOutcome> _failures = new List<OperationOutcome>();
 
-        public override bool Add(ScopedNavigator candidate)
+        public override bool Add(ITypedElement candidate)
         {
             var report = Validator.Validate(candidate, Root);
 
@@ -97,7 +98,9 @@ namespace Hl7.Fhir.Validation
 
         private static bool errorOnDiscriminator(string[] discriminators, OperationOutcome outcome)
         {
-            foreach(var location in outcome.ListErrors().SelectMany(i => i.Location))
+            foreach(var location in outcome.ListErrors().SelectMany(i => i.Location)
+                .Union(outcome.Issue.Select(i => i.Annotation<SlicePathAnnotation>()?.Value)
+                                    .Where(p => !string.IsNullOrEmpty(p))))
             {
                 // Remove all the array indices from the instance path (e.g. you end up with Patient.telecom.system, not
                 // Patient.telecom[2].system[0])
@@ -111,7 +114,7 @@ namespace Hl7.Fhir.Validation
             return false;
         }
 
-        public override OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
+        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             OperationOutcome outcome = new OperationOutcome();
 

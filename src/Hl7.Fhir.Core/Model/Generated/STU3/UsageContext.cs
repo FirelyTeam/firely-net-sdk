@@ -146,8 +146,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Value != null) yield return new ElementValue("value", false, Value);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Value != null) yield return new ElementValue("value", Value);
             }
         }
     

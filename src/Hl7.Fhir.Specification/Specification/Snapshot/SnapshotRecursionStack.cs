@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Specification.Navigation;
@@ -142,11 +142,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public int RecursionDepth => _stack.Count;
 
-#if DOTNETFW
         void validateStackIsNotEmpty([CallerMemberName] string memberName = "")
-#else
-        void validateStackIsNotEmpty(string memberName)
-#endif
         {
             if (_stack == null || _stack.Count == 0)
             {

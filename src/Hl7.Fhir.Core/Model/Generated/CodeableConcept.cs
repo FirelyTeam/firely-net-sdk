@@ -163,8 +163,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Coding) { if (elem != null) yield return new ElementValue("coding", true, elem); }
-                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                foreach (var elem in Coding) { if (elem != null) yield return new ElementValue("coding", elem); }
+                if (TextElement != null) yield return new ElementValue("text", TextElement);
             }
         }
     

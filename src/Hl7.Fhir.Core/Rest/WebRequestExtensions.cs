@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         internal static void WriteBody(this HttpWebRequest request, bool CompressRequestBody, byte[] data)
         {
-#if !DOTNETFW
+#if NETSTANDARD1_1
             Stream outs = null;
             //outs = request.GetRequestStreamAsync().Result;
             //outs.Write(data, 0, (int)data.Length);
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Rest
 
             if (!async.IsCompleted)
             {
-#if DOTNETFW
+#if !NETSTANDARD1_1
                 ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
 #endif
 

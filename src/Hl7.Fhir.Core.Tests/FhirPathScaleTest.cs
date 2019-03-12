@@ -48,9 +48,8 @@ namespace Hl7.Fhir
                     return changedDate;
                 });
 
-            var v4 = new PocoNavigator(qr);
-            var v5 = v4.Select("group.group.where(linkId = 'Section-A').question.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault() as PocoNavigator;
-            Assert.AreEqual("QuestionnaireResponse.group.group.where(linkId='Section-A').question.where(linkId='WorkerGivenNames').answer[0].value", v5.CommonPath);
+            var v4 = qr.ToTypedElement(Model.Version.DSTU2);
+            var v5 = v4.Select("group.group.where(linkId = 'Section-A').question.where(linkId = 'WorkerGivenNames').answer.value").FirstOrDefault() as PocoElementNode;
             Assert.AreEqual("QuestionnaireResponse.group.group[0].question[5].answer[0].value", v5.ShortPath);
             Assert.AreEqual("QuestionnaireResponse.group[0].group[0].question[5].answer[0].value[0]", v5.Location);
 
@@ -61,11 +60,11 @@ namespace Hl7.Fhir
             //var exp = compiler.Compile(bigValidationExpression);
             for (int n = 0; n < 100; n++)
             {
-                bool result = qr.Predicate(mediumValidationExpression);
+                bool result = qr.Predicate(Model.Version.DSTU2, mediumValidationExpression);
                 Assert.IsTrue(result, "This weird validation should have passed");
             }
 
-            bool resultBig = qr.Predicate(bigValidationExpression);
+            bool resultBig = qr.Predicate(Model.Version.DSTU2, bigValidationExpression);
             Assert.IsTrue(resultBig, "This weird big validation should have passed");
         }
     }

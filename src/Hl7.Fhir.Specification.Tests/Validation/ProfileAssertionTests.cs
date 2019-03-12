@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Resolver = new CachedResolver(
                     new MultiResolver(
-                        new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
-                        new DirectorySource(@"TestData\validation"),
+                        new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
+                        new DirectorySource(Path.Combine("TestData", "validation")),
                         new TestProfileArtifactSource(),
                         new ZipSource("specification.zip")));
 
@@ -65,7 +66,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.Equal(2, assertion.AllProfiles.Count());         // Adding a ValueSet SD that was already there does not increase the profile count
             Assert.Equal(1, assertion.AllProfiles.Count(p => p.Status == null));    // but now there's 1 unresolved profile less
-            Assert.True(assertion.AllProfiles.Contains(sd)); // the other being the Sd we just added
+            Assert.Contains(sd, assertion.AllProfiles); // the other being the Sd we just added
 
             Assert.Equal(sd, assertion.InstanceType);
             Assert.Equal(sd, assertion.DeclaredType);
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(outcome.Success);
             Assert.Equal(2, assertion.AllProfiles.Count());         // We should still have 2 distinct SDs
             Assert.Equal(0, assertion.AllProfiles.Count(p => p.Status == null));    // none remain unresolved
-            Assert.True(assertion.AllProfiles.Contains(sd)); // one still being the Sd we manually added
+            Assert.Contains(sd, assertion.AllProfiles); // one still being the Sd we manually added
 
             assertion.AddStatedProfile("http://hl7.org/fhir/StructureDefinition/unresolvable");
 
@@ -82,7 +83,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(outcome.Success);
             Assert.Equal(3, assertion.AllProfiles.Count());         // We should still have 3 distinct SDs
             Assert.Equal(1, assertion.AllProfiles.Count(p => p.Status == null));    // one remains unresolved
-            Assert.True(assertion.AllProfiles.Contains(sd)); // one still being the Sd we manually added        
+            Assert.Contains(sd, assertion.AllProfiles); // one still being the Sd we manually added        
         }
 
 

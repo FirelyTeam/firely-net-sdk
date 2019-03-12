@@ -2,23 +2,35 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-
-    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
-    <Company>Furore (http://fhir.furore.com)</Company>
-    <Copyright>Copyright 2017 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
+    <VersionPrefix>1.3.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
+    <Company>Firely (https://fire.ly)</Company>
+    <Copyright>Copyright 2013-2019 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/CareEvolution/fhir-net-api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CareEvolution/fhir-net-api</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://github.com/CareEvolution/fhir-net-api/blob/master/icon-fhir-32.png?raw=true</PackageIconUrl>
     <PackageReleaseNotes>Multi-versions release</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
-  <PropertyGroup>
-    <FhirApiVersion>0.97.0</FhirApiVersion>
-    <SupportApiVersion>0.94.0</SupportApiVersion>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+  <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
+  one version of our library that does not require it, since iOS does not have support for it.
+  Considering netstd1.1 is our lowest common denominator, I've chosen that version to not use
+  codegen -->
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);USE_CODE_GEN</DefineConstants>
   </PropertyGroup>
 
   <!-- Compiler settings -->
   <PropertyGroup>
-    <LangVersion>7</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

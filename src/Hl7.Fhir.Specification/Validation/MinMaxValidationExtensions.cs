@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Validation
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
         }
 
-        internal static IComparable GetComparableValue(this IElementNavigator instance, Type expectedType)
+        internal static IComparable GetComparableValue(this ITypedElement instance, Type expectedType)
         {
             if (expectedType == typeof(Model.Quantity))
             {
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Validation
                 return null;
         }
 
-        internal static OperationOutcome ValidateMinMaxValue(this Validator validator, ElementDefinition definition, IElementNavigator instance)
+        internal static OperationOutcome ValidateMinMaxValue(this Validator validator, ElementDefinition definition, ITypedElement instance)
         {
             var outcome = new OperationOutcome();
 
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static OperationOutcome validateMinMaxValue(Validator me, Element definition, IElementNavigator instance,
+        private static OperationOutcome validateMinMaxValue(Validator me, Element definition, ITypedElement instance,
                         int comparisonOutcome, string elementName)
         {
             var outcome = new OperationOutcome();

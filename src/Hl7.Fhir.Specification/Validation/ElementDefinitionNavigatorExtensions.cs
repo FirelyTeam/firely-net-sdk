@@ -1,9 +1,9 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -23,21 +23,12 @@ namespace Hl7.Fhir.Validation
         }
 
 
-//#if NETSTANDARD1_1
-//        public static int Count(this string s, Func<char, bool> predicate)
-//        {
-//            return s.ToCharArray().Where(predicate).Count();
-//        }
-//#endif
-
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
         {
             //TODO: There is something smarter for this in STU3
             var path = ed.Path;
 
-            return path.Count(c => c == '.') == 1 &&
-                        path.EndsWith(".value") &&
-                        Char.IsLower(path[0]);
+            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
         }
 
         internal static bool IsResourcePlaceholder(this ElementDefinition ed)

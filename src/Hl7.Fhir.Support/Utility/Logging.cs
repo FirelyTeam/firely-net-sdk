@@ -1,9 +1,9 @@
 ﻿/*  
-* Copyright (c) 2016, Furore (info@furore.com) and contributors 
+* Copyright (c) 2016, Firely (info@fire.ly) and contributors 
 * See the file CONTRIBUTORS for details. 
 *  
 * This file is licensed under the BSD 3-Clause license 
-* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
+* available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE 
 */
 
 using System;
@@ -109,18 +109,18 @@ namespace Hl7.Fhir.Utility
             return new NotImplementedException();
         }
 
-        public static FormatException Format(string message)
+        public static FormatException Format(string message, Exception innerException=null)
         {
-            return new FormatException(message);
+            return new FormatException(message, innerException);
         }
 
         /// <summary> 
         /// Creates an <see cref="FormatException"/> with the provided properties. 
         /// </summary> 
-        public static FormatException Format(string message, string location)
+        public static FormatException Format(string message, string location, Exception innerException = null)
         {
             if (location != null)
-                message += $" (at path '{location}')";
+                message += $" (at {location})";
 
             return Format(message);
         }
@@ -128,14 +128,23 @@ namespace Hl7.Fhir.Utility
         /// <summary> 
         /// Creates an <see cref="FormatException"/> with the provided properties. 
         /// </summary> 
-        public static FormatException Format(string message, IPositionInfo pos)
+        public static FormatException Format(string message, IPositionInfo pos, Exception innerException = null)
+        {
+            if (pos != null)
+                return Format(message, pos.LineNumber, pos.LinePosition, innerException);
+            else
+                return Format(message, (string)null, innerException);
+        }
+
+        /// <summary> 
+        /// Creates an <see cref="FormatException"/> with the provided properties. 
+        /// </summary> 
+        public static FormatException Format(string message, int lineNumber, int linePosition, Exception innerException = null)
         {
             string location = null;
+            location = $"line {lineNumber}, {linePosition}";
 
-            if (pos != null)
-                location = $"line {pos.LineNumber}, pos {pos.LinePosition}";
-
-            return Format(message, location);
+            return Format(message, location, innerException);
         }
     }
 }

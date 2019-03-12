@@ -10,7 +10,9 @@
         <id value="consentdirective" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/consentdirective" />
         <name value="Consent Directive" />
@@ -3261,7 +3263,9 @@
         <id value="familymemberhistory-genetic" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/familymemberhistory-genetic" />
         <name value="Family member history for genetics analysis" />
@@ -3559,7 +3563,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -3595,7 +3599,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -3631,7 +3635,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -4171,7 +4175,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -4546,7 +4550,9 @@
         <id value="shareablevalueset" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
         <name value="Shareable ValueSet" />
@@ -5236,7 +5242,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5368,7 +5374,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5541,7 +5547,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5675,7 +5681,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5842,7 +5848,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6052,7 +6058,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6208,7 +6214,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6344,7 +6350,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6654,7 +6660,9 @@
         <id value="procedurerequest-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/procedurerequest-genetics" />
         <name value="ProcedureRequest-Genetics" />
@@ -6943,7 +6951,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -7608,7 +7616,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -8137,7 +8145,9 @@
         <id value="shareablecodesystem" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/shareablecodesystem" />
         <name value="Shareable CodeSystem" />
@@ -8912,7 +8922,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9080,7 +9090,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9249,7 +9259,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9385,7 +9395,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9553,7 +9563,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9810,7 +9820,9 @@
         <id value="devicemetricobservation" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/devicemetricobservation" />
         <name value="Device Metric Observation Profile" />
@@ -10899,7 +10911,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -11179,7 +11191,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -11338,7 +11350,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -11841,7 +11853,9 @@
         <id value="observation-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/observation-genetics" />
         <name value="Observation-genetics" />
@@ -12159,7 +12173,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12193,7 +12207,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12227,7 +12241,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12261,7 +12275,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12295,7 +12309,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12330,7 +12344,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12364,7 +12378,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12398,7 +12412,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12432,7 +12446,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12466,7 +12480,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12501,7 +12515,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12535,7 +12549,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12569,7 +12583,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12603,7 +12617,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -12637,7 +12651,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -13446,7 +13460,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -13724,7 +13738,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -13888,7 +13902,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -14376,7 +14390,9 @@
         <id value="vitalsigns" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="### Complete Summary of the Mandatory Requirements&#xA;&#xA;1.  One status in `Observation.status`which has a [required](http://hl7.org/fhir/STU3/terminologies.html#extensible) binding to:&#xA;    -    [ObservationStatus] value set.&#xA;1.  A category in `Observation.category` which must have:&#xA;    -   a fixed `Observation.category.coding.system`=&quot;http://hl7.org/fhir/observation-category&quot;&#xA;    -   a fixed `Observation.category.coding.code`= &quot;vital-signs&quot;&#xA;&#xA;1.  A code in `Observation.code`&#xA;    -   a fixed `Observation.code.coding.system`= &quot;http://loinc.org&quot;&#xA;    -   a LOINC code in `Observation.code.coding.code` which has an [extensible](http://hl7.org/fhir/STU3/terminologies.html#extensible) binding to:&#xA;         -   [Vital Signs] value set.&#xA;                &#xA;1.  One patient in `Observation.subject`&#xA;1.  A date and time in `effectiveDateTime` or `effectivePeriod`&#xA;1.  Either one `Observation.valueQuantity` or, if there is no value, one code in `Observation.DataAbsentReason`&#xA;    -   Each Observation.valueQuantity must have:&#xA;        -   One numeric value in `Observation.valueQuantity.value`&#xA;        -   a fixed `Observation.valueQuantity.system`=&quot;http://unitsofmeasure&quot;&#xA;        -   a UCUM unit code in `Observation.valueQuantity.code` which has an [required] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;    -   Observation.DataAbsentReason is bound to [Observation Value&#xA;        Absent Reason] value set.&#xA;&#xA;1.  When using a panel code to group component observations (Note: See&#xA;    the comments regarding blood pressure in the table above), one or&#xA;    more `Observation.component.code` each of which must have:&#xA;    -   a fixed&#xA;        `Observation.component.code.coding.system` =&quot;&lt;http://loinc.org&gt;&quot;&#xA;         -   a LOINC code in `Observation.code.coding.code` which has an [extensible] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;&#xA;1.  Either one `Observation.component.valueQuantity` or, if there is&#xA;    no value, one code in `Observation.component.DataAbsentReason`&#xA;    -   Each Observation.component.valueQuantity must have:&#xA;        -   One numeric value in&#xA;            `Observation.component.valueQuantity.value`&#xA;        -   a fixed `Observation.component.valueQuantity.system`= &quot;&lt;http://unitsofmeasure.org&gt;&quot;&#xA;        -   a UCUM unit code in&#xA;            `Observation.component.valueQuantity.code` which has an [required] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;    -   Observation.component.DataAbsentReason is bound to [Observation&#xA;        Value Absent Reason] value set.&#xA;&#xA;1.  When using a panel code to group observations, one or more reference&#xA;    to Vitals Signs Observations in `Observation.related.target`&#xA;    -   a fixed `Observation.related.type`= &quot;has-member&quot;&#xA;&#xA; [Vital Signs]: valueset-observation-vitalsignresult.html&#xA;  [Vital Signs Units]: valueset-ucum-vitals-common.html&#xA;  [extensible]: terminologies.html#extensible&#xA;  [ObservationStatus]: valueset-observation-status.html&#xA; [Observation Value Absent Reason]: valueset-observation-valueabsentreason.html&#xA;[required]: terminologies.html#required" />
@@ -15665,7 +15681,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -15943,7 +15959,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -16103,7 +16119,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -16923,7 +16939,9 @@
         <id value="bodyweight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'29463-7'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  `Observation.valueQuantity.code` = **'kg', 'g', or '[lb_av]'**" />
@@ -18580,7 +18598,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -18858,7 +18876,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -19018,7 +19036,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -19571,7 +19589,9 @@
         <id value="resprate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'9279-1'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'/min'**" />
@@ -21219,7 +21239,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -21497,7 +21517,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -21657,7 +21677,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -22204,7 +22224,9 @@
         <id value="heartrate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8867-4'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'/min'**" />
@@ -23852,7 +23874,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -24130,7 +24152,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -24290,7 +24312,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -24837,7 +24859,9 @@
         <id value="bodytemp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8310-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'Cel', or '[degF]'**" />
@@ -26494,7 +26518,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -26772,7 +26796,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -26932,7 +26956,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -27485,7 +27509,9 @@
         <id value="bodyheight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8302-2'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -29142,7 +29168,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -29420,7 +29446,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -29580,7 +29606,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -30133,7 +30159,9 @@
         <id value="bodylength" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8306-3'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -31790,7 +31818,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -32068,7 +32096,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -32228,7 +32256,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -32781,7 +32809,9 @@
         <id value="headcircum" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8287-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -34438,7 +34468,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -34716,7 +34746,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -34876,7 +34906,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -35429,7 +35459,9 @@
         <id value="oxygensat" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="&quot;####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'59408-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'%'**&#xD;&quot;" />
@@ -37077,7 +37109,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -37355,7 +37387,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -37515,7 +37547,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -38062,7 +38094,9 @@
         <id value="bmi" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'39156-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'kg/m2'**" />
@@ -39710,7 +39744,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -39988,7 +40022,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -40148,7 +40182,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -40695,7 +40729,9 @@
         <id value="bp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **85354-9'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  One  `Observation.component.code`  which must have&#xD;    -   a fixed `Observation.component.code.coding.system`=**'http://loinc.org'**&#xD;    -   fixed  `Observation.component.code.coding.code`= **'8480-6'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;3.   One  `Observation.component.code`  which must have&#xD;    -   a fixed `Observation.component.code.coding.system`=**'http://loinc.org'**&#xD;    -   fixed  `Observation.component.code.coding.code`= **'8462-4'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;4.  fixed`Observation.component.valueQuantity.code` = **'mm[Hg]'**" />
@@ -42342,7 +42378,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -42620,7 +42656,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -42788,7 +42824,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -42832,7 +42868,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -43692,7 +43728,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -44708,7 +44744,9 @@
         <id value="vitalspanel" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xA;&#xA;1.  One code in `Observation.code` which must have&#xA;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xA;    -   a fixed  `Observation.code.coding.code`= **'85353-1'**&#xA;    -   Other additional codes are allowed - e.g. more specific LOINC&#xA;        Codes, SNOMED CT concepts, system specific codes. All codes&#xA;        SHALL have an system value&#xA;1.  No value in `Observation.value[x]`&#xA;1.  At Least one Vitals Sign Observation reference in `Observation.related`" />
@@ -46355,7 +46393,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -46633,7 +46671,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -46793,7 +46831,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -47340,7 +47378,9 @@
         <id value="lipidprofile" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="This is a test summary [lipids](observation.html)" />
@@ -48050,7 +48090,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -48471,7 +48511,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -48806,7 +48846,9 @@
         <id value="cholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -50086,7 +50128,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -50224,7 +50266,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -50398,7 +50440,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -50562,7 +50604,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -51023,7 +51065,9 @@
         <id value="triglyceride" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -52101,7 +52145,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -52383,7 +52427,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -52547,7 +52591,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -52952,7 +52996,9 @@
         <id value="hdlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -54031,7 +54077,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -54144,7 +54190,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -54344,7 +54390,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -54508,7 +54554,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -54921,7 +54967,9 @@
         <id value="ldlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -55993,7 +56041,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -56131,7 +56179,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -56305,7 +56353,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -56469,7 +56517,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -56885,7 +56933,9 @@
         <id value="diagnosticreport-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/diagnosticreport-genetics" />
         <name value="DiagnosticReport-Genetics" />
@@ -57175,7 +57225,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -57209,7 +57259,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -57243,7 +57293,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -57681,7 +57731,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -57950,7 +58000,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -58218,7 +58268,9 @@
         <id value="hlaresult" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/hlaresult" />
         <name value="Profile for HLA Genotyping Results" />
@@ -58508,7 +58560,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -58542,7 +58594,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -58576,7 +58628,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -58610,7 +58662,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -59048,7 +59100,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -59317,7 +59369,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -59589,7 +59641,9 @@
         <id value="clinicaldocument" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/clinicaldocument" />
         <name value="Clinical Document Profile for Composition" />
@@ -60245,7 +60299,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -60471,7 +60525,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -60635,7 +60689,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -60821,7 +60875,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -61205,7 +61259,9 @@
         <id value="elementdefinition-de" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="fhir" />
@@ -61271,7 +61327,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -61844,7 +61900,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -61935,7 +61991,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -62393,7 +62449,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -62575,7 +62631,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -63289,7 +63345,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -63669,7 +63725,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -63998,7 +64054,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -64215,7 +64271,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -64479,7 +64535,9 @@
         <id value="ehrsrle-auditevent" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="ehr" />
@@ -65067,7 +65125,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -65515,7 +65573,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -65728,7 +65786,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -65932,7 +65990,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -66391,7 +66449,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -66657,7 +66715,9 @@
         <id value="ehrsrle-provenance" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="ehr" />
@@ -67204,7 +67264,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -67469,7 +67529,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -67727,7 +67787,9 @@
         <id value="cqif-questionnaire" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/cqif-questionnaire" />
         <name value="CQIF-Questionnaire" />
@@ -68014,7 +68076,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -68603,7 +68665,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -68742,7 +68804,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -68777,7 +68839,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -68812,7 +68874,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -69018,7 +69080,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -69345,7 +69407,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -69420,7 +69482,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="hasValue() | (children().count() &gt; id.count())" />
+              <expression value="hasValue() or (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>

@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ActorComponent")]
         [DataContract]
-        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActorComponent"; } }
@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
         
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "PolicyComponent")]
         [DataContract]
-        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
@@ -296,8 +296,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (AuthorityElement != null) yield return new ElementValue("authority", false, AuthorityElement);
-                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
+                    if (AuthorityElement != null) yield return new ElementValue("authority", AuthorityElement);
+                    if (UriElement != null) yield return new ElementValue("uri", UriElement);
                 }
             }
         
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DataComponent")]
         [DataContract]
-        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DataComponent"; } }
@@ -423,8 +423,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MeaningElement != null) yield return new ElementValue("meaning", false, MeaningElement);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (MeaningElement != null) yield return new ElementValue("meaning", MeaningElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
         
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptComponent")]
         [DataContract]
-        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptComponent"; } }
@@ -700,16 +700,16 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
-                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
-                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", true, elem); }
-                    foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", true, elem); }
-                    foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", true, elem); }
-                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
-                    if (DataPeriod != null) yield return new ElementValue("dataPeriod", false, DataPeriod);
-                    foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", true, elem); }
+                    if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                    foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                    foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", elem); }
+                    foreach (var elem in Class) { if (elem != null) yield return new ElementValue("class", elem); }
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
+                    if (DataPeriod != null) yield return new ElementValue("dataPeriod", DataPeriod);
+                    foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
                 }
             }
         
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptActorComponent")]
         [DataContract]
-        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptActorComponent"; } }
@@ -816,8 +816,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
         
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ExceptDataComponent")]
         [DataContract]
-        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptDataComponent"; } }
@@ -943,8 +943,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (MeaningElement != null) yield return new ElementValue("meaning", false, MeaningElement);
-                    if (Reference != null) yield return new ElementValue("reference", false, Reference);
+                    if (MeaningElement != null) yield return new ElementValue("meaning", MeaningElement);
+                    if (Reference != null) yield return new ElementValue("reference", Reference);
                 }
             }
         
@@ -1418,24 +1418,24 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (DateTimeElement != null) yield return new ElementValue("dateTime", false, DateTimeElement);
-                foreach (var elem in ConsentingParty) { if (elem != null) yield return new ElementValue("consentingParty", true, elem); }
-                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
-                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
-                foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", true, elem); }
-                if (Source != null) yield return new ElementValue("source", false, Source);
-                foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", true, elem); }
-                if (PolicyRuleElement != null) yield return new ElementValue("policyRule", false, PolicyRuleElement);
-                foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", true, elem); }
-                foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", true, elem); }
-                if (DataPeriod != null) yield return new ElementValue("dataPeriod", false, DataPeriod);
-                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", true, elem); }
-                foreach (var elem in Except) { if (elem != null) yield return new ElementValue("except", true, elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
+                foreach (var elem in ConsentingParty) { if (elem != null) yield return new ElementValue("consentingParty", elem); }
+                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
+                foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", elem); }
+                if (Source != null) yield return new ElementValue("source", Source);
+                foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", elem); }
+                if (PolicyRuleElement != null) yield return new ElementValue("policyRule", PolicyRuleElement);
+                foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
+                foreach (var elem in Purpose) { if (elem != null) yield return new ElementValue("purpose", elem); }
+                if (DataPeriod != null) yield return new ElementValue("dataPeriod", DataPeriod);
+                foreach (var elem in Data) { if (elem != null) yield return new ElementValue("data", elem); }
+                foreach (var elem in Except) { if (elem != null) yield return new ElementValue("except", elem); }
             }
         }
     

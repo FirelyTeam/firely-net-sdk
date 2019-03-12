@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -88,10 +88,9 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "code"));
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "boolean"));
 
-            // Should have skipped abstract classes
-            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "ComplexElement"));
-            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Element"));
-            Assert.IsNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Resource"));
+            // Should also have found the abstract classes
+            Assert.IsNotNull(inspector.FindClassMappingForFhirDataType(Fhir.Model.Version.DSTU2, "Element"));
+            Assert.IsNotNull(inspector.FindClassMappingForResource(Fhir.Model.Version.DSTU2, "Resource"));
            
             // The open generic Code<> should not be there
             var codeOfT = inspector.FindClassMappingByType(typeof(Code<>));

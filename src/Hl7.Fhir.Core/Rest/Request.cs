@@ -1,6 +1,19 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using System;
 using System.Net;
 using System.Reflection;
+using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
@@ -36,6 +49,7 @@ namespace Hl7.Fhir.Rest
         }
 
         public HttpWebRequest ToHttpRequest(
+            Uri baseUrl,
             Model.Version version,
             string fhirVersion,
             Prefer bodyPreference,
@@ -52,7 +66,13 @@ namespace Hl7.Fhir.Rest
             if (Resource != null && !(Method == Model.HTTPVerb.POST || Method == Model.HTTPVerb.PUT))
                 throw Utility.Error.InvalidOperation("Cannot have a body on an Http " + Method.ToString());
 
-            var location = new RestUrl(Url);
+            // Create an absolute uri when the interaction.Url is relative.
+            var uri = new Uri(Url, UriKind.RelativeOrAbsolute);
+            if (!uri.IsAbsoluteUri)
+            {
+                uri = HttpUtil.MakeAbsoluteToBase(uri, baseUrl);
+            }
+            var location = new RestUrl(uri);
 
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
@@ -66,10 +86,10 @@ namespace Hl7.Fhir.Rest
 
             if (IfMatch != null) request.Headers["If-Match"] = IfMatch;
             if (IfNoneMatch != null) request.Headers["If-None-Match"] = IfNoneMatch;
-#if DOTNETFW
-            if (IfModifiedSince != null) request.IfModifiedSince = IfModifiedSince.Value.UtcDateTime;
-#else
+#if NETSTANDARD1_1
             if (IfModifiedSince != null) request.Headers["If-Modified-Since"] = IfModifiedSince.Value.UtcDateTime.ToString();
+#else
+            if (IfModifiedSince != null) request.IfModifiedSince = IfModifiedSince.Value.UtcDateTime;
 #endif
             if (IfNoneExist != null) request.Headers["If-None-Exist"] = IfNoneExist;
 
@@ -79,9 +99,16 @@ namespace Hl7.Fhir.Rest
             }
 
             if (Resource != null)
-                setBodyAndContentType(request, version, Resource, format, CompressRequestBody, out body);
+            {
+                bool searchUsingPost =
+                     Method == HTTPVerb.POST
+                     && Interaction == InteractionType.Search
+                     && Resource is Parameters;
+
+                setBodyAndContentType(request, version, Resource, format, CompressRequestBody, searchUsingPost, out body);
+            }
             // PCL doesn't support setting the length (and in this case will be empty anyway)
-#if DOTNETFW
+#if !NETSTANDARD1_1
             else
                 request.ContentLength = 0;
 #endif
@@ -127,7 +154,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static void setBodyAndContentType(HttpWebRequest request, Model.Version version, Model.Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Model.Version version, Model.Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost, out byte[] body)
         {
             if (data == null) throw Utility.Error.ArgumentNull(nameof(data));
 
@@ -138,6 +165,25 @@ namespace Hl7.Fhir.Rest
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
+            }
+            else if (searchUsingPost)
+            {
+                IDictionary<string, string> bodyParameters = new Dictionary<string, string>();
+                foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
+                {
+                    bodyParameters.Add(parameter.Name, parameter.Value.ToString());
+                }
+                if (bodyParameters.Count > 0)
+                {
+                    FormUrlEncodedContent content = new FormUrlEncodedContent(bodyParameters);
+                    body = content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    body = null;
+                }
+
+                request.ContentType = "application/x-www-form-urlencoded";
             }
             else
             {

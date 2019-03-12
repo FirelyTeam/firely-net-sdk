@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Support;
@@ -32,11 +32,7 @@ namespace Hl7.Fhir.Introspection
 
             if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 
-#if NET40
-            IEnumerable<Type> exportedTypes = assembly.GetExportedTypes();
-#else
             IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
-#endif
 
             foreach (Type type in exportedTypes)
             {

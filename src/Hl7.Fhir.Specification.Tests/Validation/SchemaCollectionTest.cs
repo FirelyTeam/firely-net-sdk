@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -22,7 +22,6 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-#if NET_XSD_SCHEMA
     [TestClass]
     public class SchemaCollectionTest
     {
@@ -55,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSchemaCollectionValidation()
         {
-            var s = File.ReadAllText(@"TestData\TestPatient.xml");
+            var s = File.ReadAllText(Path.Combine("TestData", "TestPatient.xml"));
             var doc = SerializationUtil.XDocumentFromXmlText(s);
 
             string message = null;
@@ -67,5 +66,4 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
     }
-#endif
 }

@@ -1,39 +1,30 @@
 ﻿/* 
- * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Sprache;
-using Hl7.FhirPath;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Functions;
 using Xunit;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.FhirPath;
 
 namespace Hl7.FhirPath.Tests
 {
     public class FhirPathNavTest
     {
-        public IElementNavigator getTestData()
+        public ITypedElement getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            // var tree = TreeConstructor.FromXml(tpXml);
-            // var navigator = new TreeNavigator(tree);
-            // return navigator;
-
-            var patient = (new FhirXmlParser(Fhir.Model.Version.DSTU2)).Parse<Hl7.Fhir.Model.DSTU2.Patient>(tpXml);
-            return new PocoNavigator(patient);
+            return FhirXmlNode.Parse(tpXml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
         }
 
         [Fact]
@@ -44,7 +35,7 @@ namespace Hl7.FhirPath.Tests
             var r = values.Navigate("Patient");
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
-            Assert.Equal(3, result.Count()); 
+            Assert.Equal(3, result.Count());
             Assert.Equal("usual", result.First().Value);
         }
 

@@ -5,6 +5,7 @@ using Hl7.Fhir.Model.DSTU2;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.FhirPath
 
                     Debug.WriteLine(String.Format("Testing Validation: {0} ({1} rules)", item, (dr.InvariantConstraints != null ? dr.InvariantConstraints.Count : 0)));
 
-                    var results = dr.Validate(new System.ComponentModel.DataAnnotations.ValidationContext(dr));
+                    var results = dr.Validate(DotNetAttributeValidation.BuildContext(Model.Version.DSTU2, dr));
                     foreach (var result in results)
                     {
                         if (result.ErrorMessage.Contains("FATAL"))

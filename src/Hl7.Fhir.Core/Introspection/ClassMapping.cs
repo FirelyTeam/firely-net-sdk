@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -54,6 +54,10 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsCodeOfT { get; private set; }
 
+        public bool IsBackbone { get; private set; }
+
+        public bool IsAbstract { get; private set; }
+
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
         /// </summary>
@@ -94,10 +98,7 @@ namespace Hl7.Fhir.Introspection
             if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
-
-            PropertyMapping prop = null;
-
-            bool success = _propMappings.TryGetValue(normalizedName, out prop);
+            bool success = _propMappings.TryGetValue(normalizedName, out PropertyMapping prop);
 
             // Direct success
             if (success) return prop;
@@ -111,19 +112,23 @@ namespace Hl7.Fhir.Introspection
 
         public static ClassMapping Create(Type type)
         {
-           // checkMutualExclusiveAttributes(type);
+            // checkMutualExclusiveAttributes(type);
 
-            var result = new ClassMapping();
-            result.NativeType = type;
+            var result = new ClassMapping
+            {
+                NativeType = type
+            };
 
             if (IsMappableType(type))
             {
                 (result.Version, result.Name) = collectTypeVersionAndName(type);
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
-
+                result.IsAbstract = type.GetTypeInfo().IsAbstract;
                 result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
+
+                result.IsBackbone = type.CanBeTreatedAsType(typeof(IBackboneElement));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
                     throw Error.Argument(nameof(type), "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
@@ -164,50 +169,18 @@ namespace Hl7.Fhir.Introspection
             me._orderedMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
         }
 
-        //private static void checkMutualExclusiveAttributes(Type type)
-        //{
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-        //    if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
-        //}
 
-
-        //private static object invokeEnumParser(string input, Type enumType)
-        //{
-        //    object result = null;
-        //    bool success = EnumHelper.TryParseEnum(input, enumType, out result);
-
-        //    if (!success)
-        //        throw Error.InvalidOperation("Parsing of enum failed");
-
-        //    return result;
-        //}
-
-
-        private static string getProfile(Type type)
-        {
-            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-         
-            return attr != null ? attr.Profile : null;
-        }
+        private static string getProfile(Type type) => 
+            type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>()?.Profile;
 
         private static Tuple<Model.Version, string> collectTypeVersionAndName(Type type)
         {
             var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
-            string name;
-
-            if (attr?.Name != null)
-                name =  attr.Name;
-            else
-                name = type.Name;
-            
+            string name = attr?.Name ?? type.Name;
+           
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-                //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
                 name += String.Join(",", type.GetTypeInfo().GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
@@ -235,8 +208,8 @@ namespace Hl7.Fhir.Introspection
 
             if (!hasAttribute) return false;
 
-            if (type.GetTypeInfo().IsAbstract)
-                throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
+            //if (type.GetTypeInfo().IsAbstract)
+            //    throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

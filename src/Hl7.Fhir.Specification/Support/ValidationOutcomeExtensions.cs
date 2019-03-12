@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (c) 2016, Furore (info@furore.com) and contributors
+* Copyright (c) 2016, Firely (info@fire.ly) and contributors
 * See the file CONTRIBUTORS for details.
 *
 * This file is licensed under the BSD 3-Clause license
@@ -9,6 +9,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -69,6 +70,7 @@ namespace Hl7.Fhir.Support
             return outcome.Issue.Where(issue => !issue.Success);
         }
 
+        [Obsolete("Use IssuesAt(this OperationOutcome outcome, string path) instead")]
         public static IEnumerable<OperationOutcome.IssueComponent> IssuesAt(this OperationOutcome outcome, IElementNavigator node)
         {
             return outcome.Issue.Where(issue => issue.IsAt(node));
@@ -79,6 +81,7 @@ namespace Hl7.Fhir.Support
             return outcome.Issue.Where(issue => issue.IsAt(path));
         }
 
+        [Obsolete("Use ErrorsAt(this OperationOutcome outcome, string path) instead")]
         public static IEnumerable<OperationOutcome.IssueComponent> ErrorsAt(this OperationOutcome outcome, IElementNavigator node)
         {
             return outcome.ListErrors().Where(issue => issue.IsAt(node));
@@ -128,6 +131,7 @@ namespace Hl7.Fhir.Support
             return false;
         }
 
+        [Obsolete("Use IsAt(this OperationOutcome.IssueComponent issue, string path) instead")]
         public static bool IsAt(this OperationOutcome.IssueComponent issue, IElementNavigator location)
         {
             return issue.IsAt(location.Location);

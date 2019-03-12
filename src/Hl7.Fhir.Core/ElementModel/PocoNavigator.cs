@@ -1,110 +1,54 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel.Adapters;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]
-    public class PocoNavigator : IElementNavigator
+    [Obsolete("This class has been deprecated. Do not use this class directly, instead call " +
+            "ToElementNavigator() (for backwards compatibility) or the new ToTypedNode() on any resource or datatype")]
+    public class PocoNavigator : BaseNodeToNavAdapter
     {
-        public PocoNavigator(Base model)
+        public PocoNavigator(Model.Version version, Base model, string rootName = null)
         {
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
-            //_current = new PocoElementNavigator(model.TypeName, model);
-            _parentLocation = "";
-            _parentShortPath = "";
-            _parentCommonPath = "";
+            Initialize(
+                new PocoElementNode(model, new PocoStructureDefinitionSummaryProvider(version), rootName: rootName));
 
-            _nav = new PocoElementNavigator(model);
+            _parentCommonPath = "";
         }
 
         private PocoNavigator()     // for clone
         {
         }
 
-        private PocoElementNavigator _nav;
-        private string _parentLocation;
-        private string _parentShortPath;
         private string _parentCommonPath;
 
-        private PocoElementNavigator Current => _nav;
+        public bool IsCollection => Current.Definition.IsCollection;
 
-        /// <summary>
-        /// Returns 
-        /// </summary>
-        public object Value => Current.Value;
-
-        /// <summary>
-        /// Returns 
-        /// </summary>
-        public Base FhirValue => Current.FhirValue;
-
-        /// <summary>
-        /// Return the FHIR TypeName
-        /// </summary>
-        public string Type => FhirValue is BackboneElement ? "BackboneElement" : Current.TypeName;
-
-        /// <summary>
-        /// The FHIR TypeName is also returned for the name of the root element
-        /// </summary>
-        public string Name => Current.Name;
-
-        public string Location
-        {
-            get
-            {
-                var cur = Current;
-                if (String.IsNullOrEmpty(_parentLocation))
-                {
-                    return cur.Name;
-                }
-                else
-                {
-                    return $"{_parentLocation}.{cur.Name}[{cur.ArrayIndex}]";
-                }
-            }
-        }
+        public Base FhirValue => ((PocoElementNode)Current).Current as Base;
 
         /// <summary>
         /// The ShortPath is almost the same as the Path except that
         /// where the item is not an array, the array signature is not included.
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public string ShortPath
-        {
-            get
-            {
-                var cur = Current;
-                if (String.IsNullOrEmpty(_parentShortPath))
-                {
-                    return cur.Name;
-                }
-                else
-                {
-                    // Needs to consider that the index might be irrelevant
-                    if (cur.AtCollection)
-                    {
-                        return $"{_parentShortPath}.{cur.Name}[{cur.ArrayIndex}]";
-                    }
-                    return $"{_parentShortPath}.{cur.Name}";
-                }
-            }
-        }
-
+        public string ShortPath => ((PocoElementNode)Current).ShortPath;
 
         /// <summary>
         /// This is different to the explicit path as it considers what is
@@ -128,9 +72,9 @@ namespace Hl7.Fhir.ElementModel
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.AtCollection)
+                    if (IsCollection)
                     {
-                        Base fhirValue = cur.FhirValue;
+                        Base fhirValue = FhirValue;
                         if (fhirValue is Model.DSTU2.Identifier ident2)
                         {
                             // Need to construct a where clause for this property
@@ -211,64 +155,43 @@ namespace Hl7.Fhir.ElementModel
                             // all extensions have a property name of extension, can just at the brackets and string name
                             return $"{_parentCommonPath}.{cur.Name}('{ext.Url}')";
                         }
-                        return $"{_parentCommonPath}.{cur.Name}[{cur.ArrayIndex}]";
+                        return $"{_parentCommonPath}.{cur.Name}[{((PocoElementNode)cur).ArrayIndex}]";
                     }
                     return $"{_parentCommonPath}.{cur.Name}";
                 }
             }
         }
 
-        private object lockObject = new object();
+        protected override IList<ITypedElement> GetChildren() =>
+            Current.Children().ToList();
 
-        public bool MoveToFirstChild(string nameFilter = null)
+        public override bool MoveToFirstChild(string nameFilter = null)
         {
-            var oldLoc = Location;
-            var oldSP = ShortPath;
             var oldCP = CommonPath;
-                
-            if (Current.MoveToFirstChild(nameFilter))
+
+            if (!base.MoveToFirstChild(nameFilter)) return false;
+
+            _parentCommonPath = oldCP;
+            return true;
+        }
+
+        public override bool MoveToNext(string nameFilter = null) => base.MoveToNext(nameFilter);
+
+        protected override BaseNodeToNavAdapter NewClone() =>
+            new PocoNavigator()
             {
-                lock(lockObject)
-                {
-                    _parentLocation = oldLoc;
-                    _parentShortPath = oldSP;
-                    _parentCommonPath = oldCP;
-                }
+                _parentCommonPath = _parentCommonPath
+            };
+    }
 
-                return true;
-            }
 
-            return false;
-        }
+    public static class PocoNavigatorExtensions
+    {
+        [Obsolete("Use ToTypedElement(this Base @base, string rootName = null) instead. Obsolete since 2018-10-17")]
+        public static IElementNavigator ToElementNavigator(this Base @base, Model.Version version, string rootName = null) =>
+            new PocoNavigator(version, @base, rootName);
 
-        /// <summary>
-        /// Move onto the next element in the list
-        /// </summary>
-        /// <returns>
-        /// true if there was a next element, false if it was the last element
-        /// </returns>
-        public bool MoveToNext(string nameFilter = null)
-        {
-            return Current.MoveToNext(nameFilter);
-        }
-
-        /// <summary>
-        /// Clone this navigator
-        /// </summary>
-        /// <returns></returns>
-        public IElementNavigator Clone()
-        {
-            var result = new PocoNavigator();
-
-            lock (lockObject)
-            {
-                result._nav = this._nav.Clone();
-                result._parentLocation = this._parentLocation;
-                result._parentShortPath = this._parentShortPath;
-                result._parentCommonPath = this._parentCommonPath;
-            }
-
-            return result;
-        }
+        public static ITypedElement ToTypedElement(this Base @base, Model.Version version, string rootName = null) =>
+            new PocoElementNode(@base, new PocoStructureDefinitionSummaryProvider(version), rootName: rootName);
     }
 }

@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ArmComponent")]
         [DataContract]
-        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ArmComponent"; } }
@@ -206,9 +206,9 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (NameElement != null) yield return new ElementValue("name", NameElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 }
             }
         
@@ -703,26 +703,26 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
-                foreach (var elem in Protocol) { if (elem != null) yield return new ElementValue("protocol", true, elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
-                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
-                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
-                foreach (var elem in Keyword) { if (elem != null) yield return new ElementValue("keyword", true, elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
-                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                foreach (var elem in Enrollment) { if (elem != null) yield return new ElementValue("enrollment", true, elem); }
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                if (Sponsor != null) yield return new ElementValue("sponsor", false, Sponsor);
-                if (PrincipalInvestigator != null) yield return new ElementValue("principalInvestigator", false, PrincipalInvestigator);
-                foreach (var elem in Site) { if (elem != null) yield return new ElementValue("site", true, elem); }
-                if (ReasonStopped != null) yield return new ElementValue("reasonStopped", false, ReasonStopped);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
-                foreach (var elem in Arm) { if (elem != null) yield return new ElementValue("arm", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+                foreach (var elem in Protocol) { if (elem != null) yield return new ElementValue("protocol", elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
+                foreach (var elem in Keyword) { if (elem != null) yield return new ElementValue("keyword", elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                foreach (var elem in Enrollment) { if (elem != null) yield return new ElementValue("enrollment", elem); }
+                if (Period != null) yield return new ElementValue("period", Period);
+                if (Sponsor != null) yield return new ElementValue("sponsor", Sponsor);
+                if (PrincipalInvestigator != null) yield return new ElementValue("principalInvestigator", PrincipalInvestigator);
+                foreach (var elem in Site) { if (elem != null) yield return new ElementValue("site", elem); }
+                if (ReasonStopped != null) yield return new ElementValue("reasonStopped", ReasonStopped);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Arm) { if (elem != null) yield return new ElementValue("arm", elem); }
             }
         }
     

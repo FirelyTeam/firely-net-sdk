@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "StatusHistoryComponent")]
         [DataContract]
-        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StatusHistoryComponent"; } }
@@ -171,8 +171,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
         
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DiagnosisComponent")]
         [DataContract]
-        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
@@ -316,9 +316,9 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Condition != null) yield return new ElementValue("condition", false, Condition);
-                    if (Role != null) yield return new ElementValue("role", false, Role);
-                    if (RankElement != null) yield return new ElementValue("rank", false, RankElement);
+                    if (Condition != null) yield return new ElementValue("condition", Condition);
+                    if (Role != null) yield return new ElementValue("role", Role);
+                    if (RankElement != null) yield return new ElementValue("rank", RankElement);
                 }
             }
         
@@ -628,18 +628,18 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", true, elem); }
-                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
-                foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
-                if (Period != null) yield return new ElementValue("period", false, Period);
-                foreach (var elem in ReferralRequest) { if (elem != null) yield return new ElementValue("referralRequest", true, elem); }
-                if (CareManager != null) yield return new ElementValue("careManager", false, CareManager);
-                foreach (var elem in Team) { if (elem != null) yield return new ElementValue("team", true, elem); }
-                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", elem); }
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
+                if (Period != null) yield return new ElementValue("period", Period);
+                foreach (var elem in ReferralRequest) { if (elem != null) yield return new ElementValue("referralRequest", elem); }
+                if (CareManager != null) yield return new ElementValue("careManager", CareManager);
+                foreach (var elem in Team) { if (elem != null) yield return new ElementValue("team", elem); }
+                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
             }
         }
     

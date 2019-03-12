@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -21,8 +21,8 @@ namespace Hl7.Fhir.Rest
     {
         public FhirVersionSettings(Model.Version version, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
         {
-            if (version == Model.Version.All) throw new ArgumentException("Must be a specific version", nameof(version));
-            if (string.IsNullOrEmpty(fhirVersion)) throw new ArgumentException("Cannot be empty", nameof(version));
+            if (version == Model.Version.All) throw Error.Argument(nameof(version), "Must be a specific version");
+            if (string.IsNullOrEmpty(fhirVersion)) throw Error.ArgumentNullOrEmpty(nameof(version));
 
             Version = version;
             FhirVersion = fhirVersion;
@@ -92,9 +92,9 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(_versionSettings.Version, FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(BaseUrl, _versionSettings.Version, FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if DOTNETFW
+#if !NETSTANDARD1_1
             request.Timeout = Timeout;
 #endif
 
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if !DOTNETFW
+#if NETSTANDARD1_1
                 var contentEncoding = response.Headers["Content-Encoding"];
 #else
                 var contentEncoding = response.ContentEncoding;

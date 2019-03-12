@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-#if NET_XSD_SCHEMA
+#if !NETSTANDARD1_1
         [TestMethod]    // XHtml validation not available in portable library
         public void TestXhtmlValidation()
         {

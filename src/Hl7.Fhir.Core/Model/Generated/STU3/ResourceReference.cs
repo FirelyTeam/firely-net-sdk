@@ -210,9 +210,9 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
             }
         }
     

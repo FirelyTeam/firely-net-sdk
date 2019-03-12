@@ -46,14 +46,22 @@ namespace Hl7.Fhir.Model
         {
         }
 
+        [Obsolete("Use FhirDateTime(DateTimeOffset dt) instead")]
         public FhirDateTime(DateTime dt) : this( new DateTimeOffset(dt) )
         {
         }
 
+        [Obsolete("Use FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset) instead")]
         public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
             : this(new DateTime(year,month,day,hr,min,sec,DateTimeKind.Local))
         {
         }
+
+        public FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset)
+            : this(new DateTimeOffset(year, month, day, hr, min, sec, offset))
+        {
+        }
+
 
         public FhirDateTime(int year, int month, int day)
             : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTHDAY, year, month, day))
@@ -81,17 +89,21 @@ namespace Hl7.Fhir.Model
             return new FhirDateTime(PrimitiveTypeConverter.ConvertTo<string>(DateTimeOffset.Now));
         }
 
+        [Obsolete("Use ToDateTimeOffset(TimeSpan zone) instead. Obsolete since 2018-11-22")]
+        public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null) =>
+            ToDateTimeOffset(zone ?? TimeSpan.Zero);
+        
         /// <summary>
         /// Converts this Fhir DateTime as a .NET DateTimeOffset
         /// </summary>
-        /// <param name="zone">Optional. Ensures the returned DateTimeOffset uses the the specified zone.</param>
+        /// <param name="zone">Ensures the returned DateTimeOffset uses the the specified zone.</param>
         /// <remarks>In .NET the minimal value for DateTimeOffset is 1/1/0001 12:00:00 AM +00:00. That means,for example, 
         /// a FhirDateTime of "0001-01-01T00:00:00+01:00" could not be converted to a DateTimeOffset. In that case a 
         /// ArgumentOutOfRangeException will be thrown.</remarks>
         /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date/time. If the Fhir DateTime
         /// does not specify a timezone, the UTC (Coordinated Universal Time) is assumed. Note that the zone parameter has no 
         /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
-        public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null)
+        public DateTimeOffset ToDateTimeOffset(TimeSpan zone)
         {
             if (this.Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
 
@@ -99,12 +111,11 @@ namespace Hl7.Fhir.Model
             // When there's no timezone, the UTC is assumed
             var dto = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
 
-            //NB: There's a useful TimeZone class, but Portable45 does not support it
-            if (zone != null) dto = dto.ToOffset(zone.Value);
-
-            return dto;
+            return dto.ToOffset(zone);
         }
 
+
+        [Obsolete("Use ToDateTimeOffset(TimeSpan zone) instead")]
         public DateTime? ToDateTime()
         {
             if (this.Value == null) return null;

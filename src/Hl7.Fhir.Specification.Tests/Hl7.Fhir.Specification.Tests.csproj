@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
 
@@ -15,16 +14,18 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-      <PackageReference Include="MSTest.TestAdapter" Version="1.1.14" />
-      <PackageReference Include="MSTest.TestFramework" Version="1.1.14" />
-      <PackageReference Include="System.IO.Compression" Version="4.0.0" />
-      <PackageReference Include="System.ValueTuple" Version="4.3.0" />
-      <PackageReference Include="xunit" Version="2.2.0" />
-      <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+      <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+      <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+      <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.5.0" />
+      <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" />
+      <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+      <PackageReference Include="xunit" Version="2.4.0" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
       <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +35,9 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="TestData\profiles-types.json" />
   </ItemGroup>
   <!--
   <ItemGroup>

@@ -221,11 +221,11 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (Subject != null) yield return new ElementValue("subject", false, Subject);
-                if (Author != null) yield return new ElementValue("author", false, Author);
-                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
+                if (Author != null) yield return new ElementValue("author", Author);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
             }
         }
     

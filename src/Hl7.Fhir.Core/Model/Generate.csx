@@ -611,6 +611,11 @@ public class ValueSet
             }
         }
         ExtractShared(valueSetsByEnumNameByVersion);
+        var commonFHIRDefinedType = CreateCommonFHIRDefinedType(valueSetsByEnumNameByVersion);
+        if (commonFHIRDefinedType != null)
+        {
+            valueSetsByEnumNameByVersion[string.Empty][commonFHIRDefinedType.EnumName] = commonFHIRDefinedType;
+        }
         return valueSetsByEnumNameByVersion;
     }
 
@@ -655,6 +660,44 @@ public class ValueSet
             }
         }
         valueSetsByEnumNameByVersion.Add(string.Empty, sharedValueSetsByEnumName);
+    }
+
+    private static ValueSet CreateCommonFHIRDefinedType(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByEnumNameByVersion)
+    {
+        Dictionary<string, ValueSetValue> commonValues = null;
+        foreach (var valueSetsByEnumName in valueSetsByEnumNameByVersion.Values)
+        {
+            if (valueSetsByEnumName.TryGetValue("FHIRDefinedType", out var fhirDefinedType))
+            {
+                if (commonValues == null)
+                {
+                    commonValues = fhirDefinedType.Values.ToDictionary(value => value.Code);
+                }
+                else
+                {
+                    var codes = new HashSet<string>(fhirDefinedType.Values.Select(value => value.Code));
+                    var commonCodes = commonValues.Keys.ToList();
+                    foreach (var code in commonCodes)
+                    {
+                        if (!codes.Contains(code))
+                        {
+                            commonValues.Remove(code);
+                        }
+                    }
+                }
+            }
+        }
+        if (commonValues != null && commonValues.Any())
+        {
+            return new ValueSet
+            {
+                EnumName = "FHIRDefinedType",
+                Url = "http://hl7.org/fhir/data-types",
+                Description = "Either a resource or a data type that is defined in all the supported FHIR versions",
+                Values = commonValues.Values.ToList()
+            };
+        }
+        return null;
     }
 
     private class ValueSetValueComparer : IEqualityComparer<ValueSetValue>
@@ -995,7 +1038,7 @@ public class ResourceDetails
             yield return $"    /// <summary>";
             yield return $"    /// Primitive value of the element";
             yield return $"    /// </summary>";
-            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=new[]{{Hl7.Fhir.Model.Version.All}}, Order=30)]";
+            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=Specification.XmlRepresentation.XmlAttr, InSummary=new[]{{Hl7.Fhir.Model.Version.All}}, Order=30)]";
             yield return $"    [CLSCompliant(false)]";
             if (!string.IsNullOrEmpty(Pattern) && Name != "FhirDecimal" && Name != "Time" && Name != "Integer" &&
                 Name != "UnsignedInt" && Name != "PositiveInt" && Name != "Instant"
@@ -1315,6 +1358,10 @@ public class ResourceDetails
             {
                 resourceName = "ResourceReference";
             }
+            else if (resourceName == "xhtml")
+            {
+                resourceName = "XHtml";
+            }
             else
             {
                 resourceName = resourceName.Substring(0, 1).ToUpper() + resourceName.Substring(1);
@@ -1609,7 +1656,7 @@ public class ComponentDetails
     {
         yield return $"[FhirType({version}, \"{ Name }\")]";
         yield return $"[DataContract]";
-        yield return $"public partial class { Name } : { BaseType }, System.ComponentModel.INotifyPropertyChanged";
+        yield return $"public partial class { Name } : { BaseType }, System.ComponentModel.INotifyPropertyChanged, IBackboneElement";
         yield return $"{{";
         yield return $"    [NotMapped]";
         yield return $"    public override string TypeName {{ get {{ return \"{ Name }\"; }} }}";
@@ -1969,11 +2016,11 @@ public class PropertyDetails
 
         if (IsMultiCard())
         {
-            yield return $"foreach (var elem in {Name}) {{ if (elem != null) yield return new ElementValue(\"{FhirName}\", true, elem); }}";
+            yield return $"foreach (var elem in {Name}) {{ if (elem != null) yield return new ElementValue(\"{FhirName}\", elem); }}";
         }
         else
         {
-            yield return $"if ({Name} != null) yield return new ElementValue(\"{FhirName}\", false, {Name});";
+            yield return $"if ({Name} != null) yield return new ElementValue(\"{FhirName}\", {Name});";
         }
     }
 
@@ -2058,7 +2105,7 @@ public class PropertyDetails
             case "base64Binary": return "Hl7.Fhir.Model.Base64Binary";
             case "decimal": return "Hl7.Fhir.Model.FhirDecimal";
             case "markdown": return "Hl7.Fhir.Model.Markdown";
-            case "xhtml": return "Hl7.Fhir.Model.Xhtml";
+            case "xhtml": return "Hl7.Fhir.Model.XHtml";
             case "instant": return "Hl7.Fhir.Model.Instant";
             case "integer": return "Hl7.Fhir.Model.Integer";
             case "unsignedInt": return "Hl7.Fhir.Model.UnsignedInt";
@@ -2588,7 +2635,7 @@ public class AllVersionsModelInfo : ModelInfoBase
         _typesNameAndType = resourcesByNameByVersion
             .SelectMany(
                 pair => pair.Value.Values
-                    .Where(r => !r.IsResource() && r.Name != "Xhtml")
+                    .Where(r => !r.IsResource())
                     .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
             )
             .Distinct()
@@ -2643,11 +2690,11 @@ public class ModelInfo : ModelInfoBase
             .ToList();
         _version = versionResources.First().Versions.Single();
         _typesNameAndType = versionResources
-            .Where(r => !r.IsResource() && r.Name != "Xhtml")
+            .Where(r => !r.IsResource())
             .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + _version.Version + "." + r.Name))
             .Concat(
                 sharedResources
-                    .Where(r => !r.IsResource() && r.Name != "Xhtml")
+                    .Where(r => !r.IsResource())
                     .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + r.Name))
             )
             .OrderBy(nameAndType => nameAndType.Item1)
@@ -2839,6 +2886,15 @@ public class SearchParameter
     }
 }
 
+static void DeleteSourceFiles(string directoryPath)
+{
+    foreach (var filePath in Directory.GetFiles(directoryPath, "*.cs"))
+    {
+        Console.WriteLine("Deleting {0}", filePath);
+        File.Delete(filePath);
+    }
+}
+
 static string GetMyDirectory([System.Runtime.CompilerServices.CallerFilePath] string path = "") => Path.GetDirectoryName(path);
 
 var rootDirectory = GetMyDirectory();
@@ -2861,9 +2917,12 @@ valueSetsByEnumNameByVersion[string.Empty].Add(
 var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByEnumNameByVersion);
 
 var generatedDirectory = Path.Combine(rootDirectory, "Generated");
+DeleteSourceFiles(generatedDirectory);
 foreach (var loadedVersion in loadedVersions)
 {
-    Directory.CreateDirectory(Path.Combine(generatedDirectory,loadedVersion.Version));
+    var directoryPath = Path.Combine(generatedDirectory, loadedVersion.Version);
+    Directory.CreateDirectory(directoryPath);
+    DeleteSourceFiles(directoryPath);
 }
 foreach (var pair in valueSetsByEnumNameByVersion)
 {
@@ -2881,7 +2940,7 @@ Console.WriteLine("Creating {0}", allVersionsModelInfoFilePath);
 allVersionsModelInfo.Write(allVersionsModelInfoFilePath);
 
 var sharedResourcesByName = resourcesByNameByVersion[string.Empty];
-var toSkip = new[] { "Element", "Extension", "Narrative", "Resource", "Xhtml" };
+var toSkip = new[] { "Element", "Extension", "Narrative", "Resource", "XHtml" };
 foreach (var pair in resourcesByNameByVersion)
 {
     if (!string.IsNullOrEmpty(pair.Key))

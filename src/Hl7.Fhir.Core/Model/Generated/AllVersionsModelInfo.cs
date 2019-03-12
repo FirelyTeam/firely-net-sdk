@@ -241,6 +241,7 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(Hl7.Fhir.Model.STU3.UsageContext), "UsageContext" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
+                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
         
                 { typeof(Hl7.Fhir.Model.DSTU2.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.STU3.Account), "Account" },

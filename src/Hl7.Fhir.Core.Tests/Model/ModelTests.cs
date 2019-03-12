@@ -1,21 +1,18 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.DSTU2;
 using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -51,7 +48,7 @@ namespace Hl7.Fhir.Tests.Model
             FhirDateTime dt = new FhirDateTime("2010-01-01");
             Assert.AreEqual("2010-01-01", dt.Value);
 
-            FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10);
+            FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
             Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
 
@@ -65,6 +62,23 @@ namespace Hl7.Fhir.Tests.Model
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
+        }
+
+        [TestMethod]
+        public void TodayTests()
+        {
+            var todayLocal = Date.Today(); 
+            Assert.AreEqual(DateTimeOffset.Now.ToString("yyy-MM-dd"), todayLocal.Value);
+
+            var todayUtc = Date.UtcToday();
+            Assert.AreEqual(DateTimeOffset.UtcNow.ToString("yyy-MM-dd"), todayUtc.Value);
+        }
+
+        [TestMethod]
+        public void TestInstantFromUtc()
+        {
+            Instant ins5 = Instant.FromDateTimeUtc(2011, 3, 4, 16, 45, 33);
+            Assert.AreEqual(new DateTimeOffset(2011, 3, 4, 16, 45, 33, TimeSpan.Zero), ins5.Value);
         }
 
 
@@ -197,23 +211,43 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        //[TestMethod]
-        //public void FindContainedResource()
-        //{
-        //    var cPat1 = new Patient() { Id = "pat1" };
-        //    var cPat2 = new Patient() { Id = "pat2" };
-        //    var pat = new Patient();
+        [TestMethod]
+        public void FindContainedResource()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
+            {
+                Contained = new List<Resource> { cPat1, cPat2 }
+            };
 
-        //    pat.Contained = new List<Resource> { cPat1, cPat2 };
+            var rref = new ResourceReference() { Reference = "#pat2" };
 
-        //    var rref = new ResourceReference() { Reference = "#pat2" };
+            Assert.IsNotNull(pat.FindContainedResource(rref), "#pat2 should be in the contained resources");
+            Assert.IsNotNull(pat.FindContainedResource("#pat1"), "#pat1 should be in the contained resources");
 
-        //    Assert.IsNotNull(pat.FindContainedResource(rref));
-        //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
+            rref.Reference = "#pat3";
+            Assert.IsNull(pat.FindContainedResource(rref));
 
-        //    rref.Reference = "#pat3";
-        //    Assert.IsNull(pat.FindContainedResource(rref));
-        //}
+            Assert.AreEqual(pat, pat.FindContainedResource("#"));
+
+            var pat2 = new Patient();
+            Assert.IsNull(pat2.FindContainedResource("#pat1"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FindContainedResourceExceptionExpected()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
+            {
+                Contained = new List<Resource> { cPat1, cPat2 }
+            };
+
+            pat.FindContainedResource((ResourceReference)null);
+        }
 
         [TestMethod]
         public void TestListDeepCopy()
@@ -259,10 +293,10 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestFhirTypeToFhirTypeName()
         {
-            var enumValues = Enum.GetValues(typeof(FHIRDefinedType));
+            var enumValues = Enum.GetValues(typeof(Fhir.Model.DSTU2.FHIRDefinedType));
             for (int i = 0; i < enumValues.Length; i++)
             {
-                var type = (FHIRDefinedType)i;
+                var type = (Fhir.Model.DSTU2.FHIRDefinedType)i;
                 var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
                 var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
                 Assert.IsTrue(type2.HasValue);
@@ -310,7 +344,7 @@ namespace Hl7.Fhir.Tests.Model
             sv.Value = "23:59:00";
             Assert.AreEqual(sv.Value, "23:59:00");
 
-            sv = new FhirDateTime(DateTime.Now);
+            sv = new FhirDateTime(DateTimeOffset.UtcNow);
             Assert.IsNotNull(sv);
             sv.Value = "20161201 23:59:00";
             Assert.AreEqual(sv.Value, "20161201 23:59:00");
@@ -398,17 +432,17 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestSubclassInfo()
         {
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Patient, FHIRDefinedType.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Observation, FHIRDefinedType.Patient));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Bundle));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Bundle));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Resource, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.DomainResource, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Patient, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Observation, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Element, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Resource, Fhir.Model.DSTU2.FHIRDefinedType.Bundle));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.DomainResource, Fhir.Model.DSTU2.FHIRDefinedType.Bundle));
 
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.HumanName));
-            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Oid));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Element, Fhir.Model.DSTU2.FHIRDefinedType.HumanName));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Element, Fhir.Model.DSTU2.FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(Fhir.Model.DSTU2.FHIRDefinedType.Element, Fhir.Model.DSTU2.FHIRDefinedType.Oid));
         }
 
         [TestMethod]
@@ -581,9 +615,21 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ParseFhirTypeName()
         {
-            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.AreEqual(Fhir.Model.DSTU2.FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+            Assert.AreEqual(Fhir.Model.DSTU2.FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+        }
+
+        // [WMR 20181025] Issue #746
+        [TestMethod]
+        public void TestIsCoreModelTypeUri()
+        {
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/Patient")));
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/string")));
+
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("http://example.org/fhir/StructureDefinition/Patient")));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("/StructureDefinition/Patient", UriKind.Relative)));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
         }
 
     }

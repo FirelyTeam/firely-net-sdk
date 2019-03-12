@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -26,23 +26,23 @@ namespace Hl7.Fhir.Validation
 
     internal static class FpConstraintValidationExtensions
     {
-        public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNavigator instance)
+        public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
 
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            var context = instance.AtResource ? instance : instance.Parent;
+            var context = instance.ResourceContext;
 
             foreach (var constraintElement in definition.Constraint)
             {
                 bool success = false;
-
+               
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance, new FhirEvaluationContext(context) { Resolver = callExternalResolver } );
+                    success = compiled.Predicate(instance, new FhirEvaluationContext(context) { ElementResolver = callExternalResolver } );
                 }
                 catch (Exception e)
                 {
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            IElementNavigator callExternalResolver(string url)
+            ITypedElement callExternalResolver(string url)
             {
                 OperationOutcome o = new OperationOutcome();
                 var result = v.ExternalReferenceResolutionNeeded(url, o, "dummy");
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static CompiledExpression getExecutableConstraint(Validator v, OperationOutcome outcome, IElementNavigator instance,
+        private static CompiledExpression getExecutableConstraint(Validator v, OperationOutcome outcome, ITypedElement instance,
                         ElementDefinition.ConstraintComponent constraintElement)
         {
             var compiledExpression = constraintElement.Annotation<CompiledConstraintAnnotation>()?.Expression;

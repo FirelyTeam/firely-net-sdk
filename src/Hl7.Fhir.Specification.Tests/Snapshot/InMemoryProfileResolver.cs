@@ -1,10 +1,8 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -54,8 +52,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
             => _resources.Select(g => g.Key);
-
-        public ReadOnlyCollection<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
 
         #endregion
     }

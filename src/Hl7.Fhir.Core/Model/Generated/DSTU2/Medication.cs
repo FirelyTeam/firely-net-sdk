@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProductComponent")]
         [DataContract]
-        public partial class ProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProductComponent"; } }
@@ -166,9 +166,9 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Form != null) yield return new ElementValue("form", false, Form);
-                    foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
-                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", true, elem); }
+                    if (Form != null) yield return new ElementValue("form", Form);
+                    foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", elem); }
                 }
             }
         
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IngredientComponent")]
         [DataContract]
-        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "IngredientComponent"; } }
@@ -274,8 +274,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
         
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "BatchComponent")]
         [DataContract]
-        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BatchComponent"; } }
@@ -404,8 +404,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
-                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
                 }
             }
         
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PackageComponent")]
         [DataContract]
-        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PackageComponent"; } }
@@ -509,8 +509,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Container != null) yield return new ElementValue("container", false, Container);
-                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
+                    if (Container != null) yield return new ElementValue("container", Container);
+                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
                 }
             }
         
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContentComponent")]
         [DataContract]
-        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContentComponent"; } }
@@ -616,8 +616,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return new ElementValue("item", false, Item);
-                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                    if (Item != null) yield return new ElementValue("item", Item);
+                    if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
             }
         
@@ -787,11 +787,11 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (IsBrandElement != null) yield return new ElementValue("isBrand", false, IsBrandElement);
-                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
-                if (Product != null) yield return new ElementValue("product", false, Product);
-                if (Package != null) yield return new ElementValue("package", false, Package);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (IsBrandElement != null) yield return new ElementValue("isBrand", IsBrandElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
+                if (Product != null) yield return new ElementValue("product", Product);
+                if (Package != null) yield return new ElementValue("package", Package);
             }
         }
     

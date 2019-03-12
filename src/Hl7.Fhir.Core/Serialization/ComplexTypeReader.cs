@@ -1,53 +1,78 @@
-﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-
 
 namespace Hl7.Fhir.Serialization
 {
+    internal class ValuePropertyTypedElement : ITypedElement
+    {
+        private ITypedElement _wrapped;
+
+        public ValuePropertyTypedElement(ITypedElement primitiveElement)
+        {
+            _wrapped = primitiveElement;
+        }
+
+        public string Name => "value";
+
+        public string InstanceType => _wrapped.InstanceType;
+
+        public object Value => _wrapped.Value;
+
+        public string Location => _wrapped.Location;
+
+        public IElementDefinitionSummary Definition => _wrapped.Definition;
+
+        public IEnumerable<ITypedElement> Children(string name = null) => _wrapped.Children(name);
+    }
+
 #pragma warning disable 612,618
     internal class ComplexTypeReader
     {
-        private IFhirReader _current;
+        private ITypedElement _current;
         private ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeReader(IFhirReader reader, ParserSettings settings)
+        public ComplexTypeReader(ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
         }
 
-        internal Base Deserialize(Type elementType, Base existing = null)
+        internal Base Deserialize(Base existing = null)
         {
-            var mapping = _inspector.FindClassMappingByType(elementType);
+            if (_current.InstanceType is null)
+                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+
+            var mapping = _inspector.FindClassMappingByType(Settings.Version, _current.InstanceType);
 
             if (mapping == null)
-                throw Error.Format("Asked to deserialize unknown type '" + elementType.Name + "'", _current);
+                RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
 
             return Deserialize(mapping, existing);
         }
-        
-        internal Base Deserialize(ClassMapping mapping, Base existing=null)
+
+        internal static void RaiseFormatError(string message, string location)
+        {
+            throw Error.Format("While building a POCO: " + message, location);
+        }
+
+        internal Base Deserialize(ClassMapping mapping, Base existing = null)
         {
             if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
 
@@ -62,31 +87,33 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
-            IEnumerable<Tuple<string, IFhirReader>> members = null;
+            // The older code for read() assumes the primitive value member is represented as a separate child element named "value", 
+            // while the newer ITypedElement represents this as a special Value property. We simulate the old behaviour here, by
+            // explicitly adding the value property as a child and making it act like a typed node.
+            var members = _current.Value != null ?
+                new[] { new ValuePropertyTypedElement(_current) }.Union(_current.Children()) : _current.Children();
 
-            members = _current.GetMembers();
-            read(mapping, members, existing);
+            try
+            {
+                read(mapping, members, existing);
+            }
+            catch (StructuralTypeException ste)
+            {
+                throw Error.Format(ste.Message);
+            }
 
             return existing;
 
         }
 
+        //this should be refactored into read(ITypedElement parent, Base existing)
 
-        private void read(ClassMapping mapping, IEnumerable<Tuple<string,IFhirReader>> members, Base existing)
+        private void read(ClassMapping mapping, IEnumerable<ITypedElement> members, Base existing)
         {
-            //bool hasMember;
-
             foreach (var memberData in members)
             {
-                if (Settings.CustomDeserializer != null && memberData.Item2 is IElementNavigator nav)
-                {
-                    var done = Settings.CustomDeserializer.OnBeforeDeserializeProperty(memberData.Item1, existing, nav);
-                    if (done) continue;
-                }
+                var memberName = memberData.Name;  // tuple: first is name of member
 
-                //hasMember = true;
-                var memberName = memberData.Item1;  // tuple: first is name of member
-             
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
                 var mappedProperty = mapping.FindMappedElementByName(memberName);
@@ -103,18 +130,23 @@ namespace Hl7.Fhir.Serialization
                         value = mappedProperty.GetValue(existing);
 
                         if (value != null && !mappedProperty.IsCollection)
-                            throw Error.Format($"Element '{mappedProperty.Name}' must not repeat", _current);
+                            RaiseFormatError($"Element '{mappedProperty.Name}' must not repeat", memberData.Location);
                     }
 
-                    var reader = new DispatchingReader(memberData.Item2, Settings, arrayMode: false);
+                    var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
+
+                    // Since we're still using both ClassMappings and the newer IElementDefinitionSummary provider at the same time, 
+                    // the member might be known in the one (POCO), but unknown in the provider. This is only in theory, since the
+                    // provider should provide exactly the same information as the mappings. But better to get a clear exception
+                    // when this happens.
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    if (mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
+                    if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
                     {
                         if (!Settings.AllowUnrecognizedEnums)
                         {
-                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ElementType) == null)
-                                throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ElementType.Name), _current);
+                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ImplementingType) == null)
+                                RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.ImplementingType.Name}'", _current.Location);
                         }
 
                         ((Primitive)existing).ObjectValue = value;
@@ -130,7 +162,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (Settings.AcceptUnknownMembers == false)
-                        throw Error.Format("Encountered unknown member '{0}' while de-serializing".FormatWith(memberName), _current);
+                        RaiseFormatError($"Encountered unknown member '{memberName}' while de-serializing", memberData.Location);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }

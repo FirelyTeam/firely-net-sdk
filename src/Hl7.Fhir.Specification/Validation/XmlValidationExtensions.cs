@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.FhirPath;
@@ -22,8 +22,6 @@ using System.Xml.Schema;
 
 namespace Hl7.Fhir.Validation
 {
-#if NET_XSD_SCHEMA
-
     /// <summary>
     /// Add support for validating against Base subclasses (instead of IElementNavigator) to the Validator
     /// </summary>
@@ -122,6 +120,4 @@ namespace Hl7.Fhir.Validation
                 return Issue.XSD_VALIDATION_WARNING.ToIssueComponent(message, pos);
         }
     }
-
-#endif
 }

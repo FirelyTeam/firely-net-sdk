@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System.Linq;
@@ -28,10 +28,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             OperationOutcome level1 = new OperationOutcome();
 
-            Patient p = new Patient();
-            p.Active = true;
-            _location = new PocoNavigator(p);
-            _location.MoveToFirstChild();
+            Patient p = new Patient
+            {
+                Active = true
+            };
+            var node = p.ToTypedElement();
+            _location = node.Children().First().Location;
 
             level1.AddIssue(Support.Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.ToIssueComponent("A test warning at level 1", _location));
 
@@ -50,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         private OperationOutcome _report;
-        private IElementNavigator _location;
+        private string _location;
 
         [TestMethod]
         public void IssueHierarchy()

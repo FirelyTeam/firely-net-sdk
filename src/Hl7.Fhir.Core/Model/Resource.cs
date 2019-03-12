@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 var bd = this.Annotation<ResourceBaseData>();
-                return bd != null ? bd.Base : null;
+                return bd?.Base;
             }
 
             set
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
         /// <param name="issues">The list of issues that will have the validation results appended</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, IElementNavigator model, List<CommonOperationOutcome.IssueComponent> issues)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, ITypedElement model, List<CommonOperationOutcome.IssueComponent> issues)
         {
             try
             {
@@ -160,6 +160,14 @@ namespace Hl7.Fhir.Model
             return ResourceIdentity(baseUrl.OriginalString);
         }
 
+        /// <summary>
+        /// This object is internally used for locking the resource in a multithreaded environment.
+        /// </summary>
+        /// <remarks>
+        /// As a consumer of this API, please do not use this object.
+        /// </remarks>
+        [NotMapped]
+        public readonly object SyncLock = new object();
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -211,7 +219,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new PocoNavigator(this);
+                var tree = this.ToTypedElement(DotNetAttributeValidation.GetVersion(context));
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(context, invariantRule, tree, issues);
@@ -241,6 +249,14 @@ namespace Hl7.Fhir.Model
 
         [NotMapped]
         public bool HasVersionId => Meta?.VersionId != null;
+
+        #region Obsolete members
+        [Obsolete("Use ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, ITypedElement model, OperationOutcome result) instead. Obsolete since 2018-10-17")]
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, IElementNavigator model, List<CommonOperationOutcome.IssueComponent> result)
+        {
+            return ValidateInvariantRule(context, invariantRule, model.ToTypedElement(), result);
+        }
+        #endregion
     }
 }
 

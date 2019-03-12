@@ -231,6 +231,7 @@ namespace Hl7.Fhir.Model.STU3
                 { "uri", typeof(Hl7.Fhir.Model.FhirUri) },
                 { "UsageContext", typeof(Hl7.Fhir.Model.STU3.UsageContext) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
+                { "xhtml", typeof(Hl7.Fhir.Model.XHtml) },
         
                 { "Account", typeof(Hl7.Fhir.Model.STU3.Account) },
                 { "ActivityDefinition", typeof(Hl7.Fhir.Model.STU3.ActivityDefinition) },
@@ -409,6 +410,7 @@ namespace Hl7.Fhir.Model.STU3
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(Hl7.Fhir.Model.STU3.UsageContext), "UsageContext" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
+                { typeof(Hl7.Fhir.Model.XHtml), "xhtml" },
         
                 { typeof(Hl7.Fhir.Model.STU3.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.STU3.ActivityDefinition), "ActivityDefinition" },

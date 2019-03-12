@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "CharacteristicComponent")]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
@@ -208,10 +208,10 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (Value != null) yield return new ElementValue("value", false, Value);
-                    if (ExcludeElement != null) yield return new ElementValue("exclude", false, ExcludeElement);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
+                    if (Period != null) yield return new ElementValue("period", Period);
                 }
             }
         
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "MemberComponent")]
         [DataContract]
-        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MemberComponent"; } }
@@ -353,9 +353,9 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Entity != null) yield return new ElementValue("entity", false, Entity);
-                    if (Period != null) yield return new ElementValue("period", false, Period);
-                    if (InactiveElement != null) yield return new ElementValue("inactive", false, InactiveElement);
+                    if (Entity != null) yield return new ElementValue("entity", Entity);
+                    if (Period != null) yield return new ElementValue("period", Period);
+                    if (InactiveElement != null) yield return new ElementValue("inactive", InactiveElement);
                 }
             }
         
@@ -693,15 +693,15 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
-                if (ActualElement != null) yield return new ElementValue("actual", false, ActualElement);
-                if (Code != null) yield return new ElementValue("code", false, Code);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
-                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
-                foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                if (QuantityElement != null) yield return new ElementValue("quantity", QuantityElement);
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
+                foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", elem); }
             }
         }
     

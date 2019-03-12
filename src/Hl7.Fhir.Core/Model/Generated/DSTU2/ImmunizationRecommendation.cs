@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RecommendationComponent")]
         [DataContract]
-        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RecommendationComponent"; } }
@@ -304,14 +304,14 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
-                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
-                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", false, DoseNumberElement);
-                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, ForecastStatus);
-                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, elem); }
-                    if (Protocol != null) yield return new ElementValue("protocol", false, Protocol);
-                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", true, elem); }
-                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", true, elem); }
+                    if (DateElement != null) yield return new ElementValue("date", DateElement);
+                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", VaccineCode);
+                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
+                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", elem); }
+                    if (Protocol != null) yield return new ElementValue("protocol", Protocol);
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", elem); }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", elem); }
                 }
             }
         
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DateCriterionComponent")]
         [DataContract]
-        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DateCriterionComponent"; } }
@@ -435,8 +435,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", false, Code);
-                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (ValueElement != null) yield return new ElementValue("value", ValueElement);
                 }
             }
         
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProtocolComponent")]
         [DataContract]
-        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProtocolComponent"; } }
@@ -632,10 +632,10 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", false, DoseSequenceElement);
-                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
-                    if (Authority != null) yield return new ElementValue("authority", false, Authority);
-                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
+                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", DoseSequenceElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Authority != null) yield return new ElementValue("authority", Authority);
+                    if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
                 }
             }
         
@@ -755,9 +755,9 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (Patient != null) yield return new ElementValue("patient", false, Patient);
-                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
             }
         }
     

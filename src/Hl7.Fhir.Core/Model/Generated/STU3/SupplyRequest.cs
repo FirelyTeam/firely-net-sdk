@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "OrderedItemComponent")]
         [DataContract]
-        public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OrderedItemComponent"; } }
@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
-                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Item != null) yield return new ElementValue("item", Item);
                 }
             }
         
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
@@ -263,8 +263,8 @@ namespace Hl7.Fhir.Model.STU3
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
-                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+                    if (Agent != null) yield return new ElementValue("agent", Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
                 }
             }
         
@@ -605,18 +605,18 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
-                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
-                if (Category != null) yield return new ElementValue("category", false, Category);
-                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
-                if (OrderedItem != null) yield return new ElementValue("orderedItem", false, OrderedItem);
-                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
-                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
-                if (Requester != null) yield return new ElementValue("requester", false, Requester);
-                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
-                if (Reason != null) yield return new ElementValue("reason", false, Reason);
-                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", false, DeliverFrom);
-                if (DeliverTo != null) yield return new ElementValue("deliverTo", false, DeliverTo);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Category != null) yield return new ElementValue("category", Category);
+                if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+                if (OrderedItem != null) yield return new ElementValue("orderedItem", OrderedItem);
+                if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", Requester);
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", elem); }
+                if (Reason != null) yield return new ElementValue("reason", Reason);
+                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", DeliverFrom);
+                if (DeliverTo != null) yield return new ElementValue("deliverTo", DeliverTo);
             }
         }
     

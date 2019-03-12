@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
         private Newtonsoft.Json.Linq.JObject getPatientExample()
         {
             //var reader = new StringReader(Properties.TestResources.TestPatientJson);
-            var json = File.ReadAllText(@"TestData\TestPatient.json");
+            var json = File.ReadAllText(Path.Combine("TestData", "TestPatient.json"));
 
             return (JObject)JObject.Parse(json);
         }

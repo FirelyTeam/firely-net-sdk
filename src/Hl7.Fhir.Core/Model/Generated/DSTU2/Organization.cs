@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -185,10 +185,10 @@ namespace Hl7.Fhir.Model.DSTU2
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
-                    if (Name != null) yield return new ElementValue("name", false, Name);
-                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                    if (Address != null) yield return new ElementValue("address", false, Address);
+                    if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                    if (Name != null) yield return new ElementValue("name", Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                    if (Address != null) yield return new ElementValue("address", Address);
                 }
             }
         
@@ -470,14 +470,14 @@ namespace Hl7.Fhir.Model.DSTU2
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
-                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
-                if (Type != null) yield return new ElementValue("type", false, Type);
-                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
-                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
-                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+                if (Type != null) yield return new ElementValue("type", Type);
+                if (NameElement != null) yield return new ElementValue("name", NameElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", elem); }
+                if (PartOf != null) yield return new ElementValue("partOf", PartOf);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
             }
         }
     

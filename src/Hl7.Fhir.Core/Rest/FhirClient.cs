@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Rest
             set => _requester.Prefer = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
         }
 
-#if NET_COMPRESSION
+#if !NETSTANDARD1_1
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -115,7 +115,6 @@ namespace Hl7.Fhir.Rest
             set { _requester.CompressRequestBody = value; }
         }
 #endif
-
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
@@ -173,7 +172,7 @@ namespace Hl7.Fhir.Rest
         /// url, it must reference an address within the endpoint.
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
-        /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
+        /// <exception cref="FhirOperationException{T}">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
         public Task<TResource> ReadAsync<TResource>(Uri location, string ifNoneMatch=null, DateTimeOffset? ifModifiedSince=null) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
@@ -208,7 +207,7 @@ namespace Hl7.Fhir.Rest
         /// url, it must reference an address within the endpoint.
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
-        /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
+        /// <exception cref="FhirOperationException{T}">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
         public TResource Read<TResource>(Uri location, string ifNoneMatch = null,
             DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
@@ -249,9 +248,9 @@ namespace Hl7.Fhir.Rest
             return ReadAsync<TResource>(location, ifNoneMatch, ifModifiedSince).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Refresh
+#region Refresh
 
         /// <summary>
         /// Refreshes the data in the resource passed as an argument by re-reading it from the server
@@ -280,9 +279,9 @@ namespace Hl7.Fhir.Rest
             return RefreshAsync<TResource>(current).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Update
+#region Update
 
         /// <summary>
         /// Update (or create) a resource
@@ -373,9 +372,9 @@ namespace Hl7.Fhir.Rest
         {
             return internalUpdateAsync(resource, request).WaitResult();
         }
-        #endregion
+#endregion
 
-        #region Delete
+#region Delete
 
         /// <summary>
         /// Delete a resource at the given endpoint.
@@ -471,9 +470,9 @@ namespace Hl7.Fhir.Rest
             DeleteAsync(resourceType, condition).WaitNoResult();
         }
 
-        #endregion
+#endregion
         
-        #region Create
+#region Create
         
         /// <summary>
         /// Create a resource on a FHIR endpoint
@@ -521,9 +520,9 @@ namespace Hl7.Fhir.Rest
             return CreateAsync(resource, condition).WaitResult();
         }
         
-        #endregion
+#endregion
         
-        #region Metadata
+#region Conformance
 
         /// <summary>
         /// Get the system metadata
@@ -539,10 +538,9 @@ namespace Hl7.Fhir.Rest
         {
             return MetadataAsync(summary).WaitResult();
         }
+#endregion
 
-        #endregion
-
-        #region History
+#region History
 
         /// <summary>
         /// Retrieve the version history for a specific resource type
@@ -699,9 +697,9 @@ namespace Hl7.Fhir.Rest
             return internalHistoryAsync(resourceType, id, since, pageSize, summary).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Transaction
+#region Transaction
 
         /// <summary>
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
@@ -727,9 +725,9 @@ namespace Hl7.Fhir.Rest
             return TransactionAsync(bundle).WaitResult();
         }
 
-        #endregion
-
-        #region Operation
+#endregion
+        
+#region Operation
 
         public Task<Resource> WholeSystemOperationAsync(string operationName, Parameters parameters = null, bool useGet = false)
         {
@@ -851,9 +849,9 @@ namespace Hl7.Fhir.Rest
             return internalOperationAsync(operationName, type, id, vid, parameters, useGet).WaitResult();
         }
 
-        #endregion
+#endregion
         
-        #region Get
+#region Get
 
         /// <summary>
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
@@ -901,7 +899,7 @@ namespace Hl7.Fhir.Rest
             return GetAsync(new Uri(url, UriKind.RelativeOrAbsolute));
         }
 
-        #endregion
+#endregion
         
 
    

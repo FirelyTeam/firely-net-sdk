@@ -1,9 +1,9 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System.Collections.Generic;
@@ -92,14 +92,14 @@ namespace Hl7.Fhir.Validation
 
         public string Name => Entry.Name;
 
-        public IList<ScopedNavigator> Members => Entry.Members;
+        public IList<ITypedElement> Members => Entry.Members;
 
-        public bool Add(ScopedNavigator candidate)
+        public bool Add(ITypedElement candidate)
         {
             return Entry.Add(candidate);
         }
 
-        public OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
+        public OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             var outcome = Entry.Validate(validator, errorLocation);   // Validate against entry slice, e.g. cardinality
 

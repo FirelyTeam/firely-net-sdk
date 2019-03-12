@@ -1,9 +1,9 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -22,12 +22,12 @@ namespace Hl7.Fhir.Rest
         public const string OPERATIONPREFIX = "$";
 
         private List<Request> _result;
-        private string _baseUrl;
+        private readonly Uri _baseUrl;
 
         public RequestsBuilder(string baseUrl)
         {
             _result = new List<Request>();
-            _baseUrl = baseUrl;
+            _baseUrl = new Uri(baseUrl);
         }
 
         public RequestsBuilder(Uri baseUri)
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
 
         private void addRequest(Request newRequest, RestUrl path)
         {
-            newRequest.Url = path.Uri.ToString();
+            newRequest.Url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl).ToString();
             _result.Add(newRequest);
         }
 
@@ -73,12 +73,9 @@ namespace Hl7.Fhir.Rest
                 addRequest(request, new RestUrl(url));
             else
             {
-                var absoluteUrl = _baseUrl;
-                if(!absoluteUrl.EndsWith("/")) absoluteUrl += "/";
-                absoluteUrl += url;
+                var absoluteUrl = HttpUtil.MakeAbsoluteToBase(uri, _baseUrl);
                 addRequest(request, new RestUrl(absoluteUrl));
             }
-
             return this;
         }
 
@@ -322,11 +319,28 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public RequestsBuilder SearchUsingPost(SearchParams q, string resourceType = null)
+        {
+            if (q == null) throw new ArgumentNullException(nameof(q));
+
+            var request = newRequest(HTTPVerb.POST, InteractionType.Search);
+            var path = newRestUrl();
+            if (resourceType != null) path.AddPath(resourceType);
+            path.AddPath("_search");
+            request.Resource = q.ToParameters();
+            addRequest(request, path);
+
+            return this;
+        }
+
         public RequestsBuilder Transaction<TBundle>(TBundle transaction) where TBundle : Resource
         {
             var request = newRequest(HTTPVerb.POST, InteractionType.Transaction);
             request.Resource = transaction;
-            addRequest(request, newRestUrl());
+            var url = _baseUrl.ToString();
+            if (url.EndsWith("/"))  // in case of a transaction the url cannot end with a forward slash. Remove it here.
+                url = url.TrimEnd('/');
+            addRequest(request, new RestUrl(url));
 
             return this;
         }

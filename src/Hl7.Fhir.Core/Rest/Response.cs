@@ -1,4 +1,16 @@
-﻿using Hl7.Fhir.Utility;
+﻿/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +42,7 @@ namespace Hl7.Fhir.Rest
 
             result.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
-#if !DOTNETFW
+#if NETSTANDARD1_1
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
                 result.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else
@@ -187,12 +199,15 @@ namespace Hl7.Fhir.Rest
                 else
                     result = new Serialization.FhirXmlParser(settings).Parse<Model.Resource>(bodyText);
             }
-            catch (FormatException fe)
+            catch (FormatException) when (!throwOnFormatException)
             {
-                if (throwOnFormatException) throw fe;
+                // if (throwOnFormatException) throw fe;
+
+                // [WMR 20181029] TODO...
+                // ExceptionHandler.NotifyOrThrow(...)_
+
                 return null;
             }
-
             return result;
         }
     }
