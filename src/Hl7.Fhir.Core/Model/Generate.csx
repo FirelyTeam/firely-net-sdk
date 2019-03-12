@@ -1182,9 +1182,32 @@ public class ResourceDetails
 
     private static void Patch(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
     {
-        // Make the STU3 Code patterns the same as DSTU2 (the STU3 one seems just plain wrong)
-        var stu3Code = resourcesByNameByVersion["STU3"]["Code"];
-        stu3Code.Pattern = @"[^\s]+([\s][^\s]+)*";
+        // Fixed patterns - there were quite a bit of changes in R4 and some of the old ones were plain wrong
+        var patternsByType = new Dictionary<string, string>
+        {
+            { "FhirString", null },
+            { "Markdown", null },
+            { "FhirUri", null },
+            { "FhirBoolean", null },
+            { "FhirDecimal", null },
+            { "Code", @"[^\s]+(\s[^\s]+)*" },
+            { "Oid", @"urn:oid:[0-2](\.(0|[1-9][0-9]*))+" },
+            { "Date", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?" },
+            { "FhirDateTime", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?" },
+            { "Instant", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))" },
+            { "Time", @"([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" }
+        };
+
+        foreach (var resourcesByName in resourcesByNameByVersion.Values)
+        {
+            foreach (var typePattern in patternsByType)
+            {
+                if (resourcesByName.TryGetValue(typePattern.Key, out var resourceDetails))
+                {
+                    resourceDetails.Pattern = typePattern.Value;
+                }
+            }
+        }
 
         // Make the DSTU2 Element.Id a string as in STU3 - less restrictive
         var dstu2Element = resourcesByNameByVersion["DSTU2"]["Element"];
@@ -1299,6 +1322,16 @@ public class ResourceDetails
                 resourceName = "FhirUri";
                 primitiveTypeName = "string";
             }
+            else if (resourceName == "url")
+            {
+                resourceName = "Url";
+                primitiveTypeName = "string";
+            }
+            else if (resourceName == "canonical")
+            {
+                resourceName = "Canonical";
+                primitiveTypeName = "string";
+            }
             else if (resourceName == "narrative")
             {
                 resourceName = "Narrative";
@@ -1406,7 +1439,7 @@ public class ResourceDetails
             resource.IsPrimitive = resourceBaseType.Contains("Primitive<");
             resource.AbstractType = (e.SelectSingleNode("fhir:abstract[@value='true']", loadedVersion.NST) != null);
 
-            var patternNode = e.SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']/fhir:valueString/@value", loadedVersion.NST);
+            var patternNode = e.SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex' or @url='http://hl7.org/fhir/StructureDefinition/regex']/fhir:valueString/@value", loadedVersion.NST);
             resource.Pattern = patternNode != null ? patternNode.Value : null;
 
             resource.Properties = resource.IsPrimitive ?
@@ -1528,7 +1561,7 @@ public class ResourceDetails
                 .ToList();
             var firstResourceWithSameName = resourcesWithSameName[0];
             var firstVersion = firstResourceWithSameName.Versions.Single().Version;
-            // Extension and Element defintions are circular, and they shlould not be version-specific, so we exclude them from the referenced types testing
+            // Extension and Element definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
             if (resourcesWithSameName.Count > 1 && 
                 resourcesWithSameName.Skip(1).All(resource => firstResourceWithSameName.IsSame(resource)) && 
                 firstResourceWithSameName.GetReferencedFhirTypes().All(type => type == "Extension" || type == "Element" || !resourcesByNameByVersion[firstVersion].ContainsKey(type)))
@@ -2098,6 +2131,8 @@ public class PropertyDetails
             case "code": return "Hl7.Fhir.Model.Code";
             case "oid": return "Hl7.Fhir.Model.Oid";
             case "uri": return "Hl7.Fhir.Model.FhirUri";
+            case "url": return "Hl7.Fhir.Model.Url";
+            case "canonical": return "Hl7.Fhir.Model.Canonical";
             case "boolean": return "Hl7.Fhir.Model.FhirBoolean";
             case "dateTime": return "Hl7.Fhir.Model.FhirDateTime";
             case "date": return "Hl7.Fhir.Model.Date";
@@ -2159,8 +2194,7 @@ public class PropertyDetails
         result.CardMin = element.SelectSingleNode("fhir:min/@value", ns).Value;
         result.CardMax = element.SelectSingleNode("fhir:max/@value", ns).Value;
 
-        string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary", "markdown" };
-        if (NativeTypes.Contains(result.PropType))
+        if (IsNativeType(result.PropType))
         {
             result.NativeName = result.Name;
             result.Name = result.Name + "Element";
@@ -2208,6 +2242,14 @@ public class PropertyDetails
                     break;
                 case "uri":
                     result.PropType = "Hl7.Fhir.Model.FhirUri";
+                    result.NativeType = "string";
+                    break;
+                case "url":
+                    result.PropType = "Hl7.Fhir.Model.Url";
+                    result.NativeType = "string";
+                    break;
+                case "canonical":
+                    result.PropType = "Hl7.Fhir.Model.Canonical";
                     result.NativeType = "string";
                     break;
                 case "base64Binary":
@@ -2329,8 +2371,7 @@ public class PropertyDetails
         }
         else
         {
-            string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary", "markdown" };
-            if (NativeTypes.Contains(result.PropType))
+            if (IsNativeType(result.PropType))
             {
                 result.NativeType = result.PropType;
             }
@@ -2378,6 +2419,14 @@ public class PropertyDetails
                     break;
                 case "uri":
                     result.PropType = "Hl7.Fhir.Model.FhirUri";
+                    result.NativeType = "string";
+                    break;
+                case "url":
+                    result.PropType = "Hl7.Fhir.Model.Url";
+                    result.NativeType = "string";
+                    break;
+                case "canonical":
+                    result.PropType = "Hl7.Fhir.Model.Canonical";
                     result.NativeType = "string";
                     break;
                 case "base64Binary":
@@ -2445,10 +2494,20 @@ public class PropertyDetails
         return result;
     }
 
+    private static bool IsNativeType(string propType)
+    {
+        string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary", "markdown" };
+        return NativeTypes.Contains(propType);
+    }
+
     private static string GetCodeRequiredBinding(XmlElement element, XmlNamespaceManager ns, string resourceName, Dictionary<string, string> enumTypesByValueSetUrl)
     {
         // Grab the required binding value set reference (if any) from the element
         var codeRequiredBindingNode = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns);
+        if (codeRequiredBindingNode == null)
+        {
+            codeRequiredBindingNode = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", ns);
+        }
         if (codeRequiredBindingNode == null)
         {
             return null;
@@ -2460,9 +2519,9 @@ public class PropertyDetails
             return null;
         }
 
-        if (enumTypesByValueSetUrl.ContainsKey(codeRequiredBinding))
+        if (enumTypesByValueSetUrl.TryGetValue(codeRequiredBinding, out var enumType))
         {
-            return enumTypesByValueSetUrl[codeRequiredBinding];
+            return enumType;
         }
 
         codeRequiredBinding = element.SelectSingleNode("fhir:path/@value", ns).Value;

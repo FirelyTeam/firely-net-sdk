@@ -52,9 +52,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "decimal"; } }
     
-        // Must conform to the pattern "-?([0]|([1-9][0-9]*))(\.[0-9]+)?"
-        public const string PATTERN = @"-?([0]|([1-9][0-9]*))(\.[0-9]+)?";
-    
         public FhirDecimal(decimal? value)
         {
             Value = value;
