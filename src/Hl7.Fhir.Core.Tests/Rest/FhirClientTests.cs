@@ -1264,14 +1264,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()
         {
-            Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            byte[] arr;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                arr = ms.ToArray();
-            }
-
+            byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
             var client = new FhirClient(testEndpoint);
 
             var binary = new Binary() { Data = arr, ContentType = "image/png" };
