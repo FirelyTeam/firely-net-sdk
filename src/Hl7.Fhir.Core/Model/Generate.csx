@@ -328,6 +328,48 @@ using Hl7.Fhir.Utility;
     }
 }
 
+public class PrimitiveType
+{
+    public PrimitiveType(string fhirName, string className, string nativeType)
+    {
+        FhirName = fhirName;
+        ClassName = className;
+        NativeType = nativeType;
+    }
+
+    public string FhirName { get; }
+    public string ClassName { get; }
+    public string NativeType { get; }
+
+    public static PrimitiveType Get(string fhirName)
+    {
+        return _primitiveTypes.FirstOrDefault(n => n.FhirName == fhirName);
+    }
+
+    private static PrimitiveType[] _primitiveTypes = new PrimitiveType[]
+    {
+        new PrimitiveType("id", "Id", "string"),
+        new PrimitiveType("code", "Code", "string" ),
+        new PrimitiveType("oid", "Oid", "string"),
+        new PrimitiveType("uri", "FhirUri", "string"),
+        new PrimitiveType("url", "Url", "string"),
+        new PrimitiveType("canonical", "Canonical", "string"),
+        new PrimitiveType("boolean", "FhirBoolean", "bool?"),
+        new PrimitiveType("dateTime", "FhirDateTime", "string"),
+        new PrimitiveType("date", "Date", "string"),
+        new PrimitiveType("time", "Time", "string"),
+        new PrimitiveType("base64Binary", "Base64Binary", "byte[]"),
+        new PrimitiveType("decimal", "FhirDecimal", "decimal?"),
+        new PrimitiveType("markdown", "Markdown", "string"),
+        new PrimitiveType("xhtml", "XHtml", "string"),
+        new PrimitiveType("instant", "Instant", "DateTimeOffset?"),
+        new PrimitiveType("integer", "Integer", "int?"),
+        new PrimitiveType("unsignedInt", "UnsignedInt", "int?"),
+        new PrimitiveType("positiveInt", "PositiveInt", "int?"),
+        new PrimitiveType("string", "FhirString", "string")
+    };
+}
+
 /// <summary>
 /// The complete XML structure definition data of a specific FHIR version
 /// </summary>
@@ -1307,93 +1349,15 @@ public class ResourceDetails
             var rawResourceName = resourceName;
 
             string primitiveTypeName = null;
-            if (resourceName == "string")
+            var primitiveType = PrimitiveType.Get(resourceName);
+            if (primitiveType != null)
             {
-                resourceName = "FhirString";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "decimal")
-            {
-                resourceName = "FhirDecimal";
-                primitiveTypeName = "decimal?";
-            }
-            else if (resourceName == "uri")
-            {
-                resourceName = "FhirUri";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "url")
-            {
-                resourceName = "Url";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "canonical")
-            {
-                resourceName = "Canonical";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "narrative")
-            {
-                resourceName = "Narrative";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "boolean")
-            {
-                resourceName = "FhirBoolean";
-                primitiveTypeName = "bool?";
-            }
-            else if (resourceName == "dateTime")
-            {
-                resourceName = "FhirDateTime";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "date")
-            {
-                resourceName = "Date";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "time")
-            {
-                resourceName = "Time";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "instant")
-            {
-                resourceName = "Instant";
-                primitiveTypeName = "DateTimeOffset?";
-            }
-            else if (resourceName == "integer")
-            {
-                resourceName = "Integer";
-                primitiveTypeName = "int?";
-            }
-            else if (resourceName == "positiveInt")
-            {
-                resourceName = "PositiveInt";
-                primitiveTypeName = "int?";
-            }
-            else if (resourceName == "unsignedInt")
-            {
-                resourceName = "UnsignedInt";
-                primitiveTypeName = "int?";
-            }
-            else if (resourceName == "code")
-            {
-                resourceName = "Code";
-                primitiveTypeName = "string";
-            }
-            else if (resourceName == "base64Binary")
-            {
-                resourceName = "Base64Binary";
-                primitiveTypeName = "byte[]";
+                resourceName = primitiveType.ClassName;
+                primitiveTypeName = primitiveType.NativeType;
             }
             else if (resourceName == "Reference")
             {
                 resourceName = "ResourceReference";
-            }
-            else if (resourceName == "xhtml")
-            {
-                resourceName = "XHtml";
             }
             else
             {
@@ -2124,28 +2088,14 @@ public class PropertyDetails
 
     public static string ConvertPropertyType(string propType, XmlElement element, XmlNamespaceManager ns)
     {
+        var nativeType = PrimitiveType.Get(propType);
+        if (nativeType != null )
+        {
+            return "Hl7.Fhir.Model." + nativeType.ClassName;
+        }
         switch (propType)
         {
-            case "id": return "Hl7.Fhir.Model.Id";
             case "Reference": return "Hl7.Fhir.Model.ResourceReference";
-            case "code": return "Hl7.Fhir.Model.Code";
-            case "oid": return "Hl7.Fhir.Model.Oid";
-            case "uri": return "Hl7.Fhir.Model.FhirUri";
-            case "url": return "Hl7.Fhir.Model.Url";
-            case "canonical": return "Hl7.Fhir.Model.Canonical";
-            case "boolean": return "Hl7.Fhir.Model.FhirBoolean";
-            case "dateTime": return "Hl7.Fhir.Model.FhirDateTime";
-            case "date": return "Hl7.Fhir.Model.Date";
-            case "time": return "Hl7.Fhir.Model.Time";
-            case "base64Binary": return "Hl7.Fhir.Model.Base64Binary";
-            case "decimal": return "Hl7.Fhir.Model.FhirDecimal";
-            case "markdown": return "Hl7.Fhir.Model.Markdown";
-            case "xhtml": return "Hl7.Fhir.Model.XHtml";
-            case "instant": return "Hl7.Fhir.Model.Instant";
-            case "integer": return "Hl7.Fhir.Model.Integer";
-            case "unsignedInt": return "Hl7.Fhir.Model.UnsignedInt";
-            case "positiveInt": return "Hl7.Fhir.Model.PositiveInt";
-            case "string": return "Hl7.Fhir.Model.FhirString";
             case "Quantity":
                 return GetQuantityType(element, ns);
         }
@@ -2194,115 +2144,9 @@ public class PropertyDetails
         result.CardMin = element.SelectSingleNode("fhir:min/@value", ns).Value;
         result.CardMax = element.SelectSingleNode("fhir:max/@value", ns).Value;
 
-        if (IsNativeType(result.PropType))
-        {
-            result.NativeName = result.Name;
-            result.Name = result.Name + "Element";
-            result.NativeType = result.PropType;
-        }
-
         if (parsedReferencedType == null)
         {
-            switch (result.PropType)
-            {
-                case "id":
-                    result.PropType = "Hl7.Fhir.Model.Id";
-                    result.NativeType = "string";
-                    break;
-                case "Reference":
-                    result.PropType = "Hl7.Fhir.Model.ResourceReference";
-                    break;
-                case "Code":
-                    result.PropType = "Hl7.Fhir.Model.Code";
-                    result.NativeType = "string";
-                    // If the binding is required, then we can change to the 
-                    // locally defined enumeration type
-                    break;
-                case "code":
-                    result.PropType = "Hl7.Fhir.Model.Code";
-                    result.NativeType = "string";
-                    // If the binding is required, then we can change to the 
-                    // locally defined enumeration type
-                    break;
-                case "oid":
-                    result.PropType = "Hl7.Fhir.Model.Oid";
-                    result.NativeType = "string";
-                    break;
-                case "markdown":
-                    result.PropType = "Hl7.Fhir.Model.Markdown";
-                    result.NativeType = "string";
-                    break;
-                case "integer":
-                    result.PropType = "Hl7.Fhir.Model.Integer";
-                    result.NativeType = "int?";
-                    break;
-                case "boolean":
-                    result.PropType = "Hl7.Fhir.Model.FhirBoolean";
-                    result.NativeType = "bool?";
-                    break;
-                case "uri":
-                    result.PropType = "Hl7.Fhir.Model.FhirUri";
-                    result.NativeType = "string";
-                    break;
-                case "url":
-                    result.PropType = "Hl7.Fhir.Model.Url";
-                    result.NativeType = "string";
-                    break;
-                case "canonical":
-                    result.PropType = "Hl7.Fhir.Model.Canonical";
-                    result.NativeType = "string";
-                    break;
-                case "base64Binary":
-                    result.PropType = "Hl7.Fhir.Model.Base64Binary";
-                    result.NativeType = "byte[]";
-                    break;
-                case "Resource":
-                    result.PropType = "Hl7.Fhir.Model.Resource";
-                    result.AllowedTypesByVersion = new Dictionary<string, List<string>> { { string.Empty, new List<string> { "Hl7.Fhir.Model.Resource" } } };
-                    break;
-                case "dateTime":
-                    result.PropType = "Hl7.Fhir.Model.FhirDateTime";
-                    result.NativeType = "string";
-                    break;
-                case "date":
-                    result.PropType = "Hl7.Fhir.Model.Date";
-                    result.NativeType = "string";
-                    break;
-                case "time":
-                    result.PropType = "Hl7.Fhir.Model.Time";
-                    result.NativeType = "string";
-                    break;
-                case "instant":
-                    result.PropType = "Hl7.Fhir.Model.Instant";
-                    result.NativeType = "DateTimeOffset?";
-                    break;
-                case "unsignedInt":
-                    result.PropType = "Hl7.Fhir.Model.UnsignedInt";
-                    result.NativeType = "int?";
-                    break;
-                case "positiveInt":
-                    result.PropType = "Hl7.Fhir.Model.PositiveInt";
-                    result.NativeType = "int?";
-                    break;
-                case "decimal":
-                    result.PropType = "Hl7.Fhir.Model.FhirDecimal";
-                    result.NativeType = "decimal?";
-                    break;
-                case "string":
-                    result.PropType = "Hl7.Fhir.Model.FhirString";
-                    result.NativeType = "string";
-                    break;
-                case "Element":
-                case "BackboneElement":
-                    result.PropType = ComputeBackboneComponentType(result.FhirName, element, ns);
-                    break;
-                case "Quantity":
-                    result.PropType = GetQuantityType(element, ns);
-                    break;
-                default:
-                    result.PropType = "Hl7.Fhir.Model." + result.PropType;
-                    break;
-            }
+            SetType(result, element, ns);
         }
 
         if (result.Name.Contains("[x]"))
@@ -2371,109 +2215,7 @@ public class PropertyDetails
         }
         else
         {
-            if (IsNativeType(result.PropType))
-            {
-                result.NativeType = result.PropType;
-            }
-
-            switch (result.PropType)
-            {
-                case "id":
-                    result.PropType = "Hl7.Fhir.Model.Id";
-                    result.NativeType = "string";
-                    break;
-                case "Reference":
-                    result.PropType = "Hl7.Fhir.Model.ResourceReference";
-                    break;
-                case "Resource":
-                    result.PropType = "Hl7.Fhir.Model.Resource";
-                    result.AllowedTypesByVersion = new Dictionary<string, List<string>>() { { string.Empty, new List<string> { "Hl7.Fhir.Model.Resource" } } };
-                    break;
-                case "Code":
-                    result.PropType = "Hl7.Fhir.Model.Code";
-                    result.NativeType = "string";
-                    // If the binding is required, then we can change to the 
-                    // locally defined enumeration type
-                    break;
-                case "code":
-                    result.PropType = "Hl7.Fhir.Model.Code";
-                    result.NativeType = "string";
-                    // If the binding is required, then we can change to the 
-                    // locally defined enumeration type
-                    break;
-                case "markdown":
-                    result.PropType = "Hl7.Fhir.Model.Markdown";
-                    result.NativeType = "string";
-                    break;
-                case "oid":
-                    result.PropType = "Hl7.Fhir.Model.Oid";
-                    result.NativeType = "string";
-                    break;
-                case "integer":
-                    result.PropType = "Hl7.Fhir.Model.Integer";
-                    result.NativeType = "int?";
-                    break;
-                case "boolean":
-                    result.PropType = "Hl7.Fhir.Model.FhirBoolean";
-                    result.NativeType = "bool?";
-                    break;
-                case "uri":
-                    result.PropType = "Hl7.Fhir.Model.FhirUri";
-                    result.NativeType = "string";
-                    break;
-                case "url":
-                    result.PropType = "Hl7.Fhir.Model.Url";
-                    result.NativeType = "string";
-                    break;
-                case "canonical":
-                    result.PropType = "Hl7.Fhir.Model.Canonical";
-                    result.NativeType = "string";
-                    break;
-                case "base64Binary":
-                    result.PropType = "Hl7.Fhir.Model.Base64Binary";
-                    result.NativeType = "byte[]";
-                    break;
-                case "dateTime":
-                    result.PropType = "Hl7.Fhir.Model.FhirDateTime";
-                    result.NativeType = "string";
-                    break;
-                case "date":
-                    result.PropType = "Hl7.Fhir.Model.Date";
-                    result.NativeType = "string";
-                    break;
-                case "time":
-                    result.PropType = "Hl7.Fhir.Model.Time";
-                    break;
-                case "instant":
-                    result.PropType = "Hl7.Fhir.Model.Instant";
-                    result.NativeType = "DateTimeOffset?";
-                    break;
-                case "unsignedInt":
-                    result.PropType = "Hl7.Fhir.Model.UnsignedInt";
-                    result.NativeType = "int?";
-                    break;
-                case "positiveInt":
-                    result.PropType = "Hl7.Fhir.Model.PositiveInt";
-                    result.NativeType = "int?";
-                    break;
-                case "decimal":
-                    result.PropType = "Hl7.Fhir.Model.FhirDecimal";
-                    result.NativeType = "decimal?";
-                    break;
-                case "string":
-                    result.PropType = "Hl7.Fhir.Model.FhirString";
-                    result.NativeType = "string";
-                    break;
-                case "BackboneElement":
-                    result.PropType = ComputeBackboneComponentType(result.FhirName, element, ns);
-                    break;
-                case "Quantity":
-                    result.PropType = GetQuantityType(element, ns);
-                    break;
-                default:
-                    result.PropType = "Hl7.Fhir.Model." + result.PropType;
-                    break;
-            }
+            SetType(result, element, ns);
         }
 
         if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
@@ -2494,10 +2236,39 @@ public class PropertyDetails
         return result;
     }
 
-    private static bool IsNativeType(string propType)
+    private static void SetType(PropertyDetails result, XmlElement element, XmlNamespaceManager ns)
     {
-        string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary", "markdown" };
-        return NativeTypes.Contains(propType);
+        var primitiveType = PrimitiveType.Get(result.PropType);
+        if (primitiveType != null)
+        {
+            result.NativeName = result.Name;
+            result.Name = result.Name + "Element";
+            result.PropType = "Hl7.Fhir.Model." + primitiveType.ClassName;
+            result.NativeType = primitiveType.NativeType;
+        }
+        else
+        {
+            switch (result.PropType)
+            {
+                case "Reference":
+                    result.PropType = "Hl7.Fhir.Model.ResourceReference";
+                    break;
+                case "Resource":
+                    result.PropType = "Hl7.Fhir.Model.Resource";
+                    result.AllowedTypesByVersion = new Dictionary<string, List<string>>() { { string.Empty, new List<string> { "Hl7.Fhir.Model.Resource" } } };
+                    break;
+                case "Element":
+                case "BackboneElement":
+                    result.PropType = ComputeBackboneComponentType(result.FhirName, element, ns);
+                    break;
+                case "Quantity":
+                    result.PropType = GetQuantityType(element, ns);
+                    break;
+                default:
+                    result.PropType = "Hl7.Fhir.Model." + result.PropType;
+                    break;
+            }
+        }
     }
 
     private static string GetCodeRequiredBinding(XmlElement element, XmlNamespaceManager ns, string resourceName, Dictionary<string, string> enumTypesByValueSetUrl)
