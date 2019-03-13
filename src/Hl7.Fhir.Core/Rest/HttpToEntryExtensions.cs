@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException, bool throwOnArgumentException)
         {
             var result = new Bundle.EntryComponent();
 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException);
+                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException, throwOnArgumentException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
+        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException, bool throwOnArgumentException)
         {           
             Resource result= null;
 
@@ -149,6 +149,10 @@ namespace Hl7.Fhir.Rest
                 // [WMR 20181029] TODO...
                 // ExceptionHandler.NotifyOrThrow(...)_
 
+                return null;
+            }
+            catch (ArgumentException ae) when (!throwOnArgumentException)
+            {
                 return null;
             }
             return result;
