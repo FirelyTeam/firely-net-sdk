@@ -65,12 +65,12 @@ namespace Hl7.Fhir.Tests.Serialization
                         // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
                         resource.InvariantConstraints = new List<ElementDefinitionConstraint>();
                         resource.AddDefaultConstraints();
-                        var issues = new List<CommonOperationOutcome.IssueComponent>();
-                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, issues);
-                        if (issues.Count > 0)
+                        var result = new OperationOutcome();
+                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, result);
+                        if (result.Issue.Count > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
-                            foreach (var item in issues)
+                            foreach (var item in result.Issue)
                             {
                                 if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             Trace.WriteLine(new FhirXmlSerializer(Fhir.Model.Version.DSTU2).SerializeToString(resource));
                             Trace.WriteLine("-------------------------");
                         }
-                        if (issues.Count != 0)
+                        if (result.Issue.Count != 0)
                         {
                             errorCount++;
                         }
@@ -199,8 +199,8 @@ namespace Hl7.Fhir.Tests.Serialization
                         {
                             resource.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
                         }
-                        var issues = new List<CommonOperationOutcome.IssueComponent>();
-                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, issues);
+                        var result = new OperationOutcome();
+                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, result);
                         // Debug.WriteLine("Key: " + String.Join(", ", resource.InvariantConstraints.Select(s => s.Key)));
                         foreach (var item in resource.InvariantConstraints)
                         {
@@ -225,10 +225,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
                         }
                         // we can skip the US zipcode validations
-                        if (issues.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
+                        if (result.Issue.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
-                            foreach (var item in issues)
+                            foreach (var item in result.Issue)
                             {
                                 if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);

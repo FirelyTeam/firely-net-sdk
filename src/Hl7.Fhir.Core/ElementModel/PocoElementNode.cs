@@ -78,21 +78,23 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (name == null || child.ElementName == name)
                 {
-                    var mySummary = childElementDefinitions.Single(c => c.ElementName == child.ElementName);
+                    var mySummary = childElementDefinitions.SingleOrDefault(c => c.ElementName == child.ElementName);
+                    if (mySummary != null)
+                    {
+                        if (!mySummary.IsCollection || oldElementName != child.ElementName)
+                            arrayIndex = 0;
+                        else
+                            arrayIndex += 1;
 
-                    if (!mySummary.IsCollection || oldElementName != child.ElementName)
-                        arrayIndex = 0;
-                    else
-                        arrayIndex += 1;
+                        var location = Location == null ? child.ElementName :
+                                    $"{Location}.{child.ElementName}[{arrayIndex}]";
+                        var shortPath = ShortPath == null ? child.ElementName :
+                            (mySummary.IsCollection ?
+                                $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
+                                $"{ShortPath}.{child.ElementName}");
 
-                    var location = Location == null ? child.ElementName :
-                                $"{Location}.{child.ElementName}[{arrayIndex}]";
-                    var shortPath = ShortPath == null ? child.ElementName :
-                        (mySummary.IsCollection ?
-                            $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
-                            $"{ShortPath}.{child.ElementName}");
-
-                    yield return new PocoElementNode(child.Value, this, location, shortPath, arrayIndex, mySummary);
+                        yield return new PocoElementNode(child.Value, this, location, shortPath, arrayIndex, mySummary);
+                    }
                 }
 
                 oldElementName = child.ElementName;

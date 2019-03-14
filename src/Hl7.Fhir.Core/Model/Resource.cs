@@ -88,14 +88,14 @@ namespace Hl7.Fhir.Model
         /// <param name="issues">The list of issues that will have the validation results appended</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, ITypedElement model, List<CommonOperationOutcome.IssueComponent> issues)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, ITypedElement model, OperationOutcome result)
         {
             try
             {
                 // No FhirPath extension
                 if (string.IsNullOrEmpty(invariantRule.Expression))
                 {
-                    issues.Add(new CommonOperationOutcome.IssueComponent
+                    result.Issue.Add(new OperationOutcome.IssueComponent
                     {
                         Code = IssueType.Invariant,
                         Severity = IssueSeverity.Warning,
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
                 if (model.Predicate(invariantRule.Expression, new EvaluationContext(model)))
                     return true;
 
-                issues.Add(new CommonOperationOutcome.IssueComponent
+                result.Issue.Add(new OperationOutcome.IssueComponent
                 {
                     Code = IssueType.Invariant,
                     Severity = IssueSeverity.Error,
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             }
             catch (Exception ex)
             {
-                issues.Add(new CommonOperationOutcome.IssueComponent
+                result.Issue.Add(new OperationOutcome.IssueComponent
                 {
                     Code = IssueType.Invariant,
                     Severity = IssueSeverity.Fatal,
@@ -198,9 +198,9 @@ namespace Hl7.Fhir.Model
 
         public void ValidateInvariants(ValidationContext context, List<ValidationResult> result)
         {
-            var issues = new List<CommonOperationOutcome.IssueComponent>();
-            ValidateInvariants(context, issues);
-            foreach (var item in issues)
+            var results = new OperationOutcome();
+            ValidateInvariants(context, results);
+            foreach (var item in results.Issue)
             {
                 if (item.Severity == IssueSeverity.Error
                     || item.Severity == IssueSeverity.Fatal)
@@ -208,10 +208,10 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public void ValidateInvariants(Version version, List<CommonOperationOutcome.IssueComponent> issues)
-            => ValidateInvariants(DotNetAttributeValidation.BuildContext(version, new object()), issues);
+        public void ValidateInvariants(Version version, OperationOutcome result)
+            => ValidateInvariants(DotNetAttributeValidation.BuildContext(version, new object()), result);
 
-        public void ValidateInvariants(ValidationContext context, List<CommonOperationOutcome.IssueComponent> issues)
+        public void ValidateInvariants(ValidationContext context, OperationOutcome result)
         {
             if (InvariantConstraints != null && InvariantConstraints.Count > 0)
             {
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
                 var tree = this.ToTypedElement(DotNetAttributeValidation.GetVersion(context));
                 foreach (var invariantRule in InvariantConstraints)
                 {
-                    ValidateInvariantRule(context, invariantRule, tree, issues);
+                    ValidateInvariantRule(context, invariantRule, tree, result);
                 }
 
                 // sw.Stop();
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
 
         #region Obsolete members
         [Obsolete("Use ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, ITypedElement model, OperationOutcome result) instead. Obsolete since 2018-10-17")]
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, IElementNavigator model, List<CommonOperationOutcome.IssueComponent> result)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, IElementNavigator model, OperationOutcome result)
         {
             return ValidateInvariantRule(context, invariantRule, model.ToTypedElement(), result);
         }

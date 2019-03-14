@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Tests.Rest
                 var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
-            catch (FhirOperationException<OperationOutcome>)
+            catch (FhirOperationException)
             {
                 Assert.AreEqual("404", client.LastResult.Status);
             }
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Tests.Rest
                 fe = client.Read<Patient>(fe.ResourceIdentity().WithoutVersion());
                 Assert.Fail();
             }
-            catch(FhirOperationException<OperationOutcome> ex)
+            catch(FhirOperationException ex)
             {
                 Assert.AreEqual(HttpStatusCode.Gone, ex.Status); //"410"
             }
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 var pat = client.Read<Patient>("Patient/1");
             }
-            catch (FhirOperationException<OperationOutcome> fe)
+            catch (FhirOperationException fe)
             {
                 if (!fe.Message.Contains("a valid FHIR xml/json body type was expected") && !fe.Message.Contains("not recognized as either xml or json"))
                     Assert.Fail("Failed to recognize invalid body contents");
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Tests.Rest
                 var pat = client.Read<Patient>("Patient/1");
                 Assert.Fail("Failed to throw an Exception on status 500");
             }
-            catch (FhirOperationException<OperationOutcome> fe)
+            catch (FhirOperationException fe)
             {
                 // Expected exception happened
                 if (fe.Status != HttpStatusCode.InternalServerError)
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Tests.Rest
                 var pat = client.Read<Patient>("Patient/doesnotexist");
                 Assert.Fail("Failed to throw an Exception on status 404");
             }
-            catch (FhirOperationException<OperationOutcome> fe)
+            catch (FhirOperationException fe)
             {
                 // Expected exception happened
                 if (fe.Status != HttpStatusCode.NotFound)
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Tests.Rest
                 var output = validationFhirClient.ValidateResource(new Patient());
 
             }
-            catch(FhirOperationException<OperationOutcome> ex)
+            catch(FhirOperationException ex)
             {
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }

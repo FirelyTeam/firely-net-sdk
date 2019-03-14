@@ -2,7 +2,7 @@
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirStu3Client : FhirClient<Model.STU3.Bundle, Model.STU3.CapabilityStatement, Model.STU3.OperationOutcome>
+    public class FhirStu3Client : FhirClient<Model.STU3.Bundle, Model.STU3.CapabilityStatement>
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -20,10 +20,9 @@ namespace Hl7.Fhir.Rest
         public FhirStu3Client(Uri endpoint, bool verifyFhirVersion = false) : 
             base(
                 endpoint,
-                new FhirVersionSettings<Model.STU3.OperationOutcome>(
+                new FhirVersionSettings(
                     Model.Version.STU3,
                     Model.STU3.ModelInfo.Version, 
-                    exception => Model.STU3.OperationOutcome.ForException(exception, Model.IssueType.Invalid), 
                     (data, contentType) => new Model.STU3.Binary {  Content = data, ContentType = contentType }
                 ),
                 verifyFhirVersion

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
+using Hl7.Fhir.Utility;
 
 /*
     Copyright (c) 2011+, HL7, Inc.
@@ -37,17 +37,17 @@ using System.Text;
 */
 #pragma warning disable 1591 // suppress XML summary warnings
 
+//
+// Generated for FHIR v1.0.2, v3.0.1
+//
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Version-independent information about the success/failure of an action
+    /// Information about the success/failure of an action
     /// </summary>
-    /// <remarks>Must be compatible with the OperationOutcome classes of the specific versions - e.g. serialzations of this class must be de-serializable in the 
-    /// version-specific OperationOutcome classes</remarks>
-    [FhirType(Version.All, "OperationOutcome", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.All, "OperationOutcome", IsResource=true)]
     [DataContract]
-    [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
-    public partial class CommonOperationOutcome : DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.OperationOutcome; } }
@@ -55,69 +55,27 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "OperationOutcome"; } }
     
     
-        [FhirType(Version.All, "IssueComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "IssueComponent")]
         [DataContract]
-        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        public partial class IssueComponent : BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
-            public IssueComponent()
-            { }
-
-            public IssueComponent(DSTU2.OperationOutcome.IssueComponent issue)
-            {
-                Code = issue?.Code;
-                Severity = issue?.Severity;
-                Details = (CodeableConcept)issue?.Details?.DeepCopy();
-                Diagnostics = issue?.Diagnostics;
-            }
-
-            public IssueComponent(STU3.OperationOutcome.IssueComponent issue)
-            {
-                Code = issue?.Code;
-                Severity = issue?.Severity;
-                Details = (CodeableConcept)issue?.Details?.DeepCopy();
-                Diagnostics = issue?.Diagnostics;
-            }
-
-            public DSTU2.OperationOutcome.IssueComponent ToDstu2()
-            {
-                return new DSTU2.OperationOutcome.IssueComponent
-                {
-                    Code = Code,
-                    Severity = Severity,
-                    Details = (CodeableConcept)Details?.DeepCopy(),
-                    Diagnostics = Diagnostics
-                };
-            }
-
-            public STU3.OperationOutcome.IssueComponent ToStu3()
-            {
-                return new STU3.OperationOutcome.IssueComponent
-                {
-                    Code = Code,
-                    Severity = Severity,
-                    Details = (CodeableConcept)Details?.DeepCopy(),
-                    Diagnostics = Diagnostics
-                };
-            }
-
             [NotMapped]
             public override string TypeName { get { return "IssueComponent"; } }
             
             /// <summary>
             /// fatal | error | warning | information
             /// </summary>
-            [FhirElement("severity", InSummary=new[]{Version.All}, Order=40)]
+            [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<IssueSeverity> SeverityElement
+            public Code<Hl7.Fhir.Model.IssueSeverity> SeverityElement
             {
                 get { return _SeverityElement; }
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
             
-            private Code<IssueSeverity> _SeverityElement;
+            private Code<Hl7.Fhir.Model.IssueSeverity> _SeverityElement;
             
             /// <summary>
             /// fatal | error | warning | information
@@ -125,7 +83,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IssueSeverity? Severity
+            public Hl7.Fhir.Model.IssueSeverity? Severity
             {
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
@@ -133,7 +91,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         SeverityElement = null;
                     else
-                        SeverityElement = new Code<IssueSeverity>(value);
+                        SeverityElement = new Code<Hl7.Fhir.Model.IssueSeverity>(value);
                     OnPropertyChanged("Severity");
                 }
             }
@@ -141,17 +99,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Version.All}, Order=50)]
+            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<IssueType> CodeElement
+            public Code<Hl7.Fhir.Model.IssueType> CodeElement
             {
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
-            private Code<IssueType> _CodeElement;
+            private Code<Hl7.Fhir.Model.IssueType> _CodeElement;
             
             /// <summary>
             /// Error or warning code
@@ -159,7 +117,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IssueType? Code
+            public Hl7.Fhir.Model.IssueType? Code
             {
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
@@ -167,7 +125,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         CodeElement = null;
                     else
-                        CodeElement = new Code<IssueType>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.IssueType>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -175,30 +133,30 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional details about the error
             /// </summary>
-            [FhirElement("details", InSummary=new[]{Version.All}, Order=60)]
+            [FhirElement("details", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
-            public CodeableConcept Details
+            public Hl7.Fhir.Model.CodeableConcept Details
             {
                 get { return _Details; }
                 set { _Details = value; OnPropertyChanged("Details"); }
             }
             
-            private CodeableConcept _Details;
+            private Hl7.Fhir.Model.CodeableConcept _Details;
             
             /// <summary>
             /// Additional diagnostic information about the issue
             /// </summary>
-            [FhirElement("diagnostics", InSummary=new[]{Version.All}, Order=70)]
+            [FhirElement("diagnostics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
-            public FhirString DiagnosticsElement
+            public Hl7.Fhir.Model.FhirString DiagnosticsElement
             {
                 get { return _DiagnosticsElement; }
                 set { _DiagnosticsElement = value; OnPropertyChanged("DiagnosticsElement"); }
             }
             
-            private FhirString _DiagnosticsElement;
+            private Hl7.Fhir.Model.FhirString _DiagnosticsElement;
             
             /// <summary>
             /// Additional diagnostic information about the issue
@@ -214,7 +172,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         DiagnosticsElement = null;
                     else
-                        DiagnosticsElement = new FhirString(value);
+                        DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Diagnostics");
                 }
             }
@@ -222,17 +180,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", InSummary=new[]{Version.All}, Order=80)]
+            [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<FhirString> LocationElement
+            public List<Hl7.Fhir.Model.FhirString> LocationElement
             {
-                get { if(_LocationElement==null) _LocationElement = new List<FhirString>(); return _LocationElement; }
+                get { if(_LocationElement==null) _LocationElement = new List<Hl7.Fhir.Model.FhirString>(); return _LocationElement; }
                 set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
             }
             
-            private List<FhirString> _LocationElement;
+            private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             /// <summary>
             /// XPath of element(s) related to issue
@@ -248,8 +206,42 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         LocationElement = null;
                     else
-                        LocationElement = new List<FhirString>(value.Select(elem=>new FhirString(elem)));
+                        LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Location");
+                }
+            }
+            
+            /// <summary>
+            /// FHIRPath of element(s) related to issue
+            /// </summary>
+            [FhirElement("expression", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=90)]
+            [CLSCompliant(false)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirString> ExpressionElement
+            {
+                get { if(_ExpressionElement==null) _ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(); return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirString> _ExpressionElement;
+            
+            /// <summary>
+            /// FHIRPath of element(s) related to issue
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        ExpressionElement = null;
+                    else
+                        ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("Expression");
                 }
             }
         
@@ -260,11 +252,12 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(SeverityElement != null) dest.SeverityElement = (Code<IssueSeverity>)SeverityElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Code<IssueType>)CodeElement.DeepCopy();
-                    if(Details != null) dest.Details = (CodeableConcept)Details.DeepCopy();
-                    if(DiagnosticsElement != null) dest.DiagnosticsElement = (FhirString)DiagnosticsElement.DeepCopy();
-                    if(LocationElement != null) dest.LocationElement = new List<FhirString>(LocationElement.DeepCopy());
+                    if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.IssueSeverity>)SeverityElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.IssueType>)CodeElement.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.CodeableConcept)Details.DeepCopy();
+                    if(DiagnosticsElement != null) dest.DiagnosticsElement = (Hl7.Fhir.Model.FhirString)DiagnosticsElement.DeepCopy();
+                    if(LocationElement != null) dest.LocationElement = new List<Hl7.Fhir.Model.FhirString>(LocationElement.DeepCopy());
+                    if(ExpressionElement != null) dest.ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(ExpressionElement.DeepCopy());
                     return dest;
                 }
                 else
@@ -287,6 +280,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Details, otherT.Details)) return false;
                 if( !DeepComparable.Matches(DiagnosticsElement, otherT.DiagnosticsElement)) return false;
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
             
                 return true;
             }
@@ -302,10 +296,12 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Details, otherT.Details)) return false;
                 if( !DeepComparable.IsExactly(DiagnosticsElement, otherT.DiagnosticsElement)) return false;
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
             
                 return true;
             }
-             
+        
+        
             [NotMapped]
             public override IEnumerable<Base> Children
             {
@@ -317,6 +313,7 @@ namespace Hl7.Fhir.Model
                     if (Details != null) yield return Details;
                     if (DiagnosticsElement != null) yield return DiagnosticsElement;
                     foreach (var elem in LocationElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in ExpressionElement) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -331,83 +328,18 @@ namespace Hl7.Fhir.Model
                     if (Details != null) yield return new ElementValue("details", Details);
                     if (DiagnosticsElement != null) yield return new ElementValue("diagnostics", DiagnosticsElement);
                     foreach (var elem in LocationElement) { if (elem != null) yield return new ElementValue("location", elem); }
+                    foreach (var elem in ExpressionElement) { if (elem != null) yield return new ElementValue("expression", elem); }
                 }
             }
-
-            [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-            [NotMapped]
-            private string DebuggerDisplay
-            {
-                get
-                {
-                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
-                }
-            }
-
-            [NotMapped]
-            public bool Success
-            {
-                get
-                {
-                    return Severity != null && (Severity.Value == IssueSeverity.Information || Severity.Value == IssueSeverity.Warning);
-                }
-            }
-
-            internal void ToStringBuilder(StringBuilder buffer)
-            {
-                if (Severity != null)
-                {
-                    buffer.Append("[");
-                    buffer.Append(Severity.ToString().ToUpper());
-                    buffer.Append("] ");
-                }
-
-                buffer.Append(Details?.Text ?? "(no details)");
-
-                if (Diagnostics != null)
-                {
-                    buffer.Append("(further diagnostics: ");
-                    buffer.Append(Diagnostics);
-                    buffer.Append(")");
-                }
-
-                if (Location.Any())
-                {
-                    buffer.Append(" (at ");
-                    buffer.Append(String.Join(" via ", Location));
-                    buffer.Append(")");
-                }
-            }
-
-            public override string ToString()
-            {
-                var textBuffer = new StringBuilder();
-                ToStringBuilder(textBuffer);
-                return textBuffer.ToString();
-            }
-
-            public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
-
-            [NotMapped]
-            public int HierarchyLevel
-            {
-                get
-                {
-                    return this.GetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY).GetValueOrDefault(0);
-                }
-
-                set
-                {
-                    this.SetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY, value);
-                }
-            }
+        
+        
         }
-
-
+    
+        
         /// <summary>
         /// A single issue associated with the action
         /// </summary>
-        [FhirElement("issue", InSummary=new[]{Version.All}, Order=90)]
+        [FhirElement("issue", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -422,7 +354,7 @@ namespace Hl7.Fhir.Model
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as CommonOperationOutcome;
+            var dest = other as OperationOutcome;
         
             if (dest != null)
             {
@@ -436,12 +368,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-             return CopyTo(new CommonOperationOutcome());
+             return CopyTo(new OperationOutcome());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as CommonOperationOutcome;
+            var otherT = other as OperationOutcome;
             if(otherT == null) return false;
         
             if(!base.Matches(otherT)) return false;
@@ -452,7 +384,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as CommonOperationOutcome;
+            var otherT = other as OperationOutcome;
             if(otherT == null) return false;
         
             if(!base.IsExactly(otherT)) return false;
@@ -470,102 +402,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Issue) { if (elem != null) yield return elem; }
             }
         }
-        public static CommonOperationOutcome ForMessage(string message, IssueType code, IssueSeverity severity = IssueSeverity.Error)
-        {
-            return new CommonOperationOutcome
-            {
-                Issue = new List<CommonOperationOutcome.IssueComponent>()
-                            { new CommonOperationOutcome.IssueComponent()
-                                    { Severity = severity, Code = code, Diagnostics = message }
-                            }
-            };
-        }
-
-        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
-        public static CommonOperationOutcome ForException(Exception e, IssueSeverity severity = IssueSeverity.Error)
-        {
-            return ForException(e, IssueType.Processing, severity);
-        }
-
-        public static CommonOperationOutcome ForException(Exception e, IssueType type, IssueSeverity severity = IssueSeverity.Error)
-        {
-            var result = CommonOperationOutcome.ForMessage(e.Message, type, severity);
-            var ie = e.InnerException;
-
-            while (ie != null)
-            {
-                result.Issue.Add(new IssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
-                ie = ie.InnerException;
-            }
-
-            return result;
-        }
-
-        public override string ToString()
-        {
-            if (Text != null && !string.IsNullOrEmpty(Text.Div))
-            {
-                return Text.Div;
-            }
-
-            var textBuilder = new StringBuilder();
-
-            if (Success)
-                textBuilder.Append("Overall result: SUCCESS");
-            else
-                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors + Fatals, Warnings);
-            textBuilder.AppendLine();
-
-            if (Issue.Any())
-            {
-                foreach (var issue in Issue)
-                {
-                    textBuilder.Append(' ', issue.HierarchyLevel * 2);
-                    textBuilder.AppendLine();
-                    issue.ToStringBuilder(textBuilder);
-                }
-            }
-
-            return textBuilder.ToString();
-        }
-
-        [NotMapped]
-        public bool Success
-        {
-            get
-            {
-                return !Issue.Any(i => !i.Success);
-            }
-        }
-
-
-        [NotMapped]
-        public int Fatals
-        {
-            get
-            {
-                return Issue.Where(i => i.Severity == IssueSeverity.Fatal).Count();
-            }
-        }
-
-        [NotMapped]
-        public int Errors
-        {
-            get
-            {
-                return Issue.Where(i => i.Severity == IssueSeverity.Error).Count();
-            }
-        }
-
-        [NotMapped]
-        public int Warnings
-        {
-            get
-            {
-                return Issue.Where(i => i.Severity == IssueSeverity.Warning).Count();
-            }
-        }
-
+        
         [NotMapped]
         internal override IEnumerable<ElementValue> NamedChildren
         {

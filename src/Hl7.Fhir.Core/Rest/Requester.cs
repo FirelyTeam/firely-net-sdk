@@ -17,26 +17,24 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirVersionSettings<TOperationOutcome> where TOperationOutcome : Resource
+    public class FhirVersionSettings
     {
-        public FhirVersionSettings(Model.Version version, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
+        public FhirVersionSettings(Model.Version version, string fhirVersion, Func<byte[], string, Resource> makeBinaryResource)
         {
             if (version == Model.Version.All) throw Error.Argument(nameof(version), "Must be a specific version");
             if (string.IsNullOrEmpty(fhirVersion)) throw Error.ArgumentNullOrEmpty(nameof(version));
 
             Version = version;
             FhirVersion = fhirVersion;
-            OperationOutcomeFromException = operationOutcomeFromException ?? throw new ArgumentNullException(nameof(operationOutcomeFromException));
             MakeBinaryResource = makeBinaryResource ?? throw new ArgumentNullException(nameof(makeBinaryResource));
         }
 
         public Model.Version Version { get; }
         public string FhirVersion { get; }
-        public Func<Exception, TOperationOutcome> OperationOutcomeFromException;
         public Func<byte[], string, Resource> MakeBinaryResource;
     }
 
-    internal class Requester<TOperationOutcome> where TOperationOutcome : Resource
+    internal class Requester
     {
         public Uri BaseUrl { get; private set; }
         public string FhirVersion { get { return _versionSettings.FhirVersion; } }
@@ -59,7 +57,7 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; }
 
-        public Requester(Uri baseUrl, FhirVersionSettings<TOperationOutcome> versionSettings)
+        public Requester(Uri baseUrl, FhirVersionSettings versionSettings)
         {
             BaseUrl = baseUrl;
             _versionSettings = versionSettings ?? throw new ArgumentNullException(nameof(versionSettings));
@@ -77,7 +75,7 @@ namespace Hl7.Fhir.Rest
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
-        private readonly FhirVersionSettings<TOperationOutcome> _versionSettings;
+        private readonly FhirVersionSettings _versionSettings;
 
         public Response Execute(Request interaction)
         {
@@ -146,7 +144,7 @@ namespace Hl7.Fhir.Rest
                         errorResult.Status = ((int)webResponse.StatusCode).ToString();
 
 
-                        errorResult.Resource = _versionSettings.OperationOutcomeFromException(bte);
+                        errorResult.Resource = OperationOutcome.ForException(bte, IssueType.Invalid);
                         LastResult = errorResult;
 
                         throw buildFhirOperationException(webResponse.StatusCode, errorResult.Resource);
@@ -217,12 +215,12 @@ namespace Hl7.Fhir.Rest
             else
                 message = $"Operation was unsuccessful, and returned status {status}";
 
-            if (body is TOperationOutcome outcome)
-                return new FhirOperationException<TOperationOutcome>($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
+            if (body is OperationOutcome outcome)
+                return new FhirOperationException($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
             else if (body != null)
-                return new FhirOperationException<TOperationOutcome>($"{message}. Body contains a {body.TypeName}.", status);
+                return new FhirOperationException($"{message}. Body contains a {body.TypeName}.", status);
             else
-                return new FhirOperationException<TOperationOutcome>($"{message}. Body has no content.", status);
+                return new FhirOperationException($"{message}. Body has no content.", status);
         }
     }
 }

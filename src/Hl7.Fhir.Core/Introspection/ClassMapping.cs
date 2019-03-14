@@ -69,15 +69,24 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         private IList<PropertyMapping> _orderedMappings;
 
+        private Dictionary<Model.Version, List<PropertyMapping>> _orderdMappingsByVersion = new Dictionary<Model.Version, List<PropertyMapping>>();
+
         /// <summary>
-        /// Collection of PropertyMappings that capture information about this classes
-        /// properties
+        /// PropertyMappings in the order as the appear in the reflected class, which is the order
+        /// in which they must be serialized.
         /// </summary>
-        public IList<PropertyMapping> PropertyMappings
+        public IReadOnlyCollection<PropertyMapping> GetPropertyMappings(Model.Version version)
         {
-            get
+            lock (_orderdMappingsByVersion)
             {
-                return _orderedMappings; 
+                if (!_orderdMappingsByVersion.TryGetValue(version, out var propertyMappings))
+                {
+                    propertyMappings = _orderedMappings
+                        .Where(m => m.IsIn(version))
+                        .ToList();
+                    _orderdMappingsByVersion.Add(version, propertyMappings);
+                }
+                return propertyMappings;
             }
         }
 
@@ -93,12 +102,13 @@ namespace Hl7.Fhir.Introspection
             get { return PrimitiveValueProperty != null; } 
         }
 
-        public PropertyMapping FindMappedElementByName(string name)
+        public PropertyMapping FindMappedElementByName(Model.Version version, string name)
         {
             if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
-            bool success = _propMappings.TryGetValue(normalizedName, out PropertyMapping prop);
+            bool success = _propMappings.TryGetValue(normalizedName, out PropertyMapping prop)
+                && prop.IsIn(version);
 
             // Direct success
             if (success) return prop;
@@ -106,7 +116,7 @@ namespace Hl7.Fhir.Introspection
             // Not found, maybe a polymorphic name
             // TODO: specify possible polymorhpic variations using attributes
             // to speedup look up & aid validation
-            return PropertyMappings.SingleOrDefault(p => p.MatchesSuffixedName(name));            
+            return _orderedMappings.SingleOrDefault(p => p.MatchesSuffixedName(name) && p.IsIn(version)); 
         }
 
 

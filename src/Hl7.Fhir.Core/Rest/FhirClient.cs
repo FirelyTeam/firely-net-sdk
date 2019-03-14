@@ -18,14 +18,13 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class FhirClient<TBundle, TMetadata, TOperationOutcome> : IFhirClient<TBundle, TMetadata>
+    public abstract partial class FhirClient<TBundle, TMetadata> : IFhirClient<TBundle, TMetadata>
         where TBundle : Resource, IBundle
         where TMetadata : Resource, IMetadata
-        where TOperationOutcome : Resource
     {
-        private Requester<TOperationOutcome> _requester;
+        private Requester _requester;
 
-        public FhirClient(Uri endpoint, FhirVersionSettings<TOperationOutcome> versionSettings, bool verifyFhirVersion)
+        public FhirClient(Uri endpoint, FhirVersionSettings versionSettings, bool verifyFhirVersion)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");
 
@@ -36,7 +35,7 @@ namespace Hl7.Fhir.Rest
 
             Endpoint = endpoint;
 
-            _requester = new Requester<TOperationOutcome>(Endpoint, versionSettings)
+            _requester = new Requester(Endpoint, versionSettings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse
@@ -985,7 +984,7 @@ namespace Hl7.Fhir.Rest
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Status))
             {
                 Enum.TryParse<HttpStatusCode>(response.Status, out HttpStatusCode code);
-                throw new FhirOperationException<TOperationOutcome>("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Status), code);
+                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Status), code);
             }
 
             Resource result;
@@ -993,7 +992,7 @@ namespace Hl7.Fhir.Rest
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || (response.Resource is TOperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
+            var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
             if (noRealBody && request.IsPostOrPut()
                 && ReturnFullResource && response.Location != null
                 && new ResourceIdentity(response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
@@ -1010,12 +1009,12 @@ namespace Hl7.Fhir.Rest
             {
                 // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
                 // the LastResult, and return null as the result. Otherwise, throw.
-                if (result is TOperationOutcome)
+                if (result is OperationOutcome)
                     return null;
 
                 var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Method,
                     request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException<TOperationOutcome>(message, _requester.LastResponse.StatusCode);
+                throw new FhirOperationException(message, _requester.LastResponse.StatusCode);
             }
             else
                 return result as TResource;

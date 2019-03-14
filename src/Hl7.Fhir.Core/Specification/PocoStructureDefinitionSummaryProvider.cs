@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification
         public IEnumerable<IElementDefinitionSummary> GetElements()
         {
             var version = _version;
-            return _classMapping.PropertyMappings
+            return _classMapping.GetPropertyMappings(version)
                 .Where(pm => !pm.RepresentsValueElement)
                 .Select(pm => (IElementDefinitionSummary)new PocoElementSerializationInfo(version, pm));
         }

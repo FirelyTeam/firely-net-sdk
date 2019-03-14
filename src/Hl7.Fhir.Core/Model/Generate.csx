@@ -811,7 +811,7 @@ public class ResourceDetails
     /// <summary>
     /// Versions this resource or data type belongs to. 
     /// Initially it contains only the version this resource has been loaded from (e.g. DSTU2), 
-    /// if later on the resource is determined to be common to multiple version it will contain all the versions it appears in (see the MergeSame() method)
+    /// if later on the resource is determined to be common to multiple version it will contain all the versions it appears in
     /// </summary>
     public List<LoadedVersion> Versions;
 
@@ -906,9 +906,11 @@ public class ResourceDetails
                     string.Join(",", prop.AllowedTypesByVersion[string.Empty]) :
                     string.Join(", ", prop.AllowedTypesByVersion.Select(pair => $"{pair.Key}({ string.Join(",", pair.Value) })"));
             writer.WriteLine(
-                "    {0}: {1}{2} {3} {4}{5}{6}",
+                "    {0}: {1}{2}{3} {4} {5}{6}{7}",
                 prop.Name,
                 prop.PropType,
+                prop.Versions.Count > 1 || prop.Versions.Count == 1 && string.IsNullOrEmpty(prop.Versions.Single()) ?
+                    "versions(" + string.Join(",", prop.Versions) + ")" : string.Empty,
                 prop.InSummaryVersions.Count > 0 ? " summary(" + string.Join(",", prop.InSummaryVersions) + ")" : string.Empty,
                 prop.CardMin,
                 prop.CardMax,
@@ -934,75 +936,65 @@ public class ResourceDetails
         }
     }
 
-    /// <summary>
-    /// Checks if this resource is the same as another one - where 'the same' = representable by the same C# class
-    /// </summary>
-    public bool IsSame(ResourceDetails other)
+    public ResourceDetails Clone()
     {
-        return other != null &&
-            Name == other.Name &&
-            AbstractType == other.AbstractType &&
-            BaseType == other.BaseType &&
-            IsPrimitive == other.IsPrimitive &&
-            IsConstraint == other.IsConstraint &&
-            PrimitiveTypeName == other.PrimitiveTypeName &&
-            Pattern == other.Pattern &&
-            Properties.Count == other.Properties.Count &&
-            Properties.OrderBy(p => p.Name).Zip(other.Properties.OrderBy(p => p.Name), (p1, p2) => p1.IsSame(p2)).All(same => same) &&
-            Components.Count == other.Components.Count &&
-            Components.OrderBy(c => c.Name).Zip(other.Components.OrderBy(c => c.Name), (c1, c2) => c1.IsSame(c2)).All(same => same);
-    }
+        if (Versions.Count != 1) throw new ArgumentException("The resource must belong to a single FHIR version", "this");
+        var version = Versions[0].Version;
 
-    /// <summary>
-    /// Merge resource and data type descriptions that are the same
-    /// </summary>
-    /// <param name="resources">Resources / data types to merge</param>
-    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
-    /// <returns>Newly created merged resource description</returns>
-    public static ResourceDetails MergeSame(
-        IEnumerable<ResourceDetails> resources,
-        Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
-    )
-    {
-        var firstResource = resources.First();
         return new ResourceDetails
         {
-            Versions = resources
-                .Select( resource => resource.Versions.Single() )
+            Versions = new List<LoadedVersion>( Versions ),
+            Name = Name,
+            Description = Description,
+            FhirName = FhirName,
+            AbstractType = AbstractType,
+            BaseType = BaseType,
+            IsConstraint = IsConstraint,
+            IsPrimitive = IsPrimitive,
+            PrimitiveTypeName = PrimitiveTypeName,
+            Pattern = Pattern,
+            Properties = Properties
+                .Select(prop => prop.Clone(version))
                 .ToList(),
-            Name = firstResource.Name,
-            Description = firstResource.Description,
-            FhirName = firstResource.FhirName,
-            AbstractType = firstResource.AbstractType,
-            BaseType = firstResource.BaseType,
-            IsConstraint = firstResource.IsConstraint,
-            IsPrimitive = firstResource.IsPrimitive,
-            PrimitiveTypeName = firstResource.PrimitiveTypeName,
-            Pattern = firstResource.Pattern,
-            Properties = firstResource.Properties
-                .Select( 
-                    prop => PropertyDetails.MergeSame( 
-                        resources.Select( resource => new KeyValuePair<string, PropertyDetails>(resource.Versions.Single().Version, resource.Properties.Single(p => p.Name == prop.Name))),
-                        resourcesByNameByVersion
-                    )
-                )
+            Components = Components
+                .Select(comp => comp.Clone(version))
                 .ToList(),
-            Components = firstResource.Components
-                .Select(
-                    comp => ComponentDetails.MergeSame(
-                        resources.Select(resource => new KeyValuePair<string, ComponentDetails>(resource.Versions.Single().Version, resource.Components.Single(c => c.Name == comp.Name))),
-                        resourcesByNameByVersion
-                    )
-                )
-                .ToList(),
-            Constraints = firstResource.Constraints
-                .Select(
-                    constraint => ConstraintDetails.MergeSame(
-                        resources.Select(resource => new KeyValuePair<string, ConstraintDetails>(resource.Versions.Single().Version, resource.Constraints.Single(c => c.Key == constraint.Key)))
-                    )
-                )
+            Constraints = Constraints
+                .Select(constraint => constraint.Clone(version))
                 .ToList()
         };
+    }
+
+    public bool TryMerge(ResourceDetails other)
+    {
+        if (other.Versions.Count != 1) throw new ArgumentException("The resource must belong to a single FHIR version", nameof(other));
+        var version = other.Versions[0].Version;
+
+        if (other == null ||
+            Name != other.Name ||
+            AbstractType != other.AbstractType ||
+            BaseType != other.BaseType ||
+            IsPrimitive != other.IsPrimitive ||
+            IsConstraint != other.IsConstraint ||
+            PrimitiveTypeName != other.PrimitiveTypeName ||
+            Pattern != other.Pattern) return false;
+
+        Versions.AddRange(other.Versions);
+
+        if (!PropertyDetails.TryMerge(Properties, version, other.Properties)) return false;
+
+        if (!ComponentDetails.TryMerge(Components, version, other.Components)) return false;
+
+        if (!ConstraintDetails.TryMerge(Constraints, version, other.Constraints)) return false;
+
+        return true;
+    }
+
+    public void Simplify( Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion )
+    {
+        PropertyDetails.Simplify(Properties, resourcesByNameByVersion);
+        ComponentDetails.Simplify(Components, resourcesByNameByVersion);
+        ConstraintDetails.Simplify(Constraints, resourcesByNameByVersion);
     }
 
     /// <summary>
@@ -1168,7 +1160,7 @@ public class ResourceDetails
         const string prefix = "Hl7.Fhir.Model.";
         return GetAllProperties()
             .Select(p => p.PropType)
-            .Concat(new[] {  BaseType })
+            .Concat(new[] { BaseType })
             .Where(pt => pt.StartsWith(prefix))
             .Select(pt => pt.Substring(prefix.Length));
     }
@@ -1525,12 +1517,14 @@ public class ResourceDetails
                 .ToList();
             var firstResourceWithSameName = resourcesWithSameName[0];
             var firstVersion = firstResourceWithSameName.Versions.Single().Version;
+            var mergedResource = firstResourceWithSameName.Clone();
             // Extension and Element definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
             if (resourcesWithSameName.Count > 1 && 
-                resourcesWithSameName.Skip(1).All(resource => firstResourceWithSameName.IsSame(resource)) && 
-                firstResourceWithSameName.GetReferencedFhirTypes().All(type => type == "Extension" || type == "Element" || !resourcesByNameByVersion[firstVersion].ContainsKey(type)))
+                resourcesWithSameName.Skip(1).All(resource => mergedResource.TryMerge(resource)) &&
+                mergedResource.GetReferencedFhirTypes().All(type => type == "Extension" || type == "Element" || !resourcesByNameByVersion[firstVersion].ContainsKey(type)))
             {
-                sharedResourcesByName.Add(name, ResourceDetails.MergeSame(resourcesWithSameName, resourcesByNameByVersion));
+                mergedResource.Simplify(resourcesByNameByVersion);
+                sharedResourcesByName.Add(name, mergedResource);
                 foreach (var resourcesByName in resourcesByNameByVersion.Values)
                 {
                     resourcesByName.Remove(name);
@@ -1605,43 +1599,54 @@ public class ComponentDetails
     /// </summary>
     public List<PropertyDetails> Properties;
 
-    /// <summary>
-    /// Checks if this component is the same - i.e. correspond to an identical C# sub-class - as another one
-    /// </summary>
-    public bool IsSame(ComponentDetails other)
+    public ComponentDetails Clone(string version)
     {
-        return other != null &&
-            Name == other.Name &&
-            BaseType == other.BaseType &&
-            Properties.Count == other.Properties.Count &&
-            Properties.OrderBy(p => p.Name).Zip(other.Properties.OrderBy(p => p.Name), (p1, p2) => p1.IsSame(p2)).All(same => same);
-    }
-
-    /// <summary>
-    /// Merge components that are the same
-    /// </summary>
-    /// <param name="versionAndComponents">Version and component pairs to merge</param>
-    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
-    /// <returns>Newly created merged component description</returns>
-    public static ComponentDetails MergeSame(
-        IEnumerable<KeyValuePair<string, ComponentDetails>> versionAndComponents,
-        Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
-    )
-    {
-        var firstComponent = versionAndComponents.First().Value;
         return new ComponentDetails
         {
-            Name = firstComponent.Name,
-            BaseType = firstComponent.BaseType,
-            Properties = firstComponent.Properties
-                .Select(
-                    prop => PropertyDetails.MergeSame(
-                        versionAndComponents.Select(pair => new KeyValuePair<string, PropertyDetails>(pair.Key, pair.Value.Properties.Single(p => p.Name == prop.Name))),
-                        resourcesByNameByVersion
-                    )
-                )
+            Name = Name,
+            BaseType = BaseType,
+            Properties = Properties
+                .Select( prop => prop.Clone(version) )
                 .ToList(),
         };
+    }
+
+    public bool TryMerge(string version, ComponentDetails other)
+    {
+        if (other == null || Name != other.Name || BaseType != other.BaseType) return false;
+
+        return PropertyDetails.TryMerge(Properties, version, other.Properties);
+    }
+
+    public static bool TryMerge(List<ComponentDetails> components, string version, List<ComponentDetails> otherComponents)
+    {
+        var otherComponentsByName = otherComponents.ToDictionary(p => p.Name);
+        foreach (var component in components)
+        {
+            if (otherComponentsByName.TryGetValue(component.Name, out var otherComponent))
+            {
+                if (!component.TryMerge(version, otherComponent)) return false;
+                otherComponentsByName.Remove(component.Name);
+            }
+        }
+        foreach (var otherComponent in otherComponentsByName.Values)
+        {
+            components.Add(otherComponent.Clone(version));
+        }
+        return true;
+    }
+
+    public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        PropertyDetails.Simplify(Properties, resourcesByNameByVersion);
+    }
+
+    public static void Simplify(List<ComponentDetails> components, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        foreach (var component in components)
+        {
+            component.Simplify(resourcesByNameByVersion);
+        }
     }
 
     /// <summary>
@@ -1703,10 +1708,19 @@ public class ConstraintDetails
     /// </summary>
     public string Expression;
 
-    /// <summary>
-    /// Checks if this constraint is the same as another one
-    /// </summary>
-    public bool IsSame(ConstraintDetails other)
+    public ConstraintDetails Clone(string version)
+    {
+        return new ConstraintDetails
+        {
+            Key = Key,
+            Severity = Severity,
+            Human = Human,
+            XPath = XPath,
+            Expression = Expression
+        };
+    }
+
+    public bool TryMerge(string version, ConstraintDetails other)
     {
         return other != null &&
             Key == other.Key &&
@@ -1716,23 +1730,37 @@ public class ConstraintDetails
             Expression == other.Expression;
     }
 
-    /// <summary>
-    /// Merge constraints that are the same
-    /// </summary>
-    /// <param name="versionAndConstraints">FHIR version - constraint pairs to merge</param>
-    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
-    /// <returns>Newly created merged resource description</returns>
-    public static ConstraintDetails MergeSame(IEnumerable<KeyValuePair<string, ConstraintDetails>> versionAndConstraints)
+    public static bool TryMerge(List<ConstraintDetails> constraints, string version, List<ConstraintDetails> otherConstraints)
     {
-        var firstConstraint = versionAndConstraints.First().Value;
-        return new ConstraintDetails
+        return true;
+
+        //var otherConstraintByKey = otherConstraints.ToDictionary(c => c.Key);
+        //foreach (var constraint in constraints)
+        //{
+        //    if (otherConstraintByKey.TryGetValue(constraint.Key, out var otherConstraint))
+        //    {
+        //        if (!constraint.TryMerge(version, otherConstraint)) return false;
+        //        otherConstraintByKey.Remove(constraint.Key);
+        //    }
+        //}
+        //foreach (var otherConstraint in otherConstraintByKey.Values)
+        //{
+        //    constraints.Add(otherConstraint.Clone(version));
+        //}
+        //return true;
+    }
+
+    public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        // Empty
+    }
+
+    public static void Simplify(List<ConstraintDetails> constraints, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        foreach (var constraint in constraints)
         {
-            Key = firstConstraint.Key,
-            Severity = firstConstraint.Severity,
-            Human = firstConstraint.Human,
-            XPath = firstConstraint.XPath,
-            Expression = firstConstraint.Expression
-        };
+            constraint.Simplify(resourcesByNameByVersion);
+        }
     }
 
     /// <summary>
@@ -1797,6 +1825,13 @@ public class PropertyDetails
     public string PropType;
 
     /// <summary>
+    /// Which versions this property applies to: empty if the property applies to all version,
+    /// otherwise contains the property version(s) - e.g. if it contains only 'STU3' it means that the property is 
+    /// applies only to the STU3 version (ie it is part of the resource or data type it belongs to only for STU3)
+    /// </summary>
+    public HashSet<string> Versions = new HashSet<string>();
+
+    /// <summary>
     /// Indicates if the property is part of the FHIR resource or data type summary: empty if the property is NOT part of the summary, 
     /// contains only one empty string if the property is part of the summary for all FHIR versions, otherwise contains the 
     /// version(s) for which it is part of the summary - e.g. if it contains only 'DSTU2' it means that the property is 
@@ -1840,61 +1875,111 @@ public class PropertyDetails
 
     public bool IsXmlAttribute;
 
-    public bool IsSame(PropertyDetails other)
+    public PropertyDetails Clone(string version)
     {
-        return other != null &&
+        return new PropertyDetails
+        {
+            Name = Name,
+            FhirName = FhirName,
+            PropType = PropType,
+            Versions = new HashSet<string>(new[] { version }),
+            InSummaryVersions = InSummaryVersions.Count == 0 ?
+                new HashSet<string>() :
+                new HashSet<string>(new[] { version }),
+            Summary = Summary,
+            CardMin = CardMin,
+            CardMax = CardMax,
+            ReferenceTargets = new List<string>(ReferenceTargets),
+            NativeType = NativeType,
+            NativeName = NativeName,
+            AllowedTypesByVersion = new Dictionary<string, List<string>> { { version, new List<string>(AllowedTypes()) } },
+            IsXmlAttribute = IsXmlAttribute
+        };
+    }
+
+    public bool TryMerge(string version, PropertyDetails other)
+    {
+        var isSame = other != null &&
             PropType == other.PropType &&
             Name == other.Name &&
             CardMin == other.CardMin &&
             CardMax == other.CardMax &&
             ReferenceTargets.Count == other.ReferenceTargets.Count &&
             ReferenceTargets.OrderBy(t => t).Zip(other.ReferenceTargets.OrderBy(t => t), (t1, t2) => t1 == t2).All(same => same);
+        if (!isSame) return false;
+
+        Versions.Add(version);
+        if (other.InSummaryVersions.Count > 0)
+        {
+            InSummaryVersions.Add(version);
+        }
+        AllowedTypesByVersion.Add(version, other.AllowedTypes());
+
+        return true;
     }
 
-    /// <summary>
-    /// Merge properties that are the same
-    /// </summary>
-    /// <param name="versionAndProperties">FHIR version - property pairs to merge</param>
-    /// <param name="resourcesByNameByVersion">All FHIR resources and data types by FHIR version and name - before any merging of resource that are the same across versions</param>
-    /// <returns>Newly created merged resource description</returns>
-    public static PropertyDetails MergeSame(
-        IEnumerable<KeyValuePair<string, PropertyDetails>> versionAndProperties,
-        Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion
-    )
+    public static bool TryMerge(List<PropertyDetails> properties, string version, List<PropertyDetails> otherProperties)
+    {
+        var otherPropertiesByName = otherProperties.ToDictionary(p => p.Name);
+        foreach (var property in properties)
+        {
+            if (!otherPropertiesByName.TryGetValue(property.Name, out var otherPropery))
+            {
+                if (property.CardMin != "0") return false;
+            }
+            else
+            {
+                if (!property.TryMerge(version, otherPropery)) return false;
+                otherPropertiesByName.Remove(property.Name);
+            }
+        }
+        foreach (var otherProperty in otherPropertiesByName.Values)
+        {
+            if (otherProperty.CardMin != "0") return false;
+
+            properties.Add(otherProperty.Clone(version));
+        }
+        return true;
+    }
+
+    public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
     {
         const string prefix = "Hl7.Fhir.Model.";
 
-        var firstProperty = versionAndProperties.First().Value;
-        var isSummaryVersions = versionAndProperties
-            .Where(pair => pair.Value.InSummaryVersions.Count > 0)
-            .Select(pair => pair.Key)
+        var allVersions = resourcesByNameByVersion.Keys
+            .Where( v => !string.IsNullOrEmpty( v) )
             .ToList();
-        var allowedTypesAreTheSame = versionAndProperties
-            .Skip(1)
-            .All(vp => EqualsAnyOrder(firstProperty.AllowedTypes(), vp.Value.AllowedTypes()));
-        var allowedTypesAreTheSameAndNotVersionSpecific = allowedTypesAreTheSame &&
-            versionAndProperties.All(vp => !vp.Value.AllowedTypes().Any(t => t.StartsWith(prefix) && resourcesByNameByVersion[vp.Key].ContainsKey(t.Substring(prefix.Length))));
-        return new PropertyDetails
+        if (EqualsAnyOrder(allVersions, Versions))
         {
-            Name = firstProperty.Name,
-            FhirName = firstProperty.FhirName,
-            PropType = firstProperty.PropType,
-            InSummaryVersions = isSummaryVersions.Count == 0 ?
-                new HashSet<string>() :
-                isSummaryVersions.Count == versionAndProperties.Count() ?
-                    new HashSet<string>(new[] { string.Empty }) : // All versions
-                    new HashSet<string>(isSummaryVersions),
-            Summary = firstProperty.Summary,
-            CardMin = firstProperty.CardMin,
-            CardMax = firstProperty.CardMax,
-            ReferenceTargets = new List<string>(firstProperty.ReferenceTargets),
-            NativeType = firstProperty.NativeType,
-            NativeName = firstProperty.NativeName,
-            AllowedTypesByVersion = allowedTypesAreTheSameAndNotVersionSpecific ?
-                new Dictionary<string, List<string>> { { string.Empty, new List<string>(firstProperty.AllowedTypes()) } } : // All versions
-                versionAndProperties.ToDictionary(vp => vp.Key, vp => vp.Value.AllowedTypes()),
-            IsXmlAttribute = firstProperty.IsXmlAttribute
-        };
+            // All versions
+            Versions = new HashSet<string>();
+        }
+        if (InSummaryVersions.Count > 0 && EqualsAnyOrder(allVersions, InSummaryVersions))
+        {
+            InSummaryVersions = new HashSet<string>(new[] { string.Empty });
+        }
+        var allowedTypesAllVersions = EqualsAnyOrder(allVersions, AllowedTypesByVersion.Keys);
+        if (allowedTypesAllVersions)
+        {
+            var allowedTypesList = AllowedTypesByVersion.Values.ToList();
+            var allowedTypesAreTheSame = allowedTypesList
+                .Skip(1)
+                .All(vp => EqualsAnyOrder(allowedTypesList[0], vp));
+            var allowedTypesAreTheSameAndNotVersionSpecific = allowedTypesAreTheSame &&
+                AllowedTypesByVersion.All(vp => !vp.Value.Any(t => t.StartsWith(prefix) && resourcesByNameByVersion[vp.Key].ContainsKey(t.Substring(prefix.Length))));
+            if (allowedTypesAreTheSameAndNotVersionSpecific)
+            {
+                AllowedTypesByVersion = new Dictionary<string, List<string>> { { string.Empty, allowedTypesList[0] } };
+            }
+        }
+    }
+
+    public static void Simplify(List<PropertyDetails> properties, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        foreach (var property in properties)
+        {
+            property.Simplify(resourcesByNameByVersion);
+        }
     }
 
     private List<string> AllowedTypes()
@@ -1904,7 +1989,7 @@ public class PropertyDetails
             AllowedTypesByVersion.Values.Single();
     }
 
-    private static bool EqualsAnyOrder(List<string> first, List<string> second)
+    private static bool EqualsAnyOrder(IEnumerable<string> first, IEnumerable<string> second)
     {
         return Enumerable.SequenceEqual(first.OrderBy(s => s), second.OrderBy(s => s));
     }
@@ -1912,13 +1997,25 @@ public class PropertyDetails
     public IEnumerable<string> Render(int nPropNum)
     {
         foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
+
+        var versionsString = VersionsString(Versions);
+        var versionsAttribute = string.IsNullOrEmpty(versionsString) ? 
+            string.Empty :
+            ", Versions=new[]{" + versionsString + "}";
+
+        var inSummaryVersionsString = VersionsString(InSummaryVersions);
+        var inSummaryAttribute = string.IsNullOrEmpty(inSummaryVersionsString) ?
+            string.Empty :
+            ", InSummary=new[]{" + inSummaryVersionsString + "}";
+
         var choice = PropType == "Hl7.Fhir.Model.Element" ?
             ", Choice=ChoiceType.DatatypeChoice" :
             PropType == "Hl7.Fhir.Model.Resource" ?
                 ", Choice=ChoiceType.ResourceChoice" :
                 string.Empty;
-        yield return $"[FhirElement(\"{FhirName}\"{InSummaryAttribute()}, Order={nPropNum}{choice})]";
-        if (ReferenceTargets.Count > 0 || AllowedTypesByVersion.Values.Sum(at => at.Count) > 0 || InSummaryVersions.Count > 0)
+
+        yield return $"[FhirElement(\"{FhirName}\"{versionsAttribute}{inSummaryAttribute}, Order={nPropNum}{choice})]";
+        if (!string.IsNullOrEmpty(versionsAttribute) || !string.IsNullOrEmpty(inSummaryAttribute) || ReferenceTargets.Count > 0 || AllowedTypesByVersion.Values.Sum(at => at.Count) > 0)
         {
             yield return "[CLSCompliant(false)]";
         }
@@ -1996,14 +2093,13 @@ public class PropertyDetails
         }
     }
 
-    private string InSummaryAttribute()
+    private static string VersionsString(HashSet<string> versions)
     {
-        if (InSummaryVersions.Count == 0)
+        if (versions == null || versions.Count == 0)
         {
             return string.Empty;
         }
-        var versionsString = string.Join(",", InSummaryVersions.Select( v => string.IsNullOrEmpty(v) ? "Hl7.Fhir.Model.Version.All" : "Hl7.Fhir.Model.Version." + v));
-        return ", InSummary=new[]{" + versionsString + "}";
+        return string.Join(",", versions.Select(v => string.IsNullOrEmpty(v) ? "Hl7.Fhir.Model.Version.All" : "Hl7.Fhir.Model.Version." + v));
     }
 
     public IEnumerable<string> RenderAsChildWithName()

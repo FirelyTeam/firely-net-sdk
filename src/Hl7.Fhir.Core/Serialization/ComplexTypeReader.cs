@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Serialization
 
                 // Find a property on the instance that matches the element found in the data
                 // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
-                var mappedProperty = mapping.FindMappedElementByName(memberName);
+                var mappedProperty = mapping.FindMappedElementByName(Settings.Version, memberName);
 
                 if (mappedProperty != null)
                 {

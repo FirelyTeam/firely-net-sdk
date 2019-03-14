@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Tests.Rest
                     new FhirUri("http://hl7.org/fhir/StructureDefinition/uslab-patient"));
                 Assert.Fail("Should have resulted in 400");
             }
-            catch(FhirOperationException<OperationOutcome> fe)
+            catch(FhirOperationException fe)
             {
                 Assert.AreEqual(System.Net.HttpStatusCode.BadRequest, fe.Status);
                 Assert.IsTrue(fe.Outcome.Issue.Where(i => i.Severity == IssueSeverity.Error).Any());

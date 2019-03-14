@@ -816,23 +816,23 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void OperationOutcomeXmlSerialization()
         {
-            var outcome = new CommonOperationOutcome
+            var outcome = new OperationOutcome
             {
                 Text = new Narrative { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">not found!</div>", Status = Narrative.NarrativeStatus.Generated },
-                Issue = new List<CommonOperationOutcome.IssueComponent>
+                Issue = new List<OperationOutcome.IssueComponent>
                 {
-                    new CommonOperationOutcome.IssueComponent
+                    new OperationOutcome.IssueComponent
                     {
                         Code = IssueType.NotFound,
                         Details = new CodeableConcept("mysystem","mycode","not found!"),
                         Diagnostics = "diag",
                         Location = new[] { "loc1, loc2" },
                         Severity = IssueSeverity.Error, 
+                        Expression = new[]{ "/loc1/loc2" },
                     }
                 }
             };
             var xml = FhirDstu2XmlSerializer.SerializeToString(outcome);
-
             var dstu2outcome = FhirDstu2XmlParser.Parse<OperationOutcome>(xml);
             Assert.AreEqual(outcome.Text.Div, dstu2outcome.Text.Div);
             Assert.AreEqual(outcome.Issue.Count, dstu2outcome.Issue.Count);
@@ -846,10 +846,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(outcomeIssue.Diagnostics, dstu2outcomeIssue.Diagnostics);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, dstu2outcomeIssue.Location));
             Assert.AreEqual(outcomeIssue.Severity, dstu2outcomeIssue.Severity);
+            Assert.IsFalse(dstu2outcomeIssue.Expression.Any());
 
+            var fhirStu3XmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.STU3);
             var fhirStu3XmlParser = new FhirXmlParser(Fhir.Model.Version.STU3);
 
-            var stu3outcome = fhirStu3XmlParser.Parse<Fhir.Model.STU3.OperationOutcome>(xml);
+            xml = fhirStu3XmlSerializer.SerializeToString(outcome);
+            var stu3outcome = fhirStu3XmlParser.Parse<Fhir.Model.OperationOutcome>(xml);
             Assert.AreEqual(outcome.Text.Div, stu3outcome.Text.Div);
             Assert.AreEqual(outcome.Issue.Count, stu3outcome.Issue.Count);
             var stu3outcomeIssue = stu3outcome.Issue[0];
@@ -861,28 +864,32 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(outcomeIssue.Diagnostics, stu3outcomeIssue.Diagnostics);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, stu3outcomeIssue.Location));
             Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, stu3outcomeIssue.Expression));
+
+            var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2XmlParser.Parse<OperationOutcome>(xml));
+            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));
         }
 
         [TestMethod]
         public void OperationOutcomeJsonSerialization()
         {
-            var outcome = new CommonOperationOutcome
+            var outcome = new OperationOutcome
             {
                 Text = new Narrative { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">not found!</div>", Status = Narrative.NarrativeStatus.Generated },
-                Issue = new List<CommonOperationOutcome.IssueComponent>
+                Issue = new List<OperationOutcome.IssueComponent>
                 {
-                    new CommonOperationOutcome.IssueComponent
+                    new OperationOutcome.IssueComponent
                     {
                         Code = IssueType.NotFound,
                         Details = new CodeableConcept("mysystem","mycode","not found!"),
                         Diagnostics = "diag",
                         Location = new[] { "loc1, loc2" },
                         Severity = IssueSeverity.Error,
+                        Expression = new[] { "/loc1", "/loc2"}
                     }
                 }
             };
             var json = FhirDstu2JsonSerializer.SerializeToString(outcome);
-
             var dstu2outcome = FhirDstu2JsonParser.Parse<OperationOutcome>(json);
             Assert.AreEqual(outcome.Text.Div, dstu2outcome.Text.Div);
             Assert.AreEqual(outcome.Issue.Count, dstu2outcome.Issue.Count);
@@ -896,10 +903,12 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(outcomeIssue.Diagnostics, dstu2outcomeIssue.Diagnostics);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, dstu2outcomeIssue.Location));
             Assert.AreEqual(outcomeIssue.Severity, dstu2outcomeIssue.Severity);
+            Assert.IsFalse(dstu2outcomeIssue.Expression.Any());
 
+            var fhirStu3JsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.STU3);
             var fhirStu3JsonParser = new FhirJsonParser(Fhir.Model.Version.STU3);
-
-            var stu3outcome = fhirStu3JsonParser.Parse<Fhir.Model.STU3.OperationOutcome>(json);
+            json = fhirStu3JsonSerializer.SerializeToString(outcome);
+            var stu3outcome = fhirStu3JsonParser.Parse<OperationOutcome>(json);
             Assert.AreEqual(outcome.Text.Div, stu3outcome.Text.Div);
             Assert.AreEqual(outcome.Issue.Count, stu3outcome.Issue.Count);
             var stu3outcomeIssue = stu3outcome.Issue[0];
@@ -911,6 +920,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(outcomeIssue.Diagnostics, stu3outcomeIssue.Diagnostics);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, stu3outcomeIssue.Location));
             Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, stu3outcomeIssue.Expression));
+
+            var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2JsonParser.Parse<OperationOutcome>(json));
+            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));
         }
     }
 }

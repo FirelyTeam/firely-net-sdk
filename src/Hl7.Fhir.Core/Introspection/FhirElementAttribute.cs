@@ -52,6 +52,8 @@ namespace Hl7.Fhir.Introspection
             this.Choice = ChoiceType.None;
         }
 
+        public Model.Version[] Versions { get; set; }
+
         public ChoiceType Choice { get; set; }
 
         public string Name

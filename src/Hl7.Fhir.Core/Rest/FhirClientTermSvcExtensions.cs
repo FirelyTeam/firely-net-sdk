@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Rest
         #region Expand
         public static async Task<Model.DSTU2.ValueSet> ExpandValueSetAsync(this FhirDstu2Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
-            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance, Model.DSTU2.OperationOutcome>(client, valueset, filter, date);
+            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance>(client, valueset, filter, date);
         }
 
         public static Model.DSTU2.ValueSet ExpandValueSet(this FhirDstu2Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
 
         public static async Task<Model.STU3.ValueSet> ExpandValueSetAsync(this FhirStu3Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
-            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement, Model.STU3.OperationOutcome>(client, valueset, filter, date);
+            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement>(client, valueset, filter, date);
         }
 
         public static Model.STU3.ValueSet ExpandValueSet(this FhirStu3Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Rest
 
         public static async Task<Model.DSTU2.ValueSet> ExpandValueSetAsync(this FhirDstu2Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
-            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance, Model.DSTU2.OperationOutcome>(client, identifier, filter, date);
+            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance>(client, identifier, filter, date);
         }
 
         public static Model.DSTU2.ValueSet ExpandValueSet(this FhirDstu2Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Rest
 
         public static async Task<Model.STU3.ValueSet> ExpandValueSetAsync(this FhirStu3Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
-            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement, Model.STU3.OperationOutcome>(client, identifier, filter, date);
+            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement>(client, identifier, filter, date);
         }
 
         public static Model.STU3.ValueSet ExpandValueSet(this FhirStu3Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
@@ -330,11 +330,10 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
-        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri valueset, FhirString filter, FhirDateTime date) 
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata>(FhirClient<TBundle, TMetadata> client, Uri valueset, FhirString filter, FhirDateTime date) 
             where T : Resource
             where TBundle : Resource, IBundle
             where TMetadata : Resource, IMetadata
-            where TOperationOutcome : Resource
         {
             if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
 
@@ -349,11 +348,10 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<T>();
         }
 
-        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, FhirUri identifier, FhirString filter, FhirDateTime date) 
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata>(FhirClient<TBundle, TMetadata> client, FhirUri identifier, FhirString filter, FhirDateTime date) 
             where T : Resource
             where TBundle : Resource, IBundle
             where TMetadata : Resource, IMetadata
-            where TOperationOutcome : Resource
         {
             if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
 
@@ -367,11 +365,10 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<T>();
         }
 
-        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, T vs, FhirString filter, FhirDateTime date) 
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata>(FhirClient<TBundle, TMetadata> client, T vs, FhirString filter, FhirDateTime date) 
             where T :Resource
             where TBundle : Resource, IBundle
             where TMetadata : Resource, IMetadata
-            where TOperationOutcome : Resource
         {
             if (vs == null) throw Error.ArgumentNull(nameof(vs));
 

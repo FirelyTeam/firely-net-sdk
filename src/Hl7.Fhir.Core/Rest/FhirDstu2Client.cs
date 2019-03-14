@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirDstu2Client : FhirClient<Model.DSTU2.Bundle, Model.DSTU2.Conformance, Model.DSTU2.OperationOutcome>
+    public class FhirDstu2Client : FhirClient<Model.DSTU2.Bundle, Model.DSTU2.Conformance>
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -24,10 +24,9 @@ namespace Hl7.Fhir.Rest
         public FhirDstu2Client(Uri endpoint, bool verifyFhirVersion = false) :
             base(
                 endpoint,
-                new FhirVersionSettings<Model.DSTU2.OperationOutcome>(
+                new FhirVersionSettings(
                     Model.Version.DSTU2,
                     Model.DSTU2.ModelInfo.Version,
-                    exception => Model.DSTU2.OperationOutcome.ForException(exception, Model.IssueType.Invalid),
                     (data, contentType) => new Model.DSTU2.Binary { Content = data, ContentType = contentType }
                 ),
                 verifyFhirVersion

@@ -14,10 +14,9 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class FhirClient<TBundle, TMetadata, TOperationOutcome>
+    public abstract partial class FhirClient<TBundle, TMetadata>
         where TBundle : Resource, IBundle
         where TMetadata : Resource, IMetadata
-        where TOperationOutcome : Resource
     {
         #region Search Execution
 
