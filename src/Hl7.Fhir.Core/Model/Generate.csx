@@ -1074,7 +1074,7 @@ public class ResourceDetails
             Versions[0].Version :
             "All";
         version = "Hl7.Fhir.Model.Version." + version;
-        var isElement = BaseType == "Hl7.Fhir.Model.Element" || BaseType == "Hl7.Fhir.Model.Quantity" || IsPrimitive;
+        var isElement = BaseType == "Hl7.Fhir.Model.Element" || BaseType == "Hl7.Fhir.Model.BackboneElement" || BaseType == "Hl7.Fhir.Model.Quantity" || IsPrimitive;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
         if (!AbstractType)
         {
@@ -1429,6 +1429,8 @@ public class ResourceDetails
                 }
                 else if (definedBaseType == "http://hl7.org/fhir/StructureDefinition/Quantity")
                     resourceBaseType = "Hl7.Fhir.Model.Quantity";
+                else if (definedBaseType == "http://hl7.org/fhir/StructureDefinition/BackboneElement")
+                    resourceBaseType = "Hl7.Fhir.Model.BackboneElement";
                 else
                     resourceBaseType = "Hl7.Fhir.Model.Primitive<" + primitiveTypeName + ">";
             }
