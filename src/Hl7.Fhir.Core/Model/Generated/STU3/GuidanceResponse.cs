@@ -310,13 +310,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("dataRequirement", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.DataRequirement> DataRequirement
+        public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
         {
-            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _DataRequirement; }
+            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(); return _DataRequirement; }
             set { _DataRequirement = value; OnPropertyChanged("DataRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.DataRequirement> _DataRequirement;
+        private List<Hl7.Fhir.Model.DataRequirement> _DataRequirement;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.STU3.ResourceReference>(EvaluationMessage.DeepCopy());
                 if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.STU3.ResourceReference)OutputParameters.DeepCopy();
                 if(Result != null) dest.Result = (Hl7.Fhir.Model.STU3.ResourceReference)Result.DeepCopy();
-                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(DataRequirement.DeepCopy());
+                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(DataRequirement.DeepCopy());
                 return dest;
             }
             else

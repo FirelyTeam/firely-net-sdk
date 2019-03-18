@@ -1265,7 +1265,7 @@ public class ResourceDetails
             resourcesByNameByVersion.Add(loadedVersion.Version, resourcesByName);
         }
         Patch(resourcesByNameByVersion);
-        ExtractShared(resourcesByNameByVersion);
+        ExtractShared(loadedVersions, resourcesByNameByVersion);
         return resourcesByNameByVersion;
     }
 
@@ -1558,7 +1558,7 @@ public class ResourceDetails
         return result;
     }
 
-    private static void ExtractShared(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    private static void ExtractShared(IEnumerable<LoadedVersion> loadedVersions, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
     {
         var sharedResourcesByName = new Dictionary<string, ResourceDetails>();
         var allNamesInDependencyOrder = resourcesByNameByVersion.Values
@@ -1573,7 +1573,27 @@ public class ResourceDetails
                 .Where(resourcesByName => resourcesByName.ContainsKey(name))
                 .Select(resourcesByName => resourcesByName[name])
                 .ToList();
-            if (resourcesWithSameName.Count > 1)
+            if (resourcesWithSameName.Count == 1)
+            {
+                if (!resourcesWithSameName[0].IsResource())
+                {
+                    // Share data types that appear only once 
+                    var dataType = resourcesWithSameName[0].Clone();
+                    foreach (var loadedVersion in loadedVersions)
+                    {
+                        if (!dataType.Versions.Contains(loadedVersion))
+                        {
+                            dataType.Versions.Add(loadedVersion);
+                        }
+                    }
+                    sharedResourcesByName.Add(name, dataType);
+                    foreach (var resourcesByName in resourcesByNameByVersion.Values)
+                    {
+                        resourcesByName.Remove(name);
+                    }
+                }
+            }
+            else
             {
                 var mergedResource = resourcesWithSameName[0].Clone();
                 var firstVersion = mergedResource.Versions.Single().Version;

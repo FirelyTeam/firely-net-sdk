@@ -38,79 +38,62 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Contact information
+    /// Describes the context of use for a conformance or knowledge resource
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "ContactDetail")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "UsageContext")]
     [DataContract]
-    public partial class ContactDetail : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class UsageContext : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "ContactDetail"; } }
+        public override string TypeName { get { return "UsageContext"; } }
     
         
         /// <summary>
-        /// Name of an individual to contact
+        /// Type of context being specified
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("code", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement
+        public Hl7.Fhir.Model.Coding Code
         {
-            get { return _NameElement; }
-            set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _NameElement;
+        private Hl7.Fhir.Model.Coding _Code;
         
         /// <summary>
-        /// Name of an individual to contact
+        /// Value that defines the context
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Name
-        {
-            get { return NameElement != null ? NameElement.Value : null; }
-            set
-            {
-                if (value == null)
-                    NameElement = null;
-                else
-                    NameElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Name");
-            }
-        }
-        
-        /// <summary>
-        /// Contact details for individual or organization
-        /// </summary>
-        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("value", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [Cardinality(Min=0,Max=-1)]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range)})]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ContactPoint> Telecom
+        public Hl7.Fhir.Model.Element Value
         {
-            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(); return _Telecom; }
-            set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            get { return _Value; }
+            set { _Value = value; OnPropertyChanged("Value"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ContactPoint> _Telecom;
+        private Hl7.Fhir.Model.Element _Value;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as ContactDetail;
+            var dest = other as UsageContext;
         
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Telecom.DeepCopy());
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
+                if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 return dest;
             }
             else
@@ -119,29 +102,29 @@ namespace Hl7.Fhir.Model.STU3
         
         public override IDeepCopyable DeepCopy()
         {
-             return CopyTo(new ContactDetail());
+             return CopyTo(new UsageContext());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as ContactDetail;
+            var otherT = other as UsageContext;
             if(otherT == null) return false;
         
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Value, otherT.Value)) return false;
         
             return true;
         }
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as ContactDetail;
+            var otherT = other as UsageContext;
             if(otherT == null) return false;
         
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
         
             return true;
         }
@@ -152,8 +135,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.Children) yield return item;
-                if (NameElement != null) yield return NameElement;
-                foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                if (Code != null) yield return Code;
+                if (Value != null) yield return Value;
             }
         }
         
@@ -163,8 +146,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (NameElement != null) yield return new ElementValue("name", NameElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
+                if (Code != null) yield return new ElementValue("code", Code);
+                if (Value != null) yield return new ElementValue("value", Value);
             }
         }
     

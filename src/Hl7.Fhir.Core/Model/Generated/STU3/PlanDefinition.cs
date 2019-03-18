@@ -135,13 +135,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("documentation", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.RelatedArtifact> Documentation
+            public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _Documentation; }
+                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _Documentation; }
                 set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _Documentation;
+            private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
             
             /// <summary>
             /// Target outcome for the goal
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                     if(Start != null) dest.Start = (Hl7.Fhir.Model.CodeableConcept)Start.DeepCopy();
                     if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.CodeableConcept>(Addresses.DeepCopy());
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(Documentation.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(Documentation.DeepCopy());
                     if(Target != null) dest.Target = new List<TargetComponent>(Target.DeepCopy());
                     return dest;
                 }
@@ -546,13 +546,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("documentation", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.RelatedArtifact> Documentation
+            public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _Documentation; }
+                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _Documentation; }
                 set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _Documentation;
+            private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
             
             /// <summary>
             /// What goals this action supports
@@ -593,13 +593,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("triggerDefinition", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.TriggerDefinition> TriggerDefinition
+            public List<Hl7.Fhir.Model.TriggerDefinition> TriggerDefinition
             {
-                get { if(_TriggerDefinition==null) _TriggerDefinition = new List<Hl7.Fhir.Model.STU3.TriggerDefinition>(); return _TriggerDefinition; }
+                get { if(_TriggerDefinition==null) _TriggerDefinition = new List<Hl7.Fhir.Model.TriggerDefinition>(); return _TriggerDefinition; }
                 set { _TriggerDefinition = value; OnPropertyChanged("TriggerDefinition"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.TriggerDefinition> _TriggerDefinition;
+            private List<Hl7.Fhir.Model.TriggerDefinition> _TriggerDefinition;
             
             /// <summary>
             /// Whether or not the action is applicable
@@ -621,13 +621,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("input", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.DataRequirement> Input
+            public List<Hl7.Fhir.Model.DataRequirement> Input
             {
-                get { if(_Input==null) _Input = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _Input; }
+                get { if(_Input==null) _Input = new List<Hl7.Fhir.Model.DataRequirement>(); return _Input; }
                 set { _Input = value; OnPropertyChanged("Input"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.DataRequirement> _Input;
+            private List<Hl7.Fhir.Model.DataRequirement> _Input;
             
             /// <summary>
             /// Output data definition
@@ -635,13 +635,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("output", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.DataRequirement> Output
+            public List<Hl7.Fhir.Model.DataRequirement> Output
             {
-                get { if(_Output==null) _Output = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _Output; }
+                get { if(_Output==null) _Output = new List<Hl7.Fhir.Model.DataRequirement>(); return _Output; }
                 set { _Output = value; OnPropertyChanged("Output"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.DataRequirement> _Output;
+            private List<Hl7.Fhir.Model.DataRequirement> _Output;
             
             /// <summary>
             /// Relationship to another action
@@ -930,12 +930,12 @@ namespace Hl7.Fhir.Model.STU3
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(Documentation.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(Documentation.DeepCopy());
                     if(GoalIdElement != null) dest.GoalIdElement = new List<Hl7.Fhir.Model.Id>(GoalIdElement.DeepCopy());
-                    if(TriggerDefinition != null) dest.TriggerDefinition = new List<Hl7.Fhir.Model.STU3.TriggerDefinition>(TriggerDefinition.DeepCopy());
+                    if(TriggerDefinition != null) dest.TriggerDefinition = new List<Hl7.Fhir.Model.TriggerDefinition>(TriggerDefinition.DeepCopy());
                     if(Condition != null) dest.Condition = new List<ConditionComponent>(Condition.DeepCopy());
-                    if(Input != null) dest.Input = new List<Hl7.Fhir.Model.STU3.DataRequirement>(Input.DeepCopy());
-                    if(Output != null) dest.Output = new List<Hl7.Fhir.Model.STU3.DataRequirement>(Output.DeepCopy());
+                    if(Input != null) dest.Input = new List<Hl7.Fhir.Model.DataRequirement>(Input.DeepCopy());
+                    if(Output != null) dest.Output = new List<Hl7.Fhir.Model.DataRequirement>(Output.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<RelatedActionComponent>(RelatedAction.DeepCopy());
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
@@ -2300,13 +2300,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.UsageContext> UseContext
+        public List<Hl7.Fhir.Model.UsageContext> UseContext
         {
-            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.STU3.UsageContext>(); return _UseContext; }
+            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.UsageContext>(); return _UseContext; }
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.UsageContext> _UseContext;
+        private List<Hl7.Fhir.Model.UsageContext> _UseContext;
         
         /// <summary>
         /// Intended jurisdiction for plan definition (if applicable)
@@ -2343,13 +2343,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("contributor", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Contributor> Contributor
+        public List<Hl7.Fhir.Model.Contributor> Contributor
         {
-            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(); return _Contributor; }
+            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.Contributor>(); return _Contributor; }
             set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Contributor> _Contributor;
+        private List<Hl7.Fhir.Model.Contributor> _Contributor;
         
         /// <summary>
         /// Contact details for the publisher
@@ -2358,13 +2358,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
         
         /// <summary>
         /// Use and/or publishing restrictions
@@ -2404,13 +2404,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("relatedArtifact", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.RelatedArtifact> RelatedArtifact
+        public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
         {
-            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _RelatedArtifact; }
+            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
             set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _RelatedArtifact;
+        private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
         /// Logic used by the plan definition
@@ -2480,13 +2480,13 @@ namespace Hl7.Fhir.Model.STU3
                 if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
                 if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
                 if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.STU3.UsageContext>(UseContext.DeepCopy());
+                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
-                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(Contributor.DeepCopy());
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
+                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(Contributor.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
+                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Library.DeepCopy());
                 if(Goal != null) dest.Goal = new List<GoalComponent>(Goal.DeepCopy());
                 if(Action != null) dest.Action = new List<ActionComponent>(Action.DeepCopy());

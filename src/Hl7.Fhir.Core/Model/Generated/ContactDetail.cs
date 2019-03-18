@@ -38,61 +38,26 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Contributor information
+    /// Contact information
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "Contributor")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "ContactDetail")]
     [DataContract]
-    public partial class Contributor : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContactDetail : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override string TypeName { get { return "Contributor"; } }
+        public override string TypeName { get { return "ContactDetail"; } }
     
         
         /// <summary>
-        /// author | editor | reviewer | endorser
+        /// Name of an individual to contact
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("name", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.ContributorType> TypeElement
-        {
-            get { return _TypeElement; }
-            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.STU3.ContributorType> _TypeElement;
-        
-        /// <summary>
-        /// author | editor | reviewer | endorser
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.ContributorType? Type
-        {
-            get { return TypeElement != null ? TypeElement.Value : null; }
-            set
-            {
-                if (value == null)
-                    TypeElement = null;
-                else
-                    TypeElement = new Code<Hl7.Fhir.Model.STU3.ContributorType>(value);
-                OnPropertyChanged("Type");
-            }
-        }
-        
-        /// <summary>
-        /// Who contributed the content
-        /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
-        [CLSCompliant(false)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -103,7 +68,7 @@ namespace Hl7.Fhir.Model.STU3
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// Who contributed the content
+        /// Name of an individual to contact
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -122,31 +87,30 @@ namespace Hl7.Fhir.Model.STU3
         }
         
         /// <summary>
-        /// Contact details of the contributor
+        /// Contact details for individual or organization
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("telecom", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.DSTU2.ContactPoint> Telecom
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
-            set { _Contact = value; OnPropertyChanged("Contact"); }
+            get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(); return _Telecom; }
+            set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.DSTU2.ContactPoint> _Telecom;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Contributor;
+            var dest = other as ContactDetail;
         
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.ContributorType>)TypeElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
+                if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(Telecom.DeepCopy());
                 return dest;
             }
             else
@@ -155,31 +119,29 @@ namespace Hl7.Fhir.Model.STU3
         
         public override IDeepCopyable DeepCopy()
         {
-             return CopyTo(new Contributor());
+             return CopyTo(new ContactDetail());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as Contributor;
+            var otherT = other as ContactDetail;
             if(otherT == null) return false;
         
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
         
             return true;
         }
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as Contributor;
+            var otherT = other as ContactDetail;
             if(otherT == null) return false;
         
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
         
             return true;
         }
@@ -190,9 +152,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.Children) yield return item;
-                if (TypeElement != null) yield return TypeElement;
                 if (NameElement != null) yield return NameElement;
-                foreach (var elem in Contact) { if (elem != null) yield return elem; }
+                foreach (var elem in Telecom) { if (elem != null) yield return elem; }
             }
         }
         
@@ -202,9 +163,8 @@ namespace Hl7.Fhir.Model.STU3
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
             }
         }
     

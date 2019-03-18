@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Defines an expected trigger for a module
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "TriggerDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "TriggerDefinition")]
     [DataContract]
     public partial class TriggerDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Triggering event name
         /// </summary>
-        [FhirElement("eventName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("eventName", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString EventNameElement
@@ -123,9 +123,9 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Timing of the event
         /// </summary>
-        [FhirElement("eventTiming", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("eventTiming", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Timing),typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.STU3.Timing),typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime)})]
         [DataMember]
         public Hl7.Fhir.Model.Element EventTiming
         {
@@ -138,16 +138,16 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Triggering data of the event
         /// </summary>
-        [FhirElement("eventData", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("eventData", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.DataRequirement EventData
+        public Hl7.Fhir.Model.DataRequirement EventData
         {
             get { return _EventData; }
             set { _EventData = value; OnPropertyChanged("EventData"); }
         }
         
-        private Hl7.Fhir.Model.STU3.DataRequirement _EventData;
+        private Hl7.Fhir.Model.DataRequirement _EventData;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.TriggerType>)TypeElement.DeepCopy();
                 if(EventNameElement != null) dest.EventNameElement = (Hl7.Fhir.Model.FhirString)EventNameElement.DeepCopy();
                 if(EventTiming != null) dest.EventTiming = (Hl7.Fhir.Model.Element)EventTiming.DeepCopy();
-                if(EventData != null) dest.EventData = (Hl7.Fhir.Model.STU3.DataRequirement)EventData.DeepCopy();
+                if(EventData != null) dest.EventData = (Hl7.Fhir.Model.DataRequirement)EventData.DeepCopy();
                 return dest;
             }
             else

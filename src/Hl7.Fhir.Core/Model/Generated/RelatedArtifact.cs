@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Related artifacts for a knowledge resource
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedArtifact")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "RelatedArtifact")]
     [DataContract]
     public partial class RelatedArtifact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Brief description of the related artifact
         /// </summary>
-        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("display", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Bibliographic citation for the artifact
         /// </summary>
-        [FhirElement("citation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("citation", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CitationElement
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Where the artifact can be accessed
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("url", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What document is being referenced
         /// </summary>
-        [FhirElement("document", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("document", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Document
@@ -203,16 +203,16 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What resource is being referenced
         /// </summary>
-        [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("resource", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Resource
+        public Hl7.Fhir.Model.DSTU2.ResourceReference Resource
         {
             get { return _Resource; }
             set { _Resource = value; OnPropertyChanged("Resource"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Resource;
+        private Hl7.Fhir.Model.DSTU2.ResourceReference _Resource;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
-                if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
+                if(Resource != null) dest.Resource = (Hl7.Fhir.Model.DSTU2.ResourceReference)Resource.DeepCopy();
                 return dest;
             }
             else

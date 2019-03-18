@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// How the medication is/was taken or should be taken
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "Dosage")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Dosage")]
     [DataContract]
     public partial class Dosage : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The order of the dosage instructions
         /// </summary>
-        [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("sequence", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Free text dosage instructions e.g. SIG
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("text", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Supplemental instruction - e.g. "with meals"
         /// </summary>
-        [FhirElement("additionalInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("additionalInstruction", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Patient or consumer oriented instructions
         /// </summary>
-        [FhirElement("patientInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("patientInstruction", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
@@ -170,23 +170,23 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When medication should be administered
         /// </summary>
-        [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("timing", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Timing Timing
+        public Hl7.Fhir.Model.DSTU2.Timing Timing
         {
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Timing _Timing;
+        private Hl7.Fhir.Model.DSTU2.Timing _Timing;
         
         /// <summary>
         /// Take "as needed" (for x)
         /// </summary>
-        [FhirElement("asNeeded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=80, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept)})]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
         {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Body site to administer to
         /// </summary>
-        [FhirElement("site", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("site", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// How drug should enter body
         /// </summary>
-        [FhirElement("route", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("route", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Technique for administering medication
         /// </summary>
-        [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("method", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
@@ -241,9 +241,9 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Amount of medication per dose
         /// </summary>
-        [FhirElement("dose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("dose", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=120, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity)})]
         [DataMember]
         public Hl7.Fhir.Model.Element Dose
         {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per unit of time
         /// </summary>
-        [FhirElement("maxDosePerPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("maxDosePerPeriod", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per administration
         /// </summary>
-        [FhirElement("maxDosePerAdministration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("maxDosePerAdministration", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity MaxDosePerAdministration
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
-        [FhirElement("maxDosePerLifetime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("maxDosePerLifetime", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity MaxDosePerLifetime
@@ -298,9 +298,9 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Amount of medication per unit of time
         /// </summary>
-        [FhirElement("rate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("rate", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity)})]
         [DataMember]
         public Hl7.Fhir.Model.Element Rate
         {
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 if(AdditionalInstruction != null) dest.AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalInstruction.DeepCopy());
                 if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopy();
-                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.STU3.Timing)Timing.DeepCopy();
+                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DSTU2.Timing)Timing.DeepCopy();
                 if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();

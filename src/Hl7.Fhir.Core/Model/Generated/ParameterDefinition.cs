@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.1, v1.0.2
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Definition of a parameter to a module
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterDefinition")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "ParameterDefinition")]
     [DataContract]
     public partial class ParameterDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name used to access the parameter value
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("name", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code NameElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// in | out
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("use", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Minimum cardinality
         /// </summary>
-        [FhirElement("min", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("min", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Integer MinElement
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Maximum cardinality (a number of *)
         /// </summary>
-        [FhirElement("max", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("max", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MaxElement
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A brief description of the parameter
         /// </summary>
-        [FhirElement("documentation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("documentation", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DocumentationElement
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What type of value
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -256,17 +256,17 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What profile the value is expected to be
         /// </summary>
-        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("profile", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=90)]
         [CLSCompliant(false)]
         [References("StructureDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Profile
+        public Hl7.Fhir.Model.DSTU2.ResourceReference Profile
         {
             get { return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Profile;
+        private Hl7.Fhir.Model.DSTU2.ResourceReference _Profile;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.STU3.ResourceReference)Profile.DeepCopy();
+                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.DSTU2.ResourceReference)Profile.DeepCopy();
                 return dest;
             }
             else

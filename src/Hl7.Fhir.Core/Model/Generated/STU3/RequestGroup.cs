@@ -212,13 +212,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("documentation", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.RelatedArtifact> Documentation
+            public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _Documentation; }
+                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _Documentation; }
                 set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _Documentation;
+            private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
             
             /// <summary>
             /// Whether or not the action is applicable
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(Documentation.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(Documentation.DeepCopy());
                     if(Condition != null) dest.Condition = new List<ConditionComponent>(Condition.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<RelatedActionComponent>(RelatedAction.DeepCopy());
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
