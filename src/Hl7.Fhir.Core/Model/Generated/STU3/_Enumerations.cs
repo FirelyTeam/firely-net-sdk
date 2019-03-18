@@ -884,6 +884,39 @@ namespace Hl7.Fhir.Model.STU3
     }
 
     /// <summary>
+    /// Complete, proposed, exploratory, other
+    /// (url: http://hl7.org/fhir/ValueSet/claim-use)
+    /// </summary>
+    [FhirEnumeration("Use")]
+    public enum Use
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/claim-use)
+        /// </summary>
+        [EnumLiteral("complete", "http://hl7.org/fhir/claim-use"), Description("Complete")]
+        Complete,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/claim-use)
+        /// </summary>
+        [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use"), Description("Proposed")]
+        Proposed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/claim-use)
+        /// </summary>
+        [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use"), Description("Exploratory")]
+        Exploratory,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/claim-use)
+        /// </summary>
+        [EnumLiteral("other", "http://hl7.org/fhir/claim-use"), Description("Other")]
+        Other,
+    }
+
+    /// <summary>
     /// The workflow state of a clinical impression.
     /// (url: http://hl7.org/fhir/ValueSet/clinical-impression-status)
     /// </summary>
@@ -1082,345 +1115,6 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [EnumLiteral("dateTime", "http://hl7.org/fhir/concept-property-type"), Description("dateTime")]
         DateTime,
-    }
-
-    /// <summary>
-    /// This value set includes common codes from BCP-47 (http://tools.ietf.org/html/bcp47)
-    /// (url: http://hl7.org/fhir/ValueSet/languages)
-    /// </summary>
-    [FhirEnumeration("CommonLanguages")]
-    public enum CommonLanguages
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("ar", "urn:ietf:bcp:47"), Description("Arabisch")]
-        Ar,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("bn", "urn:ietf:bcp:47"), Description("Bengalsk")]
-        Bn,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("cs", "urn:ietf:bcp:47"), Description("Tjekkisk")]
-        Cs,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("da", "urn:ietf:bcp:47"), Description("Dansk")]
-        Da,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("de", "urn:ietf:bcp:47"), Description("Tysk")]
-        De,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("de-AT", "urn:ietf:bcp:47"), Description("Tysk (Østrig")]
-        DeAT,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("de-CH", "urn:ietf:bcp:47"), Description("Tysk (Schweiz)")]
-        DeCH,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("de-DE", "urn:ietf:bcp:47"), Description("Tysk (Tyskland)")]
-        DeDE,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("el", "urn:ietf:bcp:47"), Description("Græsk")]
-        El,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en", "urn:ietf:bcp:47"), Description("Engelsk")]
-        En,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-AU", "urn:ietf:bcp:47"), Description("Engelsk (Australien)")]
-        EnAU,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-CA", "urn:ietf:bcp:47"), Description("Engelsk (Canada)")]
-        EnCA,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-GB", "urn:ietf:bcp:47"), Description("Engelsk (Storbritannien)")]
-        EnGB,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-IN", "urn:ietf:bcp:47"), Description("Engelsk (Indien)")]
-        EnIN,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-NZ", "urn:ietf:bcp:47"), Description("Engelsk (New Zeeland)")]
-        EnNZ,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-SG", "urn:ietf:bcp:47"), Description("Engelsk (Singapore)")]
-        EnSG,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("en-US", "urn:ietf:bcp:47"), Description("Engelsk (Amerikansk)")]
-        EnUS,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("es", "urn:ietf:bcp:47"), Description("Spansk")]
-        Es,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("es-AR", "urn:ietf:bcp:47"), Description("Spansk (Argentina)")]
-        EsAR,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("es-ES", "urn:ietf:bcp:47"), Description("Spansk (Spanien)")]
-        EsES,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("es-UY", "urn:ietf:bcp:47"), Description("Spansk (Uruguay)")]
-        EsUY,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fi", "urn:ietf:bcp:47"), Description("Finsk")]
-        Fi,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fr", "urn:ietf:bcp:47"), Description("Fransk")]
-        Fr,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fr-BE", "urn:ietf:bcp:47"), Description("Finsk (Belgien)")]
-        FrBE,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fr-CH", "urn:ietf:bcp:47"), Description("Fransk (Schweiz)")]
-        FrCH,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fr-FR", "urn:ietf:bcp:47"), Description("Fransk (Frankrig)")]
-        FrFR,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fy", "urn:ietf:bcp:47"), Description("Frisisk")]
-        Fy,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("fy-NL", "urn:ietf:bcp:47"), Description("Frisisk (Holland)")]
-        FyNL,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("hi", "urn:ietf:bcp:47"), Description("Hindi")]
-        Hi,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("hr", "urn:ietf:bcp:47"), Description("Kroatisk")]
-        Hr,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("it", "urn:ietf:bcp:47"), Description("Italiensk")]
-        It,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("it-CH", "urn:ietf:bcp:47"), Description("Italiensk (Schweiz)")]
-        ItCH,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("it-IT", "urn:ietf:bcp:47"), Description("Italiensk (Italien)")]
-        ItIT,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("ja", "urn:ietf:bcp:47"), Description("Japansk")]
-        Ja,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("ko", "urn:ietf:bcp:47"), Description("Koreansk")]
-        Ko,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("nl", "urn:ietf:bcp:47"), Description("Hollandsk")]
-        Nl,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("nl-BE", "urn:ietf:bcp:47"), Description("Hollandsk (Belgien)")]
-        NlBE,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("nl-NL", "urn:ietf:bcp:47"), Description("Hollandsk (Holland)")]
-        NlNL,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("no", "urn:ietf:bcp:47"), Description("Norsk")]
-        No,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("no-NO", "urn:ietf:bcp:47"), Description("Norsk (Norge)")]
-        NoNO,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("pa", "urn:ietf:bcp:47"), Description("Punjabi")]
-        Pa,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("pt", "urn:ietf:bcp:47"), Description("Portugisisk")]
-        Pt,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("pt-BR", "urn:ietf:bcp:47"), Description("Portugisisk (Brasilien)")]
-        PtBR,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("ru", "urn:ietf:bcp:47"), Description("Russisk")]
-        Ru,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("ru-RU", "urn:ietf:bcp:47"), Description("Russisk (Rusland)")]
-        RuRU,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("sr", "urn:ietf:bcp:47"), Description("Serbisk")]
-        Sr,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("sr-SP", "urn:ietf:bcp:47"), Description("Serbisk (Serbien)")]
-        SrSP,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("sv", "urn:ietf:bcp:47"), Description("Svensk")]
-        Sv,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("sv-SE", "urn:ietf:bcp:47"), Description("Svensk (Sverige)")]
-        SvSE,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("te", "urn:ietf:bcp:47"), Description("Telugu")]
-        Te,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("zh", "urn:ietf:bcp:47"), Description("Kinesisk")]
-        Zh,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("zh-CN", "urn:ietf:bcp:47"), Description("Kinesisk (Kina)")]
-        ZhCN,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("zh-HK", "urn:ietf:bcp:47"), Description("Kinesisk (Hong Kong)")]
-        ZhHK,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("zh-SG", "urn:ietf:bcp:47"), Description("Kinesisk (Singapore)")]
-        ZhSG,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: urn:ietf:bcp:47)
-        /// </summary>
-        [EnumLiteral("zh-TW", "urn:ietf:bcp:47"), Description("Kinesisk (Taiwan)")]
-        ZhTW,
     }
 
     /// <summary>
@@ -4916,33 +4610,6 @@ namespace Hl7.Fhir.Model.STU3
     }
 
     /// <summary>
-    /// Type if a sequence -- DNA, RNA, or amino acid sequence
-    /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
-    /// </summary>
-    [FhirEnumeration("sequenceType")]
-    public enum sequenceType
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/sequence-type)
-        /// </summary>
-        [EnumLiteral("aa", "http://hl7.org/fhir/sequence-type"), Description("AA Sequence")]
-        Aa,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/sequence-type)
-        /// </summary>
-        [EnumLiteral("dna", "http://hl7.org/fhir/sequence-type"), Description("DNA Sequence")]
-        Dna,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/sequence-type)
-        /// </summary>
-        [EnumLiteral("rna", "http://hl7.org/fhir/sequence-type"), Description("RNA Sequence")]
-        Rna,
-    }
-
-    /// <summary>
     /// Type for quality report
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// </summary>
@@ -5105,6 +4772,636 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [EnumLiteral("extension", "http://hl7.org/fhir/extension-context"), Description("Extension")]
         Extension,
+    }
+
+    /// <summary>
+    /// How a type relates to its baseDefinition.
+    /// (url: http://hl7.org/fhir/ValueSet/type-derivation-rule)
+    /// </summary>
+    [FhirEnumeration("TypeDerivationRule")]
+    public enum TypeDerivationRule
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/type-derivation-rule)
+        /// </summary>
+        [EnumLiteral("specialization", "http://hl7.org/fhir/type-derivation-rule"), Description("Specialization")]
+        Specialization,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/type-derivation-rule)
+        /// </summary>
+        [EnumLiteral("constraint", "http://hl7.org/fhir/type-derivation-rule"), Description("Constraint")]
+        Constraint,
+    }
+
+    /// <summary>
+    /// How the referenced structure is used in this mapping
+    /// (url: http://hl7.org/fhir/ValueSet/map-model-mode)
+    /// </summary>
+    [FhirEnumeration("StructureMapModelMode")]
+    public enum StructureMapModelMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-model-mode)
+        /// </summary>
+        [EnumLiteral("source", "http://hl7.org/fhir/map-model-mode"), Description("Source Structure Definition")]
+        Source,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-model-mode)
+        /// </summary>
+        [EnumLiteral("queried", "http://hl7.org/fhir/map-model-mode"), Description("Queried Structure Definition")]
+        Queried,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-model-mode)
+        /// </summary>
+        [EnumLiteral("target", "http://hl7.org/fhir/map-model-mode"), Description("Target Structure Definition")]
+        Target,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-model-mode)
+        /// </summary>
+        [EnumLiteral("produced", "http://hl7.org/fhir/map-model-mode"), Description("Produced Structure Definition")]
+        Produced,
+    }
+
+    /// <summary>
+    /// If this is the default rule set to apply for the source type, or this combination of types
+    /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
+    /// </summary>
+    [FhirEnumeration("StructureMapGroupTypeMode")]
+    public enum StructureMapGroupTypeMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-group-type-mode)
+        /// </summary>
+        [EnumLiteral("none", "http://hl7.org/fhir/map-group-type-mode"), Description("Not a Default")]
+        None,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-group-type-mode)
+        /// </summary>
+        [EnumLiteral("types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for Type Combination")]
+        Types,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-group-type-mode)
+        /// </summary>
+        [EnumLiteral("type-and-types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for type + combination")]
+        TypeAndTypes,
+    }
+
+    /// <summary>
+    /// Mode for this instance of data
+    /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
+    /// </summary>
+    [FhirEnumeration("StructureMapInputMode")]
+    public enum StructureMapInputMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-input-mode)
+        /// </summary>
+        [EnumLiteral("source", "http://hl7.org/fhir/map-input-mode"), Description("Source Instance")]
+        Source,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-input-mode)
+        /// </summary>
+        [EnumLiteral("target", "http://hl7.org/fhir/map-input-mode"), Description("Target Instance")]
+        Target,
+    }
+
+    /// <summary>
+    /// If field is a list, how to manage the source
+    /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
+    /// </summary>
+    [FhirEnumeration("StructureMapSourceListMode")]
+    public enum StructureMapSourceListMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-source-list-mode)
+        /// </summary>
+        [EnumLiteral("first", "http://hl7.org/fhir/map-source-list-mode"), Description("First")]
+        First,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-source-list-mode)
+        /// </summary>
+        [EnumLiteral("not_first", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the first")]
+        Not_first,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-source-list-mode)
+        /// </summary>
+        [EnumLiteral("last", "http://hl7.org/fhir/map-source-list-mode"), Description("Last")]
+        Last,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-source-list-mode)
+        /// </summary>
+        [EnumLiteral("not_last", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the last")]
+        Not_last,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-source-list-mode)
+        /// </summary>
+        [EnumLiteral("only_one", "http://hl7.org/fhir/map-source-list-mode"), Description("Enforce only one")]
+        Only_one,
+    }
+
+    /// <summary>
+    /// How to interpret the context
+    /// (url: http://hl7.org/fhir/ValueSet/map-context-type)
+    /// </summary>
+    [FhirEnumeration("StructureMapContextType")]
+    public enum StructureMapContextType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-context-type)
+        /// </summary>
+        [EnumLiteral("type", "http://hl7.org/fhir/map-context-type"), Description("Type")]
+        Type,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-context-type)
+        /// </summary>
+        [EnumLiteral("variable", "http://hl7.org/fhir/map-context-type"), Description("Variable")]
+        Variable,
+    }
+
+    /// <summary>
+    /// If field is a list, how to manage the production
+    /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
+    /// </summary>
+    [FhirEnumeration("StructureMapTargetListMode")]
+    public enum StructureMapTargetListMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-target-list-mode)
+        /// </summary>
+        [EnumLiteral("first", "http://hl7.org/fhir/map-target-list-mode"), Description("First")]
+        First,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-target-list-mode)
+        /// </summary>
+        [EnumLiteral("share", "http://hl7.org/fhir/map-target-list-mode"), Description("Share")]
+        Share,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-target-list-mode)
+        /// </summary>
+        [EnumLiteral("last", "http://hl7.org/fhir/map-target-list-mode"), Description("Last")]
+        Last,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-target-list-mode)
+        /// </summary>
+        [EnumLiteral("collate", "http://hl7.org/fhir/map-target-list-mode"), Description("Collate")]
+        Collate,
+    }
+
+    /// <summary>
+    /// How data is copied/created
+    /// (url: http://hl7.org/fhir/ValueSet/map-transform)
+    /// </summary>
+    [FhirEnumeration("StructureMapTransform")]
+    public enum StructureMapTransform
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("create", "http://hl7.org/fhir/map-transform"), Description("create")]
+        Create,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("copy", "http://hl7.org/fhir/map-transform"), Description("copy")]
+        Copy,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("truncate", "http://hl7.org/fhir/map-transform"), Description("truncate")]
+        Truncate,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("escape", "http://hl7.org/fhir/map-transform"), Description("escape")]
+        Escape,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("cast", "http://hl7.org/fhir/map-transform"), Description("cast")]
+        Cast,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("append", "http://hl7.org/fhir/map-transform"), Description("append")]
+        Append,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("translate", "http://hl7.org/fhir/map-transform"), Description("translate")]
+        Translate,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("reference", "http://hl7.org/fhir/map-transform"), Description("reference")]
+        Reference,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("dateOp", "http://hl7.org/fhir/map-transform"), Description("dateOp")]
+        DateOp,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("uuid", "http://hl7.org/fhir/map-transform"), Description("uuid")]
+        Uuid,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("pointer", "http://hl7.org/fhir/map-transform"), Description("pointer")]
+        Pointer,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("evaluate", "http://hl7.org/fhir/map-transform"), Description("evaluate")]
+        Evaluate,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("cc", "http://hl7.org/fhir/map-transform"), Description("cc")]
+        Cc,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("c", "http://hl7.org/fhir/map-transform"), Description("c")]
+        C,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("qty", "http://hl7.org/fhir/map-transform"), Description("qty")]
+        Qty,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("id", "http://hl7.org/fhir/map-transform"), Description("id")]
+        Id,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/map-transform)
+        /// </summary>
+        [EnumLiteral("cp", "http://hl7.org/fhir/map-transform"), Description("cp")]
+        Cp,
+    }
+
+    /// <summary>
+    /// A code to indicate if the substance is actively used
+    /// (url: http://hl7.org/fhir/ValueSet/substance-status)
+    /// </summary>
+    [FhirEnumeration("FHIRSubstanceStatus")]
+    public enum FHIRSubstanceStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/substance-status)
+        /// </summary>
+        [EnumLiteral("active", "http://hl7.org/fhir/substance-status"), Description("Active")]
+        Active,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/substance-status)
+        /// </summary>
+        [EnumLiteral("inactive", "http://hl7.org/fhir/substance-status"), Description("Inactive")]
+        Inactive,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/substance-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/substance-status"), Description("Entered in Error")]
+        EnteredInError,
+    }
+
+    /// <summary>
+    /// Status of the supply delivery.
+    /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
+    /// </summary>
+    [FhirEnumeration("SupplyDeliveryStatus")]
+    public enum SupplyDeliveryStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplydelivery-status)
+        /// </summary>
+        [EnumLiteral("in-progress", "http://hl7.org/fhir/supplydelivery-status"), Description("In Progress")]
+        InProgress,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplydelivery-status)
+        /// </summary>
+        [EnumLiteral("completed", "http://hl7.org/fhir/supplydelivery-status"), Description("Delivered")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplydelivery-status)
+        /// </summary>
+        [EnumLiteral("abandoned", "http://hl7.org/fhir/supplydelivery-status"), Description("Abandoned")]
+        Abandoned,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplydelivery-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplydelivery-status"), Description("Entered In Error")]
+        EnteredInError,
+    }
+
+    /// <summary>
+    /// Status of the supply request
+    /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
+    /// </summary>
+    [FhirEnumeration("SupplyRequestStatus")]
+    public enum SupplyRequestStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("draft", "http://hl7.org/fhir/supplyrequest-status"), Description("Draft")]
+        Draft,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("active", "http://hl7.org/fhir/supplyrequest-status"), Description("Active")]
+        Active,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("suspended", "http://hl7.org/fhir/supplyrequest-status"), Description("Suspended")]
+        Suspended,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("cancelled", "http://hl7.org/fhir/supplyrequest-status"), Description("Cancelled")]
+        Cancelled,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("completed", "http://hl7.org/fhir/supplyrequest-status"), Description("Completed")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplyrequest-status"), Description("Entered in Error")]
+        EnteredInError,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/supplyrequest-status)
+        /// </summary>
+        [EnumLiteral("unknown", "http://hl7.org/fhir/supplyrequest-status"), Description("Unknown")]
+        Unknown,
+    }
+
+    /// <summary>
+    /// The current status of the task.
+    /// (url: http://hl7.org/fhir/ValueSet/task-status)
+    /// </summary>
+    [FhirEnumeration("TaskStatus")]
+    public enum TaskStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("draft", "http://hl7.org/fhir/task-status"), Description("Draft")]
+        Draft,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("requested", "http://hl7.org/fhir/task-status"), Description("Requested")]
+        Requested,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("received", "http://hl7.org/fhir/task-status"), Description("Received")]
+        Received,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("accepted", "http://hl7.org/fhir/task-status"), Description("Accepted")]
+        Accepted,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("rejected", "http://hl7.org/fhir/task-status"), Description("Rejected")]
+        Rejected,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("ready", "http://hl7.org/fhir/task-status"), Description("Ready")]
+        Ready,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("cancelled", "http://hl7.org/fhir/task-status"), Description("Cancelled")]
+        Cancelled,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("in-progress", "http://hl7.org/fhir/task-status"), Description("In Progress")]
+        InProgress,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("on-hold", "http://hl7.org/fhir/task-status"), Description("On Hold")]
+        OnHold,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("failed", "http://hl7.org/fhir/task-status"), Description("Failed")]
+        Failed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("completed", "http://hl7.org/fhir/task-status"), Description("Completed")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/task-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/task-status"), Description("Entered in Error")]
+        EnteredInError,
+    }
+
+    /// <summary>
+    /// The current status of the test report.
+    /// (url: http://hl7.org/fhir/ValueSet/report-status-codes)
+    /// </summary>
+    [FhirEnumeration("TestReportStatus")]
+    public enum TestReportStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-status-codes)
+        /// </summary>
+        [EnumLiteral("completed", "http://hl7.org/fhir/report-status-codes"), Description("Completed")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-status-codes)
+        /// </summary>
+        [EnumLiteral("in-progress", "http://hl7.org/fhir/report-status-codes"), Description("In Progress")]
+        InProgress,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-status-codes)
+        /// </summary>
+        [EnumLiteral("waiting", "http://hl7.org/fhir/report-status-codes"), Description("Waiting")]
+        Waiting,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-status-codes)
+        /// </summary>
+        [EnumLiteral("stopped", "http://hl7.org/fhir/report-status-codes"), Description("Stopped")]
+        Stopped,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-status-codes)
+        /// </summary>
+        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/report-status-codes"), Description("Entered In Error")]
+        EnteredInError,
+    }
+
+    /// <summary>
+    /// The reported execution result.
+    /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
+    /// </summary>
+    [FhirEnumeration("TestReportResult")]
+    public enum TestReportResult
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-result-codes)
+        /// </summary>
+        [EnumLiteral("pass", "http://hl7.org/fhir/report-result-codes"), Description("Pass")]
+        Pass,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-result-codes)
+        /// </summary>
+        [EnumLiteral("fail", "http://hl7.org/fhir/report-result-codes"), Description("Fail")]
+        Fail,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-result-codes)
+        /// </summary>
+        [EnumLiteral("pending", "http://hl7.org/fhir/report-result-codes"), Description("Pending")]
+        Pending,
+    }
+
+    /// <summary>
+    /// The type of participant.
+    /// (url: http://hl7.org/fhir/ValueSet/report-participant-type)
+    /// </summary>
+    [FhirEnumeration("TestReportParticipantType")]
+    public enum TestReportParticipantType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-participant-type)
+        /// </summary>
+        [EnumLiteral("test-engine", "http://hl7.org/fhir/report-participant-type"), Description("Test Engine")]
+        TestEngine,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-participant-type)
+        /// </summary>
+        [EnumLiteral("client", "http://hl7.org/fhir/report-participant-type"), Description("Client")]
+        Client,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-participant-type)
+        /// </summary>
+        [EnumLiteral("server", "http://hl7.org/fhir/report-participant-type"), Description("Server")]
+        Server,
+    }
+
+    /// <summary>
+    /// The results of executing an action.
+    /// (url: http://hl7.org/fhir/ValueSet/report-action-result-codes)
+    /// </summary>
+    [FhirEnumeration("TestReportActionResult")]
+    public enum TestReportActionResult
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-action-result-codes)
+        /// </summary>
+        [EnumLiteral("pass", "http://hl7.org/fhir/report-action-result-codes"), Description("Pass")]
+        Pass,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-action-result-codes)
+        /// </summary>
+        [EnumLiteral("skip", "http://hl7.org/fhir/report-action-result-codes"), Description("Skip")]
+        Skip,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-action-result-codes)
+        /// </summary>
+        [EnumLiteral("fail", "http://hl7.org/fhir/report-action-result-codes"), Description("Fail")]
+        Fail,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-action-result-codes)
+        /// </summary>
+        [EnumLiteral("warning", "http://hl7.org/fhir/report-action-result-codes"), Description("Warning")]
+        Warning,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/report-action-result-codes)
+        /// </summary>
+        [EnumLiteral("error", "http://hl7.org/fhir/report-action-result-codes"), Description("Error")]
+        Error,
     }
 
     /// <summary>
@@ -6152,636 +6449,6 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
         VisionPrescription,
-    }
-
-    /// <summary>
-    /// How a type relates to its baseDefinition.
-    /// (url: http://hl7.org/fhir/ValueSet/type-derivation-rule)
-    /// </summary>
-    [FhirEnumeration("TypeDerivationRule")]
-    public enum TypeDerivationRule
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/type-derivation-rule)
-        /// </summary>
-        [EnumLiteral("specialization", "http://hl7.org/fhir/type-derivation-rule"), Description("Specialization")]
-        Specialization,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/type-derivation-rule)
-        /// </summary>
-        [EnumLiteral("constraint", "http://hl7.org/fhir/type-derivation-rule"), Description("Constraint")]
-        Constraint,
-    }
-
-    /// <summary>
-    /// How the referenced structure is used in this mapping
-    /// (url: http://hl7.org/fhir/ValueSet/map-model-mode)
-    /// </summary>
-    [FhirEnumeration("StructureMapModelMode")]
-    public enum StructureMapModelMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-model-mode)
-        /// </summary>
-        [EnumLiteral("source", "http://hl7.org/fhir/map-model-mode"), Description("Source Structure Definition")]
-        Source,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-model-mode)
-        /// </summary>
-        [EnumLiteral("queried", "http://hl7.org/fhir/map-model-mode"), Description("Queried Structure Definition")]
-        Queried,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-model-mode)
-        /// </summary>
-        [EnumLiteral("target", "http://hl7.org/fhir/map-model-mode"), Description("Target Structure Definition")]
-        Target,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-model-mode)
-        /// </summary>
-        [EnumLiteral("produced", "http://hl7.org/fhir/map-model-mode"), Description("Produced Structure Definition")]
-        Produced,
-    }
-
-    /// <summary>
-    /// If this is the default rule set to apply for the source type, or this combination of types
-    /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
-    /// </summary>
-    [FhirEnumeration("StructureMapGroupTypeMode")]
-    public enum StructureMapGroupTypeMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-group-type-mode)
-        /// </summary>
-        [EnumLiteral("none", "http://hl7.org/fhir/map-group-type-mode"), Description("Not a Default")]
-        None,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-group-type-mode)
-        /// </summary>
-        [EnumLiteral("types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for Type Combination")]
-        Types,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-group-type-mode)
-        /// </summary>
-        [EnumLiteral("type-and-types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for type + combination")]
-        TypeAndTypes,
-    }
-
-    /// <summary>
-    /// Mode for this instance of data
-    /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
-    /// </summary>
-    [FhirEnumeration("StructureMapInputMode")]
-    public enum StructureMapInputMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-input-mode)
-        /// </summary>
-        [EnumLiteral("source", "http://hl7.org/fhir/map-input-mode"), Description("Source Instance")]
-        Source,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-input-mode)
-        /// </summary>
-        [EnumLiteral("target", "http://hl7.org/fhir/map-input-mode"), Description("Target Instance")]
-        Target,
-    }
-
-    /// <summary>
-    /// If field is a list, how to manage the source
-    /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
-    /// </summary>
-    [FhirEnumeration("StructureMapSourceListMode")]
-    public enum StructureMapSourceListMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-source-list-mode)
-        /// </summary>
-        [EnumLiteral("first", "http://hl7.org/fhir/map-source-list-mode"), Description("First")]
-        First,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-source-list-mode)
-        /// </summary>
-        [EnumLiteral("not_first", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the first")]
-        Not_first,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-source-list-mode)
-        /// </summary>
-        [EnumLiteral("last", "http://hl7.org/fhir/map-source-list-mode"), Description("Last")]
-        Last,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-source-list-mode)
-        /// </summary>
-        [EnumLiteral("not_last", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the last")]
-        Not_last,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-source-list-mode)
-        /// </summary>
-        [EnumLiteral("only_one", "http://hl7.org/fhir/map-source-list-mode"), Description("Enforce only one")]
-        Only_one,
-    }
-
-    /// <summary>
-    /// How to interpret the context
-    /// (url: http://hl7.org/fhir/ValueSet/map-context-type)
-    /// </summary>
-    [FhirEnumeration("StructureMapContextType")]
-    public enum StructureMapContextType
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-context-type)
-        /// </summary>
-        [EnumLiteral("type", "http://hl7.org/fhir/map-context-type"), Description("Type")]
-        Type,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-context-type)
-        /// </summary>
-        [EnumLiteral("variable", "http://hl7.org/fhir/map-context-type"), Description("Variable")]
-        Variable,
-    }
-
-    /// <summary>
-    /// If field is a list, how to manage the production
-    /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
-    /// </summary>
-    [FhirEnumeration("StructureMapTargetListMode")]
-    public enum StructureMapTargetListMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-target-list-mode)
-        /// </summary>
-        [EnumLiteral("first", "http://hl7.org/fhir/map-target-list-mode"), Description("First")]
-        First,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-target-list-mode)
-        /// </summary>
-        [EnumLiteral("share", "http://hl7.org/fhir/map-target-list-mode"), Description("Share")]
-        Share,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-target-list-mode)
-        /// </summary>
-        [EnumLiteral("last", "http://hl7.org/fhir/map-target-list-mode"), Description("Last")]
-        Last,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-target-list-mode)
-        /// </summary>
-        [EnumLiteral("collate", "http://hl7.org/fhir/map-target-list-mode"), Description("Collate")]
-        Collate,
-    }
-
-    /// <summary>
-    /// How data is copied/created
-    /// (url: http://hl7.org/fhir/ValueSet/map-transform)
-    /// </summary>
-    [FhirEnumeration("StructureMapTransform")]
-    public enum StructureMapTransform
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("create", "http://hl7.org/fhir/map-transform"), Description("create")]
-        Create,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("copy", "http://hl7.org/fhir/map-transform"), Description("copy")]
-        Copy,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("truncate", "http://hl7.org/fhir/map-transform"), Description("truncate")]
-        Truncate,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("escape", "http://hl7.org/fhir/map-transform"), Description("escape")]
-        Escape,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("cast", "http://hl7.org/fhir/map-transform"), Description("cast")]
-        Cast,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("append", "http://hl7.org/fhir/map-transform"), Description("append")]
-        Append,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("translate", "http://hl7.org/fhir/map-transform"), Description("translate")]
-        Translate,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("reference", "http://hl7.org/fhir/map-transform"), Description("reference")]
-        Reference,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("dateOp", "http://hl7.org/fhir/map-transform"), Description("dateOp")]
-        DateOp,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("uuid", "http://hl7.org/fhir/map-transform"), Description("uuid")]
-        Uuid,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("pointer", "http://hl7.org/fhir/map-transform"), Description("pointer")]
-        Pointer,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("evaluate", "http://hl7.org/fhir/map-transform"), Description("evaluate")]
-        Evaluate,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("cc", "http://hl7.org/fhir/map-transform"), Description("cc")]
-        Cc,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("c", "http://hl7.org/fhir/map-transform"), Description("c")]
-        C,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("qty", "http://hl7.org/fhir/map-transform"), Description("qty")]
-        Qty,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("id", "http://hl7.org/fhir/map-transform"), Description("id")]
-        Id,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/map-transform)
-        /// </summary>
-        [EnumLiteral("cp", "http://hl7.org/fhir/map-transform"), Description("cp")]
-        Cp,
-    }
-
-    /// <summary>
-    /// A code to indicate if the substance is actively used
-    /// (url: http://hl7.org/fhir/ValueSet/substance-status)
-    /// </summary>
-    [FhirEnumeration("FHIRSubstanceStatus")]
-    public enum FHIRSubstanceStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/substance-status)
-        /// </summary>
-        [EnumLiteral("active", "http://hl7.org/fhir/substance-status"), Description("Active")]
-        Active,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/substance-status)
-        /// </summary>
-        [EnumLiteral("inactive", "http://hl7.org/fhir/substance-status"), Description("Inactive")]
-        Inactive,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/substance-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/substance-status"), Description("Entered in Error")]
-        EnteredInError,
-    }
-
-    /// <summary>
-    /// Status of the supply delivery.
-    /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
-    /// </summary>
-    [FhirEnumeration("SupplyDeliveryStatus")]
-    public enum SupplyDeliveryStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplydelivery-status)
-        /// </summary>
-        [EnumLiteral("in-progress", "http://hl7.org/fhir/supplydelivery-status"), Description("In Progress")]
-        InProgress,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplydelivery-status)
-        /// </summary>
-        [EnumLiteral("completed", "http://hl7.org/fhir/supplydelivery-status"), Description("Delivered")]
-        Completed,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplydelivery-status)
-        /// </summary>
-        [EnumLiteral("abandoned", "http://hl7.org/fhir/supplydelivery-status"), Description("Abandoned")]
-        Abandoned,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplydelivery-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplydelivery-status"), Description("Entered In Error")]
-        EnteredInError,
-    }
-
-    /// <summary>
-    /// Status of the supply request
-    /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
-    /// </summary>
-    [FhirEnumeration("SupplyRequestStatus")]
-    public enum SupplyRequestStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("draft", "http://hl7.org/fhir/supplyrequest-status"), Description("Draft")]
-        Draft,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("active", "http://hl7.org/fhir/supplyrequest-status"), Description("Active")]
-        Active,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("suspended", "http://hl7.org/fhir/supplyrequest-status"), Description("Suspended")]
-        Suspended,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("cancelled", "http://hl7.org/fhir/supplyrequest-status"), Description("Cancelled")]
-        Cancelled,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("completed", "http://hl7.org/fhir/supplyrequest-status"), Description("Completed")]
-        Completed,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplyrequest-status"), Description("Entered in Error")]
-        EnteredInError,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/supplyrequest-status)
-        /// </summary>
-        [EnumLiteral("unknown", "http://hl7.org/fhir/supplyrequest-status"), Description("Unknown")]
-        Unknown,
-    }
-
-    /// <summary>
-    /// The current status of the task.
-    /// (url: http://hl7.org/fhir/ValueSet/task-status)
-    /// </summary>
-    [FhirEnumeration("TaskStatus")]
-    public enum TaskStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("draft", "http://hl7.org/fhir/task-status"), Description("Draft")]
-        Draft,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("requested", "http://hl7.org/fhir/task-status"), Description("Requested")]
-        Requested,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("received", "http://hl7.org/fhir/task-status"), Description("Received")]
-        Received,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("accepted", "http://hl7.org/fhir/task-status"), Description("Accepted")]
-        Accepted,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("rejected", "http://hl7.org/fhir/task-status"), Description("Rejected")]
-        Rejected,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("ready", "http://hl7.org/fhir/task-status"), Description("Ready")]
-        Ready,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("cancelled", "http://hl7.org/fhir/task-status"), Description("Cancelled")]
-        Cancelled,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("in-progress", "http://hl7.org/fhir/task-status"), Description("In Progress")]
-        InProgress,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("on-hold", "http://hl7.org/fhir/task-status"), Description("On Hold")]
-        OnHold,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("failed", "http://hl7.org/fhir/task-status"), Description("Failed")]
-        Failed,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("completed", "http://hl7.org/fhir/task-status"), Description("Completed")]
-        Completed,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/task-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/task-status"), Description("Entered in Error")]
-        EnteredInError,
-    }
-
-    /// <summary>
-    /// The current status of the test report.
-    /// (url: http://hl7.org/fhir/ValueSet/report-status-codes)
-    /// </summary>
-    [FhirEnumeration("TestReportStatus")]
-    public enum TestReportStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-status-codes)
-        /// </summary>
-        [EnumLiteral("completed", "http://hl7.org/fhir/report-status-codes"), Description("Completed")]
-        Completed,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-status-codes)
-        /// </summary>
-        [EnumLiteral("in-progress", "http://hl7.org/fhir/report-status-codes"), Description("In Progress")]
-        InProgress,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-status-codes)
-        /// </summary>
-        [EnumLiteral("waiting", "http://hl7.org/fhir/report-status-codes"), Description("Waiting")]
-        Waiting,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-status-codes)
-        /// </summary>
-        [EnumLiteral("stopped", "http://hl7.org/fhir/report-status-codes"), Description("Stopped")]
-        Stopped,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-status-codes)
-        /// </summary>
-        [EnumLiteral("entered-in-error", "http://hl7.org/fhir/report-status-codes"), Description("Entered In Error")]
-        EnteredInError,
-    }
-
-    /// <summary>
-    /// The reported execution result.
-    /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
-    /// </summary>
-    [FhirEnumeration("TestReportResult")]
-    public enum TestReportResult
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-result-codes)
-        /// </summary>
-        [EnumLiteral("pass", "http://hl7.org/fhir/report-result-codes"), Description("Pass")]
-        Pass,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-result-codes)
-        /// </summary>
-        [EnumLiteral("fail", "http://hl7.org/fhir/report-result-codes"), Description("Fail")]
-        Fail,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-result-codes)
-        /// </summary>
-        [EnumLiteral("pending", "http://hl7.org/fhir/report-result-codes"), Description("Pending")]
-        Pending,
-    }
-
-    /// <summary>
-    /// The type of participant.
-    /// (url: http://hl7.org/fhir/ValueSet/report-participant-type)
-    /// </summary>
-    [FhirEnumeration("TestReportParticipantType")]
-    public enum TestReportParticipantType
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-participant-type)
-        /// </summary>
-        [EnumLiteral("test-engine", "http://hl7.org/fhir/report-participant-type"), Description("Test Engine")]
-        TestEngine,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-participant-type)
-        /// </summary>
-        [EnumLiteral("client", "http://hl7.org/fhir/report-participant-type"), Description("Client")]
-        Client,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-participant-type)
-        /// </summary>
-        [EnumLiteral("server", "http://hl7.org/fhir/report-participant-type"), Description("Server")]
-        Server,
-    }
-
-    /// <summary>
-    /// The results of executing an action.
-    /// (url: http://hl7.org/fhir/ValueSet/report-action-result-codes)
-    /// </summary>
-    [FhirEnumeration("TestReportActionResult")]
-    public enum TestReportActionResult
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-action-result-codes)
-        /// </summary>
-        [EnumLiteral("pass", "http://hl7.org/fhir/report-action-result-codes"), Description("Pass")]
-        Pass,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-action-result-codes)
-        /// </summary>
-        [EnumLiteral("skip", "http://hl7.org/fhir/report-action-result-codes"), Description("Skip")]
-        Skip,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-action-result-codes)
-        /// </summary>
-        [EnumLiteral("fail", "http://hl7.org/fhir/report-action-result-codes"), Description("Fail")]
-        Fail,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-action-result-codes)
-        /// </summary>
-        [EnumLiteral("warning", "http://hl7.org/fhir/report-action-result-codes"), Description("Warning")]
-        Warning,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://hl7.org/fhir/report-action-result-codes)
-        /// </summary>
-        [EnumLiteral("error", "http://hl7.org/fhir/report-action-result-codes"), Description("Error")]
-        Error,
     }
 
     /// <summary>

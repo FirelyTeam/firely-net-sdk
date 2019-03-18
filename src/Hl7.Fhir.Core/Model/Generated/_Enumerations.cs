@@ -347,39 +347,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Complete, proposed, exploratory, other.
-    /// (url: http://hl7.org/fhir/ValueSet/claim-use-link)
-    /// </summary>
-    [FhirEnumeration("Use")]
-    public enum Use
-    {
-        /// <summary>
-        /// The treatment is complete and this represents a Claim for the services.
-        /// (system: http://hl7.org/fhir/claim-use-link)
-        /// </summary>
-        [EnumLiteral("complete", "http://hl7.org/fhir/claim-use-link"), Description("Complete")]
-        Complete,
-        /// <summary>
-        /// The treatment is proposed and this represents a Pre-authorization for the services.
-        /// (system: http://hl7.org/fhir/claim-use-link)
-        /// </summary>
-        [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use-link"), Description("Proposed")]
-        Proposed,
-        /// <summary>
-        /// The treatment is proposed and this represents a Pre-determination for the services.
-        /// (system: http://hl7.org/fhir/claim-use-link)
-        /// </summary>
-        [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use-link"), Description("Exploratory")]
-        Exploratory,
-        /// <summary>
-        /// A locally defined or otherwise resolved status.
-        /// (system: http://hl7.org/fhir/claim-use-link)
-        /// </summary>
-        [EnumLiteral("other", "http://hl7.org/fhir/claim-use-link"), Description("Other")]
-        Other,
-    }
-
-    /// <summary>
     /// The workflow/clinical status of the composition.
     /// (url: http://hl7.org/fhir/ValueSet/composition-status)
     /// </summary>
@@ -3445,7 +3412,7 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// Either a resource or a data type that is defined in all the supported FHIR versions
-    /// (url: http://hl7.org/fhir/data-types)
+    /// (url: http://hl7.org/fhir/ValueSet/defined-types)
     /// </summary>
     [FhirEnumeration("FHIRDefinedType")]
     public enum FHIRDefinedType
@@ -4264,6 +4231,7 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// Supported FHIR versions
+    /// (url: http://hl7.org/fhir/ValueSet/versions)
     /// </summary>
     [FhirEnumeration("Version")]
     public enum Version

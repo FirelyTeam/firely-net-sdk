@@ -26,6 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 public static class StringUtils
@@ -43,10 +44,10 @@ public static class StringUtils
     /// </summary>
     public static string ConvertEnumValue(string code)
     {
-        if (code.StartsWith("_"))
-            code = code.Substring(1);
         if (code == "=")
             return "Equal";
+        if (code == "!=")
+            return "NotEqual";
         if (code == "<")
             return "LessThan";
         if (code == "<=")
@@ -55,6 +56,9 @@ public static class StringUtils
             return "GreaterOrEqual";
         if (code == ">")
             return "GreaterThan";
+        if (code.StartsWith("_"))
+            code = code.Substring(1);
+        code = code.Replace('.', '_');
         var bits = code.Split(new char[] { ' ', '-' });
         var result = string.Empty;
         foreach (var bit in bits)
@@ -62,7 +66,7 @@ public static class StringUtils
             result += bit.Substring(0, 1).ToUpper();
             result += bit.Substring(1);
         }
-        if (int.TryParse(result, out var integerValue))
+        if (char.IsDigit(result[0]))
             result = "N" + result;
         return result;
     }
@@ -567,16 +571,16 @@ public class ValueSet
     /// Load all the value sets from the XML structure definition data of a set of FHIR versions
     /// </summary>
     /// <param name="loadedVersions">The FHIR versions XML structure definition data</param>
-    /// <returns>Newly created value sets by FHIR version and by name, i.e. a dictionary indexed by FHIR version, 
+    /// <returns>Newly created value sets by FHIR version and by URL, i.e. a dictionary indexed by FHIR version, 
     /// with an empty string key representing value sets common to all version and 'DSTU2', 'STU3' etc representing the specific version; 
-    /// each value is a dictionary indexed by the enumeration name with the value sets as values</returns>
+    /// each value is a dictionary indexed by the value set URL with the value sets as values</returns>
     public static Dictionary<string, Dictionary<string, ValueSet>> LoadAll(IEnumerable<LoadedVersion> loadedVersions)
     {
-        var valueSetsByEnumNameByVersion = new Dictionary<string, Dictionary<string, ValueSet>>();
+        var valueSetsByUrlByVersion = new Dictionary<string, Dictionary<string, ValueSet>>();
         foreach (var loadedVersion in loadedVersions)
         {
-            var valueSetsByEnumName = new Dictionary<string, ValueSet>();
-            valueSetsByEnumNameByVersion.Add(loadedVersion.Version, valueSetsByEnumName);
+            var valueSetsByUrl = new Dictionary<string, ValueSet>();
+            valueSetsByUrlByVersion.Add(loadedVersion.Version, valueSetsByUrl);
             var nodesResources = loadedVersion.Resources.DocumentElement.SelectNodes(
                 "/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding/fhir:strength/@value='required']]", loadedVersion.NSR);
             var nodesTypesRoot = loadedVersion.Types.DocumentElement.SelectNodes(
@@ -586,130 +590,178 @@ public class ValueSet
             {
                 foreach (var eProp in element.SelectNodes("fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding]", loadedVersion.NSR).OfType<XmlElement>())
                 {
-                    string valuesetUrl = null;
-                    var n3 = eProp.SelectSingleNode("fhir:binding/fhir:valueSetUri/@value", loadedVersion.NSR);
-                    if (n3 != null)
+                    var valueSetUrl = GetRequiredBindingValueSetUrl(eProp, loadedVersion.NSR);
+                    if (valueSetUrl != null && !valueSetsByUrl.ContainsKey(valueSetUrl))
                     {
-                        valuesetUrl = n3.Value;
-                    }
-                    var n4 = eProp.SelectSingleNode("fhir:binding/fhir:valueSetReference/fhir:reference/@value", loadedVersion.NSR);
-                    if (n4 != null)
-                    {
-                        valuesetUrl = n4.Value;
-                    }
-                    var valuesetElement = loadedVersion.Expansions.SelectSingleNode("/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '" + valuesetUrl + "']", loadedVersion.NSE) as XmlElement;
-                    if (valuesetElement != null)
-                    {
-                        var enumName = valuesetElement.SelectSingleNode("fhir:name/@value", loadedVersion.NSE).InnerText;
-                        // reformat the name so that it is a valid .NET enumeration name
-                        enumName = enumName.Replace(" ", "").Replace("-", "_");
-                        if (!valueSetsByEnumName.ContainsKey(enumName))
+                        var valueSet = TryCreateValueSet(valueSetUrl, loadedVersion.Expansions, loadedVersion.NSE);
+                        if (valueSet != null)
                         {
-                            var valueSet = new ValueSet
-                            {
-                                EnumName = enumName,
-                                Url = valuesetUrl,
-                                Description = valuesetElement.SelectSingleNode("fhir:description/@value", loadedVersion.NSE).InnerText,
-                                Values = new List<ValueSetValue>()
-                            };
-                            valueSetsByEnumName.Add(enumName, valueSet);
-                            var codedValues = new HashSet<string>();
-                            foreach (var eval in valuesetElement.SelectNodes("fhir:expansion/fhir:contains", loadedVersion.NSE).OfType<XmlElement>())
-                            {
-                                var code = eval.SelectSingleNode("fhir:code/@value", loadedVersion.NSE).Value;
-                                var enumValue = StringUtils.ConvertEnumValue(code);
-                                if (!codedValues.Contains(enumValue))
-                                {
-                                    codedValues.Add(enumValue);
-                                    var valueSetValue = new ValueSetValue { Code = code };
-                                    var system = eval.SelectSingleNode("fhir:system/@value", loadedVersion.NSE).Value;
-                                    valueSetValue.System = system;
-                                    valueSetValue.Display = eval.SelectSingleNode("fhir:display/@value", loadedVersion.NSE).Value;
-                                    string definition = null;
-                                    var definitionNode = valuesetElement.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '" + system + "']/fhir:concept[fhir:code/@value = '" + code + "']/fhir:definition/@value", loadedVersion.NSE);
-                                    if (definitionNode != null)
-                                    {
-                                        definition = definitionNode.Value;
-                                    }
-                                    else
-                                    {
-                                        definitionNode = valuesetElement.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '" + system + "']/fhir:concept/fhir:concept[fhir:code/@value = '" + code + "']/fhir:definition/@value", loadedVersion.NSE);
-                                        if (definitionNode != null)
-                                        {
-                                            definition = definitionNode.Value;
-                                        }
-                                    }
-                                    if (string.IsNullOrEmpty(definition))
-                                    {
-                                        definition = "MISSING DESCRIPTION";
-                                    }
-                                    valueSetValue.Definition = definition;
-                                    valueSet.Values.Add(valueSetValue);
-                                }
-                            }
+                            valueSetsByUrl.Add(valueSetUrl, valueSet);
                         }
                     }
                 }
             }
         }
-        ExtractShared(valueSetsByEnumNameByVersion);
-        var commonFHIRDefinedType = CreateCommonFHIRDefinedType(valueSetsByEnumNameByVersion);
+        ExtractShared(valueSetsByUrlByVersion);
+        var commonFHIRDefinedType = CreateCommonFHIRDefinedType(valueSetsByUrlByVersion);
         if (commonFHIRDefinedType != null)
         {
-            valueSetsByEnumNameByVersion[string.Empty][commonFHIRDefinedType.EnumName] = commonFHIRDefinedType;
+            valueSetsByUrlByVersion[string.Empty][commonFHIRDefinedType.EnumName] = commonFHIRDefinedType;
         }
-        return valueSetsByEnumNameByVersion;
+        return valueSetsByUrlByVersion;
     }
 
-    private static void ExtractShared(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByEnumNameByVersion)
+    public static string GetRequiredBindingValueSetUrl(XmlElement element, XmlNamespaceManager ns)
     {
-        var sharedValueSetsByEnumName = new Dictionary<string, ValueSet>();
-        var allEnumNames = valueSetsByEnumNameByVersion.Values
-            .SelectMany(valueSetsByEnumName => valueSetsByEnumName.Keys)
+        // Grab the required binding value set reference (if any) from the element
+        var requiredBindingElement = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']", ns);
+        if (requiredBindingElement == null)
+        {
+            return null;
+        }
+
+        var valueSetUrlAttribute = requiredBindingElement.SelectSingleNode("fhir:valueSetReference/fhir:reference/@value", ns);
+        if (valueSetUrlAttribute == null)
+        {
+            valueSetUrlAttribute = requiredBindingElement.SelectSingleNode("fhir:valueSetUri/@value", ns);
+        }
+        if (valueSetUrlAttribute == null)
+        {
+            valueSetUrlAttribute = requiredBindingElement.SelectSingleNode("fhir:valueSet/@value", ns);
+        }
+        if (valueSetUrlAttribute == null)
+        {
+            return null;
+        }
+
+        var valueSetUrl = valueSetUrlAttribute.Value;
+        if (string.IsNullOrEmpty(valueSetUrl))
+        {
+            return null;
+        }
+
+        // Remove the version
+        var versionSuffixRegex = new Regex(@"\|\d+(\.\d+)?(\.\d+)?$");
+        var versionSuffixMatch = versionSuffixRegex.Match(valueSetUrl);
+        if (versionSuffixMatch.Success)
+        {
+            valueSetUrl = valueSetUrl.Substring(0, valueSetUrl.Length - versionSuffixMatch.Length);
+        }
+
+        return valueSetUrl;
+    }
+
+    private static ValueSet TryCreateValueSet(string valueSetUrl, XmlDocument expansions, XmlNamespaceManager nse)
+    {
+        var valueSetElement = expansions.SelectSingleNode("/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '" + valueSetUrl + "']", nse) as XmlElement;
+        if (valueSetElement == null) return null;
+
+        var values = new List<ValueSetValue>();
+        var codedValues = new HashSet<string>();
+        foreach (var eval in valueSetElement.SelectNodes("fhir:expansion/fhir:contains", nse).OfType<XmlElement>())
+        {
+            var code = eval.SelectSingleNode("fhir:code/@value", nse).Value;
+            var enumValue = StringUtils.ConvertEnumValue(code);
+            if (!codedValues.Contains(enumValue))
+            {
+                codedValues.Add(enumValue);
+                var valueSetValue = new ValueSetValue { Code = code };
+                var system = eval.SelectSingleNode("fhir:system/@value", nse).Value;
+                valueSetValue.System = system;
+                valueSetValue.Display = eval.SelectSingleNode("fhir:display/@value", nse).Value;
+                string definition = null;
+                var definitionNode = valueSetElement.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '" + system + "']/fhir:concept[fhir:code/@value = '" + code + "']/fhir:definition/@value", nse);
+                if (definitionNode != null)
+                {
+                    definition = definitionNode.Value;
+                }
+                else
+                {
+                    definitionNode = valueSetElement.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '" + system + "']/fhir:concept/fhir:concept[fhir:code/@value = '" + code + "']/fhir:definition/@value", nse);
+                    if (definitionNode != null)
+                    {
+                        definition = definitionNode.Value;
+                    }
+                }
+                if (string.IsNullOrEmpty(definition))
+                {
+                    definition = "MISSING DESCRIPTION";
+                }
+                valueSetValue.Definition = definition;
+                values.Add(valueSetValue);
+            }
+        }
+
+        // Ignore empty ones - there are some
+        if (values.Count == 0)
+        {
+            return null;
+        }
+
+        var enumName = valueSetElement.SelectSingleNode("fhir:name/@value", nse).InnerText;
+        // reformat the name so that it is a valid .NET enumeration name
+        enumName = enumName.Replace(" ", "").Replace("-", "_").Replace(".", "_");
+
+        return new ValueSet
+        {
+            EnumName = enumName,
+            Url = valueSetUrl,
+            Description = valueSetElement.SelectSingleNode("fhir:description/@value", nse).InnerText,
+            Values = values
+        };
+    }
+
+    private static void ExtractShared(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion)
+    {
+        var sharedValueSetsByUrl = new Dictionary<string, ValueSet>();
+        var allUrls = valueSetsByUrlByVersion.Values
+            .SelectMany(valueSetsByUrl => valueSetsByUrl.Keys)
             .Distinct()
             .ToList();
-        foreach (var enumName in allEnumNames)
+        foreach (var url in allUrls)
         {
-            var valueSetsWithSameEnumName = valueSetsByEnumNameByVersion.Values
-                .Where(valueSetsByEnumName => valueSetsByEnumName.ContainsKey(enumName))
-                .Select(valueSetsByEnumName => valueSetsByEnumName[enumName])
+            var valueSetsWithSameUrl = valueSetsByUrlByVersion.Values
+                .Where(valueSetsByUrl => valueSetsByUrl.ContainsKey(url))
+                .Select(valueSetsByUrl => valueSetsByUrl[url])
                 .ToList();
             ValueSet sharedValueSet = null;
-            if (enumName == "ResourceType")
+            if (url == "http://hl7.org/fhir/ValueSet/resource-types")
             {
                 sharedValueSet = new ValueSet
                 {
                     EnumName = "ResourceType",
-                    Url = valueSetsWithSameEnumName[0].Url,
-                    Description = valueSetsWithSameEnumName[0].Description,
-                    Values = valueSetsWithSameEnumName
+                    Url = url,
+                    Description = valueSetsWithSameUrl[0].Description,
+                    Values = valueSetsWithSameUrl
                         .SelectMany(valueSet => valueSet.Values)
                         .Distinct(new ValueSetValueComparer())
                         .ToList()
                 };
             }
-            else if (valueSetsWithSameEnumName.Count > 1 && valueSetsWithSameEnumName.Skip(1).All(vs => valueSetsWithSameEnumName[0].IsSame(vs)))
+            else if (valueSetsWithSameUrl.Count > 1 && valueSetsWithSameUrl.Skip(1).All(vs => valueSetsWithSameUrl[0].IsSame(vs)))
             {
-                sharedValueSet = valueSetsWithSameEnumName[0];
+                sharedValueSet = valueSetsWithSameUrl[0];
             }
             if (sharedValueSet != null)
             {
-                sharedValueSetsByEnumName.Add(enumName, sharedValueSet);
-                foreach (var valueSetsByEnumName in valueSetsByEnumNameByVersion.Values)
+                sharedValueSetsByUrl.Add(url, sharedValueSet);
+                foreach (var valueSetsByUrl in valueSetsByUrlByVersion.Values)
                 {
-                    valueSetsByEnumName.Remove(enumName);
+                    valueSetsByUrl.Remove(url);
                 }
             }
         }
-        valueSetsByEnumNameByVersion.Add(string.Empty, sharedValueSetsByEnumName);
+        valueSetsByUrlByVersion.Add(string.Empty, sharedValueSetsByUrl);
     }
 
-    private static ValueSet CreateCommonFHIRDefinedType(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByEnumNameByVersion)
+    private static ValueSet CreateCommonFHIRDefinedType(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion)
     {
+        const string fhirDefinedTypesUrl = "http://hl7.org/fhir/ValueSet/defined-types";
+
         Dictionary<string, ValueSetValue> commonValues = null;
-        foreach (var valueSetsByEnumName in valueSetsByEnumNameByVersion.Values)
+        foreach (var valueSetsByUrl in valueSetsByUrlByVersion.Values)
         {
-            if (valueSetsByEnumName.TryGetValue("FHIRDefinedType", out var fhirDefinedType))
+            if (valueSetsByUrl.TryGetValue(fhirDefinedTypesUrl, out var fhirDefinedType))
             {
                 if (commonValues == null)
                 {
@@ -734,7 +786,7 @@ public class ValueSet
             return new ValueSet
             {
                 EnumName = "FHIRDefinedType",
-                Url = "http://hl7.org/fhir/data-types",
+                Url = fhirDefinedTypesUrl,
                 Description = "Either a resource or a data type that is defined in all the supported FHIR versions",
                 Values = commonValues.Values.ToList()
             };
@@ -965,29 +1017,31 @@ public class ResourceDetails
         };
     }
 
-    public bool TryMerge(ResourceDetails other)
+    public string TryMerge(ResourceDetails other)
     {
         if (other.Versions.Count != 1) throw new ArgumentException("The resource must belong to a single FHIR version", nameof(other));
         var version = other.Versions[0].Version;
 
-        if (other == null ||
-            Name != other.Name ||
-            AbstractType != other.AbstractType ||
-            BaseType != other.BaseType ||
-            IsPrimitive != other.IsPrimitive ||
-            IsConstraint != other.IsConstraint ||
-            PrimitiveTypeName != other.PrimitiveTypeName ||
-            Pattern != other.Pattern) return false;
+        if (Name != other.Name) return "Name";
+        if (AbstractType != other.AbstractType) return "AbstractType";
+        if (BaseType != other.BaseType) return "BaseType";
+        if (IsPrimitive != other.IsPrimitive) return "IsPrimitive";
+        if (IsConstraint != other.IsConstraint) return "IsContraint";
+        if (PrimitiveTypeName != other.PrimitiveTypeName) return "PrimitiveTypeName";
+        if (Pattern != other.Pattern) return "Pattern";
 
         Versions.AddRange(other.Versions);
 
-        if (!PropertyDetails.TryMerge(Properties, version, other.Properties)) return false;
+        var tryMergeResult = PropertyDetails.TryMerge(Properties, version, other.Properties);
+        if (tryMergeResult != null) return tryMergeResult;
 
-        if (!ComponentDetails.TryMerge(Components, version, other.Components)) return false;
+        tryMergeResult = ComponentDetails.TryMerge(Components, version, other.Components);
+        if (tryMergeResult != null) return tryMergeResult;
 
-        if (!ConstraintDetails.TryMerge(Constraints, version, other.Constraints)) return false;
+        tryMergeResult = ConstraintDetails.TryMerge(Constraints, version, other.Constraints);
+        if (tryMergeResult != null) return tryMergeResult;
 
-        return true;
+        return null;
     }
 
     public void Simplify( Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion )
@@ -1000,7 +1054,7 @@ public class ResourceDetails
     /// <summary>
     /// Create a C# file containing the class corresponding to this FHIR resource or data type
     /// </summary>
-    /// <param name="filePath">Path of the target file, that is overwritten if it alreadt exist</param>
+    /// <param name="filePath">Path of the target file, that is overwritten if it already exist</param>
     public void Write(string filePath)
     {
         using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
@@ -1014,6 +1068,8 @@ public class ResourceDetails
 
     private IEnumerable<string> Render()
     {
+        var primitiveTypesWithPatternAttribute = new[] { "Code", "Date", "FhirDateTime", "Id", "NarrativeXhtml", "Oid", "FhirUri", "Uuid" };
+
         var version = Versions.Count == 1 ?
             Versions[0].Version :
             "All";
@@ -1074,9 +1130,7 @@ public class ResourceDetails
             yield return $"    /// </summary>";
             yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=Specification.XmlRepresentation.XmlAttr, InSummary=new[]{{Hl7.Fhir.Model.Version.All}}, Order=30)]";
             yield return $"    [CLSCompliant(false)]";
-            if (!string.IsNullOrEmpty(Pattern) && Name != "FhirDecimal" && Name != "Time" && Name != "Integer" &&
-                Name != "UnsignedInt" && Name != "PositiveInt" && Name != "Instant"
-                || Name == "FhirUri")
+            if (primitiveTypesWithPatternAttribute.Contains(Name))
             {
                 yield return $"    [{ Name.Replace("Fhir", "") }Pattern]";
             }
@@ -1162,7 +1216,8 @@ public class ResourceDetails
             .Select(p => p.PropType)
             .Concat(new[] { BaseType })
             .Where(pt => pt.StartsWith(prefix))
-            .Select(pt => pt.Substring(prefix.Length));
+            .Select(pt => pt.Substring(prefix.Length))
+            .Distinct();
     }
 
     private void FixReferencedTypesFhirVersion(string version, Dictionary<string,ResourceDetails> resourcesByName)
@@ -1183,22 +1238,22 @@ public class ResourceDetails
     /// Load all the resources and data types from the XML structure definition data of a set of FHIR versions
     /// </summary>
     /// <param name="loadedVersions">The FHIR versions XML structure definition data</param>
+    /// <param name="valueSetsByUrlByVersion">All value sets that have been mapped to enumerations, indexed by their URL and FHIR version</param>
     /// <returns>Newly created resources and data types by FHIR version and by name, i.e. a dictionary indexed by FHIR version, 
     /// with an empty string key representing resources and data types common to all version and 'DSTU2', 'STU3' etc representing the specific version; 
     /// each value is a dictionary indexed by the class name with the ResourceDetails as values</returns>
     public static Dictionary<string, Dictionary<string, ResourceDetails>> LoadAll(
         IEnumerable<LoadedVersion> loadedVersions,
-        Dictionary<string, Dictionary<string, ValueSet>> valueSetsByEnumNameByVersion
+        Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion
     )
     {
         var enumTypesByValueSetUrlByVersion = loadedVersions.ToDictionary(
-                loadedVersion => loadedVersion.Version,
-                loadedVersion => valueSetsByEnumNameByVersion[string.Empty]
-                    .Select(pair => new KeyValuePair<string, string>(pair.Value.Url, "Hl7.Fhir.Model." + pair.Key))
-                    .Concat(valueSetsByEnumNameByVersion[loadedVersion.Version].Select(pair => new KeyValuePair<string, string>(pair.Value.Url, "Hl7.Fhir.Model." + loadedVersion.Version + "." + pair.Key)))
-                    .Where(pair => !string.IsNullOrEmpty(pair.Key))
-                    .ToDictionary(pair => pair.Key, pair => pair.Value)
-            );
+            loadedVersion => loadedVersion.Version,
+            loadedVersion => valueSetsByUrlByVersion[string.Empty]
+                .Select(pair => new KeyValuePair<string, string>(pair.Key, "Hl7.Fhir.Model." + pair.Value.EnumName))
+                .Concat(valueSetsByUrlByVersion[loadedVersion.Version].Select(pair => new KeyValuePair<string, string>(pair.Key, "Hl7.Fhir.Model." + loadedVersion.Version + "." + pair.Value.EnumName)))
+                .ToDictionary(pair => pair.Key, pair => pair.Value)
+        );
 
         var resourcesByNameByVersion = new Dictionary<string, Dictionary<string, ResourceDetails>>();
         foreach (var loadedVersion in loadedVersions)
@@ -1229,7 +1284,8 @@ public class ResourceDetails
             { "Date", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?" },
             { "FhirDateTime", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?" },
             { "Instant", @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))" },
-            { "Time", @"([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" }
+            { "Time", @"([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" },
+            { "Base64Binary", @"(\s*([0-9a-zA-Z\+\=]){4}\s*)+" }
         };
 
         foreach (var resourcesByName in resourcesByNameByVersion.Values)
@@ -1465,7 +1521,7 @@ public class ResourceDetails
 
     private static bool GetIsConstraintOrPrimitive(XmlElement structureDefinitionElement, XmlNamespaceManager ns)
     {
-        // STU3 has an explicit 'derivation' element
+        // STU3 and R4 have an explicit 'derivation' element
         var derivationNode = structureDefinitionElement.SelectSingleNode("fhir:derivation/@value", ns);
         if (derivationNode != null)
         {
@@ -1481,7 +1537,7 @@ public class ResourceDetails
         var result = structureDefinitionElement.SelectSingleNode("fhir:base/@value", ns); // DSTU2
         if (result == null)
         {
-            result = structureDefinitionElement.SelectSingleNode("fhir:baseDefinition/@value", ns); // STU3
+            result = structureDefinitionElement.SelectSingleNode("fhir:baseDefinition/@value", ns); // STU3, R4
         }
         return result;
     }
@@ -1515,19 +1571,42 @@ public class ResourceDetails
                 .Where(resourcesByName => resourcesByName.ContainsKey(name))
                 .Select(resourcesByName => resourcesByName[name])
                 .ToList();
-            var firstResourceWithSameName = resourcesWithSameName[0];
-            var firstVersion = firstResourceWithSameName.Versions.Single().Version;
-            var mergedResource = firstResourceWithSameName.Clone();
-            // Extension and Element definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
-            if (resourcesWithSameName.Count > 1 && 
-                resourcesWithSameName.Skip(1).All(resource => mergedResource.TryMerge(resource)) &&
-                mergedResource.GetReferencedFhirTypes().All(type => type == "Extension" || type == "Element" || !resourcesByNameByVersion[firstVersion].ContainsKey(type)))
+            if (resourcesWithSameName.Count > 1)
             {
-                mergedResource.Simplify(resourcesByNameByVersion);
-                sharedResourcesByName.Add(name, mergedResource);
-                foreach (var resourcesByName in resourcesByNameByVersion.Values)
+                var mergedResource = resourcesWithSameName[0].Clone();
+                var firstVersion = mergedResource.Versions.Single().Version;
+                var merged = true;
+                foreach (var otherResource in resourcesWithSameName.Skip(1))
                 {
-                    resourcesByName.Remove(name);
+                    var tryMergeResult = mergedResource.TryMerge(otherResource);
+                    if (tryMergeResult != null)
+                    {
+                        merged = false;
+                        Console.WriteLine("{0}: merge version {1} failed: {2}", name, otherResource.Versions.Single().Version, tryMergeResult);
+                        break;
+                    }
+                }
+                if (merged)
+                {
+                    var firstVersionResourcesByName = resourcesByNameByVersion[firstVersion];
+                    var versionSpecificReferencedFhirTypes = mergedResource
+                        .GetReferencedFhirTypes()
+                        // Extension and Element definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
+                        .Where(type => type != "Extension" && type != "Element" && firstVersionResourcesByName.ContainsKey(type))
+                        .ToList();
+                    if (versionSpecificReferencedFhirTypes.Any())
+                    {
+                        Console.WriteLine("{0} references version-specific types: {1}", name, string.Join(", ",versionSpecificReferencedFhirTypes));
+                    }
+                    else
+                    {
+                        mergedResource.Simplify(resourcesByNameByVersion);
+                        sharedResourcesByName.Add(name, mergedResource);
+                        foreach (var resourcesByName in resourcesByNameByVersion.Values)
+                        {
+                            resourcesByName.Remove(name);
+                        }
+                    }
                 }
             }
         }
@@ -1611,21 +1690,23 @@ public class ComponentDetails
         };
     }
 
-    public bool TryMerge(string version, ComponentDetails other)
+    public string TryMerge(string version, ComponentDetails other)
     {
-        if (other == null || Name != other.Name || BaseType != other.BaseType) return false;
+        if (Name != other.Name) return "Name";
+        if (BaseType != other.BaseType) return "BaseType";
 
         return PropertyDetails.TryMerge(Properties, version, other.Properties);
     }
 
-    public static bool TryMerge(List<ComponentDetails> components, string version, List<ComponentDetails> otherComponents)
+    public static string TryMerge(List<ComponentDetails> components, string version, List<ComponentDetails> otherComponents)
     {
         var otherComponentsByName = otherComponents.ToDictionary(p => p.Name);
         foreach (var component in components)
         {
             if (otherComponentsByName.TryGetValue(component.Name, out var otherComponent))
             {
-                if (!component.TryMerge(version, otherComponent)) return false;
+                var tryMergeResult = component.TryMerge(version, otherComponent);
+                if (tryMergeResult != null) return $"Component {component.Name}: {tryMergeResult}";
                 otherComponentsByName.Remove(component.Name);
             }
         }
@@ -1633,7 +1714,7 @@ public class ComponentDetails
         {
             components.Add(otherComponent.Clone(version));
         }
-        return true;
+        return null;
     }
 
     public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
@@ -1720,19 +1801,20 @@ public class ConstraintDetails
         };
     }
 
-    public bool TryMerge(string version, ConstraintDetails other)
+    public string TryMerge(string version, ConstraintDetails other)
     {
-        return other != null &&
-            Key == other.Key &&
-            Severity == other.Severity &&
-            Human == other.Human &&
-            XPath == other.XPath &&
-            Expression == other.Expression;
+        if (Key != other.Key) return "Key";
+        if (Severity != other.Severity) return "Severity";
+        if (Human != other.Human) return "Human";
+        if (XPath != other.XPath) return "XPath";
+        if (Expression != other.Expression) return "Expression";
+
+        return null;
     }
 
-    public static bool TryMerge(List<ConstraintDetails> constraints, string version, List<ConstraintDetails> otherConstraints)
+    public static string TryMerge(List<ConstraintDetails> constraints, string version, List<ConstraintDetails> otherConstraints)
     {
-        return true;
+        return null;
 
         //var otherConstraintByKey = otherConstraints.ToDictionary(c => c.Key);
         //foreach (var constraint in constraints)
@@ -1897,16 +1979,17 @@ public class PropertyDetails
         };
     }
 
-    public bool TryMerge(string version, PropertyDetails other)
+    public string TryMerge(string version, PropertyDetails other)
     {
-        var isSame = other != null &&
-            PropType == other.PropType &&
-            Name == other.Name &&
-            CardMin == other.CardMin &&
-            CardMax == other.CardMax &&
-            ReferenceTargets.Count == other.ReferenceTargets.Count &&
-            ReferenceTargets.OrderBy(t => t).Zip(other.ReferenceTargets.OrderBy(t => t), (t1, t2) => t1 == t2).All(same => same);
-        if (!isSame) return false;
+        if (PropType != other.PropType) return $"PropType '{PropType}' - '{other.PropType}'";
+        if (Name != other.Name) return $"Name '{Name}' - '{other.Name}'";
+        if (CardMin != other.CardMin) return $"CardMin '{CardMin}' - '{other.CardMin}'";
+        if (CardMax != other.CardMax) return $"CardMax '{CardMax}' - '{other.CardMax}'";
+        if (ReferenceTargets.Count != other.ReferenceTargets.Count ||
+            ReferenceTargets.OrderBy(t => t).Zip(other.ReferenceTargets.OrderBy(t => t), (t1, t2) => t1 == t2).Any(same => !same))
+        {
+            return $"ReferenceTargets '{string.Join(",", ReferenceTargets)}' - '{string.Join(",", other.ReferenceTargets)}'";
+        }
 
         Versions.Add(version);
         if (other.InSummaryVersions.Count > 0)
@@ -1915,31 +1998,32 @@ public class PropertyDetails
         }
         AllowedTypesByVersion.Add(version, other.AllowedTypes());
 
-        return true;
+        return null;
     }
 
-    public static bool TryMerge(List<PropertyDetails> properties, string version, List<PropertyDetails> otherProperties)
+    public static string TryMerge(List<PropertyDetails> properties, string version, List<PropertyDetails> otherProperties)
     {
         var otherPropertiesByName = otherProperties.ToDictionary(p => p.Name);
         foreach (var property in properties)
         {
             if (!otherPropertiesByName.TryGetValue(property.Name, out var otherPropery))
             {
-                if (property.CardMin != "0") return false;
+                if (property.CardMin != "0") return $"Extra non-optional this property {property.Name}";
             }
             else
             {
-                if (!property.TryMerge(version, otherPropery)) return false;
+                var tryMergeResult = property.TryMerge(version, otherPropery);
+                if (tryMergeResult != null) return $"Property {property.Name}: {tryMergeResult}";
                 otherPropertiesByName.Remove(property.Name);
             }
         }
         foreach (var otherProperty in otherPropertiesByName.Values)
         {
-            if (otherProperty.CardMin != "0") return false;
+            if (otherProperty.CardMin != "0") return $"Extra non-optional other property {otherProperty.Name}";
 
             properties.Add(otherProperty.Clone(version));
         }
-        return true;
+        return null;
     }
 
     public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
@@ -2270,7 +2354,7 @@ public class PropertyDetails
 
         if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
         {
-            var codeRequiredBinding = GetCodeRequiredBinding(element, ns, resourceName, enumTypesByValueSetUrl);
+            var codeRequiredBinding = GetCodeEnumName(element, ns, resourceName, enumTypesByValueSetUrl);
             if (!string.IsNullOrEmpty(codeRequiredBinding))
             {
                 result.PropType = result.PropType + "<" + codeRequiredBinding + ">";
@@ -2321,7 +2405,7 @@ public class PropertyDetails
 
         if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
         {
-            var codeRequiredBinding = GetCodeRequiredBinding(element, ns, resourceBase, enumTypesByValueSetUrl);
+            var codeRequiredBinding = GetCodeEnumName(element, ns, resourceBase, enumTypesByValueSetUrl);
             if (!string.IsNullOrEmpty(codeRequiredBinding))
             {
                 result.PropType = result.PropType + "<" + codeRequiredBinding + ">";
@@ -2367,20 +2451,9 @@ public class PropertyDetails
         }
     }
 
-    private static string GetCodeRequiredBinding(XmlElement element, XmlNamespaceManager ns, string resourceName, Dictionary<string, string> enumTypesByValueSetUrl)
+    private static string GetCodeEnumName(XmlElement element, XmlNamespaceManager ns, string resourceName, Dictionary<string, string> enumTypesByValueSetUrl)
     {
-        // Grab the required binding value set reference (if any) from the element
-        var codeRequiredBindingNode = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", ns);
-        if (codeRequiredBindingNode == null)
-        {
-            codeRequiredBindingNode = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSet/@value", ns);
-        }
-        if (codeRequiredBindingNode == null)
-        {
-            return null;
-        }
-
-        var codeRequiredBinding = codeRequiredBindingNode.Value;
+        var codeRequiredBinding = ValueSet.GetRequiredBindingValueSetUrl(element, ns);
         if (string.IsNullOrEmpty(codeRequiredBinding) || codeRequiredBinding == "http://hl7.org/fhir/ValueSet/operation-parameter-type")
         {
             return null;
@@ -2391,15 +2464,7 @@ public class PropertyDetails
             return enumType;
         }
 
-        codeRequiredBinding = element.SelectSingleNode("fhir:path/@value", ns).Value;
-        if (codeRequiredBinding.Contains(resourceName + "."))
-            codeRequiredBinding = codeRequiredBinding.Substring(resourceName.Length + 1, 1).ToUpper() + codeRequiredBinding.Substring(resourceName.Length + 2);
-        while (codeRequiredBinding.Contains("."))
-        {
-            var index = codeRequiredBinding.IndexOf(".");
-            codeRequiredBinding = codeRequiredBinding.Substring(0, index) + codeRequiredBinding.Substring(index + 1, 1).ToUpper() + codeRequiredBinding.Substring(index + 2);
-        }
-        return codeRequiredBinding;
+        return null;
     }
 
     private static PropertyDetails ParseReferencedType(XmlElement element, XmlNamespaceManager ns, Dictionary<string, string> enumTypesByValueSetUrl)
@@ -2827,12 +2892,13 @@ var rootDirectory = GetMyDirectory();
 var loadedVersions = LoadedVersion.LoadAll(rootDirectory);
 Console.WriteLine("Generating code for versions {0}", string.Join(", ", loadedVersions.Select(lv => lv.Version)));
 
-var valueSetsByEnumNameByVersion = ValueSet.LoadAll(loadedVersions);
-valueSetsByEnumNameByVersion[string.Empty].Add(
-    "Version",
+var valueSetsByUrlByVersion = ValueSet.LoadAll(loadedVersions);
+valueSetsByUrlByVersion[string.Empty].Add(
+    "http://hl7.org/fhir/ValueSet/versions",
     new ValueSet
     {
         EnumName = "Version",
+        Url = "http://hl7.org/fhir/ValueSet/versions",
         Description = "Supported FHIR versions",
         Values = loadedVersions
             .Select(loadedVersion => new ValueSetValue { Code = loadedVersion.Version })
@@ -2840,7 +2906,7 @@ valueSetsByEnumNameByVersion[string.Empty].Add(
             .ToList()
     }
 );
-var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByEnumNameByVersion);
+var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByUrlByVersion);
 
 var generatedDirectory = Path.Combine(rootDirectory, "Generated");
 DeleteSourceFiles(generatedDirectory);
@@ -2850,7 +2916,7 @@ foreach (var loadedVersion in loadedVersions)
     Directory.CreateDirectory(directoryPath);
     DeleteSourceFiles(directoryPath);
 }
-foreach (var pair in valueSetsByEnumNameByVersion)
+foreach (var pair in valueSetsByUrlByVersion)
 {
     var version = loadedVersions.FirstOrDefault(lv => lv.Version == pair.Key);
     var versions = version == null ?

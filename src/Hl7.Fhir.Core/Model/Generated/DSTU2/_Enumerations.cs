@@ -539,6 +539,39 @@ namespace Hl7.Fhir.Model.DSTU2
     }
 
     /// <summary>
+    /// Complete, proposed, exploratory, other.
+    /// (url: http://hl7.org/fhir/ValueSet/claim-use-link)
+    /// </summary>
+    [FhirEnumeration("Use")]
+    public enum Use
+    {
+        /// <summary>
+        /// The treatment is complete and this represents a Claim for the services.
+        /// (system: http://hl7.org/fhir/claim-use-link)
+        /// </summary>
+        [EnumLiteral("complete", "http://hl7.org/fhir/claim-use-link"), Description("Complete")]
+        Complete,
+        /// <summary>
+        /// The treatment is proposed and this represents a Pre-authorization for the services.
+        /// (system: http://hl7.org/fhir/claim-use-link)
+        /// </summary>
+        [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use-link"), Description("Proposed")]
+        Proposed,
+        /// <summary>
+        /// The treatment is proposed and this represents a Pre-determination for the services.
+        /// (system: http://hl7.org/fhir/claim-use-link)
+        /// </summary>
+        [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use-link"), Description("Exploratory")]
+        Exploratory,
+        /// <summary>
+        /// A locally defined or otherwise resolved status.
+        /// (system: http://hl7.org/fhir/claim-use-link)
+        /// </summary>
+        [EnumLiteral("other", "http://hl7.org/fhir/claim-use-link"), Description("Other")]
+        Other,
+    }
+
+    /// <summary>
     /// The outcome of the processing.
     /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
     /// </summary>
@@ -857,39 +890,6 @@ namespace Hl7.Fhir.Model.DSTU2
         /// </summary>
         [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
         Disjoint,
-    }
-
-    /// <summary>
-    /// Preferred value set for Condition Clinical Status.
-    /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
-    /// </summary>
-    [FhirEnumeration("ConditionClinicalStatusCodes")]
-    public enum ConditionClinicalStatusCodes
-    {
-        /// <summary>
-        /// The subject is currently experiencing the symptoms of the condition.
-        /// (system: http://hl7.org/fhir/condition-clinical)
-        /// </summary>
-        [EnumLiteral("active", "http://hl7.org/fhir/condition-clinical"), Description("Active")]
-        Active,
-        /// <summary>
-        /// The subject is re-experiencing the symptoms of the condition after a period of remission or presumed resolution.
-        /// (system: http://hl7.org/fhir/condition-clinical)
-        /// </summary>
-        [EnumLiteral("relapse", "http://hl7.org/fhir/condition-clinical"), Description("Relapse")]
-        Relapse,
-        /// <summary>
-        /// The subject is no longer experiencing the symptoms of the condition, but there is a risk of the symptoms returning.
-        /// (system: http://hl7.org/fhir/condition-clinical)
-        /// </summary>
-        [EnumLiteral("remission", "http://hl7.org/fhir/condition-clinical"), Description("Remission")]
-        Remission,
-        /// <summary>
-        /// The subject is no longer experiencing the symptoms of the condition and there is no perceived risk of the symptoms returning.
-        /// (system: http://hl7.org/fhir/condition-clinical)
-        /// </summary>
-        [EnumLiteral("resolved", "http://hl7.org/fhir/condition-clinical"), Description("Resolved")]
-        Resolved,
     }
 
     /// <summary>

@@ -2213,13 +2213,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Use> UseElement
+        public Code<Hl7.Fhir.Model.DSTU2.Use> UseElement
         {
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Use> _UseElement;
+        private Code<Hl7.Fhir.Model.DSTU2.Use> _UseElement;
         
         /// <summary>
         /// complete | proposed | exploratory | other
@@ -2227,7 +2227,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Use? Use
+        public Hl7.Fhir.Model.DSTU2.Use? Use
         {
             get { return UseElement != null ? UseElement.Value : null; }
             set
@@ -2235,7 +2235,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (value == null)
                     UseElement = null;
                 else
-                    UseElement = new Code<Hl7.Fhir.Model.Use>(value);
+                    UseElement = new Code<Hl7.Fhir.Model.DSTU2.Use>(value);
                 OnPropertyChanged("Use");
             }
         }
@@ -2589,7 +2589,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.DSTU2.ResourceReference)Target.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.DSTU2.ResourceReference)Provider.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.DSTU2.ResourceReference)Organization.DeepCopy();
-                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Use>)UseElement.DeepCopy();
+                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.DSTU2.Use>)UseElement.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.Coding)Priority.DeepCopy();
                 if(FundsReserve != null) dest.FundsReserve = (Hl7.Fhir.Model.Coding)FundsReserve.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Enterer.DeepCopy();

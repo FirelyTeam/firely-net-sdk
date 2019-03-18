@@ -2738,13 +2738,13 @@ namespace Hl7.Fhir.Model.STU3
         /// </summary>
         [FhirElement("use", Order=130)]
         [DataMember]
-        public Code<Use> UseElement
+        public Code<Hl7.Fhir.Model.STU3.Use> UseElement
         {
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
         
-        private Code<Use> _UseElement;
+        private Code<Hl7.Fhir.Model.STU3.Use> _UseElement;
         
         /// <summary>
         /// complete | proposed | exploratory | other
@@ -2752,7 +2752,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Use? Use
+        public Hl7.Fhir.Model.STU3.Use? Use
         {
             get { return UseElement != null ? UseElement.Value : null; }
             set
@@ -2760,7 +2760,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     UseElement = null;
                 else
-                    UseElement = new Code<Use>(value);
+                    UseElement = new Code<Hl7.Fhir.Model.STU3.Use>(value);
                 OnPropertyChanged("Use");
             }
         }
@@ -3146,7 +3146,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(SubType != null) dest.SubType = new List<Hl7.Fhir.Model.CodeableConcept>(SubType.DeepCopy());
-                if(UseElement != null) dest.UseElement = (Code<Use>)UseElement.DeepCopy();
+                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.STU3.Use>)UseElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
                 if(BillablePeriod != null) dest.BillablePeriod = (Hl7.Fhir.Model.Period)BillablePeriod.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
