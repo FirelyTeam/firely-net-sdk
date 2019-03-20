@@ -30,8 +30,7 @@ namespace Hl7.Fhir.Serialization
         private FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>
                 new FhirJsonParsingSettings
                 {
-                    // TODO: True for DSTU2, should be false in STU3
-                    AllowJsonComments = true,
+                    AllowJsonComments = settings.Version == Model.Version.DSTU2,
                     PermissiveParsing = Settings.PermissiveParsing
                 };
 

@@ -15,6 +15,7 @@ using Hl7.Fhir.Model.DSTU2;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -256,6 +257,22 @@ namespace Hl7.Fhir.Tests.Serialization
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(json, json2);
+        }
+
+        [TestMethod]
+        public void JsonFhirComments()
+        {
+            var dstuPatientWithCommentJson = "{\"resourceType\":\"Patient\",\"name\":[{\"fhir_comments\":[\"Peter James Chalmers, but called Jim\"],\"family\":[\"Chalmers\"],\"given\":[\"Peter\",\"James\"]}],\"gender\":\"male\",\"birthDate\": \"1974-12-25\"}";
+            var dstu2Patient = FhirDstu2JsonParser.Parse<Patient>(dstuPatientWithCommentJson);
+            Assert.AreEqual("Chalmers", dstu2Patient.Name.SingleOrDefault()?.Family?.SingleOrDefault());
+
+            var patientWithCommentJson = "{\"resourceType\":\"Patient\",\"name\":[{\"fhir_comments\":[\"Peter James Chalmers, but called Jim\"],\"family\":\"Chalmers\",\"given\":[\"Peter\",\"James\"]}],\"gender\":\"male\",\"birthDate\": \"1974-12-25\"}";
+            var fhirStu3JsonParser = new FhirJsonParser(Fhir.Model.Version.STU3);
+            var exception = Assert.ThrowsException<FormatException>(() => fhirStu3JsonParser.Parse<Fhir.Model.STU3.Patient>(patientWithCommentJson));
+            Assert.IsTrue(exception.Message.Contains("The 'fhir_comments' feature is disabled."));
+            var fhirR4JsonParser = new FhirJsonParser(Fhir.Model.Version.R4);
+            exception = Assert.ThrowsException<FormatException>(() => fhirR4JsonParser.Parse<Fhir.Model.STU3.Patient>(patientWithCommentJson));
+            Assert.IsTrue(exception.Message.Contains("The 'fhir_comments' feature is disabled."));
         }
 
         [TestMethod]
