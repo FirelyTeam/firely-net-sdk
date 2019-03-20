@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
         [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(Version=Version.DSTU2, Types=new[]{typeof(Hl7.Fhir.Model.DSTU2.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
+        [AllowedTypes(Version=Version.R4, Types=new[]{typeof(Hl7.Fhir.Model.R4.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
         [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
         [DataMember]
         public Hl7.Fhir.Model.Element Author
@@ -105,17 +106,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The annotation  - text content
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=50)]
+        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4}, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString TextElement
+        public Hl7.Fhir.Model.Markdown TextElement
         {
             get { return _TextElement; }
             set { _TextElement = value; OnPropertyChanged("TextElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _TextElement;
+        private Hl7.Fhir.Model.Markdown _TextElement;
         
         /// <summary>
         /// The annotation  - text content
@@ -131,7 +132,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                     TextElement = null;
                 else
-                    TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    TextElement = new Hl7.Fhir.Model.Markdown(value);
                 OnPropertyChanged("Text");
             }
         }
@@ -146,7 +147,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.Element)Author.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
                 return dest;
             }
             else

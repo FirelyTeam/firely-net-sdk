@@ -1579,13 +1579,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.ContractResourceStatusCodes> StatusElement
+        public Code<Hl7.Fhir.Model.ContractResourceStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.ContractResourceStatusCodes> _StatusElement;
+        private Code<Hl7.Fhir.Model.ContractResourceStatusCodes> _StatusElement;
         
         /// <summary>
         /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.ContractResourceStatusCodes? Status
+        public Hl7.Fhir.Model.ContractResourceStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -1601,7 +1601,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.ContractResourceStatusCodes>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.ContractResourceStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1935,7 +1935,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ContractResourceStatusCodes>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ContractResourceStatusCodes>)StatusElement.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
                 if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Period)Applies.DeepCopy();
                 if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Subject.DeepCopy());

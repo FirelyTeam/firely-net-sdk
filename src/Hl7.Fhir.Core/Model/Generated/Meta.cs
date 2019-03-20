@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirUri> ProfileElement
+        public List<Hl7.Fhir.Model.Canonical> ProfileElement
         {
-            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.Canonical>(); return _ProfileElement; }
             set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+        private List<Hl7.Fhir.Model.Canonical> _ProfileElement;
         
         /// <summary>
         /// Profiles this resource claims to conform to
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                     ProfileElement = null;
                 else
-                    ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    ProfileElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
                 OnPropertyChanged("Profile");
             }
         }
@@ -182,6 +182,39 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.Coding> _Tag;
+        
+        /// <summary>
+        /// Identifies where the resource comes from
+        /// </summary>
+        [FhirElement("source", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=80)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri SourceElement
+        {
+            get { return _SourceElement; }
+            set { _SourceElement = value; OnPropertyChanged("SourceElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _SourceElement;
+        
+        /// <summary>
+        /// Identifies where the resource comes from
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Source
+        {
+            get { return SourceElement != null ? SourceElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    SourceElement = null;
+                else
+                    SourceElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Source");
+            }
+        }
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -193,9 +226,10 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(VersionIdElement != null) dest.VersionIdElement = (Hl7.Fhir.Model.Id)VersionIdElement.DeepCopy();
                 if(LastUpdatedElement != null) dest.LastUpdatedElement = (Hl7.Fhir.Model.Instant)LastUpdatedElement.DeepCopy();
-                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
+                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
                 if(Security != null) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopy());
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
+                if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
                 return dest;
             }
             else
@@ -218,6 +252,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.Matches(Security, otherT.Security)) return false;
             if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
+            if( !DeepComparable.Matches(SourceElement, otherT.SourceElement)) return false;
         
             return true;
         }
@@ -233,6 +268,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.IsExactly(Security, otherT.Security)) return false;
             if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;
+            if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
         
             return true;
         }
@@ -248,6 +284,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
                 foreach (var elem in Security) { if (elem != null) yield return elem; }
                 foreach (var elem in Tag) { if (elem != null) yield return elem; }
+                if (SourceElement != null) yield return SourceElement;
             }
         }
         
@@ -262,6 +299,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", elem); }
                 foreach (var elem in Security) { if (elem != null) yield return new ElementValue("security", elem); }
                 foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", elem); }
+                if (SourceElement != null) yield return new ElementValue("source", SourceElement);
             }
         }
     

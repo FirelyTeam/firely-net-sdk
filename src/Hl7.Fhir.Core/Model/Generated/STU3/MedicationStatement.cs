@@ -372,13 +372,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("dosage", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Dosage> Dosage
+        public List<Hl7.Fhir.Model.STU3.Dosage> Dosage
         {
-            get { if(_Dosage==null) _Dosage = new List<Hl7.Fhir.Model.Dosage>(); return _Dosage; }
+            get { if(_Dosage==null) _Dosage = new List<Hl7.Fhir.Model.STU3.Dosage>(); return _Dosage; }
             set { _Dosage = value; OnPropertyChanged("Dosage"); }
         }
         
-        private List<Hl7.Fhir.Model.Dosage> _Dosage;
+        private List<Hl7.Fhir.Model.STU3.Dosage> _Dosage;
     
     
         public static ElementDefinitionConstraint MedicationStatement_MST_1 = new ElementDefinitionConstraint
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.STU3.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.Dosage>(Dosage.DeepCopy());
+                if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.STU3.Dosage>(Dosage.DeepCopy());
                 return dest;
             }
             else

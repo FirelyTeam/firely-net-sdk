@@ -46,28 +46,29 @@ namespace Hl7.Fhir.Model
         [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
         public static OperationOutcome ForMessage(string message, IssueSeverity severity = IssueSeverity.Error)
         {
-            return ForMessage(message, IssueType.Processing, severity);
+            return ForMessage(message, R4.IssueType.Processing, severity);
         }
 
-        public static OperationOutcome ForMessage(string message, IssueType code, IssueSeverity severity = IssueSeverity.Error)
+        public static OperationOutcome ForMessage<TIssueType>(string message, TIssueType code, IssueSeverity severity = IssueSeverity.Error) where TIssueType : Enum
         {
             return new OperationOutcome()
             {
-                Issue = new List<OperationOutcome.IssueComponent>()
-                            { new OperationOutcome.IssueComponent()
-                                    { Severity = severity, Code = code, Diagnostics = message }
-                            }
+                Issue = new List<IssueComponent>
+                {
+                    new IssueComponent { Severity = severity, Code = Utility.EnumUtility.GetLiteral( code ), Diagnostics = message }
+                }
             };
         }
 
         [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
         public static OperationOutcome ForException(Exception e, IssueSeverity severity = IssueSeverity.Error)
         {
-            return ForException(e, IssueType.Processing, severity);
+            return ForException(e, R4.IssueType.Processing, severity);
         }
-        public static OperationOutcome ForException(Exception e, IssueType type, IssueSeverity severity = IssueSeverity.Error)
+
+        public static OperationOutcome ForException<TIssueType>(Exception e, TIssueType type, IssueSeverity severity = IssueSeverity.Error) where TIssueType : Enum
         {
-            var result = OperationOutcome.ForMessage(e.Message, type, severity);
+            var result = ForMessage(e.Message, type, severity);
             var ie = e.InnerException;
 
             while (ie != null)

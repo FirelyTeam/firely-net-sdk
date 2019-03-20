@@ -87,6 +87,12 @@ namespace Hl7.Fhir.ElementModel
                             if (!string.IsNullOrEmpty(ident3.System))
                                 return $"{_parentCommonPath}.{cur.Name}.where(system='{ident3.System}')";
                         }
+                        else if (fhirValue is Model.R4.Identifier ident4)
+                        {
+                            // Need to construct a where clause for this property
+                            if (!string.IsNullOrEmpty(ident4.System))
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident4.System}')";
+                        }
                         else if (fhirValue is Model.DSTU2.ContactPoint cp2)
                         {
                             // Need to construct a where clause for this property
@@ -99,6 +105,12 @@ namespace Hl7.Fhir.ElementModel
                             if (cp3.System.HasValue)
                                 return $"{_parentCommonPath}.{cur.Name}.where(system='{cp3.System.Value.GetLiteral()}')";
                         }
+                        else if (fhirValue is Model.R4.ContactPoint cp4)
+                        {
+                            // Need to construct a where clause for this property
+                            if (cp4.System.HasValue)
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{cp4.System.Value.GetLiteral()}')";
+                        }
                         else if (fhirValue is Coding cd)
                         {
                             // Need to construct a where clause for this property
@@ -108,8 +120,8 @@ namespace Hl7.Fhir.ElementModel
                         else if (fhirValue is Address addr)
                         {
                             // Need to construct a where clause for this property
-                            if (addr.Use.HasValue)
-                                return $"{_parentCommonPath}.{cur.Name}.where(use='{addr.Use.Value.GetLiteral()}')";
+                            if (addr.Use != null)
+                                return $"{_parentCommonPath}.{cur.Name}.where(use='{addr.Use}')";
                         }
                         else if (fhirValue is Model.DSTU2.Questionnaire.GroupComponent gc)
                         {
@@ -123,11 +135,17 @@ namespace Hl7.Fhir.ElementModel
                             if (!string.IsNullOrEmpty(qc.LinkId))
                                 return $"{_parentCommonPath}.{cur.Name}.where(linkId='{qc.LinkId}')";
                         }
-                        else if (fhirValue is Model.STU3.Questionnaire.ItemComponent ic)
+                        else if (fhirValue is Model.STU3.Questionnaire.ItemComponent ic3)
                         {
                             // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(ic.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ic.LinkId}')";
+                            if (!string.IsNullOrEmpty(ic3.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ic3.LinkId}')";
+                        }
+                        else if (fhirValue is Model.R4.Questionnaire.ItemComponent ic4)
+                        {
+                            // Need to construct a where clause for this property
+                            if (!string.IsNullOrEmpty(ic4.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ic4.LinkId}')";
                         }
                         else if (fhirValue is Model.DSTU2.QuestionnaireResponse.GroupComponent rgc)
                         {
@@ -141,11 +159,17 @@ namespace Hl7.Fhir.ElementModel
                             if (!string.IsNullOrEmpty(rqc.LinkId))
                                 return $"{_parentCommonPath}.{cur.Name}.where(linkId='{rqc.LinkId}')";
                         }
-                        else if (fhirValue is Model.STU3.QuestionnaireResponse.ItemComponent ric)
+                        else if (fhirValue is Model.STU3.QuestionnaireResponse.ItemComponent ric3)
                         {
                             // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(ric.LinkId))
-                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ric.LinkId}')";
+                            if (!string.IsNullOrEmpty(ric3.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ric3.LinkId}')";
+                        }
+                        else if (fhirValue is Model.R4.QuestionnaireResponse.ItemComponent ric4)
+                        {
+                            // Need to construct a where clause for this property
+                            if (!string.IsNullOrEmpty(ric4.LinkId))
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{ric4.LinkId}')";
                         }
                         else if (fhirValue is Extension ext)
                         {

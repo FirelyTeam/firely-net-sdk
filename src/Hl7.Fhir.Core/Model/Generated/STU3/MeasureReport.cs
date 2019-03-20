@@ -833,13 +833,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.MeasureReportStatus> StatusElement
+        public Code<Hl7.Fhir.Model.MeasureReportStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.MeasureReportStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.MeasureReportStatus> _StatusElement;
         
         /// <summary>
         /// complete | pending | error
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.MeasureReportStatus? Status
+        public Hl7.Fhir.Model.MeasureReportStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.MeasureReportStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.MeasureReportStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.MeasureReportStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReportStatus>)StatusElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.MeasureReportType>)TypeElement.DeepCopy();
                 if(Measure != null) dest.Measure = (Hl7.Fhir.Model.STU3.ResourceReference)Measure.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();

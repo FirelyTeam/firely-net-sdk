@@ -85,11 +85,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="invariantRule"></param>
         /// <param name="model"></param>
-        /// <param name="issues">The list of issues that will have the validation results appended</param>
+        /// <param name="result">Validation results are appended to result.Issue</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
         public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, ITypedElement model, OperationOutcome result)
         {
+            var invariant = Utility.EnumUtility.GetLiteral(R4.IssueType.Invariant);
             try
             {
                 // No FhirPath extension
@@ -97,7 +98,7 @@ namespace Hl7.Fhir.Model
                 {
                     result.Issue.Add(new OperationOutcome.IssueComponent
                     {
-                        Code = IssueType.Invariant,
+                        Code = invariant,
                         Severity = IssueSeverity.Warning,
                         Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a FhirPath expression"),
                         Diagnostics = invariantRule.Expression
@@ -113,7 +114,7 @@ namespace Hl7.Fhir.Model
 
                 result.Issue.Add(new OperationOutcome.IssueComponent
                 {
-                    Code = IssueType.Invariant,
+                    Code = invariant,
                     Severity = IssueSeverity.Error,
                     Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
                     Diagnostics = invariantRule.Expression
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.Model
             {
                 result.Issue.Add(new OperationOutcome.IssueComponent
                 {
-                    Code = IssueType.Invariant,
+                    Code = invariant,
                     Severity = IssueSeverity.Fatal,
                     Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + invariantRule.Expression),
                     Diagnostics = String.Format("FhirPath: {0}\r\nError: {1}", invariantRule.Expression, ex.Message)

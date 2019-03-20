@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1, v1.0.2
+// Generated for FHIR v4.0.0, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of context being specified
         /// </summary>
-        [FhirElement("code", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=30)]
+        [FhirElement("code", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -71,8 +71,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value that defines the context
         /// </summary>
-        [FhirElement("value", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=40, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
+        [AllowedTypes(Version=Version.R4, Types=new[]{typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.R4.ResourceReference)})]
         [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range)})]
         [Cardinality(Min=1,Max=1)]
         [DataMember]

@@ -649,13 +649,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("dosageInstruction", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Dosage> DosageInstruction
+        public List<Hl7.Fhir.Model.STU3.Dosage> DosageInstruction
         {
-            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.Dosage>(); return _DosageInstruction; }
+            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.STU3.Dosage>(); return _DosageInstruction; }
             set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
         }
         
-        private List<Hl7.Fhir.Model.Dosage> _DosageInstruction;
+        private List<Hl7.Fhir.Model.STU3.Dosage> _DosageInstruction;
         
         /// <summary>
         /// Whether a substitution was performed on the dispense
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.STU3.ResourceReference)Destination.DeepCopy();
                 if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Receiver.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.Dosage>(DosageInstruction.DeepCopy());
+                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.STU3.Dosage>(DosageInstruction.DeepCopy());
                 if(Substitution != null) dest.Substitution = (SubstitutionComponent)Substitution.DeepCopy();
                 if(DetectedIssue != null) dest.DetectedIssue = new List<Hl7.Fhir.Model.STU3.ResourceReference>(DetectedIssue.DeepCopy());
                 if(NotDoneElement != null) dest.NotDoneElement = (Hl7.Fhir.Model.FhirBoolean)NotDoneElement.DeepCopy();

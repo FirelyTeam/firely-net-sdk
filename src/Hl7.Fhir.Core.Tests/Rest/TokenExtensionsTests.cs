@@ -26,6 +26,15 @@ namespace Hl7.Fhir.Core.Tests.Rest
             yield return (new Model.STU3.Identifier("system", null), "system|");
         }
 
+        private IEnumerable<(Model.R4.Identifier id, string expected)> GetR4IdentifierTestData()
+        {
+            yield return (new Model.R4.Identifier("system", "1"), "system|1");
+            yield return (new Model.R4.Identifier("", "1"), "1");
+            yield return (new Model.R4.Identifier(null, "1"), "1");
+            yield return (new Model.R4.Identifier("system", ""), "system|");
+            yield return (new Model.R4.Identifier("system", null), "system|");
+        }
+
         private IEnumerable<(Coding coding, string expected)> GetCodingTestData()
         {
             yield return (new Coding("system", "code"), "system|code");
@@ -51,6 +60,14 @@ namespace Hl7.Fhir.Core.Tests.Rest
             yield return (new Model.STU3.ContactPoint(null, ContactPointUse.Work, null), "Work|");
         }
 
+        private IEnumerable<(Model.R4.ContactPoint contactPoint, string expected)> GetR4ContactPointTestData()
+        {
+            yield return (new Model.R4.ContactPoint(Model.R4.ContactPointSystem.Phone, ContactPointUse.Mobile, "06-12345678"), "Mobile|06-12345678");
+            yield return (new Model.R4.ContactPoint(null, null, "contact"), "contact");
+            yield return (new Model.R4.ContactPoint(null, ContactPointUse.Home, ""), "Home|");
+            yield return (new Model.R4.ContactPoint(null, ContactPointUse.Work, null), "Work|");
+        }
+
         private IEnumerable<(CodeableConcept codeableConcept, string expected)> GetCodeableConceptTestData()
         {
             yield return (new CodeableConcept("system", "code"), "system|code");
@@ -68,6 +85,10 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 Assert.AreEqual(item.expected, item.id.ToToken());
             }
             foreach (var item in GetStu3IdentifierTestData())
+            {
+                Assert.AreEqual(item.expected, item.id.ToToken());
+            }
+            foreach (var item in GetR4IdentifierTestData())
             {
                 Assert.AreEqual(item.expected, item.id.ToToken());
             }
@@ -90,6 +111,10 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 Assert.AreEqual(item.expected, item.contactPoint.ToToken());
             }
             foreach (var item in GetStu3ContactPointTestData())
+            {
+                Assert.AreEqual(item.expected, item.contactPoint.ToToken());
+            }
+            foreach (var item in GetR4ContactPointTestData())
             {
                 Assert.AreEqual(item.expected, item.contactPoint.ToToken());
             }

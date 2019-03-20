@@ -68,13 +68,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("status", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.EncounterStatus> StatusElement
+            public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement
             {
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.EncounterStatus> _StatusElement;
+            private Code<Hl7.Fhir.Model.EncounterStatus> _StatusElement;
             
             /// <summary>
             /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.EncounterStatus? Status
+            public Hl7.Fhir.Model.EncounterStatus? Status
             {
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         StatusElement = null;
                     else
-                        StatusElement = new Code<Hl7.Fhir.Model.STU3.EncounterStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.EncounterStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.EncounterStatus>)StatusElement.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -959,13 +959,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.EncounterStatus> StatusElement
+        public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.EncounterStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.EncounterStatus> _StatusElement;
         
         /// <summary>
         /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -973,7 +973,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.EncounterStatus? Status
+        public Hl7.Fhir.Model.EncounterStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.EncounterStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.EncounterStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1271,7 +1271,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.EncounterStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.Coding)Class.DeepCopy();
                 if(ClassHistory != null) dest.ClassHistory = new List<ClassHistoryComponent>(ClassHistory.DeepCopy());

@@ -1,0 +1,1138 @@
+﻿using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Linq;
+using System.Runtime.Serialization;
+using Hl7.Fhir.Utility;
+
+/*
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
+
+*/
+#pragma warning disable 1591 // suppress XML summary warnings
+
+//
+// Generated for FHIR v4.0.0
+//
+namespace Hl7.Fhir.Model.R4
+{
+    /// <summary>
+    /// CoverageEligibilityRequest resource
+    /// </summary>
+    [FhirType(Hl7.Fhir.Model.Version.R4, "CoverageEligibilityRequest", IsResource=true)]
+    [DataContract]
+    public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    {
+        [NotMapped]
+        public override ResourceType ResourceType { get { return ResourceType.CoverageEligibilityRequest; } }
+        [NotMapped]
+        public override string TypeName { get { return "CoverageEligibilityRequest"; } }
+    
+    
+        [FhirType(Hl7.Fhir.Model.Version.R4, "SupportingInformationComponent")]
+        [DataContract]
+        public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SupportingInformationComponent"; } }
+            
+            /// <summary>
+            /// Information instance identifier
+            /// </summary>
+            [FhirElement("sequence", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt SequenceElement
+            {
+                get { return _SequenceElement; }
+                set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _SequenceElement;
+            
+            /// <summary>
+            /// Information instance identifier
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Sequence
+            {
+                get { return SequenceElement != null ? SequenceElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        SequenceElement = null;
+                    else
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("Sequence");
+                }
+            }
+            
+            /// <summary>
+            /// Data to be provided
+            /// </summary>
+            [FhirElement("information", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.R4.ResourceReference Information
+            {
+                get { return _Information; }
+                set { _Information = value; OnPropertyChanged("Information"); }
+            }
+            
+            private Hl7.Fhir.Model.R4.ResourceReference _Information;
+            
+            /// <summary>
+            /// Applies to all items
+            /// </summary>
+            [FhirElement("appliesToAll", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean AppliesToAllElement
+            {
+                get { return _AppliesToAllElement; }
+                set { _AppliesToAllElement = value; OnPropertyChanged("AppliesToAllElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _AppliesToAllElement;
+            
+            /// <summary>
+            /// Applies to all items
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? AppliesToAll
+            {
+                get { return AppliesToAllElement != null ? AppliesToAllElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        AppliesToAllElement = null;
+                    else
+                        AppliesToAllElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("AppliesToAll");
+                }
+            }
+        
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SupportingInformationComponent;
+            
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
+                    if(Information != null) dest.Information = (Hl7.Fhir.Model.R4.ResourceReference)Information.DeepCopy();
+                    if(AppliesToAllElement != null) dest.AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean)AppliesToAllElement.DeepCopy();
+                    return dest;
+                }
+                else
+                    throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                 return CopyTo(new SupportingInformationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SupportingInformationComponent;
+                if(otherT == null) return false;
+            
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
+                if( !DeepComparable.Matches(Information, otherT.Information)) return false;
+                if( !DeepComparable.Matches(AppliesToAllElement, otherT.AppliesToAllElement)) return false;
+            
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SupportingInformationComponent;
+                if(otherT == null) return false;
+            
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
+                if( !DeepComparable.IsExactly(Information, otherT.Information)) return false;
+                if( !DeepComparable.IsExactly(AppliesToAllElement, otherT.AppliesToAllElement)) return false;
+            
+                return true;
+            }
+        
+        
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (SequenceElement != null) yield return SequenceElement;
+                    if (Information != null) yield return Information;
+                    if (AppliesToAllElement != null) yield return AppliesToAllElement;
+                }
+            }
+            
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+                    if (Information != null) yield return new ElementValue("information", Information);
+                    if (AppliesToAllElement != null) yield return new ElementValue("appliesToAll", AppliesToAllElement);
+                }
+            }
+        
+        
+        }
+    
+    
+        [FhirType(Hl7.Fhir.Model.Version.R4, "InsuranceComponent")]
+        [DataContract]
+        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "InsuranceComponent"; } }
+            
+            /// <summary>
+            /// Applicable coverage
+            /// </summary>
+            [FhirElement("focal", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean FocalElement
+            {
+                get { return _FocalElement; }
+                set { _FocalElement = value; OnPropertyChanged("FocalElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _FocalElement;
+            
+            /// <summary>
+            /// Applicable coverage
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Focal
+            {
+                get { return FocalElement != null ? FocalElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        FocalElement = null;
+                    else
+                        FocalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Focal");
+                }
+            }
+            
+            /// <summary>
+            /// Insurance information
+            /// </summary>
+            [FhirElement("coverage", Order=50)]
+            [CLSCompliant(false)]
+            [References("Coverage")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.R4.ResourceReference Coverage
+            {
+                get { return _Coverage; }
+                set { _Coverage = value; OnPropertyChanged("Coverage"); }
+            }
+            
+            private Hl7.Fhir.Model.R4.ResourceReference _Coverage;
+            
+            /// <summary>
+            /// Additional provider contract number
+            /// </summary>
+            [FhirElement("businessArrangement", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString BusinessArrangementElement
+            {
+                get { return _BusinessArrangementElement; }
+                set { _BusinessArrangementElement = value; OnPropertyChanged("BusinessArrangementElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _BusinessArrangementElement;
+            
+            /// <summary>
+            /// Additional provider contract number
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string BusinessArrangement
+            {
+                get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        BusinessArrangementElement = null;
+                    else
+                        BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("BusinessArrangement");
+                }
+            }
+        
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as InsuranceComponent;
+            
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(FocalElement != null) dest.FocalElement = (Hl7.Fhir.Model.FhirBoolean)FocalElement.DeepCopy();
+                    if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.R4.ResourceReference)Coverage.DeepCopy();
+                    if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
+                    return dest;
+                }
+                else
+                    throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                 return CopyTo(new InsuranceComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as InsuranceComponent;
+                if(otherT == null) return false;
+            
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(FocalElement, otherT.FocalElement)) return false;
+                if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
+                if( !DeepComparable.Matches(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+            
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as InsuranceComponent;
+                if(otherT == null) return false;
+            
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(FocalElement, otherT.FocalElement)) return false;
+                if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
+                if( !DeepComparable.IsExactly(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+            
+                return true;
+            }
+        
+        
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (FocalElement != null) yield return FocalElement;
+                    if (Coverage != null) yield return Coverage;
+                    if (BusinessArrangementElement != null) yield return BusinessArrangementElement;
+                }
+            }
+            
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (FocalElement != null) yield return new ElementValue("focal", FocalElement);
+                    if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+                    if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
+                }
+            }
+        
+        
+        }
+    
+    
+        [FhirType(Hl7.Fhir.Model.Version.R4, "DetailsComponent")]
+        [DataContract]
+        public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DetailsComponent"; } }
+            
+            /// <summary>
+            /// Applicable exception or supporting information
+            /// </summary>
+            [FhirElement("supportingInfoSequence", Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.PositiveInt> SupportingInfoSequenceElement
+            {
+                get { if(_SupportingInfoSequenceElement==null) _SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(); return _SupportingInfoSequenceElement; }
+                set { _SupportingInfoSequenceElement = value; OnPropertyChanged("SupportingInfoSequenceElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.PositiveInt> _SupportingInfoSequenceElement;
+            
+            /// <summary>
+            /// Applicable exception or supporting information
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> SupportingInfoSequence
+            {
+                get { return SupportingInfoSequenceElement != null ? SupportingInfoSequenceElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        SupportingInfoSequenceElement = null;
+                    else
+                        SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                    OnPropertyChanged("SupportingInfoSequence");
+                }
+            }
+            
+            /// <summary>
+            /// Benefit classification
+            /// </summary>
+            [FhirElement("category", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Category
+            {
+                get { return _Category; }
+                set { _Category = value; OnPropertyChanged("Category"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Category;
+            
+            /// <summary>
+            /// Billing, service, product, or drug code
+            /// </summary>
+            [FhirElement("productOrService", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept ProductOrService
+            {
+                get { return _ProductOrService; }
+                set { _ProductOrService = value; OnPropertyChanged("ProductOrService"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _ProductOrService;
+            
+            /// <summary>
+            /// Product or service billing modifiers
+            /// </summary>
+            [FhirElement("modifier", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Modifier
+            {
+                get { if(_Modifier==null) _Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Modifier; }
+                set { _Modifier = value; OnPropertyChanged("Modifier"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Modifier;
+            
+            /// <summary>
+            /// Perfoming practitioner
+            /// </summary>
+            [FhirElement("provider", Order=80)]
+            [CLSCompliant(false)]
+            [References("Practitioner","PractitionerRole")]
+            [DataMember]
+            public Hl7.Fhir.Model.R4.ResourceReference Provider
+            {
+                get { return _Provider; }
+                set { _Provider = value; OnPropertyChanged("Provider"); }
+            }
+            
+            private Hl7.Fhir.Model.R4.ResourceReference _Provider;
+            
+            /// <summary>
+            /// Count of products or services
+            /// </summary>
+            [FhirElement("quantity", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            
+            /// <summary>
+            /// Fee, charge or cost per item
+            /// </summary>
+            [FhirElement("unitPrice", Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.R4.Money UnitPrice
+            {
+                get { return _UnitPrice; }
+                set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
+            }
+            
+            private Hl7.Fhir.Model.R4.Money _UnitPrice;
+            
+            /// <summary>
+            /// Servicing facility
+            /// </summary>
+            [FhirElement("facility", Order=110)]
+            [CLSCompliant(false)]
+            [References("Location","Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.R4.ResourceReference Facility
+            {
+                get { return _Facility; }
+                set { _Facility = value; OnPropertyChanged("Facility"); }
+            }
+            
+            private Hl7.Fhir.Model.R4.ResourceReference _Facility;
+            
+            /// <summary>
+            /// Applicable diagnosis
+            /// </summary>
+            [FhirElement("diagnosis", Order=120)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<DiagnosisComponent> Diagnosis
+            {
+                get { if(_Diagnosis==null) _Diagnosis = new List<DiagnosisComponent>(); return _Diagnosis; }
+                set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
+            }
+            
+            private List<DiagnosisComponent> _Diagnosis;
+            
+            /// <summary>
+            /// Product or service details
+            /// </summary>
+            [FhirElement("detail", Order=130)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.R4.ResourceReference> Detail
+            {
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Detail; }
+                set { _Detail = value; OnPropertyChanged("Detail"); }
+            }
+            
+            private List<Hl7.Fhir.Model.R4.ResourceReference> _Detail;
+        
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DetailsComponent;
+            
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(SupportingInfoSequenceElement != null) dest.SupportingInfoSequenceElement = new List<Hl7.Fhir.Model.PositiveInt>(SupportingInfoSequenceElement.DeepCopy());
+                    if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                    if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
+                    if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
+                    if(Provider != null) dest.Provider = (Hl7.Fhir.Model.R4.ResourceReference)Provider.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.R4.Money)UnitPrice.DeepCopy();
+                    if(Facility != null) dest.Facility = (Hl7.Fhir.Model.R4.ResourceReference)Facility.DeepCopy();
+                    if(Diagnosis != null) dest.Diagnosis = new List<DiagnosisComponent>(Diagnosis.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.R4.ResourceReference>(Detail.DeepCopy());
+                    return dest;
+                }
+                else
+                    throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                 return CopyTo(new DetailsComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DetailsComponent;
+                if(otherT == null) return false;
+            
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(SupportingInfoSequenceElement, otherT.SupportingInfoSequenceElement)) return false;
+                if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+                if( !DeepComparable.Matches(ProductOrService, otherT.ProductOrService)) return false;
+                if( !DeepComparable.Matches(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
+                if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
+                if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
+            
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DetailsComponent;
+                if(otherT == null) return false;
+            
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(SupportingInfoSequenceElement, otherT.SupportingInfoSequenceElement)) return false;
+                if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+                if( !DeepComparable.IsExactly(ProductOrService, otherT.ProductOrService)) return false;
+                if( !DeepComparable.IsExactly(Modifier, otherT.Modifier)) return false;
+                if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
+                if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
+                if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+            
+                return true;
+            }
+        
+        
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    foreach (var elem in SupportingInfoSequenceElement) { if (elem != null) yield return elem; }
+                    if (Category != null) yield return Category;
+                    if (ProductOrService != null) yield return ProductOrService;
+                    foreach (var elem in Modifier) { if (elem != null) yield return elem; }
+                    if (Provider != null) yield return Provider;
+                    if (Quantity != null) yield return Quantity;
+                    if (UnitPrice != null) yield return UnitPrice;
+                    if (Facility != null) yield return Facility;
+                    foreach (var elem in Diagnosis) { if (elem != null) yield return elem; }
+                    foreach (var elem in Detail) { if (elem != null) yield return elem; }
+                }
+            }
+            
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in SupportingInfoSequenceElement) { if (elem != null) yield return new ElementValue("supportingInfoSequence", elem); }
+                    if (Category != null) yield return new ElementValue("category", Category);
+                    if (ProductOrService != null) yield return new ElementValue("productOrService", ProductOrService);
+                    foreach (var elem in Modifier) { if (elem != null) yield return new ElementValue("modifier", elem); }
+                    if (Provider != null) yield return new ElementValue("provider", Provider);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (UnitPrice != null) yield return new ElementValue("unitPrice", UnitPrice);
+                    if (Facility != null) yield return new ElementValue("facility", Facility);
+                    foreach (var elem in Diagnosis) { if (elem != null) yield return new ElementValue("diagnosis", elem); }
+                    foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
+                }
+            }
+        
+        
+        }
+    
+    
+        [FhirType(Hl7.Fhir.Model.Version.R4, "DiagnosisComponent")]
+        [DataContract]
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DiagnosisComponent"; } }
+            
+            /// <summary>
+            /// Nature of illness or problem
+            /// </summary>
+            [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Diagnosis
+            {
+                get { return _Diagnosis; }
+                set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Diagnosis;
+        
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DiagnosisComponent;
+            
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.Element)Diagnosis.DeepCopy();
+                    return dest;
+                }
+                else
+                    throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                 return CopyTo(new DiagnosisComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+            
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
+            
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+            
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
+            
+                return true;
+            }
+        
+        
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Diagnosis != null) yield return Diagnosis;
+                }
+            }
+            
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Diagnosis != null) yield return new ElementValue("diagnosis", Diagnosis);
+                }
+            }
+        
+        
+        }
+    
+        
+        /// <summary>
+        /// Business Identifier for coverage eligiblity request
+        /// </summary>
+        [FhirElement("identifier", Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        
+        /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [CLSCompliant(false)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+        
+        /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    StatusElement = null;
+                else
+                    StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
+        /// Desired processing priority
+        /// </summary>
+        [FhirElement("priority", Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Priority
+        {
+            get { return _Priority; }
+            set { _Priority = value; OnPropertyChanged("Priority"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Priority;
+        
+        /// <summary>
+        /// auth-requirements | benefits | discovery | validation
+        /// </summary>
+        [FhirElement("purpose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [CLSCompliant(false)]
+        [Cardinality(Min=1,Max=-1)]
+        [DataMember]
+        public List<Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>> PurposeElement
+        {
+            get { if(_PurposeElement==null) _PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>>(); return _PurposeElement; }
+            set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
+        }
+        
+        private List<Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>> _PurposeElement;
+        
+        /// <summary>
+        /// auth-requirements | benefits | discovery | validation
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<Hl7.Fhir.Model.R4.EligibilityRequestPurpose?> Purpose
+        {
+            get { return PurposeElement != null ? PurposeElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                    PurposeElement = null;
+                else
+                    PurposeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>(elem)));
+                OnPropertyChanged("Purpose");
+            }
+        }
+        
+        /// <summary>
+        /// Intended recipient of products and services
+        /// </summary>
+        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [CLSCompliant(false)]
+        [References("Patient")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.R4.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.R4.ResourceReference _Patient;
+        
+        /// <summary>
+        /// Estimated date or dates of service
+        /// </summary>
+        [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Serviced
+        {
+            get { return _Serviced; }
+            set { _Serviced = value; OnPropertyChanged("Serviced"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Serviced;
+        
+        /// <summary>
+        /// Creation date
+        /// </summary>
+        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [CLSCompliant(false)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime CreatedElement
+        {
+            get { return _CreatedElement; }
+            set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+        
+        /// <summary>
+        /// Creation date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Created
+        {
+            get { return CreatedElement != null ? CreatedElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    CreatedElement = null;
+                else
+                    CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Created");
+            }
+        }
+        
+        /// <summary>
+        /// Author
+        /// </summary>
+        [FhirElement("enterer", Order=160)]
+        [CLSCompliant(false)]
+        [References("Practitioner","PractitionerRole")]
+        [DataMember]
+        public Hl7.Fhir.Model.R4.ResourceReference Enterer
+        {
+            get { return _Enterer; }
+            set { _Enterer = value; OnPropertyChanged("Enterer"); }
+        }
+        
+        private Hl7.Fhir.Model.R4.ResourceReference _Enterer;
+        
+        /// <summary>
+        /// Party responsible for the request
+        /// </summary>
+        [FhirElement("provider", Order=170)]
+        [CLSCompliant(false)]
+        [References("Practitioner","PractitionerRole","Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.R4.ResourceReference Provider
+        {
+            get { return _Provider; }
+            set { _Provider = value; OnPropertyChanged("Provider"); }
+        }
+        
+        private Hl7.Fhir.Model.R4.ResourceReference _Provider;
+        
+        /// <summary>
+        /// Coverage issuer
+        /// </summary>
+        [FhirElement("insurer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [CLSCompliant(false)]
+        [References("Organization")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.R4.ResourceReference Insurer
+        {
+            get { return _Insurer; }
+            set { _Insurer = value; OnPropertyChanged("Insurer"); }
+        }
+        
+        private Hl7.Fhir.Model.R4.ResourceReference _Insurer;
+        
+        /// <summary>
+        /// Servicing facility
+        /// </summary>
+        [FhirElement("facility", Order=190)]
+        [CLSCompliant(false)]
+        [References("Location")]
+        [DataMember]
+        public Hl7.Fhir.Model.R4.ResourceReference Facility
+        {
+            get { return _Facility; }
+            set { _Facility = value; OnPropertyChanged("Facility"); }
+        }
+        
+        private Hl7.Fhir.Model.R4.ResourceReference _Facility;
+        
+        /// <summary>
+        /// Supporting information
+        /// </summary>
+        [FhirElement("supportingInfo", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<SupportingInformationComponent> SupportingInfo
+        {
+            get { if(_SupportingInfo==null) _SupportingInfo = new List<SupportingInformationComponent>(); return _SupportingInfo; }
+            set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
+        }
+        
+        private List<SupportingInformationComponent> _SupportingInfo;
+        
+        /// <summary>
+        /// Patient insurance information
+        /// </summary>
+        [FhirElement("insurance", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<InsuranceComponent> Insurance
+        {
+            get { if(_Insurance==null) _Insurance = new List<InsuranceComponent>(); return _Insurance; }
+            set { _Insurance = value; OnPropertyChanged("Insurance"); }
+        }
+        
+        private List<InsuranceComponent> _Insurance;
+        
+        /// <summary>
+        /// Item to be evaluated for eligibiity
+        /// </summary>
+        [FhirElement("item", Order=220)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<DetailsComponent> Item
+        {
+            get { if(_Item==null) _Item = new List<DetailsComponent>(); return _Item; }
+            set { _Item = value; OnPropertyChanged("Item"); }
+        }
+        
+        private List<DetailsComponent> _Item;
+    
+    
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as CoverageEligibilityRequest;
+        
+            if (dest != null)
+            {
+                base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
+                if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
+                if(PurposeElement != null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>>(PurposeElement.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.R4.ResourceReference)Patient.DeepCopy();
+                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
+                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.R4.ResourceReference)Enterer.DeepCopy();
+                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.R4.ResourceReference)Provider.DeepCopy();
+                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.R4.ResourceReference)Insurer.DeepCopy();
+                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.R4.ResourceReference)Facility.DeepCopy();
+                if(SupportingInfo != null) dest.SupportingInfo = new List<SupportingInformationComponent>(SupportingInfo.DeepCopy());
+                if(Insurance != null) dest.Insurance = new List<InsuranceComponent>(Insurance.DeepCopy());
+                if(Item != null) dest.Item = new List<DetailsComponent>(Item.DeepCopy());
+                return dest;
+            }
+            else
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+        
+        public override IDeepCopyable DeepCopy()
+        {
+             return CopyTo(new CoverageEligibilityRequest());
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as CoverageEligibilityRequest;
+            if(otherT == null) return false;
+        
+            if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.Matches(PurposeElement, otherT.PurposeElement)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Serviced, otherT.Serviced)) return false;
+            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
+            if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
+            if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
+            if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
+            if( !DeepComparable.Matches(SupportingInfo, otherT.SupportingInfo)) return false;
+            if( !DeepComparable.Matches(Insurance, otherT.Insurance)) return false;
+            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+        
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as CoverageEligibilityRequest;
+            if(otherT == null) return false;
+        
+            if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Serviced, otherT.Serviced)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
+            if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
+            if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
+            if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
+            if( !DeepComparable.IsExactly(SupportingInfo, otherT.SupportingInfo)) return false;
+            if( !DeepComparable.IsExactly(Insurance, otherT.Insurance)) return false;
+            if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+        
+            return true;
+        }
+    
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                foreach (var item in base.Children) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                if (StatusElement != null) yield return StatusElement;
+                if (Priority != null) yield return Priority;
+                foreach (var elem in PurposeElement) { if (elem != null) yield return elem; }
+                if (Patient != null) yield return Patient;
+                if (Serviced != null) yield return Serviced;
+                if (CreatedElement != null) yield return CreatedElement;
+                if (Enterer != null) yield return Enterer;
+                if (Provider != null) yield return Provider;
+                if (Insurer != null) yield return Insurer;
+                if (Facility != null) yield return Facility;
+                foreach (var elem in SupportingInfo) { if (elem != null) yield return elem; }
+                foreach (var elem in Insurance) { if (elem != null) yield return elem; }
+                foreach (var elem in Item) { if (elem != null) yield return elem; }
+            }
+        }
+        
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                if (Priority != null) yield return new ElementValue("priority", Priority);
+                foreach (var elem in PurposeElement) { if (elem != null) yield return new ElementValue("purpose", elem); }
+                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Serviced != null) yield return new ElementValue("serviced", Serviced);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Enterer != null) yield return new ElementValue("enterer", Enterer);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Insurer != null) yield return new ElementValue("insurer", Insurer);
+                if (Facility != null) yield return new ElementValue("facility", Facility);
+                foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
+                foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
+                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
+            }
+        }
+    
+    }
+
+}

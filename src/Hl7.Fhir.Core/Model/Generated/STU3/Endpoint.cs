@@ -77,13 +77,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.EndpointStatus> StatusElement
+        public Code<Hl7.Fhir.Model.EndpointStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.EndpointStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.EndpointStatus> _StatusElement;
         
         /// <summary>
         /// active | suspended | error | off | entered-in-error | test
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.EndpointStatus? Status
+        public Hl7.Fhir.Model.EndpointStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.EndpointStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.EndpointStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.EndpointStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EndpointStatus>)StatusElement.DeepCopy();
                 if(ConnectionType != null) dest.ConnectionType = (Hl7.Fhir.Model.Coding)ConnectionType.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.STU3.ResourceReference)ManagingOrganization.DeepCopy();

@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -103,13 +103,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.IssueType> CodeElement
+            public Hl7.Fhir.Model.Code CodeElement
             {
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.IssueType> _CodeElement;
+            private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
             /// Error or warning code
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.IssueType? Code
+            public string Code
             {
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         CodeElement = null;
                     else
-                        CodeElement = new Code<Hl7.Fhir.Model.IssueType>(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// FHIRPath of element(s) related to issue
             /// </summary>
-            [FhirElement("expression", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=90)]
+            [FhirElement("expression", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.IssueSeverity>)SeverityElement.DeepCopy();
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.IssueType>)CodeElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(Details != null) dest.Details = (Hl7.Fhir.Model.CodeableConcept)Details.DeepCopy();
                     if(DiagnosticsElement != null) dest.DiagnosticsElement = (Hl7.Fhir.Model.FhirString)DiagnosticsElement.DeepCopy();
                     if(LocationElement != null) dest.LocationElement = new List<Hl7.Fhir.Model.FhirString>(LocationElement.DeepCopy());

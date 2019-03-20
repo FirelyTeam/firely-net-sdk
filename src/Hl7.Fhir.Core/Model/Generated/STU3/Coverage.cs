@@ -600,13 +600,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes> StatusElement
+        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes> _StatusElement;
+        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes? Status
+        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.STU3.ResourceReference)PolicyHolder.DeepCopy();
                 if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.STU3.ResourceReference)Subscriber.DeepCopy();

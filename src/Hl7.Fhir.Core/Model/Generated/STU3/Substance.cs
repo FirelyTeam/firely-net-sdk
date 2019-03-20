@@ -328,13 +328,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.FHIRSubstanceStatus> StatusElement
+        public Code<Hl7.Fhir.Model.FHIRSubstanceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.FHIRSubstanceStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.FHIRSubstanceStatus> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.FHIRSubstanceStatus? Status
+        public Hl7.Fhir.Model.FHIRSubstanceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.FHIRSubstanceStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.FHIRSubstanceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.FHIRSubstanceStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FHIRSubstanceStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();

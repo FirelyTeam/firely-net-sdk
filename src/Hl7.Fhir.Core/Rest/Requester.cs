@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Rest
                         errorResult.Status = ((int)webResponse.StatusCode).ToString();
 
 
-                        errorResult.Resource = OperationOutcome.ForException(bte, IssueType.Invalid);
+                        errorResult.Resource = OperationOutcome.ForException(bte, Model.R4.IssueType.Invalid);
                         LastResult = errorResult;
 
                         throw buildFhirOperationException(webResponse.StatusCode, errorResult.Resource);

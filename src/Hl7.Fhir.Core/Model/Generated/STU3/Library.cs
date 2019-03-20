@@ -209,13 +209,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.PublicationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired | unknown
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.PublicationStatus? Status
+        public Hl7.Fhir.Model.PublicationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.PublicationStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -575,13 +575,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("contributor", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contributor> Contributor
+        public List<Hl7.Fhir.Model.STU3.Contributor> Contributor
         {
-            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.Contributor>(); return _Contributor; }
+            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(); return _Contributor; }
             set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private List<Hl7.Fhir.Model.Contributor> _Contributor;
+        private List<Hl7.Fhir.Model.STU3.Contributor> _Contributor;
         
         /// <summary>
         /// Contact details for the publisher
@@ -590,13 +590,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
         
         /// <summary>
         /// Use and/or publishing restrictions
@@ -636,13 +636,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("relatedArtifact", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
+        public List<Hl7.Fhir.Model.STU3.RelatedArtifact> RelatedArtifact
         {
-            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
+            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _RelatedArtifact; }
             set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
         }
         
-        private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
+        private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
         /// Parameters defined by the library
@@ -650,13 +650,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("parameter", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ParameterDefinition> Parameter
+        public List<Hl7.Fhir.Model.STU3.ParameterDefinition> Parameter
         {
-            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.ParameterDefinition>(); return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.STU3.ParameterDefinition>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         
-        private List<Hl7.Fhir.Model.ParameterDefinition> _Parameter;
+        private List<Hl7.Fhir.Model.STU3.ParameterDefinition> _Parameter;
         
         /// <summary>
         /// What data is referenced by this library
@@ -664,13 +664,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("dataRequirement", Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
+        public List<Hl7.Fhir.Model.STU3.DataRequirement> DataRequirement
         {
-            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(); return _DataRequirement; }
+            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _DataRequirement; }
             set { _DataRequirement = value; OnPropertyChanged("DataRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.DataRequirement> _DataRequirement;
+        private List<Hl7.Fhir.Model.STU3.DataRequirement> _DataRequirement;
         
         /// <summary>
         /// Contents of the library, either embedded or referenced
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.PublicationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
@@ -713,12 +713,12 @@ namespace Hl7.Fhir.Model.STU3
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
-                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(Contributor.DeepCopy());
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(Contributor.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ParameterDefinition>(Parameter.DeepCopy());
-                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(DataRequirement.DeepCopy());
+                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
+                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.STU3.ParameterDefinition>(Parameter.DeepCopy());
+                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(DataRequirement.DeepCopy());
                 if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Attachment>(Content.DeepCopy());
                 return dest;
             }

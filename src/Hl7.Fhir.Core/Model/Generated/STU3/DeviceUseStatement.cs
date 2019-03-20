@@ -76,13 +76,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.DeviceUseStatementStatus> StatusElement
+        public Code<Hl7.Fhir.Model.DeviceUseStatementStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.DeviceUseStatementStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.DeviceUseStatementStatus> _StatusElement;
         
         /// <summary>
         /// active | completed | entered-in-error +
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.DeviceUseStatementStatus? Status
+        public Hl7.Fhir.Model.DeviceUseStatementStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.DeviceUseStatementStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.DeviceUseStatementStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.DeviceUseStatementStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatementStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();
                 if(WhenUsed != null) dest.WhenUsed = (Hl7.Fhir.Model.Period)WhenUsed.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();

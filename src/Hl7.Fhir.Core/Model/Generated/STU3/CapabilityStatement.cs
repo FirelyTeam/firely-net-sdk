@@ -397,13 +397,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.RestfulCapabilityMode> ModeElement
+            public Code<Hl7.Fhir.Model.RestfulCapabilityMode> ModeElement
             {
                 get { return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.RestfulCapabilityMode> _ModeElement;
+            private Code<Hl7.Fhir.Model.RestfulCapabilityMode> _ModeElement;
             
             /// <summary>
             /// client | server
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.RestfulCapabilityMode? Mode
+            public Hl7.Fhir.Model.RestfulCapabilityMode? Mode
             {
                 get { return ModeElement != null ? ModeElement.Value : null; }
                 set
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ModeElement = null;
                     else
-                        ModeElement = new Code<Hl7.Fhir.Model.STU3.RestfulCapabilityMode>(value);
+                        ModeElement = new Code<Hl7.Fhir.Model.RestfulCapabilityMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.STU3.RestfulCapabilityMode>)ModeElement.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.RestfulCapabilityMode>)ModeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(Security != null) dest.Security = (SecurityComponent)Security.DeepCopy();
                     if(Resource != null) dest.Resource = new List<ResourceComponent>(Resource.DeepCopy());
@@ -1221,13 +1221,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("conditionalRead", Order=120)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ConditionalReadStatus> ConditionalReadElement
+            public Code<Hl7.Fhir.Model.ConditionalReadStatus> ConditionalReadElement
             {
                 get { return _ConditionalReadElement; }
                 set { _ConditionalReadElement = value; OnPropertyChanged("ConditionalReadElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ConditionalReadStatus> _ConditionalReadElement;
+            private Code<Hl7.Fhir.Model.ConditionalReadStatus> _ConditionalReadElement;
             
             /// <summary>
             /// not-supported | modified-since | not-match | full-support
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ConditionalReadStatus? ConditionalRead
+            public Hl7.Fhir.Model.ConditionalReadStatus? ConditionalRead
             {
                 get { return ConditionalReadElement != null ? ConditionalReadElement.Value : null; }
                 set
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ConditionalReadElement = null;
                     else
-                        ConditionalReadElement = new Code<Hl7.Fhir.Model.STU3.ConditionalReadStatus>(value);
+                        ConditionalReadElement = new Code<Hl7.Fhir.Model.ConditionalReadStatus>(value);
                     OnPropertyChanged("ConditionalRead");
                 }
             }
@@ -1318,13 +1318,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("referencePolicy", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>> ReferencePolicyElement
+            public List<Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>> ReferencePolicyElement
             {
-                get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
+                get { if(_ReferencePolicyElement==null) _ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>>(); return _ReferencePolicyElement; }
                 set { _ReferencePolicyElement = value; OnPropertyChanged("ReferencePolicyElement"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>> _ReferencePolicyElement;
+            private List<Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>> _ReferencePolicyElement;
             
             /// <summary>
             /// literal | logical | resolves | enforced | local
@@ -1332,7 +1332,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy?> ReferencePolicy
+            public IEnumerable<Hl7.Fhir.Model.ReferenceHandlingPolicy?> ReferencePolicy
             {
                 get { return ReferencePolicyElement != null ? ReferencePolicyElement.Select(elem => elem.Value) : null; }
                 set
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ReferencePolicyElement = null;
                     else
-                        ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>(elem)));
+                        ReferencePolicyElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>(elem)));
                     OnPropertyChanged("ReferencePolicy");
                 }
             }
@@ -1440,10 +1440,10 @@ namespace Hl7.Fhir.Model.STU3
                     if(ReadHistoryElement != null) dest.ReadHistoryElement = (Hl7.Fhir.Model.FhirBoolean)ReadHistoryElement.DeepCopy();
                     if(UpdateCreateElement != null) dest.UpdateCreateElement = (Hl7.Fhir.Model.FhirBoolean)UpdateCreateElement.DeepCopy();
                     if(ConditionalCreateElement != null) dest.ConditionalCreateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalCreateElement.DeepCopy();
-                    if(ConditionalReadElement != null) dest.ConditionalReadElement = (Code<Hl7.Fhir.Model.STU3.ConditionalReadStatus>)ConditionalReadElement.DeepCopy();
+                    if(ConditionalReadElement != null) dest.ConditionalReadElement = (Code<Hl7.Fhir.Model.ConditionalReadStatus>)ConditionalReadElement.DeepCopy();
                     if(ConditionalUpdateElement != null) dest.ConditionalUpdateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalUpdateElement.DeepCopy();
                     if(ConditionalDeleteElement != null) dest.ConditionalDeleteElement = (Code<Hl7.Fhir.Model.ConditionalDeleteStatus>)ConditionalDeleteElement.DeepCopy();
-                    if(ReferencePolicyElement != null) dest.ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.STU3.ReferenceHandlingPolicy>>(ReferencePolicyElement.DeepCopy());
+                    if(ReferencePolicyElement != null) dest.ReferencePolicyElement = new List<Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>>(ReferencePolicyElement.DeepCopy());
                     if(SearchIncludeElement != null) dest.SearchIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchIncludeElement.DeepCopy());
                     if(SearchRevIncludeElement != null) dest.SearchRevIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchRevIncludeElement.DeepCopy());
                     if(SearchParam != null) dest.SearchParam = new List<SearchParamComponent>(SearchParam.DeepCopy());
@@ -2532,13 +2532,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.EventCapabilityMode> ModeElement
+            public Code<Hl7.Fhir.Model.EventCapabilityMode> ModeElement
             {
                 get { return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.EventCapabilityMode> _ModeElement;
+            private Code<Hl7.Fhir.Model.EventCapabilityMode> _ModeElement;
             
             /// <summary>
             /// sender | receiver
@@ -2546,7 +2546,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.EventCapabilityMode? Mode
+            public Hl7.Fhir.Model.EventCapabilityMode? Mode
             {
                 get { return ModeElement != null ? ModeElement.Value : null; }
                 set
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ModeElement = null;
                     else
-                        ModeElement = new Code<Hl7.Fhir.Model.STU3.EventCapabilityMode>(value);
+                        ModeElement = new Code<Hl7.Fhir.Model.EventCapabilityMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -2582,7 +2582,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.STU3.EventCapabilityMode>)ModeElement.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.EventCapabilityMode>)ModeElement.DeepCopy();
                     if(Definition != null) dest.Definition = (Hl7.Fhir.Model.STU3.ResourceReference)Definition.DeepCopy();
                     return dest;
                 }
@@ -2673,13 +2673,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("category", Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
+            public Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory> CategoryElement
             {
                 get { return _CategoryElement; }
                 set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.MessageSignificanceCategory> _CategoryElement;
+            private Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory> _CategoryElement;
             
             /// <summary>
             /// Consequence | Currency | Notification
@@ -2687,7 +2687,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.MessageSignificanceCategory? Category
+            public Hl7.Fhir.Model.STU3.MessageSignificanceCategory? Category
             {
                 get { return CategoryElement != null ? CategoryElement.Value : null; }
                 set
@@ -2695,7 +2695,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         CategoryElement = null;
                     else
-                        CategoryElement = new Code<Hl7.Fhir.Model.MessageSignificanceCategory>(value);
+                        CategoryElement = new Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory>(value);
                     OnPropertyChanged("Category");
                 }
             }
@@ -2706,13 +2706,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("mode", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.EventCapabilityMode> ModeElement
+            public Code<Hl7.Fhir.Model.EventCapabilityMode> ModeElement
             {
                 get { return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.EventCapabilityMode> _ModeElement;
+            private Code<Hl7.Fhir.Model.EventCapabilityMode> _ModeElement;
             
             /// <summary>
             /// sender | receiver
@@ -2720,7 +2720,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.EventCapabilityMode? Mode
+            public Hl7.Fhir.Model.EventCapabilityMode? Mode
             {
                 get { return ModeElement != null ? ModeElement.Value : null; }
                 set
@@ -2728,7 +2728,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ModeElement = null;
                     else
-                        ModeElement = new Code<Hl7.Fhir.Model.STU3.EventCapabilityMode>(value);
+                        ModeElement = new Code<Hl7.Fhir.Model.EventCapabilityMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -2838,8 +2838,8 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageSignificanceCategory>)CategoryElement.DeepCopy();
-                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.STU3.EventCapabilityMode>)ModeElement.DeepCopy();
+                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory>)CategoryElement.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.EventCapabilityMode>)ModeElement.DeepCopy();
                     if(FocusElement != null) dest.FocusElement = (Code<Hl7.Fhir.Model.ResourceType>)FocusElement.DeepCopy();
                     if(Request != null) dest.Request = (Hl7.Fhir.Model.STU3.ResourceReference)Request.DeepCopy();
                     if(Response != null) dest.Response = (Hl7.Fhir.Model.STU3.ResourceReference)Response.DeepCopy();
@@ -3229,13 +3229,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.PublicationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired | unknown
@@ -3243,7 +3243,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.PublicationStatus? Status
+        public Hl7.Fhir.Model.PublicationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -3251,7 +3251,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.PublicationStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -3363,13 +3363,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
         
         /// <summary>
         /// Natural language description of the capability statement
@@ -3504,13 +3504,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.CapabilityStatementKind> KindElement
+        public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
         {
             get { return _KindElement; }
             set { _KindElement = value; OnPropertyChanged("KindElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.CapabilityStatementKind> _KindElement;
+        private Code<Hl7.Fhir.Model.CapabilityStatementKind> _KindElement;
         
         /// <summary>
         /// instance | capability | requirements
@@ -3518,7 +3518,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.CapabilityStatementKind? Kind
+        public Hl7.Fhir.Model.CapabilityStatementKind? Kind
         {
             get { return KindElement != null ? KindElement.Value : null; }
             set
@@ -3526,7 +3526,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     KindElement = null;
                 else
-                    KindElement = new Code<Hl7.Fhir.Model.STU3.CapabilityStatementKind>(value);
+                    KindElement = new Code<Hl7.Fhir.Model.CapabilityStatementKind>(value);
                 OnPropertyChanged("Kind");
             }
         }
@@ -3942,17 +3942,17 @@ namespace Hl7.Fhir.Model.STU3
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.PublicationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-                if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.STU3.CapabilityStatementKind>)KindElement.DeepCopy();
+                if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.CapabilityStatementKind>)KindElement.DeepCopy();
                 if(InstantiatesElement != null) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesElement.DeepCopy());
                 if(Software != null) dest.Software = (SoftwareComponent)Software.DeepCopy();
                 if(Implementation != null) dest.Implementation = (ImplementationComponent)Implementation.DeepCopy();

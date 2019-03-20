@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.GuidanceResponseStatus> StatusElement
+        public Code<Hl7.Fhir.Model.GuidanceResponseStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.GuidanceResponseStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.GuidanceResponseStatus> _StatusElement;
         
         /// <summary>
         /// success | data-requested | data-required | in-progress | failure | entered-in-error
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.GuidanceResponseStatus? Status
+        public Hl7.Fhir.Model.GuidanceResponseStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.GuidanceResponseStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.GuidanceResponseStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -310,13 +310,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("dataRequirement", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
+        public List<Hl7.Fhir.Model.STU3.DataRequirement> DataRequirement
         {
-            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(); return _DataRequirement; }
+            get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _DataRequirement; }
             set { _DataRequirement = value; OnPropertyChanged("DataRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.DataRequirement> _DataRequirement;
+        private List<Hl7.Fhir.Model.STU3.DataRequirement> _DataRequirement;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(RequestIdElement != null) dest.RequestIdElement = (Hl7.Fhir.Model.Id)RequestIdElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                 if(Module != null) dest.Module = (Hl7.Fhir.Model.STU3.ResourceReference)Module.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.GuidanceResponseStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.STU3.ResourceReference)Context.DeepCopy();
                 if(OccurrenceDateTimeElement != null) dest.OccurrenceDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)OccurrenceDateTimeElement.DeepCopy();
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.STU3.ResourceReference>(EvaluationMessage.DeepCopy());
                 if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.STU3.ResourceReference)OutputParameters.DeepCopy();
                 if(Result != null) dest.Result = (Hl7.Fhir.Model.STU3.ResourceReference)Result.DeepCopy();
-                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(DataRequirement.DeepCopy());
+                if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(DataRequirement.DeepCopy());
                 return dest;
             }
             else

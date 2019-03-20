@@ -95,6 +95,33 @@ namespace Hl7.Fhir.Rest
             return reference.GetAbsoluteUriForReference(new Uri(parentResourceUri, UriKind.RelativeOrAbsolute));
         }
 
+        /// <summary>
+        /// When a ResourceReference is relative, use the parent resource's fullUrl (e.g. from a Bundle's entry)
+        /// to make it absolute.
+        /// </summary>
+        /// <param name="reference">The ResourceReference to get the (possibily relative) url from</param>
+        /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
+        /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
+        /// <returns></returns>
+        public static Uri GetAbsoluteUriForReference(this Model.R4.ResourceReference reference, Uri parentResourceUri)
+        {
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
+            return GetAbsoluteUriForReference(reference.Reference, parentResourceUri);
+        }
+
+        /// <summary>
+        /// When a ResourceReference is relative, use the parent resource's fullUrl (e.g. from a Bundle's entry)
+        /// to make it absolute.
+        /// </summary>
+        /// <param name="reference">The ResourceReference to get the (possibily relative) url from</param>
+        /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
+        /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
+        /// <returns></returns>
+        public static Uri GetAbsoluteUriForReference(this Model.R4.ResourceReference reference, string parentResourceUri)
+        {
+            return reference.GetAbsoluteUriForReference(new Uri(parentResourceUri, UriKind.RelativeOrAbsolute));
+        }
+
         private static Uri GetAbsoluteUriForReference(string reference, Uri parentResourceUri)
         {
             if (parentResourceUri == null) throw Error.ArgumentNull(nameof(parentResourceUri));

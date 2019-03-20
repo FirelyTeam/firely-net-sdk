@@ -367,13 +367,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
         
         /// <summary>
         /// References and dependencies
@@ -381,13 +381,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("relatedArtifact", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
+        public List<Hl7.Fhir.Model.STU3.RelatedArtifact> RelatedArtifact
         {
-            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
+            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _RelatedArtifact; }
             set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
         }
         
-        private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
+        private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
         /// Used to search for the study
@@ -584,8 +584,8 @@ namespace Hl7.Fhir.Model.STU3
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ResearchStudyStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.CodeableConcept>(Focus.DeepCopy());
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
-                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
+                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();

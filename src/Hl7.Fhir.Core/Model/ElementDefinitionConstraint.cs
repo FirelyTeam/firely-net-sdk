@@ -33,6 +33,15 @@ namespace Hl7.Fhir.Model
             Xpath = component.Xpath;
         }
 
+        public ElementDefinitionConstraint(R4.ElementDefinition.ConstraintComponent component)
+        {
+            Key = component.Key;
+            Severity = component.Severity;
+            Human = component.Human;
+            Expression = component.Expression;
+            Xpath = component.Xpath;
+        }
+
         /// <summary>
         /// Target of 'condition' reference above
         /// </summary>
@@ -76,6 +85,18 @@ namespace Hl7.Fhir.Model
         public STU3.ElementDefinition.ConstraintComponent ToStu3()
         {
             return new STU3.ElementDefinition.ConstraintComponent
+            {
+                Key = Key,
+                Severity = Severity,
+                Human = Human,
+                Expression = Expression,
+                Xpath = Xpath,
+            };
+        }
+
+        public R4.ElementDefinition.ConstraintComponent ToR4()
+        {
+            return new R4.ElementDefinition.ConstraintComponent
             {
                 Key = Key,
                 Severity = Severity,

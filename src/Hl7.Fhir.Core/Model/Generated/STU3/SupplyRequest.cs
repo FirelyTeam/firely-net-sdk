@@ -339,13 +339,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.RequestPriority> PriorityElement
+        public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
         {
             get { return _PriorityElement; }
             set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.RequestPriority> _PriorityElement;
+        private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
         
         /// <summary>
         /// routine | urgent | asap | stat
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.RequestPriority? Priority
+        public Hl7.Fhir.Model.RequestPriority? Priority
         {
             get { return PriorityElement != null ? PriorityElement.Value : null; }
             set
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     PriorityElement = null;
                 else
-                    PriorityElement = new Code<Hl7.Fhir.Model.STU3.RequestPriority>(value);
+                    PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
                 OnPropertyChanged("Priority");
             }
         }
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.SupplyRequestStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.STU3.RequestPriority>)PriorityElement.DeepCopy();
+                if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                 if(OrderedItem != null) dest.OrderedItem = (OrderedItemComponent)OrderedItem.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();

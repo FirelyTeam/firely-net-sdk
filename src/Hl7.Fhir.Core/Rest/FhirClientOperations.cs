@@ -202,6 +202,30 @@ namespace Hl7.Fhir.Rest
             return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
         }
 
+        public static async Task<Model.R4.Bundle> FetchPatientRecordAsync(this FhirR4Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        {
+            var par = new Parameters();
+
+            if (start != null) par.Add("start", start);
+            if (end != null) par.Add("end", end);
+
+            Resource result;
+            if (patient == null)
+                result = await client.TypeOperationAsync<Model.R4.Patient>(RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+            else
+            {
+                var location = new ResourceIdentity(patient);
+                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+            }
+
+            return OperationResult<Model.R4.Bundle>(result);
+        }
+
+        public static Model.R4.Bundle FetchPatientRecord(this FhirR4Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        {
+            return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
+        }
+
         #endregion
 
         #region Meta

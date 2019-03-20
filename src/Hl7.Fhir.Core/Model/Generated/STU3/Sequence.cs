@@ -665,13 +665,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.qualityType> TypeElement
+            public Code<Hl7.Fhir.Model.qualityType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.qualityType> _TypeElement;
+            private Code<Hl7.Fhir.Model.qualityType> _TypeElement;
             
             /// <summary>
             /// indel | snp | unknown
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.qualityType? Type
+            public Hl7.Fhir.Model.qualityType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         TypeElement = null;
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.STU3.qualityType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.qualityType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.qualityType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.qualityType>)TypeElement.DeepCopy();
                     if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopy();
                     if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
                     if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
@@ -1209,13 +1209,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.repositoryType> TypeElement
+            public Code<Hl7.Fhir.Model.repositoryType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.repositoryType> _TypeElement;
+            private Code<Hl7.Fhir.Model.repositoryType> _TypeElement;
             
             /// <summary>
             /// directlink | openapi | login | oauth | other
@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.repositoryType? Type
+            public Hl7.Fhir.Model.repositoryType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         TypeElement = null;
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.STU3.repositoryType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.repositoryType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -1408,7 +1408,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.repositoryType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.repositoryType>)TypeElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DatasetIdElement != null) dest.DatasetIdElement = (Hl7.Fhir.Model.FhirString)DatasetIdElement.DeepCopy();

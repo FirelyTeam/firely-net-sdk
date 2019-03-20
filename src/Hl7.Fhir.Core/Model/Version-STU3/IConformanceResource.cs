@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model.STU3
 
     }
 
-    public partial class CapabilityStatement : IVersionableConformanceResource
+    public partial class CapabilityStatement : IVersionableConformanceResource, IMetadata
     {
 
     }

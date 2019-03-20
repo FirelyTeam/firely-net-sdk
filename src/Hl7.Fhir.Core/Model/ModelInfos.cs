@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Model
                     return DSTU2ModelInfo.Instance;
                 case Version.STU3:
                     return STU3ModelInfo.Instance;
+                case Version.R4:
+                    return R4ModelInfo.Instance;
                 default:
                     throw new ArgumentException($"Unknown or not support FHIR version '{version}'", nameof(version));
             }
@@ -61,6 +63,26 @@ namespace Hl7.Fhir.Model
             public bool IsProfiledQuantity(string type)
             {
                 return STU3.ModelInfo.IsProfiledQuantity(type);
+            }
+        }
+
+        private class R4ModelInfo : IModelInfo
+        {
+            public static R4ModelInfo Instance = new R4ModelInfo();
+
+            public Type GetTypeForFhirType(string name)
+            {
+                return R4.ModelInfo.GetTypeForFhirType(name);
+            }
+
+            public string GetFhirTypeNameForType(Type type)
+            {
+                return R4.ModelInfo.GetFhirTypeNameForType(type);
+            }
+
+            public bool IsProfiledQuantity(string type)
+            {
+                return R4.ModelInfo.IsProfiledQuantity(type);
             }
         }
     }

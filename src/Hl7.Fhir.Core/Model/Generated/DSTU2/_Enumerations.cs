@@ -1004,6 +1004,75 @@ namespace Hl7.Fhir.Model.DSTU2
     }
 
     /// <summary>
+    /// A supported modifier for a search parameter.
+    /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
+    /// </summary>
+    [FhirEnumeration("SearchModifierCode")]
+    public enum SearchModifierCode
+    {
+        /// <summary>
+        /// The search parameter returns resources that have a value or not.
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("missing", "http://hl7.org/fhir/search-modifier-code"), Description("Missing")]
+        Missing,
+        /// <summary>
+        /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("exact", "http://hl7.org/fhir/search-modifier-code"), Description("Exact")]
+        Exact,
+        /// <summary>
+        /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("contains", "http://hl7.org/fhir/search-modifier-code"), Description("Contains")]
+        Contains,
+        /// <summary>
+        /// The search parameter returns resources that do not contain a match .
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("not", "http://hl7.org/fhir/search-modifier-code"), Description("Not")]
+        Not,
+        /// <summary>
+        /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text.
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("text", "http://hl7.org/fhir/search-modifier-code"), Description("Text")]
+        Text,
+        /// <summary>
+        /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("in", "http://hl7.org/fhir/search-modifier-code"), Description("In")]
+        In,
+        /// <summary>
+        /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("not-in", "http://hl7.org/fhir/search-modifier-code"), Description("Not In")]
+        NotIn,
+        /// <summary>
+        /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("below", "http://hl7.org/fhir/search-modifier-code"), Description("Below")]
+        Below,
+        /// <summary>
+        /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("above", "http://hl7.org/fhir/search-modifier-code"), Description("Above")]
+        Above,
+        /// <summary>
+        /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
+        /// (system: http://hl7.org/fhir/search-modifier-code)
+        /// </summary>
+        [EnumLiteral("type", "http://hl7.org/fhir/search-modifier-code"), Description("Type")]
+        Type,
+    }
+
+    /// <summary>
     /// Operations supported by REST at the system level.
     /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
     /// </summary>
@@ -1061,6 +1130,33 @@ namespace Hl7.Fhir.Model.DSTU2
         /// </summary>
         [EnumLiteral("both", "http://hl7.org/fhir/transaction-mode"), Description("Batches & Transactions")]
         Both,
+    }
+
+    /// <summary>
+    /// The impact of the content of a message.
+    /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
+    /// </summary>
+    [FhirEnumeration("MessageSignificanceCategory")]
+    public enum MessageSignificanceCategory
+    {
+        /// <summary>
+        /// The message represents/requests a change that should not be processed more than once; e.g. Making a booking for an appointment.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+        Consequence,
+        /// <summary>
+        /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+        Currency,
+        /// <summary>
+        /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+        Notification,
     }
 
     /// <summary>
@@ -2893,6 +2989,189 @@ namespace Hl7.Fhir.Model.DSTU2
     }
 
     /// <summary>
+    /// A code that describes the type of issue.
+    /// (url: http://hl7.org/fhir/ValueSet/issue-type)
+    /// </summary>
+    [FhirEnumeration("IssueType")]
+    public enum IssueType
+    {
+        /// <summary>
+        /// Content invalid against the specification or a profile.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("invalid", "http://hl7.org/fhir/issue-type"), Description("Invalid Content")]
+        Invalid,
+        /// <summary>
+        /// A structural issue in the content such as wrong namespace, or unable to parse the content completely, or invalid json syntax.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("structure", "http://hl7.org/fhir/issue-type"), Description("Structural Issue")]
+        Structure,
+        /// <summary>
+        /// A required element is missing.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("required", "http://hl7.org/fhir/issue-type"), Description("Required element missing")]
+        Required,
+        /// <summary>
+        /// An element value is invalid.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("value", "http://hl7.org/fhir/issue-type"), Description("Element value invalid")]
+        Value,
+        /// <summary>
+        /// A content validation rule failed - e.g. a schematron rule.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("invariant", "http://hl7.org/fhir/issue-type"), Description("Validation rule failed")]
+        Invariant,
+        /// <summary>
+        /// An authentication/authorization/permissions issue of some kind.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("security", "http://hl7.org/fhir/issue-type"), Description("Security Problem")]
+        Security,
+        /// <summary>
+        /// The client needs to initiate an authentication process.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("login", "http://hl7.org/fhir/issue-type"), Description("Login Required")]
+        Login,
+        /// <summary>
+        /// The user or system was not able to be authenticated (either there is no process, or the proferred token is unacceptable).
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("unknown", "http://hl7.org/fhir/issue-type"), Description("Unknown User")]
+        Unknown,
+        /// <summary>
+        /// User session expired; a login may be required.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("expired", "http://hl7.org/fhir/issue-type"), Description("Session Expired")]
+        Expired,
+        /// <summary>
+        /// The user does not have the rights to perform this action.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("forbidden", "http://hl7.org/fhir/issue-type"), Description("Forbidden")]
+        Forbidden,
+        /// <summary>
+        /// Some information was not or may not have been returned due to business rules, consent or privacy rules, or access permission constraints.  This information may be accessible through alternate processes.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("suppressed", "http://hl7.org/fhir/issue-type"), Description("Information  Suppressed")]
+        Suppressed,
+        /// <summary>
+        /// Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("processing", "http://hl7.org/fhir/issue-type"), Description("Processing Failure")]
+        Processing,
+        /// <summary>
+        /// The resource or profile is not supported.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("not-supported", "http://hl7.org/fhir/issue-type"), Description("Content not supported")]
+        NotSupported,
+        /// <summary>
+        /// An attempt was made to create a duplicate record.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("duplicate", "http://hl7.org/fhir/issue-type"), Description("Duplicate")]
+        Duplicate,
+        /// <summary>
+        /// The reference provided was not found. In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the content is not found further into the application architecture.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("not-found", "http://hl7.org/fhir/issue-type"), Description("Not Found")]
+        NotFound,
+        /// <summary>
+        /// Provided content is too long (typically, this is a denial of service protection type of error).
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("too-long", "http://hl7.org/fhir/issue-type"), Description("Content Too Long")]
+        TooLong,
+        /// <summary>
+        /// The code or system could not be understood, or it was not valid in the context of a particular ValueSet.code.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("code-invalid", "http://hl7.org/fhir/issue-type"), Description("Invalid Code")]
+        CodeInvalid,
+        /// <summary>
+        /// An extension was found that was not acceptable, could not be resolved, or a modifierExtension was not recognized.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("extension", "http://hl7.org/fhir/issue-type"), Description("Unacceptable Extension")]
+        Extension,
+        /// <summary>
+        /// The operation was stopped to protect server resources; e.g. a request for a value set expansion on all of SNOMED CT.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("too-costly", "http://hl7.org/fhir/issue-type"), Description("Operation Too Costly")]
+        TooCostly,
+        /// <summary>
+        /// The content/operation failed to pass some business rule, and so could not proceed.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("business-rule", "http://hl7.org/fhir/issue-type"), Description("Business Rule Violation")]
+        BusinessRule,
+        /// <summary>
+        /// Content could not be accepted because of an edit conflict (i.e. version aware updates) (In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the conflict is discovered further into the application architecture.)
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("conflict", "http://hl7.org/fhir/issue-type"), Description("Edit Version Conflict")]
+        Conflict,
+        /// <summary>
+        /// Not all data sources typically accessed could be reached, or responded in time, so the returned information may not be complete.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("incomplete", "http://hl7.org/fhir/issue-type"), Description("Incomplete Results")]
+        Incomplete,
+        /// <summary>
+        /// Transient processing issues. The system receiving the error may be able to resubmit the same content once an underlying issue is resolved.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("transient", "http://hl7.org/fhir/issue-type"), Description("Transient Issue")]
+        Transient,
+        /// <summary>
+        /// A resource/record locking failure (usually in an underlying database).
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("lock-error", "http://hl7.org/fhir/issue-type"), Description("Lock Error")]
+        LockError,
+        /// <summary>
+        /// The persistent store is unavailable; e.g. the database is down for maintenance or similar action.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("no-store", "http://hl7.org/fhir/issue-type"), Description("No Store Available")]
+        NoStore,
+        /// <summary>
+        /// An unexpected internal error has occurred.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("exception", "http://hl7.org/fhir/issue-type"), Description("Exception")]
+        Exception,
+        /// <summary>
+        /// An internal timeout has occurred.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("timeout", "http://hl7.org/fhir/issue-type"), Description("Timeout")]
+        Timeout,
+        /// <summary>
+        /// The system is not prepared to handle this request due to load management.
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("throttled", "http://hl7.org/fhir/issue-type"), Description("Throttled")]
+        Throttled,
+        /// <summary>
+        /// A message unrelated to the processing success of the completed operation (examples of the latter include things like reminders of password expiry, system maintenance times, etc.).
+        /// (system: http://hl7.org/fhir/issue-type)
+        /// </summary>
+        [EnumLiteral("informational", "http://hl7.org/fhir/issue-type"), Description("Informational Note")]
+        Informational,
+    }
+
+    /// <summary>
     /// The status of the response to an order.
     /// (url: http://hl7.org/fhir/ValueSet/order-status)
     /// </summary>
@@ -4463,6 +4742,39 @@ namespace Hl7.Fhir.Model.DSTU2
     }
 
     /// <summary>
+    /// Identifies the purpose for this identifier, if known .
+    /// (url: http://hl7.org/fhir/ValueSet/identifier-use)
+    /// </summary>
+    [FhirEnumeration("IdentifierUse")]
+    public enum IdentifierUse
+    {
+        /// <summary>
+        /// The identifier recommended for display and use in real-world interactions.
+        /// (system: http://hl7.org/fhir/identifier-use)
+        /// </summary>
+        [EnumLiteral("usual", "http://hl7.org/fhir/identifier-use"), Description("Usual")]
+        Usual,
+        /// <summary>
+        /// The identifier considered to be most trusted for the identification of this item.
+        /// (system: http://hl7.org/fhir/identifier-use)
+        /// </summary>
+        [EnumLiteral("official", "http://hl7.org/fhir/identifier-use"), Description("Official")]
+        Official,
+        /// <summary>
+        /// A temporary identifier.
+        /// (system: http://hl7.org/fhir/identifier-use)
+        /// </summary>
+        [EnumLiteral("temp", "http://hl7.org/fhir/identifier-use"), Description("Temp")]
+        Temp,
+        /// <summary>
+        /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
+        /// (system: http://hl7.org/fhir/identifier-use)
+        /// </summary>
+        [EnumLiteral("secondary", "http://hl7.org/fhir/identifier-use"), Description("Secondary")]
+        Secondary,
+    }
+
+    /// <summary>
     /// Telecommunications form for contact point
     /// (url: http://hl7.org/fhir/ValueSet/contact-point-system)
     /// </summary>
@@ -4499,6 +4811,41 @@ namespace Hl7.Fhir.Model.DSTU2
         /// </summary>
         [EnumLiteral("other", "http://hl7.org/fhir/contact-point-system"), Description("URL")]
         Other,
+    }
+
+    /// <summary>
+    /// The use of an address<br/>
+    /// <br/>
+    /// The use of an address (home / work / etc.).
+    /// (url: http://hl7.org/fhir/ValueSet/address-use)
+    /// </summary>
+    [FhirEnumeration("AddressUse")]
+    public enum AddressUse
+    {
+        /// <summary>
+        /// A communication address at a home.
+        /// (system: http://hl7.org/fhir/address-use)
+        /// </summary>
+        [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
+        Home,
+        /// <summary>
+        /// An office address. First choice for business related contacts during business hours.
+        /// (system: http://hl7.org/fhir/address-use)
+        /// </summary>
+        [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
+        Work,
+        /// <summary>
+        /// A temporary address. The period can provide more detailed information.
+        /// (system: http://hl7.org/fhir/address-use)
+        /// </summary>
+        [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
+        Temp,
+        /// <summary>
+        /// This address is no longer in use (or was never correct, but retained for records).
+        /// (system: http://hl7.org/fhir/address-use)
+        /// </summary>
+        [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
+        Old,
     }
 
     /// <summary>

@@ -135,13 +135,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("documentation", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
+            public List<Hl7.Fhir.Model.STU3.RelatedArtifact> Documentation
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _Documentation; }
+                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _Documentation; }
                 set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
+            private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _Documentation;
             
             /// <summary>
             /// Target outcome for the goal
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                     if(Start != null) dest.Start = (Hl7.Fhir.Model.CodeableConcept)Start.DeepCopy();
                     if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.CodeableConcept>(Addresses.DeepCopy());
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(Documentation.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(Documentation.DeepCopy());
                     if(Target != null) dest.Target = new List<TargetComponent>(Target.DeepCopy());
                     return dest;
                 }
@@ -546,13 +546,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("documentation", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
+            public List<Hl7.Fhir.Model.STU3.RelatedArtifact> Documentation
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _Documentation; }
+                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _Documentation; }
                 set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.RelatedArtifact> _Documentation;
+            private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _Documentation;
             
             /// <summary>
             /// What goals this action supports
@@ -593,13 +593,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("triggerDefinition", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TriggerDefinition> TriggerDefinition
+            public List<Hl7.Fhir.Model.STU3.TriggerDefinition> TriggerDefinition
             {
-                get { if(_TriggerDefinition==null) _TriggerDefinition = new List<Hl7.Fhir.Model.TriggerDefinition>(); return _TriggerDefinition; }
+                get { if(_TriggerDefinition==null) _TriggerDefinition = new List<Hl7.Fhir.Model.STU3.TriggerDefinition>(); return _TriggerDefinition; }
                 set { _TriggerDefinition = value; OnPropertyChanged("TriggerDefinition"); }
             }
             
-            private List<Hl7.Fhir.Model.TriggerDefinition> _TriggerDefinition;
+            private List<Hl7.Fhir.Model.STU3.TriggerDefinition> _TriggerDefinition;
             
             /// <summary>
             /// Whether or not the action is applicable
@@ -621,13 +621,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("input", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DataRequirement> Input
+            public List<Hl7.Fhir.Model.STU3.DataRequirement> Input
             {
-                get { if(_Input==null) _Input = new List<Hl7.Fhir.Model.DataRequirement>(); return _Input; }
+                get { if(_Input==null) _Input = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _Input; }
                 set { _Input = value; OnPropertyChanged("Input"); }
             }
             
-            private List<Hl7.Fhir.Model.DataRequirement> _Input;
+            private List<Hl7.Fhir.Model.STU3.DataRequirement> _Input;
             
             /// <summary>
             /// Output data definition
@@ -635,13 +635,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("output", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DataRequirement> Output
+            public List<Hl7.Fhir.Model.STU3.DataRequirement> Output
             {
-                get { if(_Output==null) _Output = new List<Hl7.Fhir.Model.DataRequirement>(); return _Output; }
+                get { if(_Output==null) _Output = new List<Hl7.Fhir.Model.STU3.DataRequirement>(); return _Output; }
                 set { _Output = value; OnPropertyChanged("Output"); }
             }
             
-            private List<Hl7.Fhir.Model.DataRequirement> _Output;
+            private List<Hl7.Fhir.Model.STU3.DataRequirement> _Output;
             
             /// <summary>
             /// Relationship to another action
@@ -704,13 +704,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("groupingBehavior", Order=200)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionGroupingBehavior> GroupingBehaviorElement
+            public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
                 get { return _GroupingBehaviorElement; }
                 set { _GroupingBehaviorElement = value; OnPropertyChanged("GroupingBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionGroupingBehavior> _GroupingBehaviorElement;
+            private Code<Hl7.Fhir.Model.ActionGroupingBehavior> _GroupingBehaviorElement;
             
             /// <summary>
             /// visual-group | logical-group | sentence-group
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionGroupingBehavior? GroupingBehavior
+            public Hl7.Fhir.Model.ActionGroupingBehavior? GroupingBehavior
             {
                 get { return GroupingBehaviorElement != null ? GroupingBehaviorElement.Value : null; }
                 set
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         GroupingBehaviorElement = null;
                     else
-                        GroupingBehaviorElement = new Code<Hl7.Fhir.Model.STU3.ActionGroupingBehavior>(value);
+                        GroupingBehaviorElement = new Code<Hl7.Fhir.Model.ActionGroupingBehavior>(value);
                     OnPropertyChanged("GroupingBehavior");
                 }
             }
@@ -736,13 +736,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("selectionBehavior", Order=210)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionSelectionBehavior> SelectionBehaviorElement
+            public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
             {
                 get { return _SelectionBehaviorElement; }
                 set { _SelectionBehaviorElement = value; OnPropertyChanged("SelectionBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionSelectionBehavior> _SelectionBehaviorElement;
+            private Code<Hl7.Fhir.Model.ActionSelectionBehavior> _SelectionBehaviorElement;
             
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionSelectionBehavior? SelectionBehavior
+            public Hl7.Fhir.Model.ActionSelectionBehavior? SelectionBehavior
             {
                 get { return SelectionBehaviorElement != null ? SelectionBehaviorElement.Value : null; }
                 set
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         SelectionBehaviorElement = null;
                     else
-                        SelectionBehaviorElement = new Code<Hl7.Fhir.Model.STU3.ActionSelectionBehavior>(value);
+                        SelectionBehaviorElement = new Code<Hl7.Fhir.Model.ActionSelectionBehavior>(value);
                     OnPropertyChanged("SelectionBehavior");
                 }
             }
@@ -768,13 +768,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("requiredBehavior", Order=220)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionRequiredBehavior> RequiredBehaviorElement
+            public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
             {
                 get { return _RequiredBehaviorElement; }
                 set { _RequiredBehaviorElement = value; OnPropertyChanged("RequiredBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionRequiredBehavior> _RequiredBehaviorElement;
+            private Code<Hl7.Fhir.Model.ActionRequiredBehavior> _RequiredBehaviorElement;
             
             /// <summary>
             /// must | could | must-unless-documented
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionRequiredBehavior? RequiredBehavior
+            public Hl7.Fhir.Model.ActionRequiredBehavior? RequiredBehavior
             {
                 get { return RequiredBehaviorElement != null ? RequiredBehaviorElement.Value : null; }
                 set
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         RequiredBehaviorElement = null;
                     else
-                        RequiredBehaviorElement = new Code<Hl7.Fhir.Model.STU3.ActionRequiredBehavior>(value);
+                        RequiredBehaviorElement = new Code<Hl7.Fhir.Model.ActionRequiredBehavior>(value);
                     OnPropertyChanged("RequiredBehavior");
                 }
             }
@@ -800,13 +800,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("precheckBehavior", Order=230)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionPrecheckBehavior> PrecheckBehaviorElement
+            public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
             {
                 get { return _PrecheckBehaviorElement; }
                 set { _PrecheckBehaviorElement = value; OnPropertyChanged("PrecheckBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionPrecheckBehavior> _PrecheckBehaviorElement;
+            private Code<Hl7.Fhir.Model.ActionPrecheckBehavior> _PrecheckBehaviorElement;
             
             /// <summary>
             /// yes | no
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionPrecheckBehavior? PrecheckBehavior
+            public Hl7.Fhir.Model.ActionPrecheckBehavior? PrecheckBehavior
             {
                 get { return PrecheckBehaviorElement != null ? PrecheckBehaviorElement.Value : null; }
                 set
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         PrecheckBehaviorElement = null;
                     else
-                        PrecheckBehaviorElement = new Code<Hl7.Fhir.Model.STU3.ActionPrecheckBehavior>(value);
+                        PrecheckBehaviorElement = new Code<Hl7.Fhir.Model.ActionPrecheckBehavior>(value);
                     OnPropertyChanged("PrecheckBehavior");
                 }
             }
@@ -832,13 +832,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("cardinalityBehavior", Order=240)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionCardinalityBehavior> CardinalityBehaviorElement
+            public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
             {
                 get { return _CardinalityBehaviorElement; }
                 set { _CardinalityBehaviorElement = value; OnPropertyChanged("CardinalityBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionCardinalityBehavior> _CardinalityBehaviorElement;
+            private Code<Hl7.Fhir.Model.ActionCardinalityBehavior> _CardinalityBehaviorElement;
             
             /// <summary>
             /// single | multiple
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionCardinalityBehavior? CardinalityBehavior
+            public Hl7.Fhir.Model.ActionCardinalityBehavior? CardinalityBehavior
             {
                 get { return CardinalityBehaviorElement != null ? CardinalityBehaviorElement.Value : null; }
                 set
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         CardinalityBehaviorElement = null;
                     else
-                        CardinalityBehaviorElement = new Code<Hl7.Fhir.Model.STU3.ActionCardinalityBehavior>(value);
+                        CardinalityBehaviorElement = new Code<Hl7.Fhir.Model.ActionCardinalityBehavior>(value);
                     OnPropertyChanged("CardinalityBehavior");
                 }
             }
@@ -930,21 +930,21 @@ namespace Hl7.Fhir.Model.STU3
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
                     if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.RelatedArtifact>(Documentation.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(Documentation.DeepCopy());
                     if(GoalIdElement != null) dest.GoalIdElement = new List<Hl7.Fhir.Model.Id>(GoalIdElement.DeepCopy());
-                    if(TriggerDefinition != null) dest.TriggerDefinition = new List<Hl7.Fhir.Model.TriggerDefinition>(TriggerDefinition.DeepCopy());
+                    if(TriggerDefinition != null) dest.TriggerDefinition = new List<Hl7.Fhir.Model.STU3.TriggerDefinition>(TriggerDefinition.DeepCopy());
                     if(Condition != null) dest.Condition = new List<ConditionComponent>(Condition.DeepCopy());
-                    if(Input != null) dest.Input = new List<Hl7.Fhir.Model.DataRequirement>(Input.DeepCopy());
-                    if(Output != null) dest.Output = new List<Hl7.Fhir.Model.DataRequirement>(Output.DeepCopy());
+                    if(Input != null) dest.Input = new List<Hl7.Fhir.Model.STU3.DataRequirement>(Input.DeepCopy());
+                    if(Output != null) dest.Output = new List<Hl7.Fhir.Model.STU3.DataRequirement>(Output.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<RelatedActionComponent>(RelatedAction.DeepCopy());
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.STU3.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
-                    if(SelectionBehaviorElement != null) dest.SelectionBehaviorElement = (Code<Hl7.Fhir.Model.STU3.ActionSelectionBehavior>)SelectionBehaviorElement.DeepCopy();
-                    if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.STU3.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
-                    if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.STU3.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
-                    if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.STU3.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
+                    if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
+                    if(SelectionBehaviorElement != null) dest.SelectionBehaviorElement = (Code<Hl7.Fhir.Model.ActionSelectionBehavior>)SelectionBehaviorElement.DeepCopy();
+                    if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
+                    if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
+                    if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
                     if(Definition != null) dest.Definition = (Hl7.Fhir.Model.STU3.ResourceReference)Definition.DeepCopy();
                     if(Transform != null) dest.Transform = (Hl7.Fhir.Model.STU3.ResourceReference)Transform.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<DynamicValueComponent>(DynamicValue.DeepCopy());
@@ -1116,13 +1116,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("kind", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionConditionKind> KindElement
+            public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
             {
                 get { return _KindElement; }
                 set { _KindElement = value; OnPropertyChanged("KindElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionConditionKind> _KindElement;
+            private Code<Hl7.Fhir.Model.ActionConditionKind> _KindElement;
             
             /// <summary>
             /// applicability | start | stop
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionConditionKind? Kind
+            public Hl7.Fhir.Model.ActionConditionKind? Kind
             {
                 get { return KindElement != null ? KindElement.Value : null; }
                 set
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         KindElement = null;
                     else
-                        KindElement = new Code<Hl7.Fhir.Model.STU3.ActionConditionKind>(value);
+                        KindElement = new Code<Hl7.Fhir.Model.ActionConditionKind>(value);
                     OnPropertyChanged("Kind");
                 }
             }
@@ -1246,7 +1246,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.STU3.ActionConditionKind>)KindElement.DeepCopy();
+                    if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ActionConditionKind>)KindElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.FhirString)LanguageElement.DeepCopy();
                     if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
@@ -1366,13 +1366,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("relationship", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ActionRelationshipType> RelationshipElement
+            public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
             {
                 get { return _RelationshipElement; }
                 set { _RelationshipElement = value; OnPropertyChanged("RelationshipElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ActionRelationshipType> _RelationshipElement;
+            private Code<Hl7.Fhir.Model.ActionRelationshipType> _RelationshipElement;
             
             /// <summary>
             /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
@@ -1380,7 +1380,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ActionRelationshipType? Relationship
+            public Hl7.Fhir.Model.ActionRelationshipType? Relationship
             {
                 get { return RelationshipElement != null ? RelationshipElement.Value : null; }
                 set
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         RelationshipElement = null;
                     else
-                        RelationshipElement = new Code<Hl7.Fhir.Model.STU3.ActionRelationshipType>(value);
+                        RelationshipElement = new Code<Hl7.Fhir.Model.ActionRelationshipType>(value);
                     OnPropertyChanged("Relationship");
                 }
             }
@@ -1416,7 +1416,7 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(ActionIdElement != null) dest.ActionIdElement = (Hl7.Fhir.Model.Id)ActionIdElement.DeepCopy();
-                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.STU3.ActionRelationshipType>)RelationshipElement.DeepCopy();
+                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
                     if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
                     return dest;
                 }
@@ -1992,13 +1992,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.PublicationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired | unknown
@@ -2006,7 +2006,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.PublicationStatus? Status
+        public Hl7.Fhir.Model.PublicationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -2014,7 +2014,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.PublicationStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -2343,13 +2343,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("contributor", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Contributor> Contributor
+        public List<Hl7.Fhir.Model.STU3.Contributor> Contributor
         {
-            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.Contributor>(); return _Contributor; }
+            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(); return _Contributor; }
             set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private List<Hl7.Fhir.Model.Contributor> _Contributor;
+        private List<Hl7.Fhir.Model.STU3.Contributor> _Contributor;
         
         /// <summary>
         /// Contact details for the publisher
@@ -2358,13 +2358,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
         
         /// <summary>
         /// Use and/or publishing restrictions
@@ -2404,13 +2404,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("relatedArtifact", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
+        public List<Hl7.Fhir.Model.STU3.RelatedArtifact> RelatedArtifact
         {
-            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
+            get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(); return _RelatedArtifact; }
             set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
         }
         
-        private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
+        private List<Hl7.Fhir.Model.STU3.RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
         /// Logic used by the plan definition
@@ -2470,7 +2470,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.PublicationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
@@ -2483,10 +2483,10 @@ namespace Hl7.Fhir.Model.STU3
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
-                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(Contributor.DeepCopy());
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.STU3.Contributor>(Contributor.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
+                if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Library.DeepCopy());
                 if(Goal != null) dest.Goal = new List<GoalComponent>(Goal.DeepCopy());
                 if(Action != null) dest.Action = new List<ActionComponent>(Action.DeepCopy());

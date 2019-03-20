@@ -74,5 +74,35 @@ namespace Hl7.Fhir.Rest
         {
             return RefreshBundleAsync(client, bundle).WaitResult();
         }
+
+        public static async Task<Model.R4.Bundle> RefreshBundleAsync(this FhirR4Client client, Model.R4.Bundle bundle)
+        {
+            if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+
+            if (bundle.Type != BundleType.Searchset)
+                throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
+
+            // Clone old bundle, without the entries (so, just the header)
+            var result = (Model.R4.Bundle)bundle.DeepCopy();
+
+            result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
+            result.Meta = new Meta();
+            result.Meta.LastUpdated = DateTimeOffset.Now;
+
+            foreach (var entry in result.Entry)
+            {
+                if (entry.Resource != null)
+                {
+                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl).ConfigureAwait(false);
+                }
+            }
+
+            return result;
+        }
+
+        public static Model.R4.Bundle RefreshBundle(this FhirR4Client client, Model.R4.Bundle bundle)
+        {
+            return RefreshBundleAsync(client, bundle).WaitResult();
+        }
     }
 }

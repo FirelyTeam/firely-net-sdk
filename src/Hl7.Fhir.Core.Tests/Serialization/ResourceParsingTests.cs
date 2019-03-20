@@ -428,6 +428,79 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void R4QuantitySubTypesRoundTrip()
+        {
+            var p = new Fhir.Model.R4.Patient();
+            p.Extension = new List<Extension>
+            {
+                new Extension( "Age", new Fhir.Model.R4.Age { Code = "year", Value = 40 } ),
+                new Extension( "Count", new Fhir.Model.R4.Count { Code = "1", Value = 17 } ),
+                new Extension( "Distance", new Fhir.Model.R4.Distance { Code = "km", Value = 42.5M } ),
+                new Extension( "Duration", new Fhir.Model.R4.Duration { Code = "s", Value = 3.72M } ),
+                new Extension( "Money", new Fhir.Model.R4.Money { Currency = Fhir.Model.R4.Currencies.USD, Value = 1000 } ),
+                new Extension( "SimpleQuantity", new SimpleQuantity { Code = "ml/s", Value = 45.78M } ),
+                new Extension( "Quantity", new Quantity { Code = "mol/s", Value = 3 } )
+            };
+
+            var xmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.R4);
+            var xml = xmlSerializer.SerializeToString(p);
+            var xmlParser = new FhirXmlParser(Fhir.Model.Version.R4);
+            var patientFromXml = xmlParser.Parse<Fhir.Model.R4.Patient>(xml);
+
+            // In R4 the classes derived from Quantity are separate FHIR types - except SimpleQuantity, that is serialized/deserialized back to Quantity,
+            // and Money, that is not derived from Quantity anymore
+
+            Assert.IsInstanceOfType(patientFromXml.Extension[0].Value, typeof(Fhir.Model.R4.Age));
+            Assert.AreEqual("year", ((Quantity)patientFromXml.Extension[0].Value).Code);
+            Assert.AreEqual(40, ((Quantity)patientFromXml.Extension[0].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[1].Value, typeof(Fhir.Model.R4.Count));
+            Assert.AreEqual("1", ((Quantity)patientFromXml.Extension[1].Value).Code);
+            Assert.AreEqual(17, ((Quantity)patientFromXml.Extension[1].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[2].Value, typeof(Fhir.Model.R4.Distance));
+            Assert.AreEqual("km", ((Quantity)patientFromXml.Extension[2].Value).Code);
+            Assert.AreEqual(42.5M, ((Quantity)patientFromXml.Extension[2].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[3].Value, typeof(Fhir.Model.R4.Duration));
+            Assert.AreEqual("s", ((Quantity)patientFromXml.Extension[3].Value).Code);
+            Assert.AreEqual(3.72M, ((Quantity)patientFromXml.Extension[3].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[4].Value, typeof(Fhir.Model.R4.Money));
+            Assert.AreEqual(Fhir.Model.R4.Currencies.USD, ((Fhir.Model.R4.Money)patientFromXml.Extension[4].Value).Currency);
+            Assert.AreEqual(1000, ((Fhir.Model.R4.Money)patientFromXml.Extension[4].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[5].Value, typeof(Quantity));   // SimpleQuantity => Quantity
+            Assert.AreEqual("ml/s", ((Quantity)patientFromXml.Extension[5].Value).Code);
+            Assert.AreEqual(45.78M, ((Quantity)patientFromXml.Extension[5].Value).Value);
+            Assert.IsInstanceOfType(patientFromXml.Extension[6].Value, typeof(Quantity));
+            Assert.AreEqual("mol/s", ((Quantity)patientFromXml.Extension[6].Value).Code);
+            Assert.AreEqual(3, ((Quantity)patientFromXml.Extension[6].Value).Value);
+
+            var jsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.R4);
+            var json = jsonSerializer.SerializeToString(p);
+            var jsonParser = new FhirJsonParser(Fhir.Model.Version.R4);
+            var patientFromJson = jsonParser.Parse<Fhir.Model.R4.Patient>(json);
+
+            Assert.IsInstanceOfType(patientFromJson.Extension[0].Value, typeof(Fhir.Model.R4.Age));
+            Assert.AreEqual("year", ((Quantity)patientFromJson.Extension[0].Value).Code);
+            Assert.AreEqual(40, ((Quantity)patientFromJson.Extension[0].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[1].Value, typeof(Fhir.Model.R4.Count));
+            Assert.AreEqual("1", ((Quantity)patientFromJson.Extension[1].Value).Code);
+            Assert.AreEqual(17, ((Quantity)patientFromJson.Extension[1].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[2].Value, typeof(Fhir.Model.R4.Distance));
+            Assert.AreEqual("km", ((Quantity)patientFromJson.Extension[2].Value).Code);
+            Assert.AreEqual(42.5M, ((Quantity)patientFromJson.Extension[2].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[3].Value, typeof(Fhir.Model.R4.Duration));
+            Assert.AreEqual("s", ((Quantity)patientFromJson.Extension[3].Value).Code);
+            Assert.AreEqual(3.72M, ((Quantity)patientFromJson.Extension[3].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[4].Value, typeof(Fhir.Model.R4.Money));
+            Assert.AreEqual(Fhir.Model.R4.Currencies.USD, ((Fhir.Model.R4.Money)patientFromJson.Extension[4].Value).Currency);
+            Assert.AreEqual(1000, ((Fhir.Model.R4.Money)patientFromJson.Extension[4].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[5].Value, typeof(Quantity));   // SimpleQuantity => Quantity
+            Assert.AreEqual("ml/s", ((Quantity)patientFromJson.Extension[5].Value).Code);
+            Assert.AreEqual(45.78M, ((Quantity)patientFromJson.Extension[5].Value).Value);
+            Assert.IsInstanceOfType(patientFromJson.Extension[6].Value, typeof(Quantity));
+            Assert.AreEqual("mol/s", ((Quantity)patientFromJson.Extension[6].Value).Code);
+            Assert.AreEqual(3, ((Quantity)patientFromJson.Extension[6].Value).Value);
+        }
+
+        [TestMethod]
         public void NarrativeMustBeValidXml()
         {
             try

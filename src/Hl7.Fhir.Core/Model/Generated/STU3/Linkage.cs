@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.LinkageType> TypeElement
+            public Code<Hl7.Fhir.Model.LinkageType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.LinkageType> _TypeElement;
+            private Code<Hl7.Fhir.Model.LinkageType> _TypeElement;
             
             /// <summary>
             /// source | alternate | historical
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.LinkageType? Type
+            public Hl7.Fhir.Model.LinkageType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         TypeElement = null;
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.STU3.LinkageType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.LinkageType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.LinkageType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.LinkageType>)TypeElement.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
                     return dest;
                 }

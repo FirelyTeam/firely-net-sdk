@@ -789,13 +789,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.CarePlanIntent> IntentElement
+        public Code<Hl7.Fhir.Model.CarePlanIntent> IntentElement
         {
             get { return _IntentElement; }
             set { _IntentElement = value; OnPropertyChanged("IntentElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.CarePlanIntent> _IntentElement;
+        private Code<Hl7.Fhir.Model.CarePlanIntent> _IntentElement;
         
         /// <summary>
         /// proposal | plan | order | option
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.CarePlanIntent? Intent
+        public Hl7.Fhir.Model.CarePlanIntent? Intent
         {
             get { return IntentElement != null ? IntentElement.Value : null; }
             set
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     IntentElement = null;
                 else
-                    IntentElement = new Code<Hl7.Fhir.Model.STU3.CarePlanIntent>(value);
+                    IntentElement = new Code<Hl7.Fhir.Model.CarePlanIntent>(value);
                 OnPropertyChanged("Intent");
             }
         }
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Replaces.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.STU3.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.CarePlanStatus>)StatusElement.DeepCopy();
-                if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.STU3.CarePlanIntent>)IntentElement.DeepCopy();
+                if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.CarePlanIntent>)IntentElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();

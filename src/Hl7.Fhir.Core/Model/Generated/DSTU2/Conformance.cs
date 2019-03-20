@@ -1927,13 +1927,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("modifier", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
+            public List<Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>> ModifierElement
             {
-                get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
+                get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>>(); return _ModifierElement; }
                 set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.SearchModifierCode>> _ModifierElement;
+            private List<Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>> _ModifierElement;
             
             /// <summary>
             /// missing | exact | contains | not | text | in | not-in | below | above | type
@@ -1941,7 +1941,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.SearchModifierCode?> Modifier
+            public IEnumerable<Hl7.Fhir.Model.DSTU2.SearchModifierCode?> Modifier
             {
                 get { return ModifierElement != null ? ModifierElement.Select(elem => elem.Value) : null; }
                 set
@@ -1949,7 +1949,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if (value == null)
                         ModifierElement = null;
                     else
-                        ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
+                        ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>(elem)));
                     OnPropertyChanged("Modifier");
                 }
             }
@@ -1999,7 +1999,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
-                    if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(ModifierElement.DeepCopy());
+                    if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.DSTU2.SearchModifierCode>>(ModifierElement.DeepCopy());
                     if(ChainElement != null) dest.ChainElement = new List<Hl7.Fhir.Model.FhirString>(ChainElement.DeepCopy());
                     return dest;
                 }
@@ -2684,13 +2684,13 @@ namespace Hl7.Fhir.Model.DSTU2
             /// </summary>
             [FhirElement("category", Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
+            public Code<Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory> CategoryElement
             {
                 get { return _CategoryElement; }
                 set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.MessageSignificanceCategory> _CategoryElement;
+            private Code<Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory> _CategoryElement;
             
             /// <summary>
             /// Consequence | Currency | Notification
@@ -2698,7 +2698,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.MessageSignificanceCategory? Category
+            public Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory? Category
             {
                 get { return CategoryElement != null ? CategoryElement.Value : null; }
                 set
@@ -2706,7 +2706,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if (value == null)
                         CategoryElement = null;
                     else
-                        CategoryElement = new Code<Hl7.Fhir.Model.MessageSignificanceCategory>(value);
+                        CategoryElement = new Code<Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory>(value);
                     OnPropertyChanged("Category");
                 }
             }
@@ -2849,7 +2849,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageSignificanceCategory>)CategoryElement.DeepCopy();
+                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.DSTU2.ConformanceEventMode>)ModeElement.DeepCopy();
                     if(FocusElement != null) dest.FocusElement = (Code<Hl7.Fhir.Model.ResourceType>)FocusElement.DeepCopy();
                     if(Request != null) dest.Request = (Hl7.Fhir.Model.DSTU2.ResourceReference)Request.DeepCopy();

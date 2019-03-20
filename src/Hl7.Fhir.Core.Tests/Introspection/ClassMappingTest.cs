@@ -61,6 +61,13 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual("Lane", mapping.Name);
             Assert.AreEqual(typeof(LaneV3), mapping.NativeType);
             Assert.IsNull(mapping.Profile);
+
+            mapping = ClassMapping.Create(typeof(LaneV4));
+            Assert.IsTrue(mapping.IsResource);
+            Assert.AreEqual(Fhir.Model.Version.R4, mapping.Version);
+            Assert.AreEqual("Lane", mapping.Name);
+            Assert.AreEqual(typeof(LaneV4), mapping.NativeType);
+            Assert.IsNull(mapping.Profile);
         }
 
 
@@ -111,6 +118,9 @@ namespace Hl7.Fhir.Tests.Introspection
 
     [FhirType(Fhir.Model.Version.STU3, "Lane", IsResource = true)]
     public class LaneV3 { }
+
+    [FhirType(Fhir.Model.Version.R4, "Lane", IsResource = true)]
+    public class LaneV4 { }
 
     /* 
      * Datatype classes for tests

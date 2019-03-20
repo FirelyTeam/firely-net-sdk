@@ -355,6 +355,7 @@ public class PrimitiveType
         new PrimitiveType("id", "Id", "string"),
         new PrimitiveType("code", "Code", "string" ),
         new PrimitiveType("oid", "Oid", "string"),
+        new PrimitiveType("uuid", "Uuid", "string"),
         new PrimitiveType("uri", "FhirUri", "string"),
         new PrimitiveType("url", "Url", "string"),
         new PrimitiveType("canonical", "Canonical", "string"),
@@ -602,6 +603,7 @@ public class ValueSet
                 }
             }
         }
+        Patch(valueSetsByUrlByVersion);
         ExtractShared(valueSetsByUrlByVersion);
         var commonFHIRDefinedType = CreateCommonFHIRDefinedType(valueSetsByUrlByVersion);
         if (commonFHIRDefinedType != null)
@@ -709,6 +711,22 @@ public class ValueSet
             Description = valueSetElement.SelectSingleNode("fhir:description/@value", nse).InnerText,
             Values = values
         };
+    }
+
+    private static void Patch(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion)
+    {
+        // Fix duplicate name
+        valueSetsByUrlByVersion["R4"]["http://hl7.org/fhir/ValueSet/medication-statement-status"].EnumName = "MedicationStatementStatus";
+
+        // Use R4 HTTP verbs for all version - they are the most comprehensive
+        var httpVerbs = valueSetsByUrlByVersion["R4"]["http://hl7.org/fhir/ValueSet/http-verb"];
+        valueSetsByUrlByVersion["DSTU2"]["http://hl7.org/fhir/ValueSet/http-verb"] = httpVerbs;
+        valueSetsByUrlByVersion["STU3"]["http://hl7.org/fhir/ValueSet/http-verb"] = httpVerbs;
+
+        // Use R4 search parameter types for all version - they are the most comprehensive
+        var searchParamTypes = valueSetsByUrlByVersion["R4"]["http://hl7.org/fhir/ValueSet/search-param-type"];
+        valueSetsByUrlByVersion["DSTU2"]["http://hl7.org/fhir/ValueSet/search-param-type"] = searchParamTypes;
+        valueSetsByUrlByVersion["STU3"]["http://hl7.org/fhir/ValueSet/search-param-type"] = searchParamTypes;
     }
 
     private static void ExtractShared(Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion)
@@ -933,6 +951,16 @@ public class ResourceDetails
     public bool IsResource()
     {
         return BaseType.EndsWith(".DomainResource") || BaseType.EndsWith(".Resource") || Name == "DomainResource" || Name == "Resource";
+    }
+
+    public PropertyDetails GetProperty(string name)
+    {
+        return Properties.FirstOrDefault(p => p.Name == name);
+    }
+
+    public ComponentDetails GetComponent(string name)
+    {
+        return Components.FirstOrDefault(c => c.Name == name);
     }
 
     /// <summary>
@@ -1299,11 +1327,40 @@ public class ResourceDetails
             }
         }
 
-        // Make the DSTU2 Element.Id a string as in STU3 - less restrictive
-        var dstu2Element = resourcesByNameByVersion["DSTU2"]["Element"];
-        var dstu2ElementIdElement = dstu2Element.Properties.Single(p => p.Name == "IdElement");
-        dstu2ElementIdElement.PropType = "Hl7.Fhir.Model.FhirString";
-        dstu2ElementIdElement.NativeType = "string";
+        var propertyTypes = new string[][]
+        {
+            // Make the DSTU2 Element.Id a string as in STU3 - less restrictive
+            new[] { "DSTU2", "Element", "IdElement", "Hl7.Fhir.Model.FhirString", "string"},
+            // Make the DSTU2 and STU3 Meta.Profile a Canonical as in R4 
+            new[] {"DSTU2", "Meta", "ProfileElement", "Hl7.Fhir.Model.Canonical", null},
+            new[] {"STU3", "Meta", "ProfileElement", "Hl7.Fhir.Model.Canonical", null},
+            // Make the DSTU2 and STU3 Attachment.UrlElement a Url as in R4 
+            new[] {"DSTU2", "Attachment", "UrlElement", "Hl7.Fhir.Model.Url", null},
+            new[] {"STU3", "Attachment", "UrlElement", "Hl7.Fhir.Model.Url", null},
+            // Make Extension.UrlElement a URI as in DSTU2 and STU3
+            new[] {"R4", "Extension", "UrlElement", "Hl7.Fhir.Model.FhirUri", null},
+            // Make the DSTU2 and STU3 Annotation.TextElement Markdown as in R4
+            new[] {"DSTU2", "Annotation", "TextElement", "Hl7.Fhir.Model.Markdown", null},
+            new[] {"STU3", "Annotation", "TextElement", "Hl7.Fhir.Model.Markdown", null},
+            // Make Identifier.UseElement untyped - so that it can stay version-independent (the IdentifierUse value set changed in R4)
+            new[] { "DSTU2", "Identifier", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+            new[] { "STU3", "Identifier", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+            new[] { "R4", "Identifier", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+            // Make Address.UseElement untyped - so that it can stay version-independent (the AddressUse value set changed in R4)
+            new[] { "DSTU2", "Address", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+            new[] { "STU3", "Address", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+            new[] { "R4", "Address", "UseElement", "Hl7.Fhir.Model.Code", "string"},
+        };
+
+        foreach (var propertyType in propertyTypes)
+        {
+            var property = resourcesByNameByVersion[propertyType[0]][propertyType[1]].GetProperty(propertyType[2]);
+            property.PropType = propertyType[3];
+            if (propertyType[4]  != null)
+            {
+                property.NativeType = propertyType[4];
+            }
+        }
 
         // Make DSTU2 Parameters constraints the same as in STU3 - the DSTU2 ones are wrong
         var dstu2Parameters = resourcesByNameByVersion["DSTU2"]["Parameters"];
@@ -1318,6 +1375,17 @@ public class ResourceDetails
                 XPath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
             }
         };
+
+        // Make OperationOutcome.Isse.CodeElement untyped - so that the changes in the IssueType enumeration do not cause the OperationOutcome to be version-specific
+        var dstu2OperationOutcomeIssueCodeElement = resourcesByNameByVersion["DSTU2"]["OperationOutcome"].GetComponent("IssueComponent").GetProperty("CodeElement");
+        dstu2OperationOutcomeIssueCodeElement.PropType = "Hl7.Fhir.Model.Code";
+        dstu2OperationOutcomeIssueCodeElement.NativeType = "string";
+        var stu3OperationOutcomeIssueCodeElement = resourcesByNameByVersion["STU3"]["OperationOutcome"].GetComponent("IssueComponent").GetProperty("CodeElement");
+        stu3OperationOutcomeIssueCodeElement.PropType = "Hl7.Fhir.Model.Code";
+        stu3OperationOutcomeIssueCodeElement.NativeType = "string";
+        var r4OperationOutcomeIssueCodeElement = resourcesByNameByVersion["R4"]["OperationOutcome"].GetComponent("IssueComponent").GetProperty("CodeElement");
+        r4OperationOutcomeIssueCodeElement.PropType = "Hl7.Fhir.Model.Code";
+        r4OperationOutcomeIssueCodeElement.NativeType = "string";
     }
 
     private static List<ResourceDetails> LoadResources(LoadedVersion loadedVersion, Dictionary<string, string> enumTypesByValueSetUrl)
@@ -1547,9 +1615,9 @@ public class ResourceDetails
     private static List<PropertyDetails> GetProperties(string className, string resourceName, XmlElement e, XmlNamespaceManager ns, Dictionary<string, string> enumTypesByValueSetUrl)
     {
         var result = new List<PropertyDetails>();
-        foreach (var snapshotElement in e.SelectNodes("fhir:differential/fhir:element", ns).OfType<XmlElement>())
+        foreach (var differentialElement in e.SelectNodes("fhir:differential/fhir:element", ns).OfType<XmlElement>())
         {
-            var pd = PropertyDetails.Parse(className, resourceName, snapshotElement, ns, enumTypesByValueSetUrl);
+            var pd = PropertyDetails.Parse(className, resourceName, differentialElement, ns, enumTypesByValueSetUrl);
             if (pd != null)
             {
                 result.Add(pd);
@@ -1699,6 +1767,11 @@ public class ComponentDetails
     /// Component properties - corresponding to the C# sub-class properties
     /// </summary>
     public List<PropertyDetails> Properties;
+
+    public PropertyDetails GetProperty(string name)
+    {
+        return Properties.FirstOrDefault(p => p.Name == name);
+    }
 
     public ComponentDetails Clone(string version)
     {
@@ -2307,16 +2380,40 @@ public class PropertyDetails
     public static PropertyDetails Parse(string className, string resourceName, XmlElement element, XmlNamespaceManager ns, Dictionary<string, string> enumTypesByValueSetUrl)
     {
         var result = new PropertyDetails();
+
         if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", ns) != null)
+        {
             result.InSummaryVersions.Add(string.Empty);
+        }
+
         if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", ns) != null)
+        {
             result.IsXmlAttribute = true;
-        if (element.SelectSingleNode("fhir:short/@value", ns) != null)
-            result.Summary = element.SelectSingleNode("fhir:short/@value", ns).Value;
-        if (element.SelectSingleNode("fhir:type/fhir:code/@value", ns) != null)
-            result.PropType = element.SelectSingleNode("fhir:type/fhir:code/@value", ns).Value;
+        }
+
+        var shortNode = element.SelectSingleNode("fhir:short/@value", ns);
+        if (shortNode != null)
+        {
+            result.Summary = shortNode.Value;
+        }
+
+        var typeCodeNode = element.SelectSingleNode("fhir:type/fhir:code/@value", ns);
+        if (typeCodeNode != null)
+        {
+            result.PropType = typeCodeNode.Value;
+        }
         else
-            result.PropType = "BackboneElement";
+        {
+            var typeJsonTypeNode = element.SelectSingleNode("fhir:type/fhir:code/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type']/fhir:valueString/@value", ns);
+            if (typeJsonTypeNode != null)
+            {
+                result.PropType = typeJsonTypeNode.Value;
+            }
+            else
+            {
+                result.PropType = "BackboneElement";
+            }
+        }
 
         // Check for a nameReference to another property
         var parsedReferencedType = ParseReferencedType(element, ns, enumTypesByValueSetUrl);
@@ -2831,6 +2928,8 @@ public class SearchParameter
             case "composite": _outputType = "Composite"; break;
             case "quantity": _outputType = "Quantity"; break;
             case "uri": _outputType = "Uri"; break;
+            case "special": _outputType = "Special"; break;
+            default: throw new InvalidDataException($"Unknown or not supported search type '{searchType}'");
         }
         var xpath = sp.SelectSingleNode("fhir:xpath/@value", ns)?.Value ??
             string.Empty;

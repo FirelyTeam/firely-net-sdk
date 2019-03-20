@@ -103,48 +103,22 @@ namespace Hl7.Fhir.ElementModel
         /// </remarks>
         public static Element ParseBindable(this ITypedElement instance)
         {
-            var dstu2InstanceType = Model.DSTU2.ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
-            if (dstu2InstanceType != null)
+            var type = Utility.EnumUtility.ParseLiteral<FHIRDefinedType>(instance.InstanceType);
+            switch (type)
             {
-                switch (dstu2InstanceType)
-                {
-                    case Model.DSTU2.FHIRDefinedType.Code:
-                        return instance.ParsePrimitive<Code>();
-                    case Model.DSTU2.FHIRDefinedType.Coding:
-                        return instance.ParseCoding();
-                    case Model.DSTU2.FHIRDefinedType.CodeableConcept:
-                        return instance.ParseCodeableConcept();
-                    case Model.DSTU2.FHIRDefinedType.Quantity:
-                        return parseQuantity(instance);
-                    case Model.DSTU2.FHIRDefinedType.String:
-                        return new Code(instance.ParsePrimitive<FhirString>()?.Value);
-                    case Model.DSTU2.FHIRDefinedType.Uri:
-                        return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
-                    case Model.DSTU2.FHIRDefinedType.Extension:
-                        return parseExtension(instance);
-                    default:
-                        // Not bindable
-                        return null;
-                }
-            }
-
-            var stu3InstanceType = Model.STU3.ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
-
-            switch (stu3InstanceType)
-            {
-                case Model.STU3.FHIRAllTypes.Code:
+                case FHIRDefinedType.Code:
                     return instance.ParsePrimitive<Code>();
-                case Model.STU3.FHIRAllTypes.Coding:
+                case FHIRDefinedType.Coding:
                     return instance.ParseCoding();
-                case Model.STU3.FHIRAllTypes.CodeableConcept:
+                case FHIRDefinedType.CodeableConcept:
                     return instance.ParseCodeableConcept();
-                case Model.STU3.FHIRAllTypes.Quantity:
+                case FHIRDefinedType.Quantity:
                     return parseQuantity(instance);
-                case Model.STU3.FHIRAllTypes.String:
+                case FHIRDefinedType.String:
                     return new Code(instance.ParsePrimitive<FhirString>()?.Value);
-                case Model.STU3.FHIRAllTypes.Uri:
+                case FHIRDefinedType.Uri:
                     return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
-                case Model.STU3.FHIRAllTypes.Extension:
+                case FHIRDefinedType.Extension:
                     return parseExtension(instance);
                 case null:
                 //HACK: fall through - IElementNav did not provide a type
@@ -217,8 +191,20 @@ namespace Hl7.Fhir.ElementModel
             return new Model.STU3.ResourceReference
             {
                 Reference = instance.Children("reference").GetString(),
-                Display = instance.Children("display").GetString(),
-                Identifier = null, // TODO
+                Display = instance.Children("display").GetString()
+            };
+        }
+
+        [Obsolete("Use ParseR4ResourceReference(this ITypedElement instance) instead")]
+        public static Model.R4.ResourceReference ParseR4ResourceReference(this IElementNavigator instance)
+             => ParseR4ResourceReference(instance.ToTypedElement());
+
+        public static Model.R4.ResourceReference ParseR4ResourceReference(this ITypedElement instance)
+        {
+            return new Model.R4.ResourceReference
+            {
+                Reference = instance.Children("reference").GetString(),
+                Display = instance.Children("display").GetString()
             };
         }
 

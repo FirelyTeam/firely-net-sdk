@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
                 return String.Format("Text=\"{0}\"", Text);
             return string.Join(", ", string.Join(", ", Line.ToArray()), 
                 City, State, PostalCode, Country)
-                + (Use.HasValue ? " Use=\"" + Use.Value + "\"" : "")
+                + (Use != null ? " Use=\"" + Use + "\"" : "")
                 + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
         }
     }

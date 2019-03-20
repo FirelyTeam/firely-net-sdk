@@ -45,6 +45,16 @@ namespace Hl7.Fhir.Rest
             return result += identifier.Value;
         }
 
+        internal static string ToToken(this Model.R4.Identifier identifier)
+        {
+            var result = string.Empty;
+            if (!string.IsNullOrEmpty(identifier.System))
+            {
+                result += $"{identifier.System}|";
+            }
+            return result += identifier.Value;
+        }
+
         internal static string ToToken(this Model.DSTU2.ContactPoint contactPoint)
         {
             var result = string.Empty;
@@ -56,6 +66,16 @@ namespace Hl7.Fhir.Rest
         }
 
         internal static string ToToken(this Model.STU3.ContactPoint contactPoint)
+        {
+            var result = string.Empty;
+            if (contactPoint.Use.HasValue)
+            {
+                result += $"{contactPoint.Use}|";
+            }
+            return result += contactPoint.Value;
+        }
+
+        internal static string ToToken(this Model.R4.ContactPoint contactPoint)
         {
             var result = string.Empty;
             if (contactPoint.Use.HasValue)

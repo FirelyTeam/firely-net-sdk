@@ -236,16 +236,22 @@ namespace Hl7.Fhir.Rest
                         return id.ToToken();
                     case Model.STU3.Identifier id:
                         return id.ToToken();
+                    case Model.R4.Identifier id:
+                        return id.ToToken();
                     case Coding coding:
                         return coding.ToToken();
                     case Model.DSTU2.ContactPoint contactPoint:
                         return contactPoint.ToToken();
                     case Model.STU3.ContactPoint contactPoint:
                         return contactPoint.ToToken();
+                    case Model.R4.ContactPoint contactPoint:
+                        return contactPoint.ToToken();
                     case CodeableConcept codeableConcept:
                         return codeableConcept.ToToken();
                     default:
-                        if (Model.DSTU2.ModelInfo.IsPrimitive(parameter.Value.GetType()) || Model.STU3.ModelInfo.IsPrimitive(parameter.Value.GetType()))
+                        if (Model.DSTU2.ModelInfo.IsPrimitive(parameter.Value.GetType()) 
+                            || Model.STU3.ModelInfo.IsPrimitive(parameter.Value.GetType()) 
+                            || Model.R4.ModelInfo.IsPrimitive(parameter.Value.GetType()))
                         {
                             return parameter.Value.ToString();
                         }

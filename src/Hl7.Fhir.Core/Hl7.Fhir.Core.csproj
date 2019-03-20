@@ -10,9 +10,9 @@
     <Version>$(FhirApiVersion)</Version>
     <PackageId>CareEvolution.Fhir.Core</PackageId>
     <Title>HL7 FHIR Core support</Title>	
-    <Summary>.NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.2) and STU3 (3.0.1)</Summary>
-    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers. It supports FHIR versions DSTU2 (1.0.2) and STU3 (3.0.1)</Description>
-    <PackageTags>HL7 FHIR REST parse serialize class model DSTU2 STU3</PackageTags>
+    <Summary>.NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0.2), STU3 (3.0.1) and R4 (4.0.0)</Summary>
+    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers. It supports FHIR versions DSTU2 (1.0.2), STU3 (3.0.1) and R4 (4.0.0)</Description>
+    <PackageTags>HL7 FHIR REST parse serialize class model DSTU2 STU3 R4</PackageTags>
     <AssemblyName>Hl7.Fhir.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
@@ -22,7 +22,6 @@
     <EmbeddedResource Remove="Rest\Search\**" />
     <None Remove="Rest\Search\**" />
   </ItemGroup>
-
 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
@@ -39,12 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Validation\xhtml\fhir-xhtml.xsd" />
-    <None Include="Validation\xhtml\xml.xsd" />
     <None Include="Model\Source-DSTU2\expansions.xml" />
     <None Include="Model\Source-DSTU2\profiles-resources.xml" />
     <None Include="Model\Source-DSTU2\profiles-types.xml" />
     <None Include="Model\Source-DSTU2\search-parameters.xml" />
+    <None Include="Model\Source-R4\expansions.xml" />
+    <None Include="Model\Source-R4\profiles-resources.xml" />
+    <None Include="Model\Source-R4\profiles-types.xml" />
+    <None Include="Model\Source-R4\search-parameters.xml" />
     <None Include="Model\Source-STU3\expansions.xml" />
     <None Include="Model\Source-STU3\profiles-resources.xml" />
     <None Include="Model\Source-STU3\profiles-types.xml" />
@@ -54,16 +55,13 @@
     <PackageReference Include="Hl7.Fhir.Serialization" Version="1.2.0-beta2" />
     <PackageReference Include="Hl7.Fhir.Support" Version="1.2.0-beta2" />
     <PackageReference Include="Hl7.FhirPath" Version="1.2.0-beta2" />
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Generated\DSTU2\" />
+    <Folder Include="Model\Generated\R4\" />
     <Folder Include="Model\Generated\STU3\" />
   </ItemGroup>
 </Project>

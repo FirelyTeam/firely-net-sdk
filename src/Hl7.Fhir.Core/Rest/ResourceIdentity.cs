@@ -212,6 +212,11 @@ namespace Hl7.Fhir.Rest
             return ResourceIdentity.Core(type.GetLiteral());
         }
 
+        public static ResourceIdentity Core(Model.R4.FHIRDefinedType type)
+        {
+            return ResourceIdentity.Core(type.GetLiteral());
+        }
+
 
         public const string CORE_BASE_URL = "http://hl7.org/fhir/StructureDefinition/";
 

@@ -39,7 +39,7 @@
     <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
     <None Remove="TestData\TestPatient.xml" />
-    <None Remove="TestData\testscript-example(example)-STU3.xml" />
+    <None Remove="TestData\testscript-example(example)-STU3-R4.xml" />
     <None Remove="TestData\testscript-example(example).xml" />
     <None Remove="TestData\typeErrors.xml" />
   </ItemGroup>

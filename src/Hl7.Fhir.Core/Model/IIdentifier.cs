@@ -9,9 +9,9 @@ namespace Hl7.Fhir.Model
     public interface IIdentifier
     {
         /// <summary>
-        /// usual | official | temp | secondary (If known)
+        /// usual | official | temp | secondary | old (R4 only) (If known)
         /// </summary>
-        IdentifierUse? Use { get; set; }
+        string Use { get; set; }
 
         /// <summary>
         /// Description of identifier
@@ -57,9 +57,9 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// usual | official | temp | secondary (If known)
+        /// usual | official | temp | secondary | old (R4 only) (If known)
         /// </summary>
-        public IdentifierUse? Use { get; set; }
+        public string Use { get; set; }
 
         /// <summary>
         /// Description of identifier

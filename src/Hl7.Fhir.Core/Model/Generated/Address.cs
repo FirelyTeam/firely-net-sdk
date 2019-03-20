@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v3.0.1
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,13 +59,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AddressUse> UseElement
+        public Hl7.Fhir.Model.Code UseElement
         {
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.AddressUse> _UseElement;
+        private Hl7.Fhir.Model.Code _UseElement;
         
         /// <summary>
         /// home | work | temp | old - purpose of this address
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AddressUse? Use
+        public string Use
         {
             get { return UseElement != null ? UseElement.Value : null; }
             set
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                     UseElement = null;
                 else
-                    UseElement = new Code<Hl7.Fhir.Model.AddressUse>(value);
+                    UseElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Use");
             }
         }
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.AddressUse>)UseElement.DeepCopy();
+                if(UseElement != null) dest.UseElement = (Hl7.Fhir.Model.Code)UseElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AddressType>)TypeElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 if(LineElement != null) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(LineElement.DeepCopy());

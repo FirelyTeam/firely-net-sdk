@@ -59,13 +59,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.IdentifierUse> UseElement
+        public Hl7.Fhir.Model.Code UseElement
         {
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.IdentifierUse> _UseElement;
+        private Hl7.Fhir.Model.Code _UseElement;
         
         /// <summary>
         /// usual | official | temp | secondary (If known)
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.IdentifierUse? Use
+        public string Use
         {
             get { return UseElement != null ? UseElement.Value : null; }
             set
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (value == null)
                     UseElement = null;
                 else
-                    UseElement = new Code<Hl7.Fhir.Model.IdentifierUse>(value);
+                    UseElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Use");
             }
         }
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.IdentifierUse>)UseElement.DeepCopy();
+                if(UseElement != null) dest.UseElement = (Hl7.Fhir.Model.Code)UseElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();

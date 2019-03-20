@@ -263,13 +263,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("entryType", Order=100)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.UDIEntryType> EntryTypeElement
+            public Code<Hl7.Fhir.Model.UDIEntryType> EntryTypeElement
             {
                 get { return _EntryTypeElement; }
                 set { _EntryTypeElement = value; OnPropertyChanged("EntryTypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.UDIEntryType> _EntryTypeElement;
+            private Code<Hl7.Fhir.Model.UDIEntryType> _EntryTypeElement;
             
             /// <summary>
             /// barcode | rfid | manual +
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.UDIEntryType? EntryType
+            public Hl7.Fhir.Model.UDIEntryType? EntryType
             {
                 get { return EntryTypeElement != null ? EntryTypeElement.Value : null; }
                 set
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         EntryTypeElement = null;
                     else
-                        EntryTypeElement = new Code<Hl7.Fhir.Model.STU3.UDIEntryType>(value);
+                        EntryTypeElement = new Code<Hl7.Fhir.Model.UDIEntryType>(value);
                     OnPropertyChanged("EntryType");
                 }
             }
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(CarrierHRFElement != null) dest.CarrierHRFElement = (Hl7.Fhir.Model.FhirString)CarrierHRFElement.DeepCopy();
                     if(CarrierAIDCElement != null) dest.CarrierAIDCElement = (Hl7.Fhir.Model.Base64Binary)CarrierAIDCElement.DeepCopy();
                     if(IssuerElement != null) dest.IssuerElement = (Hl7.Fhir.Model.FhirUri)IssuerElement.DeepCopy();
-                    if(EntryTypeElement != null) dest.EntryTypeElement = (Code<Hl7.Fhir.Model.STU3.UDIEntryType>)EntryTypeElement.DeepCopy();
+                    if(EntryTypeElement != null) dest.EntryTypeElement = (Code<Hl7.Fhir.Model.UDIEntryType>)EntryTypeElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -420,13 +420,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.FHIRDeviceStatus> StatusElement
+        public Code<Hl7.Fhir.Model.FHIRDeviceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.FHIRDeviceStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.FHIRDeviceStatus> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error | unknown
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.FHIRDeviceStatus? Status
+        public Hl7.Fhir.Model.FHIRDeviceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.FHIRDeviceStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.FHIRDeviceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model.STU3
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
                 if(Udi != null) dest.Udi = (UdiComponent)Udi.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.FHIRDeviceStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FHIRDeviceStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
                 if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopy();

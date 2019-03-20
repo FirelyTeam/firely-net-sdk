@@ -16,6 +16,7 @@ using Hl7.Fhir.Model.DSTU2;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Validation
 {
@@ -116,7 +117,7 @@ namespace Hl7.Fhir.Tests.Validation
             issue.Severity = IssueSeverity.Information;
             validateErrorOrFail(oo, true);
 
-            issue.Code = IssueType.Forbidden;
+            issue.Code = IssueType.Forbidden.GetLiteral();
 
             DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, oo, true);
         }

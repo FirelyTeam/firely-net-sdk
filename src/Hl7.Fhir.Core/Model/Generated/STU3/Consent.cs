@@ -319,13 +319,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning> MeaningElement
+            public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
             {
                 get { return _MeaningElement; }
                 set { _MeaningElement = value; OnPropertyChanged("MeaningElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning> _MeaningElement;
+            private Code<Hl7.Fhir.Model.ConsentDataMeaning> _MeaningElement;
             
             /// <summary>
             /// instance | related | dependents | authoredby
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ConsentDataMeaning? Meaning
+            public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
             {
                 get { return MeaningElement != null ? MeaningElement.Value : null; }
                 set
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         MeaningElement = null;
                     else
-                        MeaningElement = new Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning>(value);
+                        MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
                     OnPropertyChanged("Meaning");
                 }
             }
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning>)MeaningElement.DeepCopy();
+                    if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopy();
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.STU3.ResourceReference)Reference.DeepCopy();
                     return dest;
                 }
@@ -839,13 +839,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning> MeaningElement
+            public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
             {
                 get { return _MeaningElement; }
                 set { _MeaningElement = value; OnPropertyChanged("MeaningElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning> _MeaningElement;
+            private Code<Hl7.Fhir.Model.ConsentDataMeaning> _MeaningElement;
             
             /// <summary>
             /// instance | related | dependents | authoredby
@@ -853,7 +853,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.ConsentDataMeaning? Meaning
+            public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
             {
                 get { return MeaningElement != null ? MeaningElement.Value : null; }
                 set
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         MeaningElement = null;
                     else
-                        MeaningElement = new Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning>(value);
+                        MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
                     OnPropertyChanged("Meaning");
                 }
             }
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.STU3.ConsentDataMeaning>)MeaningElement.DeepCopy();
+                    if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopy();
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.STU3.ResourceReference)Reference.DeepCopy();
                     return dest;
                 }
@@ -973,13 +973,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.ConsentState> StatusElement
+        public Code<Hl7.Fhir.Model.ConsentState> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.ConsentState> _StatusElement;
+        private Code<Hl7.Fhir.Model.ConsentState> _StatusElement;
         
         /// <summary>
         /// draft | proposed | active | rejected | inactive | entered-in-error
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.ConsentState? Status
+        public Hl7.Fhir.Model.ConsentState? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.ConsentState>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.ConsentState>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ConsentState>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConsentState>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();

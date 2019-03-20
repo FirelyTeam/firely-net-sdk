@@ -68,13 +68,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.TestReportParticipantType> TypeElement
+            public Code<Hl7.Fhir.Model.TestReportParticipantType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.TestReportParticipantType> _TypeElement;
+            private Code<Hl7.Fhir.Model.TestReportParticipantType> _TypeElement;
             
             /// <summary>
             /// test-engine | client | server
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.TestReportParticipantType? Type
+            public Hl7.Fhir.Model.TestReportParticipantType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         TypeElement = null;
                     else
-                        TypeElement = new Code<Hl7.Fhir.Model.STU3.TestReportParticipantType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.TestReportParticipantType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.TestReportParticipantType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TestReportParticipantType>)TypeElement.DeepCopy();
                     if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     return dest;
@@ -440,13 +440,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("result", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.TestReportActionResult> ResultElement
+            public Code<Hl7.Fhir.Model.TestReportActionResult> ResultElement
             {
                 get { return _ResultElement; }
                 set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.TestReportActionResult> _ResultElement;
+            private Code<Hl7.Fhir.Model.TestReportActionResult> _ResultElement;
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.TestReportActionResult? Result
+            public Hl7.Fhir.Model.TestReportActionResult? Result
             {
                 get { return ResultElement != null ? ResultElement.Value : null; }
                 set
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ResultElement = null;
                     else
-                        ResultElement = new Code<Hl7.Fhir.Model.STU3.TestReportActionResult>(value);
+                        ResultElement = new Code<Hl7.Fhir.Model.TestReportActionResult>(value);
                     OnPropertyChanged("Result");
                 }
             }
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.STU3.TestReportActionResult>)ResultElement.DeepCopy();
+                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReportActionResult>)ResultElement.DeepCopy();
                     if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
                     if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirUri)DetailElement.DeepCopy();
                     return dest;
@@ -620,13 +620,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("result", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.STU3.TestReportActionResult> ResultElement
+            public Code<Hl7.Fhir.Model.TestReportActionResult> ResultElement
             {
                 get { return _ResultElement; }
                 set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.STU3.TestReportActionResult> _ResultElement;
+            private Code<Hl7.Fhir.Model.TestReportActionResult> _ResultElement;
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.STU3.TestReportActionResult? Result
+            public Hl7.Fhir.Model.TestReportActionResult? Result
             {
                 get { return ResultElement != null ? ResultElement.Value : null; }
                 set
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model.STU3
                     if (value == null)
                         ResultElement = null;
                     else
-                        ResultElement = new Code<Hl7.Fhir.Model.STU3.TestReportActionResult>(value);
+                        ResultElement = new Code<Hl7.Fhir.Model.TestReportActionResult>(value);
                     OnPropertyChanged("Result");
                 }
             }
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.STU3.TestReportActionResult>)ResultElement.DeepCopy();
+                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReportActionResult>)ResultElement.DeepCopy();
                     if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
                     if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                     return dest;
@@ -1280,13 +1280,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.TestReportStatus> StatusElement
+        public Code<Hl7.Fhir.Model.TestReportStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.TestReportStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.TestReportStatus> _StatusElement;
         
         /// <summary>
         /// completed | in-progress | waiting | stopped | entered-in-error
@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.TestReportStatus? Status
+        public Hl7.Fhir.Model.TestReportStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -1302,7 +1302,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.TestReportStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.TestReportStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1330,13 +1330,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.TestReportResult> ResultElement
+        public Code<Hl7.Fhir.Model.TestReportResult> ResultElement
         {
             get { return _ResultElement; }
             set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.TestReportResult> _ResultElement;
+        private Code<Hl7.Fhir.Model.TestReportResult> _ResultElement;
         
         /// <summary>
         /// pass | fail | pending
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.TestReportResult? Result
+        public Hl7.Fhir.Model.TestReportResult? Result
         {
             get { return ResultElement != null ? ResultElement.Value : null; }
             set
@@ -1352,7 +1352,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     ResultElement = null;
                 else
-                    ResultElement = new Code<Hl7.Fhir.Model.STU3.TestReportResult>(value);
+                    ResultElement = new Code<Hl7.Fhir.Model.TestReportResult>(value);
                 OnPropertyChanged("Result");
             }
         }
@@ -1546,9 +1546,9 @@ namespace Hl7.Fhir.Model.STU3
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.TestReportStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.TestReportStatus>)StatusElement.DeepCopy();
                 if(TestScript != null) dest.TestScript = (Hl7.Fhir.Model.STU3.ResourceReference)TestScript.DeepCopy();
-                if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.STU3.TestReportResult>)ResultElement.DeepCopy();
+                if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReportResult>)ResultElement.DeepCopy();
                 if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
                 if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();

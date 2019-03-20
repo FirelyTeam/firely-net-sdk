@@ -78,8 +78,15 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundTripOneExampleStu3()
         {
-            roundTripOneExample(Version.STU3, "testscript-example(example)-STU3.xml");
+            roundTripOneExample(Version.STU3, "testscript-example(example)-STU3-R4.xml");
             roundTripOneExample(Version.STU3, "TestPatient.xml");
+        }
+
+        [TestMethod]
+        public void RoundTripOneExampleR4()
+        {
+            roundTripOneExample(Version.R4, "testscript-example(example)-STU3-R4.xml");
+            roundTripOneExample(Version.R4, "TestPatient.xml");
         }
 
         private void roundTripOneExample(Fhir.Model.Version version, string filename)

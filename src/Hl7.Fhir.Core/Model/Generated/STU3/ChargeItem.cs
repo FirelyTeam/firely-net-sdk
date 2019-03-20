@@ -216,13 +216,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.ChargeItemStatus> StatusElement
+        public Code<Hl7.Fhir.Model.ChargeItemStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.ChargeItemStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ChargeItemStatus> _StatusElement;
         
         /// <summary>
         /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.ChargeItemStatus? Status
+        public Hl7.Fhir.Model.ChargeItemStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.ChargeItemStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.ChargeItemStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model.STU3
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                 if(DefinitionElement != null) dest.DefinitionElement = new List<Hl7.Fhir.Model.FhirUri>(DefinitionElement.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ChargeItemStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ChargeItemStatus>)StatusElement.DeepCopy();
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.STU3.ResourceReference>(PartOf.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();

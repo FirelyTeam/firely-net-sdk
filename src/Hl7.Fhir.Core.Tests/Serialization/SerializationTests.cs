@@ -384,6 +384,12 @@ namespace Hl7.Fhir.Tests.Serialization
                     }
                 }
             };
+            var completeR4Data = new FhirXmlSerializer(Fhir.Model.Version.R4).SerializeToString(p, Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(completeR4Data.Contains("<name value=\"N\""));
+            Assert.IsTrue(completeR4Data.Contains("<valueString value=\"V\""));
+            var summaryR4Data = new FhirXmlSerializer(Fhir.Model.Version.R4).SerializeToString(p, Fhir.Rest.SummaryType.True);
+            Assert.IsTrue(summaryR4Data.Contains("<name value=\"N\""));
+            Assert.IsTrue(summaryR4Data.Contains("<valueString value=\"V\""));
             var completeStu3Data = new FhirXmlSerializer(Fhir.Model.Version.STU3).SerializeToString(p, Fhir.Rest.SummaryType.False);
             Assert.IsTrue(completeStu3Data.Contains("<name value=\"N\""));
             Assert.IsTrue(completeStu3Data.Contains("<valueString value=\"V\""));
@@ -782,8 +788,17 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void MultiVersionXmlSerialization()
         {
+            var r4bundle = new Fhir.Model.R4.Bundle { Id = "101" };
+            var fhirR4XmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.R4);
+            var xml = fhirR4XmlSerializer.SerializeToString(r4bundle);
+            var fhirR4XmlParser = new FhirXmlParser(Fhir.Model.Version.R4);
+            var deserializedR4bundle = fhirR4XmlParser.Parse<Resource>(xml) as Fhir.Model.R4.Bundle;
+            Assert.IsNotNull(deserializedR4bundle);
+            Assert.AreEqual(r4bundle.Id, deserializedR4bundle.Id);
+
             var stu3bundle = new Fhir.Model.STU3.Bundle { Id = "101" };
-            var xml = FhirDstu2XmlSerializer.SerializeToString(stu3bundle);
+            var fhirStu3XmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.STU3);
+            xml = fhirStu3XmlSerializer.SerializeToString(stu3bundle);
             var fhirStu3XmlParser = new FhirXmlParser(Fhir.Model.Version.STU3);
             var deserializedStu3bundle = fhirStu3XmlParser.Parse<Resource>(xml) as Fhir.Model.STU3.Bundle;
             Assert.IsNotNull(deserializedStu3bundle);
@@ -799,8 +814,17 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void MultiVersionJsonSerialization()
         {
+            var r4bundle = new Fhir.Model.R4.Bundle { Id = "101" };
+            var fhirR4JsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.R4);
+            var json = fhirR4JsonSerializer.SerializeToString(r4bundle);
+            var fhirR4JsonParser = new FhirJsonParser(Fhir.Model.Version.R4);
+            var deserializedR4bundle = fhirR4JsonParser.Parse<Resource>(json) as Fhir.Model.R4.Bundle;
+            Assert.IsNotNull(deserializedR4bundle);
+            Assert.AreEqual(r4bundle.Id, deserializedR4bundle.Id);
+
             var stu3bundle = new Fhir.Model.STU3.Bundle { Id = "101" };
-            var json = FhirDstu2JsonSerializer.SerializeToString(stu3bundle);
+            var fhirStu3JsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.STU3);
+            json = fhirStu3JsonSerializer.SerializeToString(stu3bundle);
             var fhirStu3JsonParser = new FhirJsonParser(Fhir.Model.Version.STU3);
             var deserializedStu3bundle = fhirStu3JsonParser.Parse<Resource>(json) as Fhir.Model.STU3.Bundle;
             Assert.IsNotNull(deserializedStu3bundle);
@@ -823,7 +847,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Code = IssueType.NotFound,
+                        Code = IssueType.NotFound.GetLiteral(),
                         Details = new CodeableConcept("mysystem","mycode","not found!"),
                         Diagnostics = "diag",
                         Location = new[] { "loc1, loc2" },
@@ -866,6 +890,24 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, stu3outcomeIssue.Expression));
 
+            var fhirR4XmlSerializer = new FhirXmlSerializer(Fhir.Model.Version.R4);
+            var fhirR4XmlParser = new FhirXmlParser(Fhir.Model.Version.R4);
+
+            xml = fhirR4XmlSerializer.SerializeToString(outcome);
+            var r4outcome = fhirR4XmlParser.Parse<Fhir.Model.OperationOutcome>(xml);
+            Assert.AreEqual(outcome.Text.Div, stu3outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, stu3outcome.Issue.Count);
+            var r4outcomeIssue = r4outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, r4outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, r4outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, r4outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, r4outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, r4outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, r4outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, r4outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, r4outcomeIssue.Severity);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, r4outcomeIssue.Expression));
+
             var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2XmlParser.Parse<OperationOutcome>(xml));
             Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));
         }
@@ -880,7 +922,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Code = IssueType.NotFound,
+                        Code = IssueType.NotFound.GetLiteral(),
                         Details = new CodeableConcept("mysystem","mycode","not found!"),
                         Diagnostics = "diag",
                         Location = new[] { "loc1, loc2" },
@@ -921,6 +963,23 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, stu3outcomeIssue.Location));
             Assert.AreEqual(outcomeIssue.Severity, stu3outcomeIssue.Severity);
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, stu3outcomeIssue.Expression));
+
+            var fhirR4JsonSerializer = new FhirJsonSerializer(Fhir.Model.Version.R4);
+            var fhirR4JsonParser = new FhirJsonParser(Fhir.Model.Version.R4);
+            json = fhirR4JsonSerializer.SerializeToString(outcome);
+            var r4outcome = fhirR4JsonParser.Parse<OperationOutcome>(json);
+            Assert.AreEqual(outcome.Text.Div, r4outcome.Text.Div);
+            Assert.AreEqual(outcome.Issue.Count, r4outcome.Issue.Count);
+            var r4outcomeIssue = stu3outcome.Issue[0];
+            Assert.AreEqual(outcomeIssue.Code, r4outcomeIssue.Code);
+            Assert.AreEqual(outcomeIssue.Details.Text, r4outcomeIssue.Details.Text);
+            Assert.AreEqual(outcomeIssue.Details.Coding.Count, r4outcomeIssue.Details.Coding.Count);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].System, r4outcomeIssue.Details.Coding[0].System);
+            Assert.AreEqual(outcomeIssue.Details.Coding[0].Code, r4outcomeIssue.Details.Coding[0].Code);
+            Assert.AreEqual(outcomeIssue.Diagnostics, r4outcomeIssue.Diagnostics);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Location, r4outcomeIssue.Location));
+            Assert.AreEqual(outcomeIssue.Severity, r4outcomeIssue.Severity);
+            Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, r4outcomeIssue.Expression));
 
             var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2JsonParser.Parse<OperationOutcome>(json));
             Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));

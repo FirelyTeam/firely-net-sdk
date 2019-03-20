@@ -290,13 +290,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.STU3.PublicationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.STU3.PublicationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired | unknown
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.STU3.PublicationStatus? Status
+        public Hl7.Fhir.Model.PublicationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     StatusElement = null;
                 else
-                    StatusElement = new Code<Hl7.Fhir.Model.STU3.PublicationStatus>(value);
+                    StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -423,13 +423,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ContactDetail> Contact
+        public List<Hl7.Fhir.Model.STU3.ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+        private List<Hl7.Fhir.Model.STU3.ContactDetail> _Contact;
         
         /// <summary>
         /// Context the content is intended to support
@@ -796,13 +796,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("comparator", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Code<Hl7.Fhir.Model.STU3.SearchComparator>> ComparatorElement
+        public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
         {
-            get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchComparator>>(); return _ComparatorElement; }
+            get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(); return _ComparatorElement; }
             set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
         }
         
-        private List<Code<Hl7.Fhir.Model.STU3.SearchComparator>> _ComparatorElement;
+        private List<Code<Hl7.Fhir.Model.SearchComparator>> _ComparatorElement;
         
         /// <summary>
         /// eq | ne | gt | lt | ge | le | sa | eb | ap
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<Hl7.Fhir.Model.STU3.SearchComparator?> Comparator
+        public IEnumerable<Hl7.Fhir.Model.SearchComparator?> Comparator
         {
             get { return ComparatorElement != null ? ComparatorElement.Select(elem => elem.Value) : null; }
             set
@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     ComparatorElement = null;
                 else
-                    ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchComparator>(elem)));
+                    ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchComparator>(elem)));
                 OnPropertyChanged("Comparator");
             }
         }
@@ -829,13 +829,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("modifier", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
+        public List<Code<Hl7.Fhir.Model.STU3.SearchModifierCode>> ModifierElement
         {
-            get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(); return _ModifierElement; }
+            get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchModifierCode>>(); return _ModifierElement; }
             set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
         }
         
-        private List<Code<Hl7.Fhir.Model.SearchModifierCode>> _ModifierElement;
+        private List<Code<Hl7.Fhir.Model.STU3.SearchModifierCode>> _ModifierElement;
         
         /// <summary>
         /// missing | exact | contains | not | text | in | not-in | below | above | type
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<Hl7.Fhir.Model.SearchModifierCode?> Modifier
+        public IEnumerable<Hl7.Fhir.Model.STU3.SearchModifierCode?> Modifier
         {
             get { return ModifierElement != null ? ModifierElement.Select(elem => elem.Value) : null; }
             set
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (value == null)
                     ModifierElement = null;
                 else
-                    ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchModifierCode>(elem)));
+                    ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.SearchModifierCode>(elem)));
                 OnPropertyChanged("Modifier");
             }
         }
@@ -940,11 +940,11 @@ namespace Hl7.Fhir.Model.STU3
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.PublicationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
@@ -957,8 +957,8 @@ namespace Hl7.Fhir.Model.STU3
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.XPathUsageType>)XpathUsageElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
-                if(ComparatorElement != null) dest.ComparatorElement = new List<Code<Hl7.Fhir.Model.STU3.SearchComparator>>(ComparatorElement.DeepCopy());
-                if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.SearchModifierCode>>(ModifierElement.DeepCopy());
+                if(ComparatorElement != null) dest.ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchComparator>>(ComparatorElement.DeepCopy());
+                if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.STU3.SearchModifierCode>>(ModifierElement.DeepCopy());
                 if(ChainElement != null) dest.ChainElement = new List<Hl7.Fhir.Model.FhirString>(ChainElement.DeepCopy());
                 if(Component != null) dest.Component = new List<ComponentComponent>(Component.DeepCopy());
                 return dest;
