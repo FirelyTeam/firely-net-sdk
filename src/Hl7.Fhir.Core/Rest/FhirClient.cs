@@ -727,16 +727,16 @@ namespace Hl7.Fhir.Rest
             return internalHistoryAsync(resourceType, id, since, pageSize, summary).WaitResult();
         }
 
-#endregion
+        #endregion
 
-#region Transaction
+        #region Transaction
 
         /// <summary>
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
         /// <param name="bundle">The bundled creates, updates and deleted</param>
-        /// <returns>A bundle as returned by the server after it has processed the transaction, or null
-        /// if an error occurred.</returns>
+        /// <returns>A bundle as returned by the server after it has processed the transaction, or 
+        /// a FhirOperationException will be thrown if an error occurred.</returns>
         public Task<Bundle> TransactionAsync(Bundle bundle)
         {
             if (bundle == null) throw new ArgumentNullException(nameof(bundle));
@@ -748,8 +748,8 @@ namespace Hl7.Fhir.Rest
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
         /// <param name="bundle">The bundled creates, updates and deleted</param>
-        /// <returns>A bundle as returned by the server after it has processed the transaction, or null
-        /// if an error occurred.</returns>
+        /// <returns>A bundle as returned by the server after it has processed the transaction, or 
+        /// a FhirOperationException will be thrown if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
         {
             return TransactionAsync(bundle).WaitResult();
