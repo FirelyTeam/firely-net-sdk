@@ -7,28 +7,29 @@
  */
 
 using System;
-using Xunit;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.FhirPath.Tests
 {
-
+    [TestClass]
     public class QuantityTests
     {
-        [Fact]
+        [TestMethod]
         public void QuantityConstructor()
         {
             var newq = new Quantity(3.14m, "kg");
-            Assert.Equal("kg", newq.Unit);
-            Assert.Equal(3.14m, newq.Value);
+            Assert.AreEqual("kg", newq.Unit);
+            Assert.AreEqual(3.14m, newq.Value);
 
             newq = new Quantity(3.14, "kg", "http://someothersystem.nl");
-            Assert.Equal("kg", newq.Unit);
-            Assert.Equal(3.14m, newq.Value);
-            Assert.Equal("http://someothersystem.nl", newq.System);
+            Assert.AreEqual("kg", newq.Unit);
+            Assert.AreEqual(3.14m, newq.Value);
+            Assert.AreEqual("http://someothersystem.nl", newq.System);
         }
 
-        [Fact]
+        [TestMethod]
         public void QuantityEquals()
         {
             var newq = new Quantity(3.14m, "kg");
@@ -36,39 +37,39 @@ namespace Hl7.FhirPath.Tests
             var newq3 = new Quantity(3.14, "kg", "http://nu.nl");
             var newq4 = new Quantity(3.15, "kg");
 
-            Assert.Equal(newq, newq2);
-            Assert.Throws<NotSupportedException>( () => newq == newq3);
-            Assert.NotEqual(newq, newq4);
+            Assert.AreEqual(newq, newq2);
+            ExceptionAssert.Throws<NotSupportedException>( () => newq == newq3);
+            Assert.AreNotEqual(newq, newq4);
         }
 
-        [Fact]
+        [TestMethod]
         public void Comparison()
         {
             var smaller = new Quantity(3.14m, "kg");
             var smaller2 = new Quantity(3.14, "kg", Quantity.UCUM);
             var bigger = new Quantity(4.0, "kg");
 
-            Assert.True(smaller < bigger);
-            Assert.True(smaller <= smaller2);
-            Assert.True(bigger >= smaller);
+            Assert.IsTrue(smaller < bigger);
+            Assert.IsTrue(smaller <= smaller2);
+            Assert.IsTrue(bigger >= smaller);
 
-            Assert.Equal(-1, smaller.CompareTo(bigger));
-            Assert.Equal(1, bigger.CompareTo(smaller));
-            Assert.Equal(0, smaller.CompareTo(smaller));
+            Assert.AreEqual(-1, smaller.CompareTo(bigger));
+            Assert.AreEqual(1, bigger.CompareTo(smaller));
+            Assert.AreEqual(0, smaller.CompareTo(smaller));
         }
 
 
-        [Fact]
+        [TestMethod]
         public void DifferentUnitsNotSupported()
         {
             var a = new Quantity(3.14m, "kg");
             var b = new Quantity(30.5, "g");
 
-            Assert.Throws<NotSupportedException>( () => a < b);
-            Assert.Throws<NotSupportedException>(() => a == b);
-            Assert.Throws<NotSupportedException>(() => a >= b);
+            ExceptionAssert.Throws<NotSupportedException>( () => a < b);
+            ExceptionAssert.Throws<NotSupportedException>(() => a == b);
+            ExceptionAssert.Throws<NotSupportedException>(() => a >= b);
 
-            Assert.False(a.Equals(b));
+            Assert.IsFalse(a.Equals(b));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            TestHelper.AssertThrows<FhirOperationException>(act, "the patient is no longer on the server");
+            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
             
             
             Console.WriteLine("Test Completed");
