@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir'><contained></contained></Patient>";
             var parser = new FhirXmlParser();
 
-            TestHelper.AssertThrows<FormatException>(() => parser.Parse<Patient>(xml));
+            ExceptionAssert.Throws<FormatException>(() => parser.Parse<Patient>(xml));
         }
     }
 }

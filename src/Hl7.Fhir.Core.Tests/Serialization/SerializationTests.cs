@@ -231,10 +231,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
             Assert.IsTrue(noSummarySpecified.Contains("<photo"));
 
-            TestHelper.AssertThrows<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
-            TestHelper.AssertThrows<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
-            TestHelper.AssertThrows<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
-            TestHelper.AssertThrows<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
         }
 
         [TestMethod]

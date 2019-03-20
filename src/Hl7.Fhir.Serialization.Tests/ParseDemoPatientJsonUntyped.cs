@@ -9,6 +9,7 @@ using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.FhirPath;
 using Newtonsoft.Json;
+using Hl7.Fhir.Tests;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -141,16 +142,16 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesArrayMismatch()
         {
             var nav = FhirJsonNode.Parse("{ 'a': [2,3,4], '_a' : [2,4] }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': 2, '_a' : [2] }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': [2,3,4], '_a' : {} }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ '_a': [4,5,6] }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': [2,3,4] }", "test");
             Assert.IsTrue(nav.Children().Any());
@@ -163,44 +164,44 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesUnsupportedFeatures()
         {
             var nav = FhirJsonNode.Parse("{ 'a': '   ' }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': {}, '_a' : {} }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': {'active':true}, '_a': {'dummy':4} }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ '_a' : {} }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': 3, '_a' : 4 }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': new DateTime() }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ '_a': new DateTime() }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
         }
 
         [TestMethod]
         public void CatchNullErrors()
         {
             var nav = FhirJsonNode.Parse("{ 'a': null }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ '_a': null }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': null, '_a' : null }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': [null] }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNode.Parse("{ 'a': [null], '_a': [null] }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
         }
 
         [TestMethod]
