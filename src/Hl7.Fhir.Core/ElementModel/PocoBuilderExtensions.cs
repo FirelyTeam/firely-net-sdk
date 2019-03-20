@@ -115,7 +115,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 var newCoding = new Coding();
                 var q = instance.ParseQuantity();
-                newCoding.Code = q.Unit;
+                newCoding.Code = q.Code;
                 newCoding.System = q.System ?? "http://unitsofmeasure.org";
                 return newCoding;
             }
