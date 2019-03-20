@@ -62,13 +62,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The order that this is a response to
@@ -78,13 +78,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Request
+        public Hl7.Fhir.Model.ResourceReference Request
         {
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Request;
+        private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
         /// When the response was made
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Who
+        public Hl7.Fhir.Model.ResourceReference Who
         {
             get { return _Who; }
             set { _Who = value; OnPropertyChanged("Who"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Who;
+        private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
@@ -208,13 +208,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Fulfillment
+        public List<Hl7.Fhir.Model.ResourceReference> Fulfillment
         {
-            get { if(_Fulfillment==null) _Fulfillment = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Fulfillment; }
+            get { if(_Fulfillment==null) _Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Fulfillment; }
             set { _Fulfillment = value; OnPropertyChanged("Fulfillment"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Fulfillment;
+        private List<Hl7.Fhir.Model.ResourceReference> _Fulfillment;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -224,13 +224,13 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
-                if(Request != null) dest.Request = (Hl7.Fhir.Model.DSTU2.ResourceReference)Request.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Who != null) dest.Who = (Hl7.Fhir.Model.DSTU2.ResourceReference)Who.DeepCopy();
+                if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
                 if(OrderStatusElement != null) dest.OrderStatusElement = (Code<Hl7.Fhir.Model.DSTU2.OrderStatus>)OrderStatusElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Fulfillment.DeepCopy());
+                if(Fulfillment != null) dest.Fulfillment = new List<Hl7.Fhir.Model.ResourceReference>(Fulfillment.DeepCopy());
                 return dest;
             }
             else

@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -386,13 +386,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Request fulfilled by this QuestionnaireResponse
@@ -402,13 +402,13 @@ namespace Hl7.Fhir.Model.R4
         [References("CarePlan","ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> BasedOn
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
         {
-            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _BasedOn; }
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
             set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _BasedOn;
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
         
         /// <summary>
         /// Part of this action
@@ -418,13 +418,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Observation","Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> PartOf
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
         {
-            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _PartOf; }
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _PartOf;
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
         /// Form being answered
@@ -499,13 +499,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Encounter created as part of
@@ -514,13 +514,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Date the answers were gathered
@@ -562,13 +562,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// The person who answered the questions
@@ -577,13 +577,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Source
+        public Hl7.Fhir.Model.ResourceReference Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Source;
+        private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// Groups and questions
@@ -623,16 +623,16 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
-                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(BasedOn.DeepCopy());
-                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.R4.ResourceReference>(PartOf.DeepCopy());
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(QuestionnaireElement != null) dest.QuestionnaireElement = (Hl7.Fhir.Model.Canonical)QuestionnaireElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.QuestionnaireResponseStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.R4.ResourceReference)Encounter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(AuthoredElement != null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredElement.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.R4.ResourceReference)Author.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.R4.ResourceReference)Source.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Item != null) dest.Item = new List<ItemComponent>(Item.DeepCopy());
                 return dest;
             }

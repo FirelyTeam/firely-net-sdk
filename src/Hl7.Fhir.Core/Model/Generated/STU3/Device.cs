@@ -392,13 +392,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
@@ -659,13 +659,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Organization responsible for device
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Owner
+        public Hl7.Fhir.Model.ResourceReference Owner
         {
             get { return _Owner; }
             set { _Owner = value; OnPropertyChanged("Owner"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Owner;
+        private Hl7.Fhir.Model.ResourceReference _Owner;
         
         /// <summary>
         /// Details for human/organization for support
@@ -703,13 +703,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Network address to contact device
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Udi != null) dest.Udi = (UdiComponent)Udi.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FHIRDeviceStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
@@ -790,10 +790,10 @@ namespace Hl7.Fhir.Model.STU3
                 if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
                 if(ModelElement != null) dest.ModelElement = (Hl7.Fhir.Model.FhirString)ModelElement.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
-                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.STU3.ResourceReference)Owner.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Contact.DeepCopy());
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.STU3.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Safety != null) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(Safety.DeepCopy());

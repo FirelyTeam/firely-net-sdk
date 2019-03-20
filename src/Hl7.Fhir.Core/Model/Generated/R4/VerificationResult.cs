@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Who
+            public Hl7.Fhir.Model.ResourceReference Who
             {
                 get { return _Who; }
                 set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Who;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
             /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Who != null) dest.Who = (Hl7.Fhir.Model.R4.ResourceReference)Who.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                     if(CommunicationMethod != null) dest.CommunicationMethod = new List<Hl7.Fhir.Model.CodeableConcept>(CommunicationMethod.DeepCopy());
                     if(ValidationStatus != null) dest.ValidationStatus = (Hl7.Fhir.Model.CodeableConcept)ValidationStatus.DeepCopy();
@@ -290,13 +290,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Who
+            public Hl7.Fhir.Model.ResourceReference Who
             {
                 get { return _Who; }
                 set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Who;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
             /// When the who is asserting on behalf of another (organization or individual)
@@ -305,13 +305,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference OnBehalfOf
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
             {
                 get { return _OnBehalfOf; }
                 set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _OnBehalfOf;
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
             
             /// <summary>
             /// The method by which attested information was submitted/retrieved
@@ -457,8 +457,8 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Who != null) dest.Who = (Hl7.Fhir.Model.R4.ResourceReference)Who.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.R4.ResourceReference)OnBehalfOf.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
                     if(CommunicationMethod != null) dest.CommunicationMethod = (Hl7.Fhir.Model.CodeableConcept)CommunicationMethod.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
                     if(SourceIdentityCertificateElement != null) dest.SourceIdentityCertificateElement = (Hl7.Fhir.Model.FhirString)SourceIdentityCertificateElement.DeepCopy();
@@ -566,13 +566,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Organization
+            public Hl7.Fhir.Model.ResourceReference Organization
             {
                 get { return _Organization; }
                 set { _Organization = value; OnPropertyChanged("Organization"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
             /// A digital identity certificate associated with the validator
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.R4.ResourceReference)Organization.DeepCopy();
+                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(IdentityCertificateElement != null) dest.IdentityCertificateElement = (Hl7.Fhir.Model.FhirString)IdentityCertificateElement.DeepCopy();
                     if(AttestationSignature != null) dest.AttestationSignature = (Hl7.Fhir.Model.R4.Signature)AttestationSignature.DeepCopy();
                     return dest;
@@ -702,13 +702,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Target
+        public List<Hl7.Fhir.Model.ResourceReference> Target
         {
-            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Target; }
+            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Target;
+        private List<Hl7.Fhir.Model.ResourceReference> _Target;
         
         /// <summary>
         /// The fhirpath location(s) within the resource that was validated
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.R4.ResourceReference>(Target.DeepCopy());
+                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
                 if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.status>)StatusElement.DeepCopy();

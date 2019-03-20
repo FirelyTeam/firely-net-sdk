@@ -101,13 +101,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("information", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Information
+            public Hl7.Fhir.Model.ResourceReference Information
             {
                 get { return _Information; }
                 set { _Information = value; OnPropertyChanged("Information"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Information;
+            private Hl7.Fhir.Model.ResourceReference _Information;
             
             /// <summary>
             /// Applies to all items
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
-                    if(Information != null) dest.Information = (Hl7.Fhir.Model.R4.ResourceReference)Information.DeepCopy();
+                    if(Information != null) dest.Information = (Hl7.Fhir.Model.ResourceReference)Information.DeepCopy();
                     if(AppliesToAllElement != null) dest.AppliesToAllElement = (Hl7.Fhir.Model.FhirBoolean)AppliesToAllElement.DeepCopy();
                     return dest;
                 }
@@ -264,13 +264,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Coverage
+            public Hl7.Fhir.Model.ResourceReference Coverage
             {
                 get { return _Coverage; }
                 set { _Coverage = value; OnPropertyChanged("Coverage"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Coverage;
+            private Hl7.Fhir.Model.ResourceReference _Coverage;
             
             /// <summary>
             /// Additional provider contract number
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(FocalElement != null) dest.FocalElement = (Hl7.Fhir.Model.FhirBoolean)FocalElement.DeepCopy();
-                    if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.R4.ResourceReference)Coverage.DeepCopy();
+                    if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
                     if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
                     return dest;
                 }
@@ -467,13 +467,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Provider
+            public Hl7.Fhir.Model.ResourceReference Provider
             {
                 get { return _Provider; }
                 set { _Provider = value; OnPropertyChanged("Provider"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Provider;
+            private Hl7.Fhir.Model.ResourceReference _Provider;
             
             /// <summary>
             /// Count of products or services
@@ -508,13 +508,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Location","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Facility
+            public Hl7.Fhir.Model.ResourceReference Facility
             {
                 get { return _Facility; }
                 set { _Facility = value; OnPropertyChanged("Facility"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Facility;
+            private Hl7.Fhir.Model.ResourceReference _Facility;
             
             /// <summary>
             /// Applicable diagnosis
@@ -536,13 +536,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("detail", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Detail
+            public List<Hl7.Fhir.Model.ResourceReference> Detail
             {
-                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Detail; }
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Detail;
+            private List<Hl7.Fhir.Model.ResourceReference> _Detail;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -555,12 +555,12 @@ namespace Hl7.Fhir.Model.R4
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
-                    if(Provider != null) dest.Provider = (Hl7.Fhir.Model.R4.ResourceReference)Provider.DeepCopy();
+                    if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.R4.Money)UnitPrice.DeepCopy();
-                    if(Facility != null) dest.Facility = (Hl7.Fhir.Model.R4.ResourceReference)Facility.DeepCopy();
+                    if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
                     if(Diagnosis != null) dest.Diagnosis = new List<DiagnosisComponent>(Diagnosis.DeepCopy());
-                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.R4.ResourceReference>(Detail.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                     return dest;
                 }
                 else
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Diagnosis
             {
@@ -749,13 +749,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
@@ -846,13 +846,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Estimated date or dates of service
@@ -910,13 +910,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Enterer
+        public Hl7.Fhir.Model.ResourceReference Enterer
         {
             get { return _Enterer; }
             set { _Enterer = value; OnPropertyChanged("Enterer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Enterer;
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// Party responsible for the request
@@ -925,13 +925,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Provider
+        public Hl7.Fhir.Model.ResourceReference Provider
         {
             get { return _Provider; }
             set { _Provider = value; OnPropertyChanged("Provider"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Provider;
+        private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
         /// Coverage issuer
@@ -941,13 +941,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Insurer
+        public Hl7.Fhir.Model.ResourceReference Insurer
         {
             get { return _Insurer; }
             set { _Insurer = value; OnPropertyChanged("Insurer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Insurer;
+        private Hl7.Fhir.Model.ResourceReference _Insurer;
         
         /// <summary>
         /// Servicing facility
@@ -956,13 +956,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Facility
+        public Hl7.Fhir.Model.ResourceReference Facility
         {
             get { return _Facility; }
             set { _Facility = value; OnPropertyChanged("Facility"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Facility;
+        private Hl7.Fhir.Model.ResourceReference _Facility;
         
         /// <summary>
         /// Supporting information
@@ -1014,17 +1014,17 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.R4.EligibilityRequestPurpose>>(PurposeElement.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.R4.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.R4.ResourceReference)Enterer.DeepCopy();
-                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.R4.ResourceReference)Provider.DeepCopy();
-                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.R4.ResourceReference)Insurer.DeepCopy();
-                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.R4.ResourceReference)Facility.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
+                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
+                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
                 if(SupportingInfo != null) dest.SupportingInfo = new List<SupportingInformationComponent>(SupportingInfo.DeepCopy());
                 if(Insurance != null) dest.Insurance = new List<InsuranceComponent>(Insurance.DeepCopy());
                 if(Item != null) dest.Item = new List<DetailsComponent>(Item.DeepCopy());

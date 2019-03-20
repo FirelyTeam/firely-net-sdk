@@ -110,13 +110,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Who
+        public Hl7.Fhir.Model.ResourceReference Who
         {
             get { return _Who; }
             set { _Who = value; OnPropertyChanged("Who"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Who;
+        private Hl7.Fhir.Model.ResourceReference _Who;
         
         /// <summary>
         /// The party represented
@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference OnBehalfOf
+        public Hl7.Fhir.Model.ResourceReference OnBehalfOf
         {
             get { return _OnBehalfOf; }
             set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _OnBehalfOf;
+        private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
         
         /// <summary>
         /// The technical format of the signed resources
@@ -239,8 +239,8 @@ namespace Hl7.Fhir.Model.R4
                 base.CopyTo(dest);
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
-                if(Who != null) dest.Who = (Hl7.Fhir.Model.R4.ResourceReference)Who.DeepCopy();
-                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.R4.ResourceReference)OnBehalfOf.DeepCopy();
+                if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
                 if(TargetFormatElement != null) dest.TargetFormatElement = (Hl7.Fhir.Model.Code)TargetFormatElement.DeepCopy();
                 if(SigFormatElement != null) dest.SigFormatElement = (Hl7.Fhir.Model.Code)SigFormatElement.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();

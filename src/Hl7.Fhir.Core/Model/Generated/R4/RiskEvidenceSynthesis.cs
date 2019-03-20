@@ -991,13 +991,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the risk evidence synthesis
@@ -1518,13 +1518,13 @@ namespace Hl7.Fhir.Model.R4
         [References("EvidenceVariable")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Population
+        public Hl7.Fhir.Model.ResourceReference Population
         {
             get { return _Population; }
             set { _Population = value; OnPropertyChanged("Population"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Population;
+        private Hl7.Fhir.Model.ResourceReference _Population;
         
         /// <summary>
         /// What exposure?
@@ -1533,13 +1533,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("EvidenceVariable")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Exposure
+        public Hl7.Fhir.Model.ResourceReference Exposure
         {
             get { return _Exposure; }
             set { _Exposure = value; OnPropertyChanged("Exposure"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Exposure;
+        private Hl7.Fhir.Model.ResourceReference _Exposure;
         
         /// <summary>
         /// What outcome?
@@ -1549,13 +1549,13 @@ namespace Hl7.Fhir.Model.R4
         [References("EvidenceVariable")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Outcome
+        public Hl7.Fhir.Model.ResourceReference Outcome
         {
             get { return _Outcome; }
             set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Outcome;
+        private Hl7.Fhir.Model.ResourceReference _Outcome;
         
         /// <summary>
         /// What sample size was involved?
@@ -1623,7 +1623,7 @@ namespace Hl7.Fhir.Model.R4
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -1647,9 +1647,9 @@ namespace Hl7.Fhir.Model.R4
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.R4.RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(SynthesisType != null) dest.SynthesisType = (Hl7.Fhir.Model.CodeableConcept)SynthesisType.DeepCopy();
                 if(StudyType != null) dest.StudyType = (Hl7.Fhir.Model.CodeableConcept)StudyType.DeepCopy();
-                if(Population != null) dest.Population = (Hl7.Fhir.Model.R4.ResourceReference)Population.DeepCopy();
-                if(Exposure != null) dest.Exposure = (Hl7.Fhir.Model.R4.ResourceReference)Exposure.DeepCopy();
-                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.R4.ResourceReference)Outcome.DeepCopy();
+                if(Population != null) dest.Population = (Hl7.Fhir.Model.ResourceReference)Population.DeepCopy();
+                if(Exposure != null) dest.Exposure = (Hl7.Fhir.Model.ResourceReference)Exposure.DeepCopy();
+                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.ResourceReference)Outcome.DeepCopy();
                 if(SampleSize != null) dest.SampleSize = (SampleSizeComponent)SampleSize.DeepCopy();
                 if(RiskEstimate != null) dest.RiskEstimate = (RiskEstimateComponent)RiskEstimate.DeepCopy();
                 if(Certainty != null) dest.Certainty = new List<CertaintyComponent>(Certainty.DeepCopy());

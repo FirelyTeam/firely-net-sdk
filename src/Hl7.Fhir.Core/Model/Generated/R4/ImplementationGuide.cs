@@ -702,13 +702,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("reference", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Reference
+            public Hl7.Fhir.Model.ResourceReference Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Reference;
+            private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
             /// Versions this applies to (if different to IG)
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.R4.ResourceReference)Reference.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
                     if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.R4.FHIRVersion>>(FhirVersionElement.DeepCopy());
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Url),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Url),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Name
@@ -1689,13 +1689,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Reference
+            public Hl7.Fhir.Model.ResourceReference Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Reference;
+            private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
             /// Is an example/What is this an example of?
@@ -1751,7 +1751,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.R4.ResourceReference)Reference.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
                     if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
                     if(RelativePathElement != null) dest.RelativePathElement = (Hl7.Fhir.Model.Url)RelativePathElement.DeepCopy();
                     return dest;

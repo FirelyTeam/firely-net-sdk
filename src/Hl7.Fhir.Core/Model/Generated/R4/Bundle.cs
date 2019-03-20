@@ -1093,13 +1093,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.BundleType>)TypeElement.DeepCopy();
                 if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();

@@ -84,13 +84,13 @@ namespace Hl7.Fhir.Model.R4
             [References("MedicationKnowledge")]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Reference
+            public List<Hl7.Fhir.Model.ResourceReference> Reference
             {
-                get { if(_Reference==null) _Reference = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Reference; }
+                get { if(_Reference==null) _Reference = new List<Hl7.Fhir.Model.ResourceReference>(); return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Reference;
+            private List<Hl7.Fhir.Model.ResourceReference> _Reference;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.R4.ResourceReference>(Reference.DeepCopy());
+                    if(Reference != null) dest.Reference = new List<Hl7.Fhir.Model.ResourceReference>(Reference.DeepCopy());
                     return dest;
                 }
                 else
@@ -190,13 +190,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("DocumentReference","Media")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Source
+            public Hl7.Fhir.Model.ResourceReference Source
             {
                 get { return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Source;
+            private Hl7.Fhir.Model.ResourceReference _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Source != null) dest.Source = (Hl7.Fhir.Model.R4.ResourceReference)Source.DeepCopy();
+                    if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                     return dest;
                 }
                 else
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Item
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("indication", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Indication
             {
@@ -1369,13 +1369,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference RegulatoryAuthority
+            public Hl7.Fhir.Model.ResourceReference RegulatoryAuthority
             {
                 get { return _RegulatoryAuthority; }
                 set { _RegulatoryAuthority = value; OnPropertyChanged("RegulatoryAuthority"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _RegulatoryAuthority;
+            private Hl7.Fhir.Model.ResourceReference _RegulatoryAuthority;
             
             /// <summary>
             /// Specifies if changes are allowed when dispensing a medication from a regulatory perspective
@@ -1425,7 +1425,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(RegulatoryAuthority != null) dest.RegulatoryAuthority = (Hl7.Fhir.Model.R4.ResourceReference)RegulatoryAuthority.DeepCopy();
+                    if(RegulatoryAuthority != null) dest.RegulatoryAuthority = (Hl7.Fhir.Model.ResourceReference)RegulatoryAuthority.DeepCopy();
                     if(Substitution != null) dest.Substitution = new List<SubstitutionComponent>(Substitution.DeepCopy());
                     if(Schedule != null) dest.Schedule = new List<ScheduleComponent>(Schedule.DeepCopy());
                     if(MaxDispense != null) dest.MaxDispense = (MaxDispenseComponent)MaxDispense.DeepCopy();
@@ -1994,13 +1994,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Manufacturer
+        public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
             get { return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Manufacturer;
+        private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
         /// powder | tablets | capsule +
@@ -2085,13 +2085,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Medication")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> AssociatedMedication
+        public List<Hl7.Fhir.Model.ResourceReference> AssociatedMedication
         {
-            get { if(_AssociatedMedication==null) _AssociatedMedication = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _AssociatedMedication; }
+            get { if(_AssociatedMedication==null) _AssociatedMedication = new List<Hl7.Fhir.Model.ResourceReference>(); return _AssociatedMedication; }
             set { _AssociatedMedication = value; OnPropertyChanged("AssociatedMedication"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _AssociatedMedication;
+        private List<Hl7.Fhir.Model.ResourceReference> _AssociatedMedication;
         
         /// <summary>
         /// Category of the medication or product
@@ -2272,13 +2272,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DetectedIssue")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Contraindication
+        public List<Hl7.Fhir.Model.ResourceReference> Contraindication
         {
-            get { if(_Contraindication==null) _Contraindication = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Contraindication; }
+            get { if(_Contraindication==null) _Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contraindication; }
             set { _Contraindication = value; OnPropertyChanged("Contraindication"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Contraindication;
+        private List<Hl7.Fhir.Model.ResourceReference> _Contraindication;
         
         /// <summary>
         /// Regulatory information about a medication
@@ -2318,12 +2318,12 @@ namespace Hl7.Fhir.Model.R4
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.MedicationKnowledgeStatusCodes>)StatusElement.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.R4.ResourceReference)Manufacturer.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
                 if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
                 if(SynonymElement != null) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
                 if(RelatedMedicationKnowledge != null) dest.RelatedMedicationKnowledge = new List<RelatedMedicationKnowledgeComponent>(RelatedMedicationKnowledge.DeepCopy());
-                if(AssociatedMedication != null) dest.AssociatedMedication = new List<Hl7.Fhir.Model.R4.ResourceReference>(AssociatedMedication.DeepCopy());
+                if(AssociatedMedication != null) dest.AssociatedMedication = new List<Hl7.Fhir.Model.ResourceReference>(AssociatedMedication.DeepCopy());
                 if(ProductType != null) dest.ProductType = new List<Hl7.Fhir.Model.CodeableConcept>(ProductType.DeepCopy());
                 if(Monograph != null) dest.Monograph = new List<MonographComponent>(Monograph.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<IngredientComponent>(Ingredient.DeepCopy());
@@ -2335,7 +2335,7 @@ namespace Hl7.Fhir.Model.R4
                 if(MedicineClassification != null) dest.MedicineClassification = new List<MedicineClassificationComponent>(MedicineClassification.DeepCopy());
                 if(Packaging != null) dest.Packaging = (PackagingComponent)Packaging.DeepCopy();
                 if(DrugCharacteristic != null) dest.DrugCharacteristic = new List<DrugCharacteristicComponent>(DrugCharacteristic.DeepCopy());
-                if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.R4.ResourceReference>(Contraindication.DeepCopy());
+                if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(Contraindication.DeepCopy());
                 if(Regulatory != null) dest.Regulatory = new List<RegulatoryComponent>(Regulatory.DeepCopy());
                 if(Kinetics != null) dest.Kinetics = new List<KineticsComponent>(Kinetics.DeepCopy());
                 return dest;

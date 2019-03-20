@@ -790,13 +790,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Formal identifier for the study
@@ -838,13 +838,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("accession", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier Accession
+        public Hl7.Fhir.Model.Identifier Accession
         {
             get { return _Accession; }
             set { _Accession = value; OnPropertyChanged("Accession"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _Accession;
+        private Hl7.Fhir.Model.Identifier _Accession;
         
         /// <summary>
         /// Other identifiers for the study
@@ -853,13 +853,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Order(s) that caused this study to be performed
@@ -869,13 +869,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Order
+        public List<Hl7.Fhir.Model.ResourceReference> Order
         {
-            get { if(_Order==null) _Order = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Order; }
+            get { if(_Order==null) _Order = new List<Hl7.Fhir.Model.ResourceReference>(); return _Order; }
             set { _Order = value; OnPropertyChanged("Order"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Order;
+        private List<Hl7.Fhir.Model.ResourceReference> _Order;
         
         /// <summary>
         /// All series modality if actual acquisition modalities
@@ -899,13 +899,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Referrer
+        public Hl7.Fhir.Model.ResourceReference Referrer
         {
             get { return _Referrer; }
             set { _Referrer = value; OnPropertyChanged("Referrer"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Referrer;
+        private Hl7.Fhir.Model.ResourceReference _Referrer;
         
         /// <summary>
         /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE (0008,0056)
@@ -1049,13 +1049,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Procedure
+        public List<Hl7.Fhir.Model.ResourceReference> Procedure
         {
-            get { if(_Procedure==null) _Procedure = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Procedure; }
+            get { if(_Procedure==null) _Procedure = new List<Hl7.Fhir.Model.ResourceReference>(); return _Procedure; }
             set { _Procedure = value; OnPropertyChanged("Procedure"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Procedure;
+        private List<Hl7.Fhir.Model.ResourceReference> _Procedure;
         
         /// <summary>
         /// Who interpreted images
@@ -1064,13 +1064,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Interpreter
+        public Hl7.Fhir.Model.ResourceReference Interpreter
         {
             get { return _Interpreter; }
             set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Interpreter;
+        private Hl7.Fhir.Model.ResourceReference _Interpreter;
         
         /// <summary>
         /// Institution-generated description
@@ -1129,19 +1129,19 @@ namespace Hl7.Fhir.Model.DSTU2
             {
                 base.CopyTo(dest);
                 if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.DSTU2.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                if(Accession != null) dest.Accession = (Hl7.Fhir.Model.DSTU2.Identifier)Accession.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
-                if(Order != null) dest.Order = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Order.DeepCopy());
+                if(Accession != null) dest.Accession = (Hl7.Fhir.Model.Identifier)Accession.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Order != null) dest.Order = new List<Hl7.Fhir.Model.ResourceReference>(Order.DeepCopy());
                 if(ModalityList != null) dest.ModalityList = new List<Hl7.Fhir.Model.Coding>(ModalityList.DeepCopy());
-                if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Referrer.DeepCopy();
+                if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
                 if(AvailabilityElement != null) dest.AvailabilityElement = (Code<Hl7.Fhir.Model.InstanceAvailability>)AvailabilityElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(NumberOfSeriesElement != null) dest.NumberOfSeriesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfSeriesElement.DeepCopy();
                 if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
-                if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Procedure.DeepCopy());
-                if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.DSTU2.ResourceReference)Interpreter.DeepCopy();
+                if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.ResourceReference>(Procedure.DeepCopy());
+                if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.ResourceReference)Interpreter.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Series != null) dest.Series = new List<SeriesComponent>(Series.DeepCopy());
                 return dest;

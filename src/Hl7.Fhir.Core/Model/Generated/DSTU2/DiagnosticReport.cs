@@ -102,13 +102,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Media")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Link
+            public Hl7.Fhir.Model.ResourceReference Link
             {
                 get { return _Link; }
                 set { _Link = value; OnPropertyChanged("Link"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Link;
+            private Hl7.Fhir.Model.ResourceReference _Link;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                    if(Link != null) dest.Link = (Hl7.Fhir.Model.DSTU2.ResourceReference)Link.DeepCopy();
+                    if(Link != null) dest.Link = (Hl7.Fhir.Model.ResourceReference)Link.DeepCopy();
                     return dest;
                 }
                 else
@@ -188,13 +188,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
@@ -267,13 +267,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Health care event when test ordered
@@ -282,13 +282,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Clinically Relevant time/time-period for report
@@ -348,13 +348,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Performer
+        public Hl7.Fhir.Model.ResourceReference Performer
         {
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// What was requested
@@ -364,13 +364,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("DiagnosticOrder","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Request
+        public List<Hl7.Fhir.Model.ResourceReference> Request
         {
-            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Request; }
+            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.ResourceReference>(); return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Request;
+        private List<Hl7.Fhir.Model.ResourceReference> _Request;
         
         /// <summary>
         /// Specimens this report is based on
@@ -380,13 +380,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Specimen
+        public List<Hl7.Fhir.Model.ResourceReference> Specimen
         {
-            get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Specimen; }
+            get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Specimen;
+        private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
         
         /// <summary>
         /// Observations - simple, or complex nested groups
@@ -396,13 +396,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Result
+        public List<Hl7.Fhir.Model.ResourceReference> Result
         {
-            get { if(_Result==null) _Result = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Result; }
+            get { if(_Result==null) _Result = new List<Hl7.Fhir.Model.ResourceReference>(); return _Result; }
             set { _Result = value; OnPropertyChanged("Result"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Result;
+        private List<Hl7.Fhir.Model.ResourceReference> _Result;
         
         /// <summary>
         /// Reference to full details of imaging associated with the diagnostic report
@@ -412,13 +412,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("ImagingStudy","ImagingObjectSelection")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> ImagingStudy
+        public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
         {
-            get { if(_ImagingStudy==null) _ImagingStudy = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _ImagingStudy; }
+            get { if(_ImagingStudy==null) _ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(); return _ImagingStudy; }
             set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _ImagingStudy;
+        private List<Hl7.Fhir.Model.ResourceReference> _ImagingStudy;
         
         /// <summary>
         /// Key images associated with this report
@@ -503,19 +503,19 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DSTU2.DiagnosticReportStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DSTU2.ResourceReference)Subject.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.DSTU2.ResourceReference)Encounter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Performer.DeepCopy();
-                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Request.DeepCopy());
-                if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Specimen.DeepCopy());
-                if(Result != null) dest.Result = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Result.DeepCopy());
-                if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(ImagingStudy.DeepCopy());
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
+                if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
+                if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
+                if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
                 if(Image != null) dest.Image = new List<ImageComponent>(Image.DeepCopy());
                 if(ConclusionElement != null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)ConclusionElement.DeepCopy();
                 if(CodedDiagnosis != null) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(CodedDiagnosis.DeepCopy());

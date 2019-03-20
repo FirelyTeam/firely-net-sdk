@@ -83,13 +83,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Practitioner","Organization","Patient","PractitionerRole","Device","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Actor
+            public Hl7.Fhir.Model.ResourceReference Actor
             {
                 get { return _Actor; }
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Actor;
+            private Hl7.Fhir.Model.ResourceReference _Actor;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.R4.ResourceReference)Actor.DeepCopy();
+                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     return dest;
                 }
                 else
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("chargeItem", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.R4.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element ChargeItem
@@ -493,13 +493,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// draft | issued | balanced | cancelled | entered-in-error
@@ -588,13 +588,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Recipient of this invoice
@@ -603,13 +603,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization","Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Recipient
+        public Hl7.Fhir.Model.ResourceReference Recipient
         {
             get { return _Recipient; }
             set { _Recipient = value; OnPropertyChanged("Recipient"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Recipient;
+        private Hl7.Fhir.Model.ResourceReference _Recipient;
         
         /// <summary>
         /// Invoice date / posting date
@@ -665,13 +665,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Issuer
+        public Hl7.Fhir.Model.ResourceReference Issuer
         {
             get { return _Issuer; }
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Issuer;
+        private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
         /// Account that is being balanced
@@ -680,13 +680,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Account")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Account
+        public Hl7.Fhir.Model.ResourceReference Account
         {
             get { return _Account; }
             set { _Account = value; OnPropertyChanged("Account"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Account;
+        private Hl7.Fhir.Model.ResourceReference _Account;
         
         /// <summary>
         /// Line items of this Invoice
@@ -798,16 +798,16 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.InvoiceStatus>)StatusElement.DeepCopy();
                 if(CancelledReasonElement != null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)CancelledReasonElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
-                if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.R4.ResourceReference)Recipient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
-                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.R4.ResourceReference)Issuer.DeepCopy();
-                if(Account != null) dest.Account = (Hl7.Fhir.Model.R4.ResourceReference)Account.DeepCopy();
+                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
+                if(Account != null) dest.Account = (Hl7.Fhir.Model.ResourceReference)Account.DeepCopy();
                 if(LineItem != null) dest.LineItem = new List<LineItemComponent>(LineItem.DeepCopy());
                 if(TotalPriceComponent != null) dest.TotalPriceComponent = new List<PriceComponentComponent>(TotalPriceComponent.DeepCopy());
                 if(TotalNet != null) dest.TotalNet = (Hl7.Fhir.Model.R4.Money)TotalNet.DeepCopy();

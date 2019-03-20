@@ -84,13 +84,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Actor
+            public Hl7.Fhir.Model.ResourceReference Actor
             {
                 get { return _Actor; }
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Actor;
+            private Hl7.Fhir.Model.ResourceReference _Actor;
             
             /// <summary>
             /// required | optional | information-only
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.R4.ResourceReference)Actor.DeepCopy();
+                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     if(RequiredElement != null) dest.RequiredElement = (Code<Hl7.Fhir.Model.ParticipantRequired>)RequiredElement.DeepCopy();
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>)StatusElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -265,13 +265,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
@@ -403,13 +403,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Condition","Procedure","Observation","ImmunizationRecommendation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ReasonReference
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
         {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ReasonReference; }
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
             set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
         
         /// <summary>
         /// Used to make informed decisions if needing to re-prioritize
@@ -481,13 +481,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("supportingInformation", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> SupportingInformation
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
         {
-            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _SupportingInformation; }
+            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
             set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _SupportingInformation;
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
         
         /// <summary>
         /// When appointment is to take place
@@ -595,13 +595,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Slot")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Slot
+        public List<Hl7.Fhir.Model.ResourceReference> Slot
         {
-            get { if(_Slot==null) _Slot = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Slot; }
+            get { if(_Slot==null) _Slot = new List<Hl7.Fhir.Model.ResourceReference>(); return _Slot; }
             set { _Slot = value; OnPropertyChanged("Slot"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Slot;
+        private List<Hl7.Fhir.Model.ResourceReference> _Slot;
         
         /// <summary>
         /// The date that this appointment was initially created
@@ -707,13 +707,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> BasedOn
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
         {
-            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _BasedOn; }
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
             set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _BasedOn;
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
         
         /// <summary>
         /// Participants involved in appointment
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.AppointmentStatus>)StatusElement.DeepCopy();
                 if(CancelationReason != null) dest.CancelationReason = (Hl7.Fhir.Model.CodeableConcept)CancelationReason.DeepCopy();
                 if(ServiceCategory != null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
@@ -805,18 +805,18 @@ namespace Hl7.Fhir.Model.R4
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
                 if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.R4.ResourceReference>(ReasonReference.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.UnsignedInt)PriorityElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.R4.ResourceReference>(SupportingInformation.DeepCopy());
+                if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
-                if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.R4.ResourceReference>(Slot.DeepCopy());
+                if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopy();
-                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(BasedOn.DeepCopy());
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
                 if(RequestedPeriod != null) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
                 return dest;

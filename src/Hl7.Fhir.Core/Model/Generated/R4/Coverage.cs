@@ -461,13 +461,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
@@ -524,13 +524,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference PolicyHolder
+        public Hl7.Fhir.Model.ResourceReference PolicyHolder
         {
             get { return _PolicyHolder; }
             set { _PolicyHolder = value; OnPropertyChanged("PolicyHolder"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _PolicyHolder;
+        private Hl7.Fhir.Model.ResourceReference _PolicyHolder;
         
         /// <summary>
         /// Subscriber to the policy
@@ -539,13 +539,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subscriber
+        public Hl7.Fhir.Model.ResourceReference Subscriber
         {
             get { return _Subscriber; }
             set { _Subscriber = value; OnPropertyChanged("Subscriber"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subscriber;
+        private Hl7.Fhir.Model.ResourceReference _Subscriber;
         
         /// <summary>
         /// ID assigned to the subscriber
@@ -588,13 +588,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Beneficiary
+        public Hl7.Fhir.Model.ResourceReference Beneficiary
         {
             get { return _Beneficiary; }
             set { _Beneficiary = value; OnPropertyChanged("Beneficiary"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Beneficiary;
+        private Hl7.Fhir.Model.ResourceReference _Beneficiary;
         
         /// <summary>
         /// Dependent number
@@ -664,13 +664,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Payor
+        public List<Hl7.Fhir.Model.ResourceReference> Payor
         {
-            get { if(_Payor==null) _Payor = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Payor; }
+            get { if(_Payor==null) _Payor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Payor; }
             set { _Payor = value; OnPropertyChanged("Payor"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Payor;
+        private List<Hl7.Fhir.Model.ResourceReference> _Payor;
         
         /// <summary>
         /// Additional coverage classifications
@@ -806,13 +806,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Contract
+        public List<Hl7.Fhir.Model.ResourceReference> Contract
         {
-            get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Contract; }
+            get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contract; }
             set { _Contract = value; OnPropertyChanged("Contract"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Contract;
+        private List<Hl7.Fhir.Model.ResourceReference> _Contract;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -822,23 +822,23 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.R4.ResourceReference)PolicyHolder.DeepCopy();
-                if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.R4.ResourceReference)Subscriber.DeepCopy();
+                if(PolicyHolder != null) dest.PolicyHolder = (Hl7.Fhir.Model.ResourceReference)PolicyHolder.DeepCopy();
+                if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopy();
                 if(SubscriberIdElement != null) dest.SubscriberIdElement = (Hl7.Fhir.Model.FhirString)SubscriberIdElement.DeepCopy();
-                if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.R4.ResourceReference)Beneficiary.DeepCopy();
+                if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.ResourceReference)Beneficiary.DeepCopy();
                 if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.FhirString)DependentElement.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Payor != null) dest.Payor = new List<Hl7.Fhir.Model.R4.ResourceReference>(Payor.DeepCopy());
+                if(Payor != null) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
                 if(Class != null) dest.Class = new List<ClassComponent>(Class.DeepCopy());
                 if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopy();
                 if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopy();
                 if(CostToBeneficiary != null) dest.CostToBeneficiary = new List<CostToBeneficiaryComponent>(CostToBeneficiary.DeepCopy());
                 if(SubrogationElement != null) dest.SubrogationElement = (Hl7.Fhir.Model.FhirBoolean)SubrogationElement.DeepCopy();
-                if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.R4.ResourceReference>(Contract.DeepCopy());
+                if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
                 return dest;
             }
             else

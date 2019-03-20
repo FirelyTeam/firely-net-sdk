@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Collector
+            public Hl7.Fhir.Model.ResourceReference Collector
             {
                 get { return _Collector; }
                 set { _Collector = value; OnPropertyChanged("Collector"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Collector;
+            private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
             /// Who is product from
@@ -84,13 +84,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Patient","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Source
+            public Hl7.Fhir.Model.ResourceReference Source
             {
                 get { return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Source;
+            private Hl7.Fhir.Model.ResourceReference _Source;
             
             /// <summary>
             /// Time of product collection
@@ -114,8 +114,8 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Collector != null) dest.Collector = (Hl7.Fhir.Model.R4.ResourceReference)Collector.DeepCopy();
-                    if(Source != null) dest.Source = (Hl7.Fhir.Model.R4.ResourceReference)Source.DeepCopy();
+                    if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
+                    if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
                     return dest;
                 }
@@ -242,13 +242,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Substance")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Additive
+            public Hl7.Fhir.Model.ResourceReference Additive
             {
                 get { return _Additive; }
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Additive;
+            private Hl7.Fhir.Model.ResourceReference _Additive;
             
             /// <summary>
             /// Time of processing
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
-                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.R4.ResourceReference)Additive.DeepCopy();
+                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.ResourceReference)Additive.DeepCopy();
                     if(Time != null) dest.Time = (Hl7.Fhir.Model.Element)Time.DeepCopy();
                     return dest;
                 }
@@ -675,13 +675,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// organ | tissue | fluid | cells | biologicalAgent
@@ -768,13 +768,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Request
+        public List<Hl7.Fhir.Model.ResourceReference> Request
         {
-            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Request; }
+            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.ResourceReference>(); return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Request;
+        private List<Hl7.Fhir.Model.ResourceReference> _Request;
         
         /// <summary>
         /// The amount of this biologically derived product
@@ -816,13 +816,13 @@ namespace Hl7.Fhir.Model.R4
         [References("BiologicallyDerivedProduct")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Parent
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Parent; }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// How this product was collected
@@ -886,13 +886,13 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ProductCategoryElement != null) dest.ProductCategoryElement = (Code<Hl7.Fhir.Model.R4.BiologicallyDerivedProductCategory>)ProductCategoryElement.DeepCopy();
                 if(ProductCode != null) dest.ProductCode = (Hl7.Fhir.Model.CodeableConcept)ProductCode.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.BiologicallyDerivedProductStatus>)StatusElement.DeepCopy();
-                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.R4.ResourceReference>(Request.DeepCopy());
+                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.Integer)QuantityElement.DeepCopy();
-                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.R4.ResourceReference>(Parent.DeepCopy());
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Collection != null) dest.Collection = (CollectionComponent)Collection.DeepCopy();
                 if(Processing != null) dest.Processing = new List<ProcessingComponent>(Processing.DeepCopy());
                 if(Manipulation != null) dest.Manipulation = (ManipulationComponent)Manipulation.DeepCopy();

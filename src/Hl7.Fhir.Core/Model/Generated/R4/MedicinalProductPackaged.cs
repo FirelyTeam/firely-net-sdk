@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier OuterPackaging
+            public Hl7.Fhir.Model.Identifier OuterPackaging
             {
                 get { return _OuterPackaging; }
                 set { _OuterPackaging = value; OnPropertyChanged("OuterPackaging"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _OuterPackaging;
+            private Hl7.Fhir.Model.Identifier _OuterPackaging;
             
             /// <summary>
             /// A number appearing on the immediate packaging (and not the outer packaging)
@@ -83,13 +83,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("immediatePackaging", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier ImmediatePackaging
+            public Hl7.Fhir.Model.Identifier ImmediatePackaging
             {
                 get { return _ImmediatePackaging; }
                 set { _ImmediatePackaging = value; OnPropertyChanged("ImmediatePackaging"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _ImmediatePackaging;
+            private Hl7.Fhir.Model.Identifier _ImmediatePackaging;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -98,8 +98,8 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(OuterPackaging != null) dest.OuterPackaging = (Hl7.Fhir.Model.R4.Identifier)OuterPackaging.DeepCopy();
-                    if(ImmediatePackaging != null) dest.ImmediatePackaging = (Hl7.Fhir.Model.R4.Identifier)ImmediatePackaging.DeepCopy();
+                    if(OuterPackaging != null) dest.OuterPackaging = (Hl7.Fhir.Model.Identifier)OuterPackaging.DeepCopy();
+                    if(ImmediatePackaging != null) dest.ImmediatePackaging = (Hl7.Fhir.Model.Identifier)ImmediatePackaging.DeepCopy();
                     return dest;
                 }
                 else
@@ -176,13 +176,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// The physical type of the container of the medicine
@@ -252,13 +252,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DeviceDefinition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Device
+            public List<Hl7.Fhir.Model.ResourceReference> Device
             {
-                get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Device; }
+                get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.ResourceReference>(); return _Device; }
                 set { _Device = value; OnPropertyChanged("Device"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Device;
+            private List<Hl7.Fhir.Model.ResourceReference> _Device;
             
             /// <summary>
             /// The manufactured item as contained in the packaged medicinal product
@@ -268,13 +268,13 @@ namespace Hl7.Fhir.Model.R4
             [References("MedicinalProductManufactured")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> ManufacturedItem
+            public List<Hl7.Fhir.Model.ResourceReference> ManufacturedItem
             {
-                get { if(_ManufacturedItem==null) _ManufacturedItem = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ManufacturedItem; }
+                get { if(_ManufacturedItem==null) _ManufacturedItem = new List<Hl7.Fhir.Model.ResourceReference>(); return _ManufacturedItem; }
                 set { _ManufacturedItem = value; OnPropertyChanged("ManufacturedItem"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _ManufacturedItem;
+            private List<Hl7.Fhir.Model.ResourceReference> _ManufacturedItem;
             
             /// <summary>
             /// Allows containers within containers
@@ -343,13 +343,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Manufacturer
+            public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
             {
-                get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Manufacturer; }
+                get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
                 set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Manufacturer;
+            private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -358,18 +358,18 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Material != null) dest.Material = new List<Hl7.Fhir.Model.CodeableConcept>(Material.DeepCopy());
                     if(AlternateMaterial != null) dest.AlternateMaterial = new List<Hl7.Fhir.Model.CodeableConcept>(AlternateMaterial.DeepCopy());
-                    if(Device != null) dest.Device = new List<Hl7.Fhir.Model.R4.ResourceReference>(Device.DeepCopy());
-                    if(ManufacturedItem != null) dest.ManufacturedItem = new List<Hl7.Fhir.Model.R4.ResourceReference>(ManufacturedItem.DeepCopy());
+                    if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
+                    if(ManufacturedItem != null) dest.ManufacturedItem = new List<Hl7.Fhir.Model.ResourceReference>(ManufacturedItem.DeepCopy());
                     if(PackageItem != null) dest.PackageItem = new List<PackageItemComponent>(PackageItem.DeepCopy());
                     if(PhysicalCharacteristics != null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)PhysicalCharacteristics.DeepCopy();
                     if(OtherCharacteristics != null) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(OtherCharacteristics.DeepCopy());
                     if(ShelfLifeStorage != null) dest.ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(ShelfLifeStorage.DeepCopy());
-                    if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Manufacturer.DeepCopy());
+                    if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                     return dest;
                 }
                 else
@@ -479,13 +479,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The product with this is a pack for
@@ -495,13 +495,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProduct")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Subject
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
         {
-            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Subject; }
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Subject;
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// Textual description
@@ -572,13 +572,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("MedicinalProductAuthorization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference MarketingAuthorization
+        public Hl7.Fhir.Model.ResourceReference MarketingAuthorization
         {
             get { return _MarketingAuthorization; }
             set { _MarketingAuthorization = value; OnPropertyChanged("MarketingAuthorization"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _MarketingAuthorization;
+        private Hl7.Fhir.Model.ResourceReference _MarketingAuthorization;
         
         /// <summary>
         /// Manufacturer of this Package Item
@@ -588,13 +588,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Manufacturer
+        public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
         {
-            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Manufacturer; }
+            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Manufacturer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
         
         /// <summary>
         /// Batch numbering
@@ -634,13 +634,13 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(Subject.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopy();
                 if(MarketingStatus != null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
-                if(MarketingAuthorization != null) dest.MarketingAuthorization = (Hl7.Fhir.Model.R4.ResourceReference)MarketingAuthorization.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Manufacturer.DeepCopy());
+                if(MarketingAuthorization != null) dest.MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)MarketingAuthorization.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                 if(BatchIdentifier != null) dest.BatchIdentifier = new List<BatchIdentifierComponent>(BatchIdentifier.DeepCopy());
                 if(PackageItem != null) dest.PackageItem = new List<PackageItemComponent>(PackageItem.DeepCopy());
                 return dest;

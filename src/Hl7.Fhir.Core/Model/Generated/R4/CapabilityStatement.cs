@@ -319,13 +319,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Custodian
+            public Hl7.Fhir.Model.ResourceReference Custodian
             {
                 get { return _Custodian; }
                 set { _Custodian = value; OnPropertyChanged("Custodian"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Custodian;
+            private Hl7.Fhir.Model.ResourceReference _Custodian;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.Url)UrlElement.DeepCopy();
-                    if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.R4.ResourceReference)Custodian.DeepCopy();
+                    if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
                     return dest;
                 }
                 else

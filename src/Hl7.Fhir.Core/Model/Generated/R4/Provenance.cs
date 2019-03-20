@@ -98,13 +98,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Who
+            public Hl7.Fhir.Model.ResourceReference Who
             {
                 get { return _Who; }
                 set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Who;
+            private Hl7.Fhir.Model.ResourceReference _Who;
             
             /// <summary>
             /// Who the agent is representing
@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference OnBehalfOf
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
             {
                 get { return _OnBehalfOf; }
                 set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _OnBehalfOf;
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -130,8 +130,8 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                    if(Who != null) dest.Who = (Hl7.Fhir.Model.R4.ResourceReference)Who.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.R4.ResourceReference)OnBehalfOf.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
                     return dest;
                 }
                 else
@@ -250,13 +250,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference What
+            public Hl7.Fhir.Model.ResourceReference What
             {
                 get { return _What; }
                 set { _What = value; OnPropertyChanged("What"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _What;
+            private Hl7.Fhir.Model.ResourceReference _What;
             
             /// <summary>
             /// Entity is attributed to this agent
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(RoleElement != null) dest.RoleElement = (Code<Hl7.Fhir.Model.R4.ProvenanceEntityRole>)RoleElement.DeepCopy();
-                    if(What != null) dest.What = (Hl7.Fhir.Model.R4.ResourceReference)What.DeepCopy();
+                    if(What != null) dest.What = (Hl7.Fhir.Model.ResourceReference)What.DeepCopy();
                     if(Agent != null) dest.Agent = new List<AgentComponent>(Agent.DeepCopy());
                     return dest;
                 }
@@ -355,13 +355,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Target
+        public List<Hl7.Fhir.Model.ResourceReference> Target
         {
-            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Target; }
+            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Target;
+        private List<Hl7.Fhir.Model.ResourceReference> _Target;
         
         /// <summary>
         /// When the activity occurred
@@ -452,13 +452,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Reason the activity is occurring
@@ -537,11 +537,11 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.R4.ResourceReference>(Target.DeepCopy());
+                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Occurred != null) dest.Occurred = (Hl7.Fhir.Model.Element)Occurred.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.R4.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Activity != null) dest.Activity = (Hl7.Fhir.Model.CodeableConcept)Activity.DeepCopy();
                 if(Agent != null) dest.Agent = new List<AgentComponent>(Agent.DeepCopy());

@@ -98,13 +98,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(GeneSequenceOrigin != null) dest.GeneSequenceOrigin = (Hl7.Fhir.Model.CodeableConcept)GeneSequenceOrigin.DeepCopy();
                     if(Gene != null) dest.Gene = (Hl7.Fhir.Model.CodeableConcept)Gene.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -209,13 +209,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("element", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Element
+            public Hl7.Fhir.Model.Identifier Element
             {
                 get { return _Element; }
                 set { _Element = value; OnPropertyChanged("Element"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Element;
+            private Hl7.Fhir.Model.Identifier _Element;
             
             /// <summary>
             /// Todo
@@ -225,13 +225,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -241,8 +241,8 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Element != null) dest.Element = (Hl7.Fhir.Model.R4.Identifier)Element.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Element != null) dest.Element = (Hl7.Fhir.Model.Identifier)Element.DeepCopy();
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -367,13 +367,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model.R4
                     if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopy();
                     if(Classification != null) dest.Classification = (Hl7.Fhir.Model.CodeableConcept)Classification.DeepCopy();
                     if(Subtype != null) dest.Subtype = new List<Hl7.Fhir.Model.CodeableConcept>(Subtype.DeepCopy());
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -469,13 +469,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Target
+            public Hl7.Fhir.Model.Identifier Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Target;
+            private Hl7.Fhir.Model.Identifier _Target;
             
             /// <summary>
             /// Todo
@@ -570,13 +570,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -585,14 +585,14 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.R4.Identifier)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Identifier)Target.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Interaction != null) dest.Interaction = (Hl7.Fhir.Model.CodeableConcept)Interaction.DeepCopy();
                     if(Organism != null) dest.Organism = (Hl7.Fhir.Model.CodeableConcept)Organism.DeepCopy();
                     if(OrganismType != null) dest.OrganismType = (Hl7.Fhir.Model.CodeableConcept)OrganismType.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else

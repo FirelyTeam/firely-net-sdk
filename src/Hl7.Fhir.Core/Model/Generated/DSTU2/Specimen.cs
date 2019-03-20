@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Practitioner")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Collector
+            public Hl7.Fhir.Model.ResourceReference Collector
             {
                 get { return _Collector; }
                 set { _Collector = value; OnPropertyChanged("Collector"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Collector;
+            private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
             /// Collector comments
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Collector != null) dest.Collector = (Hl7.Fhir.Model.DSTU2.ResourceReference)Collector.DeepCopy();
+                    if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
                     if(CommentElement != null) dest.CommentElement = new List<Hl7.Fhir.Model.FhirString>(CommentElement.DeepCopy());
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
@@ -315,13 +315,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Substance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Additive
+            public List<Hl7.Fhir.Model.ResourceReference> Additive
             {
-                get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Additive; }
+                get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.ResourceReference>(); return _Additive; }
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Additive;
+            private List<Hl7.Fhir.Model.ResourceReference> _Additive;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
-                    if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Additive.DeepCopy());
+                    if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.ResourceReference>(Additive.DeepCopy());
                     return dest;
                 }
                 else
@@ -413,13 +413,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// Textual description of the container
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// </summary>
             [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Additive
             {
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.SimpleQuantity)Capacity.DeepCopy();
@@ -605,13 +605,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// available | unavailable | unsatisfactory | entered-in-error
@@ -668,13 +668,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Parent
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Parent; }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
@@ -684,13 +684,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Patient","Group","Device","Substance")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Identifier assigned by the lab
@@ -698,13 +698,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("accessionIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier AccessionIdentifier
+        public Hl7.Fhir.Model.Identifier AccessionIdentifier
         {
             get { return _AccessionIdentifier; }
             set { _AccessionIdentifier = value; OnPropertyChanged("AccessionIdentifier"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _AccessionIdentifier;
+        private Hl7.Fhir.Model.Identifier _AccessionIdentifier;
         
         /// <summary>
         /// The time when specimen was received for processing
@@ -788,12 +788,12 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SpecimenStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Parent.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DSTU2.ResourceReference)Subject.DeepCopy();
-                if(AccessionIdentifier != null) dest.AccessionIdentifier = (Hl7.Fhir.Model.DSTU2.Identifier)AccessionIdentifier.DeepCopy();
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(AccessionIdentifier != null) dest.AccessionIdentifier = (Hl7.Fhir.Model.Identifier)AccessionIdentifier.DeepCopy();
                 if(ReceivedTimeElement != null) dest.ReceivedTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedTimeElement.DeepCopy();
                 if(Collection != null) dest.Collection = (CollectionComponent)Collection.DeepCopy();
                 if(Treatment != null) dest.Treatment = new List<TreatmentComponent>(Treatment.DeepCopy());

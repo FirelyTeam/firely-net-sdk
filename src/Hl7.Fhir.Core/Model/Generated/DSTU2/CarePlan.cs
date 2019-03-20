@@ -102,13 +102,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("CarePlan")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Plan
+            public Hl7.Fhir.Model.ResourceReference Plan
             {
                 get { return _Plan; }
                 set { _Plan = value; OnPropertyChanged("Plan"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Plan;
+            private Hl7.Fhir.Model.ResourceReference _Plan;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DSTU2.CarePlanRelationship>)CodeElement.DeepCopy();
-                    if(Plan != null) dest.Plan = (Hl7.Fhir.Model.DSTU2.ResourceReference)Plan.DeepCopy();
+                    if(Plan != null) dest.Plan = (Hl7.Fhir.Model.ResourceReference)Plan.DeepCopy();
                     return dest;
                 }
                 else
@@ -208,13 +208,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Practitioner","RelatedPerson","Patient","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Member
+            public Hl7.Fhir.Model.ResourceReference Member
             {
                 get { return _Member; }
                 set { _Member = value; OnPropertyChanged("Member"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Member;
+            private Hl7.Fhir.Model.ResourceReference _Member;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-                    if(Member != null) dest.Member = (Hl7.Fhir.Model.DSTU2.ResourceReference)Member.DeepCopy();
+                    if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
                     return dest;
                 }
                 else
@@ -300,13 +300,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("actionResulting", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> ActionResulting
+            public List<Hl7.Fhir.Model.ResourceReference> ActionResulting
             {
-                get { if(_ActionResulting==null) _ActionResulting = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _ActionResulting; }
+                get { if(_ActionResulting==null) _ActionResulting = new List<Hl7.Fhir.Model.ResourceReference>(); return _ActionResulting; }
                 set { _ActionResulting = value; OnPropertyChanged("ActionResulting"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _ActionResulting;
+            private List<Hl7.Fhir.Model.ResourceReference> _ActionResulting;
             
             /// <summary>
             /// Comments about the activity status/progress
@@ -329,13 +329,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Reference
+            public Hl7.Fhir.Model.ResourceReference Reference
             {
                 get { return _Reference; }
                 set { _Reference = value; OnPropertyChanged("Reference"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Reference;
+            private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
             /// In-line definition of activity
@@ -357,9 +357,9 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ActionResulting != null) dest.ActionResulting = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(ActionResulting.DeepCopy());
+                    if(ActionResulting != null) dest.ActionResulting = new List<Hl7.Fhir.Model.ResourceReference>(ActionResulting.DeepCopy());
                     if(Progress != null) dest.Progress = new List<Hl7.Fhir.Model.Annotation>(Progress.DeepCopy());
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.DSTU2.ResourceReference)Reference.DeepCopy();
+                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
                     if(Detail != null) dest.Detail = (DetailComponent)Detail.DeepCopy();
                     return dest;
                 }
@@ -486,13 +486,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> ReasonReference
+            public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
             {
-                get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _ReasonReference; }
+                get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
                 set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _ReasonReference;
+            private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
             
             /// <summary>
             /// Goals this activity relates to
@@ -502,13 +502,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Goal")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Goal
+            public List<Hl7.Fhir.Model.ResourceReference> Goal
             {
-                get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Goal; }
+                get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.ResourceReference>(); return _Goal; }
                 set { _Goal = value; OnPropertyChanged("Goal"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Goal;
+            private List<Hl7.Fhir.Model.ResourceReference> _Goal;
             
             /// <summary>
             /// not-started | scheduled | in-progress | on-hold | completed | cancelled
@@ -610,13 +610,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Location")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Location
+            public Hl7.Fhir.Model.ResourceReference Location
             {
                 get { return _Location; }
                 set { _Location = value; OnPropertyChanged("Location"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Location;
+            private Hl7.Fhir.Model.ResourceReference _Location;
             
             /// <summary>
             /// Who will be responsible?
@@ -626,20 +626,20 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Practitioner","Organization","RelatedPerson","Patient")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Performer
+            public List<Hl7.Fhir.Model.ResourceReference> Performer
             {
-                get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Performer; }
+                get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
                 set { _Performer = value; OnPropertyChanged("Performer"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Performer;
+            private List<Hl7.Fhir.Model.ResourceReference> _Performer;
             
             /// <summary>
             /// What is to be administered/supplied
             /// </summary>
             [FhirElement("product", Order=150, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.DSTU2.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Product
             {
@@ -717,14 +717,14 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                    if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(ReasonReference.DeepCopy());
-                    if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Goal.DeepCopy());
+                    if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                    if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.ResourceReference>(Goal.DeepCopy());
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DSTU2.CarePlanActivityStatus>)StatusElement.DeepCopy();
                     if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
                     if(ProhibitedElement != null) dest.ProhibitedElement = (Hl7.Fhir.Model.FhirBoolean)ProhibitedElement.DeepCopy();
                     if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
-                    if(Location != null) dest.Location = (Hl7.Fhir.Model.DSTU2.ResourceReference)Location.DeepCopy();
-                    if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Performer.DeepCopy());
+                    if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                    if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                     if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.SimpleQuantity)DailyAmount.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
@@ -850,13 +850,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Who care plan is for
@@ -865,13 +865,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// proposed | draft | active | completed | cancelled
@@ -914,13 +914,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Context
         {
             get { return _Context; }
             set { _Context = value; OnPropertyChanged("Context"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
         /// Time period plan covers
@@ -944,13 +944,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Patient","Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Author
+        public List<Hl7.Fhir.Model.ResourceReference> Author
         {
-            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Author; }
+            get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.ResourceReference>(); return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Author;
+        private List<Hl7.Fhir.Model.ResourceReference> _Author;
         
         /// <summary>
         /// When last updated
@@ -1041,13 +1041,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Addresses
+        public List<Hl7.Fhir.Model.ResourceReference> Addresses
         {
-            get { if(_Addresses==null) _Addresses = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Addresses; }
+            get { if(_Addresses==null) _Addresses = new List<Hl7.Fhir.Model.ResourceReference>(); return _Addresses; }
             set { _Addresses = value; OnPropertyChanged("Addresses"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Addresses;
+        private List<Hl7.Fhir.Model.ResourceReference> _Addresses;
         
         /// <summary>
         /// Information considered as part of plan
@@ -1055,13 +1055,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("support", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Support
+        public List<Hl7.Fhir.Model.ResourceReference> Support
         {
-            get { if(_Support==null) _Support = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Support; }
+            get { if(_Support==null) _Support = new List<Hl7.Fhir.Model.ResourceReference>(); return _Support; }
             set { _Support = value; OnPropertyChanged("Support"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Support;
+        private List<Hl7.Fhir.Model.ResourceReference> _Support;
         
         /// <summary>
         /// Plans related to this one
@@ -1099,13 +1099,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Goal")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Goal
+        public List<Hl7.Fhir.Model.ResourceReference> Goal
         {
-            get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Goal; }
+            get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.ResourceReference>(); return _Goal; }
             set { _Goal = value; OnPropertyChanged("Goal"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Goal;
+        private List<Hl7.Fhir.Model.ResourceReference> _Goal;
         
         /// <summary>
         /// Action to occur as part of plan
@@ -1158,20 +1158,20 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DSTU2.ResourceReference)Subject.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DSTU2.CarePlanStatus>)StatusElement.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.DSTU2.ResourceReference)Context.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Author.DeepCopy());
+                if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(ModifiedElement != null) dest.ModifiedElement = (Hl7.Fhir.Model.FhirDateTime)ModifiedElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Addresses.DeepCopy());
-                if(Support != null) dest.Support = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Support.DeepCopy());
+                if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
+                if(Support != null) dest.Support = new List<Hl7.Fhir.Model.ResourceReference>(Support.DeepCopy());
                 if(RelatedPlan != null) dest.RelatedPlan = new List<RelatedPlanComponent>(RelatedPlan.DeepCopy());
                 if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
-                if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Goal.DeepCopy());
+                if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.ResourceReference>(Goal.DeepCopy());
                 if(Activity != null) dest.Activity = new List<ActivityComponent>(Activity.DeepCopy());
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
                 return dest;

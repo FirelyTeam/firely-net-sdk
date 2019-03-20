@@ -922,13 +922,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [FhirElement("manufacturer", Order=110, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Manufacturer
         {
@@ -1156,13 +1156,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Owner
+        public Hl7.Fhir.Model.ResourceReference Owner
         {
             get { return _Owner; }
             set { _Owner = value; OnPropertyChanged("Owner"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Owner;
+        private Hl7.Fhir.Model.ResourceReference _Owner;
         
         /// <summary>
         /// Details for human/organization for support
@@ -1276,13 +1276,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("DeviceDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ParentDevice
+        public Hl7.Fhir.Model.ResourceReference ParentDevice
         {
             get { return _ParentDevice; }
             set { _ParentDevice = value; OnPropertyChanged("ParentDevice"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ParentDevice;
+        private Hl7.Fhir.Model.ResourceReference _ParentDevice;
         
         /// <summary>
         /// A substance used to create the material(s) of which the device is made
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(UdiDeviceIdentifier != null) dest.UdiDeviceIdentifier = new List<UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.Element)Manufacturer.DeepCopy();
                 if(DeviceName != null) dest.DeviceName = new List<DeviceNameComponent>(DeviceName.DeepCopy());
@@ -1320,13 +1320,13 @@ namespace Hl7.Fhir.Model.R4
                 if(LanguageCode != null) dest.LanguageCode = new List<Hl7.Fhir.Model.CodeableConcept>(LanguageCode.DeepCopy());
                 if(Capability != null) dest.Capability = new List<CapabilityComponent>(Capability.DeepCopy());
                 if(Property != null) dest.Property = new List<PropertyComponent>(Property.DeepCopy());
-                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.R4.ResourceReference)Owner.DeepCopy();
+                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.R4.ContactPoint>(Contact.DeepCopy());
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(OnlineInformationElement != null) dest.OnlineInformationElement = (Hl7.Fhir.Model.FhirUri)OnlineInformationElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                if(ParentDevice != null) dest.ParentDevice = (Hl7.Fhir.Model.R4.ResourceReference)ParentDevice.DeepCopy();
+                if(ParentDevice != null) dest.ParentDevice = (Hl7.Fhir.Model.ResourceReference)ParentDevice.DeepCopy();
                 if(Material != null) dest.Material = new List<MaterialComponent>(Material.DeepCopy());
                 return dest;
             }

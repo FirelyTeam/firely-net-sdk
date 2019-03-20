@@ -555,13 +555,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("ValueSet")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Options
+            public Hl7.Fhir.Model.ResourceReference Options
             {
                 get { return _Options; }
                 set { _Options = value; OnPropertyChanged("Options"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Options;
+            private Hl7.Fhir.Model.ResourceReference _Options;
             
             /// <summary>
             /// Permitted answer
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.DSTU2.AnswerFormat>)TypeElement.DeepCopy();
                     if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
                     if(RepeatsElement != null) dest.RepeatsElement = (Hl7.Fhir.Model.FhirBoolean)RepeatsElement.DeepCopy();
-                    if(Options != null) dest.Options = (Hl7.Fhir.Model.DSTU2.ResourceReference)Options.DeepCopy();
+                    if(Options != null) dest.Options = (Hl7.Fhir.Model.ResourceReference)Options.DeepCopy();
                     if(Option != null) dest.Option = new List<Hl7.Fhir.Model.Coding>(Option.DeepCopy());
                     if(Group != null) dest.Group = new List<GroupComponent>(Group.DeepCopy());
                     return dest;
@@ -704,13 +704,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Logical identifier for this version of Questionnaire
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DSTU2.QuestionnaireStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();

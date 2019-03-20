@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// A reference from one resource to another
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "Reference")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Reference")]
     [DataContract]
     public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model.STU3
     
         
         /// <summary>
-        /// Literal reference, Relative, internal or absolute URL
+        /// Relative, internal or absolute URL reference
         /// </summary>
         [FhirElement("reference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
         [CLSCompliant(false)]
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model.STU3
         private Hl7.Fhir.Model.FhirString _ReferenceElement;
         
         /// <summary>
-        /// Literal reference, Relative, internal or absolute URL
+        /// Relative, internal or absolute URL reference
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -87,23 +87,9 @@ namespace Hl7.Fhir.Model.STU3
         }
         
         /// <summary>
-        /// Logical reference, when literal reference is not known
-        /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
-        [CLSCompliant(false)]
-        [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
-        {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
-        
-        /// <summary>
         /// Text alternative for the resource
         /// </summary>
-        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
@@ -132,6 +118,53 @@ namespace Hl7.Fhir.Model.STU3
                 OnPropertyChanged("Display");
             }
         }
+        
+        /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=50)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri TypeElement
+        {
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _TypeElement;
+        
+        /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Type
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    TypeElement = null;
+                else
+                    TypeElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Type");
+            }
+        }
+        
+        /// <summary>
+        /// Logical reference, when literal reference is not known
+        /// </summary>
+        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=60)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
     
     
         public static ElementDefinitionConstraint ResourceReference_REF_1 = new ElementDefinitionConstraint
@@ -139,7 +172,7 @@ namespace Hl7.Fhir.Model.STU3
             Expression = "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
             Key = "ref-1",
             Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have a contained resource if a local reference is provided",
+            Human = "SHALL have a local reference if the resource is provided inline",
             Xpath = "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
         };
     
@@ -153,8 +186,9 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
                 if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirUri)TypeElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 return dest;
             }
             else
@@ -173,8 +207,9 @@ namespace Hl7.Fhir.Model.STU3
         
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
         
             return true;
         }
@@ -186,8 +221,9 @@ namespace Hl7.Fhir.Model.STU3
         
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
         
             return true;
         }
@@ -199,8 +235,9 @@ namespace Hl7.Fhir.Model.STU3
             {
                 foreach (var item in base.Children) yield return item;
                 if (ReferenceElement != null) yield return ReferenceElement;
-                if (Identifier != null) yield return Identifier;
                 if (DisplayElement != null) yield return DisplayElement;
+                if (TypeElement != null) yield return TypeElement;
+                if (Identifier != null) yield return Identifier;
             }
         }
         
@@ -211,8 +248,9 @@ namespace Hl7.Fhir.Model.STU3
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
-                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
             }
         }
     

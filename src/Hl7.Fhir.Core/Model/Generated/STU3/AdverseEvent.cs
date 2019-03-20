@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Instance
+            public Hl7.Fhir.Model.ResourceReference Instance
             {
                 get { return _Instance; }
                 set { _Instance = value; OnPropertyChanged("Instance"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Instance;
+            private Hl7.Fhir.Model.ResourceReference _Instance;
             
             /// <summary>
             /// causality1 | causality2
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference CausalityAuthor
+            public Hl7.Fhir.Model.ResourceReference CausalityAuthor
             {
                 get { return _CausalityAuthor; }
                 set { _CausalityAuthor = value; OnPropertyChanged("CausalityAuthor"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _CausalityAuthor;
+            private Hl7.Fhir.Model.ResourceReference _CausalityAuthor;
             
             /// <summary>
             /// result1 | result2
@@ -208,12 +208,12 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Instance != null) dest.Instance = (Hl7.Fhir.Model.STU3.ResourceReference)Instance.DeepCopy();
+                    if(Instance != null) dest.Instance = (Hl7.Fhir.Model.ResourceReference)Instance.DeepCopy();
                     if(CausalityElement != null) dest.CausalityElement = (Code<Hl7.Fhir.Model.STU3.AdverseEventCausality>)CausalityElement.DeepCopy();
                     if(CausalityAssessment != null) dest.CausalityAssessment = (Hl7.Fhir.Model.CodeableConcept)CausalityAssessment.DeepCopy();
                     if(CausalityProductRelatednessElement != null) dest.CausalityProductRelatednessElement = (Hl7.Fhir.Model.FhirString)CausalityProductRelatednessElement.DeepCopy();
                     if(CausalityMethod != null) dest.CausalityMethod = (Hl7.Fhir.Model.CodeableConcept)CausalityMethod.DeepCopy();
-                    if(CausalityAuthor != null) dest.CausalityAuthor = (Hl7.Fhir.Model.STU3.ResourceReference)CausalityAuthor.DeepCopy();
+                    if(CausalityAuthor != null) dest.CausalityAuthor = (Hl7.Fhir.Model.ResourceReference)CausalityAuthor.DeepCopy();
                     if(CausalityResult != null) dest.CausalityResult = (Hl7.Fhir.Model.CodeableConcept)CausalityResult.DeepCopy();
                     return dest;
                 }
@@ -303,13 +303,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// AE | PAE <br/>
@@ -367,13 +367,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Patient","ResearchSubject","Medication","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// When the event occurred
@@ -416,13 +416,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Reaction
+        public List<Hl7.Fhir.Model.ResourceReference> Reaction
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Reaction; }
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.ResourceReference>(); return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Reaction;
+        private List<Hl7.Fhir.Model.ResourceReference> _Reaction;
         
         /// <summary>
         /// Location where adverse event occurred
@@ -431,13 +431,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Mild | Moderate | Severe
@@ -474,13 +474,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Recorder
+        public Hl7.Fhir.Model.ResourceReference Recorder
         {
             get { return _Recorder; }
             set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Recorder;
+        private Hl7.Fhir.Model.ResourceReference _Recorder;
         
         /// <summary>
         /// Who  was involved in the adverse event or the potential adverse event
@@ -489,13 +489,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference EventParticipant
+        public Hl7.Fhir.Model.ResourceReference EventParticipant
         {
             get { return _EventParticipant; }
             set { _EventParticipant = value; OnPropertyChanged("EventParticipant"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _EventParticipant;
+        private Hl7.Fhir.Model.ResourceReference _EventParticipant;
         
         /// <summary>
         /// Description of the adverse event
@@ -553,13 +553,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> SubjectMedicalHistory
+        public List<Hl7.Fhir.Model.ResourceReference> SubjectMedicalHistory
         {
-            get { if(_SubjectMedicalHistory==null) _SubjectMedicalHistory = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _SubjectMedicalHistory; }
+            get { if(_SubjectMedicalHistory==null) _SubjectMedicalHistory = new List<Hl7.Fhir.Model.ResourceReference>(); return _SubjectMedicalHistory; }
             set { _SubjectMedicalHistory = value; OnPropertyChanged("SubjectMedicalHistory"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _SubjectMedicalHistory;
+        private List<Hl7.Fhir.Model.ResourceReference> _SubjectMedicalHistory;
         
         /// <summary>
         /// AdverseEvent.referenceDocument
@@ -569,13 +569,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> ReferenceDocument
+        public List<Hl7.Fhir.Model.ResourceReference> ReferenceDocument
         {
-            get { if(_ReferenceDocument==null) _ReferenceDocument = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _ReferenceDocument; }
+            get { if(_ReferenceDocument==null) _ReferenceDocument = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReferenceDocument; }
             set { _ReferenceDocument = value; OnPropertyChanged("ReferenceDocument"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _ReferenceDocument;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReferenceDocument;
         
         /// <summary>
         /// AdverseEvent.study
@@ -585,13 +585,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Study
+        public List<Hl7.Fhir.Model.ResourceReference> Study
         {
-            get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Study; }
+            get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ResourceReference>(); return _Study; }
             set { _Study = value; OnPropertyChanged("Study"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Study;
+        private List<Hl7.Fhir.Model.ResourceReference> _Study;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -601,22 +601,22 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.STU3.AdverseEventCategory>)CategoryElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Reaction.DeepCopy());
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.STU3.ResourceReference)Location.DeepCopy();
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.ResourceReference>(Reaction.DeepCopy());
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Seriousness != null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)Seriousness.DeepCopy();
                 if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
-                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.STU3.ResourceReference)Recorder.DeepCopy();
-                if(EventParticipant != null) dest.EventParticipant = (Hl7.Fhir.Model.STU3.ResourceReference)EventParticipant.DeepCopy();
+                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
+                if(EventParticipant != null) dest.EventParticipant = (Hl7.Fhir.Model.ResourceReference)EventParticipant.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SuspectEntity != null) dest.SuspectEntity = new List<SuspectEntityComponent>(SuspectEntity.DeepCopy());
-                if(SubjectMedicalHistory != null) dest.SubjectMedicalHistory = new List<Hl7.Fhir.Model.STU3.ResourceReference>(SubjectMedicalHistory.DeepCopy());
-                if(ReferenceDocument != null) dest.ReferenceDocument = new List<Hl7.Fhir.Model.STU3.ResourceReference>(ReferenceDocument.DeepCopy());
-                if(Study != null) dest.Study = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Study.DeepCopy());
+                if(SubjectMedicalHistory != null) dest.SubjectMedicalHistory = new List<Hl7.Fhir.Model.ResourceReference>(SubjectMedicalHistory.DeepCopy());
+                if(ReferenceDocument != null) dest.ReferenceDocument = new List<Hl7.Fhir.Model.ResourceReference>(ReferenceDocument.DeepCopy());
+                if(Study != null) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(Study.DeepCopy());
                 return dest;
             }
             else

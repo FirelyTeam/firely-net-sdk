@@ -540,13 +540,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
@@ -692,13 +692,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ValidCodedValueSet
+        public Hl7.Fhir.Model.ResourceReference ValidCodedValueSet
         {
             get { return _ValidCodedValueSet; }
             set { _ValidCodedValueSet = value; OnPropertyChanged("ValidCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ValidCodedValueSet;
+        private Hl7.Fhir.Model.ResourceReference _ValidCodedValueSet;
         
         /// <summary>
         /// Value set of normal coded values for the observations conforming to this ObservationDefinition
@@ -707,13 +707,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference NormalCodedValueSet
+        public Hl7.Fhir.Model.ResourceReference NormalCodedValueSet
         {
             get { return _NormalCodedValueSet; }
             set { _NormalCodedValueSet = value; OnPropertyChanged("NormalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _NormalCodedValueSet;
+        private Hl7.Fhir.Model.ResourceReference _NormalCodedValueSet;
         
         /// <summary>
         /// Value set of abnormal coded values for the observations conforming to this ObservationDefinition
@@ -722,13 +722,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference AbnormalCodedValueSet
+        public Hl7.Fhir.Model.ResourceReference AbnormalCodedValueSet
         {
             get { return _AbnormalCodedValueSet; }
             set { _AbnormalCodedValueSet = value; OnPropertyChanged("AbnormalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _AbnormalCodedValueSet;
+        private Hl7.Fhir.Model.ResourceReference _AbnormalCodedValueSet;
         
         /// <summary>
         /// Value set of critical coded values for the observations conforming to this ObservationDefinition
@@ -737,13 +737,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("ValueSet")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference CriticalCodedValueSet
+        public Hl7.Fhir.Model.ResourceReference CriticalCodedValueSet
         {
             get { return _CriticalCodedValueSet; }
             set { _CriticalCodedValueSet = value; OnPropertyChanged("CriticalCodedValueSet"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _CriticalCodedValueSet;
+        private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -755,17 +755,17 @@ namespace Hl7.Fhir.Model.R4
                 base.CopyTo(dest);
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(PermittedDataTypeElement != null) dest.PermittedDataTypeElement = new List<Code<Hl7.Fhir.Model.R4.ObservationDataType>>(PermittedDataTypeElement.DeepCopy());
                 if(MultipleResultsAllowedElement != null) dest.MultipleResultsAllowedElement = (Hl7.Fhir.Model.FhirBoolean)MultipleResultsAllowedElement.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(PreferredReportNameElement != null) dest.PreferredReportNameElement = (Hl7.Fhir.Model.FhirString)PreferredReportNameElement.DeepCopy();
                 if(QuantitativeDetails != null) dest.QuantitativeDetails = (QuantitativeDetailsComponent)QuantitativeDetails.DeepCopy();
                 if(QualifiedInterval != null) dest.QualifiedInterval = new List<QualifiedIntervalComponent>(QualifiedInterval.DeepCopy());
-                if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.R4.ResourceReference)ValidCodedValueSet.DeepCopy();
-                if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.R4.ResourceReference)NormalCodedValueSet.DeepCopy();
-                if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.R4.ResourceReference)AbnormalCodedValueSet.DeepCopy();
-                if(CriticalCodedValueSet != null) dest.CriticalCodedValueSet = (Hl7.Fhir.Model.R4.ResourceReference)CriticalCodedValueSet.DeepCopy();
+                if(ValidCodedValueSet != null) dest.ValidCodedValueSet = (Hl7.Fhir.Model.ResourceReference)ValidCodedValueSet.DeepCopy();
+                if(NormalCodedValueSet != null) dest.NormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)NormalCodedValueSet.DeepCopy();
+                if(AbnormalCodedValueSet != null) dest.AbnormalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)AbnormalCodedValueSet.DeepCopy();
+                if(CriticalCodedValueSet != null) dest.CriticalCodedValueSet = (Hl7.Fhir.Model.ResourceReference)CriticalCodedValueSet.DeepCopy();
                 return dest;
             }
             else

@@ -280,39 +280,39 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Request fulfilled by this assessment
         /// </summary>
         [FhirElement("basedOn", Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference BasedOn
+        public Hl7.Fhir.Model.ResourceReference BasedOn
         {
             get { return _BasedOn; }
             set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _BasedOn;
+        private Hl7.Fhir.Model.ResourceReference _BasedOn;
         
         /// <summary>
         /// Part of this occurrence
         /// </summary>
         [FhirElement("parent", Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Parent
+        public Hl7.Fhir.Model.ResourceReference Parent
         {
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Parent;
+        private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
         /// registered | preliminary | final | amended +
@@ -382,13 +382,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Where was assessment performed?
@@ -397,13 +397,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Context
+        public Hl7.Fhir.Model.ResourceReference Context
         {
             get { return _Context; }
             set { _Context = value; OnPropertyChanged("Context"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
         /// When was assessment made?
@@ -427,13 +427,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Condition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Condition
+        public Hl7.Fhir.Model.ResourceReference Condition
         {
             get { return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Condition;
+        private Hl7.Fhir.Model.ResourceReference _Condition;
         
         /// <summary>
         /// Who did assessment?
@@ -442,20 +442,20 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Performer
+        public Hl7.Fhir.Model.ResourceReference Performer
         {
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// Why the assessment was necessary?
         /// </summary>
         [FhirElement("reason", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -471,13 +471,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("basis", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Basis
+        public List<Hl7.Fhir.Model.ResourceReference> Basis
         {
-            get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Basis; }
+            get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.ResourceReference>(); return _Basis; }
             set { _Basis = value; OnPropertyChanged("Basis"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Basis;
+        private List<Hl7.Fhir.Model.ResourceReference> _Basis;
         
         /// <summary>
         /// Outcome predicted
@@ -591,19 +591,19 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
-                if(BasedOn != null) dest.BasedOn = (Hl7.Fhir.Model.STU3.ResourceReference)BasedOn.DeepCopy();
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.STU3.ResourceReference)Parent.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(BasedOn != null) dest.BasedOn = (Hl7.Fhir.Model.ResourceReference)BasedOn.DeepCopy();
+                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ObservationStatus>)StatusElement.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.STU3.ResourceReference)Subject.DeepCopy();
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.STU3.ResourceReference)Context.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
-                if(Condition != null) dest.Condition = (Hl7.Fhir.Model.STU3.ResourceReference)Condition.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.STU3.ResourceReference)Performer.DeepCopy();
+                if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Basis.DeepCopy());
+                if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
                 if(Prediction != null) dest.Prediction = new List<PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();

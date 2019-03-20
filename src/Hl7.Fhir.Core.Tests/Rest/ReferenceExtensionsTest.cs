@@ -10,7 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Model.DSTU2;
+using Hl7.Fhir.Model;
 using System.Linq;
 
 namespace Hl7.Fhir.Test
@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void GetAbsoluteUri()
         {
-            var r = new ResourceReference { Reference = "Patient/4" };
+            var r = new ResourceReference("Patient/4");
             Assert.AreEqual("http://someserver.org/fhir/Patient/4", r.GetAbsoluteUriForReference("http://someserver.org/fhir/Observation/5").ToString());
 
             r.Reference = "http://otherserver.org/fhir/Patient/4";

@@ -243,13 +243,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// active | suspended | inactive
@@ -458,13 +458,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// Another Location this one is physically part of
@@ -473,13 +473,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference PartOf
+        public Hl7.Fhir.Model.ResourceReference PartOf
         {
             get { return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _PartOf;
+        private Hl7.Fhir.Model.ResourceReference _PartOf;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.LocationStatus>)StatusElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
@@ -499,8 +499,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(PhysicalType != null) dest.PhysicalType = (Hl7.Fhir.Model.CodeableConcept)PhysicalType.DeepCopy();
                 if(Position != null) dest.Position = (PositionComponent)Position.DeepCopy();
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.DSTU2.ResourceReference)ManagingOrganization.DeepCopy();
-                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.DSTU2.ResourceReference)PartOf.DeepCopy();
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
+                if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 return dest;
             }
             else

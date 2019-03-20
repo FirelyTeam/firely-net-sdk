@@ -30,38 +30,21 @@
 
 using System;
 
-
-namespace Hl7.Fhir.Model.R4
+namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay(@"\{ Value={ValueElement.Value} System={System}}")]
-    public partial class Identifier : IIdentifier
+    public partial class Identifier
     {
-        public Identifier(IIdentifier identifier)
-        {
-            if (identifier == null) throw new ArgumentNullException(nameof(identifier));
-
-            Use = identifier.Use;
-            Type = identifier.Type;
-            System = identifier.System;
-            Value = identifier.Value;
-            Period = identifier.Period;
-            if (identifier.Assigner != null)
-            {
-                Assigner = new ResourceReference(identifier.Assigner);
-            }
-        }
-
-        public static implicit operator Identifier(CommonIdentifier identifier)
-        {
-            if (identifier == null) return null;
-            return new Identifier(identifier);
-        }
-
         public const string SYSTEM_URI = "urn:ietf:rfc:3986";
 
-        IResourceReference IIdentifier.Assigner
+        public Identifier()
         {
-            get { return Assigner; }
+        }
+
+        public Identifier(string system, string value)
+        {
+            this.System = system;
+            this.Value = value;
         }
     }
 }

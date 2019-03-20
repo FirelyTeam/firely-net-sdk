@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("SearchParameter")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Definition
+            public Hl7.Fhir.Model.ResourceReference Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Definition;
+            private Hl7.Fhir.Model.ResourceReference _Definition;
             
             /// <summary>
             /// Subexpression relative to main expression
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.STU3.ResourceReference)Definition.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                     if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     return dest;
                 }

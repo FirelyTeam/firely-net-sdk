@@ -95,13 +95,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the service definition
@@ -663,13 +663,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("OperationDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference OperationDefinition
+        public Hl7.Fhir.Model.ResourceReference OperationDefinition
         {
             get { return _OperationDefinition; }
             set { _OperationDefinition = value; OnPropertyChanged("OperationDefinition"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _OperationDefinition;
+        private Hl7.Fhir.Model.ResourceReference _OperationDefinition;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Trigger != null) dest.Trigger = new List<Hl7.Fhir.Model.STU3.TriggerDefinition>(Trigger.DeepCopy());
                 if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.STU3.DataRequirement>(DataRequirement.DeepCopy());
-                if(OperationDefinition != null) dest.OperationDefinition = (Hl7.Fhir.Model.STU3.ResourceReference)OperationDefinition.DeepCopy();
+                if(OperationDefinition != null) dest.OperationDefinition = (Hl7.Fhir.Model.ResourceReference)OperationDefinition.DeepCopy();
                 return dest;
             }
             else

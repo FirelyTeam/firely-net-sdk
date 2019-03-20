@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Patient","Practitioner","RelatedPerson","Person")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Target
+            public Hl7.Fhir.Model.ResourceReference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Target;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// level1 | level2 | level3 | level4
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.DSTU2.ResourceReference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(AssuranceElement != null) dest.AssuranceElement = (Code<Hl7.Fhir.Model.IdentityAssuranceLevel>)AssuranceElement.DeepCopy();
                     return dest;
                 }
@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// A name associated with the person
@@ -325,13 +325,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// This person's record is in active use
@@ -388,14 +388,14 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.DSTU2.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.DSTU2.ResourceReference)ManagingOrganization.DeepCopy();
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Link != null) dest.Link = new List<LinkComponent>(Link.DeepCopy());
                 return dest;

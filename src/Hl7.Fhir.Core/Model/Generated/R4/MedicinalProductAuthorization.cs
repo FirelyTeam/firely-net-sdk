@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// Country of authorization
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Country != null) dest.Country = (Hl7.Fhir.Model.CodeableConcept)Country.DeepCopy();
                     if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                     if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopy();
@@ -233,13 +233,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Identifier
+            public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Identifier;
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Type of procedure
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Date != null) dest.Date = (Hl7.Fhir.Model.Element)Date.DeepCopy();
                     if(Application != null) dest.Application = new List<ProcedureComponent>(Application.DeepCopy());
@@ -374,13 +374,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The medicinal product that is being authorized
@@ -389,13 +389,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("MedicinalProduct","MedicinalProductPackaged")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// The country in which the marketing authorization has been granted
@@ -637,13 +637,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Holder
+        public Hl7.Fhir.Model.ResourceReference Holder
         {
             get { return _Holder; }
             set { _Holder = value; OnPropertyChanged("Holder"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Holder;
+        private Hl7.Fhir.Model.ResourceReference _Holder;
         
         /// <summary>
         /// Medicines Regulatory Agency
@@ -652,13 +652,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Regulator
+        public Hl7.Fhir.Model.ResourceReference Regulator
         {
             get { return _Regulator; }
             set { _Regulator = value; OnPropertyChanged("Regulator"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Regulator;
+        private Hl7.Fhir.Model.ResourceReference _Regulator;
         
         /// <summary>
         /// The regulatory procedure for granting or amending a marketing authorization
@@ -682,8 +682,8 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
@@ -695,8 +695,8 @@ namespace Hl7.Fhir.Model.R4
                 if(InternationalBirthDateElement != null) dest.InternationalBirthDateElement = (Hl7.Fhir.Model.FhirDateTime)InternationalBirthDateElement.DeepCopy();
                 if(LegalBasis != null) dest.LegalBasis = (Hl7.Fhir.Model.CodeableConcept)LegalBasis.DeepCopy();
                 if(JurisdictionalAuthorization != null) dest.JurisdictionalAuthorization = new List<JurisdictionalAuthorizationComponent>(JurisdictionalAuthorization.DeepCopy());
-                if(Holder != null) dest.Holder = (Hl7.Fhir.Model.R4.ResourceReference)Holder.DeepCopy();
-                if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.R4.ResourceReference)Regulator.DeepCopy();
+                if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopy();
+                if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopy();
                 if(Procedure != null) dest.Procedure = (ProcedureComponent)Procedure.DeepCopy();
                 return dest;
             }

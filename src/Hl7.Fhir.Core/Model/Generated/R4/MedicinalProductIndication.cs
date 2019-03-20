@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Medication
@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProduct","Medication")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Subject
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
         {
-            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Subject; }
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Subject;
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// The disease, symptom or procedure that is the indication for treatment
@@ -274,13 +274,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductUndesirableEffect")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> UndesirableEffect
+        public List<Hl7.Fhir.Model.ResourceReference> UndesirableEffect
         {
-            get { if(_UndesirableEffect==null) _UndesirableEffect = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _UndesirableEffect; }
+            get { if(_UndesirableEffect==null) _UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(); return _UndesirableEffect; }
             set { _UndesirableEffect = value; OnPropertyChanged("UndesirableEffect"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _UndesirableEffect;
+        private List<Hl7.Fhir.Model.ResourceReference> _UndesirableEffect;
         
         /// <summary>
         /// The population group to which this applies
@@ -305,14 +305,14 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(Subject.DeepCopy());
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(DiseaseSymptomProcedure != null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableConcept)DiseaseSymptomProcedure.DeepCopy();
                 if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
                 if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
                 if(IntendedEffect != null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableConcept)IntendedEffect.DeepCopy();
                 if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
                 if(OtherTherapy != null) dest.OtherTherapy = new List<OtherTherapyComponent>(OtherTherapy.DeepCopy());
-                if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.R4.ResourceReference>(UndesirableEffect.DeepCopy());
+                if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
                 if(Population != null) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
                 return dest;
             }

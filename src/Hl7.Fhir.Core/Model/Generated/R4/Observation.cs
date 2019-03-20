@@ -422,13 +422,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Fulfills plan, proposal or order
@@ -438,13 +438,13 @@ namespace Hl7.Fhir.Model.R4
         [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> BasedOn
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
         {
-            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _BasedOn; }
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
             set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _BasedOn;
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
         
         /// <summary>
         /// Part of referenced event
@@ -454,13 +454,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Immunization","ImagingStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> PartOf
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
         {
-            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _PartOf; }
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _PartOf;
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
         /// registered | preliminary | final | amended +
@@ -532,13 +532,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// What the observation is about, when it is not about the subject of record
@@ -547,13 +547,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Focus
+        public List<Hl7.Fhir.Model.ResourceReference> Focus
         {
-            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Focus; }
+            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.ResourceReference>(); return _Focus; }
             set { _Focus = value; OnPropertyChanged("Focus"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Focus;
+        private List<Hl7.Fhir.Model.ResourceReference> _Focus;
         
         /// <summary>
         /// Healthcare event during which this observation is made
@@ -562,13 +562,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// Clinically relevant time/time-period for observation
@@ -626,13 +626,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Performer
+        public List<Hl7.Fhir.Model.ResourceReference> Performer
         {
-            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Performer; }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Performer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
         /// Actual result
@@ -723,13 +723,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Specimen")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Specimen
+        public Hl7.Fhir.Model.ResourceReference Specimen
         {
             get { return _Specimen; }
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Specimen;
+        private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
         /// (Measurement) Device
@@ -738,13 +738,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Device","DeviceMetric")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Device
+        public Hl7.Fhir.Model.ResourceReference Device
         {
             get { return _Device; }
             set { _Device = value; OnPropertyChanged("Device"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Device;
+        private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
         /// Provides guide for interpretation
@@ -768,13 +768,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Observation","QuestionnaireResponse","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> HasMember
+        public List<Hl7.Fhir.Model.ResourceReference> HasMember
         {
-            get { if(_HasMember==null) _HasMember = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _HasMember; }
+            get { if(_HasMember==null) _HasMember = new List<Hl7.Fhir.Model.ResourceReference>(); return _HasMember; }
             set { _HasMember = value; OnPropertyChanged("HasMember"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _HasMember;
+        private List<Hl7.Fhir.Model.ResourceReference> _HasMember;
         
         /// <summary>
         /// Related measurements the observation is made from
@@ -784,13 +784,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> DerivedFrom
+        public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
         {
-            get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _DerivedFrom; }
+            get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
             set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _DerivedFrom;
+        private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
         
         /// <summary>
         /// Component results
@@ -851,29 +851,29 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
-                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.R4.ResourceReference>(BasedOn.DeepCopy());
-                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.R4.ResourceReference>(PartOf.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.ObservationStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
-                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.R4.ResourceReference>(Focus.DeepCopy());
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.R4.ResourceReference)Encounter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Performer.DeepCopy());
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = new List<Hl7.Fhir.Model.CodeableConcept>(Interpretation.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.R4.ResourceReference)Specimen.DeepCopy();
-                if(Device != null) dest.Device = (Hl7.Fhir.Model.R4.ResourceReference)Device.DeepCopy();
+                if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
+                if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = new List<ReferenceRangeComponent>(ReferenceRange.DeepCopy());
-                if(HasMember != null) dest.HasMember = new List<Hl7.Fhir.Model.R4.ResourceReference>(HasMember.DeepCopy());
-                if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.R4.ResourceReference>(DerivedFrom.DeepCopy());
+                if(HasMember != null) dest.HasMember = new List<Hl7.Fhir.Model.ResourceReference>(HasMember.DeepCopy());
+                if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
                 if(Component != null) dest.Component = new List<ComponentComponent>(Component.DeepCopy());
                 return dest;
             }

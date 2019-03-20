@@ -95,13 +95,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the evidence
@@ -660,13 +660,13 @@ namespace Hl7.Fhir.Model.R4
         [References("EvidenceVariable")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ExposureBackground
+        public Hl7.Fhir.Model.ResourceReference ExposureBackground
         {
             get { return _ExposureBackground; }
             set { _ExposureBackground = value; OnPropertyChanged("ExposureBackground"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ExposureBackground;
+        private Hl7.Fhir.Model.ResourceReference _ExposureBackground;
         
         /// <summary>
         /// What exposure?
@@ -676,13 +676,13 @@ namespace Hl7.Fhir.Model.R4
         [References("EvidenceVariable")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ExposureVariant
+        public List<Hl7.Fhir.Model.ResourceReference> ExposureVariant
         {
-            get { if(_ExposureVariant==null) _ExposureVariant = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ExposureVariant; }
+            get { if(_ExposureVariant==null) _ExposureVariant = new List<Hl7.Fhir.Model.ResourceReference>(); return _ExposureVariant; }
             set { _ExposureVariant = value; OnPropertyChanged("ExposureVariant"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ExposureVariant;
+        private List<Hl7.Fhir.Model.ResourceReference> _ExposureVariant;
         
         /// <summary>
         /// What outcome?
@@ -692,13 +692,13 @@ namespace Hl7.Fhir.Model.R4
         [References("EvidenceVariable")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Outcome
+        public List<Hl7.Fhir.Model.ResourceReference> Outcome
         {
-            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Outcome; }
+            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.ResourceReference>(); return _Outcome; }
             set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Outcome;
+        private List<Hl7.Fhir.Model.ResourceReference> _Outcome;
     
     
         public static ElementDefinitionConstraint Evidence_EVI_0 = new ElementDefinitionConstraint
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model.R4
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -749,9 +749,9 @@ namespace Hl7.Fhir.Model.R4
                 if(Reviewer != null) dest.Reviewer = new List<Hl7.Fhir.Model.R4.ContactDetail>(Reviewer.DeepCopy());
                 if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.R4.ContactDetail>(Endorser.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.R4.RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(ExposureBackground != null) dest.ExposureBackground = (Hl7.Fhir.Model.R4.ResourceReference)ExposureBackground.DeepCopy();
-                if(ExposureVariant != null) dest.ExposureVariant = new List<Hl7.Fhir.Model.R4.ResourceReference>(ExposureVariant.DeepCopy());
-                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.R4.ResourceReference>(Outcome.DeepCopy());
+                if(ExposureBackground != null) dest.ExposureBackground = (Hl7.Fhir.Model.ResourceReference)ExposureBackground.DeepCopy();
+                if(ExposureVariant != null) dest.ExposureVariant = new List<Hl7.Fhir.Model.ResourceReference>(ExposureVariant.DeepCopy());
+                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.ResourceReference>(Outcome.DeepCopy());
                 return dest;
             }
             else

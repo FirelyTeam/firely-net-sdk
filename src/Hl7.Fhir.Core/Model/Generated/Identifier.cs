@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
 //
-namespace Hl7.Fhir.Model.DSTU2
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// An identifier intended for computation
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Identifier")]
+    [FhirType(Hl7.Fhir.Model.Version.All, "Identifier")]
     [DataContract]
     public partial class Identifier : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Assigner
+        public Hl7.Fhir.Model.ResourceReference Assigner
         {
             get { return _Assigner; }
             set { _Assigner = value; OnPropertyChanged("Assigner"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Assigner;
+        private Hl7.Fhir.Model.ResourceReference _Assigner;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.DSTU2.ResourceReference)Assigner.DeepCopy();
+                if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)Assigner.DeepCopy();
                 return dest;
             }
             else

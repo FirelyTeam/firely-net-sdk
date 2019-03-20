@@ -25,27 +25,7 @@ namespace Hl7.Fhir.Rest
             return (coding != null) ? coding.ToToken() : string.Empty;
         }
 
-        internal static string ToToken(this Model.DSTU2.Identifier identifier)
-        {
-            var result = string.Empty;
-            if (!string.IsNullOrEmpty(identifier.System))
-            {
-                result += $"{identifier.System}|";
-            }
-            return result += identifier.Value;
-        }
-
-        internal static string ToToken(this Model.STU3.Identifier identifier)
-        {
-            var result = string.Empty;
-            if (!string.IsNullOrEmpty(identifier.System))
-            {
-                result += $"{identifier.System}|";
-            }
-            return result += identifier.Value;
-        }
-
-        internal static string ToToken(this Model.R4.Identifier identifier)
+        internal static string ToToken(this Model.Identifier identifier)
         {
             var result = string.Empty;
             if (!string.IsNullOrEmpty(identifier.System))

@@ -723,13 +723,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Ingredient role e.g. Active ingredient, excipient
@@ -787,13 +787,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Manufacturer
+        public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
         {
-            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Manufacturer; }
+            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Manufacturer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
         
         /// <summary>
         /// A specified substance that comprises this ingredient
@@ -832,10 +832,10 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                 if(AllergenicIndicatorElement != null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)AllergenicIndicatorElement.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Manufacturer.DeepCopy());
+                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                 if(SpecifiedSubstance != null) dest.SpecifiedSubstance = new List<SpecifiedSubstanceComponent>(SpecifiedSubstance.DeepCopy());
                 if(Substance != null) dest.Substance = (SubstanceComponent)Substance.DeepCopy();
                 return dest;

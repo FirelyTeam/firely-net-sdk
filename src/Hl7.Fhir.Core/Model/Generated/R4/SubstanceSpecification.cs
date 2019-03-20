@@ -82,13 +82,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Identifier
+            public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Identifier;
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Textual name for this moiety substance
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopy();
                     if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("definingSubstance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.R4.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element DefiningSubstance
             {
@@ -617,13 +617,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
             
             /// <summary>
             /// Molecular structural representation
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model.R4
                     if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopy();
                     if(Isotope != null) dest.Isotope = new List<IsotopeComponent>(Isotope.DeepCopy());
                     if(MolecularWeight != null) dest.MolecularWeight = (MolecularWeightComponent)MolecularWeight.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     if(Representation != null) dest.Representation = new List<RepresentationComponent>(Representation.DeepCopy());
                     return dest;
                 }
@@ -754,13 +754,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Identifier
+            public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Identifier;
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Substance name for each non-natural or radioisotope
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
                     if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopy();
                     if(HalfLife != null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)HalfLife.DeepCopy();
@@ -1282,13 +1282,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model.R4
                     if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                     if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
                     if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -1576,13 +1576,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1601,7 +1601,7 @@ namespace Hl7.Fhir.Model.R4
                     if(Synonym != null) dest.Synonym = new List<NameComponent>(Synonym.DeepCopy());
                     if(Translation != null) dest.Translation = new List<NameComponent>(Translation.DeepCopy());
                     if(Official != null) dest.Official = new List<OfficialComponent>(Official.DeepCopy());
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -1856,7 +1856,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.R4.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Substance
             {
@@ -1964,13 +1964,13 @@ namespace Hl7.Fhir.Model.R4
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> Source
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1985,7 +1985,7 @@ namespace Hl7.Fhir.Model.R4
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
                     if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -2074,13 +2074,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// High level categorization, e.g. polymer or nucleic acid
@@ -2165,13 +2165,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Source
+        public List<Hl7.Fhir.Model.ResourceReference> Source
         {
-            get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Source; }
+            get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Source;
+        private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
         /// <summary>
         /// Textual comment about this record of a substance
@@ -2243,13 +2243,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("SubstanceReferenceInformation")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ReferenceInformation
+        public Hl7.Fhir.Model.ResourceReference ReferenceInformation
         {
             get { return _ReferenceInformation; }
             set { _ReferenceInformation = value; OnPropertyChanged("ReferenceInformation"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ReferenceInformation;
+        private Hl7.Fhir.Model.ResourceReference _ReferenceInformation;
         
         /// <summary>
         /// Structural information
@@ -2332,13 +2332,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("SubstanceNucleicAcid")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference NucleicAcid
+        public Hl7.Fhir.Model.ResourceReference NucleicAcid
         {
             get { return _NucleicAcid; }
             set { _NucleicAcid = value; OnPropertyChanged("NucleicAcid"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _NucleicAcid;
+        private Hl7.Fhir.Model.ResourceReference _NucleicAcid;
         
         /// <summary>
         /// Data items specific to polymers
@@ -2347,13 +2347,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("SubstancePolymer")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Polymer
+        public Hl7.Fhir.Model.ResourceReference Polymer
         {
             get { return _Polymer; }
             set { _Polymer = value; OnPropertyChanged("Polymer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Polymer;
+        private Hl7.Fhir.Model.ResourceReference _Polymer;
         
         /// <summary>
         /// Data items specific to proteins
@@ -2362,13 +2362,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("SubstanceProtein")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Protein
+        public Hl7.Fhir.Model.ResourceReference Protein
         {
             get { return _Protein; }
             set { _Protein = value; OnPropertyChanged("Protein"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Protein;
+        private Hl7.Fhir.Model.ResourceReference _Protein;
         
         /// <summary>
         /// Material or taxonomic/anatomical source for the substance
@@ -2377,13 +2377,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("SubstanceSourceMaterial")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference SourceMaterial
+        public Hl7.Fhir.Model.ResourceReference SourceMaterial
         {
             get { return _SourceMaterial; }
             set { _SourceMaterial = value; OnPropertyChanged("SourceMaterial"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _SourceMaterial;
+        private Hl7.Fhir.Model.ResourceReference _SourceMaterial;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2393,25 +2393,25 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                 if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Source != null) dest.Source = new List<Hl7.Fhir.Model.R4.ResourceReference>(Source.DeepCopy());
+                if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(Moiety != null) dest.Moiety = new List<MoietyComponent>(Moiety.DeepCopy());
                 if(Property != null) dest.Property = new List<PropertyComponent>(Property.DeepCopy());
-                if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.R4.ResourceReference)ReferenceInformation.DeepCopy();
+                if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)ReferenceInformation.DeepCopy();
                 if(Structure != null) dest.Structure = (StructureComponent)Structure.DeepCopy();
                 if(Code != null) dest.Code = new List<CodeComponent>(Code.DeepCopy());
                 if(Name != null) dest.Name = new List<NameComponent>(Name.DeepCopy());
                 if(MolecularWeight != null) dest.MolecularWeight = new List<MolecularWeightComponent>(MolecularWeight.DeepCopy());
                 if(Relationship != null) dest.Relationship = new List<RelationshipComponent>(Relationship.DeepCopy());
-                if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.R4.ResourceReference)NucleicAcid.DeepCopy();
-                if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.R4.ResourceReference)Polymer.DeepCopy();
-                if(Protein != null) dest.Protein = (Hl7.Fhir.Model.R4.ResourceReference)Protein.DeepCopy();
-                if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.R4.ResourceReference)SourceMaterial.DeepCopy();
+                if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)NucleicAcid.DeepCopy();
+                if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)Polymer.DeepCopy();
+                if(Protein != null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)Protein.DeepCopy();
+                if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.ResourceReference)SourceMaterial.DeepCopy();
                 return dest;
             }
             else

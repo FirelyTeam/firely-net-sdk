@@ -181,13 +181,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("nTerminalModificationId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier NTerminalModificationId
+            public Hl7.Fhir.Model.Identifier NTerminalModificationId
             {
                 get { return _NTerminalModificationId; }
                 set { _NTerminalModificationId = value; OnPropertyChanged("NTerminalModificationId"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _NTerminalModificationId;
+            private Hl7.Fhir.Model.Identifier _NTerminalModificationId;
             
             /// <summary>
             /// The name of the fragment modified at the N-terminal of the SubstanceProtein shall be specified
@@ -228,13 +228,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("cTerminalModificationId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier CTerminalModificationId
+            public Hl7.Fhir.Model.Identifier CTerminalModificationId
             {
                 get { return _CTerminalModificationId; }
                 set { _CTerminalModificationId = value; OnPropertyChanged("CTerminalModificationId"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _CTerminalModificationId;
+            private Hl7.Fhir.Model.Identifier _CTerminalModificationId;
             
             /// <summary>
             /// The modification at the C-terminal shall be specified
@@ -280,9 +280,9 @@ namespace Hl7.Fhir.Model.R4
                     if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
                     if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
                     if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopy();
-                    if(NTerminalModificationId != null) dest.NTerminalModificationId = (Hl7.Fhir.Model.R4.Identifier)NTerminalModificationId.DeepCopy();
+                    if(NTerminalModificationId != null) dest.NTerminalModificationId = (Hl7.Fhir.Model.Identifier)NTerminalModificationId.DeepCopy();
                     if(NTerminalModificationElement != null) dest.NTerminalModificationElement = (Hl7.Fhir.Model.FhirString)NTerminalModificationElement.DeepCopy();
-                    if(CTerminalModificationId != null) dest.CTerminalModificationId = (Hl7.Fhir.Model.R4.Identifier)CTerminalModificationId.DeepCopy();
+                    if(CTerminalModificationId != null) dest.CTerminalModificationId = (Hl7.Fhir.Model.Identifier)CTerminalModificationId.DeepCopy();
                     if(CTerminalModificationElement != null) dest.CTerminalModificationElement = (Hl7.Fhir.Model.FhirString)CTerminalModificationElement.DeepCopy();
                     return dest;
                 }

@@ -61,13 +61,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("requestIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier RequestIdentifier
+        public Hl7.Fhir.Model.Identifier RequestIdentifier
         {
             get { return _RequestIdentifier; }
             set { _RequestIdentifier = value; OnPropertyChanged("RequestIdentifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _RequestIdentifier;
+        private Hl7.Fhir.Model.Identifier _RequestIdentifier;
         
         /// <summary>
         /// Business identifier
@@ -76,13 +76,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// What guidance was requested
@@ -141,13 +141,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Encounter during which the response was returned
@@ -156,13 +156,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Encounter
+        public Hl7.Fhir.Model.ResourceReference Encounter
         {
             get { return _Encounter; }
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Encounter;
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
         /// When the guidance response was processed
@@ -203,13 +203,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Performer
+        public Hl7.Fhir.Model.ResourceReference Performer
         {
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// Why guidance is needed
@@ -233,13 +233,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Condition","Observation","DiagnosticReport","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ReasonReference
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
         {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ReasonReference; }
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
             set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
         
         /// <summary>
         /// Additional notes about the response
@@ -263,13 +263,13 @@ namespace Hl7.Fhir.Model.R4
         [References("OperationOutcome")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> EvaluationMessage
+        public List<Hl7.Fhir.Model.ResourceReference> EvaluationMessage
         {
-            get { if(_EvaluationMessage==null) _EvaluationMessage = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _EvaluationMessage; }
+            get { if(_EvaluationMessage==null) _EvaluationMessage = new List<Hl7.Fhir.Model.ResourceReference>(); return _EvaluationMessage; }
             set { _EvaluationMessage = value; OnPropertyChanged("EvaluationMessage"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _EvaluationMessage;
+        private List<Hl7.Fhir.Model.ResourceReference> _EvaluationMessage;
         
         /// <summary>
         /// The output parameters of the evaluation, if any
@@ -278,13 +278,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Parameters")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference OutputParameters
+        public Hl7.Fhir.Model.ResourceReference OutputParameters
         {
             get { return _OutputParameters; }
             set { _OutputParameters = value; OnPropertyChanged("OutputParameters"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _OutputParameters;
+        private Hl7.Fhir.Model.ResourceReference _OutputParameters;
         
         /// <summary>
         /// Proposed actions, if any
@@ -293,13 +293,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("CarePlan","RequestGroup")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Result
+        public Hl7.Fhir.Model.ResourceReference Result
         {
             get { return _Result; }
             set { _Result = value; OnPropertyChanged("Result"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Result;
+        private Hl7.Fhir.Model.ResourceReference _Result;
         
         /// <summary>
         /// Additional required data
@@ -323,20 +323,20 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(RequestIdentifier != null) dest.RequestIdentifier = (Hl7.Fhir.Model.R4.Identifier)RequestIdentifier.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(RequestIdentifier != null) dest.RequestIdentifier = (Hl7.Fhir.Model.Identifier)RequestIdentifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Module != null) dest.Module = (Hl7.Fhir.Model.Element)Module.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponseStatus>)StatusElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.R4.ResourceReference)Encounter.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(OccurrenceDateTimeElement != null) dest.OccurrenceDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)OccurrenceDateTimeElement.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.R4.ResourceReference)Performer.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.R4.ResourceReference>(ReasonReference.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.R4.ResourceReference>(EvaluationMessage.DeepCopy());
-                if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.R4.ResourceReference)OutputParameters.DeepCopy();
-                if(Result != null) dest.Result = (Hl7.Fhir.Model.R4.ResourceReference)Result.DeepCopy();
+                if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.ResourceReference>(EvaluationMessage.DeepCopy());
+                if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.ResourceReference)OutputParameters.DeepCopy();
+                if(Result != null) dest.Result = (Hl7.Fhir.Model.ResourceReference)Result.DeepCopy();
                 if(DataRequirement != null) dest.DataRequirement = new List<Hl7.Fhir.Model.R4.DataRequirement>(DataRequirement.DeepCopy());
                 return dest;
             }

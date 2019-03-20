@@ -1681,8 +1681,8 @@ public class ResourceDetails
                     var firstVersionResourcesByName = resourcesByNameByVersion[firstVersion];
                     var versionSpecificReferencedFhirTypes = mergedResource
                         .GetReferencedFhirTypes()
-                        // Extension and Element definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
-                        .Where(type => type != "Extension" && type != "Element" && firstVersionResourcesByName.ContainsKey(type))
+                        // Extension / Element and ResourceReference / Identifier definitions are circular, and they should not be version-specific, so we exclude them from the referenced types testing
+                        .Where(type => type != "Extension" && type != "Element" && type != "ResourceReference" && type != "Identifier" && firstVersionResourcesByName.ContainsKey(type))
                         .ToList();
                     if (versionSpecificReferencedFhirTypes.Any())
                     {
@@ -2098,10 +2098,10 @@ public class PropertyDetails
 
     public static string TryMerge(List<PropertyDetails> properties, string version, List<PropertyDetails> otherProperties)
     {
-        var otherPropertiesByName = otherProperties.ToDictionary(p => p.Name);
+        var otherPropertiesByFhirName = otherProperties.ToDictionary(p => p.FhirName);
         foreach (var property in properties)
         {
-            if (!otherPropertiesByName.TryGetValue(property.Name, out var otherPropery))
+            if (!otherPropertiesByFhirName.TryGetValue(property.FhirName, out var otherPropery))
             {
                 if (property.CardMin != "0") return $"Extra non-optional this property {property.Name}";
             }
@@ -2109,10 +2109,10 @@ public class PropertyDetails
             {
                 var tryMergeResult = property.TryMerge(version, otherPropery);
                 if (tryMergeResult != null) return $"Property {property.Name}: {tryMergeResult}";
-                otherPropertiesByName.Remove(property.Name);
+                otherPropertiesByFhirName.Remove(property.FhirName);
             }
         }
-        foreach (var otherProperty in otherPropertiesByName.Values)
+        foreach (var otherProperty in otherPropertiesByFhirName.Values)
         {
             if (otherProperty.CardMin != "0") return $"Extra non-optional other property {otherProperty.Name}";
 

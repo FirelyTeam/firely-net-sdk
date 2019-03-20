@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v1.0.2, v3.0.1
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Determine insurance validity and scope of coverage
+    /// Eligibility request
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "EligibilityRequest", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.All, "EligibilityRequest", IsResource=true)]
     [DataContract]
     public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -58,21 +58,128 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=90)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
+        /// Resource version
+        /// </summary>
+        [FhirElement("ruleset", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=100)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding Ruleset
+        {
+            get { return _Ruleset; }
+            set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _Ruleset;
+        
+        /// <summary>
+        /// Original version
+        /// </summary>
+        [FhirElement("originalRuleset", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=110)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding OriginalRuleset
+        {
+            get { return _OriginalRuleset; }
+            set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _OriginalRuleset;
+        
+        /// <summary>
+        /// Creation date
+        /// </summary>
+        [FhirElement("created", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=120)]
+        [CLSCompliant(false)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime CreatedElement
+        {
+            get { return _CreatedElement; }
+            set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+        
+        /// <summary>
+        /// Creation date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Created
+        {
+            get { return CreatedElement != null ? CreatedElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    CreatedElement = null;
+                else
+                    CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Created");
+            }
+        }
+        
+        /// <summary>
+        /// Insurer
+        /// </summary>
+        [FhirElement("target", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=130)]
+        [CLSCompliant(false)]
+        [References("Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Target
+        {
+            get { return _Target; }
+            set { _Target = value; OnPropertyChanged("Target"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Target;
+        
+        /// <summary>
+        /// Responsible practitioner
+        /// </summary>
+        [FhirElement("provider", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=140)]
+        [CLSCompliant(false)]
+        [References("Practitioner")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Provider
+        {
+            get { return _Provider; }
+            set { _Provider = value; OnPropertyChanged("Provider"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Provider;
+        
+        /// <summary>
+        /// Responsible organization
+        /// </summary>
+        [FhirElement("organization", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=150)]
+        [CLSCompliant(false)]
+        [References("Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Organization
+        {
+            get { return _Organization; }
+            set { _Organization = value; OnPropertyChanged("Organization"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -105,7 +212,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Desired processing priority
         /// </summary>
-        [FhirElement("priority", Order=110)]
+        [FhirElement("priority", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=170)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -118,24 +226,24 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The subject of the Products and Services
         /// </summary>
-        [FhirElement("patient", Order=120)]
+        [FhirElement("patient", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=180)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Estimated date or dates of Service
         /// </summary>
-        [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("serviced", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period)})]
         [DataMember]
         public Hl7.Fhir.Model.Element Serviced
         {
@@ -146,131 +254,70 @@ namespace Hl7.Fhir.Model.STU3
         private Hl7.Fhir.Model.Element _Serviced;
         
         /// <summary>
-        /// Creation date
-        /// </summary>
-        [FhirElement("created", Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime CreatedElement
-        {
-            get { return _CreatedElement; }
-            set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
-        
-        /// <summary>
-        /// Creation date
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Created
-        {
-            get { return CreatedElement != null ? CreatedElement.Value : null; }
-            set
-            {
-                if (value == null)
-                    CreatedElement = null;
-                else
-                    CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Created");
-            }
-        }
-        
-        /// <summary>
         /// Author
         /// </summary>
-        [FhirElement("enterer", Order=150)]
+        [FhirElement("enterer", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=200)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Enterer
+        public Hl7.Fhir.Model.ResourceReference Enterer
         {
             get { return _Enterer; }
             set { _Enterer = value; OnPropertyChanged("Enterer"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Enterer;
-        
-        /// <summary>
-        /// Responsible practitioner
-        /// </summary>
-        [FhirElement("provider", Order=160)]
-        [CLSCompliant(false)]
-        [References("Practitioner")]
-        [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Provider
-        {
-            get { return _Provider; }
-            set { _Provider = value; OnPropertyChanged("Provider"); }
-        }
-        
-        private Hl7.Fhir.Model.STU3.ResourceReference _Provider;
-        
-        /// <summary>
-        /// Responsible organization
-        /// </summary>
-        [FhirElement("organization", Order=170)]
-        [CLSCompliant(false)]
-        [References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Organization
-        {
-            get { return _Organization; }
-            set { _Organization = value; OnPropertyChanged("Organization"); }
-        }
-        
-        private Hl7.Fhir.Model.STU3.ResourceReference _Organization;
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// Target
         /// </summary>
-        [FhirElement("insurer", Order=180)]
+        [FhirElement("insurer", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=210)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Insurer
+        public Hl7.Fhir.Model.ResourceReference Insurer
         {
             get { return _Insurer; }
             set { _Insurer = value; OnPropertyChanged("Insurer"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Insurer;
+        private Hl7.Fhir.Model.ResourceReference _Insurer;
         
         /// <summary>
         /// Servicing Facility
         /// </summary>
-        [FhirElement("facility", Order=190)]
+        [FhirElement("facility", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=220)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Facility
+        public Hl7.Fhir.Model.ResourceReference Facility
         {
             get { return _Facility; }
             set { _Facility = value; OnPropertyChanged("Facility"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Facility;
+        private Hl7.Fhir.Model.ResourceReference _Facility;
         
         /// <summary>
         /// Insurance or medical plan
         /// </summary>
-        [FhirElement("coverage", Order=200)]
+        [FhirElement("coverage", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=230)]
         [CLSCompliant(false)]
         [References("Coverage")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Coverage
+        public Hl7.Fhir.Model.ResourceReference Coverage
         {
             get { return _Coverage; }
             set { _Coverage = value; OnPropertyChanged("Coverage"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Coverage;
+        private Hl7.Fhir.Model.ResourceReference _Coverage;
         
         /// <summary>
         /// Business agreement
         /// </summary>
-        [FhirElement("businessArrangement", Order=210)]
+        [FhirElement("businessArrangement", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=240)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString BusinessArrangementElement
         {
@@ -302,7 +349,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of services covered
         /// </summary>
-        [FhirElement("benefitCategory", Order=220)]
+        [FhirElement("benefitCategory", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=250)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitCategory
         {
@@ -315,7 +363,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Detailed services covered within the type
         /// </summary>
-        [FhirElement("benefitSubCategory", Order=230)]
+        [FhirElement("benefitSubCategory", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=260)]
+        [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
         {
@@ -333,18 +382,21 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
+                if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
+                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
+                if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
+                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
-                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.STU3.ResourceReference)Enterer.DeepCopy();
-                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.STU3.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.STU3.ResourceReference)Organization.DeepCopy();
-                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.STU3.ResourceReference)Insurer.DeepCopy();
-                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.STU3.ResourceReference)Facility.DeepCopy();
-                if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.STU3.ResourceReference)Coverage.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+                if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
+                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
+                if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
                 if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
                 if(BenefitCategory != null) dest.BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitCategory.DeepCopy();
                 if(BenefitSubCategory != null) dest.BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitSubCategory.DeepCopy();
@@ -366,14 +418,17 @@ namespace Hl7.Fhir.Model.STU3
         
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
+            if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
+            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+            if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
+            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Serviced, otherT.Serviced)) return false;
-            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
-            if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
@@ -391,14 +446,17 @@ namespace Hl7.Fhir.Model.STU3
         
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
+            if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+            if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
+            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Serviced, otherT.Serviced)) return false;
-            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
-            if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
-            if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
             if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
@@ -416,14 +474,17 @@ namespace Hl7.Fhir.Model.STU3
             {
                 foreach (var item in base.Children) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                if (Ruleset != null) yield return Ruleset;
+                if (OriginalRuleset != null) yield return OriginalRuleset;
+                if (CreatedElement != null) yield return CreatedElement;
+                if (Target != null) yield return Target;
+                if (Provider != null) yield return Provider;
+                if (Organization != null) yield return Organization;
                 if (StatusElement != null) yield return StatusElement;
                 if (Priority != null) yield return Priority;
                 if (Patient != null) yield return Patient;
                 if (Serviced != null) yield return Serviced;
-                if (CreatedElement != null) yield return CreatedElement;
                 if (Enterer != null) yield return Enterer;
-                if (Provider != null) yield return Provider;
-                if (Organization != null) yield return Organization;
                 if (Insurer != null) yield return Insurer;
                 if (Facility != null) yield return Facility;
                 if (Coverage != null) yield return Coverage;
@@ -440,14 +501,17 @@ namespace Hl7.Fhir.Model.STU3
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+                if (Target != null) yield return new ElementValue("target", Target);
+                if (Provider != null) yield return new ElementValue("provider", Provider);
+                if (Organization != null) yield return new ElementValue("organization", Organization);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Priority != null) yield return new ElementValue("priority", Priority);
                 if (Patient != null) yield return new ElementValue("patient", Patient);
                 if (Serviced != null) yield return new ElementValue("serviced", Serviced);
-                if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
                 if (Enterer != null) yield return new ElementValue("enterer", Enterer);
-                if (Provider != null) yield return new ElementValue("provider", Provider);
-                if (Organization != null) yield return new ElementValue("organization", Organization);
                 if (Insurer != null) yield return new ElementValue("insurer", Insurer);
                 if (Facility != null) yield return new ElementValue("facility", Facility);
                 if (Coverage != null) yield return new ElementValue("coverage", Coverage);

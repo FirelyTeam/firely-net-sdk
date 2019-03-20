@@ -344,13 +344,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the activity definition
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Subject
         {
@@ -1198,13 +1198,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Who should participate in the action
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [FhirElement("product", Order=460, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.R4.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element Product
         {
@@ -1284,13 +1284,13 @@ namespace Hl7.Fhir.Model.R4
         [References("SpecimenDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> SpecimenRequirement
+        public List<Hl7.Fhir.Model.ResourceReference> SpecimenRequirement
         {
-            get { if(_SpecimenRequirement==null) _SpecimenRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _SpecimenRequirement; }
+            get { if(_SpecimenRequirement==null) _SpecimenRequirement = new List<Hl7.Fhir.Model.ResourceReference>(); return _SpecimenRequirement; }
             set { _SpecimenRequirement = value; OnPropertyChanged("SpecimenRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _SpecimenRequirement;
+        private List<Hl7.Fhir.Model.ResourceReference> _SpecimenRequirement;
         
         /// <summary>
         /// What observations are required to perform this action
@@ -1300,13 +1300,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ObservationDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ObservationRequirement
+        public List<Hl7.Fhir.Model.ResourceReference> ObservationRequirement
         {
-            get { if(_ObservationRequirement==null) _ObservationRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ObservationRequirement; }
+            get { if(_ObservationRequirement==null) _ObservationRequirement = new List<Hl7.Fhir.Model.ResourceReference>(); return _ObservationRequirement; }
             set { _ObservationRequirement = value; OnPropertyChanged("ObservationRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ObservationRequirement;
+        private List<Hl7.Fhir.Model.ResourceReference> _ObservationRequirement;
         
         /// <summary>
         /// What observations must be produced by this action
@@ -1316,13 +1316,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ObservationDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ObservationResultRequirement
+        public List<Hl7.Fhir.Model.ResourceReference> ObservationResultRequirement
         {
-            get { if(_ObservationResultRequirement==null) _ObservationResultRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ObservationResultRequirement; }
+            get { if(_ObservationResultRequirement==null) _ObservationResultRequirement = new List<Hl7.Fhir.Model.ResourceReference>(); return _ObservationResultRequirement; }
             set { _ObservationResultRequirement = value; OnPropertyChanged("ObservationResultRequirement"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ObservationResultRequirement;
+        private List<Hl7.Fhir.Model.ResourceReference> _ObservationResultRequirement;
         
         /// <summary>
         /// Transform to apply the template
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model.R4
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -1429,15 +1429,15 @@ namespace Hl7.Fhir.Model.R4
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                 if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.R4.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Participant != null) dest.Participant = new List<ParticipantComponent>(Participant.DeepCopy());
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.R4.Dosage>(Dosage.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
-                if(SpecimenRequirement != null) dest.SpecimenRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(SpecimenRequirement.DeepCopy());
-                if(ObservationRequirement != null) dest.ObservationRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(ObservationRequirement.DeepCopy());
-                if(ObservationResultRequirement != null) dest.ObservationResultRequirement = new List<Hl7.Fhir.Model.R4.ResourceReference>(ObservationResultRequirement.DeepCopy());
+                if(SpecimenRequirement != null) dest.SpecimenRequirement = new List<Hl7.Fhir.Model.ResourceReference>(SpecimenRequirement.DeepCopy());
+                if(ObservationRequirement != null) dest.ObservationRequirement = new List<Hl7.Fhir.Model.ResourceReference>(ObservationRequirement.DeepCopy());
+                if(ObservationResultRequirement != null) dest.ObservationResultRequirement = new List<Hl7.Fhir.Model.ResourceReference>(ObservationResultRequirement.DeepCopy());
                 if(TransformElement != null) dest.TransformElement = (Hl7.Fhir.Model.Canonical)TransformElement.DeepCopy();
                 if(DynamicValue != null) dest.DynamicValue = new List<DynamicValueComponent>(DynamicValue.DeepCopy());
                 return dest;

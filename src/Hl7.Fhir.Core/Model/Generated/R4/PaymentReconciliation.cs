@@ -67,26 +67,26 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("identifier", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Identifier
+            public Hl7.Fhir.Model.Identifier Identifier
             {
                 get { return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Identifier;
+            private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
             /// Business identifier of the prior payment detail
             /// </summary>
             [FhirElement("predecessor", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Predecessor
+            public Hl7.Fhir.Model.Identifier Predecessor
             {
                 get { return _Predecessor; }
                 set { _Predecessor = value; OnPropertyChanged("Predecessor"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Predecessor;
+            private Hl7.Fhir.Model.Identifier _Predecessor;
             
             /// <summary>
             /// Category of payment
@@ -107,13 +107,13 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("request", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Request
+            public Hl7.Fhir.Model.ResourceReference Request
             {
                 get { return _Request; }
                 set { _Request = value; OnPropertyChanged("Request"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Request;
+            private Hl7.Fhir.Model.ResourceReference _Request;
             
             /// <summary>
             /// Submitter of the request
@@ -122,26 +122,26 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Submitter
+            public Hl7.Fhir.Model.ResourceReference Submitter
             {
                 get { return _Submitter; }
                 set { _Submitter = value; OnPropertyChanged("Submitter"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Submitter;
+            private Hl7.Fhir.Model.ResourceReference _Submitter;
             
             /// <summary>
             /// Response committing to a payment
             /// </summary>
             [FhirElement("response", Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Response
+            public Hl7.Fhir.Model.ResourceReference Response
             {
                 get { return _Response; }
                 set { _Response = value; OnPropertyChanged("Response"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Response;
+            private Hl7.Fhir.Model.ResourceReference _Response;
             
             /// <summary>
             /// Date of commitment to pay
@@ -182,13 +182,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("PractitionerRole")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Responsible
+            public Hl7.Fhir.Model.ResourceReference Responsible
             {
                 get { return _Responsible; }
                 set { _Responsible = value; OnPropertyChanged("Responsible"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Responsible;
+            private Hl7.Fhir.Model.ResourceReference _Responsible;
             
             /// <summary>
             /// Recipient of the payment
@@ -197,13 +197,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Payee
+            public Hl7.Fhir.Model.ResourceReference Payee
             {
                 get { return _Payee; }
                 set { _Payee = value; OnPropertyChanged("Payee"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Payee;
+            private Hl7.Fhir.Model.ResourceReference _Payee;
             
             /// <summary>
             /// Amount allocated to this payable
@@ -225,15 +225,15 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
-                    if(Predecessor != null) dest.Predecessor = (Hl7.Fhir.Model.R4.Identifier)Predecessor.DeepCopy();
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(Predecessor != null) dest.Predecessor = (Hl7.Fhir.Model.Identifier)Predecessor.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Request != null) dest.Request = (Hl7.Fhir.Model.R4.ResourceReference)Request.DeepCopy();
-                    if(Submitter != null) dest.Submitter = (Hl7.Fhir.Model.R4.ResourceReference)Submitter.DeepCopy();
-                    if(Response != null) dest.Response = (Hl7.Fhir.Model.R4.ResourceReference)Response.DeepCopy();
+                    if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
+                    if(Submitter != null) dest.Submitter = (Hl7.Fhir.Model.ResourceReference)Submitter.DeepCopy();
+                    if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
-                    if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.R4.ResourceReference)Responsible.DeepCopy();
-                    if(Payee != null) dest.Payee = (Hl7.Fhir.Model.R4.ResourceReference)Payee.DeepCopy();
+                    if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.ResourceReference)Responsible.DeepCopy();
+                    if(Payee != null) dest.Payee = (Hl7.Fhir.Model.ResourceReference)Payee.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.R4.Money)Amount.DeepCopy();
                     return dest;
                 }
@@ -477,13 +477,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
@@ -574,13 +574,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference PaymentIssuer
+        public Hl7.Fhir.Model.ResourceReference PaymentIssuer
         {
             get { return _PaymentIssuer; }
             set { _PaymentIssuer = value; OnPropertyChanged("PaymentIssuer"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _PaymentIssuer;
+        private Hl7.Fhir.Model.ResourceReference _PaymentIssuer;
         
         /// <summary>
         /// Reference to requesting resource
@@ -589,13 +589,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Task")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Request
+        public Hl7.Fhir.Model.ResourceReference Request
         {
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Request;
+        private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
         /// Responsible practitioner
@@ -604,13 +604,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Requestor
+        public Hl7.Fhir.Model.ResourceReference Requestor
         {
             get { return _Requestor; }
             set { _Requestor = value; OnPropertyChanged("Requestor"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Requestor;
+        private Hl7.Fhir.Model.ResourceReference _Requestor;
         
         /// <summary>
         /// queued | complete | error | partial
@@ -730,13 +730,13 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [FhirElement("paymentIdentifier", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier PaymentIdentifier
+        public Hl7.Fhir.Model.Identifier PaymentIdentifier
         {
             get { return _PaymentIdentifier; }
             set { _PaymentIdentifier = value; OnPropertyChanged("PaymentIdentifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _PaymentIdentifier;
+        private Hl7.Fhir.Model.Identifier _PaymentIdentifier;
         
         /// <summary>
         /// Settlement particulars
@@ -787,18 +787,18 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(PaymentIssuer != null) dest.PaymentIssuer = (Hl7.Fhir.Model.R4.ResourceReference)PaymentIssuer.DeepCopy();
-                if(Request != null) dest.Request = (Hl7.Fhir.Model.R4.ResourceReference)Request.DeepCopy();
-                if(Requestor != null) dest.Requestor = (Hl7.Fhir.Model.R4.ResourceReference)Requestor.DeepCopy();
+                if(PaymentIssuer != null) dest.PaymentIssuer = (Hl7.Fhir.Model.ResourceReference)PaymentIssuer.DeepCopy();
+                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
+                if(Requestor != null) dest.Requestor = (Hl7.Fhir.Model.ResourceReference)Requestor.DeepCopy();
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.R4.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(PaymentDateElement != null) dest.PaymentDateElement = (Hl7.Fhir.Model.Date)PaymentDateElement.DeepCopy();
                 if(PaymentAmount != null) dest.PaymentAmount = (Hl7.Fhir.Model.R4.Money)PaymentAmount.DeepCopy();
-                if(PaymentIdentifier != null) dest.PaymentIdentifier = (Hl7.Fhir.Model.R4.Identifier)PaymentIdentifier.DeepCopy();
+                if(PaymentIdentifier != null) dest.PaymentIdentifier = (Hl7.Fhir.Model.Identifier)PaymentIdentifier.DeepCopy();
                 if(Detail != null) dest.Detail = new List<DetailsComponent>(Detail.DeepCopy());
                 if(FormCode != null) dest.FormCode = (Hl7.Fhir.Model.CodeableConcept)FormCode.DeepCopy();
                 if(ProcessNote != null) dest.ProcessNote = new List<NotesComponent>(ProcessNote.DeepCopy());

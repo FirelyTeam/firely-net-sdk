@@ -626,13 +626,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The administrable dose form, after necessary reconstitution
@@ -671,13 +671,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductIngredient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Ingredient
+        public List<Hl7.Fhir.Model.ResourceReference> Ingredient
         {
-            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Ingredient; }
+            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Ingredient; }
             set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Ingredient;
+        private List<Hl7.Fhir.Model.ResourceReference> _Ingredient;
         
         /// <summary>
         /// Accompanying device
@@ -687,13 +687,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DeviceDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Device
+        public List<Hl7.Fhir.Model.ResourceReference> Device
         {
-            get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Device; }
+            get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.ResourceReference>(); return _Device; }
             set { _Device = value; OnPropertyChanged("Device"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Device;
+        private List<Hl7.Fhir.Model.ResourceReference> _Device;
         
         /// <summary>
         /// Characteristics e.g. a products onset of action
@@ -733,11 +733,11 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(AdministrableDoseForm != null) dest.AdministrableDoseForm = (Hl7.Fhir.Model.CodeableConcept)AdministrableDoseForm.DeepCopy();
                 if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
-                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.R4.ResourceReference>(Ingredient.DeepCopy());
-                if(Device != null) dest.Device = new List<Hl7.Fhir.Model.R4.ResourceReference>(Device.DeepCopy());
+                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
+                if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
                 if(Characteristics != null) dest.Characteristics = new List<CharacteristicsComponent>(Characteristics.DeepCopy());
                 if(RouteOfAdministration != null) dest.RouteOfAdministration = new List<RouteOfAdministrationComponent>(RouteOfAdministration.DeepCopy());
                 return dest;

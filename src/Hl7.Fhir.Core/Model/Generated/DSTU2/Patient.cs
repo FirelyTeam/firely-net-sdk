@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Organization
+            public Hl7.Fhir.Model.ResourceReference Organization
             {
                 get { return _Organization; }
                 set { _Organization = value; OnPropertyChanged("Organization"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
             /// The period during which this contact person or organization is valid to be contacted relating to this patient
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(Telecom.DeepCopy());
                     if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                     if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.DSTU2.ResourceReference)Organization.DeepCopy();
+                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -537,13 +537,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Patient")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Other
+            public Hl7.Fhir.Model.ResourceReference Other
             {
                 get { return _Other; }
                 set { _Other = value; OnPropertyChanged("Other"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Other;
+            private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
             /// replace | refer | seealso - type of link
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Other != null) dest.Other = (Hl7.Fhir.Model.DSTU2.ResourceReference)Other.DeepCopy();
+                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.DSTU2.LinkType>)TypeElement.DeepCopy();
                     return dest;
                 }
@@ -656,13 +656,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this patient's record is in active use
@@ -915,13 +915,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> CareProvider
+        public List<Hl7.Fhir.Model.ResourceReference> CareProvider
         {
-            get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _CareProvider; }
+            get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareProvider; }
             set { _CareProvider = value; OnPropertyChanged("CareProvider"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _CareProvider;
+        private List<Hl7.Fhir.Model.ResourceReference> _CareProvider;
         
         /// <summary>
         /// Organization that is the custodian of the patient record
@@ -930,13 +930,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.DSTU2.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(Telecom.DeepCopy());
@@ -990,8 +990,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(Contact != null) dest.Contact = new List<ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<CommunicationComponent>(Communication.DeepCopy());
-                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(CareProvider.DeepCopy());
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.DSTU2.ResourceReference)ManagingOrganization.DeepCopy();
+                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<LinkComponent>(Link.DeepCopy());
                 return dest;
             }

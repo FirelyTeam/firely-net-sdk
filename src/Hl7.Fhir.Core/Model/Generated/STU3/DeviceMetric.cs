@@ -244,13 +244,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Identity of metric, for example Heart Rate or PEEP Setting
@@ -288,13 +288,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Source
+        public Hl7.Fhir.Model.ResourceReference Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Source;
+        private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// Describes the link to the parent DeviceComponent
@@ -303,13 +303,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("DeviceComponent")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Parent
+        public Hl7.Fhir.Model.ResourceReference Parent
         {
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Parent;
+        private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
         /// on | off | standby | entered-in-error
@@ -448,11 +448,11 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.STU3.ResourceReference)Source.DeepCopy();
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.STU3.ResourceReference)Parent.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(OperationalStatusElement != null) dest.OperationalStatusElement = (Code<Hl7.Fhir.Model.STU3.DeviceMetricOperationalStatus>)OperationalStatusElement.DeepCopy();
                 if(ColorElement != null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetricColor>)ColorElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetricCategory>)CategoryElement.DeepCopy();

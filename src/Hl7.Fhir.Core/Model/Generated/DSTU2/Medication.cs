@@ -191,13 +191,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Item
+            public Hl7.Fhir.Model.ResourceReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Item;
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// Quantity of ingredient present
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DSTU2.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                     return dest;
                 }
@@ -533,13 +533,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Item
+            public Hl7.Fhir.Model.ResourceReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Item;
+            private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
             /// Quantity present in the package
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DSTU2.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
                     return dest;
                 }
@@ -679,13 +679,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Manufacturer
+        public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
             get { return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Manufacturer;
+        private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
         /// Administrable medication details
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(IsBrandElement != null) dest.IsBrandElement = (Hl7.Fhir.Model.FhirBoolean)IsBrandElement.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Manufacturer.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(Product != null) dest.Product = (ProductComponent)Product.DeepCopy();
                 if(Package != null) dest.Package = (PackageComponent)Package.DeepCopy();
                 return dest;

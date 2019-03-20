@@ -84,13 +84,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Actor
+            public Hl7.Fhir.Model.ResourceReference Actor
             {
                 get { return _Actor; }
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Actor;
+            private Hl7.Fhir.Model.ResourceReference _Actor;
             
             /// <summary>
             /// Authorization-system identifier for the agent
@@ -98,13 +98,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("userId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.Identifier UserId
+            public Hl7.Fhir.Model.Identifier UserId
             {
                 get { return _UserId; }
                 set { _UserId = value; OnPropertyChanged("UserId"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.Identifier _UserId;
+            private Hl7.Fhir.Model.Identifier _UserId;
             
             /// <summary>
             /// Track delegation between agents
@@ -129,8 +129,8 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.Coding)Role.DeepCopy();
-                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.DSTU2.ResourceReference)Actor.DeepCopy();
-                    if(UserId != null) dest.UserId = (Hl7.Fhir.Model.DSTU2.Identifier)UserId.DeepCopy();
+                    if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
+                    if(UserId != null) dest.UserId = (Hl7.Fhir.Model.Identifier)UserId.DeepCopy();
                     if(RelatedAgent != null) dest.RelatedAgent = new List<RelatedAgentComponent>(RelatedAgent.DeepCopy());
                     return dest;
                 }
@@ -559,13 +559,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Target
+        public List<Hl7.Fhir.Model.ResourceReference> Target
         {
-            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Target; }
+            get { if(_Target==null) _Target = new List<Hl7.Fhir.Model.ResourceReference>(); return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Target;
+        private List<Hl7.Fhir.Model.ResourceReference> _Target;
         
         /// <summary>
         /// When the activity occurred
@@ -651,13 +651,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Policy or plan the activity was defined by
@@ -746,12 +746,12 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Target.DeepCopy());
+                if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Activity != null) dest.Activity = (Hl7.Fhir.Model.CodeableConcept)Activity.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.DSTU2.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<AgentComponent>(Agent.DeepCopy());
                 if(Entity != null) dest.Entity = new List<EntityComponent>(Entity.DeepCopy());

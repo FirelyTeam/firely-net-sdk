@@ -62,13 +62,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ResearchStudy")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Study
+        public Hl7.Fhir.Model.ResourceReference Study
         {
             get { return _Study; }
             set { _Study = value; OnPropertyChanged("Study"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Study;
+        private Hl7.Fhir.Model.ResourceReference _Study;
         
         /// <summary>
         /// Who is part of study
@@ -142,13 +142,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Individual
+        public Hl7.Fhir.Model.ResourceReference Individual
         {
             get { return _Individual; }
             set { _Individual = value; OnPropertyChanged("Individual"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Individual;
+        private Hl7.Fhir.Model.ResourceReference _Individual;
         
         /// <summary>
         /// What path should be followed
@@ -221,13 +221,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Consent")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Consent
+        public Hl7.Fhir.Model.ResourceReference Consent
         {
             get { return _Consent; }
             set { _Consent = value; OnPropertyChanged("Consent"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Consent;
+        private Hl7.Fhir.Model.ResourceReference _Consent;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -237,14 +237,14 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.R4.ResearchSubjectStatus>)StatusElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Study != null) dest.Study = (Hl7.Fhir.Model.R4.ResourceReference)Study.DeepCopy();
-                if(Individual != null) dest.Individual = (Hl7.Fhir.Model.R4.ResourceReference)Individual.DeepCopy();
+                if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
+                if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopy();
                 if(AssignedArmElement != null) dest.AssignedArmElement = (Hl7.Fhir.Model.FhirString)AssignedArmElement.DeepCopy();
                 if(ActualArmElement != null) dest.ActualArmElement = (Hl7.Fhir.Model.FhirString)ActualArmElement.DeepCopy();
-                if(Consent != null) dest.Consent = (Hl7.Fhir.Model.R4.ResourceReference)Consent.DeepCopy();
+                if(Consent != null) dest.Consent = (Hl7.Fhir.Model.ResourceReference)Consent.DeepCopy();
                 return dest;
             }
             else

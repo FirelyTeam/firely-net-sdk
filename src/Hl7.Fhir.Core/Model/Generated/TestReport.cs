@@ -38,14 +38,14 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v4.0.0, v3.0.1
 //
-namespace Hl7.Fhir.Model.STU3
+namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// Describes the results of a TestScript execution
     /// </summary>
-    [FhirType(Hl7.Fhir.Model.Version.STU3, "TestReport", IsResource=true)]
+    [FhirType(Hl7.Fhir.Model.Version.All, "TestReport", IsResource=true)]
     [DataContract]
     public partial class TestReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
         public override string TypeName { get { return "TestReport"; } }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "ParticipantComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// test-engine | client | server
             /// </summary>
-            [FhirElement("type", Order=40)]
+            [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestReportParticipantType> TypeElement
@@ -98,7 +99,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The uri of the participant. An absolute URL is preferred
             /// </summary>
-            [FhirElement("uri", Order=50)]
+            [FhirElement("uri", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UriElement
@@ -131,7 +133,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The display name of the participant
             /// </summary>
-            [FhirElement("display", Order=60)]
+            [FhirElement("display", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DisplayElement
             {
@@ -236,7 +239,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "SetupComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "SetupComponent")]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -246,7 +249,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A setup operation or assert that was executed
             /// </summary>
-            [FhirElement("action", Order=40)]
+            [FhirElement("action", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<SetupActionComponent> Action
@@ -323,7 +327,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "SetupActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "SetupActionComponent")]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -333,7 +337,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The operation to perform
             /// </summary>
-            [FhirElement("operation", Order=40)]
+            [FhirElement("operation", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public OperationComponent Operation
             {
@@ -346,7 +351,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The assertion to perform
             /// </summary>
-            [FhirElement("assert", Order=50)]
+            [FhirElement("assert", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public AssertComponent Assert
             {
@@ -427,7 +433,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "OperationComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "OperationComponent")]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -437,7 +443,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// pass | skip | fail | warning | error
             /// </summary>
-            [FhirElement("result", Order=40)]
+            [FhirElement("result", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestReportActionResult> ResultElement
@@ -470,7 +477,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A message associated with the result
             /// </summary>
-            [FhirElement("message", Order=50)]
+            [FhirElement("message", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Markdown MessageElement
             {
@@ -502,7 +510,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A link to further details on the result
             /// </summary>
-            [FhirElement("detail", Order=60)]
+            [FhirElement("detail", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri DetailElement
             {
@@ -607,7 +616,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "AssertComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "AssertComponent")]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -617,7 +626,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// pass | skip | fail | warning | error
             /// </summary>
-            [FhirElement("result", Order=40)]
+            [FhirElement("result", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestReportActionResult> ResultElement
@@ -650,7 +660,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A message associated with the result
             /// </summary>
-            [FhirElement("message", Order=50)]
+            [FhirElement("message", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Markdown MessageElement
             {
@@ -682,7 +693,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A link to further details on the result
             /// </summary>
-            [FhirElement("detail", Order=60)]
+            [FhirElement("detail", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=60)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DetailElement
             {
@@ -787,7 +799,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "TestComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "TestComponent")]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -797,7 +809,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Tracking/logging name of this test
             /// </summary>
-            [FhirElement("name", Order=40)]
+            [FhirElement("name", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
             {
@@ -829,7 +842,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Tracking/reporting short description of the test
             /// </summary>
-            [FhirElement("description", Order=50)]
+            [FhirElement("description", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -861,7 +875,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A test operation or assert that was performed
             /// </summary>
-            [FhirElement("action", Order=60)]
+            [FhirElement("action", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=60)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<TestActionComponent> Action
@@ -948,7 +963,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "TestActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "TestActionComponent")]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -958,7 +973,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The operation performed
             /// </summary>
-            [FhirElement("operation", Order=40)]
+            [FhirElement("operation", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [DataMember]
             public OperationComponent Operation
             {
@@ -971,7 +987,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The assertion performed
             /// </summary>
-            [FhirElement("assert", Order=50)]
+            [FhirElement("assert", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=50)]
+            [CLSCompliant(false)]
             [DataMember]
             public AssertComponent Assert
             {
@@ -1052,7 +1069,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "TeardownComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "TeardownComponent")]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1062,7 +1079,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// One or more teardown operations performed
             /// </summary>
-            [FhirElement("action", Order=40)]
+            [FhirElement("action", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<TeardownActionComponent> Action
@@ -1139,7 +1157,7 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        [FhirType(Hl7.Fhir.Model.Version.STU3, "TeardownActionComponent")]
+        [FhirType(Hl7.Fhir.Model.Version.All, "TeardownActionComponent")]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
         {
@@ -1149,7 +1167,8 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The teardown operation performed
             /// </summary>
-            [FhirElement("operation", Order=40)]
+            [FhirElement("operation", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40)]
+            [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public OperationComponent Operation
@@ -1229,21 +1248,21 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Informal name of the executed TestScript
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("name", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -1276,7 +1295,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// completed | in-progress | waiting | stopped | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1310,23 +1329,23 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Reference to the  version-specific TestScript that was executed to produce this TestReport
         /// </summary>
-        [FhirElement("testScript", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("testScript", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=120)]
         [CLSCompliant(false)]
         [References("TestScript")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference TestScript
+        public Hl7.Fhir.Model.ResourceReference TestScript
         {
             get { return _TestScript; }
             set { _TestScript = value; OnPropertyChanged("TestScript"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _TestScript;
+        private Hl7.Fhir.Model.ResourceReference _TestScript;
         
         /// <summary>
         /// pass | fail | pending
         /// </summary>
-        [FhirElement("result", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("result", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1360,7 +1379,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The final score (percentage of tests passed) resulting from the execution of the TestScript
         /// </summary>
-        [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("score", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal ScoreElement
@@ -1393,7 +1412,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the tester producing this report (Organization or individual)
         /// </summary>
-        [FhirElement("tester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("tester", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TesterElement
@@ -1426,7 +1445,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the TestScript was executed and this TestReport was generated
         /// </summary>
-        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("issued", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
@@ -1459,7 +1478,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A participant in the test execution, either the execution engine, a client, or a server
         /// </summary>
-        [FhirElement("participant", Order=170)]
+        [FhirElement("participant", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=170)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ParticipantComponent> Participant
@@ -1473,7 +1493,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The results of the series of required setup operations before the tests were executed
         /// </summary>
-        [FhirElement("setup", Order=180)]
+        [FhirElement("setup", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=180)]
+        [CLSCompliant(false)]
         [DataMember]
         public SetupComponent Setup
         {
@@ -1486,7 +1507,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A test executed from the test script
         /// </summary>
-        [FhirElement("test", Order=190)]
+        [FhirElement("test", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=190)]
+        [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<TestComponent> Test
@@ -1500,7 +1522,8 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The results of running the series of required clean up steps
         /// </summary>
-        [FhirElement("teardown", Order=200)]
+        [FhirElement("teardown", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=200)]
+        [CLSCompliant(false)]
         [DataMember]
         public TeardownComponent Teardown
         {
@@ -1544,10 +1567,10 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.TestReportStatus>)StatusElement.DeepCopy();
-                if(TestScript != null) dest.TestScript = (Hl7.Fhir.Model.STU3.ResourceReference)TestScript.DeepCopy();
+                if(TestScript != null) dest.TestScript = (Hl7.Fhir.Model.ResourceReference)TestScript.DeepCopy();
                 if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReportResult>)ResultElement.DeepCopy();
                 if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
                 if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopy();

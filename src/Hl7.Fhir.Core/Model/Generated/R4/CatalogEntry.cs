@@ -103,13 +103,13 @@ namespace Hl7.Fhir.Model.R4
             [References("CatalogEntry")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Item
+            public Hl7.Fhir.Model.ResourceReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Item;
+            private Hl7.Fhir.Model.ResourceReference _Item;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(RelationtypeElement != null) dest.RelationtypeElement = (Code<Hl7.Fhir.Model.R4.CatalogEntryRelationType>)RelationtypeElement.DeepCopy();
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.R4.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
                     return dest;
                 }
                 else
@@ -189,13 +189,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The type of item - medication, device, service, protocol or other
@@ -252,13 +252,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Medication","Device","Organization","Practitioner","PractitionerRole","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ReferencedItem
+        public Hl7.Fhir.Model.ResourceReference ReferencedItem
         {
             get { return _ReferencedItem; }
             set { _ReferencedItem = value; OnPropertyChanged("ReferencedItem"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ReferencedItem;
+        private Hl7.Fhir.Model.ResourceReference _ReferencedItem;
         
         /// <summary>
         /// Any additional identifier(s) for the catalog item, in the same granularity or concept
@@ -266,13 +266,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("additionalIdentifier", Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> AdditionalIdentifier
+        public List<Hl7.Fhir.Model.Identifier> AdditionalIdentifier
         {
-            get { if(_AdditionalIdentifier==null) _AdditionalIdentifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _AdditionalIdentifier; }
+            get { if(_AdditionalIdentifier==null) _AdditionalIdentifier = new List<Hl7.Fhir.Model.Identifier>(); return _AdditionalIdentifier; }
             set { _AdditionalIdentifier = value; OnPropertyChanged("AdditionalIdentifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _AdditionalIdentifier;
+        private List<Hl7.Fhir.Model.Identifier> _AdditionalIdentifier;
         
         /// <summary>
         /// Classification (category or class) of the item entry
@@ -447,11 +447,11 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(OrderableElement != null) dest.OrderableElement = (Hl7.Fhir.Model.FhirBoolean)OrderableElement.DeepCopy();
-                if(ReferencedItem != null) dest.ReferencedItem = (Hl7.Fhir.Model.R4.ResourceReference)ReferencedItem.DeepCopy();
-                if(AdditionalIdentifier != null) dest.AdditionalIdentifier = new List<Hl7.Fhir.Model.R4.Identifier>(AdditionalIdentifier.DeepCopy());
+                if(ReferencedItem != null) dest.ReferencedItem = (Hl7.Fhir.Model.ResourceReference)ReferencedItem.DeepCopy();
+                if(AdditionalIdentifier != null) dest.AdditionalIdentifier = new List<Hl7.Fhir.Model.Identifier>(AdditionalIdentifier.DeepCopy());
                 if(Classification != null) dest.Classification = new List<Hl7.Fhir.Model.CodeableConcept>(Classification.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();

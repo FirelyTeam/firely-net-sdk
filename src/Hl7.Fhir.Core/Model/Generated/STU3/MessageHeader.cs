@@ -102,13 +102,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("Device")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Target
+            public Hl7.Fhir.Model.ResourceReference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Target;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// Actual destination address or id
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.STU3.ResourceReference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     return dest;
                 }
@@ -542,13 +542,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("OperationOutcome")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Details
+            public Hl7.Fhir.Model.ResourceReference Details
             {
                 get { return _Details; }
                 set { _Details = value; OnPropertyChanged("Details"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Details;
+            private Hl7.Fhir.Model.ResourceReference _Details;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model.STU3
                     base.CopyTo(dest);
                     if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.ResponseType>)CodeElement.DeepCopy();
-                    if(Details != null) dest.Details = (Hl7.Fhir.Model.STU3.ResourceReference)Details.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.ResourceReference)Details.DeepCopy();
                     return dest;
                 }
                 else
@@ -663,13 +663,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Receiver
+        public Hl7.Fhir.Model.ResourceReference Receiver
         {
             get { return _Receiver; }
             set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Receiver;
+        private Hl7.Fhir.Model.ResourceReference _Receiver;
         
         /// <summary>
         /// Real world sender of the message
@@ -678,13 +678,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Sender
+        public Hl7.Fhir.Model.ResourceReference Sender
         {
             get { return _Sender; }
             set { _Sender = value; OnPropertyChanged("Sender"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Sender;
+        private Hl7.Fhir.Model.ResourceReference _Sender;
         
         /// <summary>
         /// Time that the message was sent
@@ -727,13 +727,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Enterer
+        public Hl7.Fhir.Model.ResourceReference Enterer
         {
             get { return _Enterer; }
             set { _Enterer = value; OnPropertyChanged("Enterer"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Enterer;
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// The source of the decision
@@ -742,13 +742,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Message source application
@@ -772,13 +772,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Responsible
+        public Hl7.Fhir.Model.ResourceReference Responsible
         {
             get { return _Responsible; }
             set { _Responsible = value; OnPropertyChanged("Responsible"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Responsible;
+        private Hl7.Fhir.Model.ResourceReference _Responsible;
         
         /// <summary>
         /// Cause of event
@@ -815,13 +815,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Focus
+        public List<Hl7.Fhir.Model.ResourceReference> Focus
         {
-            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Focus; }
+            get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.ResourceReference>(); return _Focus; }
             set { _Focus = value; OnPropertyChanged("Focus"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Focus;
+        private List<Hl7.Fhir.Model.ResourceReference> _Focus;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -833,16 +833,16 @@ namespace Hl7.Fhir.Model.STU3
                 base.CopyTo(dest);
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
                 if(Destination != null) dest.Destination = new List<MessageDestinationComponent>(Destination.DeepCopy());
-                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.STU3.ResourceReference)Receiver.DeepCopy();
-                if(Sender != null) dest.Sender = (Hl7.Fhir.Model.STU3.ResourceReference)Sender.DeepCopy();
+                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
+                if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
-                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.STU3.ResourceReference)Enterer.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.STU3.ResourceReference)Author.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Source != null) dest.Source = (MessageSourceComponent)Source.DeepCopy();
-                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.STU3.ResourceReference)Responsible.DeepCopy();
+                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.ResourceReference)Responsible.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                 if(Response != null) dest.Response = (ResponseComponent)Response.DeepCopy();
-                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Focus.DeepCopy());
+                if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
                 return dest;
             }
             else

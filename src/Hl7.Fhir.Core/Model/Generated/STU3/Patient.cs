@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Organization
+            public Hl7.Fhir.Model.ResourceReference Organization
             {
                 get { return _Organization; }
                 set { _Organization = value; OnPropertyChanged("Organization"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Organization;
+            private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
             /// The period during which this contact person or organization is valid to be contacted relating to this patient
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Telecom.DeepCopy());
                     if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                     if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.STU3.ResourceReference)Organization.DeepCopy();
+                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -537,13 +537,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("Patient","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Other
+            public Hl7.Fhir.Model.ResourceReference Other
             {
                 get { return _Other; }
                 set { _Other = value; OnPropertyChanged("Other"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Other;
+            private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
             /// replaced-by | replaces | refer | seealso - type of link
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Other != null) dest.Other = (Hl7.Fhir.Model.STU3.ResourceReference)Other.DeepCopy();
+                    if(Other != null) dest.Other = (Hl7.Fhir.Model.ResourceReference)Other.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.LinkType>)TypeElement.DeepCopy();
                     return dest;
                 }
@@ -657,13 +657,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this patient's record is in active use
@@ -916,13 +916,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> GeneralPractitioner
+        public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
         {
-            get { if(_GeneralPractitioner==null) _GeneralPractitioner = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _GeneralPractitioner; }
+            get { if(_GeneralPractitioner==null) _GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(); return _GeneralPractitioner; }
             set { _GeneralPractitioner = value; OnPropertyChanged("GeneralPractitioner"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _GeneralPractitioner;
+        private List<Hl7.Fhir.Model.ResourceReference> _GeneralPractitioner;
         
         /// <summary>
         /// Organization that is the custodian of the patient record
@@ -931,13 +931,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Name != null) dest.Name = new List<Hl7.Fhir.Model.STU3.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Telecom.DeepCopy());
@@ -992,8 +992,8 @@ namespace Hl7.Fhir.Model.STU3
                 if(Contact != null) dest.Contact = new List<ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<CommunicationComponent>(Communication.DeepCopy());
-                if(GeneralPractitioner != null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.STU3.ResourceReference>(GeneralPractitioner.DeepCopy());
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.STU3.ResourceReference)ManagingOrganization.DeepCopy();
+                if(GeneralPractitioner != null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopy());
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<LinkComponent>(Link.DeepCopy());
                 return dest;
             }

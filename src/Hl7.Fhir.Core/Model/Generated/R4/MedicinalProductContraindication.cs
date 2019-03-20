@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Medication
@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProduct","Medication")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Subject
+        public List<Hl7.Fhir.Model.ResourceReference> Subject
         {
-            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Subject; }
+            get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Subject;
+        private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
         /// The disease, symptom or procedure for the contraindication
@@ -231,13 +231,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductIndication")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> TherapeuticIndication
+        public List<Hl7.Fhir.Model.ResourceReference> TherapeuticIndication
         {
-            get { if(_TherapeuticIndication==null) _TherapeuticIndication = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _TherapeuticIndication; }
+            get { if(_TherapeuticIndication==null) _TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(); return _TherapeuticIndication; }
             set { _TherapeuticIndication = value; OnPropertyChanged("TherapeuticIndication"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _TherapeuticIndication;
+        private List<Hl7.Fhir.Model.ResourceReference> _TherapeuticIndication;
         
         /// <summary>
         /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
@@ -277,11 +277,11 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.R4.ResourceReference>(Subject.DeepCopy());
+                if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(Disease != null) dest.Disease = (Hl7.Fhir.Model.CodeableConcept)Disease.DeepCopy();
                 if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
                 if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
-                if(TherapeuticIndication != null) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.R4.ResourceReference>(TherapeuticIndication.DeepCopy());
+                if(TherapeuticIndication != null) dest.TherapeuticIndication = new List<Hl7.Fhir.Model.ResourceReference>(TherapeuticIndication.DeepCopy());
                 if(OtherTherapy != null) dest.OtherTherapy = new List<OtherTherapyComponent>(OtherTherapy.DeepCopy());
                 if(Population != null) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
                 return dest;

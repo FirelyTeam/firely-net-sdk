@@ -234,11 +234,7 @@ namespace Hl7.Fhir.Rest
             {
                 switch (parameter.Value)
                 {
-                    case Model.DSTU2.Identifier id:
-                        return id.ToToken();
-                    case Model.STU3.Identifier id:
-                        return id.ToToken();
-                    case Model.R4.Identifier id:
+                    case Model.Identifier id:
                         return id.ToToken();
                     case Coding coding:
                         return coding.ToToken();

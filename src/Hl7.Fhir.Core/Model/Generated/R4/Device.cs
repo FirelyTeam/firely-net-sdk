@@ -641,13 +641,13 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("component", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier Component
+            public Hl7.Fhir.Model.Identifier Component
             {
                 get { return _Component; }
                 set { _Component = value; OnPropertyChanged("Component"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _Component;
+            private Hl7.Fhir.Model.Identifier _Component;
             
             /// <summary>
             /// The version text
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Component != null) dest.Component = (Hl7.Fhir.Model.R4.Identifier)Component.DeepCopy();
+                    if(Component != null) dest.Component = (Hl7.Fhir.Model.Identifier)Component.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                     return dest;
                 }
@@ -889,13 +889,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// The reference to the definition for the device
@@ -904,13 +904,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("DeviceDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Definition
+        public Hl7.Fhir.Model.ResourceReference Definition
         {
             get { return _Definition; }
             set { _Definition = value; OnPropertyChanged("Definition"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Definition;
+        private Hl7.Fhir.Model.ResourceReference _Definition;
         
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
@@ -1306,13 +1306,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Organization responsible for device
@@ -1321,13 +1321,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Owner
+        public Hl7.Fhir.Model.ResourceReference Owner
         {
             get { return _Owner; }
             set { _Owner = value; OnPropertyChanged("Owner"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Owner;
+        private Hl7.Fhir.Model.ResourceReference _Owner;
         
         /// <summary>
         /// Details for human/organization for support
@@ -1350,13 +1350,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Location
+        public Hl7.Fhir.Model.ResourceReference Location
         {
             get { return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Location;
+        private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
         /// Network address to contact device
@@ -1426,13 +1426,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Parent
+        public Hl7.Fhir.Model.ResourceReference Parent
         {
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Parent;
+        private Hl7.Fhir.Model.ResourceReference _Parent;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1442,8 +1442,8 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
-                if(Definition != null) dest.Definition = (Hl7.Fhir.Model.R4.ResourceReference)Definition.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                 if(UdiCarrier != null) dest.UdiCarrier = new List<UdiCarrierComponent>(UdiCarrier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FHIRDeviceStatus>)StatusElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
@@ -1460,14 +1460,14 @@ namespace Hl7.Fhir.Model.R4
                 if(Specialization != null) dest.Specialization = new List<SpecializationComponent>(Specialization.DeepCopy());
                 if(Version != null) dest.Version = new List<VersionComponent>(Version.DeepCopy());
                 if(Property != null) dest.Property = new List<PropertyComponent>(Property.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.R4.ResourceReference)Patient.DeepCopy();
-                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.R4.ResourceReference)Owner.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.R4.ContactPoint>(Contact.DeepCopy());
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.R4.ResourceReference)Location.DeepCopy();
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Safety != null) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(Safety.DeepCopy());
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.R4.ResourceReference)Parent.DeepCopy();
+                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 return dest;
             }
             else

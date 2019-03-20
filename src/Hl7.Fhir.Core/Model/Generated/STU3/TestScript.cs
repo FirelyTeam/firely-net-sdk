@@ -763,13 +763,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("CapabilityStatement")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Capabilities
+            public Hl7.Fhir.Model.ResourceReference Capabilities
             {
                 get { return _Capabilities; }
                 set { _Capabilities = value; OnPropertyChanged("Capabilities"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Capabilities;
+            private Hl7.Fhir.Model.ResourceReference _Capabilities;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(OriginElement != null) dest.OriginElement = new List<Hl7.Fhir.Model.Integer>(OriginElement.DeepCopy());
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(LinkElement != null) dest.LinkElement = new List<Hl7.Fhir.Model.FhirUri>(LinkElement.DeepCopy());
-                    if(Capabilities != null) dest.Capabilities = (Hl7.Fhir.Model.STU3.ResourceReference)Capabilities.DeepCopy();
+                    if(Capabilities != null) dest.Capabilities = (Hl7.Fhir.Model.ResourceReference)Capabilities.DeepCopy();
                     return dest;
                 }
                 else
@@ -943,13 +943,13 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("resource", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Resource
+            public Hl7.Fhir.Model.ResourceReference Resource
             {
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Resource;
+            private Hl7.Fhir.Model.ResourceReference _Resource;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model.STU3
                     base.CopyTo(dest);
                     if(AutocreateElement != null) dest.AutocreateElement = (Hl7.Fhir.Model.FhirBoolean)AutocreateElement.DeepCopy();
                     if(AutodeleteElement != null) dest.AutodeleteElement = (Hl7.Fhir.Model.FhirBoolean)AutodeleteElement.DeepCopy();
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                     return dest;
                 }
                 else
@@ -1405,13 +1405,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("resource", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Resource
+            public Hl7.Fhir.Model.ResourceReference Resource
             {
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Resource;
+            private Hl7.Fhir.Model.ResourceReference _Resource;
             
             /// <summary>
             /// Rule parameter template
@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                     if(Param != null) dest.Param = new List<RuleParamComponent>(Param.DeepCopy());
                     return dest;
                 }
@@ -1654,13 +1654,13 @@ namespace Hl7.Fhir.Model.STU3
             [FhirElement("resource", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Resource
+            public Hl7.Fhir.Model.ResourceReference Resource
             {
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Resource;
+            private Hl7.Fhir.Model.ResourceReference _Resource;
             
             /// <summary>
             /// The referenced rule within the ruleset
@@ -1683,7 +1683,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                     if(Rule != null) dest.Rule = new List<RulesetRuleComponent>(Rule.DeepCopy());
                     return dest;
                 }
@@ -5033,13 +5033,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Business version of the test script
@@ -5476,13 +5476,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("profile", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Profile
+        public List<Hl7.Fhir.Model.ResourceReference> Profile
         {
-            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Profile; }
+            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Profile;
+        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
         /// Placeholder for evaluated elements
@@ -5711,7 +5711,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -5729,7 +5729,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Destination != null) dest.Destination = new List<DestinationComponent>(Destination.DeepCopy());
                 if(Metadata != null) dest.Metadata = (MetadataComponent)Metadata.DeepCopy();
                 if(Fixture != null) dest.Fixture = new List<FixtureComponent>(Fixture.DeepCopy());
-                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Profile.DeepCopy());
+                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
                 if(Variable != null) dest.Variable = new List<VariableComponent>(Variable.DeepCopy());
                 if(Rule != null) dest.Rule = new List<RuleComponent>(Rule.DeepCopy());
                 if(Ruleset != null) dest.Ruleset = new List<RulesetComponent>(Ruleset.DeepCopy());

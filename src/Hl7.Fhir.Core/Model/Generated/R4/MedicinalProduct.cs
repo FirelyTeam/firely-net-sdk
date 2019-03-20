@@ -483,13 +483,13 @@ namespace Hl7.Fhir.Model.R4
             [FhirElement("authorisationReferenceNumber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.Identifier AuthorisationReferenceNumber
+            public Hl7.Fhir.Model.Identifier AuthorisationReferenceNumber
             {
                 get { return _AuthorisationReferenceNumber; }
                 set { _AuthorisationReferenceNumber = value; OnPropertyChanged("AuthorisationReferenceNumber"); }
             }
             
-            private Hl7.Fhir.Model.R4.Identifier _AuthorisationReferenceNumber;
+            private Hl7.Fhir.Model.Identifier _AuthorisationReferenceNumber;
             
             /// <summary>
             /// Regulatory authorization date
@@ -546,13 +546,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Manufacturer
+            public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
             {
-                get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Manufacturer; }
+                get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
                 set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Manufacturer;
+            private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
             
             /// <summary>
             /// A regulator which oversees the operation
@@ -561,13 +561,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Regulator
+            public Hl7.Fhir.Model.ResourceReference Regulator
             {
                 get { return _Regulator; }
                 set { _Regulator = value; OnPropertyChanged("Regulator"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Regulator;
+            private Hl7.Fhir.Model.ResourceReference _Regulator;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -577,11 +577,11 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopy();
-                    if(AuthorisationReferenceNumber != null) dest.AuthorisationReferenceNumber = (Hl7.Fhir.Model.R4.Identifier)AuthorisationReferenceNumber.DeepCopy();
+                    if(AuthorisationReferenceNumber != null) dest.AuthorisationReferenceNumber = (Hl7.Fhir.Model.Identifier)AuthorisationReferenceNumber.DeepCopy();
                     if(EffectiveDateElement != null) dest.EffectiveDateElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveDateElement.DeepCopy();
                     if(ConfidentialityIndicator != null) dest.ConfidentialityIndicator = (Hl7.Fhir.Model.CodeableConcept)ConfidentialityIndicator.DeepCopy();
-                    if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Manufacturer.DeepCopy());
-                    if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.R4.ResourceReference)Regulator.DeepCopy();
+                    if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+                    if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopy();
                     return dest;
                 }
                 else
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// The type of special designation, e.g. orphan drug, minor use
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("indication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Indication
             {
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
                     if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
@@ -889,13 +889,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Regulatory type, e.g. Investigational or Authorized
@@ -1053,13 +1053,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductPharmaceutical")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> PharmaceuticalProduct
+        public List<Hl7.Fhir.Model.ResourceReference> PharmaceuticalProduct
         {
-            get { if(_PharmaceuticalProduct==null) _PharmaceuticalProduct = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _PharmaceuticalProduct; }
+            get { if(_PharmaceuticalProduct==null) _PharmaceuticalProduct = new List<Hl7.Fhir.Model.ResourceReference>(); return _PharmaceuticalProduct; }
             set { _PharmaceuticalProduct = value; OnPropertyChanged("PharmaceuticalProduct"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _PharmaceuticalProduct;
+        private List<Hl7.Fhir.Model.ResourceReference> _PharmaceuticalProduct;
         
         /// <summary>
         /// Package representation for the product
@@ -1069,13 +1069,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductPackaged")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> PackagedMedicinalProduct
+        public List<Hl7.Fhir.Model.ResourceReference> PackagedMedicinalProduct
         {
-            get { if(_PackagedMedicinalProduct==null) _PackagedMedicinalProduct = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _PackagedMedicinalProduct; }
+            get { if(_PackagedMedicinalProduct==null) _PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(); return _PackagedMedicinalProduct; }
             set { _PackagedMedicinalProduct = value; OnPropertyChanged("PackagedMedicinalProduct"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _PackagedMedicinalProduct;
+        private List<Hl7.Fhir.Model.ResourceReference> _PackagedMedicinalProduct;
         
         /// <summary>
         /// Supporting documentation, typically for regulatory submission
@@ -1085,13 +1085,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> AttachedDocument
+        public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
         {
-            get { if(_AttachedDocument==null) _AttachedDocument = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _AttachedDocument; }
+            get { if(_AttachedDocument==null) _AttachedDocument = new List<Hl7.Fhir.Model.ResourceReference>(); return _AttachedDocument; }
             set { _AttachedDocument = value; OnPropertyChanged("AttachedDocument"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _AttachedDocument;
+        private List<Hl7.Fhir.Model.ResourceReference> _AttachedDocument;
         
         /// <summary>
         /// A master file for to the medicinal product (e.g. Pharmacovigilance System Master File)
@@ -1101,13 +1101,13 @@ namespace Hl7.Fhir.Model.R4
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> MasterFile
+        public List<Hl7.Fhir.Model.ResourceReference> MasterFile
         {
-            get { if(_MasterFile==null) _MasterFile = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _MasterFile; }
+            get { if(_MasterFile==null) _MasterFile = new List<Hl7.Fhir.Model.ResourceReference>(); return _MasterFile; }
             set { _MasterFile = value; OnPropertyChanged("MasterFile"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _MasterFile;
+        private List<Hl7.Fhir.Model.ResourceReference> _MasterFile;
         
         /// <summary>
         /// A product specific contact, person (in a role), or an organization
@@ -1117,13 +1117,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Contact
+        public List<Hl7.Fhir.Model.ResourceReference> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Contact;
+        private List<Hl7.Fhir.Model.ResourceReference> _Contact;
         
         /// <summary>
         /// Clinical trials or studies that this product is involved in
@@ -1133,13 +1133,13 @@ namespace Hl7.Fhir.Model.R4
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> ClinicalTrial
+        public List<Hl7.Fhir.Model.ResourceReference> ClinicalTrial
         {
-            get { if(_ClinicalTrial==null) _ClinicalTrial = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _ClinicalTrial; }
+            get { if(_ClinicalTrial==null) _ClinicalTrial = new List<Hl7.Fhir.Model.ResourceReference>(); return _ClinicalTrial; }
             set { _ClinicalTrial = value; OnPropertyChanged("ClinicalTrial"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _ClinicalTrial;
+        private List<Hl7.Fhir.Model.ResourceReference> _ClinicalTrial;
         
         /// <summary>
         /// The product's name, including full name and possibly coded parts
@@ -1163,13 +1163,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> CrossReference
+        public List<Hl7.Fhir.Model.Identifier> CrossReference
         {
-            get { if(_CrossReference==null) _CrossReference = new List<Hl7.Fhir.Model.R4.Identifier>(); return _CrossReference; }
+            get { if(_CrossReference==null) _CrossReference = new List<Hl7.Fhir.Model.Identifier>(); return _CrossReference; }
             set { _CrossReference = value; OnPropertyChanged("CrossReference"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _CrossReference;
+        private List<Hl7.Fhir.Model.Identifier> _CrossReference;
         
         /// <summary>
         /// An operation applied to the product, for manufacturing or adminsitrative purpose
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Domain != null) dest.Domain = (Hl7.Fhir.Model.Coding)Domain.DeepCopy();
                 if(CombinedPharmaceuticalDoseForm != null) dest.CombinedPharmaceuticalDoseForm = (Hl7.Fhir.Model.CodeableConcept)CombinedPharmaceuticalDoseForm.DeepCopy();
@@ -1219,14 +1219,14 @@ namespace Hl7.Fhir.Model.R4
                 if(PaediatricUseIndicator != null) dest.PaediatricUseIndicator = (Hl7.Fhir.Model.CodeableConcept)PaediatricUseIndicator.DeepCopy();
                 if(ProductClassification != null) dest.ProductClassification = new List<Hl7.Fhir.Model.CodeableConcept>(ProductClassification.DeepCopy());
                 if(MarketingStatus != null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
-                if(PharmaceuticalProduct != null) dest.PharmaceuticalProduct = new List<Hl7.Fhir.Model.R4.ResourceReference>(PharmaceuticalProduct.DeepCopy());
-                if(PackagedMedicinalProduct != null) dest.PackagedMedicinalProduct = new List<Hl7.Fhir.Model.R4.ResourceReference>(PackagedMedicinalProduct.DeepCopy());
-                if(AttachedDocument != null) dest.AttachedDocument = new List<Hl7.Fhir.Model.R4.ResourceReference>(AttachedDocument.DeepCopy());
-                if(MasterFile != null) dest.MasterFile = new List<Hl7.Fhir.Model.R4.ResourceReference>(MasterFile.DeepCopy());
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.R4.ResourceReference>(Contact.DeepCopy());
-                if(ClinicalTrial != null) dest.ClinicalTrial = new List<Hl7.Fhir.Model.R4.ResourceReference>(ClinicalTrial.DeepCopy());
+                if(PharmaceuticalProduct != null) dest.PharmaceuticalProduct = new List<Hl7.Fhir.Model.ResourceReference>(PharmaceuticalProduct.DeepCopy());
+                if(PackagedMedicinalProduct != null) dest.PackagedMedicinalProduct = new List<Hl7.Fhir.Model.ResourceReference>(PackagedMedicinalProduct.DeepCopy());
+                if(AttachedDocument != null) dest.AttachedDocument = new List<Hl7.Fhir.Model.ResourceReference>(AttachedDocument.DeepCopy());
+                if(MasterFile != null) dest.MasterFile = new List<Hl7.Fhir.Model.ResourceReference>(MasterFile.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ResourceReference>(Contact.DeepCopy());
+                if(ClinicalTrial != null) dest.ClinicalTrial = new List<Hl7.Fhir.Model.ResourceReference>(ClinicalTrial.DeepCopy());
                 if(Name != null) dest.Name = new List<NameComponent>(Name.DeepCopy());
-                if(CrossReference != null) dest.CrossReference = new List<Hl7.Fhir.Model.R4.Identifier>(CrossReference.DeepCopy());
+                if(CrossReference != null) dest.CrossReference = new List<Hl7.Fhir.Model.Identifier>(CrossReference.DeepCopy());
                 if(ManufacturingBusinessOperation != null) dest.ManufacturingBusinessOperation = new List<ManufacturingBusinessOperationComponent>(ManufacturingBusinessOperation.DeepCopy());
                 if(SpecialDesignation != null) dest.SpecialDesignation = new List<SpecialDesignationComponent>(SpecialDesignation.DeepCopy());
                 return dest;

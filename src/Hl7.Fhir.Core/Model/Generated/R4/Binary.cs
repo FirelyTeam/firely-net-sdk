@@ -95,13 +95,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("securityContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference SecurityContext
+        public Hl7.Fhir.Model.ResourceReference SecurityContext
         {
             get { return _SecurityContext; }
             set { _SecurityContext = value; OnPropertyChanged("SecurityContext"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _SecurityContext;
+        private Hl7.Fhir.Model.ResourceReference _SecurityContext;
         
         /// <summary>
         /// The actual content
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model.R4
             {
                 base.CopyTo(dest);
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
-                if(SecurityContext != null) dest.SecurityContext = (Hl7.Fhir.Model.R4.ResourceReference)SecurityContext.DeepCopy();
+                if(SecurityContext != null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)SecurityContext.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
                 return dest;
             }

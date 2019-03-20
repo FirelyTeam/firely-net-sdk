@@ -297,13 +297,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
             
             /// <summary>
             /// ValueSet details if this is coded
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.FHIRAllTypes>)TypeElement.DeepCopy();
                     if(SearchTypeElement != null) dest.SearchTypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)SearchTypeElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.STU3.ResourceReference)Profile.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     if(Binding != null) dest.Binding = (BindingComponent)Binding.DeepCopy();
                     if(Part != null) dest.Part = new List<ParameterComponent>(Part.DeepCopy());
                     return dest;
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("valueSet", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element ValueSet
@@ -1194,13 +1194,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("OperationDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Base
+        public Hl7.Fhir.Model.ResourceReference Base
         {
             get { return _Base; }
             set { _Base = value; OnPropertyChanged("Base"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Base;
+        private Hl7.Fhir.Model.ResourceReference _Base;
         
         /// <summary>
         /// Types this operation applies to
@@ -1416,7 +1416,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(IdempotentElement != null) dest.IdempotentElement = (Hl7.Fhir.Model.FhirBoolean)IdempotentElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(Base != null) dest.Base = (Hl7.Fhir.Model.STU3.ResourceReference)Base.DeepCopy();
+                if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
                 if(ResourceElement != null) dest.ResourceElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(ResourceElement.DeepCopy());
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirBoolean)SystemElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirBoolean)TypeElement.DeepCopy();

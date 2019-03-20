@@ -964,13 +964,13 @@ namespace Hl7.Fhir.Model.R4
             /// </summary>
             [FhirElement("resource", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference Resource
+            public Hl7.Fhir.Model.ResourceReference Resource
             {
                 get { return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _Resource;
+            private Hl7.Fhir.Model.ResourceReference _Resource;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(AutocreateElement != null) dest.AutocreateElement = (Hl7.Fhir.Model.FhirBoolean)AutocreateElement.DeepCopy();
                     if(AutodeleteElement != null) dest.AutodeleteElement = (Hl7.Fhir.Model.FhirBoolean)AutodeleteElement.DeepCopy();
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.R4.ResourceReference)Resource.DeepCopy();
+                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                     return dest;
                 }
                 else
@@ -3771,13 +3771,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Business version of the test script
@@ -4214,13 +4214,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("profile", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Profile
+        public List<Hl7.Fhir.Model.ResourceReference> Profile
         {
-            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Profile; }
+            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Profile;
+        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
         /// Placeholder for evaluated elements
@@ -4431,7 +4431,7 @@ namespace Hl7.Fhir.Model.R4
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.R4.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -4449,7 +4449,7 @@ namespace Hl7.Fhir.Model.R4
                 if(Destination != null) dest.Destination = new List<DestinationComponent>(Destination.DeepCopy());
                 if(Metadata != null) dest.Metadata = (MetadataComponent)Metadata.DeepCopy();
                 if(Fixture != null) dest.Fixture = new List<FixtureComponent>(Fixture.DeepCopy());
-                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.R4.ResourceReference>(Profile.DeepCopy());
+                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
                 if(Variable != null) dest.Variable = new List<VariableComponent>(Variable.DeepCopy());
                 if(Setup != null) dest.Setup = (SetupComponent)Setup.DeepCopy();
                 if(Test != null) dest.Test = new List<TestComponent>(Test.DeepCopy());

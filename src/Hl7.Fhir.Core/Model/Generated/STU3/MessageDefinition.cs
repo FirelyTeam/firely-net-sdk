@@ -103,13 +103,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
             
             /// <summary>
             /// Minimum number of focuses of this type
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.ResourceType>)CodeElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.STU3.ResourceReference)Profile.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     return dest;
@@ -271,13 +271,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("MessageDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Message
+            public Hl7.Fhir.Model.ResourceReference Message
             {
                 get { return _Message; }
                 set { _Message = value; OnPropertyChanged("Message"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Message;
+            private Hl7.Fhir.Model.ResourceReference _Message;
             
             /// <summary>
             /// When should this response be used
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Message != null) dest.Message = (Hl7.Fhir.Model.STU3.ResourceReference)Message.DeepCopy();
+                    if(Message != null) dest.Message = (Hl7.Fhir.Model.ResourceReference)Message.DeepCopy();
                     if(SituationElement != null) dest.SituationElement = (Hl7.Fhir.Model.Markdown)SituationElement.DeepCopy();
                     return dest;
                 }
@@ -421,13 +421,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Business version of the message definition
@@ -812,13 +812,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("MessageDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Base
+        public Hl7.Fhir.Model.ResourceReference Base
         {
             get { return _Base; }
             set { _Base = value; OnPropertyChanged("Base"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Base;
+        private Hl7.Fhir.Model.ResourceReference _Base;
         
         /// <summary>
         /// Protocol/workflow this is part of
@@ -828,13 +828,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Parent
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
         {
-            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Parent; }
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Parent;
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
         /// Takes the place of
@@ -844,13 +844,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("MessageDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Replaces
+        public List<Hl7.Fhir.Model.ResourceReference> Replaces
         {
-            get { if(_Replaces==null) _Replaces = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Replaces; }
+            get { if(_Replaces==null) _Replaces = new List<Hl7.Fhir.Model.ResourceReference>(); return _Replaces; }
             set { _Replaces = value; OnPropertyChanged("Replaces"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Replaces;
+        private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
         
         /// <summary>
         /// Event type
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -1000,9 +1000,9 @@ namespace Hl7.Fhir.Model.STU3
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
-                if(Base != null) dest.Base = (Hl7.Fhir.Model.STU3.ResourceReference)Base.DeepCopy();
-                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Parent.DeepCopy());
-                if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Replaces.DeepCopy());
+                if(Base != null) dest.Base = (Hl7.Fhir.Model.ResourceReference)Base.DeepCopy();
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+                if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                 if(Focus != null) dest.Focus = new List<FocusComponent>(Focus.DeepCopy());

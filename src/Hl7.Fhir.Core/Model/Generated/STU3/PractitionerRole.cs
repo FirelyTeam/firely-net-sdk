@@ -403,13 +403,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this practitioner's record is in active use
@@ -465,13 +465,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Practitioner
+        public Hl7.Fhir.Model.ResourceReference Practitioner
         {
             get { return _Practitioner; }
             set { _Practitioner = value; OnPropertyChanged("Practitioner"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Practitioner;
+        private Hl7.Fhir.Model.ResourceReference _Practitioner;
         
         /// <summary>
         /// Organization where the roles are available
@@ -480,13 +480,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Organization
+        public Hl7.Fhir.Model.ResourceReference Organization
         {
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Organization;
+        private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
         /// Roles which this practitioner may perform
@@ -526,13 +526,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Location
+        public List<Hl7.Fhir.Model.ResourceReference> Location
         {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Location;
+        private List<Hl7.Fhir.Model.ResourceReference> _Location;
         
         /// <summary>
         /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
@@ -542,13 +542,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("HealthcareService")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> HealthcareService
+        public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
         {
-            get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _HealthcareService; }
+            get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
             set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _HealthcareService;
+        private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
         
         /// <summary>
         /// Contact details that are specific to the role/location/service
@@ -633,13 +633,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Endpoint
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
         {
-            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Endpoint; }
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
             set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Endpoint;
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -649,20 +649,20 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Practitioner != null) dest.Practitioner = (Hl7.Fhir.Model.STU3.ResourceReference)Practitioner.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.STU3.ResourceReference)Organization.DeepCopy();
+                if(Practitioner != null) dest.Practitioner = (Hl7.Fhir.Model.ResourceReference)Practitioner.DeepCopy();
+                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Location.DeepCopy());
-                if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.STU3.ResourceReference>(HealthcareService.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Telecom.DeepCopy());
                 if(AvailableTime != null) dest.AvailableTime = new List<AvailableTimeComponent>(AvailableTime.DeepCopy());
                 if(NotAvailable != null) dest.NotAvailable = new List<NotAvailableComponent>(NotAvailable.DeepCopy());
                 if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
-                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Endpoint.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else

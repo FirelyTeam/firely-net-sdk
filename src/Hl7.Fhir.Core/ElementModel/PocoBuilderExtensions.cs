@@ -169,39 +169,13 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        [Obsolete("Use ParseDstu2ResourceReference(this ITypedElement instance) instead")]
-        public static Model.DSTU2.ResourceReference ParseDstu2ResourceReference(this IElementNavigator instance)
-             => ParseDstu2ResourceReference(instance.ToTypedElement());
+        [Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
+        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+             => ParseResourceReference(instance.ToTypedElement());
 
-        public static Model.DSTU2.ResourceReference ParseDstu2ResourceReference(this ITypedElement instance)
+        public static ResourceReference ParseResourceReference(this ITypedElement instance)
         {
-            return new Model.DSTU2.ResourceReference
-            {
-                Reference = instance.Children("reference").GetString(),
-                Display = instance.Children("display").GetString()
-            };
-        }
-
-        [Obsolete("Use ParseStu3ResourceReference(this ITypedElement instance) instead")]
-        public static Model.STU3.ResourceReference ParseStu3ResourceReference(this IElementNavigator instance)
-             => ParseStu3ResourceReference(instance.ToTypedElement());
-
-        public static Model.STU3.ResourceReference ParseStu3ResourceReference(this ITypedElement instance)
-        {
-            return new Model.STU3.ResourceReference
-            {
-                Reference = instance.Children("reference").GetString(),
-                Display = instance.Children("display").GetString()
-            };
-        }
-
-        [Obsolete("Use ParseR4ResourceReference(this ITypedElement instance) instead")]
-        public static Model.R4.ResourceReference ParseR4ResourceReference(this IElementNavigator instance)
-             => ParseR4ResourceReference(instance.ToTypedElement());
-
-        public static Model.R4.ResourceReference ParseR4ResourceReference(this ITypedElement instance)
-        {
-            return new Model.R4.ResourceReference
+            return new Model.ResourceReference
             {
                 Reference = instance.Children("reference").GetString(),
                 Display = instance.Children("display").GetString()

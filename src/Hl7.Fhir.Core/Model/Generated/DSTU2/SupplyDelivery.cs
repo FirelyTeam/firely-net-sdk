@@ -61,13 +61,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// in-progress | completed | abandoned
@@ -109,13 +109,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Category of dispense event
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Medication","Substance","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference SuppliedItem
+        public Hl7.Fhir.Model.ResourceReference SuppliedItem
         {
             get { return _SuppliedItem; }
             set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _SuppliedItem;
+        private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
         
         /// <summary>
         /// Dispenser
@@ -167,13 +167,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Supplier
+        public Hl7.Fhir.Model.ResourceReference Supplier
         {
             get { return _Supplier; }
             set { _Supplier = value; OnPropertyChanged("Supplier"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Supplier;
+        private Hl7.Fhir.Model.ResourceReference _Supplier;
         
         /// <summary>
         /// Dispensing time
@@ -229,13 +229,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Destination
+        public Hl7.Fhir.Model.ResourceReference Destination
         {
             get { return _Destination; }
             set { _Destination = value; OnPropertyChanged("Destination"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Destination;
+        private Hl7.Fhir.Model.ResourceReference _Destination;
         
         /// <summary>
         /// Who collected the Supply
@@ -245,13 +245,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Receiver
+        public List<Hl7.Fhir.Model.ResourceReference> Receiver
         {
-            get { if(_Receiver==null) _Receiver = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Receiver; }
+            get { if(_Receiver==null) _Receiver = new List<Hl7.Fhir.Model.ResourceReference>(); return _Receiver; }
             set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Receiver;
+        private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -261,17 +261,17 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.DSTU2.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DSTU2.SupplyDeliveryStatus>)StatusElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.DSTU2.ResourceReference)Patient.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.DSTU2.ResourceReference)SuppliedItem.DeepCopy();
-                if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.DSTU2.ResourceReference)Supplier.DeepCopy();
+                if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
+                if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                 if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-                if(Destination != null) dest.Destination = (Hl7.Fhir.Model.DSTU2.ResourceReference)Destination.DeepCopy();
-                if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Receiver.DeepCopy());
+                if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
+                if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
                 return dest;
             }
             else

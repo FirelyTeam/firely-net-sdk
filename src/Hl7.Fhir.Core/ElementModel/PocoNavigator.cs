@@ -75,23 +75,11 @@ namespace Hl7.Fhir.ElementModel
                     if (IsCollection)
                     {
                         Base fhirValue = FhirValue;
-                        if (fhirValue is Model.DSTU2.Identifier ident2)
+                        if (fhirValue is Model.Identifier ident)
                         {
                             // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(ident2.System))
-                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident2.System}')";
-                        }
-                        else if (fhirValue is Model.STU3.Identifier ident3)
-                        {
-                            // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(ident3.System))
-                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident3.System}')";
-                        }
-                        else if (fhirValue is Model.R4.Identifier ident4)
-                        {
-                            // Need to construct a where clause for this property
-                            if (!string.IsNullOrEmpty(ident4.System))
-                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident4.System}')";
+                            if (!string.IsNullOrEmpty(ident.System))
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident.System}')";
                         }
                         else if (fhirValue is Model.DSTU2.ContactPoint cp2)
                         {

@@ -8,31 +8,13 @@ namespace Hl7.Fhir.Core.Tests.Rest
     [TestClass]
     public class TokenExtensionsTests
     {
-        private IEnumerable<(Model.DSTU2.Identifier id, string expected)> GetDstu2IdentifierTestData()
+        private IEnumerable<(Model.Identifier id, string expected)> GetIdentifierTestData()
         {
-            yield return (new Model.DSTU2.Identifier("system", "1"), "system|1");
-            yield return (new Model.DSTU2.Identifier("", "1"), "1");
-            yield return (new Model.DSTU2.Identifier(null, "1"), "1");
-            yield return (new Model.DSTU2.Identifier("system",""), "system|");
-            yield return (new Model.DSTU2.Identifier("system", null), "system|");
-        }
-
-        private IEnumerable<(Model.STU3.Identifier id, string expected)> GetStu3IdentifierTestData()
-        {
-            yield return (new Model.STU3.Identifier("system", "1"), "system|1");
-            yield return (new Model.STU3.Identifier("", "1"), "1");
-            yield return (new Model.STU3.Identifier(null, "1"), "1");
-            yield return (new Model.STU3.Identifier("system", ""), "system|");
-            yield return (new Model.STU3.Identifier("system", null), "system|");
-        }
-
-        private IEnumerable<(Model.R4.Identifier id, string expected)> GetR4IdentifierTestData()
-        {
-            yield return (new Model.R4.Identifier("system", "1"), "system|1");
-            yield return (new Model.R4.Identifier("", "1"), "1");
-            yield return (new Model.R4.Identifier(null, "1"), "1");
-            yield return (new Model.R4.Identifier("system", ""), "system|");
-            yield return (new Model.R4.Identifier("system", null), "system|");
+            yield return (new Model.Identifier("system", "1"), "system|1");
+            yield return (new Model.Identifier("", "1"), "1");
+            yield return (new Model.Identifier(null, "1"), "1");
+            yield return (new Model.Identifier("system",""), "system|");
+            yield return (new Model.Identifier("system", null), "system|");
         }
 
         private IEnumerable<(Coding coding, string expected)> GetCodingTestData()
@@ -80,15 +62,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         [TestMethod]
         public void IdentifierToTokenTest()
         {
-            foreach (var item in GetDstu2IdentifierTestData())
-            {
-                Assert.AreEqual(item.expected, item.id.ToToken());
-            }
-            foreach (var item in GetStu3IdentifierTestData())
-            {
-                Assert.AreEqual(item.expected, item.id.ToToken());
-            }
-            foreach (var item in GetR4IdentifierTestData())
+            foreach (var item in GetIdentifierTestData())
             {
                 Assert.AreEqual(item.expected, item.id.ToToken());
             }

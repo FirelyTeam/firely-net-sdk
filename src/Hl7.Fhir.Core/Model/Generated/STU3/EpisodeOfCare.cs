@@ -195,13 +195,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("Condition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Condition
+            public Hl7.Fhir.Model.ResourceReference Condition
             {
                 get { return _Condition; }
                 set { _Condition = value; OnPropertyChanged("Condition"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Condition;
+            private Hl7.Fhir.Model.ResourceReference _Condition;
             
             /// <summary>
             /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.STU3
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.STU3.ResourceReference)Condition.DeepCopy();
+                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                     if(RankElement != null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)RankElement.DeepCopy();
                     return dest;
@@ -332,13 +332,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -426,13 +426,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Organization that assumes care
@@ -441,13 +441,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference ManagingOrganization
+        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
             get { return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _ManagingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
         /// Interval during responsibility is assumed
@@ -471,13 +471,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> ReferralRequest
+        public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
         {
-            get { if(_ReferralRequest==null) _ReferralRequest = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _ReferralRequest; }
+            get { if(_ReferralRequest==null) _ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReferralRequest; }
             set { _ReferralRequest = value; OnPropertyChanged("ReferralRequest"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _ReferralRequest;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReferralRequest;
         
         /// <summary>
         /// Care manager/care co-ordinator for the patient
@@ -486,13 +486,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference CareManager
+        public Hl7.Fhir.Model.ResourceReference CareManager
         {
             get { return _CareManager; }
             set { _CareManager = value; OnPropertyChanged("CareManager"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _CareManager;
+        private Hl7.Fhir.Model.ResourceReference _CareManager;
         
         /// <summary>
         /// Other practitioners facilitating this episode of care
@@ -502,13 +502,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Team
+        public List<Hl7.Fhir.Model.ResourceReference> Team
         {
-            get { if(_Team==null) _Team = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Team; }
+            get { if(_Team==null) _Team = new List<Hl7.Fhir.Model.ResourceReference>(); return _Team; }
             set { _Team = value; OnPropertyChanged("Team"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Team;
+        private List<Hl7.Fhir.Model.ResourceReference> _Team;
         
         /// <summary>
         /// The set of accounts that may be used for billing for this EpisodeOfCare
@@ -518,13 +518,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Account")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Account
+        public List<Hl7.Fhir.Model.ResourceReference> Account
         {
-            get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Account; }
+            get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.ResourceReference>(); return _Account; }
             set { _Account = value; OnPropertyChanged("Account"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Account;
+        private List<Hl7.Fhir.Model.ResourceReference> _Account;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -534,18 +534,18 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.EpisodeOfCareStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Diagnosis != null) dest.Diagnosis = new List<DiagnosisComponent>(Diagnosis.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.STU3.ResourceReference)ManagingOrganization.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.STU3.ResourceReference>(ReferralRequest.DeepCopy());
-                if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.STU3.ResourceReference)CareManager.DeepCopy();
-                if(Team != null) dest.Team = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Team.DeepCopy());
-                if(Account != null) dest.Account = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Account.DeepCopy());
+                if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
+                if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
+                if(Team != null) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
+                if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
                 return dest;
             }
             else

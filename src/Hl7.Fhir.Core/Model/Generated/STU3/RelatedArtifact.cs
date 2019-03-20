@@ -206,13 +206,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Resource
+        public Hl7.Fhir.Model.ResourceReference Resource
         {
             get { return _Resource; }
             set { _Resource = value; OnPropertyChanged("Resource"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Resource;
+        private Hl7.Fhir.Model.ResourceReference _Resource;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
-                if(Resource != null) dest.Resource = (Hl7.Fhir.Model.STU3.ResourceReference)Resource.DeepCopy();
+                if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                 return dest;
             }
             else

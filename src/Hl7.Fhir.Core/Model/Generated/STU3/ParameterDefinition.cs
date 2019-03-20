@@ -260,13 +260,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("StructureDefinition")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Profile
+        public Hl7.Fhir.Model.ResourceReference Profile
         {
             get { return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Profile;
+        private Hl7.Fhir.Model.ResourceReference _Profile;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.STU3.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.STU3.ResourceReference)Profile.DeepCopy();
+                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                 return dest;
             }
             else

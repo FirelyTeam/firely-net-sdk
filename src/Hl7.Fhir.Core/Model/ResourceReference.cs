@@ -31,15 +31,12 @@
 using Hl7.Fhir.Introspection;
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
-namespace Hl7.Fhir.Model.R4
+namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class ResourceReference : IResourceReference
+    public partial class ResourceReference
     {
         public ResourceReference(string reference)
         {
@@ -54,30 +51,6 @@ namespace Hl7.Fhir.Model.R4
 
         public ResourceReference()
         {
-
-        }
-
-        public ResourceReference(IResourceReference resourceReference)
-        {
-            if (resourceReference == null) throw new ArgumentNullException(nameof(resourceReference));
-
-            Reference = resourceReference.Reference;
-            Display = resourceReference.Display;
-            if (resourceReference.Identifier != null)
-            {
-                Identifier = new Identifier(resourceReference.Identifier);
-            }
-        }
-
-        public static implicit operator ResourceReference(CommonResourceReference resourceReference)
-        {
-            if (resourceReference == null) return null;
-            return new ResourceReference(resourceReference);
-        }
-
-        IIdentifier IResourceReference.Identifier
-        {
-            get { return Identifier; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -130,5 +103,4 @@ namespace Hl7.Fhir.Model.R4
             }
         }
     }
-  
 }

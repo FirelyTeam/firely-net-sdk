@@ -82,17 +82,4 @@ namespace Hl7.Fhir.Model.STU3
             this.Value = value;
         }
     }
-
-    public partial class Identifier
-    {
-        public Identifier()
-        {
-        }
-
-        public Identifier(string system, string value)
-        {
-            this.System = system;
-            this.Value = value;
-        }        
-    }
 }

@@ -62,13 +62,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Appointment this response relates to
@@ -78,13 +78,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Appointment
+        public Hl7.Fhir.Model.ResourceReference Appointment
         {
             get { return _Appointment; }
             set { _Appointment = value; OnPropertyChanged("Appointment"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Appointment;
+        private Hl7.Fhir.Model.ResourceReference _Appointment;
         
         /// <summary>
         /// Time from appointment, or requested new start time
@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Actor
+        public Hl7.Fhir.Model.ResourceReference Actor
         {
             get { return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Actor;
+        private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
@@ -270,12 +270,12 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
-                if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.DSTU2.ResourceReference)Appointment.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Instant)StartElement.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(ParticipantType != null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopy());
-                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.DSTU2.ResourceReference)Actor.DeepCopy();
+                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                 if(ParticipantStatusElement != null) dest.ParticipantStatusElement = (Code<Hl7.Fhir.Model.DSTU2.ParticipantStatus>)ParticipantStatusElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 return dest;

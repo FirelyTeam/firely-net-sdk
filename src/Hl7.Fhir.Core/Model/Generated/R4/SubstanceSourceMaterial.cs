@@ -1082,13 +1082,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("organismId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.R4.Identifier OrganismId
+        public Hl7.Fhir.Model.Identifier OrganismId
         {
             get { return _OrganismId; }
             set { _OrganismId = value; OnPropertyChanged("OrganismId"); }
         }
         
-        private Hl7.Fhir.Model.R4.Identifier _OrganismId;
+        private Hl7.Fhir.Model.Identifier _OrganismId;
         
         /// <summary>
         /// The organism accepted Scientific name shall be provided based on the organism taxonomy
@@ -1130,13 +1130,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> ParentSubstanceId
+        public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
         {
-            get { if(_ParentSubstanceId==null) _ParentSubstanceId = new List<Hl7.Fhir.Model.R4.Identifier>(); return _ParentSubstanceId; }
+            get { if(_ParentSubstanceId==null) _ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(); return _ParentSubstanceId; }
             set { _ParentSubstanceId = value; OnPropertyChanged("ParentSubstanceId"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _ParentSubstanceId;
+        private List<Hl7.Fhir.Model.Identifier> _ParentSubstanceId;
         
         /// <summary>
         /// The parent substance of the Herbal Drug, or Herbal preparation
@@ -1290,9 +1290,9 @@ namespace Hl7.Fhir.Model.R4
                 if(SourceMaterialClass != null) dest.SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialClass.DeepCopy();
                 if(SourceMaterialType != null) dest.SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialType.DeepCopy();
                 if(SourceMaterialState != null) dest.SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialState.DeepCopy();
-                if(OrganismId != null) dest.OrganismId = (Hl7.Fhir.Model.R4.Identifier)OrganismId.DeepCopy();
+                if(OrganismId != null) dest.OrganismId = (Hl7.Fhir.Model.Identifier)OrganismId.DeepCopy();
                 if(OrganismNameElement != null) dest.OrganismNameElement = (Hl7.Fhir.Model.FhirString)OrganismNameElement.DeepCopy();
-                if(ParentSubstanceId != null) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.R4.Identifier>(ParentSubstanceId.DeepCopy());
+                if(ParentSubstanceId != null) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(ParentSubstanceId.DeepCopy());
                 if(ParentSubstanceNameElement != null) dest.ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(ParentSubstanceNameElement.DeepCopy());
                 if(CountryOfOrigin != null) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopy());
                 if(GeographicalLocationElement != null) dest.GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(GeographicalLocationElement.DeepCopy());

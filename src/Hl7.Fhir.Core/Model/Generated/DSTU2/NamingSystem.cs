@@ -706,13 +706,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("NamingSystem")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference ReplacedBy
+        public Hl7.Fhir.Model.ResourceReference ReplacedBy
         {
             get { return _ReplacedBy; }
             set { _ReplacedBy = value; OnPropertyChanged("ReplacedBy"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _ReplacedBy;
+        private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
     
     
         public static ElementDefinitionConstraint NamingSystem_NSD_2 = new ElementDefinitionConstraint
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
                 if(UniqueId != null) dest.UniqueId = new List<UniqueIdComponent>(UniqueId.DeepCopy());
-                if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.DSTU2.ResourceReference)ReplacedBy.DeepCopy();
+                if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }
             else

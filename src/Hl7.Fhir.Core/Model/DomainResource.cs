@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="reference">the reference to contained resource</param>
         /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
-        public Resource FindContainedResource(IResourceReference reference)
+        public Resource FindContainedResource(ResourceReference reference)
         {
             if (reference == null) throw Error.ArgumentNull(nameof(reference));
 
@@ -81,12 +81,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="reference">the reference to contained resource</param>
         /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
-
         public Resource FindContainedResource(string reference)
         {
             if (reference == null) throw Error.ArgumentNullOrEmpty(nameof(reference));
 
-            return FindContainedResource(new CommonResourceReference(reference));
+            return FindContainedResource(new ResourceReference(reference));
         }
             
         

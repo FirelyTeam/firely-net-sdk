@@ -403,13 +403,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this healthcareservice is in active use
@@ -451,13 +451,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference ProvidedBy
+        public Hl7.Fhir.Model.ResourceReference ProvidedBy
         {
             get { return _ProvidedBy; }
             set { _ProvidedBy = value; OnPropertyChanged("ProvidedBy"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _ProvidedBy;
+        private Hl7.Fhir.Model.ResourceReference _ProvidedBy;
         
         /// <summary>
         /// Broad category of service being performed or delivered
@@ -511,13 +511,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Location
+        public List<Hl7.Fhir.Model.ResourceReference> Location
         {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Location;
+        private List<Hl7.Fhir.Model.ResourceReference> _Location;
         
         /// <summary>
         /// Description of service as presented to a consumer while searching
@@ -653,13 +653,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> CoverageArea
+        public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
         {
-            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _CoverageArea; }
+            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(); return _CoverageArea; }
             set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _CoverageArea;
+        private List<Hl7.Fhir.Model.ResourceReference> _CoverageArea;
         
         /// <summary>
         /// Conditions under which service is available/offered
@@ -881,13 +881,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Endpoint
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
         {
-            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Endpoint; }
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
             set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Endpoint;
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -897,19 +897,19 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.STU3.ResourceReference)ProvidedBy.DeepCopy();
+                if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Location.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)ExtraDetailsElement.DeepCopy();
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.STU3.ContactPoint>(Telecom.DeepCopy());
-                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.STU3.ResourceReference>(CoverageArea.DeepCopy());
+                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
                 if(ServiceProvisionCode != null) dest.ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceProvisionCode.DeepCopy());
                 if(Eligibility != null) dest.Eligibility = (Hl7.Fhir.Model.CodeableConcept)Eligibility.DeepCopy();
                 if(EligibilityNoteElement != null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)EligibilityNoteElement.DeepCopy();
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(AvailableTime != null) dest.AvailableTime = new List<AvailableTimeComponent>(AvailableTime.DeepCopy());
                 if(NotAvailable != null) dest.NotAvailable = new List<NotAvailableComponent>(NotAvailable.DeepCopy());
                 if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
-                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Endpoint.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else

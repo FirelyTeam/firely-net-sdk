@@ -82,13 +82,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("componentId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.Identifier ComponentId
+            public Hl7.Fhir.Model.Identifier ComponentId
             {
                 get { return _ComponentId; }
                 set { _ComponentId = value; OnPropertyChanged("ComponentId"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.Identifier _ComponentId;
+            private Hl7.Fhir.Model.Identifier _ComponentId;
             
             /// <summary>
             /// A printable string defining the component
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(SpecType != null) dest.SpecType = (Hl7.Fhir.Model.CodeableConcept)SpecType.DeepCopy();
-                    if(ComponentId != null) dest.ComponentId = (Hl7.Fhir.Model.DSTU2.Identifier)ComponentId.DeepCopy();
+                    if(ComponentId != null) dest.ComponentId = (Hl7.Fhir.Model.Identifier)ComponentId.DeepCopy();
                     if(ProductionSpecElement != null) dest.ProductionSpecElement = (Hl7.Fhir.Model.FhirString)ProductionSpecElement.DeepCopy();
                     return dest;
                 }
@@ -221,13 +221,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Recent system change timestamp
@@ -270,13 +270,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Source
+        public Hl7.Fhir.Model.ResourceReference Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Source;
+        private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
         /// Parent resource link
@@ -285,13 +285,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("DeviceComponent")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Parent
+        public Hl7.Fhir.Model.ResourceReference Parent
         {
             get { return _Parent; }
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Parent;
+        private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
         /// Component operational status
@@ -393,10 +393,10 @@ namespace Hl7.Fhir.Model.DSTU2
             {
                 base.CopyTo(dest);
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.DSTU2.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.DSTU2.ResourceReference)Source.DeepCopy();
-                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.DSTU2.ResourceReference)Parent.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+                if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(OperationalStatus != null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
                 if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
                 if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DSTU2.Measmnt_Principle>)MeasurementPrincipleElement.DeepCopy();

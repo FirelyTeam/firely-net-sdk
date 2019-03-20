@@ -137,13 +137,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("OperationOutcome")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Details
+            public Hl7.Fhir.Model.ResourceReference Details
             {
                 get { return _Details; }
                 set { _Details = value; OnPropertyChanged("Details"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Details;
+            private Hl7.Fhir.Model.ResourceReference _Details;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     base.CopyTo(dest);
                     if(IdentifierElement != null) dest.IdentifierElement = (Hl7.Fhir.Model.Id)IdentifierElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.ResponseType>)CodeElement.DeepCopy();
-                    if(Details != null) dest.Details = (Hl7.Fhir.Model.DSTU2.ResourceReference)Details.DeepCopy();
+                    if(Details != null) dest.Details = (Hl7.Fhir.Model.ResourceReference)Details.DeepCopy();
                     return dest;
                 }
                 else
@@ -508,13 +508,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Device")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Target
+            public Hl7.Fhir.Model.ResourceReference Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Target;
+            private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
             /// Actual destination address or id
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.DSTU2.ResourceReference)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                     if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUri)EndpointElement.DeepCopy();
                     return dest;
                 }
@@ -726,13 +726,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Enterer
+        public Hl7.Fhir.Model.ResourceReference Enterer
         {
             get { return _Enterer; }
             set { _Enterer = value; OnPropertyChanged("Enterer"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Enterer;
+        private Hl7.Fhir.Model.ResourceReference _Enterer;
         
         /// <summary>
         /// The source of the decision
@@ -741,13 +741,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Intended "real-world" recipient for the data
@@ -756,13 +756,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Receiver
+        public Hl7.Fhir.Model.ResourceReference Receiver
         {
             get { return _Receiver; }
             set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Receiver;
+        private Hl7.Fhir.Model.ResourceReference _Receiver;
         
         /// <summary>
         /// Final responsibility for event
@@ -771,13 +771,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Responsible
+        public Hl7.Fhir.Model.ResourceReference Responsible
         {
             get { return _Responsible; }
             set { _Responsible = value; OnPropertyChanged("Responsible"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Responsible;
+        private Hl7.Fhir.Model.ResourceReference _Responsible;
         
         /// <summary>
         /// Cause of event
@@ -800,13 +800,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Data
+        public List<Hl7.Fhir.Model.ResourceReference> Data
         {
-            get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Data; }
+            get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.ResourceReference>(); return _Data; }
             set { _Data = value; OnPropertyChanged("Data"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Data;
+        private List<Hl7.Fhir.Model.ResourceReference> _Data;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -821,12 +821,12 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(Response != null) dest.Response = (ResponseComponent)Response.DeepCopy();
                 if(Source != null) dest.Source = (MessageSourceComponent)Source.DeepCopy();
                 if(Destination != null) dest.Destination = new List<MessageDestinationComponent>(Destination.DeepCopy());
-                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Enterer.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.DSTU2.ResourceReference)Author.DeepCopy();
-                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.DSTU2.ResourceReference)Receiver.DeepCopy();
-                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.DSTU2.ResourceReference)Responsible.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(Receiver != null) dest.Receiver = (Hl7.Fhir.Model.ResourceReference)Receiver.DeepCopy();
+                if(Responsible != null) dest.Responsible = (Hl7.Fhir.Model.ResourceReference)Responsible.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Data.DeepCopy());
+                if(Data != null) dest.Data = new List<Hl7.Fhir.Model.ResourceReference>(Data.DeepCopy());
                 return dest;
             }
             else

@@ -225,13 +225,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Network
+            public List<Hl7.Fhir.Model.ResourceReference> Network
             {
-                get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Network; }
+                get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.ResourceReference>(); return _Network; }
                 set { _Network = value; OnPropertyChanged("Network"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Network;
+            private List<Hl7.Fhir.Model.ResourceReference> _Network;
             
             /// <summary>
             /// List of benefits
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model.R4
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Network != null) dest.Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(Network.DeepCopy());
+                    if(Network != null) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopy());
                     if(Benefit != null) dest.Benefit = new List<CoverageBenefitComponent>(Benefit.DeepCopy());
                     return dest;
                 }
@@ -584,13 +584,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// Type of plan
@@ -613,13 +613,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Location")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> CoverageArea
+            public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
             {
-                get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _CoverageArea; }
+                get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(); return _CoverageArea; }
                 set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _CoverageArea;
+            private List<Hl7.Fhir.Model.ResourceReference> _CoverageArea;
             
             /// <summary>
             /// What networks provide coverage
@@ -629,13 +629,13 @@ namespace Hl7.Fhir.Model.R4
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.R4.ResourceReference> Network
+            public List<Hl7.Fhir.Model.ResourceReference> Network
             {
-                get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Network; }
+                get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.ResourceReference>(); return _Network; }
                 set { _Network = value; OnPropertyChanged("Network"); }
             }
             
-            private List<Hl7.Fhir.Model.R4.ResourceReference> _Network;
+            private List<Hl7.Fhir.Model.ResourceReference> _Network;
             
             /// <summary>
             /// Overall costs
@@ -672,10 +672,10 @@ namespace Hl7.Fhir.Model.R4
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.R4.ResourceReference>(CoverageArea.DeepCopy());
-                    if(Network != null) dest.Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(Network.DeepCopy());
+                    if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
+                    if(Network != null) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopy());
                     if(GeneralCost != null) dest.GeneralCost = new List<GeneralCostComponent>(GeneralCost.DeepCopy());
                     if(SpecificCost != null) dest.SpecificCost = new List<SpecificCostComponent>(SpecificCost.DeepCopy());
                     return dest;
@@ -1295,13 +1295,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// draft | active | retired | unknown
@@ -1437,13 +1437,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference OwnedBy
+        public Hl7.Fhir.Model.ResourceReference OwnedBy
         {
             get { return _OwnedBy; }
             set { _OwnedBy = value; OnPropertyChanged("OwnedBy"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _OwnedBy;
+        private Hl7.Fhir.Model.ResourceReference _OwnedBy;
         
         /// <summary>
         /// Product administrator
@@ -1452,13 +1452,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference AdministeredBy
+        public Hl7.Fhir.Model.ResourceReference AdministeredBy
         {
             get { return _AdministeredBy; }
             set { _AdministeredBy = value; OnPropertyChanged("AdministeredBy"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _AdministeredBy;
+        private Hl7.Fhir.Model.ResourceReference _AdministeredBy;
         
         /// <summary>
         /// Where product applies
@@ -1468,13 +1468,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> CoverageArea
+        public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
         {
-            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _CoverageArea; }
+            get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(); return _CoverageArea; }
             set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _CoverageArea;
+        private List<Hl7.Fhir.Model.ResourceReference> _CoverageArea;
         
         /// <summary>
         /// Contact for the product
@@ -1498,13 +1498,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Endpoint
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
         {
-            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Endpoint; }
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
             set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Endpoint;
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
         /// <summary>
         /// What networks are Included
@@ -1514,13 +1514,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Network
+        public List<Hl7.Fhir.Model.ResourceReference> Network
         {
-            get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Network; }
+            get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.ResourceReference>(); return _Network; }
             set { _Network = value; OnPropertyChanged("Network"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Network;
+        private List<Hl7.Fhir.Model.ResourceReference> _Network;
         
         /// <summary>
         /// Coverage details
@@ -1574,18 +1574,18 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(OwnedBy != null) dest.OwnedBy = (Hl7.Fhir.Model.R4.ResourceReference)OwnedBy.DeepCopy();
-                if(AdministeredBy != null) dest.AdministeredBy = (Hl7.Fhir.Model.R4.ResourceReference)AdministeredBy.DeepCopy();
-                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.R4.ResourceReference>(CoverageArea.DeepCopy());
+                if(OwnedBy != null) dest.OwnedBy = (Hl7.Fhir.Model.ResourceReference)OwnedBy.DeepCopy();
+                if(AdministeredBy != null) dest.AdministeredBy = (Hl7.Fhir.Model.ResourceReference)AdministeredBy.DeepCopy();
+                if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
                 if(Contact != null) dest.Contact = new List<ContactComponent>(Contact.DeepCopy());
-                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.R4.ResourceReference>(Endpoint.DeepCopy());
-                if(Network != null) dest.Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(Network.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
+                if(Network != null) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopy());
                 if(Coverage != null) dest.Coverage = new List<CoverageComponent>(Coverage.DeepCopy());
                 if(Plan != null) dest.Plan = new List<PlanComponent>(Plan.DeepCopy());
                 return dest;

@@ -259,13 +259,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference SubjectResults
+            public Hl7.Fhir.Model.ResourceReference SubjectResults
             {
                 get { return _SubjectResults; }
                 set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _SubjectResults;
+            private Hl7.Fhir.Model.ResourceReference _SubjectResults;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.R4.ResourceReference)SubjectResults.DeepCopy();
+                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
                     return dest;
                 }
                 else
@@ -756,13 +756,13 @@ namespace Hl7.Fhir.Model.R4
             [CLSCompliant(false)]
             [References("List")]
             [DataMember]
-            public Hl7.Fhir.Model.R4.ResourceReference SubjectResults
+            public Hl7.Fhir.Model.ResourceReference SubjectResults
             {
                 get { return _SubjectResults; }
                 set { _SubjectResults = value; OnPropertyChanged("SubjectResults"); }
             }
             
-            private Hl7.Fhir.Model.R4.ResourceReference _SubjectResults;
+            private Hl7.Fhir.Model.ResourceReference _SubjectResults;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model.R4
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
-                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.R4.ResourceReference)SubjectResults.DeepCopy();
+                    if(SubjectResults != null) dest.SubjectResults = (Hl7.Fhir.Model.ResourceReference)SubjectResults.DeepCopy();
                     return dest;
                 }
                 else
@@ -847,13 +847,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// complete | pending | error
@@ -964,13 +964,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","Location","Device","RelatedPerson","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Subject
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Subject;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// When the report was generated
@@ -1012,13 +1012,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Location","Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Reporter
+        public Hl7.Fhir.Model.ResourceReference Reporter
         {
             get { return _Reporter; }
             set { _Reporter = value; OnPropertyChanged("Reporter"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Reporter;
+        private Hl7.Fhir.Model.ResourceReference _Reporter;
         
         /// <summary>
         /// What period the report covers
@@ -1069,13 +1069,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("evaluatedResource", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> EvaluatedResource
+        public List<Hl7.Fhir.Model.ResourceReference> EvaluatedResource
         {
-            get { if(_EvaluatedResource==null) _EvaluatedResource = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _EvaluatedResource; }
+            get { if(_EvaluatedResource==null) _EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(); return _EvaluatedResource; }
             set { _EvaluatedResource = value; OnPropertyChanged("EvaluatedResource"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _EvaluatedResource;
+        private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
     
     
         public static ElementDefinitionConstraint MeasureReport_MRP_2 = new ElementDefinitionConstraint
@@ -1111,17 +1111,17 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReportStatus>)StatusElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.R4.MeasureReportType>)TypeElement.DeepCopy();
                 if(MeasureElement != null) dest.MeasureElement = (Hl7.Fhir.Model.Canonical)MeasureElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.R4.ResourceReference)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.R4.ResourceReference)Reporter.DeepCopy();
+                if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(ImprovementNotation != null) dest.ImprovementNotation = (Hl7.Fhir.Model.CodeableConcept)ImprovementNotation.DeepCopy();
                 if(Group != null) dest.Group = new List<GroupComponent>(Group.DeepCopy());
-                if(EvaluatedResource != null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.R4.ResourceReference>(EvaluatedResource.DeepCopy());
+                if(EvaluatedResource != null) dest.EvaluatedResource = new List<Hl7.Fhir.Model.ResourceReference>(EvaluatedResource.DeepCopy());
                 return dest;
             }
             else

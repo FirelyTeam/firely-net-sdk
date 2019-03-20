@@ -103,13 +103,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("ImagingStudy")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference ImagingStudy
+            public Hl7.Fhir.Model.ResourceReference ImagingStudy
             {
                 get { return _ImagingStudy; }
                 set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _ImagingStudy;
+            private Hl7.Fhir.Model.ResourceReference _ImagingStudy;
             
             /// <summary>
             /// Study access service endpoint
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.ResourceReference> Endpoint
+            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
             {
-                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Endpoint; }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
                 set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.ResourceReference> _Endpoint;
+            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
             
             /// <summary>
             /// Series identity of the selected instances
@@ -150,8 +150,8 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.STU3.ResourceReference)ImagingStudy.DeepCopy();
-                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Endpoint.DeepCopy());
+                    if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)ImagingStudy.DeepCopy();
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(Series != null) dest.Series = new List<SeriesComponent>(Series.DeepCopy());
                     return dest;
                 }
@@ -272,13 +272,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.STU3.ResourceReference> Endpoint
+            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
             {
-                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Endpoint; }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
                 set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private List<Hl7.Fhir.Model.STU3.ResourceReference> _Endpoint;
+            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
             
             /// <summary>
             /// The selected instance
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Endpoint.DeepCopy());
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(Instance != null) dest.Instance = new List<InstanceComponent>(Instance.DeepCopy());
                     return dest;
                 }
@@ -523,13 +523,13 @@ namespace Hl7.Fhir.Model.STU3
         [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.Identifier Identifier
+        public Hl7.Fhir.Model.Identifier Identifier
         {
             get { return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.STU3.Identifier _Identifier;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Patient of the selected objects
@@ -539,13 +539,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Time when the selection of instances was made
@@ -587,13 +587,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Author
+        public Hl7.Fhir.Model.ResourceReference Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Author;
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// Description text
@@ -651,10 +651,10 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.STU3.Identifier)Identifier.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.STU3.ResourceReference)Author.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Study != null) dest.Study = new List<StudyComponent>(Study.DeepCopy());
                 return dest;

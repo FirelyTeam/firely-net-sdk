@@ -130,13 +130,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("Sequence")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference ReferenceSeqPointer
+            public Hl7.Fhir.Model.ResourceReference ReferenceSeqPointer
             {
                 get { return _ReferenceSeqPointer; }
                 set { _ReferenceSeqPointer = value; OnPropertyChanged("ReferenceSeqPointer"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _ReferenceSeqPointer;
+            private Hl7.Fhir.Model.ResourceReference _ReferenceSeqPointer;
             
             /// <summary>
             /// A string to represent reference sequence
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopy();
                     if(GenomeBuildElement != null) dest.GenomeBuildElement = (Hl7.Fhir.Model.FhirString)GenomeBuildElement.DeepCopy();
                     if(ReferenceSeqId != null) dest.ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)ReferenceSeqId.DeepCopy();
-                    if(ReferenceSeqPointer != null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.STU3.ResourceReference)ReferenceSeqPointer.DeepCopy();
+                    if(ReferenceSeqPointer != null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)ReferenceSeqPointer.DeepCopy();
                     if(ReferenceSeqStringElement != null) dest.ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)ReferenceSeqStringElement.DeepCopy();
                     if(StrandElement != null) dest.StrandElement = (Hl7.Fhir.Model.Integer)StrandElement.DeepCopy();
                     if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopy();
@@ -552,13 +552,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("Observation")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference VariantPointer
+            public Hl7.Fhir.Model.ResourceReference VariantPointer
             {
                 get { return _VariantPointer; }
                 set { _VariantPointer = value; OnPropertyChanged("VariantPointer"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _VariantPointer;
+            private Hl7.Fhir.Model.ResourceReference _VariantPointer;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(ObservedAlleleElement != null) dest.ObservedAlleleElement = (Hl7.Fhir.Model.FhirString)ObservedAlleleElement.DeepCopy();
                     if(ReferenceAlleleElement != null) dest.ReferenceAlleleElement = (Hl7.Fhir.Model.FhirString)ReferenceAlleleElement.DeepCopy();
                     if(CigarElement != null) dest.CigarElement = (Hl7.Fhir.Model.FhirString)CigarElement.DeepCopy();
-                    if(VariantPointer != null) dest.VariantPointer = (Hl7.Fhir.Model.STU3.ResourceReference)VariantPointer.DeepCopy();
+                    if(VariantPointer != null) dest.VariantPointer = (Hl7.Fhir.Model.ResourceReference)VariantPointer.DeepCopy();
                     return dest;
                 }
                 else
@@ -1499,13 +1499,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// aa | dna | rna
@@ -1581,13 +1581,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Specimen used for sequencing
@@ -1596,13 +1596,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Specimen")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Specimen
+        public Hl7.Fhir.Model.ResourceReference Specimen
         {
             get { return _Specimen; }
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Specimen;
+        private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
         /// The method for sequencing
@@ -1611,13 +1611,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Device
+        public Hl7.Fhir.Model.ResourceReference Device
         {
             get { return _Device; }
             set { _Device = value; OnPropertyChanged("Device"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Device;
+        private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
         /// Who should be responsible for test result
@@ -1626,13 +1626,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Performer
+        public Hl7.Fhir.Model.ResourceReference Performer
         {
             get { return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Performer;
+        private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
         /// The number of copies of the seqeunce of interest.  (RNASeq)
@@ -1781,13 +1781,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Sequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Pointer
+        public List<Hl7.Fhir.Model.ResourceReference> Pointer
         {
-            get { if(_Pointer==null) _Pointer = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Pointer; }
+            get { if(_Pointer==null) _Pointer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Pointer; }
             set { _Pointer = value; OnPropertyChanged("Pointer"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Pointer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
     
     
         public static ElementDefinitionConstraint Sequence_SEQ_3 = new ElementDefinitionConstraint
@@ -1843,13 +1843,13 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                 if(CoordinateSystemElement != null) dest.CoordinateSystemElement = (Hl7.Fhir.Model.Integer)CoordinateSystemElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.STU3.ResourceReference)Patient.DeepCopy();
-                if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.STU3.ResourceReference)Specimen.DeepCopy();
-                if(Device != null) dest.Device = (Hl7.Fhir.Model.STU3.ResourceReference)Device.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.STU3.ResourceReference)Performer.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
+                if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(ReferenceSeq != null) dest.ReferenceSeq = (ReferenceSeqComponent)ReferenceSeq.DeepCopy();
                 if(Variant != null) dest.Variant = new List<VariantComponent>(Variant.DeepCopy());
@@ -1857,7 +1857,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Quality != null) dest.Quality = new List<QualityComponent>(Quality.DeepCopy());
                 if(ReadCoverageElement != null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)ReadCoverageElement.DeepCopy();
                 if(Repository != null) dest.Repository = new List<RepositoryComponent>(Repository.DeepCopy());
-                if(Pointer != null) dest.Pointer = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Pointer.DeepCopy());
+                if(Pointer != null) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopy());
                 return dest;
             }
             else

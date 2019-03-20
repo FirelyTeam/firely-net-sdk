@@ -866,13 +866,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("ActivityDefinition","PlanDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Definition
+            public Hl7.Fhir.Model.ResourceReference Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Definition;
+            private Hl7.Fhir.Model.ResourceReference _Definition;
             
             /// <summary>
             /// Transform to apply the template
@@ -881,13 +881,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("StructureMap")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Transform
+            public Hl7.Fhir.Model.ResourceReference Transform
             {
                 get { return _Transform; }
                 set { _Transform = value; OnPropertyChanged("Transform"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Transform;
+            private Hl7.Fhir.Model.ResourceReference _Transform;
             
             /// <summary>
             /// Dynamic aspects of the definition
@@ -945,8 +945,8 @@ namespace Hl7.Fhir.Model.STU3
                     if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
                     if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
                     if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.STU3.ResourceReference)Definition.DeepCopy();
-                    if(Transform != null) dest.Transform = (Hl7.Fhir.Model.STU3.ResourceReference)Transform.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
+                    if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<DynamicValueComponent>(DynamicValue.DeepCopy());
                     if(Action != null) dest.Action = new List<ActionComponent>(Action.DeepCopy());
                     return dest;
@@ -1864,13 +1864,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Business version of the plan definition
@@ -2420,13 +2420,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Library")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Library
+        public List<Hl7.Fhir.Model.ResourceReference> Library
         {
-            get { if(_Library==null) _Library = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Library; }
+            get { if(_Library==null) _Library = new List<Hl7.Fhir.Model.ResourceReference>(); return _Library; }
             set { _Library = value; OnPropertyChanged("Library"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Library;
+        private List<Hl7.Fhir.Model.ResourceReference> _Library;
         
         /// <summary>
         /// What the plan is trying to accomplish
@@ -2465,7 +2465,7 @@ namespace Hl7.Fhir.Model.STU3
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -2487,7 +2487,7 @@ namespace Hl7.Fhir.Model.STU3
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.STU3.ContactDetail>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.STU3.RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(Library != null) dest.Library = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Library.DeepCopy());
+                if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
                 if(Goal != null) dest.Goal = new List<GoalComponent>(Goal.DeepCopy());
                 if(Action != null) dest.Action = new List<ActionComponent>(Action.DeepCopy());
                 return dest;

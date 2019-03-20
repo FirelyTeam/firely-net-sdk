@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Tests.Validation
                     new Parameters.ParameterComponent
                     {
                         Name = "Test",
-                        Value = new Fhir.Model.STU3.ResourceReference { Reference = "#test" }
+                        Value = new Fhir.Model.STU3.SampledData { Origin = new SimpleQuantity { Value = 0 }, Period = 15, Dimensions = 1, Data = "10,12" }
                     }
                 }
             };

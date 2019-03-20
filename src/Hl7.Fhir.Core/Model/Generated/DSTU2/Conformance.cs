@@ -1193,13 +1193,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
             
             /// <summary>
             /// What operations are supported?
@@ -1495,7 +1495,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.DSTU2.ResourceReference)Profile.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     if(Interaction != null) dest.Interaction = new List<ResourceInteractionComponent>(Interaction.DeepCopy());
                     if(VersioningElement != null) dest.VersioningElement = (Code<Hl7.Fhir.Model.ResourceVersionPolicy>)VersioningElement.DeepCopy();
                     if(ReadHistoryElement != null) dest.ReadHistoryElement = (Hl7.Fhir.Model.FhirBoolean)ReadHistoryElement.DeepCopy();
@@ -2274,13 +2274,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("OperationDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Definition
+            public Hl7.Fhir.Model.ResourceReference Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Definition;
+            private Hl7.Fhir.Model.ResourceReference _Definition;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -2290,7 +2290,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.DSTU2.ResourceReference)Definition.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                     return dest;
                 }
                 else
@@ -2785,13 +2785,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Request
+            public Hl7.Fhir.Model.ResourceReference Request
             {
                 get { return _Request; }
                 set { _Request = value; OnPropertyChanged("Request"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Request;
+            private Hl7.Fhir.Model.ResourceReference _Request;
             
             /// <summary>
             /// Profile that describes the response
@@ -2801,13 +2801,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Response
+            public Hl7.Fhir.Model.ResourceReference Response
             {
                 get { return _Response; }
                 set { _Response = value; OnPropertyChanged("Response"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Response;
+            private Hl7.Fhir.Model.ResourceReference _Response;
             
             /// <summary>
             /// Endpoint-specific event documentation
@@ -2852,8 +2852,8 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DSTU2.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.DSTU2.ConformanceEventMode>)ModeElement.DeepCopy();
                     if(FocusElement != null) dest.FocusElement = (Code<Hl7.Fhir.Model.ResourceType>)FocusElement.DeepCopy();
-                    if(Request != null) dest.Request = (Hl7.Fhir.Model.DSTU2.ResourceReference)Request.DeepCopy();
-                    if(Response != null) dest.Response = (Hl7.Fhir.Model.DSTU2.ResourceReference)Response.DeepCopy();
+                    if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
+                    if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     return dest;
                 }
@@ -3017,13 +3017,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -3034,7 +3034,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     base.CopyTo(dest);
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.DocumentMode>)ModeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.DSTU2.ResourceReference)Profile.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     return dest;
                 }
                 else
@@ -3617,13 +3617,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Profile
+        public List<Hl7.Fhir.Model.ResourceReference> Profile
         {
-            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Profile; }
+            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Profile;
+        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
         /// If the endpoint is a RESTful one
@@ -3799,7 +3799,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
                 if(AcceptUnknownElement != null) dest.AcceptUnknownElement = (Code<Hl7.Fhir.Model.UnknownContentCode>)AcceptUnknownElement.DeepCopy();
                 if(FormatElement != null) dest.FormatElement = new List<Hl7.Fhir.Model.Code>(FormatElement.DeepCopy());
-                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Profile.DeepCopy());
+                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
                 if(Rest != null) dest.Rest = new List<RestComponent>(Rest.DeepCopy());
                 if(Messaging != null) dest.Messaging = new List<MessagingComponent>(Messaging.DeepCopy());
                 if(Document != null) dest.Document = new List<DocumentComponent>(Document.DeepCopy());

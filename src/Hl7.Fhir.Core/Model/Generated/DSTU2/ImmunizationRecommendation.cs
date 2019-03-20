@@ -194,13 +194,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Immunization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> SupportingImmunization
+            public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
             {
-                get { if(_SupportingImmunization==null) _SupportingImmunization = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _SupportingImmunization; }
+                get { if(_SupportingImmunization==null) _SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingImmunization; }
                 set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _SupportingImmunization;
+            private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
             
             /// <summary>
             /// Patient observations supporting recommendation
@@ -210,13 +210,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Observation","AllergyIntolerance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> SupportingPatientInformation
+            public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
             {
-                get { if(_SupportingPatientInformation==null) _SupportingPatientInformation = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _SupportingPatientInformation; }
+                get { if(_SupportingPatientInformation==null) _SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingPatientInformation; }
                 set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _SupportingPatientInformation;
+            private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -231,8 +231,8 @@ namespace Hl7.Fhir.Model.DSTU2
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(DateCriterion != null) dest.DateCriterion = new List<DateCriterionComponent>(DateCriterion.DeepCopy());
                     if(Protocol != null) dest.Protocol = (ProtocolComponent)Protocol.DeepCopy();
-                    if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(SupportingImmunization.DeepCopy());
-                    if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(SupportingPatientInformation.DeepCopy());
+                    if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
+                    if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
                     return dest;
                 }
                 else
@@ -522,13 +522,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Authority
+            public Hl7.Fhir.Model.ResourceReference Authority
             {
                 get { return _Authority; }
                 set { _Authority = value; OnPropertyChanged("Authority"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Authority;
+            private Hl7.Fhir.Model.ResourceReference _Authority;
             
             /// <summary>
             /// Name of vaccination series
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     base.CopyTo(dest);
                     if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.Integer)DoseSequenceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Authority != null) dest.Authority = (Hl7.Fhir.Model.DSTU2.ResourceReference)Authority.DeepCopy();
+                    if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
                     return dest;
                 }
@@ -650,13 +650,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Who this profile is for
@@ -666,13 +666,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
             get { return _Patient; }
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Vaccine administration recommendations
@@ -697,8 +697,8 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.DSTU2.ResourceReference)Patient.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Recommendation != null) dest.Recommendation = new List<RecommendationComponent>(Recommendation.DeepCopy());
                 return dest;
             }

@@ -62,13 +62,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this organization affiliation record is in active use
@@ -124,13 +124,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference Organization
+        public Hl7.Fhir.Model.ResourceReference Organization
         {
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _Organization;
+        private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
         /// Organization that provides/performs the role (e.g. providing services or is a member of)
@@ -139,13 +139,13 @@ namespace Hl7.Fhir.Model.R4
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.R4.ResourceReference ParticipatingOrganization
+        public Hl7.Fhir.Model.ResourceReference ParticipatingOrganization
         {
             get { return _ParticipatingOrganization; }
             set { _ParticipatingOrganization = value; OnPropertyChanged("ParticipatingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.R4.ResourceReference _ParticipatingOrganization;
+        private Hl7.Fhir.Model.ResourceReference _ParticipatingOrganization;
         
         /// <summary>
         /// Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Network
+        public List<Hl7.Fhir.Model.ResourceReference> Network
         {
-            get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Network; }
+            get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.ResourceReference>(); return _Network; }
             set { _Network = value; OnPropertyChanged("Network"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Network;
+        private List<Hl7.Fhir.Model.ResourceReference> _Network;
         
         /// <summary>
         /// Definition of the role the participatingOrganization plays
@@ -201,13 +201,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Location
+        public List<Hl7.Fhir.Model.ResourceReference> Location
         {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Location;
+        private List<Hl7.Fhir.Model.ResourceReference> _Location;
         
         /// <summary>
         /// Healthcare services provided through the role
@@ -217,13 +217,13 @@ namespace Hl7.Fhir.Model.R4
         [References("HealthcareService")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> HealthcareService
+        public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
         {
-            get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _HealthcareService; }
+            get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
             set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _HealthcareService;
+        private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
         
         /// <summary>
         /// Contact details at the participatingOrganization relevant to this Affiliation
@@ -248,13 +248,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Endpoint
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
         {
-            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Endpoint; }
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
             set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Endpoint;
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -264,18 +264,18 @@ namespace Hl7.Fhir.Model.R4
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.R4.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.R4.ResourceReference)Organization.DeepCopy();
-                if(ParticipatingOrganization != null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.R4.ResourceReference)ParticipatingOrganization.DeepCopy();
-                if(Network != null) dest.Network = new List<Hl7.Fhir.Model.R4.ResourceReference>(Network.DeepCopy());
+                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
+                if(ParticipatingOrganization != null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)ParticipatingOrganization.DeepCopy();
+                if(Network != null) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopy());
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.R4.ResourceReference>(Location.DeepCopy());
-                if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.R4.ResourceReference>(HealthcareService.DeepCopy());
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.R4.ContactPoint>(Telecom.DeepCopy());
-                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.R4.ResourceReference>(Endpoint.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else

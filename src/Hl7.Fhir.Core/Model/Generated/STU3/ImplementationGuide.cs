@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model.STU3
             /// </summary>
             [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.STU3.ResourceReference))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Source
@@ -526,13 +526,13 @@ namespace Hl7.Fhir.Model.STU3
             [CLSCompliant(false)]
             [References("StructureDefinition")]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference ExampleFor
+            public Hl7.Fhir.Model.ResourceReference ExampleFor
             {
                 get { return _ExampleFor; }
                 set { _ExampleFor = value; OnPropertyChanged("ExampleFor"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _ExampleFor;
+            private Hl7.Fhir.Model.ResourceReference _ExampleFor;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model.STU3
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(AcronymElement != null) dest.AcronymElement = (Hl7.Fhir.Model.FhirString)AcronymElement.DeepCopy();
                     if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
-                    if(ExampleFor != null) dest.ExampleFor = (Hl7.Fhir.Model.STU3.ResourceReference)ExampleFor.DeepCopy();
+                    if(ExampleFor != null) dest.ExampleFor = (Hl7.Fhir.Model.ResourceReference)ExampleFor.DeepCopy();
                     return dest;
                 }
                 else
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model.STU3
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.STU3.ResourceReference Profile
+            public Hl7.Fhir.Model.ResourceReference Profile
             {
                 get { return _Profile; }
                 set { _Profile = value; OnPropertyChanged("Profile"); }
             }
             
-            private Hl7.Fhir.Model.STU3.ResourceReference _Profile;
+            private Hl7.Fhir.Model.ResourceReference _Profile;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model.STU3
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
-                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.STU3.ResourceReference)Profile.DeepCopy();
+                    if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     return dest;
                 }
                 else

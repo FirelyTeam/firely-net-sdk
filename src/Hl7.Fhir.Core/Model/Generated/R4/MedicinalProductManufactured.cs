@@ -107,13 +107,13 @@ namespace Hl7.Fhir.Model.R4
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Manufacturer
+        public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
         {
-            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Manufacturer; }
+            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Manufacturer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
         
         /// <summary>
         /// Ingredient
@@ -123,13 +123,13 @@ namespace Hl7.Fhir.Model.R4
         [References("MedicinalProductIngredient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.R4.ResourceReference> Ingredient
+        public List<Hl7.Fhir.Model.ResourceReference> Ingredient
         {
-            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.R4.ResourceReference>(); return _Ingredient; }
+            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Ingredient; }
             set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
         }
         
-        private List<Hl7.Fhir.Model.R4.ResourceReference> _Ingredient;
+        private List<Hl7.Fhir.Model.ResourceReference> _Ingredient;
         
         /// <summary>
         /// Dimensions, color etc.
@@ -171,8 +171,8 @@ namespace Hl7.Fhir.Model.R4
                 if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopy();
                 if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.R4.ResourceReference>(Manufacturer.DeepCopy());
-                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.R4.ResourceReference>(Ingredient.DeepCopy());
+                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
                 if(PhysicalCharacteristics != null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)PhysicalCharacteristics.DeepCopy();
                 if(OtherCharacteristics != null) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(OtherCharacteristics.DeepCopy());
                 return dest;

@@ -223,13 +223,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Name for this study
@@ -272,13 +272,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Protocol
+        public List<Hl7.Fhir.Model.ResourceReference> Protocol
         {
-            get { if(_Protocol==null) _Protocol = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Protocol; }
+            get { if(_Protocol==null) _Protocol = new List<Hl7.Fhir.Model.ResourceReference>(); return _Protocol; }
             set { _Protocol = value; OnPropertyChanged("Protocol"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Protocol;
+        private List<Hl7.Fhir.Model.ResourceReference> _Protocol;
         
         /// <summary>
         /// Part of larger study
@@ -288,13 +288,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> PartOf
+        public List<Hl7.Fhir.Model.ResourceReference> PartOf
         {
-            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _PartOf; }
+            get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _PartOf;
+        private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
         /// draft | in-progress | suspended | stopped | completed | entered-in-error
@@ -459,13 +459,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Group")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Enrollment
+        public List<Hl7.Fhir.Model.ResourceReference> Enrollment
         {
-            get { if(_Enrollment==null) _Enrollment = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Enrollment; }
+            get { if(_Enrollment==null) _Enrollment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Enrollment; }
             set { _Enrollment = value; OnPropertyChanged("Enrollment"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Enrollment;
+        private List<Hl7.Fhir.Model.ResourceReference> _Enrollment;
         
         /// <summary>
         /// When the study began and ended
@@ -488,13 +488,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference Sponsor
+        public Hl7.Fhir.Model.ResourceReference Sponsor
         {
             get { return _Sponsor; }
             set { _Sponsor = value; OnPropertyChanged("Sponsor"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _Sponsor;
+        private Hl7.Fhir.Model.ResourceReference _Sponsor;
         
         /// <summary>
         /// The individual responsible for the study
@@ -503,13 +503,13 @@ namespace Hl7.Fhir.Model.STU3
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.STU3.ResourceReference PrincipalInvestigator
+        public Hl7.Fhir.Model.ResourceReference PrincipalInvestigator
         {
             get { return _PrincipalInvestigator; }
             set { _PrincipalInvestigator = value; OnPropertyChanged("PrincipalInvestigator"); }
         }
         
-        private Hl7.Fhir.Model.STU3.ResourceReference _PrincipalInvestigator;
+        private Hl7.Fhir.Model.ResourceReference _PrincipalInvestigator;
         
         /// <summary>
         /// Location involved in study execution
@@ -519,13 +519,13 @@ namespace Hl7.Fhir.Model.STU3
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.STU3.ResourceReference> Site
+        public List<Hl7.Fhir.Model.ResourceReference> Site
         {
-            get { if(_Site==null) _Site = new List<Hl7.Fhir.Model.STU3.ResourceReference>(); return _Site; }
+            get { if(_Site==null) _Site = new List<Hl7.Fhir.Model.ResourceReference>(); return _Site; }
             set { _Site = value; OnPropertyChanged("Site"); }
         }
         
-        private List<Hl7.Fhir.Model.STU3.ResourceReference> _Site;
+        private List<Hl7.Fhir.Model.ResourceReference> _Site;
         
         /// <summary>
         /// Reason for terminating study early
@@ -577,10 +577,10 @@ namespace Hl7.Fhir.Model.STU3
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.STU3.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(Protocol != null) dest.Protocol = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Protocol.DeepCopy());
-                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.STU3.ResourceReference>(PartOf.DeepCopy());
+                if(Protocol != null) dest.Protocol = new List<Hl7.Fhir.Model.ResourceReference>(Protocol.DeepCopy());
+                if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.STU3.ResearchStudyStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.CodeableConcept>(Focus.DeepCopy());
@@ -589,11 +589,11 @@ namespace Hl7.Fhir.Model.STU3
                 if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.CodeableConcept>(Keyword.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-                if(Enrollment != null) dest.Enrollment = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Enrollment.DeepCopy());
+                if(Enrollment != null) dest.Enrollment = new List<Hl7.Fhir.Model.ResourceReference>(Enrollment.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Sponsor != null) dest.Sponsor = (Hl7.Fhir.Model.STU3.ResourceReference)Sponsor.DeepCopy();
-                if(PrincipalInvestigator != null) dest.PrincipalInvestigator = (Hl7.Fhir.Model.STU3.ResourceReference)PrincipalInvestigator.DeepCopy();
-                if(Site != null) dest.Site = new List<Hl7.Fhir.Model.STU3.ResourceReference>(Site.DeepCopy());
+                if(Sponsor != null) dest.Sponsor = (Hl7.Fhir.Model.ResourceReference)Sponsor.DeepCopy();
+                if(PrincipalInvestigator != null) dest.PrincipalInvestigator = (Hl7.Fhir.Model.ResourceReference)PrincipalInvestigator.DeepCopy();
+                if(Site != null) dest.Site = new List<Hl7.Fhir.Model.ResourceReference>(Site.DeepCopy());
                 if(ReasonStopped != null) dest.ReasonStopped = (Hl7.Fhir.Model.CodeableConcept)ReasonStopped.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Arm != null) dest.Arm = new List<ArmComponent>(Arm.DeepCopy());

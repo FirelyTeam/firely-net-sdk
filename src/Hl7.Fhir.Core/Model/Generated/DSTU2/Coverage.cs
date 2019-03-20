@@ -62,26 +62,26 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Issuer
+        public Hl7.Fhir.Model.ResourceReference Issuer
         {
             get { return _Issuer; }
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Issuer;
+        private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
         /// BIN Number
         /// </summary>
         [FhirElement("bin", Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier Bin
+        public Hl7.Fhir.Model.Identifier Bin
         {
             get { return _Bin; }
             set { _Bin = value; OnPropertyChanged("Bin"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _Bin;
+        private Hl7.Fhir.Model.Identifier _Bin;
         
         /// <summary>
         /// Coverage start and end dates
@@ -117,13 +117,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("subscriberId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier SubscriberId
+        public Hl7.Fhir.Model.Identifier SubscriberId
         {
             get { return _SubscriberId; }
             set { _SubscriberId = value; OnPropertyChanged("SubscriberId"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _SubscriberId;
+        private Hl7.Fhir.Model.Identifier _SubscriberId;
         
         /// <summary>
         /// The primary coverage ID
@@ -132,13 +132,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// An identifier for the group
@@ -312,13 +312,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.ResourceReference Subscriber
+        public Hl7.Fhir.Model.ResourceReference Subscriber
         {
             get { return _Subscriber; }
             set { _Subscriber = value; OnPropertyChanged("Subscriber"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.ResourceReference _Subscriber;
+        private Hl7.Fhir.Model.ResourceReference _Subscriber;
         
         /// <summary>
         /// Insurer network
@@ -326,13 +326,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [FhirElement("network", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
-        public Hl7.Fhir.Model.DSTU2.Identifier Network
+        public Hl7.Fhir.Model.Identifier Network
         {
             get { return _Network; }
             set { _Network = value; OnPropertyChanged("Network"); }
         }
         
-        private Hl7.Fhir.Model.DSTU2.Identifier _Network;
+        private Hl7.Fhir.Model.Identifier _Network;
         
         /// <summary>
         /// Contract details
@@ -342,13 +342,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Contract
+        public List<Hl7.Fhir.Model.ResourceReference> Contract
         {
-            get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Contract; }
+            get { if(_Contract==null) _Contract = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contract; }
             set { _Contract = value; OnPropertyChanged("Contract"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Contract;
+        private List<Hl7.Fhir.Model.ResourceReference> _Contract;
     
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -358,20 +358,20 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Issuer.DeepCopy();
-                if(Bin != null) dest.Bin = (Hl7.Fhir.Model.DSTU2.Identifier)Bin.DeepCopy();
+                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
+                if(Bin != null) dest.Bin = (Hl7.Fhir.Model.Identifier)Bin.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                if(SubscriberId != null) dest.SubscriberId = (Hl7.Fhir.Model.DSTU2.Identifier)SubscriberId.DeepCopy();
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(SubscriberId != null) dest.SubscriberId = (Hl7.Fhir.Model.Identifier)SubscriberId.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
                 if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
                 if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
                 if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.PositiveInt)DependentElement.DeepCopy();
                 if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
-                if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.DSTU2.ResourceReference)Subscriber.DeepCopy();
-                if(Network != null) dest.Network = (Hl7.Fhir.Model.DSTU2.Identifier)Network.DeepCopy();
-                if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Contract.DeepCopy());
+                if(Subscriber != null) dest.Subscriber = (Hl7.Fhir.Model.ResourceReference)Subscriber.DeepCopy();
+                if(Network != null) dest.Network = (Hl7.Fhir.Model.Identifier)Network.DeepCopy();
+                if(Contract != null) dest.Contract = new List<Hl7.Fhir.Model.ResourceReference>(Contract.DeepCopy());
                 return dest;
             }
             else

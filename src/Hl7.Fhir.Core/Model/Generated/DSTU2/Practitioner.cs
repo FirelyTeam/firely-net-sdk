@@ -69,13 +69,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference ManagingOrganization
+            public Hl7.Fhir.Model.ResourceReference ManagingOrganization
             {
                 get { return _ManagingOrganization; }
                 set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _ManagingOrganization;
+            private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
             
             /// <summary>
             /// Roles which this practitioner may perform
@@ -128,13 +128,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("Location")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> Location
+            public List<Hl7.Fhir.Model.ResourceReference> Location
             {
-                get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _Location; }
+                get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
                 set { _Location = value; OnPropertyChanged("Location"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _Location;
+            private List<Hl7.Fhir.Model.ResourceReference> _Location;
             
             /// <summary>
             /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
@@ -144,13 +144,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [References("HealthcareService")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.ResourceReference> HealthcareService
+            public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
             {
-                get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(); return _HealthcareService; }
+                get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
                 set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.ResourceReference> _HealthcareService;
+            private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -159,12 +159,12 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.DSTU2.ResourceReference)ManagingOrganization.DeepCopy();
+                    if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                     if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Location != null) dest.Location = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(Location.DeepCopy());
-                    if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.DSTU2.ResourceReference>(HealthcareService.DeepCopy());
+                    if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
+                    if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
                     return dest;
                 }
                 else
@@ -256,13 +256,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [FhirElement("identifier", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+            public List<Hl7.Fhir.Model.Identifier> Identifier
             {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
-            private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
             /// Coded representation of the qualification
@@ -298,13 +298,13 @@ namespace Hl7.Fhir.Model.DSTU2
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.DSTU2.ResourceReference Issuer
+            public Hl7.Fhir.Model.ResourceReference Issuer
             {
                 get { return _Issuer; }
                 set { _Issuer = value; OnPropertyChanged("Issuer"); }
             }
             
-            private Hl7.Fhir.Model.DSTU2.ResourceReference _Issuer;
+            private Hl7.Fhir.Model.ResourceReference _Issuer;
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -313,10 +313,10 @@ namespace Hl7.Fhir.Model.DSTU2
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.DSTU2.ResourceReference)Issuer.DeepCopy();
+                    if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
                     return dest;
                 }
                 else
@@ -394,13 +394,13 @@ namespace Hl7.Fhir.Model.DSTU2
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DSTU2.Identifier> Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(); return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private List<Hl7.Fhir.Model.DSTU2.Identifier> _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Whether this practitioner's record is in active use
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model.DSTU2
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.DSTU2.Identifier>(Identifier.DeepCopy());
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Name != null) dest.Name = (Hl7.Fhir.Model.DSTU2.HumanName)Name.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.DSTU2.ContactPoint>(Telecom.DeepCopy());
