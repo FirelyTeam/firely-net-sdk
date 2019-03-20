@@ -74,6 +74,62 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void HapiDstu2Search()
+        {
+            var client = new FhirDstu2Client("http://hapi.fhir.org/baseDstu2");
+            HapiSearch<Patient>(
+                searchParams => client.Search<Patient>(searchParams),
+                patient => patient.BirthDate
+            );
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void HapiStu3Search()
+        {
+            var client = new FhirStu3Client("http://hapi.fhir.org/baseDstu3");
+            HapiSearch<Fhir.Model.STU3.Patient>(
+                searchParams => client.Search<Fhir.Model.STU3.Patient>(searchParams),
+                patient => patient.BirthDate
+            );
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void HapiR4Search()
+        {
+            var client = new FhirR4Client("http://hapi.fhir.org/baseR4");
+            HapiSearch<Fhir.Model.R4.Patient>(
+                searchParams => client.Search<Fhir.Model.R4.Patient>(searchParams),
+                patient => patient.BirthDate
+            );
+        }
+
+        private void HapiSearch<TPatient>(
+            Func<SearchParams, IBundle> search,
+            Func<TPatient, string> getBirthDate
+        ) where TPatient : class
+        {
+            var searchParams = new SearchParams()
+                .OrderBy("birthdate", SortOrder.Ascending)
+                .LimitTo(10);
+
+            var count = 0;
+            var lastBirthDate = "";
+            var patientBundle = search(searchParams);
+            foreach (var entry in patientBundle.Entries)
+            {
+                if (entry.Search?.Mode == SearchEntryMode.Match)
+                {
+                    count++;
+                    var patient = entry.Resource as TPatient;
+                    Assert.IsNotNull(patient);
+                    Assert.IsTrue(string.Compare(getBirthDate(patient), lastBirthDate, false) >= 0);
+                    lastBirthDate = getBirthDate(patient);
+                }
+            }
+            Assert.IsTrue(count > 0 && count <= 10);
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         [Ignore]    // Uses Grahame test server, that mostly does not work
         public void FetchConformance()
         {
