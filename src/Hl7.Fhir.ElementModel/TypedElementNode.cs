@@ -190,7 +190,7 @@ namespace Hl7.Fhir.ElementModel
                 // If we found a type, but we don't know about the specific child, complain
                 if (dis != ElementDefinitionSummaryCache.Empty && !match.IsTracking)
                 {
-                    raiseTypeError($"Encountered unknown element '{scan.Name}' while parsing", this,
+                    raiseTypeError($"Encountered unknown element '{scan.Name}' at location '{scan.Location}' while parsing", this,
                             warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
 
                     // don't include member, unless we are explicitly told to let it pass
