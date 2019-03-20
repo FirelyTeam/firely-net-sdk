@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Task<TBundle> SearchAsync(SearchParams q, string resourceType = null)
         {
-            var tx = new RequestsBuilder(Endpoint).Search(q,resourceType).ToRequest();
+            var tx = new RequestsBuilder(Endpoint, ParserSettings.Version).Search(q,resourceType).ToRequest();
             return executeAsync<TBundle>(tx, HttpStatusCode.OK);
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         public Task<TBundle> SearchUsingPostAsync(SearchParams q, string resourceType = null)
         {
-            var tx = new RequestsBuilder(Endpoint).SearchUsingPost(q, resourceType).ToRequest();
+            var tx = new RequestsBuilder(Endpoint, ParserSettings.Version).SearchUsingPost(q, resourceType).ToRequest();
             return executeAsync<TBundle>(tx, new[] { HttpStatusCode.OK });
         }
 
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Rest
 
             if (continueAt != null)
             {
-                var tx = new RequestsBuilder(Endpoint).Get(continueAt).ToRequest();
+                var tx = new RequestsBuilder(Endpoint, ParserSettings.Version).Get(continueAt).ToRequest();
                 return executeAsync<TBundle>(tx, HttpStatusCode.OK);
             }
             else

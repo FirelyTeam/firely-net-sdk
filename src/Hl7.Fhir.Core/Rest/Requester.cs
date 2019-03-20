@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Rest
     {
         public Uri BaseUrl { get; private set; }
         public string FhirVersion { get { return _versionSettings.FhirVersion; } }
+        public Model.Version Version { get { return _versionSettings.Version; } }
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
         public int Timeout { get; set; }           // In milliseconds

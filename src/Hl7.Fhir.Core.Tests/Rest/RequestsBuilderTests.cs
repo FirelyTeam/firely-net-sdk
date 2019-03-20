@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Test
         public void TestBuild()
         {
             var p = new Patient();
-            var b = new RequestsBuilder("http://myserver.org/fhir")
+            var b = new RequestsBuilder("http://myserver.org/fhir", Model.Version.DSTU2)
                         .Create(p)
                         .ResourceHistory("Patient","7")
                         .Delete("Patient","8")
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Test
             parameters.Add(new Tuple<string, string>("Active", "true"));
             SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            var request = new RequestsBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToRequest();
+            var request = new RequestsBuilder(endpoint, Model.Version.DSTU2).SearchUsingPost(searchParams, resourceType).ToRequest();
             byte[] body;
             var httpRequest = request.ToHttpRequest(endpoint, Model.Version.DSTU2, "1.0.2", Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Test
         {
             var endpoint = new Uri("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f");
 
-            var tx = new RequestsBuilder(endpoint);
+            var tx = new RequestsBuilder(endpoint, Model.Version.DSTU2);
             tx.Get("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=<=2014-09-08T18:42:02.000Z&context=14187710&_format=json");
             var b = tx.ToRequest();
 
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Test
             parameters.Add(new Tuple<string, string>("Key", specialCharacters));
             SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            var request = new RequestsBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToRequest();
+            var request = new RequestsBuilder(endpoint, Model.Version.DSTU2).SearchUsingPost(searchParams, resourceType).ToRequest();
             byte[] body;
             request.ToHttpRequest(endpoint, Model.Version.DSTU2, "1.0.2", Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Test
             parameters.Add(new Tuple<string, string>("Key", "Value"));
             SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            var request = new RequestsBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToRequest();
+            var request = new RequestsBuilder(endpoint, Model.Version.DSTU2).SearchUsingPost(searchParams, resourceType).ToRequest();
             byte[] body;
             var httpRequest = request.ToHttpRequest(endpoint, Model.Version.DSTU2, "1.0.2", Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Test
             parameters.Add(new Tuple<string, string>("Key", "Value"));
             SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            var request = new RequestsBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToRequest();
+            var request = new RequestsBuilder(endpoint, Model.Version.DSTU2).SearchUsingPost(searchParams, resourceType).ToRequest();
             byte[] body;
             var httpRequest = request.ToHttpRequest(endpoint, Model.Version.DSTU2, "1.0.2", Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Test
             parameters.Add(new Tuple<string, string>("Key", "value"));
             SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            var request = new RequestsBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToRequest();
+            var request = new RequestsBuilder(endpoint, Model.Version.DSTU2).SearchUsingPost(searchParams, resourceType).ToRequest();
             byte[] body;
             HttpWebRequest httpRequest = request.ToHttpRequest(endpoint, Model.Version.DSTU2, "1.0.2", Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
 
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Test
         public void TestConditionalCreate()
         {
             var p = new Patient();
-            var tx = new RequestsBuilder("http://myserver.org/fhir")
+            var tx = new RequestsBuilder("http://myserver.org/fhir", Model.Version.DSTU2)
                         .Create(p, new SearchParams().Where("name=foobar"));
             var b = tx.ToRequest();
 
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Test
         public void TestConditionalUpdate()
         {
             var p = new Patient();
-            var tx = new RequestsBuilder("http://myserver.org/fhir")
+            var tx = new RequestsBuilder("http://myserver.org/fhir", Model.Version.DSTU2)
                         .Update(new SearchParams().Where("name=foobar"), p, versionId: "314");
             var b = tx.ToRequest();
 
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestTransactionWithForwardSlash()
         {
-            var tx2 = new RequestsBuilder("http://myserver.org/fhir/");
+            var tx2 = new RequestsBuilder("http://myserver.org/fhir/", Model.Version.DSTU2);
             var requests = tx2.Get("@Patient/1").ToRequests();
 
             var bundle = new Bundle
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Test
                     .ToList()
             };
 
-            var tx = new RequestsBuilder("http://myserver.org/fhir/")
+            var tx = new RequestsBuilder("http://myserver.org/fhir/", Model.Version.DSTU2)
                 .Transaction(bundle);
 
             var b = tx.ToRequest();
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Test
                 PreferredFormat = ResourceFormat.Json
             };
 
-            var transaction = new RequestsBuilder(client.Endpoint)
+            var transaction = new RequestsBuilder(client.Endpoint, Model.Version.DSTU2)
                 .Create(observation)
                 .Get("Patient/1");
             var requests = transaction.ToRequests();

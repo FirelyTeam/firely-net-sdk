@@ -179,8 +179,23 @@ namespace Hl7.Fhir.Rest
 
         private void addNonEmptySort(string value, SortOrder sortOrder)
         {
-            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT));
-            Sort.Add(Tuple.Create(value, sortOrder));
+            if (String.IsNullOrEmpty(value))
+                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: value cannot be empty");
+            var elements = value.Split(',');
+            if (elements.Any(f => String.IsNullOrEmpty(f)))
+                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of non-empty element names");
+            if (!elements.All(f => Char.IsLetter(f[0]) || f[0] == '-'))
+                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of element names, optionally prefixed with '-'");
+
+            var oppositeSortOrder = sortOrder == SortOrder.Ascending ?
+                SortOrder.Descending :
+                SortOrder.Ascending;
+            foreach (var e in elements)
+            {
+                var newTuple = e[0] == '-' ? Tuple.Create(e.Substring(1), oppositeSortOrder) :
+                            Tuple.Create(e, sortOrder);
+                Sort.Add(newTuple);
+            }
         }
 
         /// <summary>
@@ -326,7 +341,13 @@ namespace Hl7.Fhir.Rest
                          (order == SortOrder.Ascending ? SEARCH_MODIF_ASCENDING : SEARCH_MODIF_DESCENDING);
         }
 
-        public UriParamList ToUriParamList()
+        private string createSortField(Tuple<string, SortOrder> sort)
+        {
+            if (sort.Item2 == SortOrder.Ascending) return sort.Item1;
+            return "-" + sort.Item1;
+        }
+
+        public UriParamList ToUriParamList(Model.Version version)
         {
             var result = new UriParamList();
 
@@ -336,7 +357,18 @@ namespace Hl7.Fhir.Rest
             if (Count != null) result.Add(Tuple.Create(SEARCH_PARAM_COUNT, Count.Value.ToString()));
             if (Include.Any()) result.AddRange(Include.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE, i)));
             if (RevInclude.Any()) result.AddRange(RevInclude.Select(i => Tuple.Create(SEARCH_PARAM_REVINCLUDE, i)));
-            if (Sort.Any()) result.AddRange(Sort.Select(s => Tuple.Create(createSortParamName(s.Item2), s.Item1)));
+            if (Sort.Any())
+            {
+                if (version == Model.Version.DSTU2)
+                {
+                    result.AddRange(Sort.Select(s => Tuple.Create(createSortParamName(s.Item2), s.Item1)));
+                }
+                else
+                {
+                    var sortFields = string.Join(",", Sort.Select(createSortField));
+                    result.Add(Tuple.Create(SEARCH_PARAM_SORT, sortFields));
+                }
+            }
             if (Summary != null) result.Add(Tuple.Create(SEARCH_PARAM_SUMMARY, Summary.Value.ToString().ToLower()));
             if (!String.IsNullOrEmpty(Filter)) result.Add(Tuple.Create(SEARCH_PARAM_FILTER, Filter));
             if (Contained != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINED, Contained.Value.ToString().ToLower()));
@@ -368,11 +400,11 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        public Parameters ToParameters()
+        public Parameters ToParameters(Model.Version version)
         {
             var result = new Parameters();
 
-            foreach (var parameter in ToUriParamList())
+            foreach (var parameter in ToUriParamList(version))
             {
                 result.Add(parameter.Item1, new FhirString(parameter.Item2));
             }

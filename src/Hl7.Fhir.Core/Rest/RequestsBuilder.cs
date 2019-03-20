@@ -23,15 +23,17 @@ namespace Hl7.Fhir.Rest
 
         private List<Request> _result;
         private readonly Uri _baseUrl;
+        private readonly Model.Version _version;
 
-        public RequestsBuilder(string baseUrl)
+        public RequestsBuilder(string baseUrl, Model.Version version)
         {
             _result = new List<Request>();
             _baseUrl = new Uri(baseUrl);
+            _version = version;
         }
 
-        public RequestsBuilder(Uri baseUri)
-            : this(baseUri.OriginalString)
+        public RequestsBuilder(Uri baseUri, Model.Version version)
+            : this(baseUri.OriginalString, version)
         {
         }
 
@@ -122,7 +124,7 @@ namespace Hl7.Fhir.Rest
             request.Resource = body;
             request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
-            path.AddParams(condition.ToUriParamList());
+            path.AddParams(condition.ToUriParamList(_version));
             addRequest(request, path);
 
             return this;
@@ -152,7 +154,7 @@ namespace Hl7.Fhir.Rest
         {
             var request = newRequest(HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType);
-            path.AddParams(condition.ToUriParamList());
+            path.AddParams(condition.ToUriParamList(_version));
             addRequest(request, path);
 
             return this;
@@ -174,7 +176,7 @@ namespace Hl7.Fhir.Rest
             request.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
-            request.IfNoneExist = condition.ToUriParamList().ToQueryString();
+            request.IfNoneExist = condition.ToUriParamList(_version).ToQueryString();
             addRequest(request, path);
 
             return this;
@@ -319,7 +321,7 @@ namespace Hl7.Fhir.Rest
             var request = newRequest(HTTPVerb.GET, InteractionType.Search);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
-            if(q != null) path.AddParams(q.ToUriParamList());
+            if(q != null) path.AddParams(q.ToUriParamList(_version));
             addRequest(request, path);
 
             return this;
@@ -333,7 +335,7 @@ namespace Hl7.Fhir.Rest
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             path.AddPath("_search");
-            request.Resource = q.ToParameters();
+            request.Resource = q.ToParameters(_version);
             addRequest(request, path);
 
             return this;

@@ -21,6 +21,37 @@ namespace Hl7.Fhir.Test.Rest
 	public class SearchParamsTests
     {
         [TestMethod]
+        public void CheckAllSearchFhirPathExpressions()
+        {
+            CheckAllSearchFhirPathExpressions(Model.DSTU2.ModelInfo.SearchParameters);
+            CheckAllSearchFhirPathExpressions(Model.STU3.ModelInfo.SearchParameters);
+            CheckAllSearchFhirPathExpressions(Model.R4.ModelInfo.SearchParameters);
+        }
+
+        private void CheckAllSearchFhirPathExpressions(List<SearchParamDefinition> items)
+        {
+            int errorsFound = 0;
+            foreach (var item in items)
+            {
+                string expression = item.Expression;
+                if (string.IsNullOrEmpty(expression))
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Search parameter {0}.{1} ({2}) has no expression",
+                        item.Resource, item.Name, item.Type.ToString()));
+                    continue;
+                }
+                if (expression.Contains(" or "))
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Search parameter {0}.{1} ({2}) should not contain an 'or' statement",
+                        item.Resource, item.Name, item.Type.ToString()));
+                    System.Diagnostics.Trace.WriteLine("\t" + item.Expression);
+                    errorsFound++;
+                }
+            }
+            Assert.AreEqual(0, errorsFound, "Invalid FhirPath expression in search parameters");
+        }
+
+        [TestMethod]
         public void CountSetToNullAndGet()
         {
             var q = new SearchParams();
@@ -32,18 +63,25 @@ namespace Hl7.Fhir.Test.Rest
         [TestMethod]
         public void ManipulateParameters()
         {
+            ManipulateParameters(Model.Version.DSTU2);
+            ManipulateParameters(Model.Version.STU3);
+            ManipulateParameters(Model.Version.R4);
+        }
+
+        private void ManipulateParameters(Model.Version version)
+        {
             var q = new SearchParams();
 
             q.Add("testX", "someVal");
             q.Add("testX", "someVal2");
             q.Add("testXY", "someVal3");
 
-            var paramlist = q.ToUriParamList();
+            var paramlist = q.ToUriParamList(version);
             var vals = paramlist.Values("testX");
             Assert.AreEqual(2, vals.Count());
             Assert.AreEqual("someVal", vals.First());
             Assert.AreEqual("someVal2", vals.Skip(1).First());
-            
+
             Assert.AreEqual("someVal3", paramlist.SingleValue("testXY"));
 
             paramlist.Remove("testXY");
@@ -54,12 +92,19 @@ namespace Hl7.Fhir.Test.Rest
         [TestMethod]
         public void MinimalParams()
         {
+            MinimalParams(Model.Version.DSTU2);
+            MinimalParams(Model.Version.STU3);
+            MinimalParams(Model.Version.R4);
+        }
+
+        private void MinimalParams(Model.Version version)
+        {
             var q = new SearchParams();
 
             q.Add("name", "ewout");
-            
+
             // Validate no "Default" search parameters are added except for the ones the user added
-            Assert.AreEqual("name=ewout", q.ToUriParamList().ToQueryString());
+            Assert.AreEqual("name=ewout", q.ToUriParamList(version).ToQueryString());
         }
 
 
@@ -110,7 +155,7 @@ namespace Hl7.Fhir.Test.Rest
         }
 
         [TestMethod]
-        public void ParamOrderHasDefault()
+        public void Dstu2ParamOrderHasDefault()
         {
             var q = new SearchParams();
 
@@ -125,14 +170,33 @@ namespace Hl7.Fhir.Test.Rest
 
 
         [TestMethod]
+        public void ParamOrderHasDefault()
+        {
+            var q = new SearchParams();
+
+            q.Add("_sort", "birthdate,name,-active");
+            Assert.AreEqual(3, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("birthdate", SortOrder.Ascending), q.Sort.First());
+            Assert.AreEqual(Tuple.Create("name", SortOrder.Ascending), q.Sort.Skip(1).First());
+            Assert.AreEqual(Tuple.Create("active", SortOrder.Descending), q.Sort.Skip(2).First());
+        }
+
+        [TestMethod]
         public void ManageSearchResult()
+        {
+            ManageSearchResult(Model.Version.DSTU2);
+            ManageSearchResult(Model.Version.STU3);
+            ManageSearchResult(Model.Version.R4);
+        }
+
+        private void ManageSearchResult(Model.Version version)
         {
             var q = new SearchParams()
                .Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
                 .SummaryOnly().Include("Patient.managingOrganization").Select("field1", "field2")
                 .LimitTo(20);
 
-            var parameters = q.ToUriParamList();
+            var parameters = q.ToUriParamList(version);
 
             var p = parameters.Single("name");
             Assert.AreEqual("name:exact", p.Item1);
@@ -173,6 +237,13 @@ namespace Hl7.Fhir.Test.Rest
         [TestMethod]
         public void SerializeParams()
         {
+            SerializeParams(Model.Version.DSTU2, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=text&_elements=field1%2Cfield2");
+            SerializeParams(Model.Version.STU3, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=text&_elements=field1%2Cfield2");
+            SerializeParams(Model.Version.R4, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=text&_elements=field1%2Cfield2");
+        }
+
+        private void SerializeParams(Model.Version version, string expectedOutput)
+        {
             var q = new SearchParams();
             q.Query = "special";
             q.Count = 31;
@@ -184,32 +255,73 @@ namespace Hl7.Fhir.Test.Rest
             q.Elements.Add("field1");
             q.Elements.Add("field2");
 
-            var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=text&_elements=field1%2Cfield2", output);
+            var output = q.ToUriParamList(version).ToQueryString();
+            Assert.AreEqual(expectedOutput, output);
         }
 
         [TestMethod]
-        public void ParseAndSerializeParams()
+        public void Dstu2ParseAndSerializeParams()
+        {
+            Dstu2ParseAndSerializeParams(Model.Version.DSTU2, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+            Dstu2ParseAndSerializeParams(Model.Version.STU3, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+            Dstu2ParseAndSerializeParams(Model.Version.R4, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+        }
+
+        private void Dstu2ParseAndSerializeParams(Model.Version version, string expectedOutput)
         {
             var q = new SearchParams();
             q.Add("_query", "special");
             q.Add("_count", "31");
             q.Add("_summary", "data");
             q.Add("_sort:desc", "sorted");
-            q.Add("_sort:asc", "sorted2");
+            q.Add("_sort", "sorted2");
             q.Add("_include", "Patient.name");
             q.Add("_include", "Observation.subject");
             q.Add("image:missing", "true");
             q.Add("_elements", "field1,field2");
-            var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
+            var output = q.ToUriParamList(version).ToQueryString();
+            Assert.AreEqual(expectedOutput, output);
 
             var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
 
             Assert.AreEqual(q.Query, q2.Query);
             Assert.AreEqual(q.Count, q2.Count);
             Assert.AreEqual(q.Summary, q2.Summary);
-            
+
+            CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
+            CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
+            CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
+            CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
+        }
+
+        [TestMethod]
+        public void ParseAndSerializeParams()
+        {
+            ParseAndSerializeParams(Model.Version.DSTU2, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+            ParseAndSerializeParams(Model.Version.STU3, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+            ParseAndSerializeParams(Model.Version.R4, "_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true");
+        }
+
+        private void ParseAndSerializeParams(Model.Version version, string expectedOutput)
+        {
+            var q = new SearchParams();
+            q.Add("_query", "special");
+            q.Add("_count", "31");
+            q.Add("_summary", "data");
+            q.Add("_sort", "-sorted,sorted2");
+            q.Add("_include", "Patient.name");
+            q.Add("_include", "Observation.subject");
+            q.Add("image:missing", "true");
+            q.Add("_elements", "field1,field2");
+            var output = q.ToUriParamList(version).ToQueryString();
+            Assert.AreEqual(expectedOutput, output);
+
+            var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
+
+            Assert.AreEqual(q.Query, q2.Query);
+            Assert.AreEqual(q.Count, q2.Count);
+            Assert.AreEqual(q.Summary, q2.Summary);
+
             CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
             CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
@@ -291,14 +403,23 @@ namespace Hl7.Fhir.Test.Rest
             formatException = AssertThrows<FormatException>(() => q.Add("_sort:ascz", "x"));
             Assert.AreEqual("Invalid _sort: 'ascz' is not a recognized sort order", formatException.Message);
 
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", ",x,"));
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", "a,,b"));
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", "+x"));
+            Assert.AreEqual("Invalid _sort: must be a list of element names, optionally prefixed with '-'", formatException.Message);
+
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+            Assert.AreEqual("Invalid _sort: value cannot be empty", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort:asc", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+            Assert.AreEqual("Invalid _sort: value cannot be empty", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort:desc", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+            Assert.AreEqual("Invalid _sort: value cannot be empty", formatException.Message);
         }
 
         [TestMethod]

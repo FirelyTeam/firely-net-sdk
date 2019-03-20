@@ -181,12 +181,12 @@ namespace Hl7.Fhir.Rest
 
             if (!id.HasVersion)
             {
-                var ri = new RequestsBuilder(Endpoint).Read(id.ResourceType, id.Id, ifNoneMatch, ifModifiedSince);
+                var ri = GetRequestsBuilder().Read(id.ResourceType, id.Id, ifNoneMatch, ifModifiedSince);
                 request = ri.ToRequest();
             }
             else
             {
-                request = new RequestsBuilder(Endpoint).VRead(id.ResourceType, id.Id, id.VersionId).ToRequest();
+                request = GetRequestsBuilder().VRead(id.ResourceType, id.Id, id.VersionId).ToRequest();
             }
 
             return executeAsync<TResource>(request, HttpStatusCode.OK);
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Resource needs a non-null Id to send the update to");
 
-            var upd = new RequestsBuilder(Endpoint);
+            var upd = GetRequestsBuilder();
 
             if (versionAware && resource.HasVersionId)
                 upd.Update(resource.Id, resource, versionId: resource.VersionId);
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var upd = new RequestsBuilder(Endpoint);
+            var upd = GetRequestsBuilder();
                 
             if (versionAware && resource.HasVersionId)
                 upd.Update(condition, resource, versionId: resource.VersionId);
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
-            var tx = new RequestsBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToRequest();
+            var tx = GetRequestsBuilder().Delete(id.ResourceType, id.Id).ToRequest();
 
             await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }).ConfigureAwait(false);
         }
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Rest
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var tx = new RequestsBuilder(Endpoint).Delete(resourceType, condition).ToRequest();
+            var tx = GetRequestsBuilder().Delete(resourceType, condition).ToRequest();
             await executeAsync<Resource>(tx,new[]{ HttpStatusCode.OK, HttpStatusCode.NoContent}).ConfigureAwait(false);
         }
         /// <summary>
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Rest
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-            var request = new RequestsBuilder(Endpoint).Create(resource).ToRequest();
+            var request = GetRequestsBuilder().Create(resource).ToRequest();
 
             return executeAsync<TResource>(request,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
-            var tx = new RequestsBuilder(Endpoint).Create(resource,condition).ToRequest();
+            var tx = GetRequestsBuilder().Create(resource,condition).ToRequest();
 
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Conformance or CapabilityStatement resource. Throws an exception if the operation failed.</returns>
         public Task<TMetadata> MetadataAsync(SummaryType? summary = null)
         {
-            var tx = new RequestsBuilder(Endpoint).GetMetadata(summary).ToRequest();
+            var tx = GetRequestsBuilder().GetMetadata(summary).ToRequest();
             return executeAsync<TMetadata>(tx, HttpStatusCode.OK);
         }
 
@@ -682,11 +682,11 @@ namespace Hl7.Fhir.Rest
             RequestsBuilder history;
 
             if(resourceType == null)
-                history = new RequestsBuilder(Endpoint).ServerHistory(summary,pageSize,since);
+                history = GetRequestsBuilder().ServerHistory(summary,pageSize,since);
             else if(id == null)
-                history = new RequestsBuilder(Endpoint).CollectionHistory(resourceType, summary,pageSize,since);
+                history = GetRequestsBuilder().CollectionHistory(resourceType, summary,pageSize,since);
             else
-                history = new RequestsBuilder(Endpoint).ResourceHistory(resourceType,id, summary,pageSize,since);
+                history = GetRequestsBuilder().ResourceHistory(resourceType,id, summary,pageSize,since);
 
             return executeAsync<TBundle>(history.ToRequest(), HttpStatusCode.OK);
         }
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Rest
         {
             if (bundle == null) throw new ArgumentNullException(nameof(bundle));
 
-            var request = new RequestsBuilder(Endpoint).Transaction(bundle).ToRequest();
+            var request = GetRequestsBuilder().Transaction(bundle).ToRequest();
             return executeAsync<TBundle>(request, HttpStatusCode.OK);
         }
         /// <summary>
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Rest
             if (location == null) throw Error.ArgumentNull(nameof(location));
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
-            var tx = new RequestsBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToRequest();
+            var tx = GetRequestsBuilder().EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToRequest();
 
             return executeAsync<Resource>(tx, HttpStatusCode.OK);
         }
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Rest
         {
             if (operation == null) throw Error.ArgumentNull(nameof(operation));
 
-            var tx = new RequestsBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToRequest();
+            var tx = GetRequestsBuilder().EndpointOperation(new RestUrl(operation), parameters, useGet).ToRequest();
 
             return executeAsync<Resource>(tx, HttpStatusCode.OK);
         }
@@ -833,11 +833,11 @@ namespace Hl7.Fhir.Rest
             Request request;
 
             if (type == null)
-                request = new RequestsBuilder(Endpoint).ServerOperation(operationName, parameters, useGet).ToRequest();
+                request = GetRequestsBuilder().ServerOperation(operationName, parameters, useGet).ToRequest();
             else if (id == null)
-                request = new RequestsBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToRequest();
+                request = GetRequestsBuilder().TypeOperation(type, operationName, parameters, useGet).ToRequest();
             else
-                request = new RequestsBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToRequest();
+                request = GetRequestsBuilder().ResourceOperation(type, id, vid, operationName, parameters, useGet).ToRequest();
 
             return executeAsync<Resource>(request, HttpStatusCode.OK);
         }
@@ -872,7 +872,7 @@ namespace Hl7.Fhir.Rest
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
 
-            var tx = new RequestsBuilder(Endpoint).Get(url).ToRequest();
+            var tx = GetRequestsBuilder().Get(url).ToRequest();
             return await executeAsync<Resource>(tx, HttpStatusCode.OK).ConfigureAwait(false);
         }
         /// <summary>
@@ -900,7 +900,10 @@ namespace Hl7.Fhir.Rest
 
 #endregion
         
-
+        private RequestsBuilder GetRequestsBuilder()
+        {
+            return new RequestsBuilder(Endpoint, _requester.Version);
+        }
    
 
         private ResourceIdentity verifyResourceIdentity(Uri location, bool needId, bool needVid)
