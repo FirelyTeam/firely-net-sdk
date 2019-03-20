@@ -371,7 +371,8 @@ namespace Hl7.Fhir.Serialization
             object checkOrder(ITypedElement node, IExceptionSource ies, object state)
             {
                 var sdSummary = node.Definition;
-                if (sdSummary == null) return null;
+                var serializationDetails = node.GetXmlSerializationDetails();
+                if (sdSummary == null || serializationDetails == null) return null;
 
                 if (state is OrderRuleState ors)
                 {
