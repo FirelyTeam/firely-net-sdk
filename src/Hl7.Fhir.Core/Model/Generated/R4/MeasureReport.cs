@@ -1078,30 +1078,30 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
     
     
-        public static ElementDefinitionConstraint MeasureReport_MRP_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MeasureReport_Constraints =
         {
-            Expression = "group.stratifier.stratum.all(value.exists() xor component.exists())",
-            Key = "mrp-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Stratifiers SHALL be either a single criteria or a set of criteria components",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
-        };
-    
-        public static ElementDefinitionConstraint MeasureReport_MRP_1 = new ElementDefinitionConstraint
-        {
-            Expression = "(type != 'data-collection') or group.exists().not()",
-            Key = "mrp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Measure Reports used for data collection SHALL NOT communicate group and score information",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "mrp-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.stratifier.stratum.all(value.exists() xor component.exists())",
+                human: "Stratifiers SHALL be either a single criteria or a set of criteria components",
+                xpath: "not(f:kind/@value='data-collection') or not(exists(f:group))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "mrp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(type != 'data-collection') or group.exists().not()",
+                human: "Measure Reports used for data collection SHALL NOT communicate group and score information",
+                xpath: "not(f:kind/@value='data-collection') or not(exists(f:group))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MeasureReport_MRP_2);
-            InvariantConstraints.Add(MeasureReport_MRP_1);
+            InvariantConstraints.AddRange(MeasureReport_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -579,40 +579,38 @@ namespace Hl7.Fhir.Model.STU3
         private List<ConditionComponent> _Condition;
     
     
-        public static ElementDefinitionConstraint FamilyMemberHistory_FHS_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] FamilyMemberHistory_Constraints =
         {
-            Expression = "age.exists() or estimatedAge.empty()",
-            Key = "fhs-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can only have estimatedAge if age[x] is present",
-            Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
-        };
-    
-        public static ElementDefinitionConstraint FamilyMemberHistory_FHS_3 = new ElementDefinitionConstraint
-        {
-            Expression = "notDone or notDoneReason.exists().not()",
-            Key = "fhs-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
-        };
-    
-        public static ElementDefinitionConstraint FamilyMemberHistory_FHS_1 = new ElementDefinitionConstraint
-        {
-            Expression = "age.empty() or born.empty()",
-            Key = "fhs-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can have age[x] or born[x], but not both",
-            Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "fhs-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "age.exists() or estimatedAge.empty()",
+                human: "Can only have estimatedAge if age[x] is present",
+                xpath: "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "fhs-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "notDone or notDoneReason.exists().not()",
+                human: "Not Done Reason can only be specified if NotDone is \"true\"",
+                xpath: "f:notDone/@value=true() or not(exists(f:notDoneReason))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "fhs-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "age.empty() or born.empty()",
+                human: "Can have age[x] or born[x], but not both",
+                xpath: "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_2);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_3);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
+            InvariantConstraints.AddRange(FamilyMemberHistory_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

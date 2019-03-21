@@ -527,40 +527,38 @@ namespace Hl7.Fhir.Model.DSTU2
         private DosageComponent _Dosage;
     
     
-        public static ElementDefinitionConstraint MedicationAdministration_MAD_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationAdministration_Constraints =
         {
-            Expression = "reasonGiven.empty() or wasNotGiven = 'false'",
-            Key = "mad-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason given is only permitted if wasNotGiven is false",
-            Xpath = "not(exists(f:reasonGiven) and f:wasNotGiven/@value=true())"
-        };
-    
-        public static ElementDefinitionConstraint MedicationAdministration_MAD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "reasonNotGiven.empty() or wasNotGiven = 'true'",
-            Key = "mad-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason not given is only permitted if wasNotGiven is true",
-            Xpath = "not(exists(f:reasonNotGiven) and f:wasNotGiven/@value=false())"
-        };
-    
-        public static ElementDefinitionConstraint MedicationAdministration_MAD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "dosage.all(quantity or rate)",
-            Key = "mad-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of dosage.quantity and dosage.rate[x]",
-            Xpath = "exists(f:quantity) or exists(f:rateRatio) or exists(f:rateRange)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "mad-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonGiven.empty() or wasNotGiven = 'false'",
+                human: "Reason given is only permitted if wasNotGiven is false",
+                xpath: "not(exists(f:reasonGiven) and f:wasNotGiven/@value=true())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "mad-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonNotGiven.empty() or wasNotGiven = 'true'",
+                human: "Reason not given is only permitted if wasNotGiven is true",
+                xpath: "not(exists(f:reasonNotGiven) and f:wasNotGiven/@value=false())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "mad-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "dosage.all(quantity or rate)",
+                human: "SHALL have at least one of dosage.quantity and dosage.rate[x]",
+                xpath: "exists(f:quantity) or exists(f:rateRatio) or exists(f:rateRange)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationAdministration_MAD_3);
-            InvariantConstraints.Add(MedicationAdministration_MAD_2);
-            InvariantConstraints.Add(MedicationAdministration_MAD_1);
+            InvariantConstraints.AddRange(MedicationAdministration_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

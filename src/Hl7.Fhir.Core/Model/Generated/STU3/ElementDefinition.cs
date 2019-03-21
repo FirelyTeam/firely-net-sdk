@@ -2524,139 +2524,128 @@ namespace Hl7.Fhir.Model.STU3
         private List<MappingComponent> _Mapping;
     
     
-        public static ElementDefinitionConstraint ElementDefinition_ELD_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ElementDefinition_Constraints =
         {
-            Expression = "min.empty() or max.empty() or (max = '*') or (min <= max.toInteger())",
-            Key = "eld-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Min <= Max",
-            Xpath = "not(exists(f:min)) or not(exists(f:max)) or (not(f:max/@value) and not(f:min/@value)) or (f:max/@value = '*') or (number(f:max/@value) >= f:min/@value)"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_5 = new ElementDefinitionConstraint
-        {
-            Expression = "contentReference.empty() or (type.empty() and defaultValue.empty() and fixed.empty() and pattern.empty() and example.empty() and minValue.empty() and maxValue.empty() and maxLength.empty() and binding.empty())",
-            Key = "eld-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "if the element definition has a contentReference, it cannot have type, defaultValue, fixed, pattern, example, minValue, maxValue, maxLength, or binding",
-            Xpath = "not(exists(f:contentReference) and (exists(f:type) or exists(f:*[starts-with(local-name(.), 'value')]) or exists(f:*[starts-with(local-name(.), 'defaultValue')])  or exists(f:*[starts-with(local-name(.), 'fixed')]) or exists(f:*[starts-with(local-name(.), 'pattern')]) or exists(f:*[starts-with(local-name(.), 'example')]) or exists(f:*[starts-with(local-name(.), 'f:minValue')]) or exists(f:*[starts-with(local-name(.), 'f:maxValue')]) or exists(f:maxLength) or exists(f:binding)))"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_7 = new ElementDefinitionConstraint
-        {
-            Expression = "pattern.empty() or (type.count() <= 1)",
-            Key = "eld-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Pattern may only be specified if there is one type",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'pattern')])) or (count(f:type)<=1)"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_6 = new ElementDefinitionConstraint
-        {
-            Expression = "fixed.empty() or (type.count()  <= 1)",
-            Key = "eld-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Fixed value may only be specified if there is one type",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'fixed')])) or (count(f:type)<=1)"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_11 = new ElementDefinitionConstraint
-        {
-            Expression = "binding.empty() or type.code.empty() or type.select((code = 'code') or (code = 'Coding') or (code='CodeableConcept') or (code = 'Quantity') or (code = 'Extension') or (code = 'string') or (code = 'uri')).exists()",
-            Key = "eld-11",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Binding can only be present for coded elements, string, and uri",
-            Xpath = "not(exists(f:binding)) or (count(f:type/f:code) = 0) or  f:type/f:code/@value=('code','Coding','CodeableConcept','Quantity','Extension', 'string', 'uri')"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_8 = new ElementDefinitionConstraint
-        {
-            Expression = "pattern.empty() or fixed.empty()",
-            Key = "eld-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Pattern and value are mutually exclusive",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'pattern')])) or not(exists(f:*[starts-with(local-name(.), 'fixed')]))"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_14 = new ElementDefinitionConstraint
-        {
-            Expression = "constraint.select(key).isDistinct()",
-            Key = "eld-14",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Constraints must be unique by key",
-            Xpath = "count(f:constraint) = count(distinct-values(f:constraint/f:key/@value))"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_13 = new ElementDefinitionConstraint
-        {
-            Expression = "type.select(code&profile&targetProfile).isDistinct()",
-            Key = "eld-13",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Types must be unique by the combination of code and profile",
-            Xpath = "not(exists(for $type in f:type return $type/preceding-sibling::f:type[f:code/@value=$type/f:code/@value and f:profile/@value = $type/f:profile/@value]))"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_16 = new ElementDefinitionConstraint
-        {
-            Expression = "sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\\\/\\\\-_]+$')",
-            Key = "eld-16",
-            Severity = ConstraintSeverity.Warning,
-            Human = "sliceName must be composed of proper tokens separated by \"/\"",
-            Xpath = "not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\\\/\\\\-\\\\_]+$')"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_15 = new ElementDefinitionConstraint
-        {
-            Expression = "defaultValue.empty() or meaningWhenMissing.empty()",
-            Key = "eld-15",
-            Severity = ConstraintSeverity.Warning,
-            Human = "default value and meaningWhenMissing are mutually exclusive",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'fixed')])) or not(exists(f:meaningWhenMissing))"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "slicing.all(discriminator.exists() or description.exists())",
-            Key = "eld-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there are no discriminators, there must be a definition",
-            Xpath = "(f:discriminator) or (f:description)"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "max.all(empty() or ($this = '*') or (toInteger() >= 0))",
-            Key = "eld-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Max SHALL be a number or \"*\"",
-            Xpath = "@value='*' or (normalize-space(@value)!='' and normalize-space(translate(@value, '0123456789',''))='')"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_4 = new ElementDefinitionConstraint
-        {
-            Expression = "type.all(aggregation.empty() or (code = 'Reference'))",
-            Key = "eld-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Aggregation may only be specified if one of the allowed types for the element is a resource",
-            Xpath = "not(exists(f:aggregation)) or exists(f:code[@value = 'Reference'])"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_10 = new ElementDefinitionConstraint
-        {
-            Expression = "binding.all(valueSet.exists() or description.exists())",
-            Key = "eld-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "provide either a reference or a description (or both)",
-            Xpath = "(exists(f:valueSetUri) or exists(f:valueSetReference)) or exists(f:description)"
-        };
-    
-        public static ElementDefinitionConstraint ElementDefinition_ELD_12 = new ElementDefinitionConstraint
-        {
-            Expression = "binding.all(valueSet.is(uri).not() or valueSet.as(uri).startsWith('http:') or valueSet.as(uri).startsWith('https') or valueSet.as(uri).startsWith('urn:'))",
-            Key = "eld-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "ValueSet as a URI SHALL start with http:// or https:// or urn:",
-            Xpath = "not(exists(f:valueSetUri)) or (starts-with(string(f:valueSetUri/@value), 'http:') or starts-with(string(f:valueSetUri/@value), 'https:') or starts-with(string(f:valueSetUri/@value), 'urn:'))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "min.empty() or max.empty() or (max = '*') or (min <= max.toInteger())",
+                human: "Min <= Max",
+                xpath: "not(exists(f:min)) or not(exists(f:max)) or (not(f:max/@value) and not(f:min/@value)) or (f:max/@value = '*') or (number(f:max/@value) >= f:min/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "contentReference.empty() or (type.empty() and defaultValue.empty() and fixed.empty() and pattern.empty() and example.empty() and minValue.empty() and maxValue.empty() and maxLength.empty() and binding.empty())",
+                human: "if the element definition has a contentReference, it cannot have type, defaultValue, fixed, pattern, example, minValue, maxValue, maxLength, or binding",
+                xpath: "not(exists(f:contentReference) and (exists(f:type) or exists(f:*[starts-with(local-name(.), 'value')]) or exists(f:*[starts-with(local-name(.), 'defaultValue')])  or exists(f:*[starts-with(local-name(.), 'fixed')]) or exists(f:*[starts-with(local-name(.), 'pattern')]) or exists(f:*[starts-with(local-name(.), 'example')]) or exists(f:*[starts-with(local-name(.), 'f:minValue')]) or exists(f:*[starts-with(local-name(.), 'f:maxValue')]) or exists(f:maxLength) or exists(f:binding)))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "pattern.empty() or (type.count() <= 1)",
+                human: "Pattern may only be specified if there is one type",
+                xpath: "not(exists(f:*[starts-with(local-name(.), 'pattern')])) or (count(f:type)<=1)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "fixed.empty() or (type.count()  <= 1)",
+                human: "Fixed value may only be specified if there is one type",
+                xpath: "not(exists(f:*[starts-with(local-name(.), 'fixed')])) or (count(f:type)<=1)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-11",
+                severity: ConstraintSeverity.Warning,
+                expression: "binding.empty() or type.code.empty() or type.select((code = 'code') or (code = 'Coding') or (code='CodeableConcept') or (code = 'Quantity') or (code = 'Extension') or (code = 'string') or (code = 'uri')).exists()",
+                human: "Binding can only be present for coded elements, string, and uri",
+                xpath: "not(exists(f:binding)) or (count(f:type/f:code) = 0) or  f:type/f:code/@value=('code','Coding','CodeableConcept','Quantity','Extension', 'string', 'uri')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "pattern.empty() or fixed.empty()",
+                human: "Pattern and value are mutually exclusive",
+                xpath: "not(exists(f:*[starts-with(local-name(.), 'pattern')])) or not(exists(f:*[starts-with(local-name(.), 'fixed')]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-14",
+                severity: ConstraintSeverity.Warning,
+                expression: "constraint.select(key).isDistinct()",
+                human: "Constraints must be unique by key",
+                xpath: "count(f:constraint) = count(distinct-values(f:constraint/f:key/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-13",
+                severity: ConstraintSeverity.Warning,
+                expression: "type.select(code&profile&targetProfile).isDistinct()",
+                human: "Types must be unique by the combination of code and profile",
+                xpath: "not(exists(for $type in f:type return $type/preceding-sibling::f:type[f:code/@value=$type/f:code/@value and f:profile/@value = $type/f:profile/@value]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-16",
+                severity: ConstraintSeverity.Warning,
+                expression: "sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\\\/\\\\-_]+$')",
+                human: "sliceName must be composed of proper tokens separated by \"/\"",
+                xpath: "not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\\\/\\\\-\\\\_]+$')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-15",
+                severity: ConstraintSeverity.Warning,
+                expression: "defaultValue.empty() or meaningWhenMissing.empty()",
+                human: "default value and meaningWhenMissing are mutually exclusive",
+                xpath: "not(exists(f:*[starts-with(local-name(.), 'fixed')])) or not(exists(f:meaningWhenMissing))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "slicing.all(discriminator.exists() or description.exists())",
+                human: "If there are no discriminators, there must be a definition",
+                xpath: "(f:discriminator) or (f:description)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "max.all(empty() or ($this = '*') or (toInteger() >= 0))",
+                human: "Max SHALL be a number or \"*\"",
+                xpath: "@value='*' or (normalize-space(@value)!='' and normalize-space(translate(@value, '0123456789',''))='')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "type.all(aggregation.empty() or (code = 'Reference'))",
+                human: "Aggregation may only be specified if one of the allowed types for the element is a resource",
+                xpath: "not(exists(f:aggregation)) or exists(f:code[@value = 'Reference'])"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "binding.all(valueSet.exists() or description.exists())",
+                human: "provide either a reference or a description (or both)",
+                xpath: "(exists(f:valueSetUri) or exists(f:valueSetReference)) or exists(f:description)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "eld-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "binding.all(valueSet.is(uri).not() or valueSet.as(uri).startsWith('http:') or valueSet.as(uri).startsWith('https') or valueSet.as(uri).startsWith('urn:'))",
+                human: "ValueSet as a URI SHALL start with http:// or https:// or urn:",
+                xpath: "not(exists(f:valueSetUri)) or (starts-with(string(f:valueSetUri/@value), 'http:') or starts-with(string(f:valueSetUri/@value), 'https:') or starts-with(string(f:valueSetUri/@value), 'urn:'))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

@@ -1027,30 +1027,30 @@ namespace Hl7.Fhir.Model.STU3
         private List<SectionComponent> _Section;
     
     
-        public static ElementDefinitionConstraint Composition_CMP_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Composition_Constraints =
         {
-            Expression = "section.all(text.exists() or entry.exists() or section.exists())",
-            Key = "cmp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A section must at least one of text, entries, or sub-sections",
-            Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
-        };
-    
-        public static ElementDefinitionConstraint Composition_CMP_2 = new ElementDefinitionConstraint
-        {
-            Expression = "section.all(emptyReason.empty() or entry.empty())",
-            Key = "cmp-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A section can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cmp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "section.all(text.exists() or entry.exists() or section.exists())",
+                human: "A section must at least one of text, entries, or sub-sections",
+                xpath: "exists(f:text) or exists(f:entry) or exists(f:section)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cmp-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "section.all(emptyReason.empty() or entry.empty())",
+                human: "A section can only have an emptyReason if it is empty",
+                xpath: "not(exists(f:emptyReason) and exists(f:entry))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Composition_CMP_1);
-            InvariantConstraints.Add(Composition_CMP_2);
+            InvariantConstraints.AddRange(Composition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

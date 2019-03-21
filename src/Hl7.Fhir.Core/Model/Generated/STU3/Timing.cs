@@ -739,85 +739,80 @@ namespace Hl7.Fhir.Model.STU3
         private Hl7.Fhir.Model.CodeableConcept _Code;
     
     
-        public static ElementDefinitionConstraint Timing_TIM_9 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Timing_Constraints =
         {
-            Expression = "repeat.all(offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not())))",
-            Key = "tim-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's an offset, there must be a when (and not C, CM, CD, CV)",
-            Xpath = "not(exists(f:offset)) or exists(f:when)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_5 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(period.exists() implies period >= 0)",
-            Key = "tim-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "period SHALL be a non-negative value",
-            Xpath = "f:period/@value >= 0 or not(f:period/@value)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_6 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(periodMax.empty() or period.exists())",
-            Key = "tim-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a periodMax, there must be a period",
-            Xpath = "not(exists(f:periodMax)) or exists(f:period)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_7 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(durationMax.empty() or duration.exists())",
-            Key = "tim-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a durationMax, there must be a duration",
-            Xpath = "not(exists(f:durationMax)) or exists(f:duration)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_8 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(countMax.empty() or count.exists())",
-            Key = "tim-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a countMax, there must be a count",
-            Xpath = "not(exists(f:countMax)) or exists(f:count)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_1 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(duration.empty() or durationUnit.exists())",
-            Key = "tim-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "if there's a duration, there needs to be duration units",
-            Xpath = "not(exists(f:duration)) or exists(f:durationUnit)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_10 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(timeOfDay.empty() or when.empty())",
-            Key = "tim-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a timeOfDay, there cannot be be a when, or vice versa",
-            Xpath = "not(exists(f:timeOfDay)) or not(exists(f:when))"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_2 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(period.empty() or periodUnit.exists())",
-            Key = "tim-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "if there's a period, there needs to be period units",
-            Xpath = "not(exists(f:period)) or exists(f:periodUnit)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_4 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(duration.exists() implies duration >= 0)",
-            Key = "tim-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "duration SHALL be a non-negative value",
-            Xpath = "f:duration/@value >= 0 or not(f:duration/@value)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not())))",
+                human: "If there's an offset, there must be a when (and not C, CM, CD, CV)",
+                xpath: "not(exists(f:offset)) or exists(f:when)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(period.exists() implies period >= 0)",
+                human: "period SHALL be a non-negative value",
+                xpath: "f:period/@value >= 0 or not(f:period/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(periodMax.empty() or period.exists())",
+                human: "If there's a periodMax, there must be a period",
+                xpath: "not(exists(f:periodMax)) or exists(f:period)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(durationMax.empty() or duration.exists())",
+                human: "If there's a durationMax, there must be a duration",
+                xpath: "not(exists(f:durationMax)) or exists(f:duration)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(countMax.empty() or count.exists())",
+                human: "If there's a countMax, there must be a count",
+                xpath: "not(exists(f:countMax)) or exists(f:count)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(duration.empty() or durationUnit.exists())",
+                human: "if there's a duration, there needs to be duration units",
+                xpath: "not(exists(f:duration)) or exists(f:durationUnit)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(timeOfDay.empty() or when.empty())",
+                human: "If there's a timeOfDay, there cannot be be a when, or vice versa",
+                xpath: "not(exists(f:timeOfDay)) or not(exists(f:when))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(period.empty() or periodUnit.exists())",
+                human: "if there's a period, there needs to be period units",
+                xpath: "not(exists(f:period)) or exists(f:periodUnit)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "tim-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(duration.exists() implies duration >= 0)",
+                human: "duration SHALL be a non-negative value",
+                xpath: "f:duration/@value >= 0 or not(f:duration/@value)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

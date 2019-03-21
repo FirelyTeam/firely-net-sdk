@@ -112,50 +112,70 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
     
     
-        public static ElementDefinitionConstraint DomainResource_DOM_4 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] DomainResource_Constraints =
         {
-            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
-            Key = "dom-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
-            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
-        };
-    
-        public static ElementDefinitionConstraint DomainResource_DOM_3 = new ElementDefinitionConstraint
-        {
-            Expression = "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
-            Key = "dom-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
-            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
-        };
-    
-        public static ElementDefinitionConstraint DomainResource_DOM_2 = new ElementDefinitionConstraint
-        {
-            Expression = "contained.contained.empty()",
-            Key = "dom-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
-            Xpath = "not(parent::f:contained and f:contained)"
-        };
-    
-        public static ElementDefinitionConstraint DomainResource_DOM_1 = new ElementDefinitionConstraint
-        {
-            Expression = "contained.text.empty()",
-            Key = "dom-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
-            Xpath = "not(parent::f:contained and f:text)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "dom-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+                human: "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+                xpath: "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3},
+                key: "dom-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
+                human: "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+                xpath: "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "dom-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.contained.empty()",
+                human: "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+                xpath: "not(parent::f:contained and f:contained)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3},
+                key: "dom-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.text.empty()",
+                human: "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+                xpath: "not(parent::f:contained and f:text)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "dom-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
+                human: "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
+                xpath: "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "dom-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "text.div.exists()",
+                human: "A resource should have narrative for robust management",
+                xpath: "exists(f:text/h:div)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "dom-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "contained.meta.security.empty()",
+                human: "If a resource is contained in another resource, it SHALL NOT have a security label",
+                xpath: "not(exists(f:contained/*/f:meta/f:security))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(DomainResource_DOM_4);
-            InvariantConstraints.Add(DomainResource_DOM_3);
-            InvariantConstraints.Add(DomainResource_DOM_2);
-            InvariantConstraints.Add(DomainResource_DOM_1);
+            InvariantConstraints.AddRange(DomainResource_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

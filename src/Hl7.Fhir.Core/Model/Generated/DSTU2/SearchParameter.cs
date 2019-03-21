@@ -662,20 +662,22 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        public static ElementDefinitionConstraint SearchParameter_SPD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] SearchParameter_Constraints =
         {
-            Expression = "xpath.empty() or xpathUsage",
-            Key = "spd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If an xpath is present, there SHALL be an xpathUsage",
-            Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "spd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "xpath.empty() or xpathUsage",
+                human: "If an xpath is present, there SHALL be an xpathUsage",
+                xpath: "not(exists(f:xpath)) or exists(f:xpathUsage)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(SearchParameter_SPD_1);
+            InvariantConstraints.AddRange(SearchParameter_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

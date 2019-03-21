@@ -910,50 +910,46 @@ namespace Hl7.Fhir.Model.DSTU2
         private GroupComponent _Group;
     
     
-        public static ElementDefinitionConstraint Questionnaire_QUE_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Questionnaire_Constraints =
         {
-            Expression = "group.required = true",
-            Key = "que-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If root group must be \"required\"",
-            Xpath = "f:group/f:required/@value=true()"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_2 = new ElementDefinitionConstraint
-        {
-            Expression = "descendants().linkId.isDistinct()",
-            Key = "que-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The link ids for groups and questions must be unique within the questionnaire",
-            Xpath = "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_1 = new ElementDefinitionConstraint
-        {
-            Expression = "group.all(group.empty() or question.empty())",
-            Key = "que-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Groups may either contain questions or groups but not both",
-            Xpath = "not(exists(f:group) and exists(f:question))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_4 = new ElementDefinitionConstraint
-        {
-            Expression = "group.question.all(option.empty() or options.empty())",
-            Key = "que-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A question must use either option or options, not both",
-            Xpath = "not(f:options and f:option)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "que-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.required = true",
+                human: "If root group must be \"required\"",
+                xpath: "f:group/f:required/@value=true()"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "que-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "descendants().linkId.isDistinct()",
+                human: "The link ids for groups and questions must be unique within the questionnaire",
+                xpath: "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "que-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.all(group.empty() or question.empty())",
+                human: "Groups may either contain questions or groups but not both",
+                xpath: "not(exists(f:group) and exists(f:question))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "que-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.question.all(option.empty() or options.empty())",
+                human: "A question must use either option or options, not both",
+                xpath: "not(f:options and f:option)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Questionnaire_QUE_3);
-            InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_1);
-            InvariantConstraints.Add(Questionnaire_QUE_4);
+            InvariantConstraints.AddRange(Questionnaire_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

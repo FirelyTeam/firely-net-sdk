@@ -1130,60 +1130,54 @@ namespace Hl7.Fhir.Model.R4
         private provisionComponent _Provision;
     
     
-        public static ElementDefinitionConstraint Consent_PPC_4 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Consent_Constraints =
         {
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='adr').exists().not()",
-            Key = "ppc-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "IF Scope=adr, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr'])))"
-        };
-    
-        public static ElementDefinitionConstraint Consent_PPC_5 = new ElementDefinitionConstraint
-        {
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='treatment').exists().not()",
-            Key = "ppc-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "IF Scope=treatment, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))"
-        };
-    
-        public static ElementDefinitionConstraint Consent_PPC_2 = new ElementDefinitionConstraint
-        {
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='patient-privacy').exists().not()",
-            Key = "ppc-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "IF Scope=privacy, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))"
-        };
-    
-        public static ElementDefinitionConstraint Consent_PPC_3 = new ElementDefinitionConstraint
-        {
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='research').exists().not()",
-            Key = "ppc-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "IF Scope=research, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
-        };
-    
-        public static ElementDefinitionConstraint Consent_PPC_1 = new ElementDefinitionConstraint
-        {
-            Expression = "policy.exists() or policyRule.exists()",
-            Key = "ppc-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a Policy or PolicyRule",
-            Xpath = "exists(f:policy) or exists(f:policyRule)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ppc-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "patient.exists() or scope.coding.where(system='something' and code='adr').exists().not()",
+                human: "IF Scope=adr, there must be a patient",
+                xpath: "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr'])))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ppc-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "patient.exists() or scope.coding.where(system='something' and code='treatment').exists().not()",
+                human: "IF Scope=treatment, there must be a patient",
+                xpath: "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ppc-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "patient.exists() or scope.coding.where(system='something' and code='patient-privacy').exists().not()",
+                human: "IF Scope=privacy, there must be a patient",
+                xpath: "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ppc-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "patient.exists() or scope.coding.where(system='something' and code='research').exists().not()",
+                human: "IF Scope=research, there must be a patient",
+                xpath: "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ppc-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "policy.exists() or policyRule.exists()",
+                human: "Either a Policy or PolicyRule",
+                xpath: "exists(f:policy) or exists(f:policyRule)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Consent_PPC_4);
-            InvariantConstraints.Add(Consent_PPC_5);
-            InvariantConstraints.Add(Consent_PPC_2);
-            InvariantConstraints.Add(Consent_PPC_3);
-            InvariantConstraints.Add(Consent_PPC_1);
+            InvariantConstraints.AddRange(Consent_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

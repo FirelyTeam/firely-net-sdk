@@ -413,50 +413,46 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint Media_MDA_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Media_Constraints =
         {
-            Expression = "height.empty() or type != 'audio'",
-            Key = "mda-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Height can only be used for a photo or video",
-            Xpath = "not(f:type/@value='audio') or not(f:height)"
-        };
-    
-        public static ElementDefinitionConstraint Media_MDA_2 = new ElementDefinitionConstraint
-        {
-            Expression = "width.empty() or type != 'audio'",
-            Key = "mda-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Width can only be used for a photo or video",
-            Xpath = "not(f:type/@value='audio') or not(f:width)"
-        };
-    
-        public static ElementDefinitionConstraint Media_MDA_3 = new ElementDefinitionConstraint
-        {
-            Expression = "frames.empty() or type = 'photo'",
-            Key = "mda-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Frames can only be used for a photo",
-            Xpath = "(f:type/@value='photo') or not(f:frames)"
-        };
-    
-        public static ElementDefinitionConstraint Media_MDA_4 = new ElementDefinitionConstraint
-        {
-            Expression = "duration.empty() or type != 'photo'",
-            Key = "mda-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Duration can only be used for an audio or a video",
-            Xpath = "not(f:type/@value='photo') or not(f:duration)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mda-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "height.empty() or type != 'audio'",
+                human: "Height can only be used for a photo or video",
+                xpath: "not(f:type/@value='audio') or not(f:height)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mda-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "width.empty() or type != 'audio'",
+                human: "Width can only be used for a photo or video",
+                xpath: "not(f:type/@value='audio') or not(f:width)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mda-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "frames.empty() or type = 'photo'",
+                human: "Frames can only be used for a photo",
+                xpath: "(f:type/@value='photo') or not(f:frames)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mda-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "duration.empty() or type != 'photo'",
+                human: "Duration can only be used for an audio or a video",
+                xpath: "not(f:type/@value='photo') or not(f:duration)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Media_MDA_1);
-            InvariantConstraints.Add(Media_MDA_2);
-            InvariantConstraints.Add(Media_MDA_3);
-            InvariantConstraints.Add(Media_MDA_4);
+            InvariantConstraints.AddRange(Media_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

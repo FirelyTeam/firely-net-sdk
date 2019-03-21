@@ -1680,50 +1680,46 @@ namespace Hl7.Fhir.Model.R4
         private List<OverloadComponent> _Overload;
     
     
-        public static ElementDefinitionConstraint OperationDefinition_OPD_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] OperationDefinition_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "opd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint OperationDefinition_OPD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "parameter.all(type.exists() or part.exists())",
-            Key = "opd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
-        };
-    
-        public static ElementDefinitionConstraint OperationDefinition_OPD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "parameter.all(searchType.exists() implies type = 'string')",
-            Key = "opd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A search type can only be specified for parameters of type string",
-            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
-        };
-    
-        public static ElementDefinitionConstraint OperationDefinition_OPD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "parameter.all(targetProfile.exists() implies (type = 'Reference' or type = 'canonical'))",
-            Key = "opd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A targetProfile can only be specified for parameters of type Reference or Canonical",
-            Xpath = "not(exists(f:targetProfile)) or ((f:type/@value = 'Reference') or (f:type/@value = 'canonical'))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "opd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "opd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(type.exists() or part.exists())",
+                human: "Either a type must be provided, or parts",
+                xpath: "exists(f:type) or exists(f:part)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "opd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(searchType.exists() implies type = 'string')",
+                human: "A search type can only be specified for parameters of type string",
+                xpath: "not(exists(f:searchType)) or (f:type/@value = 'string')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "opd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(targetProfile.exists() implies (type = 'Reference' or type = 'canonical'))",
+                human: "A targetProfile can only be specified for parameters of type Reference or Canonical",
+                xpath: "not(exists(f:targetProfile)) or ((f:type/@value = 'Reference') or (f:type/@value = 'canonical'))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(OperationDefinition_OPD_0);
-            InvariantConstraints.Add(OperationDefinition_OPD_1);
-            InvariantConstraints.Add(OperationDefinition_OPD_2);
-            InvariantConstraints.Add(OperationDefinition_OPD_3);
+            InvariantConstraints.AddRange(OperationDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -1290,20 +1290,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private EnteralFormulaComponent _EnteralFormula;
     
     
-        public static ElementDefinitionConstraint NutritionOrder_NOR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] NutritionOrder_Constraints =
         {
-            Expression = "oralDiet or supplement or enteralFormula",
-            Key = "nor-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
-            Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "nor-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "oralDiet or supplement or enteralFormula",
+                human: "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
+                xpath: "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(NutritionOrder_NOR_1);
+            InvariantConstraints.AddRange(NutritionOrder_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

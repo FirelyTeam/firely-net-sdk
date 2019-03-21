@@ -1756,30 +1756,30 @@ namespace Hl7.Fhir.Model.R4
         private List<ConceptDefinitionComponent> _Concept;
     
     
-        public static ElementDefinitionConstraint CodeSystem_CSD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CodeSystem_Constraints =
         {
-            Expression = "concept.code.combine($this.descendants().concept.code).isDistinct()",
-            Key = "csd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Within a code system definition, all the codes SHALL be unique",
-            Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
-        };
-    
-        public static ElementDefinitionConstraint CodeSystem_CSD_0 = new ElementDefinitionConstraint
-        {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "csd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "csd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "concept.code.combine($this.descendants().concept.code).isDistinct()",
+                human: "Within a code system definition, all the codes SHALL be unique",
+                xpath: "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "csd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CodeSystem_CSD_1);
-            InvariantConstraints.Add(CodeSystem_CSD_0);
+            InvariantConstraints.AddRange(CodeSystem_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

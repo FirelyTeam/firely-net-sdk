@@ -1010,20 +1010,22 @@ namespace Hl7.Fhir.Model.R4
         private List<OutputComponent> _Output;
     
     
-        public static ElementDefinitionConstraint Task_INV_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Task_Constraints =
         {
-            Expression = "lastModified.exists().not() or authoredOn.exists().not() or lastModified >= authoredOn",
-            Key = "inv-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Last modified date must be greater than or equal to authored-on date.",
-            Xpath = "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "lastModified.exists().not() or authoredOn.exists().not() or lastModified >= authoredOn",
+                human: "Last modified date must be greater than or equal to authored-on date.",
+                xpath: "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Task_INV_1);
+            InvariantConstraints.AddRange(Task_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

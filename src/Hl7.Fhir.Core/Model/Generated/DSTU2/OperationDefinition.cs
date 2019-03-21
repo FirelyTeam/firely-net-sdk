@@ -1224,20 +1224,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<ParameterComponent> _Parameter;
     
     
-        public static ElementDefinitionConstraint OperationDefinition_OPD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] OperationDefinition_Constraints =
         {
-            Expression = "parameter.all(type or part)",
-            Key = "opd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "opd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(type or part)",
+                human: "Either a type must be provided, or parts",
+                xpath: "exists(f:type) or exists(f:part)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(OperationDefinition_OPD_1);
+            InvariantConstraints.AddRange(OperationDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

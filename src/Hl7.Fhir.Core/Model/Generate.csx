@@ -1010,8 +1010,8 @@ public class ResourceDetails
         {
             writer.WriteLine("    ---- Constraints");
             foreach (var constraint in Constraints)
-            {
-                writer.WriteLine("        {0} - {1}: {2}, XPath: {3}, Expression: {4}", constraint.Key, constraint.Severity, constraint.Human, constraint.XPath, constraint.Expression);
+            { 
+                writer.WriteLine("        {0} - {1}: {2}, XPath: {3}, Expression: {4}, Versions: {5}", constraint.Key, constraint.Severity, constraint.Human, constraint.XPath, constraint.Expression, string.Join(",", Versions));
             }
         }
     }
@@ -1040,7 +1040,7 @@ public class ResourceDetails
                 .Select(comp => comp.Clone(version))
                 .ToList(),
             Constraints = Constraints
-                .Select(constraint => constraint.Clone(version))
+                .Select(constraint => constraint.Clone())
                 .ToList()
         };
     }
@@ -1066,7 +1066,7 @@ public class ResourceDetails
         tryMergeResult = ComponentDetails.TryMerge(Components, version, other.Components);
         if (tryMergeResult != null) return tryMergeResult;
 
-        tryMergeResult = ConstraintDetails.TryMerge(Constraints, version, other.Constraints);
+        tryMergeResult = ConstraintDetails.TryMerge(Constraints, other.Constraints);
         if (tryMergeResult != null) return tryMergeResult;
 
         return null;
@@ -1190,11 +1190,14 @@ public class ResourceDetails
         yield return string.Empty;
         if (Constraints.Any())
         {
+            yield return string.Empty;
+            yield return $"    public static ElementDefinitionConstraint[] {Name}_Constraints =";
+            yield return $"    {{";
             foreach (var constraint in Constraints)
             {
-                yield return string.Empty;
-                foreach (var line in constraint.Render(Name)) yield return "    " + line;
+                foreach (var line in constraint.Render()) yield return "        " + line;
             }
+            yield return $"    }};";
             yield return string.Empty;
             if (isElement)
             {
@@ -1205,11 +1208,7 @@ public class ResourceDetails
                 yield return $"    public override void AddDefaultConstraints()";
                 yield return $"    {{";
                 yield return $"        base.AddDefaultConstraints();";
-                yield return string.Empty;
-                foreach (var constraint in Constraints)
-                {
-                    yield return $"        InvariantConstraints.Add({ constraint.GetName(Name) });";
-                }
+                yield return $"        InvariantConstraints.AddRange({Name}_Constraints);";
                 yield return $"    }}";
             }
         }
@@ -1368,6 +1367,7 @@ public class ResourceDetails
         {
             new ConstraintDetails
             {
+                Versions = new List<LoadedVersion>( dstu2Parameters.Versions ),
                 Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
                 Key = "inv-1",
                 Severity = "Warning",
@@ -1448,7 +1448,7 @@ public class ResourceDetails
                 resource.Components.Add(component);
             }
 
-            resource.Constraints = GetConstraints(resourceName, e, loadedVersion.NSR);
+            resource.Constraints = GetConstraints(loadedVersion, resourceName, e, loadedVersion.NSR);
 
             resource.IsConstraint = GetIsConstraintOrPrimitive(e, loadedVersion.NST) && !resource.IsPrimitive;
         }
@@ -1554,14 +1554,14 @@ public class ResourceDetails
                 }
             }
 
-            resource.Constraints = GetConstraints(resourceName, e, loadedVersion.NST);
+            resource.Constraints = GetConstraints(loadedVersion, resourceName, e, loadedVersion.NST);
 
             resource.IsConstraint = GetIsConstraintOrPrimitive(e, loadedVersion.NST) && !resource.IsPrimitive;
         }
         return result;
     }
 
-    private static List<ConstraintDetails> GetConstraints(string resourceName, XmlElement structureDefinitionElement, XmlNamespaceManager ns)
+    private static List<ConstraintDetails> GetConstraints(LoadedVersion loadedVersion, string resourceName, XmlElement structureDefinitionElement, XmlNamespaceManager ns)
     {
         var result = new List<ConstraintDetails>();
         foreach (var node in structureDefinitionElement.SelectNodes("fhir:differential/fhir:element/fhir:constraint", ns).OfType<XmlElement>())
@@ -1578,6 +1578,7 @@ public class ResourceDetails
             }
             var constraint = new ConstraintDetails
             {
+                Versions = new List<LoadedVersion> { loadedVersion },
                 Key = node.SelectSingleNode("fhir:key/@value", ns).Value,
                 Severity = node.SelectSingleNode("fhir:severity/@value", ns).Value,
                 Human = node.SelectSingleNode("fhir:human/@value", ns).Value,
@@ -1860,6 +1861,11 @@ public class ComponentDetails
 public class ConstraintDetails
 {
     /// <summary>
+    /// Versions this constraint refers to. 
+    /// </summary>
+    public List<LoadedVersion> Versions;
+
+    /// <summary>
     /// Key identifying the constraint - e.g. 'pat-1'
     /// </summary>
     public string Key;
@@ -1884,10 +1890,11 @@ public class ConstraintDetails
     /// </summary>
     public string Expression;
 
-    public ConstraintDetails Clone(string version)
+    public ConstraintDetails Clone()
     {
         return new ConstraintDetails
         {
+            Versions = new List<LoadedVersion>(Versions),
             Key = Key,
             Severity = Severity,
             Human = Human,
@@ -1896,7 +1903,7 @@ public class ConstraintDetails
         };
     }
 
-    public string TryMerge(string version, ConstraintDetails other)
+    public string TryMerge(ConstraintDetails other)
     {
         if (Key != other.Key) return "Key";
         if (Severity != other.Severity) return "Severity";
@@ -1904,27 +1911,28 @@ public class ConstraintDetails
         if (XPath != other.XPath) return "XPath";
         if (Expression != other.Expression) return "Expression";
 
+        Versions.AddRange(other.Versions);
         return null;
     }
 
-    public static string TryMerge(List<ConstraintDetails> constraints, string version, List<ConstraintDetails> otherConstraints)
+    public static string TryMerge(List<ConstraintDetails> constraints, List<ConstraintDetails> otherConstraints)
     {
+        var otherConstraintByKey = otherConstraints.ToDictionary(c => c.Key);
+        foreach (var constraint in constraints)
+        {
+            if (otherConstraintByKey.TryGetValue(constraint.Key, out var otherConstraint))
+            {
+                if (constraint.TryMerge(otherConstraint) == null)
+                {
+                    otherConstraintByKey.Remove(constraint.Key);
+                };
+            }
+        }
+        foreach (var otherConstraint in otherConstraintByKey.Values)
+        {
+            constraints.Add(otherConstraint.Clone());
+        }
         return null;
-
-        //var otherConstraintByKey = otherConstraints.ToDictionary(c => c.Key);
-        //foreach (var constraint in constraints)
-        //{
-        //    if (otherConstraintByKey.TryGetValue(constraint.Key, out var otherConstraint))
-        //    {
-        //        if (!constraint.TryMerge(version, otherConstraint)) return false;
-        //        otherConstraintByKey.Remove(constraint.Key);
-        //    }
-        //}
-        //foreach (var otherConstraint in otherConstraintByKey.Values)
-        //{
-        //    constraints.Add(otherConstraint.Clone(version));
-        //}
-        //return true;
     }
 
     public void Simplify(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
@@ -1943,30 +1951,30 @@ public class ConstraintDetails
     /// <summary>
     /// Renders the C# code of the constraint
     /// </summary>
-    /// <param name="type">Type (class) containing the constrant</param>
     /// <returns>C# code lines</returns>
-    public IEnumerable<string> Render(string type)
+    public IEnumerable<string> Render()
     {
-        yield return $"public static ElementDefinitionConstraint { GetName(type) } = new ElementDefinitionConstraint";
-        yield return $"{{";
-        if (!string.IsNullOrEmpty(Expression))
-        {
-            yield return $"    Expression = { StringUtils.Quote(Expression) },";
-        }
-        yield return $"    Key = { StringUtils.Quote(Key) },";
+        var versionsString = string.Join(",", Versions.Select(loadedVersion => "Hl7.Fhir.Model.Version." + loadedVersion.Version));
+        yield return $"new ElementDefinitionConstraint(";
+        yield return $"    versions: new[] {{{ versionsString }}},";
+        yield return $"    key: { StringUtils.Quote(Key) },";
         var severity = Severity == "Error" ?
             "ConstraintSeverity.Error" :
             "ConstraintSeverity.Warning";
-        yield return $"    Severity = { severity },";
+        yield return $"    severity: { severity },";
+        if (!string.IsNullOrEmpty(Expression))
+        {
+            yield return $"    expression: { StringUtils.Quote(Expression) },";
+        }
         if (!string.IsNullOrEmpty(Human))
         {
-            yield return $"    Human = { StringUtils.Quote(Human) },";
+            yield return $"    human: { StringUtils.Quote(Human) },";
         }
         if (!string.IsNullOrEmpty(XPath))
         {
-            yield return $"    Xpath = { StringUtils.Quote(XPath) }";
+            yield return $"    xpath: { StringUtils.Quote(XPath) }";
         }
-        yield return $"}};";
+        yield return $"),";
     }
 
     /// <summary>

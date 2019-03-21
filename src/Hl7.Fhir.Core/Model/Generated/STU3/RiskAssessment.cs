@@ -558,30 +558,30 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        public static ElementDefinitionConstraint RiskAssessment_RAS_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] RiskAssessment_Constraints =
         {
-            Expression = "prediction.all(probability is decimal implies probability.as(decimal) <= 100)",
-            Key = "ras-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must be <= 100",
-            Xpath = "not(f:probabilityDecimal) or f:probabilityDecimal/@value <= 100"
-        };
-    
-        public static ElementDefinitionConstraint RiskAssessment_RAS_1 = new ElementDefinitionConstraint
-        {
-            Expression = "prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
-            Key = "ras-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "low and high must be percentages, if present",
-            Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "ras-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "prediction.all(probability is decimal implies probability.as(decimal) <= 100)",
+                human: "Must be <= 100",
+                xpath: "not(f:probabilityDecimal) or f:probabilityDecimal/@value <= 100"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "ras-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
+                human: "low and high must be percentages, if present",
+                xpath: "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(RiskAssessment_RAS_2);
-            InvariantConstraints.Add(RiskAssessment_RAS_1);
+            InvariantConstraints.AddRange(RiskAssessment_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -744,50 +744,46 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
     
     
-        public static ElementDefinitionConstraint Appointment_APP_4 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Appointment_Constraints =
         {
-            Expression = "Appointment.cancelationReason.exists() implies (Appointment.status='no-show' or Appointment.status='cancelled')",
-            Key = "app-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Cancelation reason is only used for appointments that have been cancelled, or no-show",
-            Xpath = "not(exists(f:cancellationReason)) or f:status/@value=('no-show', 'cancelled')"
-        };
-    
-        public static ElementDefinitionConstraint Appointment_APP_3 = new ElementDefinitionConstraint
-        {
-            Expression = "(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled' | 'waitlist'))",
-            Key = "app-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only proposed or cancelled appointments can be missing start/end dates",
-            Xpath = "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled') or (f:status/@value='waitlist'))"
-        };
-    
-        public static ElementDefinitionConstraint Appointment_APP_2 = new ElementDefinitionConstraint
-        {
-            Expression = "start.exists() = end.exists()",
-            Key = "app-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either start and end are specified, or neither",
-            Xpath = "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
-        };
-    
-        public static ElementDefinitionConstraint Appointment_APP_1 = new ElementDefinitionConstraint
-        {
-            Expression = "participant.all(type.exists() or actor.exists())",
-            Key = "app-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either the type or actor on the participant SHALL be specified",
-            Xpath = "(exists(f:type) or exists(f:actor))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "app-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "Appointment.cancelationReason.exists() implies (Appointment.status='no-show' or Appointment.status='cancelled')",
+                human: "Cancelation reason is only used for appointments that have been cancelled, or no-show",
+                xpath: "not(exists(f:cancellationReason)) or f:status/@value=('no-show', 'cancelled')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "app-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled' | 'waitlist'))",
+                human: "Only proposed or cancelled appointments can be missing start/end dates",
+                xpath: "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled') or (f:status/@value='waitlist'))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "app-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "start.exists() = end.exists()",
+                human: "Either start and end are specified, or neither",
+                xpath: "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "app-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "participant.all(type.exists() or actor.exists())",
+                human: "Either the type or actor on the participant SHALL be specified",
+                xpath: "(exists(f:type) or exists(f:actor))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Appointment_APP_4);
-            InvariantConstraints.Add(Appointment_APP_3);
-            InvariantConstraints.Add(Appointment_APP_2);
-            InvariantConstraints.Add(Appointment_APP_1);
+            InvariantConstraints.AddRange(Appointment_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

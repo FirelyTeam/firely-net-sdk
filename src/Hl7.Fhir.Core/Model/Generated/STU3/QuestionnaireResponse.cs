@@ -600,20 +600,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<ItemComponent> _Item;
     
     
-        public static ElementDefinitionConstraint QuestionnaireResponse_QRS_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] QuestionnaireResponse_Constraints =
         {
-            Expression = "item.all((answer.exists() and item.exists()).not())",
-            Key = "qrs-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Nested item can't be beneath both item and answer",
-            Xpath = "not(exists(f:answer) and exists(f:item))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "qrs-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all((answer.exists() and item.exists()).not())",
+                human: "Nested item can't be beneath both item and answer",
+                xpath: "not(exists(f:answer) and exists(f:item))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
+            InvariantConstraints.AddRange(QuestionnaireResponse_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

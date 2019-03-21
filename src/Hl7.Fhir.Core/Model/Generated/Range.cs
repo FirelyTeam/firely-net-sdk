@@ -82,13 +82,16 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.SimpleQuantity _High;
     
     
-        public static ElementDefinitionConstraint Range_RNG_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Range_Constraints =
         {
-            Expression = "low.empty() or high.empty() or (low <= high)",
-            Key = "rng-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If present, low SHALL have a lower value than high",
-            Xpath = "not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) <= number(f:high/f:value/@value))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "rng-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "low.empty() or high.empty() or (low <= high)",
+                human: "If present, low SHALL have a lower value than high",
+                xpath: "not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) <= number(f:high/f:value/@value))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

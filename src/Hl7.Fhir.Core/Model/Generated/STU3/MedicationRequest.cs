@@ -895,20 +895,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
     
     
-        public static ElementDefinitionConstraint MedicationRequest_MPS_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationRequest_Constraints =
         {
-            Expression = "requester.all((agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
-            Key = "mps-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mps-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "requester.all((agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
+                human: "onBehalfOf can only be specified if agent is practitioner or device",
+                xpath: "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationRequest_MPS_1);
+            InvariantConstraints.AddRange(MedicationRequest_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

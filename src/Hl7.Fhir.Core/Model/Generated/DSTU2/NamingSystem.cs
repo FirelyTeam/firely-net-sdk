@@ -715,40 +715,38 @@ namespace Hl7.Fhir.Model.DSTU2
         private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
     
     
-        public static ElementDefinitionConstraint NamingSystem_NSD_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] NamingSystem_Constraints =
         {
-            Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
-            Key = "nsd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can't have more than one preferred identifier for a type",
-            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
-        };
-    
-        public static ElementDefinitionConstraint NamingSystem_NSD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "replacedBy.empty() or status = 'retired'",
-            Key = "nsd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can only have replacedBy if naming system is retired",
-            Xpath = "not(f:replacedBy) or f:status/@value='retired'"
-        };
-    
-        public static ElementDefinitionConstraint NamingSystem_NSD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "kind != 'root' or uniqueId in ('uuid' | 'ruid')",
-            Key = "nsd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Root systems cannot have uuid or sid identifiers",
-            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value=('uuid', 'ruid'))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "nsd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "uniqueId.where(preferred = true).select(type).isDistinct()",
+                human: "Can't have more than one preferred identifier for a type",
+                xpath: "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "nsd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "replacedBy.empty() or status = 'retired'",
+                human: "Can only have replacedBy if naming system is retired",
+                xpath: "not(f:replacedBy) or f:status/@value='retired'"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "nsd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "kind != 'root' or uniqueId in ('uuid' | 'ruid')",
+                human: "Root systems cannot have uuid or sid identifiers",
+                xpath: "not(f:kind/@value='root' and f:uniqueId/f:type/@value=('uuid', 'ruid'))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(NamingSystem_NSD_2);
-            InvariantConstraints.Add(NamingSystem_NSD_3);
-            InvariantConstraints.Add(NamingSystem_NSD_1);
+            InvariantConstraints.AddRange(NamingSystem_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

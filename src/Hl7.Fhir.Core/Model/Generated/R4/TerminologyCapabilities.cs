@@ -2223,70 +2223,62 @@ namespace Hl7.Fhir.Model.R4
         private ClosureComponent _Closure;
     
     
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] TerminologyCapabilities_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "tcp-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_3 = new ElementDefinitionConstraint
-        {
-            Expression = "(kind != 'instance') or implementation.exists()",
-            Key = "tcp-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If kind = instance, implementation must be present and software may be present",
-            Xpath = "not(f:kind/@value='instance') or exists(f:implementation)"
-        };
-    
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_2 = new ElementDefinitionConstraint
-        {
-            Expression = "(description.count() + software.count() + implementation.count()) > 0",
-            Key = "tcp-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Capability Statement SHALL have at least one of description, software, or implementation element.",
-            Xpath = "count(f:software | f:implementation | f:description) > 0"
-        };
-    
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_5 = new ElementDefinitionConstraint
-        {
-            Expression = "(kind!='requirements') or (implementation.exists().not() and software.exists().not())",
-            Key = "tcp-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If kind = requirements, implementation and software must be absent",
-            Xpath = "not(f:kind/@value='instance') or (not(exists(f:implementation)) and not(exists(f:software)))"
-        };
-    
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_4 = new ElementDefinitionConstraint
-        {
-            Expression = "(kind != 'capability') or (implementation.exists().not() and software.exists())",
-            Key = "tcp-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If kind = capability, implementation must be absent, software must be present",
-            Xpath = " not(f:kind/@value='instance') or (not(exists(f:implementation)) and exists(f:software))"
-        };
-    
-        public static ElementDefinitionConstraint TerminologyCapabilities_TCP_1 = new ElementDefinitionConstraint
-        {
-            Expression = "codeSystem.all(version.count() > 1 implies version.all(code.exists()))",
-            Key = "tcp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there is more than one version, a version code must be defined",
-            Xpath = "(count(f:version) <= 1) or not(exists(f:version[not(f:code)]))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "(kind != 'instance') or implementation.exists()",
+                human: "If kind = instance, implementation must be present and software may be present",
+                xpath: "not(f:kind/@value='instance') or exists(f:implementation)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "(description.count() + software.count() + implementation.count()) > 0",
+                human: "A Capability Statement SHALL have at least one of description, software, or implementation element.",
+                xpath: "count(f:software | f:implementation | f:description) > 0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "(kind!='requirements') or (implementation.exists().not() and software.exists().not())",
+                human: "If kind = requirements, implementation and software must be absent",
+                xpath: "not(f:kind/@value='instance') or (not(exists(f:implementation)) and not(exists(f:software)))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "(kind != 'capability') or (implementation.exists().not() and software.exists())",
+                human: "If kind = capability, implementation must be absent, software must be present",
+                xpath: " not(f:kind/@value='instance') or (not(exists(f:implementation)) and exists(f:software))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "tcp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeSystem.all(version.count() > 1 implies version.all(code.exists()))",
+                human: "If there is more than one version, a version code must be defined",
+                xpath: "(count(f:version) <= 1) or not(exists(f:version[not(f:code)]))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_0);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_3);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_2);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_5);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_4);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_1);
+            InvariantConstraints.AddRange(TerminologyCapabilities_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

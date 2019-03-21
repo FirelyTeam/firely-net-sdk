@@ -1087,30 +1087,30 @@ namespace Hl7.Fhir.Model.R4
         }
     
     
-        public static ElementDefinitionConstraint MessageDefinition_MSD_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MessageDefinition_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "msd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint MessageDefinition_MD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "focus.all(max='*' or (max.toInteger() > 0))",
-            Key = "md-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Max must be postive int or *",
-            Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "msd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "md-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "focus.all(max='*' or (max.toInteger() > 0))",
+                human: "Max must be postive int or *",
+                xpath: "f:max/@value='*' or number(f:max/@value) > 0"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MessageDefinition_MSD_0);
-            InvariantConstraints.Add(MessageDefinition_MD_1);
+            InvariantConstraints.AddRange(MessageDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

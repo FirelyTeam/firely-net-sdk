@@ -349,40 +349,38 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<ContactComponent> _Contact;
     
     
-        public static ElementDefinitionConstraint Organization_ORG_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Organization_Constraints =
         {
-            Expression = "identifier or name",
-            Key = "org-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The organization SHALL at least have a name or an id, and possibly more than one",
-            Xpath = "count(f:identifier | f:name) > 0"
-        };
-    
-        public static ElementDefinitionConstraint Organization_ORG_3 = new ElementDefinitionConstraint
-        {
-            Expression = "telecom.all($this.where(use = 'home').empty())",
-            Key = "org-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The telecom of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
-        };
-    
-        public static ElementDefinitionConstraint Organization_ORG_2 = new ElementDefinitionConstraint
-        {
-            Expression = "address.all($this.where(use = 'home').empty())",
-            Key = "org-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "An address of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "org-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "identifier or name",
+                human: "The organization SHALL at least have a name or an id, and possibly more than one",
+                xpath: "count(f:identifier | f:name) > 0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "org-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "telecom.all($this.where(use = 'home').empty())",
+                human: "The telecom of an organization can never be of use 'home'",
+                xpath: "count(f:use[@value='home']) = 0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "org-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "address.all($this.where(use = 'home').empty())",
+                human: "An address of an organization can never be of use 'home'",
+                xpath: "count(f:use[@value='home']) = 0"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Organization_ORG_1);
-            InvariantConstraints.Add(Organization_ORG_3);
-            InvariantConstraints.Add(Organization_ORG_2);
+            InvariantConstraints.AddRange(Organization_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

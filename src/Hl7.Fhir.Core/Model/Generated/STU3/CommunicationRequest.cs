@@ -605,20 +605,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint CommunicationRequest_CMR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CommunicationRequest_Constraints =
         {
-            Expression = "requester.all((agent.resolve() is Practitioner) or (agent.resolve() is Device) or onBehalfOf.exists().not())",
-            Key = "cmr-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cmr-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "requester.all((agent.resolve() is Practitioner) or (agent.resolve() is Device) or onBehalfOf.exists().not())",
+                human: "onBehalfOf can only be specified if agent is practitioner or device",
+                xpath: "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CommunicationRequest_CMR_1);
+            InvariantConstraints.AddRange(CommunicationRequest_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

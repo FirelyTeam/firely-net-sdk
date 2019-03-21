@@ -51,13 +51,16 @@ namespace Hl7.Fhir.Model
     
     
     
-        public static ElementDefinitionConstraint SimpleQuantity_SQTY_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] SimpleQuantity_Constraints =
         {
-            Expression = "comparator.empty()",
-            Key = "sqty-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The comparator is not used on a SimpleQuantity",
-            Xpath = "not(exists(f:comparator))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "sqty-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "comparator.empty()",
+                human: "The comparator is not used on a SimpleQuantity",
+                xpath: "not(exists(f:comparator))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

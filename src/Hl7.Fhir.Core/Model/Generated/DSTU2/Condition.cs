@@ -582,30 +582,30 @@ namespace Hl7.Fhir.Model.DSTU2
         }
     
     
-        public static ElementDefinitionConstraint Condition_CON_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Condition_Constraints =
         {
-            Expression = "stage.all(summary or assessment)",
-            Key = "con-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_2 = new ElementDefinitionConstraint
-        {
-            Expression = "evidence.all(code or detail)",
-            Key = "con-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "con-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "stage.all(summary or assessment)",
+                human: "Stage SHALL have summary or assessment",
+                xpath: "exists(f:summary) or exists(f:assessment)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "con-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "evidence.all(code or detail)",
+                human: "evidence SHALL have code or details",
+                xpath: "exists(f:code) or exists(f:detail)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
+            InvariantConstraints.AddRange(Condition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

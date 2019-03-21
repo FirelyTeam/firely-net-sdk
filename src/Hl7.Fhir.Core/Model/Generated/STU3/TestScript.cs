@@ -5567,140 +5567,118 @@ namespace Hl7.Fhir.Model.STU3
         private TeardownComponent _Teardown;
     
     
-        public static ElementDefinitionConstraint TestScript_INV_4 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] TestScript_Constraints =
         {
-            Expression = "metadata.all(capability.required.exists() or capability.validated.exists())",
-            Key = "inv-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "TestScript metadata capability SHALL contain required or validated or both.",
-            Xpath = "f:capability/f:required or f:capability/f:validated or (f:capability/f:required and f:capability/f:validated)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_3 = new ElementDefinitionConstraint
-        {
-            Expression = "variable.all(expression.empty() or headerField.empty() or path.empty())",
-            Key = "inv-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Variable can only contain one of expression, headerField or path.",
-            Xpath = "not(f:expression and f:headerField and f:path)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_1 = new ElementDefinitionConstraint
-        {
-            Expression = "setup.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Setup action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_7 = new ElementDefinitionConstraint
-        {
-            Expression = "setup.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' |'search' | 'transaction' | 'history')))",
-            Key = "inv-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Setup operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or ((f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1)) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_5 = new ElementDefinitionConstraint
-        {
-            Expression = "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
-            Key = "inv-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only a single assertion SHALL be present within setup action assert element.",
-            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_10 = new ElementDefinitionConstraint
-        {
-            Expression = "setup.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
-            Key = "inv-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Setup action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
-            Xpath = "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_12 = new ElementDefinitionConstraint
-        {
-            Expression = "setup.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
-            Key = "inv-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Setup action assert response and responseCode SHALL be empty when direction equals request",
-            Xpath = "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_2 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Test action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_8 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
-            Key = "inv-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Test operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or (f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_6 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
-            Key = "inv-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only a single assertion SHALL be present within test action assert element.",
-            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_11 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
-            Key = "inv-11",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Test action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
-            Xpath = "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_13 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
-            Key = "inv-13",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Test action assert response and response and responseCode SHALL be empty when direction equals request",
-            Xpath = "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
-        };
-    
-        public static ElementDefinitionConstraint TestScript_INV_9 = new ElementDefinitionConstraint
-        {
-            Expression = "teardown.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
-            Key = "inv-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Teardown operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "metadata.all(capability.required.exists() or capability.validated.exists())",
+                human: "TestScript metadata capability SHALL contain required or validated or both.",
+                xpath: "f:capability/f:required or f:capability/f:validated or (f:capability/f:required and f:capability/f:validated)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "variable.all(expression.empty() or headerField.empty() or path.empty())",
+                human: "Variable can only contain one of expression, headerField or path.",
+                xpath: "not(f:expression and f:headerField and f:path)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.all(operation.exists() xor assert.exists())",
+                human: "Setup action SHALL contain either an operation or assert but not both.",
+                xpath: "(f:operation or f:assert) and not(f:operation and f:assert)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' |'search' | 'transaction' | 'history')))",
+                human: "Setup operation SHALL contain either sourceId or targetId or params or url.",
+                xpath: "f:sourceId or ((f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1)) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+                human: "Only a single assertion SHALL be present within setup action assert element.",
+                xpath: "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
+                human: "Setup action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
+                xpath: "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
+                human: "Setup action assert response and responseCode SHALL be empty when direction equals request",
+                xpath: "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.all(operation.exists() xor assert.exists())",
+                human: "Test action SHALL contain either an operation or assert but not both.",
+                xpath: "(f:operation or f:assert) and not(f:operation and f:assert)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
+                human: "Test operation SHALL contain either sourceId or targetId or params or url.",
+                xpath: "f:sourceId or (f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+                human: "Only a single assertion SHALL be present within test action assert element.",
+                xpath: "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-11",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
+                human: "Test action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
+                xpath: "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-13",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
+                human: "Test action assert response and response and responseCode SHALL be empty when direction equals request",
+                xpath: "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "teardown.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
+                human: "Teardown operation SHALL contain either sourceId or targetId or params or url.",
+                xpath: "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(TestScript_INV_4);
-            InvariantConstraints.Add(TestScript_INV_3);
-            InvariantConstraints.Add(TestScript_INV_1);
-            InvariantConstraints.Add(TestScript_INV_7);
-            InvariantConstraints.Add(TestScript_INV_5);
-            InvariantConstraints.Add(TestScript_INV_10);
-            InvariantConstraints.Add(TestScript_INV_12);
-            InvariantConstraints.Add(TestScript_INV_2);
-            InvariantConstraints.Add(TestScript_INV_8);
-            InvariantConstraints.Add(TestScript_INV_6);
-            InvariantConstraints.Add(TestScript_INV_11);
-            InvariantConstraints.Add(TestScript_INV_13);
-            InvariantConstraints.Add(TestScript_INV_9);
+            InvariantConstraints.AddRange(TestScript_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

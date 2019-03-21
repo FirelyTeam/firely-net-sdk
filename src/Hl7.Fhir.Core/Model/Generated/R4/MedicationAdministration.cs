@@ -681,20 +681,22 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
     
     
-        public static ElementDefinitionConstraint MedicationAdministration_MAD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationAdministration_Constraints =
         {
-            Expression = "dosage.all(dose.exists() or rate.exists())",
-            Key = "mad-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of dosage.dose or dosage.rate[x]",
-            Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "mad-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "dosage.all(dose.exists() or rate.exists())",
+                human: "SHALL have at least one of dosage.dose or dosage.rate[x]",
+                xpath: "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationAdministration_MAD_1);
+            InvariantConstraints.AddRange(MedicationAdministration_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

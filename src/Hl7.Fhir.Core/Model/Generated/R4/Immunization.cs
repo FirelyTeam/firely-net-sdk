@@ -1237,20 +1237,22 @@ namespace Hl7.Fhir.Model.R4
         private List<ProtocolAppliedComponent> _ProtocolApplied;
     
     
-        public static ElementDefinitionConstraint Immunization_IMM_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Immunization_Constraints =
         {
-            Expression = "education.all(documentType.exists() or reference.exists())",
-            Key = "imm-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "One of documentType or reference SHALL be present",
-            Xpath = "exists(f:documentType) or exists(f:reference)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "imm-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "education.all(documentType.exists() or reference.exists())",
+                human: "One of documentType or reference SHALL be present",
+                xpath: "exists(f:documentType) or exists(f:reference)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Immunization_IMM_1);
+            InvariantConstraints.AddRange(Immunization_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

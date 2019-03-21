@@ -603,20 +603,22 @@ namespace Hl7.Fhir.Model.R4
         private List<MemberComponent> _Member;
     
     
-        public static ElementDefinitionConstraint Group_GRP_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Group_Constraints =
         {
-            Expression = "member.empty() or (actual = true)",
-            Key = "grp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can only have members if group is \"actual\"",
-            Xpath = "f:actual/@value=true() or not(exists(f:member))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "grp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "member.empty() or (actual = true)",
+                human: "Can only have members if group is \"actual\"",
+                xpath: "f:actual/@value=true() or not(exists(f:member))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Group_GRP_1);
+            InvariantConstraints.AddRange(Group_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

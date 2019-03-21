@@ -1199,20 +1199,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<SourceElementComponent> _Element;
     
     
-        public static ElementDefinitionConstraint ConceptMap_CMD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ConceptMap_Constraints =
         {
-            Expression = "element.target.all(comments or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
-            Key = "cmd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the map is narrower or inexact, there SHALL be some comments",
-            Xpath = "exists(f:comments) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cmd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "element.target.all(comments or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
+                human: "If the map is narrower or inexact, there SHALL be some comments",
+                xpath: "exists(f:comments) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ConceptMap_CMD_1);
+            InvariantConstraints.AddRange(ConceptMap_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

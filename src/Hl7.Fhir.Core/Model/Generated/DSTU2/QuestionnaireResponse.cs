@@ -727,20 +727,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private GroupComponent _Group;
     
     
-        public static ElementDefinitionConstraint QuestionnaireResponse_QRS_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] QuestionnaireResponse_Constraints =
         {
-            Expression = "group.all(group.empty() or question.empty())",
-            Key = "qrs-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Groups may either contain questions or groups but not both",
-            Xpath = "not(exists(f:group) and exists(f:question))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "qrs-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.all(group.empty() or question.empty())",
+                human: "Groups may either contain questions or groups but not both",
+                xpath: "not(exists(f:group) and exists(f:question))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
+            InvariantConstraints.AddRange(QuestionnaireResponse_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

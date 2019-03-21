@@ -37,6 +37,7 @@ using Hl7.FhirPath;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.FhirPath;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
@@ -216,12 +217,13 @@ namespace Hl7.Fhir.Model
         {
             if (InvariantConstraints != null && InvariantConstraints.Count > 0)
             {
+                var version = DotNetAttributeValidation.GetVersion(context);
                 // var sw = System.Diagnostics.Stopwatch.StartNew();
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = this.ToTypedElement(DotNetAttributeValidation.GetVersion(context));
-                foreach (var invariantRule in InvariantConstraints)
+                var tree = this.ToTypedElement(version);
+                foreach (var invariantRule in InvariantConstraints.AppliesTo(version))
                 {
                     ValidateInvariantRule(context, invariantRule, tree, result);
                 }

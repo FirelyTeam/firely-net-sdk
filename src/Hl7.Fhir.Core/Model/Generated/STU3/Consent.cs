@@ -1277,20 +1277,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<ExceptComponent> _Except;
     
     
-        public static ElementDefinitionConstraint Consent_PPC_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Consent_Constraints =
         {
-            Expression = "policy.exists() or policyRule.exists()",
-            Key = "ppc-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a Policy or PolicyRule",
-            Xpath = "exists(f:policy) or exists(f:policyRule)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "ppc-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "policy.exists() or policyRule.exists()",
+                human: "Either a Policy or PolicyRule",
+                xpath: "exists(f:policy) or exists(f:policyRule)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Consent_PPC_1);
+            InvariantConstraints.AddRange(Consent_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

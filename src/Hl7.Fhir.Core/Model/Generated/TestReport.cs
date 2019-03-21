@@ -1534,30 +1534,30 @@ namespace Hl7.Fhir.Model
         private TeardownComponent _Teardown;
     
     
-        public static ElementDefinitionConstraint TestReport_INV_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] TestReport_Constraints =
         {
-            Expression = "setup.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Setup action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
-        };
-    
-        public static ElementDefinitionConstraint TestReport_INV_2 = new ElementDefinitionConstraint
-        {
-            Expression = "test.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Test action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "setup.action.all(operation.exists() xor assert.exists())",
+                human: "Setup action SHALL contain either an operation or assert but not both.",
+                xpath: "(f:operation or f:assert) and not(f:operation and f:assert)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "inv-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "test.action.all(operation.exists() xor assert.exists())",
+                human: "Test action SHALL contain either an operation or assert but not both.",
+                xpath: "(f:operation or f:assert) and not(f:operation and f:assert)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(TestReport_INV_1);
-            InvariantConstraints.Add(TestReport_INV_2);
+            InvariantConstraints.AddRange(TestReport_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -541,40 +541,38 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<ParticipantComponent> _Participant;
     
     
-        public static ElementDefinitionConstraint Appointment_APP_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Appointment_Constraints =
         {
-            Expression = "(start.exists() and end.exists()) or (status = 'proposed') or (status = 'cancelled')",
-            Key = "app-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only proposed or cancelled appointments can be missing start/end dates",
-            Xpath = "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled'))"
-        };
-    
-        public static ElementDefinitionConstraint Appointment_APP_2 = new ElementDefinitionConstraint
-        {
-            Expression = "start.empty() xor end.exists()",
-            Key = "app-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either start and end are specified, or neither",
-            Xpath = "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
-        };
-    
-        public static ElementDefinitionConstraint Appointment_APP_1 = new ElementDefinitionConstraint
-        {
-            Expression = "participant.all(type.exists() or actor.exists())",
-            Key = "app-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either the type or actor on the participant MUST be specified",
-            Xpath = "(exists(f:type) or exists(f:actor))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "app-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "(start.exists() and end.exists()) or (status = 'proposed') or (status = 'cancelled')",
+                human: "Only proposed or cancelled appointments can be missing start/end dates",
+                xpath: "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled'))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "app-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "start.empty() xor end.exists()",
+                human: "Either start and end are specified, or neither",
+                xpath: "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "app-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "participant.all(type.exists() or actor.exists())",
+                human: "Either the type or actor on the participant MUST be specified",
+                xpath: "(exists(f:type) or exists(f:actor))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Appointment_APP_3);
-            InvariantConstraints.Add(Appointment_APP_2);
-            InvariantConstraints.Add(Appointment_APP_1);
+            InvariantConstraints.AddRange(Appointment_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

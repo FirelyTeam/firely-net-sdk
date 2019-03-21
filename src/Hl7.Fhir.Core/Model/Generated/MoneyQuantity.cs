@@ -51,13 +51,16 @@ namespace Hl7.Fhir.Model
     
     
     
-        public static ElementDefinitionConstraint MoneyQuantity_MTQY_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MoneyQuantity_Constraints =
         {
-            Expression = "(code.exists() or value.empty()) and (system.empty() or system = 'urn:iso:std:iso:4217')",
-            Key = "mtqy-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = \"urn:iso:std:iso:4217\" - currency).",
-            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='urn:iso:std:iso:4217')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "mtqy-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(code.exists() or value.empty()) and (system.empty() or system = 'urn:iso:std:iso:4217')",
+                human: "There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = \"urn:iso:std:iso:4217\" - currency).",
+                xpath: "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='urn:iso:std:iso:4217')"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

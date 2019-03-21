@@ -1790,50 +1790,46 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
     
     
-        public static ElementDefinitionConstraint Sequence_SEQ_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Sequence_Constraints =
         {
-            Expression = "coordinateSystem = 1 or coordinateSystem = 0",
-            Key = "seq-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only 0 and 1 are valid for coordinateSystem",
-            Xpath = "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
-        };
-    
-        public static ElementDefinitionConstraint Sequence_SEQ_4 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceSeq.all(strand.empty() or strand = 1 or strand = -1)",
-            Key = "seq-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only +1 and -1 are valid for strand",
-            Xpath = "not(exists(f:strand)) or count(f:strand[@value=-1 and @value=1]) = 1"
-        };
-    
-        public static ElementDefinitionConstraint Sequence_SEQ_5 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
-            Key = "seq-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "GenomeBuild and chromosome must be both contained if either one of them is contained",
-            Xpath = "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
-        };
-    
-        public static ElementDefinitionConstraint Sequence_SEQ_6 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
-            Key = "seq-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
-            Xpath = "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "seq-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "coordinateSystem = 1 or coordinateSystem = 0",
+                human: "Only 0 and 1 are valid for coordinateSystem",
+                xpath: "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "seq-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceSeq.all(strand.empty() or strand = 1 or strand = -1)",
+                human: "Only +1 and -1 are valid for strand",
+                xpath: "not(exists(f:strand)) or count(f:strand[@value=-1 and @value=1]) = 1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "seq-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
+                human: "GenomeBuild and chromosome must be both contained if either one of them is contained",
+                xpath: "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "seq-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
+                human: "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
+                xpath: "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Sequence_SEQ_3);
-            InvariantConstraints.Add(Sequence_SEQ_4);
-            InvariantConstraints.Add(Sequence_SEQ_5);
-            InvariantConstraints.Add(Sequence_SEQ_6);
+            InvariantConstraints.AddRange(Sequence_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

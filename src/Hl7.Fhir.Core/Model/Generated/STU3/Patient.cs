@@ -955,20 +955,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<LinkComponent> _Link;
     
     
-        public static ElementDefinitionConstraint Patient_PAT_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Patient_Constraints =
         {
-            Expression = "contact.all(name.exists() or telecom.exists() or address.exists() or organization.exists())",
-            Key = "pat-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL at least contain a contact's details or a reference to an organization",
-            Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "pat-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "contact.all(name.exists() or telecom.exists() or address.exists() or organization.exists())",
+                human: "SHALL at least contain a contact's details or a reference to an organization",
+                xpath: "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Patient_PAT_1);
+            InvariantConstraints.AddRange(Patient_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -381,20 +381,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.STU3.Dosage> _Dosage;
     
     
-        public static ElementDefinitionConstraint MedicationStatement_MST_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationStatement_Constraints =
         {
-            Expression = "reasonNotTaken.exists().not() or (taken = 'n')",
-            Key = "mst-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason not taken is only permitted if Taken is No",
-            Xpath = "not(exists(f:reasonNotTaken)) or f:taken/@value='n'"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mst-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonNotTaken.exists().not() or (taken = 'n')",
+                human: "Reason not taken is only permitted if Taken is No",
+                xpath: "not(exists(f:reasonNotTaken)) or f:taken/@value='n'"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationStatement_MST_1);
+            InvariantConstraints.AddRange(MedicationStatement_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

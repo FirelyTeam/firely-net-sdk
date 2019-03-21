@@ -3825,110 +3825,94 @@ namespace Hl7.Fhir.Model.STU3
         private List<DocumentComponent> _Document;
     
     
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_8 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CapabilityStatement_Constraints =
         {
-            Expression = "rest.select(mode).isDistinct()",
-            Key = "cpb-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There can only be one REST declaration per mode.",
-            Xpath = "count(f:rest)=count(distinct-values(f:rest/f:mode/@value))"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_7 = new ElementDefinitionConstraint
-        {
-            Expression = "document.select(profile.reference&mode).isDistinct()",
-            Key = "cpb-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The set of documents must be unique by the combination of profile and mode.",
-            Xpath = "count(f:document[f:mode/@value='producer'])=count(distinct-values(f:document[f:mode/@value='producer']/f:profile/f:reference/@value)) and count(f:document[f:mode/@value='consumer'])=count(distinct-values(f:document[f:mode/@value='consumer']/f:profile/f:reference/@value))"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_15 = new ElementDefinitionConstraint
-        {
-            Expression = "implementation.empty() or kind != 'capability'",
-            Key = "cpb-15",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Capability Statements of kind 'instance' do not have implementation elements.",
-            Xpath = "not(exists(f:implementation)) or (f:kind/@value != 'capability')"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_3 = new ElementDefinitionConstraint
-        {
-            Expression = "messaging.endpoint.empty() or kind = 'instance'",
-            Key = "cpb-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Messaging end-point is required (and is only permitted) when a statement is for an implementation.",
-            Xpath = "not(exists(f:messaging/f:endpoint)) or f:kind/@value = 'instance'"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_14 = new ElementDefinitionConstraint
-        {
-            Expression = "(software.empty() and implementation.empty()) or kind != 'requirements'",
-            Key = "cpb-14",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Capability Statements of kind 'requirements' do not have software or implementation elements.",
-            Xpath = "not(exists(f:software) or exists(f:implementation)) or (f:kind/@value != 'requirements')"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_2 = new ElementDefinitionConstraint
-        {
-            Expression = "(description.count() + software.count() + implementation.count()) > 0",
-            Key = "cpb-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Capability Statement SHALL have at least one of description, software, or implementation element.",
-            Xpath = "count(f:software | f:implementation | f:description) > 0"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_1 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.exists() or messaging.exists() or document.exists()",
-            Key = "cpb-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Capability Statement SHALL have at least one of REST, messaging or document element.",
-            Xpath = "exists(f:rest) or exists(f:messaging) or exists(f:document)"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_9 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.all(resource.select(type).isDistinct())",
-            Key = "cpb-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A given resource can only be described once per RESTful mode.",
-            Xpath = "count(f:resource)=count(distinct-values(f:resource/f:type/@value))"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_12 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.resource.all(searchParam.select(name).isDistinct())",
-            Key = "cpb-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Search parameter names must be unique in the context of a resource.",
-            Xpath = "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
-        };
-    
-        public static ElementDefinitionConstraint CapabilityStatement_CPB_16 = new ElementDefinitionConstraint
-        {
-            Expression = "messaging.all(supportedMessage.empty() != event.empty())",
-            Key = "cpb-16",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Capability Statement messaging element SHALL have either supportedMessage or event element, but not both.",
-            Xpath = "exists(f:supportedMessage) != exists(f:event)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.select(mode).isDistinct()",
+                human: "There can only be one REST declaration per mode.",
+                xpath: "count(f:rest)=count(distinct-values(f:rest/f:mode/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "document.select(profile.reference&mode).isDistinct()",
+                human: "The set of documents must be unique by the combination of profile and mode.",
+                xpath: "count(f:document[f:mode/@value='producer'])=count(distinct-values(f:document[f:mode/@value='producer']/f:profile/f:reference/@value)) and count(f:document[f:mode/@value='consumer'])=count(distinct-values(f:document[f:mode/@value='consumer']/f:profile/f:reference/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-15",
+                severity: ConstraintSeverity.Warning,
+                expression: "implementation.empty() or kind != 'capability'",
+                human: "Capability Statements of kind 'instance' do not have implementation elements.",
+                xpath: "not(exists(f:implementation)) or (f:kind/@value != 'capability')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "messaging.endpoint.empty() or kind = 'instance'",
+                human: "Messaging end-point is required (and is only permitted) when a statement is for an implementation.",
+                xpath: "not(exists(f:messaging/f:endpoint)) or f:kind/@value = 'instance'"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-14",
+                severity: ConstraintSeverity.Warning,
+                expression: "(software.empty() and implementation.empty()) or kind != 'requirements'",
+                human: "Capability Statements of kind 'requirements' do not have software or implementation elements.",
+                xpath: "not(exists(f:software) or exists(f:implementation)) or (f:kind/@value != 'requirements')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "(description.count() + software.count() + implementation.count()) > 0",
+                human: "A Capability Statement SHALL have at least one of description, software, or implementation element.",
+                xpath: "count(f:software | f:implementation | f:description) > 0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.exists() or messaging.exists() or document.exists()",
+                human: "A Capability Statement SHALL have at least one of REST, messaging or document element.",
+                xpath: "exists(f:rest) or exists(f:messaging) or exists(f:document)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.all(resource.select(type).isDistinct())",
+                human: "A given resource can only be described once per RESTful mode.",
+                xpath: "count(f:resource)=count(distinct-values(f:resource/f:type/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.resource.all(searchParam.select(name).isDistinct())",
+                human: "Search parameter names must be unique in the context of a resource.",
+                xpath: "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpb-16",
+                severity: ConstraintSeverity.Warning,
+                expression: "messaging.all(supportedMessage.empty() != event.empty())",
+                human: "A Capability Statement messaging element SHALL have either supportedMessage or event element, but not both.",
+                xpath: "exists(f:supportedMessage) != exists(f:event)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CapabilityStatement_CPB_8);
-            InvariantConstraints.Add(CapabilityStatement_CPB_7);
-            InvariantConstraints.Add(CapabilityStatement_CPB_15);
-            InvariantConstraints.Add(CapabilityStatement_CPB_3);
-            InvariantConstraints.Add(CapabilityStatement_CPB_14);
-            InvariantConstraints.Add(CapabilityStatement_CPB_2);
-            InvariantConstraints.Add(CapabilityStatement_CPB_1);
-            InvariantConstraints.Add(CapabilityStatement_CPB_9);
-            InvariantConstraints.Add(CapabilityStatement_CPB_12);
-            InvariantConstraints.Add(CapabilityStatement_CPB_16);
+            InvariantConstraints.AddRange(CapabilityStatement_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

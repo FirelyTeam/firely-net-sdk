@@ -2209,20 +2209,22 @@ namespace Hl7.Fhir.Model.R4
         }
     
     
-        public static ElementDefinitionConstraint ExampleScenario_ESC_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ExampleScenario_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "esc-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "esc-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ExampleScenario_ESC_0);
+            InvariantConstraints.AddRange(ExampleScenario_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

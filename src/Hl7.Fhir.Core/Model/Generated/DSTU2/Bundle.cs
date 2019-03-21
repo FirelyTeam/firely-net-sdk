@@ -1179,80 +1179,70 @@ namespace Hl7.Fhir.Model.DSTU2
         private Hl7.Fhir.Model.DSTU2.Signature _Signature;
     
     
-        public static ElementDefinitionConstraint Bundle_BDL_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Bundle_Constraints =
         {
-            Expression = "entry.search.empty() or (type = 'searchset')",
-            Key = "bdl-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.search only when a search",
-            Xpath = "not(f:entry/f:search) or (f:type/@value = 'searchset')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_1 = new ElementDefinitionConstraint
-        {
-            Expression = "total.empty() or (type = 'searchset') or (type = 'history')",
-            Key = "bdl-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "total only when a search or history",
-            Xpath = "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_7 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.where(fullUrl).select(fullUrl|resource.meta.versionId).isDistinct()",
-            Key = "bdl-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
-            Xpath = "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_3 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'",
-            Key = "bdl-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.request only for some types of bundles",
-            Xpath = "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_4 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.response.empty() or type = 'batch-response' or type = 'transaction-response'",
-            Key = "bdl-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.response only for some types of bundles",
-            Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_5 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.all(resource or request or response)",
-            Key = "bdl-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "must be a resource unless there's a request or response",
-            Xpath = "f:resource or f:request or f:response"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_6 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.all(fullUrl.empty() xor resource)",
-            Key = "bdl-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The fullUrl element must be present when a resource is present, and not present otherwise",
-            Xpath = "(not(exists(f:fullUrl)) and not(exists(f:resource))) or (exists(f:fullUrl) and exists(f:resource))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.search.empty() or (type = 'searchset')",
+                human: "entry.search only when a search",
+                xpath: "not(f:entry/f:search) or (f:type/@value = 'searchset')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "total.empty() or (type = 'searchset') or (type = 'history')",
+                human: "total only when a search or history",
+                xpath: "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.where(fullUrl).select(fullUrl|resource.meta.versionId).isDistinct()",
+                human: "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
+                xpath: "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'",
+                human: "entry.request only for some types of bundles",
+                xpath: "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.response.empty() or type = 'batch-response' or type = 'transaction-response'",
+                human: "entry.response only for some types of bundles",
+                xpath: "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.all(resource or request or response)",
+                human: "must be a resource unless there's a request or response",
+                xpath: "f:resource or f:request or f:response"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "bdl-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.all(fullUrl.empty() xor resource)",
+                human: "The fullUrl element must be present when a resource is present, and not present otherwise",
+                xpath: "(not(exists(f:fullUrl)) and not(exists(f:resource))) or (exists(f:fullUrl) and exists(f:resource))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_1);
-            InvariantConstraints.Add(Bundle_BDL_7);
-            InvariantConstraints.Add(Bundle_BDL_3);
-            InvariantConstraints.Add(Bundle_BDL_4);
-            InvariantConstraints.Add(Bundle_BDL_5);
-            InvariantConstraints.Add(Bundle_BDL_6);
+            InvariantConstraints.AddRange(Bundle_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -616,20 +616,22 @@ namespace Hl7.Fhir.Model.R4
         private List<RecommendationComponent> _Recommendation;
     
     
-        public static ElementDefinitionConstraint ImmunizationRecommendation_IMR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ImmunizationRecommendation_Constraints =
         {
-            Expression = "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
-            Key = "imr-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "One of vaccineCode or targetDisease SHALL be present",
-            Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "imr-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
+                human: "One of vaccineCode or targetDisease SHALL be present",
+                xpath: "exists(f:vaccineCode) or exists(f:targetDisease)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ImmunizationRecommendation_IMR_1);
+            InvariantConstraints.AddRange(ImmunizationRecommendation_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

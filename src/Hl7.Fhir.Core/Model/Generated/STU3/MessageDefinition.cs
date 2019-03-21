@@ -962,20 +962,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<AllowedResponseComponent> _AllowedResponse;
     
     
-        public static ElementDefinitionConstraint MessageDefinition_MD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MessageDefinition_Constraints =
         {
-            Expression = "focus.all(max='*' or (max.toInteger() > 0))",
-            Key = "md-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Max must be postive int or *",
-            Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "md-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "focus.all(max='*' or (max.toInteger() > 0))",
+                human: "Max must be postive int or *",
+                xpath: "f:max/@value='*' or number(f:max/@value) > 0"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MessageDefinition_MD_1);
+            InvariantConstraints.AddRange(MessageDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

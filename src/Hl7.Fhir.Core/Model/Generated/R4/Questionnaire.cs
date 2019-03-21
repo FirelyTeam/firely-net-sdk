@@ -1603,150 +1603,126 @@ namespace Hl7.Fhir.Model.R4
         private List<ItemComponent> _Item;
     
     
-        public static ElementDefinitionConstraint Questionnaire_QUE_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Questionnaire_Constraints =
         {
-            Expression = "descendants().linkId.isDistinct()",
-            Key = "que-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The link ids for groups and questions must be unique within the questionnaire",
-            Xpath = "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_0 = new ElementDefinitionConstraint
-        {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "que-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_9 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(type!='display' or readOnly.empty())",
-            Key = "que-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Read-only can't be specified for \"display\" items",
-            Xpath = "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_8 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all((type!='group' and type!='display') or initial.empty())",
-            Key = "que-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Initial values can't be specified for groups or display items",
-            Xpath = "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_6 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(type!='display' or (required.empty() and repeats.empty()))",
-            Key = "que-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Required and repeat aren't permitted for display items",
-            Xpath = "not(f:type/@value='display' and (f:required or f:repeats))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_5 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all((type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty()))",
-            Key = "que-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only 'choice' and 'open-choice' items can have answerValueSet",
-            Xpath = "f:type/@value=('choice','open-choice','decimal','integer','date','dateTime','time','string','quantity',') or not(f:answerOption or f:answerValueSet)"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_4 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(answerOption.empty() or answerValueSet.empty())",
-            Key = "que-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A question cannot have both answerOption and answerValueSet",
-            Xpath = "not(f:answerValueSet and f:answerOption)"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_3 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(type!='display' or code.empty())",
-            Key = "que-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Display items cannot have a \"code\" asserted",
-            Xpath = "not(f:type/@value='display' and f:code)"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_10 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all((type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty())",
-            Key = "que-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Maximum length can only be declared for simple question types",
-            Xpath = "f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_1 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all((type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty()))",
-            Key = "que-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Group items must have nested items, display items cannot have nested items",
-            Xpath = "not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_13 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(repeats=true or initial.count() <= 1)",
-            Key = "que-13",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can only have multiple initial values for repeating items",
-            Xpath = "f:repeats/@value='true' or count(f:initial)<=1"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_11 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(answerOption.empty() or initial.empty())",
-            Key = "que-11",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If one or more answerOption is present, initial[x] must be missing",
-            Xpath = "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_12 = new ElementDefinitionConstraint
-        {
-            Expression = "item.all(enableWhen.count() > 2 implies enableBehavior.exists())",
-            Key = "que-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there are more than one enableWhen, enableBehavior must be specified",
-            Xpath = "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
-        };
-    
-        public static ElementDefinitionConstraint Questionnaire_QUE_7 = new ElementDefinitionConstraint
-        {
-            Expression = "item.enableWhen.all(operator = 'exists' implies (answer is Boolean))",
-            Key = "que-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the operator is 'exists', the value must be a boolean",
-            Xpath = "f:operator/@value != 'exists' or exists(f:answerBoolean)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "descendants().linkId.isDistinct()",
+                human: "The link ids for groups and questions must be unique within the questionnaire",
+                xpath: "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(type!='display' or readOnly.empty())",
+                human: "Read-only can't be specified for \"display\" items",
+                xpath: "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all((type!='group' and type!='display') or initial.empty())",
+                human: "Initial values can't be specified for groups or display items",
+                xpath: "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(type!='display' or (required.empty() and repeats.empty()))",
+                human: "Required and repeat aren't permitted for display items",
+                xpath: "not(f:type/@value='display' and (f:required or f:repeats))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all((type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty()))",
+                human: "Only 'choice' and 'open-choice' items can have answerValueSet",
+                xpath: "f:type/@value=('choice','open-choice','decimal','integer','date','dateTime','time','string','quantity',') or not(f:answerOption or f:answerValueSet)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(answerOption.empty() or answerValueSet.empty())",
+                human: "A question cannot have both answerOption and answerValueSet",
+                xpath: "not(f:answerValueSet and f:answerOption)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(type!='display' or code.empty())",
+                human: "Display items cannot have a \"code\" asserted",
+                xpath: "not(f:type/@value='display' and f:code)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all((type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty())",
+                human: "Maximum length can only be declared for simple question types",
+                xpath: "f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all((type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty()))",
+                human: "Group items must have nested items, display items cannot have nested items",
+                xpath: "not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-13",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(repeats=true or initial.count() <= 1)",
+                human: "Can only have multiple initial values for repeating items",
+                xpath: "f:repeats/@value='true' or count(f:initial)<=1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-11",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(answerOption.empty() or initial.empty())",
+                human: "If one or more answerOption is present, initial[x] must be missing",
+                xpath: "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.all(enableWhen.count() > 2 implies enableBehavior.exists())",
+                human: "If there are more than one enableWhen, enableBehavior must be specified",
+                xpath: "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "que-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.enableWhen.all(operator = 'exists' implies (answer is Boolean))",
+                human: "If the operator is 'exists', the value must be a boolean",
+                xpath: "f:operator/@value != 'exists' or exists(f:answerBoolean)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_0);
-            InvariantConstraints.Add(Questionnaire_QUE_9);
-            InvariantConstraints.Add(Questionnaire_QUE_8);
-            InvariantConstraints.Add(Questionnaire_QUE_6);
-            InvariantConstraints.Add(Questionnaire_QUE_5);
-            InvariantConstraints.Add(Questionnaire_QUE_4);
-            InvariantConstraints.Add(Questionnaire_QUE_3);
-            InvariantConstraints.Add(Questionnaire_QUE_10);
-            InvariantConstraints.Add(Questionnaire_QUE_1);
-            InvariantConstraints.Add(Questionnaire_QUE_13);
-            InvariantConstraints.Add(Questionnaire_QUE_11);
-            InvariantConstraints.Add(Questionnaire_QUE_12);
-            InvariantConstraints.Add(Questionnaire_QUE_7);
+            InvariantConstraints.AddRange(Questionnaire_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

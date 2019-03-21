@@ -299,20 +299,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<Hl7.Fhir.Model.ResourceReference> _Detail;
     
     
-        public static ElementDefinitionConstraint Order_ORD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Order_Constraints =
         {
-            Expression = "when.all(code.empty() or schedule.empty())",
-            Key = "ord-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Provide a code or a schedule, but not both",
-            Xpath = "exists(f:code) != exists(f:schedule)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "ord-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "when.all(code.empty() or schedule.empty())",
+                human: "Provide a code or a schedule, but not both",
+                xpath: "exists(f:code) != exists(f:schedule)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Order_ORD_1);
+            InvariantConstraints.AddRange(Order_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

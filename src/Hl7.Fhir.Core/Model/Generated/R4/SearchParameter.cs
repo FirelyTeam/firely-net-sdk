@@ -985,40 +985,38 @@ namespace Hl7.Fhir.Model.R4
         private List<ComponentComponent> _Component;
     
     
-        public static ElementDefinitionConstraint SearchParameter_SPD_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] SearchParameter_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "spd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint SearchParameter_SPD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "xpath.empty() or xpathUsage.exists()",
-            Key = "spd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If an xpath is present, there SHALL be an xpathUsage",
-            Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
-        };
-    
-        public static ElementDefinitionConstraint SearchParameter_SPD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "chain.empty() or type = 'reference'",
-            Key = "spd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
-            Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "spd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "spd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "xpath.empty() or xpathUsage.exists()",
+                human: "If an xpath is present, there SHALL be an xpathUsage",
+                xpath: "not(exists(f:xpath)) or exists(f:xpathUsage)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "spd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "chain.empty() or type = 'reference'",
+                human: "Search parameters can only have chain names when the search parameter type is 'reference'",
+                xpath: "not(exists(f:chain)) or (f:type/@value = 'reference')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(SearchParameter_SPD_0);
-            InvariantConstraints.Add(SearchParameter_SPD_1);
-            InvariantConstraints.Add(SearchParameter_SPD_2);
+            InvariantConstraints.AddRange(SearchParameter_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

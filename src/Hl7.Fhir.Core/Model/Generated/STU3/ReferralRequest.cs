@@ -601,20 +601,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
     
     
-        public static ElementDefinitionConstraint ReferralRequest_RFR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ReferralRequest_Constraints =
         {
-            Expression = "requester.all((agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
-            Key = "rfr-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "rfr-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "requester.all((agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
+                human: "onBehalfOf can only be specified if agent is practitioner or device",
+                xpath: "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ReferralRequest_RFR_1);
+            InvariantConstraints.AddRange(ReferralRequest_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -703,20 +703,22 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
     
     
-        public static ElementDefinitionConstraint ServiceRequest_PRR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ServiceRequest_Constraints =
         {
-            Expression = "orderDetail.empty() or code.exists()",
-            Key = "prr-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "orderDetail SHALL only be present if code is present",
-            Xpath = "exists(f:code) or not(exists(f:orderDetail))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "prr-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "orderDetail.empty() or code.exists()",
+                human: "orderDetail SHALL only be present if code is present",
+                xpath: "exists(f:code) or not(exists(f:orderDetail))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ServiceRequest_PRR_1);
+            InvariantConstraints.AddRange(ServiceRequest_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

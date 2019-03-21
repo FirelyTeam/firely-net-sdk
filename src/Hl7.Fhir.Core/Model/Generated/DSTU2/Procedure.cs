@@ -617,20 +617,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<Hl7.Fhir.Model.ResourceReference> _Used;
     
     
-        public static ElementDefinitionConstraint Procedure_PRO_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Procedure_Constraints =
         {
-            Expression = "reasonNotPerformed.empty() or notPerformed = 'true'",
-            Key = "pro-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason not performed is only permitted if notPerformed indicator is true",
-            Xpath = "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "pro-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonNotPerformed.empty() or notPerformed = 'true'",
+                human: "Reason not performed is only permitted if notPerformed indicator is true",
+                xpath: "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Procedure_PRO_1);
+            InvariantConstraints.AddRange(Procedure_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

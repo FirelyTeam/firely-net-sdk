@@ -1271,130 +1271,110 @@ namespace Hl7.Fhir.Model.DSTU2
         private DifferentialComponent _Differential;
     
     
-        public static ElementDefinitionConstraint StructureDefinition_SDF_11 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] StructureDefinition_Constraints =
         {
-            Expression = "constrainedType.empty() or snapshot.empty() or snapshot.element.first().path = constrainedType",
-            Key = "sdf-11",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a constrained type, its content must match the path name in the first element of a snapshot",
-            Xpath = "not(exists(f:constrainedType)) or not(exists(f:snapshot)) or (f:constrainedType/@value = f:snapshot/f:element[1]/f:path/@value)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_5 = new ElementDefinitionConstraint
-        {
-            Expression = "constrainedType != 'Extension' or (context and contextType)",
-            Key = "sdf-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the structure defines an extension then the structure must have context information",
-            Xpath = "not(f:constrainedType/@value = 'extension') or (exists(f:context) and exists(f:contextType))"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_12 = new ElementDefinitionConstraint
-        {
-            Expression = "snapshot.element.base implies base",
-            Key = "sdf-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "element.base cannot appear if there is no base on the structure definition",
-            Xpath = "f:base or not(exists(f:snapshot/f:element/f:base) or exists(f:differential/f:element/f:base))"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_4 = new ElementDefinitionConstraint
-        {
-            Expression = "base or abstract = 'true'",
-            Key = "sdf-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A structure must have a base unless abstract = true",
-            Xpath = "(f:abstract/@value =true()) or exists(f:base)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_7 = new ElementDefinitionConstraint
-        {
-            Expression = "constrainedType or url = 'http://hl7.org/fhir/StructureDefinition/'+id",
-            Key = "sdf-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
-            Xpath = "exists(f:constrainedType) or f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_6 = new ElementDefinitionConstraint
-        {
-            Expression = "snapshot or differential",
-            Key = "sdf-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A structure must have either a differential, or a snapshot (or both)",
-            Xpath = "exists(f:snapshot) or exists(f:differential)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_1 = new ElementDefinitionConstraint
-        {
-            Expression = "constrainedType or snapshot.element.select(path).isDistinct()",
-            Key = "sdf-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Element paths must be unique unless the structure is a constraint",
-            Xpath = "exists(f:constrainedType) or (count(f:snapshot/f:element) = count(distinct-values(f:snapshot/f:element/f:path/@value)))"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_8 = new ElementDefinitionConstraint
-        {
-            Expression = "snapshot.element.tail().all(path.startsWith(%context.snapshot.element.first().path+'.')) and differential.element.tail().all(path.startsWith(%context.differential.element.first().path+'.'))",
-            Key = "sdf-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "In any snapshot or differential, all the elements except the first have to have a path that starts with the path of the first + \".\"",
-            Xpath = "string-join(for $elementName in f:*[self::f:snapshot or self::f:differential]/f:element[position()>1]/f:path/@value return if (starts-with($elementName, concat($elementName/ancestor::f:element/parent::f:*/f:element[1]/f:path/@value, '.'))) then '' else $elementName,'')=''"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_9 = new ElementDefinitionConstraint
-        {
-            Expression = "children().element.first().label.empty() and children().element.first().code.empty() and children().element.first().requirements.empty()",
-            Key = "sdf-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
-            Xpath = "not(exists(f:snapshot/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)])) and not(exists(f:differential/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)]))"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_10 = new ElementDefinitionConstraint
-        {
-            Expression = "base or abstract = 'true' or constrainedType",
-            Key = "sdf-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the structure is not abstract, or there's a constrained type, then there SHALL be a base",
-            Xpath = "(f:abstract/@value=true()) or not(exists(f:constrainedType)) or exists(f:base)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_2 = new ElementDefinitionConstraint
-        {
-            Expression = "mapping.all(name or uri)",
-            Key = "sdf-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have at a name or a uri (or both)",
-            Xpath = "exists(f:uri) or exists(f:name)"
-        };
-    
-        public static ElementDefinitionConstraint StructureDefinition_SDF_3 = new ElementDefinitionConstraint
-        {
-            Expression = "snapshot.all(element.all(definition and min and max))",
-            Key = "sdf-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Each element definition in a snapshot must have a formal definition and cardinalities",
-            Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-11",
+                severity: ConstraintSeverity.Warning,
+                expression: "constrainedType.empty() or snapshot.empty() or snapshot.element.first().path = constrainedType",
+                human: "If there's a constrained type, its content must match the path name in the first element of a snapshot",
+                xpath: "not(exists(f:constrainedType)) or not(exists(f:snapshot)) or (f:constrainedType/@value = f:snapshot/f:element[1]/f:path/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "constrainedType != 'Extension' or (context and contextType)",
+                human: "If the structure defines an extension then the structure must have context information",
+                xpath: "not(f:constrainedType/@value = 'extension') or (exists(f:context) and exists(f:contextType))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "snapshot.element.base implies base",
+                human: "element.base cannot appear if there is no base on the structure definition",
+                xpath: "f:base or not(exists(f:snapshot/f:element/f:base) or exists(f:differential/f:element/f:base))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "base or abstract = 'true'",
+                human: "A structure must have a base unless abstract = true",
+                xpath: "(f:abstract/@value =true()) or exists(f:base)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "constrainedType or url = 'http://hl7.org/fhir/StructureDefinition/'+id",
+                human: "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
+                xpath: "exists(f:constrainedType) or f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "snapshot or differential",
+                human: "A structure must have either a differential, or a snapshot (or both)",
+                xpath: "exists(f:snapshot) or exists(f:differential)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "constrainedType or snapshot.element.select(path).isDistinct()",
+                human: "Element paths must be unique unless the structure is a constraint",
+                xpath: "exists(f:constrainedType) or (count(f:snapshot/f:element) = count(distinct-values(f:snapshot/f:element/f:path/@value)))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "snapshot.element.tail().all(path.startsWith(%context.snapshot.element.first().path+'.')) and differential.element.tail().all(path.startsWith(%context.differential.element.first().path+'.'))",
+                human: "In any snapshot or differential, all the elements except the first have to have a path that starts with the path of the first + \".\"",
+                xpath: "string-join(for $elementName in f:*[self::f:snapshot or self::f:differential]/f:element[position()>1]/f:path/@value return if (starts-with($elementName, concat($elementName/ancestor::f:element/parent::f:*/f:element[1]/f:path/@value, '.'))) then '' else $elementName,'')=''"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "children().element.first().label.empty() and children().element.first().code.empty() and children().element.first().requirements.empty()",
+                human: "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
+                xpath: "not(exists(f:snapshot/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)])) and not(exists(f:differential/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "base or abstract = 'true' or constrainedType",
+                human: "If the structure is not abstract, or there's a constrained type, then there SHALL be a base",
+                xpath: "(f:abstract/@value=true()) or not(exists(f:constrainedType)) or exists(f:base)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "mapping.all(name or uri)",
+                human: "Must have at a name or a uri (or both)",
+                xpath: "exists(f:uri) or exists(f:name)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sdf-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "snapshot.all(element.all(definition and min and max))",
+                human: "Each element definition in a snapshot must have a formal definition and cardinalities",
+                xpath: "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(StructureDefinition_SDF_11);
-            InvariantConstraints.Add(StructureDefinition_SDF_5);
-            InvariantConstraints.Add(StructureDefinition_SDF_12);
-            InvariantConstraints.Add(StructureDefinition_SDF_4);
-            InvariantConstraints.Add(StructureDefinition_SDF_7);
-            InvariantConstraints.Add(StructureDefinition_SDF_6);
-            InvariantConstraints.Add(StructureDefinition_SDF_1);
-            InvariantConstraints.Add(StructureDefinition_SDF_8);
-            InvariantConstraints.Add(StructureDefinition_SDF_9);
-            InvariantConstraints.Add(StructureDefinition_SDF_10);
-            InvariantConstraints.Add(StructureDefinition_SDF_2);
-            InvariantConstraints.Add(StructureDefinition_SDF_3);
+            InvariantConstraints.AddRange(StructureDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

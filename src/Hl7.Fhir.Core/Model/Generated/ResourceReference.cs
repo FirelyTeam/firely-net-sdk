@@ -167,13 +167,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
     
     
-        public static ElementDefinitionConstraint ResourceReference_REF_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ResourceReference_Constraints =
         {
-            Expression = "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-            Key = "ref-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have a local reference if the resource is provided inline",
-            Xpath = "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "ref-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
+                human: "SHALL have a local reference if the resource is provided inline",
+                xpath: "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "ref-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
+                human: "SHALL have a contained resource if a local reference is provided",
+                xpath: "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

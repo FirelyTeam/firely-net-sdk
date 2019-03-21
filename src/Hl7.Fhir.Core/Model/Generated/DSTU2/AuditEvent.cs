@@ -1485,20 +1485,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<ObjectComponent> _Object;
     
     
-        public static ElementDefinitionConstraint AuditEvent_SEV_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] AuditEvent_Constraints =
         {
-            Expression = "object.all(name.empty() or query.empty())",
-            Key = "sev-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a name or a query (NOT both)",
-            Xpath = "not(exists(f:name)) or not(exists(f:query))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "sev-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "object.all(name.empty() or query.empty())",
+                human: "Either a name or a query (NOT both)",
+                xpath: "not(exists(f:name)) or not(exists(f:query))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(AuditEvent_SEV_1);
+            InvariantConstraints.AddRange(AuditEvent_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

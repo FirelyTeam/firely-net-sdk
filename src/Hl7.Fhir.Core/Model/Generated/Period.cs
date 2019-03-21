@@ -120,13 +120,24 @@ namespace Hl7.Fhir.Model
         }
     
     
-        public static ElementDefinitionConstraint Period_PER_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Period_Constraints =
         {
-            Expression = "start.empty() or end.empty() or (start <= end)",
-            Key = "per-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If present, start SHALL have a lower value than end",
-            Xpath = "not(exists(f:start)) or not(exists(f:end)) or (f:start/@value <= f:end/@value)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3},
+                key: "per-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "start.empty() or end.empty() or (start <= end)",
+                human: "If present, start SHALL have a lower value than end",
+                xpath: "not(exists(f:start)) or not(exists(f:end)) or (f:start/@value <= f:end/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "per-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "start.hasValue().not() or end.hasValue().not() or (start <= end)",
+                human: "If present, start SHALL have a lower value than end",
+                xpath: "not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) <= xs:dateTime(f:end/@value))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

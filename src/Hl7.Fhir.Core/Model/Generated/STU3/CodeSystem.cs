@@ -1722,20 +1722,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<ConceptDefinitionComponent> _Concept;
     
     
-        public static ElementDefinitionConstraint CodeSystem_CSD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CodeSystem_Constraints =
         {
-            Expression = "(concept.code | descendants().concept.code).isDistinct()",
-            Key = "csd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Within a code system definition, all the codes SHALL be unique",
-            Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "csd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(concept.code | descendants().concept.code).isDistinct()",
+                human: "Within a code system definition, all the codes SHALL be unique",
+                xpath: "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CodeSystem_CSD_1);
+            InvariantConstraints.AddRange(CodeSystem_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

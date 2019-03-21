@@ -953,20 +953,22 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<LinkComponent> _Link;
     
     
-        public static ElementDefinitionConstraint Patient_PAT_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Patient_Constraints =
         {
-            Expression = "contact.all(name or telecom or address or organization)",
-            Key = "pat-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL at least contain a contact's details or a reference to an organization",
-            Xpath = "f:name or f:telecom or f:address or f:organization"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "pat-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "contact.all(name or telecom or address or organization)",
+                human: "SHALL at least contain a contact's details or a reference to an organization",
+                xpath: "f:name or f:telecom or f:address or f:organization"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Patient_PAT_1);
+            InvariantConstraints.AddRange(Patient_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

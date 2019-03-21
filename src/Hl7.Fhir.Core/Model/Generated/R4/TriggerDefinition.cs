@@ -165,31 +165,32 @@ namespace Hl7.Fhir.Model.R4
         private Hl7.Fhir.Model.Expression _Condition;
     
     
-        public static ElementDefinitionConstraint TriggerDefinition_TRD_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] TriggerDefinition_Constraints =
         {
-            Expression = "(type = 'named-event' implies name.exists()) and (type = 'periodic' implies timing.exists()) and (type.startsWith('data-') implies data.exists())",
-            Key = "trd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A named event requires a name, a periodic event requires timing, and a data event requires data",
-            Xpath = "((not(f:type/@value = 'named-event')) or name.exists()) and (not(f:type/@value = 'periodic') or timing.exists()) and (not(starts-with(f:type/@value, 'data-')) or data.exists())"
-        };
-    
-        public static ElementDefinitionConstraint TriggerDefinition_TRD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "condition.exists() implies data.exists()",
-            Key = "trd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A condition only if there is a data requirement",
-            Xpath = "not(exists(f:condition)) or exists(f:data)"
-        };
-    
-        public static ElementDefinitionConstraint TriggerDefinition_TRD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "data.empty() or timing.empty()",
-            Key = "trd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either timing, or a data requirement, but not both",
-            Xpath = "not(exists(f:data)) or not(exists(*[starts-with(local-name(.), 'timing')]))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "trd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "(type = 'named-event' implies name.exists()) and (type = 'periodic' implies timing.exists()) and (type.startsWith('data-') implies data.exists())",
+                human: "A named event requires a name, a periodic event requires timing, and a data event requires data",
+                xpath: "((not(f:type/@value = 'named-event')) or name.exists()) and (not(f:type/@value = 'periodic') or timing.exists()) and (not(starts-with(f:type/@value, 'data-')) or data.exists())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "trd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "condition.exists() implies data.exists()",
+                human: "A condition only if there is a data requirement",
+                xpath: "not(exists(f:condition)) or exists(f:data)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "trd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "data.empty() or timing.empty()",
+                human: "Either timing, or a data requirement, but not both",
+                xpath: "not(exists(f:data)) or not(exists(*[starts-with(local-name(.), 'timing')]))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

@@ -54,13 +54,16 @@ namespace Hl7.Fhir.Model.STU3
     
     
     
-        public static ElementDefinitionConstraint Distance_DIS_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Distance_Constraints =
         {
-            Expression = "(code or value.empty()) and (system.empty() or system = %ucum)",
-            Key = "dis-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.",
-            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "dis-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(code or value.empty()) and (system.empty() or system = %ucum)",
+                human: "There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.",
+                xpath: "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

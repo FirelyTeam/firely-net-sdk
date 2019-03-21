@@ -959,20 +959,22 @@ namespace Hl7.Fhir.Model.R4
         private List<CharacteristicComponent> _Characteristic;
     
     
-        public static ElementDefinitionConstraint EvidenceVariable_EVV_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] EvidenceVariable_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "evv-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "evv-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(EvidenceVariable_EVV_0);
+            InvariantConstraints.AddRange(EvidenceVariable_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

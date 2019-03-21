@@ -582,30 +582,30 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<DosageComponent> _Dosage;
     
     
-        public static ElementDefinitionConstraint MedicationStatement_MST_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationStatement_Constraints =
         {
-            Expression = "reasonForUse.empty() or wasNotTaken = false",
-            Key = "mst-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason for use is only permitted if wasNotTaken is false",
-            Xpath = "not(exists(*[starts-with(local-name(.), 'reasonForUse')]) and f:wasNotTaken/@value=true())"
-        };
-    
-        public static ElementDefinitionConstraint MedicationStatement_MST_1 = new ElementDefinitionConstraint
-        {
-            Expression = "reasonNotTaken.empty() or wasNotTaken = true",
-            Key = "mst-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason not taken is only permitted if wasNotTaken is true",
-            Xpath = "not(exists(f:reasonNotTaken) and f:wasNotTaken/@value=false())"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "mst-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonForUse.empty() or wasNotTaken = false",
+                human: "Reason for use is only permitted if wasNotTaken is false",
+                xpath: "not(exists(*[starts-with(local-name(.), 'reasonForUse')]) and f:wasNotTaken/@value=true())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "mst-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "reasonNotTaken.empty() or wasNotTaken = true",
+                human: "Reason not taken is only permitted if wasNotTaken is true",
+                xpath: "not(exists(f:reasonNotTaken) and f:wasNotTaken/@value=false())"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationStatement_MST_2);
-            InvariantConstraints.Add(MedicationStatement_MST_1);
+            InvariantConstraints.AddRange(MedicationStatement_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

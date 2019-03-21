@@ -1304,20 +1304,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<ActionComponent> _Action;
     
     
-        public static ElementDefinitionConstraint RequestGroup_RQG_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] RequestGroup_Constraints =
         {
-            Expression = "action.all(resource.exists() != action.exists())",
-            Key = "rqg-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have resource or action but not both",
-            Xpath = "exists(f:resource) != exists(f:action)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "rqg-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "action.all(resource.exists() != action.exists())",
+                human: "Must have resource or action but not both",
+                xpath: "exists(f:resource) != exists(f:action)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(RequestGroup_RQG_1);
+            InvariantConstraints.AddRange(RequestGroup_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -3669,110 +3669,94 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<DocumentComponent> _Document;
     
     
-        public static ElementDefinitionConstraint Conformance_CNF_14 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Conformance_Constraints =
         {
-            Expression = "(software.empty() and implementation.empty()) or kind != 'requirements'",
-            Key = "cnf-14",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Conformance statements of kind 'requirements' do not have software or implementation elements",
-            Xpath = "not(exists(f:software) or exists(f:implementation)) or (f:kind/@value != 'requirements')"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_1 = new ElementDefinitionConstraint
-        {
-            Expression = "rest or messaging or document",
-            Key = "cnf-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Conformance statement SHALL have at least one of REST, messaging or document",
-            Xpath = "exists(f:rest) or exists(f:messaging) or exists(f:document)"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_15 = new ElementDefinitionConstraint
-        {
-            Expression = "implementation.empty() or kind != 'capability'",
-            Key = "cnf-15",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Conformance statements of kind 'software' do not have implementation elements",
-            Xpath = "not(exists(f:implementation)) or (f:kind/@value != 'capability')"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_2 = new ElementDefinitionConstraint
-        {
-            Expression = "description or software or implementation",
-            Key = "cnf-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A Conformance statement SHALL have at least one of description, software, or implementation",
-            Xpath = "count(f:software | f:implementation | f:description) > 0"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_3 = new ElementDefinitionConstraint
-        {
-            Expression = "messaging.endpoint.empty() or kind = 'instance'",
-            Key = "cnf-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Messaging end-point is required (and is only permitted) when statement is for an implementation",
-            Xpath = "not(exists(f:messaging/f:endpoint)) or f:kind/@value = 'instance'"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_7 = new ElementDefinitionConstraint
-        {
-            Expression = "document.select(profile|mode).isDistinct()",
-            Key = "cnf-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The set of documents must be unique by the combination of profile & mode",
-            Xpath = "count(f:document[f:mode/@value='producer'])=count(distinct-values(f:document[f:mode/@value='producer']/f:profile/f:reference/@value)) and count(f:document[f:mode/@value='consumer'])=count(distinct-values(f:document[f:mode/@value='consumer']/f:profile/f:reference/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_8 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.select(mode).isDistinct()",
-            Key = "cnf-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There can only be one REST declaration per mode",
-            Xpath = "count(f:rest)=count(distinct-values(f:rest/f:mode/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_9 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.all(resource.select(type).isDistinct())",
-            Key = "cnf-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A given resource can only be described once per RESTful mode",
-            Xpath = "count(f:resource)=count(distinct-values(f:resource/f:type/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_12 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.resource.all(searchParam.select(name).isDistinct())",
-            Key = "cnf-12",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Search parameter names must be unique in the context of a resource",
-            Xpath = "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
-        };
-    
-        public static ElementDefinitionConstraint Conformance_CNF_13 = new ElementDefinitionConstraint
-        {
-            Expression = "rest.resource.searchParam.all(chain.empty() or type = 'reference')",
-            Key = "cnf-13",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
-            Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-14",
+                severity: ConstraintSeverity.Warning,
+                expression: "(software.empty() and implementation.empty()) or kind != 'requirements'",
+                human: "Conformance statements of kind 'requirements' do not have software or implementation elements",
+                xpath: "not(exists(f:software) or exists(f:implementation)) or (f:kind/@value != 'requirements')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest or messaging or document",
+                human: "A Conformance statement SHALL have at least one of REST, messaging or document",
+                xpath: "exists(f:rest) or exists(f:messaging) or exists(f:document)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-15",
+                severity: ConstraintSeverity.Warning,
+                expression: "implementation.empty() or kind != 'capability'",
+                human: "Conformance statements of kind 'software' do not have implementation elements",
+                xpath: "not(exists(f:implementation)) or (f:kind/@value != 'capability')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "description or software or implementation",
+                human: "A Conformance statement SHALL have at least one of description, software, or implementation",
+                xpath: "count(f:software | f:implementation | f:description) > 0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "messaging.endpoint.empty() or kind = 'instance'",
+                human: "Messaging end-point is required (and is only permitted) when statement is for an implementation",
+                xpath: "not(exists(f:messaging/f:endpoint)) or f:kind/@value = 'instance'"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "document.select(profile|mode).isDistinct()",
+                human: "The set of documents must be unique by the combination of profile & mode",
+                xpath: "count(f:document[f:mode/@value='producer'])=count(distinct-values(f:document[f:mode/@value='producer']/f:profile/f:reference/@value)) and count(f:document[f:mode/@value='consumer'])=count(distinct-values(f:document[f:mode/@value='consumer']/f:profile/f:reference/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.select(mode).isDistinct()",
+                human: "There can only be one REST declaration per mode",
+                xpath: "count(f:rest)=count(distinct-values(f:rest/f:mode/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.all(resource.select(type).isDistinct())",
+                human: "A given resource can only be described once per RESTful mode",
+                xpath: "count(f:resource)=count(distinct-values(f:resource/f:type/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-12",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.resource.all(searchParam.select(name).isDistinct())",
+                human: "Search parameter names must be unique in the context of a resource",
+                xpath: "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cnf-13",
+                severity: ConstraintSeverity.Warning,
+                expression: "rest.resource.searchParam.all(chain.empty() or type = 'reference')",
+                human: "Search parameters can only have chain names when the search parameter type is 'reference'",
+                xpath: "not(exists(f:chain)) or (f:type/@value = 'reference')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Conformance_CNF_14);
-            InvariantConstraints.Add(Conformance_CNF_1);
-            InvariantConstraints.Add(Conformance_CNF_15);
-            InvariantConstraints.Add(Conformance_CNF_2);
-            InvariantConstraints.Add(Conformance_CNF_3);
-            InvariantConstraints.Add(Conformance_CNF_7);
-            InvariantConstraints.Add(Conformance_CNF_8);
-            InvariantConstraints.Add(Conformance_CNF_9);
-            InvariantConstraints.Add(Conformance_CNF_12);
-            InvariantConstraints.Add(Conformance_CNF_13);
+            InvariantConstraints.AddRange(Conformance_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -240,20 +240,38 @@ namespace Hl7.Fhir.Model
         private List<ParameterComponent> _Parameter;
     
     
-        public static ElementDefinitionConstraint Parameters_INV_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Parameters_Constraints =
         {
-            Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
-            Key = "inv-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A parameter must have only one of (value, resource, part)",
-            Xpath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
+                human: "A parameter must have only one of (value, resource, part)",
+                xpath: "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
+                human: "A parameter must have one and only one of (value, resource, part)",
+                xpath: "(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), 'value')])) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "inv-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
+                human: "A parameter must have only one of (value, resource, part)",
+                xpath: "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Parameters_INV_1);
+            InvariantConstraints.AddRange(Parameters_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

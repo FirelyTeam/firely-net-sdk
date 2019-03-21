@@ -1548,30 +1548,30 @@ namespace Hl7.Fhir.Model.STU3
         }
     
     
-        public static ElementDefinitionConstraint ExpansionProfile_EXP_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ExpansionProfile_Constraints =
         {
-            Expression = "designation.include.designation.all(language.exists() or use.exists())",
-            Key = "exp-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of language or use",
-            Xpath = "exists(f:language) or exists(f:use)"
-        };
-    
-        public static ElementDefinitionConstraint ExpansionProfile_EXP_4 = new ElementDefinitionConstraint
-        {
-            Expression = "designation.exclude.designation.all(language.exists() or use.exists())",
-            Key = "exp-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of language or use",
-            Xpath = "exists(f:language) or exists(f:use)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "exp-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "designation.include.designation.all(language.exists() or use.exists())",
+                human: "SHALL have at least one of language or use",
+                xpath: "exists(f:language) or exists(f:use)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "exp-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "designation.exclude.designation.all(language.exists() or use.exists())",
+                human: "SHALL have at least one of language or use",
+                xpath: "exists(f:language) or exists(f:use)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ExpansionProfile_EXP_3);
-            InvariantConstraints.Add(ExpansionProfile_EXP_4);
+            InvariantConstraints.AddRange(ExpansionProfile_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

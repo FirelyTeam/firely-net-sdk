@@ -1551,20 +1551,22 @@ namespace Hl7.Fhir.Model.R4
         private List<PlanComponent> _Plan;
     
     
-        public static ElementDefinitionConstraint InsurancePlan_IPN_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] InsurancePlan_Constraints =
         {
-            Expression = "(identifier.count() + name.count()) > 0",
-            Key = "ipn-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The organization SHALL at least have a name or an idendtifier, and possibly more than one",
-            Xpath = "count(f:identifier | f:name) > 0"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ipn-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(identifier.count() + name.count()) > 0",
+                human: "The organization SHALL at least have a name or an idendtifier, and possibly more than one",
+                xpath: "count(f:identifier | f:name) > 0"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(InsurancePlan_IPN_1);
+            InvariantConstraints.AddRange(InsurancePlan_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

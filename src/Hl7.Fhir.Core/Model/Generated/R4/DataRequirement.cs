@@ -761,22 +761,24 @@ namespace Hl7.Fhir.Model.R4
         private List<SortComponent> _Sort;
     
     
-        public static ElementDefinitionConstraint DataRequirement_DRQ_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] DataRequirement_Constraints =
         {
-            Expression = "codeFilter.all(path.exists() xor searchParam.exists())",
-            Key = "drq-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a path or a searchParam must be provided, but not both",
-            Xpath = "(exists(f:path) and not(exists(f:searchParam))) or (not(exists(f:path)) and exists(f:searchParam))"
-        };
-    
-        public static ElementDefinitionConstraint DataRequirement_DRQ_2 = new ElementDefinitionConstraint
-        {
-            Expression = "dateFilter.all(path.exists() xor searchParam.exists())",
-            Key = "drq-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a path or a searchParam must be provided, but not both",
-            Xpath = "(exists(f:path) and not(exists(f:searchParam))) or (not(exists(f:path)) and exists(f:searchParam))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "drq-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeFilter.all(path.exists() xor searchParam.exists())",
+                human: "Either a path or a searchParam must be provided, but not both",
+                xpath: "(exists(f:path) and not(exists(f:searchParam))) or (not(exists(f:path)) and exists(f:searchParam))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "drq-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "dateFilter.all(path.exists() xor searchParam.exists())",
+                human: "Either a path or a searchParam must be provided, but not both",
+                xpath: "(exists(f:path) and not(exists(f:searchParam))) or (not(exists(f:path)) and exists(f:searchParam))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

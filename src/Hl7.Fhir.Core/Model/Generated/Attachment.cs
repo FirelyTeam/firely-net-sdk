@@ -318,13 +318,32 @@ namespace Hl7.Fhir.Model
         }
     
     
-        public static ElementDefinitionConstraint Attachment_ATT_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Attachment_Constraints =
         {
-            Expression = "data.empty() or contentType",
-            Key = "att-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "It the Attachment has data, it SHALL have a contentType",
-            Xpath = "not(exists(f:data)) or exists(f:contentType)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "att-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "data.empty() or contentType",
+                human: "It the Attachment has data, it SHALL have a contentType",
+                xpath: "not(exists(f:data)) or exists(f:contentType)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "att-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "data.empty() or contentType.exists()",
+                human: "If the Attachment has data, it SHALL have a contentType",
+                xpath: "not(exists(f:data)) or exists(f:contentType)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "att-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "data.empty() or contentType.exists()",
+                human: "It the Attachment has data, it SHALL have a contentType",
+                xpath: "not(exists(f:data)) or exists(f:contentType)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

@@ -1367,30 +1367,30 @@ namespace Hl7.Fhir.Model.STU3
         private List<OverloadComponent> _Overload;
     
     
-        public static ElementDefinitionConstraint OperationDefinition_OPD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] OperationDefinition_Constraints =
         {
-            Expression = "parameter.all(type.exists() or part.exists())",
-            Key = "opd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
-        };
-    
-        public static ElementDefinitionConstraint OperationDefinition_OPD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "parameter.all(searchType implies type = 'string')",
-            Key = "opd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A search type can only be specified for parameters of type string",
-            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "opd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(type.exists() or part.exists())",
+                human: "Either a type must be provided, or parts",
+                xpath: "exists(f:type) or exists(f:part)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "opd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "parameter.all(searchType implies type = 'string')",
+                human: "A search type can only be specified for parameters of type string",
+                xpath: "not(exists(f:searchType)) or (f:type/@value = 'string')"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(OperationDefinition_OPD_1);
-            InvariantConstraints.Add(OperationDefinition_OPD_2);
+            InvariantConstraints.AddRange(OperationDefinition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

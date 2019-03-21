@@ -247,20 +247,22 @@ namespace Hl7.Fhir.Model.R4
         }
     
     
-        public static ElementDefinitionConstraint AppointmentResponse_APR_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] AppointmentResponse_Constraints =
         {
-            Expression = "participantType.exists() or actor.exists()",
-            Key = "apr-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either the participantType or actor must be specified",
-            Xpath = "(exists(f:participantType) or exists(f:actor))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "apr-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "participantType.exists() or actor.exists()",
+                human: "Either the participantType or actor must be specified",
+                xpath: "(exists(f:participantType) or exists(f:actor))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(AppointmentResponse_APR_1);
+            InvariantConstraints.AddRange(AppointmentResponse_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -1049,20 +1049,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint CarePlan_CPL_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CarePlan_Constraints =
         {
-            Expression = "activity.all(detail.empty() or reference.empty())",
-            Key = "cpl-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Provide a reference or detail, not both",
-            Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cpl-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "activity.all(detail.empty() or reference.empty())",
+                human: "Provide a reference or detail, not both",
+                xpath: "not(exists(f:detail)) or not(exists(f:reference))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CarePlan_CPL_3);
+            InvariantConstraints.AddRange(CarePlan_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

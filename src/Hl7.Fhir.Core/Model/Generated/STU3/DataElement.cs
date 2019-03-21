@@ -692,40 +692,38 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.STU3.ElementDefinition> _Element;
     
     
-        public static ElementDefinitionConstraint DataElement_DAE_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] DataElement_Constraints =
         {
-            Expression = "mapping.all(uri.exists() or name.exists())",
-            Key = "dae-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "At least one of  name or uri SHALL be present",
-            Xpath = "exists(f:uri) or exists(f:name)"
-        };
-    
-        public static ElementDefinitionConstraint DataElement_DAE_1 = new ElementDefinitionConstraint
-        {
-            Expression = "element.all(base.empty())",
-            Key = "dae-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "No base allowed",
-            Xpath = "not(exists(f:base))"
-        };
-    
-        public static ElementDefinitionConstraint DataElement_DAE_2 = new ElementDefinitionConstraint
-        {
-            Expression = "element.all(slicing.empty())",
-            Key = "dae-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "No slicing allowed",
-            Xpath = "not(exists(f:slicing))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "dae-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "mapping.all(uri.exists() or name.exists())",
+                human: "At least one of  name or uri SHALL be present",
+                xpath: "exists(f:uri) or exists(f:name)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "dae-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "element.all(base.empty())",
+                human: "No base allowed",
+                xpath: "not(exists(f:base))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "dae-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "element.all(slicing.empty())",
+                human: "No slicing allowed",
+                xpath: "not(exists(f:slicing))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(DataElement_DAE_3);
-            InvariantConstraints.Add(DataElement_DAE_1);
-            InvariantConstraints.Add(DataElement_DAE_2);
+            InvariantConstraints.AddRange(DataElement_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

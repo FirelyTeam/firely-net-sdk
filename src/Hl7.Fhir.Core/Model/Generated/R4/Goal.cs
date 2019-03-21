@@ -474,20 +474,22 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _OutcomeReference;
     
     
-        public static ElementDefinitionConstraint Goal_GOL_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Goal_Constraints =
         {
-            Expression = "target.all((detail.exists() and measure.exists()) or detail.exists().not())",
-            Key = "gol-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Goal.target.measure is required if Goal.target.detail is populated",
-            Xpath = "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "gol-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "target.all((detail.exists() and measure.exists()) or detail.exists().not())",
+                human: "Goal.target.measure is required if Goal.target.detail is populated",
+                xpath: "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Goal_GOL_1);
+            InvariantConstraints.AddRange(Goal_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

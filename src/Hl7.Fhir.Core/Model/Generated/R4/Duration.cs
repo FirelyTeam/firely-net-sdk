@@ -54,13 +54,16 @@ namespace Hl7.Fhir.Model.R4
     
     
     
-        public static ElementDefinitionConstraint Duration_DRT_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Duration_Constraints =
         {
-            Expression = "code.exists() implies ((system = %ucum) and value.exists())",
-            Key = "drt-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.",
-            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "drt-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "code.exists() implies ((system = %ucum) and value.exists())",
+                human: "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.",
+                xpath: "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

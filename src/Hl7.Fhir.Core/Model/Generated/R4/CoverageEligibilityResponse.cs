@@ -1186,20 +1186,22 @@ namespace Hl7.Fhir.Model.R4
         private List<ErrorsComponent> _Error;
     
     
-        public static ElementDefinitionConstraint CoverageEligibilityResponse_CES_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CoverageEligibilityResponse_Constraints =
         {
-            Expression = "insurance.item.all(category.exists() xor productOrService.exists())",
-            Key = "ces-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL contain a category or a billcode but not both.",
-            Xpath = "exists(f:category) or exists(f:productOrService)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ces-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "insurance.item.all(category.exists() xor productOrService.exists())",
+                human: "SHALL contain a category or a billcode but not both.",
+                xpath: "exists(f:category) or exists(f:productOrService)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CoverageEligibilityResponse_CES_1);
+            InvariantConstraints.AddRange(CoverageEligibilityResponse_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

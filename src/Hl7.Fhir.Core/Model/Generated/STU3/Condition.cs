@@ -558,50 +558,46 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint Condition_CON_4 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Condition_Constraints =
         {
-            Expression = "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            Key = "con-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_3 = new ElementDefinitionConstraint
-        {
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            Key = "con-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_1 = new ElementDefinitionConstraint
-        {
-            Expression = "stage.all(summary.exists() or assessment.exists())",
-            Key = "con-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_2 = new ElementDefinitionConstraint
-        {
-            Expression = "evidence.all(code.exists() or detail.exists())",
-            Key = "con-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "con-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
+                human: "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
+                xpath: "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "con-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+                human: "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
+                xpath: "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "con-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "stage.all(summary.exists() or assessment.exists())",
+                human: "Stage SHALL have summary or assessment",
+                xpath: "exists(f:summary) or exists(f:assessment)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "con-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "evidence.all(code.exists() or detail.exists())",
+                human: "evidence SHALL have code or details",
+                xpath: "exists(f:code) or exists(f:detail)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Condition_CON_4);
-            InvariantConstraints.Add(Condition_CON_3);
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
+            InvariantConstraints.AddRange(Condition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -496,40 +496,38 @@ namespace Hl7.Fhir.Model.R4
         private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
     
     
-        public static ElementDefinitionConstraint List_LST_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] List_Constraints =
         {
-            Expression = "mode = 'working' or entry.date.empty()",
-            Key = "lst-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "An entry date can only be used if the mode of the list is \"working\"",
-            Xpath = "(f:mode/@value = 'working') or not(exists(f:entry/f:date))"
-        };
-    
-        public static ElementDefinitionConstraint List_LST_2 = new ElementDefinitionConstraint
-        {
-            Expression = "mode = 'changes' or entry.deleted.empty()",
-            Key = "lst-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "The deleted flag can only be used if the mode of the list is \"changes\"",
-            Xpath = "(f:mode/@value = 'changes') or not(exists(f:entry/f:deleted))"
-        };
-    
-        public static ElementDefinitionConstraint List_LST_1 = new ElementDefinitionConstraint
-        {
-            Expression = "emptyReason.empty() or entry.empty()",
-            Key = "lst-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A list can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "lst-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "mode = 'working' or entry.date.empty()",
+                human: "An entry date can only be used if the mode of the list is \"working\"",
+                xpath: "(f:mode/@value = 'working') or not(exists(f:entry/f:date))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "lst-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "mode = 'changes' or entry.deleted.empty()",
+                human: "The deleted flag can only be used if the mode of the list is \"changes\"",
+                xpath: "(f:mode/@value = 'changes') or not(exists(f:entry/f:deleted))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "lst-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "emptyReason.empty() or entry.empty()",
+                human: "A list can only have an emptyReason if it is empty",
+                xpath: "not(exists(f:emptyReason) and exists(f:entry))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(List_LST_3);
-            InvariantConstraints.Add(List_LST_2);
-            InvariantConstraints.Add(List_LST_1);
+            InvariantConstraints.AddRange(List_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

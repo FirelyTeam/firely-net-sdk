@@ -2530,40 +2530,38 @@ namespace Hl7.Fhir.Model.R4
         private List<GroupComponent> _Group;
     
     
-        public static ElementDefinitionConstraint StructureMap_SMP_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] StructureMap_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "smp-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint StructureMap_SMP_2 = new ElementDefinitionConstraint
-        {
-            Expression = "group.rule.target.all(context.exists() implies contextType.exists())",
-            Key = "smp-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have a contextType if you have a context",
-            Xpath = "not(f:context) or (f:contextType)"
-        };
-    
-        public static ElementDefinitionConstraint StructureMap_SMP_1 = new ElementDefinitionConstraint
-        {
-            Expression = "group.rule.target.all(element.exists() implies context.exists())",
-            Key = "smp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Can only have an element if you have a context",
-            Xpath = "not(f:element) or (f:context)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "smp-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "smp-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.rule.target.all(context.exists() implies contextType.exists())",
+                human: "Must have a contextType if you have a context",
+                xpath: "not(f:context) or (f:contextType)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "smp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.rule.target.all(element.exists() implies context.exists())",
+                human: "Can only have an element if you have a context",
+                xpath: "not(f:element) or (f:context)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(StructureMap_SMP_0);
-            InvariantConstraints.Add(StructureMap_SMP_2);
-            InvariantConstraints.Add(StructureMap_SMP_1);
+            InvariantConstraints.AddRange(StructureMap_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -554,60 +554,54 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint Condition_CON_5 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Condition_Constraints =
         {
-            Expression = "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code='entered-in-error').empty() or clinicalStatus.empty()",
-            Key = "con-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
-            Xpath = "not(exists(f:verificationStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-ver-status' and f:code/@value='entered-in-error'])) or not(exists(f:clinicalStatus))"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_4 = new ElementDefinitionConstraint
-        {
-            Expression = "abatement.empty() or clinicalStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-clinical' and (code='resolved' or code='remission' or code='inactive')).exists()",
-            Key = "con-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(exists(*[starts-with(local-name(.), 'abatement')])) or exists(f:clinicalStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-clinical' and f:code/@value=('resolved', 'remission', 'inactive')])"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_3 = new ElementDefinitionConstraint
-        {
-            Expression = "clinicalStatus.exists() or verificationStatus='entered-in-error' or category.select($this='problem-list-item').empty()",
-            Key = "con-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item",
-            Xpath = "exists(f:clinicalStatus) or f:verificationStatus/@value='entered-in-error' or not(exists(category[@value='problem-list-item']))"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_1 = new ElementDefinitionConstraint
-        {
-            Expression = "stage.all(summary.exists() or assessment.exists())",
-            Key = "con-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-    
-        public static ElementDefinitionConstraint Condition_CON_2 = new ElementDefinitionConstraint
-        {
-            Expression = "evidence.all(code.exists() or detail.exists())",
-            Key = "con-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "con-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code='entered-in-error').empty() or clinicalStatus.empty()",
+                human: "Condition.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
+                xpath: "not(exists(f:verificationStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-ver-status' and f:code/@value='entered-in-error'])) or not(exists(f:clinicalStatus))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "con-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "abatement.empty() or clinicalStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-clinical' and (code='resolved' or code='remission' or code='inactive')).exists()",
+                human: "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
+                xpath: "not(exists(*[starts-with(local-name(.), 'abatement')])) or exists(f:clinicalStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-clinical' and f:code/@value=('resolved', 'remission', 'inactive')])"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "con-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "clinicalStatus.exists() or verificationStatus='entered-in-error' or category.select($this='problem-list-item').empty()",
+                human: "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item",
+                xpath: "exists(f:clinicalStatus) or f:verificationStatus/@value='entered-in-error' or not(exists(category[@value='problem-list-item']))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "con-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "stage.all(summary.exists() or assessment.exists())",
+                human: "Stage SHALL have summary or assessment",
+                xpath: "exists(f:summary) or exists(f:assessment)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "con-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "evidence.all(code.exists() or detail.exists())",
+                human: "evidence SHALL have code or details",
+                xpath: "exists(f:code) or exists(f:detail)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Condition_CON_5);
-            InvariantConstraints.Add(Condition_CON_4);
-            InvariantConstraints.Add(Condition_CON_3);
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
+            InvariantConstraints.AddRange(Condition_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

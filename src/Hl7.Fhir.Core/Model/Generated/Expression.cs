@@ -220,13 +220,16 @@ namespace Hl7.Fhir.Model
         }
     
     
-        public static ElementDefinitionConstraint Expression_EXP_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Expression_Constraints =
         {
-            Expression = "expression.exists() or reference.exists()",
-            Key = "exp-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "An expression or a reference must be provided",
-            Xpath = "exists(f:expression) or exists(f:reference)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "exp-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "expression.exists() or reference.exists()",
+                human: "An expression or a reference must be provided",
+                xpath: "exists(f:expression) or exists(f:reference)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

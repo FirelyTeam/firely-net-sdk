@@ -584,67 +584,64 @@ namespace Hl7.Fhir.Model.DSTU2
         private Hl7.Fhir.Model.CodeableConcept _Code;
     
     
-        public static ElementDefinitionConstraint Timing_TIM_5 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Timing_Constraints =
         {
-            Expression = "repeat.all(period.exists() implies period >= 0)",
-            Key = "tim-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "period SHALL be a non-negative value",
-            Xpath = "@value >= 0 or not(@value)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_6 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(periodMax.empty() or period)",
-            Key = "tim-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a periodMax, there must be a period",
-            Xpath = "not(exists(f:periodMax)) or exists(f:period)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_7 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(durationMax.empty() or duration)",
-            Key = "tim-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If there's a durationMax, there must be a duration",
-            Xpath = "not(exists(f:durationMax)) or exists(f:duration)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_1 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(duration.empty() or durationUnits)",
-            Key = "tim-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "if there's a duration, there needs to be duration units",
-            Xpath = "not(exists(f:duration)) or exists(f:durationUnits)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_2 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(period.empty() or periodUnits)",
-            Key = "tim-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "if there's a period, there needs to be period units",
-            Xpath = "not(exists(f:period)) or exists(f:periodUnits)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_3 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(((period or frequency) and when).not())",
-            Key = "tim-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Either frequency or when can exist, not both",
-            Xpath = "not((f:period or f:frequency) and f:when)"
-        };
-    
-        public static ElementDefinitionConstraint Timing_TIM_4 = new ElementDefinitionConstraint
-        {
-            Expression = "repeat.all(duration.exists() implies duration >= 0)",
-            Key = "tim-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "duration SHALL be a non-negative value",
-            Xpath = "@value >= 0 or not(@value)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(period.exists() implies period >= 0)",
+                human: "period SHALL be a non-negative value",
+                xpath: "@value >= 0 or not(@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(periodMax.empty() or period)",
+                human: "If there's a periodMax, there must be a period",
+                xpath: "not(exists(f:periodMax)) or exists(f:period)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(durationMax.empty() or duration)",
+                human: "If there's a durationMax, there must be a duration",
+                xpath: "not(exists(f:durationMax)) or exists(f:duration)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(duration.empty() or durationUnits)",
+                human: "if there's a duration, there needs to be duration units",
+                xpath: "not(exists(f:duration)) or exists(f:durationUnits)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(period.empty() or periodUnits)",
+                human: "if there's a period, there needs to be period units",
+                xpath: "not(exists(f:period)) or exists(f:periodUnits)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(((period or frequency) and when).not())",
+                human: "Either frequency or when can exist, not both",
+                xpath: "not((f:period or f:frequency) and f:when)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "tim-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "repeat.all(duration.exists() implies duration >= 0)",
+                human: "duration SHALL be a non-negative value",
+                xpath: "@value >= 0 or not(@value)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

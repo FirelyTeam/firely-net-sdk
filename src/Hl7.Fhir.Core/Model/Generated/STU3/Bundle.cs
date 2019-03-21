@@ -1213,90 +1213,78 @@ namespace Hl7.Fhir.Model.STU3
         private Hl7.Fhir.Model.STU3.Signature _Signature;
     
     
-        public static ElementDefinitionConstraint Bundle_BDL_7 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Bundle_Constraints =
         {
-            Expression = "entry.where(fullUrl).select(fullUrl&resource.meta.versionId).isDistinct()",
-            Key = "bdl-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
-            Xpath = "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_9 = new ElementDefinitionConstraint
-        {
-            Expression = "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
-            Key = "bdl-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A document must have an identifier with a system and a value",
-            Xpath = "not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_3 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'",
-            Key = "bdl-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.request only for some types of bundles",
-            Xpath = "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_4 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.response.empty() or type = 'batch-response' or type = 'transaction-response'",
-            Key = "bdl-4",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.response only for some types of bundles",
-            Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_1 = new ElementDefinitionConstraint
-        {
-            Expression = "total.empty() or (type = 'searchset') or (type = 'history')",
-            Key = "bdl-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "total only when a search or history",
-            Xpath = "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_2 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.search.empty() or (type = 'searchset')",
-            Key = "bdl-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "entry.search only when a search",
-            Xpath = "not(f:entry/f:search) or (f:type/@value = 'searchset')"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_8 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.all(fullUrl.contains('/_history/').not())",
-            Key = "bdl-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "fullUrl cannot be a version specific reference",
-            Xpath = "not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"
-        };
-    
-        public static ElementDefinitionConstraint Bundle_BDL_5 = new ElementDefinitionConstraint
-        {
-            Expression = "entry.all(resource.exists() or request.exists() or response.exists())",
-            Key = "bdl-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "must be a resource unless there's a request or response",
-            Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.where(fullUrl).select(fullUrl&resource.meta.versionId).isDistinct()",
+                human: "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
+                xpath: "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
+                human: "A document must have an identifier with a system and a value",
+                xpath: "not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.request.empty() or type = 'batch' or type = 'transaction' or type = 'history'",
+                human: "entry.request only for some types of bundles",
+                xpath: "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-4",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.response.empty() or type = 'batch-response' or type = 'transaction-response'",
+                human: "entry.response only for some types of bundles",
+                xpath: "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "total.empty() or (type = 'searchset') or (type = 'history')",
+                human: "total only when a search or history",
+                xpath: "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.search.empty() or (type = 'searchset')",
+                human: "entry.search only when a search",
+                xpath: "not(f:entry/f:search) or (f:type/@value = 'searchset')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.all(fullUrl.contains('/_history/').not())",
+                human: "fullUrl cannot be a version specific reference",
+                xpath: "not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "bdl-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "entry.all(resource.exists() or request.exists() or response.exists())",
+                human: "must be a resource unless there's a request or response",
+                xpath: "exists(f:resource) or exists(f:request) or exists(f:response)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Bundle_BDL_7);
-            InvariantConstraints.Add(Bundle_BDL_9);
-            InvariantConstraints.Add(Bundle_BDL_3);
-            InvariantConstraints.Add(Bundle_BDL_4);
-            InvariantConstraints.Add(Bundle_BDL_1);
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_8);
-            InvariantConstraints.Add(Bundle_BDL_5);
+            InvariantConstraints.AddRange(Bundle_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

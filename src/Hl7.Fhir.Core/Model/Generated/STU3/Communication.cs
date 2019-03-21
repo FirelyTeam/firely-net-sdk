@@ -513,20 +513,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint Communication_COM_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Communication_Constraints =
         {
-            Expression = "notDone or notDoneReason.exists().not()",
-            Key = "com-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "com-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "notDone or notDoneReason.exists().not()",
+                human: "Not Done Reason can only be specified if NotDone is \"true\"",
+                xpath: "f:notDone/@value=true() or not(exists(f:notDoneReason))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Communication_COM_1);
+            InvariantConstraints.AddRange(Communication_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

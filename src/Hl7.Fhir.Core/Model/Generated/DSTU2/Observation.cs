@@ -847,40 +847,38 @@ namespace Hl7.Fhir.Model.DSTU2
         private List<ComponentComponent> _Component;
     
     
-        public static ElementDefinitionConstraint Observation_OBS_6 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Observation_Constraints =
         {
-            Expression = "dataAbsentReason.empty() or value.empty()",
-            Key = "obs-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
-            Xpath = "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
-        };
-    
-        public static ElementDefinitionConstraint Observation_OBS_7 = new ElementDefinitionConstraint
-        {
-            Expression = "component.where(code = %context.code).empty()",
-            Key = "obs-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Component code SHALL not be same as observation code",
-            Xpath = "not(exists(f:component/f:code)) or count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0"
-        };
-    
-        public static ElementDefinitionConstraint Observation_OBS_3 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceRange.all(low or high or text)",
-            Key = "obs-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have at least a low or a high or text",
-            Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "obs-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "dataAbsentReason.empty() or value.empty()",
+                human: "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
+                xpath: "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "obs-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "component.where(code = %context.code).empty()",
+                human: "Component code SHALL not be same as observation code",
+                xpath: "not(exists(f:component/f:code)) or count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "obs-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceRange.all(low or high or text)",
+                human: "Must have at least a low or a high or text",
+                xpath: "(exists(f:low) or exists(f:high)or exists(f:text))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Observation_OBS_6);
-            InvariantConstraints.Add(Observation_OBS_7);
-            InvariantConstraints.Add(Observation_OBS_3);
+            InvariantConstraints.AddRange(Observation_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

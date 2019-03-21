@@ -430,20 +430,22 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.Annotation> _Note;
     
     
-        public static ElementDefinitionConstraint CareTeam_CTM_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] CareTeam_Constraints =
         {
-            Expression = "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
-            Key = "ctm-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
-            Xpath = "starts-with(f:member/f:reference/@value, 'Practitioner/') or contains(f:member/f:reference/@value, '/Practitioner/') or exists(ancestor::*/f:contains/f:Practitioner/f:id[@value=substring-after(current()/f:member/f:reference/@value, '#')]) or not(exists(f:onBehalfOf))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ctm-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
+                human: "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
+                xpath: "starts-with(f:member/f:reference/@value, 'Practitioner/') or contains(f:member/f:reference/@value, '/Practitioner/') or exists(ancestor::*/f:contains/f:Practitioner/f:id[@value=substring-after(current()/f:member/f:reference/@value, '#')]) or not(exists(f:onBehalfOf))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(CareTeam_CTM_1);
+            InvariantConstraints.AddRange(CareTeam_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

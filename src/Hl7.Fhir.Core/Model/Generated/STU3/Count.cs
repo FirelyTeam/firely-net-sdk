@@ -54,13 +54,16 @@ namespace Hl7.Fhir.Model.STU3
     
     
     
-        public static ElementDefinitionConstraint Count_CNT_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Count_Constraints =
         {
-            Expression = "(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = '1') and (value.empty() or value.toString().contains('.').not())",
-            Key = "cnt-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There SHALL be a code with a value of \"1\" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.",
-            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or (f:system/@value='http://unitsofmeasure.org' and f:code/@value='1')) and not(contains(f:value/@value, '.'))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "cnt-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = '1') and (value.empty() or value.toString().contains('.').not())",
+                human: "There SHALL be a code with a value of \"1\" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.",
+                xpath: "(f:code or not(f:value)) and (not(exists(f:system)) or (f:system/@value='http://unitsofmeasure.org' and f:code/@value='1')) and not(contains(f:value/@value, '.'))"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

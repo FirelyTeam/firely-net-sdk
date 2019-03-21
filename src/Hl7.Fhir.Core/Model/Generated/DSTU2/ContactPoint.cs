@@ -200,13 +200,16 @@ namespace Hl7.Fhir.Model.DSTU2
         private Hl7.Fhir.Model.Period _Period;
     
     
-        public static ElementDefinitionConstraint ContactPoint_CPT_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ContactPoint_Constraints =
         {
-            Expression = "value.empty() or system",
-            Key = "cpt-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A system is required if a value is provided.",
-            Xpath = "not(exists(f:value)) or exists(f:system)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "cpt-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "value.empty() or system",
+                human: "A system is required if a value is provided.",
+                xpath: "not(exists(f:value)) or exists(f:system)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

@@ -2690,40 +2690,38 @@ namespace Hl7.Fhir.Model.R4
         private List<StructureVariantComponent> _StructureVariant;
     
     
-        public static ElementDefinitionConstraint MolecularSequence_MSQ_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MolecularSequence_Constraints =
         {
-            Expression = "coordinateSystem = 1 or coordinateSystem = 0",
-            Key = "msq-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Only 0 and 1 are valid for coordinateSystem",
-            Xpath = "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
-        };
-    
-        public static ElementDefinitionConstraint MolecularSequence_MSQ_6 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
-            Key = "msq-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
-            Xpath = "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
-        };
-    
-        public static ElementDefinitionConstraint MolecularSequence_MSQ_5 = new ElementDefinitionConstraint
-        {
-            Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
-            Key = "msq-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "GenomeBuild and chromosome must be both contained if either one of them is contained",
-            Xpath = "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "msq-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "coordinateSystem = 1 or coordinateSystem = 0",
+                human: "Only 0 and 1 are valid for coordinateSystem",
+                xpath: "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "msq-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
+                human: "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
+                xpath: "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "msq-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
+                human: "GenomeBuild and chromosome must be both contained if either one of them is contained",
+                xpath: "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MolecularSequence_MSQ_3);
-            InvariantConstraints.Add(MolecularSequence_MSQ_6);
-            InvariantConstraints.Add(MolecularSequence_MSQ_5);
+            InvariantConstraints.AddRange(MolecularSequence_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -2158,80 +2158,70 @@ namespace Hl7.Fhir.Model.R4
         private ExpansionComponent _Expansion;
     
     
-        public static ElementDefinitionConstraint ValueSet_VSD_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ValueSet_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "vsd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.include.all((concept.exists() or filter.exists()) implies system.exists())",
-            Key = "vsd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A value set with concepts or filters SHALL include a system",
-            Xpath = "not(exists(f:concept) or exists(f:filter)) or exists(f:system)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.include.all(concept.empty() or filter.empty())",
-            Key = "vsd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Cannot have both concept and filter",
-            Xpath = "not(exists(f:concept)) or not(exists(f:filter))"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.include.all(valueSet.exists() or system.exists())",
-            Key = "vsd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A value set include/exclude SHALL have a value set or a system",
-            Xpath = "exists(f:valueSet) or exists(f:system)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_6 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.exists() or display.exists())",
-            Key = "vsd-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have a code or a display",
-            Xpath = "exists(f:code) or exists(f:display)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_9 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.exists() or abstract = true)",
-            Key = "vsd-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have a code if not abstract",
-            Xpath = "exists(f:code) or (f:abstract/@value = true())"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_10 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.empty() or system.exists())",
-            Key = "vsd-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have a system if a code is present",
-            Xpath = "exists(f:system) or not(exists(f:code))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.include.all((concept.exists() or filter.exists()) implies system.exists())",
+                human: "A value set with concepts or filters SHALL include a system",
+                xpath: "not(exists(f:concept) or exists(f:filter)) or exists(f:system)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.include.all(concept.empty() or filter.empty())",
+                human: "Cannot have both concept and filter",
+                xpath: "not(exists(f:concept)) or not(exists(f:filter))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.include.all(valueSet.exists() or system.exists())",
+                human: "A value set include/exclude SHALL have a value set or a system",
+                xpath: "exists(f:valueSet) or exists(f:system)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.exists() or display.exists())",
+                human: "SHALL have a code or a display",
+                xpath: "exists(f:code) or exists(f:display)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.exists() or abstract = true)",
+                human: "Must have a code if not abstract",
+                xpath: "exists(f:code) or (f:abstract/@value = true())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "vsd-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.empty() or system.exists())",
+                human: "Must have a system if a code is present",
+                xpath: "exists(f:system) or not(exists(f:code))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ValueSet_VSD_0);
-            InvariantConstraints.Add(ValueSet_VSD_2);
-            InvariantConstraints.Add(ValueSet_VSD_3);
-            InvariantConstraints.Add(ValueSet_VSD_1);
-            InvariantConstraints.Add(ValueSet_VSD_6);
-            InvariantConstraints.Add(ValueSet_VSD_9);
-            InvariantConstraints.Add(ValueSet_VSD_10);
+            InvariantConstraints.AddRange(ValueSet_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

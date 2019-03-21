@@ -1133,30 +1133,30 @@ namespace Hl7.Fhir.Model.STU3
         private List<VaccinationProtocolComponent> _VaccinationProtocol;
     
     
-        public static ElementDefinitionConstraint Immunization_IMM_2 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Immunization_Constraints =
         {
-            Expression = "(notGiven = true) or explanation.reasonNotGiven.empty()",
-            Key = "imm-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent.",
-            Xpath = "not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
-        };
-    
-        public static ElementDefinitionConstraint Immunization_IMM_1 = new ElementDefinitionConstraint
-        {
-            Expression = "(notGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
-            Key = "imm-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present",
-            Xpath = "not(f:notGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "imm-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "(notGiven = true) or explanation.reasonNotGiven.empty()",
+                human: "If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent.",
+                xpath: "not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "imm-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(notGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
+                human: "If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present",
+                xpath: "not(f:notGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Immunization_IMM_2);
-            InvariantConstraints.Add(Immunization_IMM_1);
+            InvariantConstraints.AddRange(Immunization_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

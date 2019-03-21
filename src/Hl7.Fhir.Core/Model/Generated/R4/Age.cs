@@ -54,13 +54,16 @@ namespace Hl7.Fhir.Model.R4
     
     
     
-        public static ElementDefinitionConstraint Age_AGE_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Age_Constraints =
         {
-            Expression = "(code.exists() or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.hasValue().not() or value > 0)",
-            Key = "age-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive.",
-            Xpath = "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value >=0)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "age-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "(code.exists() or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.hasValue().not() or value > 0)",
+                human: "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive.",
+                xpath: "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value >=0)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

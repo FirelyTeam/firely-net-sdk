@@ -634,30 +634,30 @@ namespace Hl7.Fhir.Model.R4
         private List<ReactionComponent> _Reaction;
     
     
-        public static ElementDefinitionConstraint AllergyIntolerance_AIT_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] AllergyIntolerance_Constraints =
         {
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            Key = "ait-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-    
-        public static ElementDefinitionConstraint AllergyIntolerance_AIT_2 = new ElementDefinitionConstraint
-        {
-            Expression = "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
-            Key = "ait-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
-            Xpath = "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ait-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+                human: "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
+                xpath: "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "ait-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
+                human: "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
+                xpath: "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(AllergyIntolerance_AIT_1);
-            InvariantConstraints.Add(AllergyIntolerance_AIT_2);
+            InvariantConstraints.AddRange(AllergyIntolerance_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

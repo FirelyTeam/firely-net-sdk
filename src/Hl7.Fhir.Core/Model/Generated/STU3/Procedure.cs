@@ -717,20 +717,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
     
     
-        public static ElementDefinitionConstraint Procedure_PRO_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Procedure_Constraints =
         {
-            Expression = "notDoneReason.empty() or notDone = true",
-            Key = "pro-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Reason not done is only permitted if notDone indicator is true",
-            Xpath = "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "pro-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "notDoneReason.empty() or notDone = true",
+                human: "Reason not done is only permitted if notDone indicator is true",
+                xpath: "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Procedure_PRO_1);
+            InvariantConstraints.AddRange(Procedure_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -750,20 +750,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
     
     
-        public static ElementDefinitionConstraint MedicationDispense_MDD_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] MedicationDispense_Constraints =
         {
-            Expression = "whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared",
-            Key = "mdd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "whenHandedOver cannot be before whenPrepared",
-            Xpath = "not(exists(f:whenHandedOver/@value)) or not(exists(f:whenPrepared/@value)) or ( f:whenHandedOver/@value >= f:whenPrepared/@value)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "mdd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared",
+                human: "whenHandedOver cannot be before whenPrepared",
+                xpath: "not(exists(f:whenHandedOver/@value)) or not(exists(f:whenPrepared/@value)) or ( f:whenHandedOver/@value >= f:whenPrepared/@value)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(MedicationDispense_MDD_1);
+            InvariantConstraints.AddRange(MedicationDispense_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

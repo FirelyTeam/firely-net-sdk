@@ -2639,110 +2639,94 @@ namespace Hl7.Fhir.Model.DSTU2
         private ExpansionComponent _Expansion;
     
     
-        public static ElementDefinitionConstraint ValueSet_VSD_7 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ValueSet_Constraints =
         {
-            Expression = "codeSystem.empty() or (codeSystem.system != url)",
-            Key = "vsd-7",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A defined code system (if present) SHALL have a different url than the value set url",
-            Xpath = "not(f:codeSystem/f:system/@value = f:url/@value)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_5 = new ElementDefinitionConstraint
-        {
-            Expression = "codeSystem.exists() or compose.exists() or expansion.exists()",
-            Key = "vsd-5",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Value set SHALL contain at least one of a codeSystem, a compose, or an expansion element",
-            Xpath = "exists(f:codeSystem) or exists(f:compose) or exists(f:expansion)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.import.count() != 1 or compose.include.exists() or compose.exclude.exists() or codeSystem.exists()",
-            Key = "vsd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A value set with only one import SHALL also have an include and/or an exclude unless the value set includes and inline code system",
-            Xpath = "not(exists(f:compose)) or (count(f:compose/f:import)!=1 or exists(f:compose/f:include) or exists(f:compose/f:exclude) or exists(f:codeSystem))"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_8 = new ElementDefinitionConstraint
-        {
-            Expression = "codeSystem.all(descendants().concept.code.isDistinct())",
-            Key = "vsd-8",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Codes must be unique",
-            Xpath = "count(descendant::f:concept)=count(distinct-values(descendant::f:concept/f:code/@value))"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "codeSystem.all(descendants().concept.code.isDistinct())",
-            Key = "vsd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Within a code system definition, all the codes SHALL be unique",
-            Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.all(include.exists() or import.exists())",
-            Key = "vsd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "A value set composition SHALL have an include or an import",
-            Xpath = "exists(f:include) or exists(f:import)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_11 = new ElementDefinitionConstraint
-        {
-            Expression = "compose.include.all(concept.empty() or filter.empty())",
-            Key = "vsd-11",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Cannot have both concept and filter",
-            Xpath = "not(exists(f:concept)) or not(exists(f:filter))"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_9 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.exists() or (abstract = 'true'))",
-            Key = "vsd-9",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have a code if not abstract",
-            Xpath = "exists(f:code) or (f:abstract/@value = true())"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_6 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.exists() or display.exists())",
-            Key = "vsd-6",
-            Severity = ConstraintSeverity.Warning,
-            Human = "SHALL have a code or a display",
-            Xpath = "exists(f:code) or exists(f:display)"
-        };
-    
-        public static ElementDefinitionConstraint ValueSet_VSD_10 = new ElementDefinitionConstraint
-        {
-            Expression = "expansion.contains.all(code.empty() or system.exists())",
-            Key = "vsd-10",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have a system if a code is present",
-            Xpath = "exists(f:system) or not(exists(f:code))"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-7",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeSystem.empty() or (codeSystem.system != url)",
+                human: "A defined code system (if present) SHALL have a different url than the value set url",
+                xpath: "not(f:codeSystem/f:system/@value = f:url/@value)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-5",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeSystem.exists() or compose.exists() or expansion.exists()",
+                human: "Value set SHALL contain at least one of a codeSystem, a compose, or an expansion element",
+                xpath: "exists(f:codeSystem) or exists(f:compose) or exists(f:expansion)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.import.count() != 1 or compose.include.exists() or compose.exclude.exists() or codeSystem.exists()",
+                human: "A value set with only one import SHALL also have an include and/or an exclude unless the value set includes and inline code system",
+                xpath: "not(exists(f:compose)) or (count(f:compose/f:import)!=1 or exists(f:compose/f:include) or exists(f:compose/f:exclude) or exists(f:codeSystem))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-8",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeSystem.all(descendants().concept.code.isDistinct())",
+                human: "Codes must be unique",
+                xpath: "count(descendant::f:concept)=count(distinct-values(descendant::f:concept/f:code/@value))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "codeSystem.all(descendants().concept.code.isDistinct())",
+                human: "Within a code system definition, all the codes SHALL be unique",
+                xpath: "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.all(include.exists() or import.exists())",
+                human: "A value set composition SHALL have an include or an import",
+                xpath: "exists(f:include) or exists(f:import)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-11",
+                severity: ConstraintSeverity.Warning,
+                expression: "compose.include.all(concept.empty() or filter.empty())",
+                human: "Cannot have both concept and filter",
+                xpath: "not(exists(f:concept)) or not(exists(f:filter))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-9",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.exists() or (abstract = 'true'))",
+                human: "Must have a code if not abstract",
+                xpath: "exists(f:code) or (f:abstract/@value = true())"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-6",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.exists() or display.exists())",
+                human: "SHALL have a code or a display",
+                xpath: "exists(f:code) or exists(f:display)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "vsd-10",
+                severity: ConstraintSeverity.Warning,
+                expression: "expansion.contains.all(code.empty() or system.exists())",
+                human: "Must have a system if a code is present",
+                xpath: "exists(f:system) or not(exists(f:code))"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ValueSet_VSD_7);
-            InvariantConstraints.Add(ValueSet_VSD_5);
-            InvariantConstraints.Add(ValueSet_VSD_2);
-            InvariantConstraints.Add(ValueSet_VSD_8);
-            InvariantConstraints.Add(ValueSet_VSD_3);
-            InvariantConstraints.Add(ValueSet_VSD_1);
-            InvariantConstraints.Add(ValueSet_VSD_11);
-            InvariantConstraints.Add(ValueSet_VSD_9);
-            InvariantConstraints.Add(ValueSet_VSD_6);
-            InvariantConstraints.Add(ValueSet_VSD_10);
+            InvariantConstraints.AddRange(ValueSet_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

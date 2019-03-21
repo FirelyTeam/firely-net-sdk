@@ -219,13 +219,24 @@ namespace Hl7.Fhir.Model
         }
     
     
-        public static ElementDefinitionConstraint Quantity_QTY_3 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Quantity_Constraints =
         {
-            Expression = "code.empty() or system",
-            Key = "qty-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If a code for the unit is present, the system SHALL also be present",
-            Xpath = "not(exists(f:code)) or exists(f:system)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.DSTU2},
+                key: "qty-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "code.empty() or system",
+                human: "If a code for the unit is present, the system SHALL also be present",
+                xpath: "not(exists(f:code)) or exists(f:system)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3},
+                key: "qty-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "code.empty() or system.exists()",
+                human: "If a code for the unit is present, the system SHALL also be present",
+                xpath: "not(exists(f:code)) or exists(f:system)"
+            ),
         };
     
         // TODO: Add code to enforce the above constraints

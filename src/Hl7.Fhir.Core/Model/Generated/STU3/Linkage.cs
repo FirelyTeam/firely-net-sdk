@@ -246,20 +246,22 @@ namespace Hl7.Fhir.Model.STU3
         private List<ItemComponent> _Item;
     
     
-        public static ElementDefinitionConstraint Linkage_LNK_1 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] Linkage_Constraints =
         {
-            Expression = "item.count()>1",
-            Key = "lnk-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Must have at least two items",
-            Xpath = "count(f:item)>1"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.STU3},
+                key: "lnk-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "item.count()>1",
+                human: "Must have at least two items",
+                xpath: "count(f:item)>1"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(Linkage_LNK_1);
+            InvariantConstraints.AddRange(Linkage_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)

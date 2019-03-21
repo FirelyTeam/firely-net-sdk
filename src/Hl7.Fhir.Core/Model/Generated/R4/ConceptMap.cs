@@ -1624,50 +1624,46 @@ namespace Hl7.Fhir.Model.R4
         private List<GroupComponent> _Group;
     
     
-        public static ElementDefinitionConstraint ConceptMap_CMD_0 = new ElementDefinitionConstraint
+        public static ElementDefinitionConstraint[] ConceptMap_Constraints =
         {
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "cmd-0",
-            Severity = ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-    
-        public static ElementDefinitionConstraint ConceptMap_CMD_1 = new ElementDefinitionConstraint
-        {
-            Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
-            Key = "cmd-1",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the map is narrower or inexact, there SHALL be some comments",
-            Xpath = "exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
-        };
-    
-        public static ElementDefinitionConstraint ConceptMap_CMD_3 = new ElementDefinitionConstraint
-        {
-            Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
-            Key = "cmd-3",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the mode is 'other-map', a url must be provided",
-            Xpath = "(f:mode/@value != 'other-map') or exists(f:url)"
-        };
-    
-        public static ElementDefinitionConstraint ConceptMap_CMD_2 = new ElementDefinitionConstraint
-        {
-            Expression = "group.unmapped.all((mode = 'fixed') implies code.exists())",
-            Key = "cmd-2",
-            Severity = ConstraintSeverity.Warning,
-            Human = "If the mode is 'fixed', a code must be provided",
-            Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "cmd-0",
+                severity: ConstraintSeverity.Warning,
+                expression: "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+                human: "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+                xpath: "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "cmd-1",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
+                human: "If the map is narrower or inexact, there SHALL be some comments",
+                xpath: "exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "cmd-3",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.unmapped.all((mode = 'other-map') implies url.exists())",
+                human: "If the mode is 'other-map', a url must be provided",
+                xpath: "(f:mode/@value != 'other-map') or exists(f:url)"
+            ),
+            new ElementDefinitionConstraint(
+                versions: new[] {Hl7.Fhir.Model.Version.R4},
+                key: "cmd-2",
+                severity: ConstraintSeverity.Warning,
+                expression: "group.unmapped.all((mode = 'fixed') implies code.exists())",
+                human: "If the mode is 'fixed', a code must be provided",
+                xpath: "(f:mode/@value != 'fixed') or exists(f:code)"
+            ),
         };
     
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
-    
-            InvariantConstraints.Add(ConceptMap_CMD_0);
-            InvariantConstraints.Add(ConceptMap_CMD_1);
-            InvariantConstraints.Add(ConceptMap_CMD_3);
-            InvariantConstraints.Add(ConceptMap_CMD_2);
+            InvariantConstraints.AddRange(ConceptMap_Constraints);
         }
     
         public override IDeepCopyable CopyTo(IDeepCopyable other)
