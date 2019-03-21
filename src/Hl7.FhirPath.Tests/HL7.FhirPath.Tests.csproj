@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFrameworks>netcoreapp2.1;net452</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -28,6 +28,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.0"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

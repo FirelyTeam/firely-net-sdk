@@ -174,6 +174,6 @@ namespace Hl7.FhirPath.Tests
 
         public IElementDefinitionSummary Definition => null;
 
-        public IEnumerable<ITypedElement> Children(string name = null) => Array.Empty<ITypedElement>();
+        public IEnumerable<ITypedElement> Children(string name = null) => new ITypedElement[0];
     }
 }

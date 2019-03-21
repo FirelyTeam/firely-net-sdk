@@ -46,6 +46,9 @@
     <PropertyGroup Condition="'$(_VSTestFramework)' == 'net45'">
       <_VSTestFrameworkString>.NETFramework,Version=v4.5</_VSTestFrameworkString>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(_VSTestFramework)' == 'net452'">
+      <_VSTestFrameworkString>.NETFramework,Version=v4.5.2</_VSTestFrameworkString>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(_VSTestFramework)' == 'net40'">
       <_VSTestFrameworkString>.NETFramework,Version=v4.0</_VSTestFrameworkString>
     </PropertyGroup>
