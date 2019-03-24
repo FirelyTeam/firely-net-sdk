@@ -107,12 +107,12 @@ namespace Hl7.Fhir.Rest
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true, throwOnArgumentException: true);
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true);
                             return LastResult;
                         }
                         else
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false, throwOnArgumentException: false);
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false);
                             throw buildFhirOperationException(webResponse.StatusCode, LastResult.Resource);
                         }
                     }
