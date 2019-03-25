@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Tests
             var actualList = actuals.ToList();
 
             if (expectedList.Count != actualList.Count)
-                throw new AssertFailedException($"Number of elements are not the same in container {expected.Path ?? actual.Path}");
+                throw new AssertFailedException($"Number of elements are not the same in container {expected.Path ?? actual.Path}: expected <{expectedList.Count}>, actual <{actualList.Count}>");
 
             for (int elemNr = 0; elemNr < expectedList.Count(); elemNr++)
             {
