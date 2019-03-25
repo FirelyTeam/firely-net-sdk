@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
-    public interface IBinary
+    public partial interface IBinary
     {
         byte[] Content { get; set; }
-        string ContentType { get; set; }
     }
 }

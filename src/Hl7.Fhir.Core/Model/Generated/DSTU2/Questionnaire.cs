@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Questionnaire", IsResource=true)]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IQuestionnaire, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "QuestionComponent")]
         [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "QuestionComponent"; } }

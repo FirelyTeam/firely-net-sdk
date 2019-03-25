@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ReferenceSeqComponent")]
         [DataContract]
-        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceSeqComponent"; } }
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "VariantComponent")]
         [DataContract]
-        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "VariantComponent"; } }
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "QualityComponent")]
         [DataContract]
-        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "QualityComponent"; } }
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RepositoryComponent")]
         [DataContract]
-        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RepositoryComponent"; } }

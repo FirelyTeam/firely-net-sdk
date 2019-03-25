@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "DeviceComponent", IsResource=true)]
     [DataContract]
-    public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IDeviceComponent, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DeviceComponent; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ProductionSpecificationComponent")]
         [DataContract]
-        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDeviceComponentProductionSpecificationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ProductionSpecificationComponent"; } }
@@ -197,6 +197,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDeviceComponentProductionSpecificationComponent> Hl7.Fhir.Model.IDeviceComponent.ProductionSpecification { get { return ProductionSpecification; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Observation", IsResource=true)]
     [DataContract]
-    public partial class Observation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Observation : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IObservation, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Observation; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ReferenceRangeComponent")]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IObservationReferenceRangeComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
@@ -253,10 +253,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ComponentComponent")]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IObservationComponentComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IObservationReferenceRangeComponent> Hl7.Fhir.Model.IObservationComponentComponent.ReferenceRange { get { return ReferenceRange; } }
             
             /// <summary>
             /// Type of component observation (code / type)
@@ -413,6 +416,12 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IObservationReferenceRangeComponent> Hl7.Fhir.Model.IObservation.ReferenceRange { get { return ReferenceRange; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IObservationComponentComponent> Hl7.Fhir.Model.IObservation.Component { get { return Component; } }
     
         
         /// <summary>

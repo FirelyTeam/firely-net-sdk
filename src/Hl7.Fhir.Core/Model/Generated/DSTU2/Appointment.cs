@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Appointment", IsResource=true)]
     [DataContract]
-    public partial class Appointment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Appointment : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IAppointment, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Appointment; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IAppointmentParticipantComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -237,6 +237,9 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IAppointmentParticipantComponent> Hl7.Fhir.Model.IAppointment.Participant { get { return Participant; } }
     
         
         /// <summary>

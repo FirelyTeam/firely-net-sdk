@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Distance")]
     [DataContract]
-    public partial class Distance : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Distance : Hl7.Fhir.Model.Quantity, Hl7.Fhir.Model.IDistance, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Distance"; } }

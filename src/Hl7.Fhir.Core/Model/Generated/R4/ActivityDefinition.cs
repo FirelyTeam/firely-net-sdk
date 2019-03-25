@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "ActivityDefinition", IsResource=true)]
     [DataContract]
-    public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IActivityDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ActivityDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IActivityDefinitionParticipantComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DynamicValueComponent")]
         [DataContract]
-        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IActivityDefinitionDynamicValueComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DynamicValueComponent"; } }
@@ -302,6 +302,21 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IActivityDefinition.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IActivityDefinition.RelatedArtifact { get { return RelatedArtifact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IActivityDefinitionParticipantComponent> Hl7.Fhir.Model.IActivityDefinition.Participant { get { return Participant; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDosage> Hl7.Fhir.Model.IActivityDefinition.Dosage { get { return Dosage; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IActivityDefinitionDynamicValueComponent> Hl7.Fhir.Model.IActivityDefinition.DynamicValue { get { return DynamicValue; } }
     
         
         /// <summary>

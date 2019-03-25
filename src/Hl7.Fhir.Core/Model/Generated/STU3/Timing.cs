@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Timing")]
     [DataContract]
-    public partial class Timing : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Timing : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.ITiming, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Timing"; } }
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RepeatComponent")]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RepeatComponent : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.ITimingRepeatComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
@@ -674,6 +674,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITimingRepeatComponent Hl7.Fhir.Model.ITiming.Repeat { get { return Repeat; } }
     
         
         /// <summary>

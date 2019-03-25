@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RelatedMedicationKnowledgeComponent")]
         [DataContract]
-        public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedMedicationKnowledgeComponent"; } }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MonographComponent")]
         [DataContract]
-        public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MonographComponent"; } }
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "IngredientComponent")]
         [DataContract]
-        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "IngredientComponent"; } }
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "CostComponent")]
         [DataContract]
-        public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CostComponent"; } }
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MonitoringProgramComponent")]
         [DataContract]
-        public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MonitoringProgramComponent"; } }
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "AdministrationGuidelinesComponent")]
         [DataContract]
-        public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AdministrationGuidelinesComponent"; } }
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DosageComponent")]
         [DataContract]
-        public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DosageComponent"; } }
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "PatientCharacteristicsComponent")]
         [DataContract]
-        public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PatientCharacteristicsComponent"; } }
@@ -1040,7 +1040,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MedicineClassificationComponent")]
         [DataContract]
-        public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MedicineClassificationComponent"; } }
@@ -1146,7 +1146,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "PackagingComponent")]
         [DataContract]
-        public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PackagingComponent"; } }
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DrugCharacteristicComponent")]
         [DataContract]
-        public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DrugCharacteristicComponent"; } }
@@ -1356,7 +1356,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RegulatoryComponent")]
         [DataContract]
-        public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RegulatoryComponent"; } }
@@ -1501,7 +1501,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SubstitutionComponent")]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
@@ -1626,7 +1626,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ScheduleComponent")]
         [DataContract]
-        public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ScheduleComponent"; } }
@@ -1713,7 +1713,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MaxDispenseComponent")]
         [DataContract]
-        public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MaxDispenseComponent"; } }
@@ -1818,7 +1818,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "KineticsComponent")]
         [DataContract]
-        public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "KineticsComponent"; } }

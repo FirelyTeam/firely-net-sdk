@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "VisionPrescription", IsResource=true)]
     [DataContract]
-    public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IVisionPrescription, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.VisionPrescription; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DispenseComponent")]
         [DataContract]
-        public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DispenseComponent"; } }

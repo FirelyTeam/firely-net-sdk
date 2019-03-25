@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "LineItemComponent")]
         [DataContract]
-        public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LineItemComponent"; } }
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "PriceComponentComponent")]
         [DataContract]
-        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PriceComponentComponent"; } }

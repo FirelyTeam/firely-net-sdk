@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcessResponse", IsResource=true)]
     [DataContract]
-    public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IProcessResponse, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ProcessResponse; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcessNoteComponent")]
         [DataContract]
-        public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessNoteComponent"; } }

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model.DSTU2
 {
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DeviceUseStatement", IsResource=true)]
     [DataContract]
-    public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IDeviceUseStatement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DeviceUseStatement; } }

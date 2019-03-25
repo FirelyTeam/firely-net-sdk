@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Basic", IsResource=true)]
     [DataContract]
-    public partial class Basic : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Basic : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IBasic, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Basic; } }

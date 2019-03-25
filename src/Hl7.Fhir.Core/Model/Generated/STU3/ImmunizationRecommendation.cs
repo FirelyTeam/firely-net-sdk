@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ImmunizationRecommendation", IsResource=true)]
     [DataContract]
-    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IImmunizationRecommendation, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ImmunizationRecommendation; } }
@@ -57,10 +57,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RecommendationComponent")]
         [DataContract]
-        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IImmunizationRecommendationRecommendationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RecommendationComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IImmunizationRecommendationDateCriterionComponent> Hl7.Fhir.Model.IImmunizationRecommendationRecommendationComponent.DateCriterion { get { return DateCriterion; } }
             
             /// <summary>
             /// Date recommendation created
@@ -339,7 +342,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DateCriterionComponent")]
         [DataContract]
-        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IImmunizationRecommendationDateCriterionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DateCriterionComponent"; } }
@@ -464,7 +467,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ProtocolComponent")]
         [DataContract]
-        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ProtocolComponent"; } }
@@ -659,6 +662,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IImmunizationRecommendationRecommendationComponent> Hl7.Fhir.Model.IImmunizationRecommendation.Recommendation { get { return Recommendation; } }
     
         
         /// <summary>

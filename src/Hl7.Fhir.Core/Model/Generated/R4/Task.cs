@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Task", IsResource=true)]
     [DataContract]
-    public partial class Task : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Task : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ITask, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Task; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RestrictionComponent")]
         [DataContract]
-        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITaskRestrictionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RestrictionComponent"; } }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITaskParameterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "OutputComponent")]
         [DataContract]
-        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITaskOutputComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OutputComponent"; } }
@@ -413,6 +413,15 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITaskRestrictionComponent Hl7.Fhir.Model.ITask.Restriction { get { return Restriction; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ITaskParameterComponent> Hl7.Fhir.Model.ITask.Input { get { return Input; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ITaskOutputComponent> Hl7.Fhir.Model.ITask.Output { get { return Output; } }
     
         
         /// <summary>

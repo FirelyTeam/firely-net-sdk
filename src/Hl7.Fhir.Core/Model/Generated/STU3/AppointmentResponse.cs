@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "AppointmentResponse", IsResource=true)]
     [DataContract]
-    public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IAppointmentResponse, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.AppointmentResponse; } }

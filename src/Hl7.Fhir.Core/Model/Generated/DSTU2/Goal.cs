@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Goal", IsResource=true)]
     [DataContract]
-    public partial class Goal : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Goal : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IGoal, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Goal; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OutcomeComponent")]
         [DataContract]
-        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OutcomeComponent"; } }

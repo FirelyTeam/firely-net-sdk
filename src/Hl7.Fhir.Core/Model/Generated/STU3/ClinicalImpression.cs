@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ClinicalImpression", IsResource=true)]
     [DataContract]
-    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IClinicalImpression, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ClinicalImpression; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "InvestigationComponent")]
         [DataContract]
-        public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InvestigationComponent"; } }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "FindingComponent")]
         [DataContract]
-        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClinicalImpressionFindingComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FindingComponent"; } }
@@ -287,6 +287,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IClinicalImpressionFindingComponent> Hl7.Fhir.Model.IClinicalImpression.Finding { get { return Finding; } }
     
         
         /// <summary>

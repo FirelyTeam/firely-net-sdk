@@ -47,10 +47,13 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Contributor")]
     [DataContract]
-    public partial class Contributor : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Contributor : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IContributor, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Contributor"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IContributor.Contact { get { return Contact; } }
     
         
         /// <summary>

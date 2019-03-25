@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureDefinition", IsResource=true)]
     [DataContract]
-    public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IStructureDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.StructureDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "MappingComponent")]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureDefinitionMappingComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }
@@ -274,10 +274,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SnapshotComponent")]
         [DataContract]
-        public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureDefinitionSnapshotComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SnapshotComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IElementDefinition> Hl7.Fhir.Model.IStructureDefinitionSnapshotComponent.Element { get { return Element; } }
             
             /// <summary>
             /// Definition of elements in the resource (if no StructureDefinition)
@@ -361,10 +364,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DifferentialComponent")]
         [DataContract]
-        public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureDefinitionDifferentialComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DifferentialComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IElementDefinition> Hl7.Fhir.Model.IStructureDefinitionDifferentialComponent.Element { get { return Element; } }
             
             /// <summary>
             /// Definition of elements in the resource (if no StructureDefinition)
@@ -444,6 +450,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IStructureDefinitionMappingComponent> Hl7.Fhir.Model.IStructureDefinition.Mapping { get { return Mapping; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IStructureDefinitionSnapshotComponent Hl7.Fhir.Model.IStructureDefinition.Snapshot { get { return Snapshot; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IStructureDefinitionDifferentialComponent Hl7.Fhir.Model.IStructureDefinition.Differential { get { return Differential; } }
     
         
         /// <summary>

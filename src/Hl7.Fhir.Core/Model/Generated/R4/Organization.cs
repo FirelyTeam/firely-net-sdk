@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Organization", IsResource=true)]
     [DataContract]
-    public partial class Organization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Organization : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IOrganization, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Organization; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IOrganizationContactComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IHumanName Hl7.Fhir.Model.IOrganizationContactComponent.Name { get { return Name; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IOrganizationContactComponent.Telecom { get { return Telecom; } }
             
             /// <summary>
             /// The type of contact
@@ -194,6 +200,12 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IOrganization.Telecom { get { return Telecom; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IOrganizationContactComponent> Hl7.Fhir.Model.IOrganization.Contact { get { return Contact; } }
     
         
         /// <summary>

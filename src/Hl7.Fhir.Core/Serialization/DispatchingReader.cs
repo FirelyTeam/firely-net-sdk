@@ -42,9 +42,9 @@ namespace Hl7.Fhir.Serialization
             // nesting series of dispatcher calls
             if (!_arrayMode && prop.IsCollection)
             {
-                if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
+                if (existing != null && !(existing is System.Collections.IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
                 var reader = new RepeatingElementReader(_current, Settings);
-                return reader.Deserialize(prop, memberName, (IList)existing);
+                return reader.Deserialize(prop, memberName, (System.Collections.IList)existing);
             }
 
             // If this is a primitive type, no classmappings and reflection is involved,

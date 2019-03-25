@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification
             _classMapping = classMapping;
         }
 
-        public string TypeName => !_classMapping.IsBackbone ? _classMapping.Name :
+        public string TypeName => !_classMapping.IsComponent ? _classMapping.Name :
             (_classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
             "BackboneElement" : "Element");
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification
         {
             var pm = _pm;
 
-            if (pm.IsBackboneElement)
+            if (pm.IsComponent)
             {
                 var mapping = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.ImplementingType);
                 return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(_version, mapping) };

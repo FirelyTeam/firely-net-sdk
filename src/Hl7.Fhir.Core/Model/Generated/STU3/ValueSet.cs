@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ValueSet", IsResource=true)]
     [DataContract]
-    public partial class ValueSet : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ValueSet : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IValueSet, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ValueSet; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ComposeComponent")]
         [DataContract]
-        public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetComposeComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ComposeComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetConceptSetComponent> Hl7.Fhir.Model.IValueSetComposeComponent.Include { get { return Include; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetConceptSetComponent> Hl7.Fhir.Model.IValueSetComposeComponent.Exclude { get { return Exclude; } }
             
             /// <summary>
             /// Fixed date for version-less references (transitive)
@@ -240,10 +246,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptSetComponent")]
         [DataContract]
-        public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetConceptSetComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptSetComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetConceptReferenceComponent> Hl7.Fhir.Model.IValueSetConceptSetComponent.Concept { get { return Concept; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetFilterComponent> Hl7.Fhir.Model.IValueSetConceptSetComponent.Filter { get { return Filter; } }
             
             /// <summary>
             /// The system the codes come from
@@ -462,10 +474,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptReferenceComponent")]
         [DataContract]
-        public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetConceptReferenceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptReferenceComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetDesignationComponent> Hl7.Fhir.Model.IValueSetConceptReferenceComponent.Designation { get { return Designation; } }
             
             /// <summary>
             /// Code or expression from system
@@ -624,7 +639,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationComponent")]
         [DataContract]
-        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetDesignationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
@@ -785,7 +800,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "FilterComponent")]
         [DataContract]
-        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetFilterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FilterComponent"; } }
@@ -970,10 +985,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ExpansionComponent")]
         [DataContract]
-        public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetExpansionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ExpansionComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetParameterComponent> Hl7.Fhir.Model.IValueSetExpansionComponent.Parameter { get { return Parameter; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetContainsComponent> Hl7.Fhir.Model.IValueSetExpansionComponent.Contains { get { return Contains; } }
             
             /// <summary>
             /// Uniquely identifies this expansion
@@ -1226,7 +1247,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetParameterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -1352,10 +1373,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ContainsComponent")]
         [DataContract]
-        public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IValueSetContainsComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContainsComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IValueSetContainsComponent> Hl7.Fhir.Model.IValueSetContainsComponent.Contains { get { return Contains; } }
             
             /// <summary>
             /// System value for the code
@@ -1676,6 +1700,12 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IValueSetComposeComponent Hl7.Fhir.Model.IValueSet.Compose { get { return Compose; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IValueSetExpansionComponent Hl7.Fhir.Model.IValueSet.Expansion { get { return Expansion; } }
     
         
         /// <summary>

@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     
         [FhirType(Hl7.Fhir.Model.Version.All, "IssueComponent")]
         [DataContract]
-        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "IssueComponent"; } }

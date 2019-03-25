@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
 #endif
     [DataContract]
     [FhirType(Version.All, "Element", IsResource=false)]
-    public abstract partial class Element : Base, IExtendable
+    public abstract partial class Element : Base, IElement
     {
         [NotMapped]
         public override string TypeName { get { return "Element"; } }

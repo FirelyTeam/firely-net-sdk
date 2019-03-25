@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "WhenComponent")]
         [DataContract]
-        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "WhenComponent"; } }

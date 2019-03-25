@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Practitioner", IsResource=true)]
     [DataContract]
-    public partial class Practitioner : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Practitioner : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPractitioner, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Practitioner; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PractitionerRoleComponent")]
         [DataContract]
-        public partial class PractitionerRoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PractitionerRoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PractitionerRoleComponent"; } }
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "QualificationComponent")]
         [DataContract]
-        public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPractitionerQualificationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "QualificationComponent"; } }
@@ -385,6 +385,12 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IPractitioner.Telecom { get { return Telecom; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPractitionerQualificationComponent> Hl7.Fhir.Model.IPractitioner.Qualification { get { return Qualification; } }
     
         
         /// <summary>

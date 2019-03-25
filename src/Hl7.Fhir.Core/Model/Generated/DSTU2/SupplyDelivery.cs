@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SupplyDelivery", IsResource=true)]
     [DataContract]
-    public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ISupplyDelivery, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.SupplyDelivery; } }

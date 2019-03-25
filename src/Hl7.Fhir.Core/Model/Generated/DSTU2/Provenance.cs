@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Provenance", IsResource=true)]
     [DataContract]
-    public partial class Provenance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Provenance : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IProvenance, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Provenance; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IProvenanceAgentComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RelatedAgentComponent")]
         [DataContract]
-        public partial class RelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedAgentComponent"; } }
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EntityComponent")]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IProvenanceEntityComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }
@@ -550,6 +550,15 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IProvenanceAgentComponent> Hl7.Fhir.Model.IProvenance.Agent { get { return Agent; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IProvenanceEntityComponent> Hl7.Fhir.Model.IProvenance.Entity { get { return Entity; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ISignature> Hl7.Fhir.Model.IProvenance.Signature { get { return Signature; } }
     
         
         /// <summary>

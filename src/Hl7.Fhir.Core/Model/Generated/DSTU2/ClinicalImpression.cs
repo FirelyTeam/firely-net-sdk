@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ClinicalImpression", IsResource=true)]
     [DataContract]
-    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IClinicalImpression, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ClinicalImpression; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "InvestigationsComponent")]
         [DataContract]
-        public partial class InvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InvestigationsComponent"; } }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FindingComponent")]
         [DataContract]
-        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClinicalImpressionFindingComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FindingComponent"; } }
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RuledOutComponent")]
         [DataContract]
-        public partial class RuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RuledOutComponent"; } }
@@ -409,6 +409,9 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IClinicalImpressionFindingComponent> Hl7.Fhir.Model.IClinicalImpression.Finding { get { return Finding; } }
     
         
         /// <summary>

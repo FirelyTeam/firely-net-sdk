@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Person", IsResource=true)]
     [DataContract]
-    public partial class Person : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Person : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPerson, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Person; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPersonLinkComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -179,6 +179,15 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IHumanName> Hl7.Fhir.Model.IPerson.Name { get { return Name; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IPerson.Telecom { get { return Telecom; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPersonLinkComponent> Hl7.Fhir.Model.IPerson.Link { get { return Link; } }
     
         
         /// <summary>

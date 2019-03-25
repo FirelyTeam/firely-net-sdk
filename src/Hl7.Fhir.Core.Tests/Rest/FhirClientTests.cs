@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Tests.Rest
             var count = 0;
             var lastBirthDate = "";
             var patientBundle = search(searchParams);
-            foreach (var entry in patientBundle.Entries)
+            foreach (var entry in patientBundle.Entry)
             {
                 if (entry.Search?.Mode == SearchEntryMode.Match)
                 {

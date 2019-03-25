@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "AllergyIntolerance", IsResource=true)]
     [DataContract]
-    public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IAllergyIntolerance, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.AllergyIntolerance; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ReactionComponent")]
         [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IAllergyIntoleranceReactionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
@@ -306,6 +306,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IAllergyIntoleranceReactionComponent> Hl7.Fhir.Model.IAllergyIntolerance.Reaction { get { return Reaction; } }
     
         
         /// <summary>

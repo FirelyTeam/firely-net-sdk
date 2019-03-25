@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Group", IsResource=true)]
     [DataContract]
-    public partial class Group : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Group : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IGroup, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Group; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "CharacteristicComponent")]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IGroupCharacteristicComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "MemberComponent")]
         [DataContract]
-        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IGroupMemberComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MemberComponent"; } }
@@ -361,6 +361,12 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IGroupCharacteristicComponent> Hl7.Fhir.Model.IGroup.Characteristic { get { return Characteristic; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IGroupMemberComponent> Hl7.Fhir.Model.IGroup.Member { get { return Member; } }
     
         
         /// <summary>

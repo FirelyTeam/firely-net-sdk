@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Specimen", IsResource=true)]
     [DataContract]
-    public partial class Specimen : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Specimen : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ISpecimen, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Specimen; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CollectionComponent")]
         [DataContract]
-        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ISpecimenCollectionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CollectionComponent"; } }
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TreatmentComponent")]
         [DataContract]
-        public partial class TreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TreatmentComponent"; } }
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContainerComponent")]
         [DataContract]
-        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ISpecimenContainerComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }
@@ -596,6 +596,12 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ISpecimenCollectionComponent Hl7.Fhir.Model.ISpecimen.Collection { get { return Collection; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ISpecimenContainerComponent> Hl7.Fhir.Model.ISpecimen.Container { get { return Container; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ResearchStudy", IsResource=true)]
     [DataContract]
-    public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IResearchStudy, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ResearchStudy; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ArmComponent")]
         [DataContract]
-        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IResearchStudyArmComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ArmComponent"; } }
@@ -214,6 +214,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IResearchStudy.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IResearchStudy.RelatedArtifact { get { return RelatedArtifact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IResearchStudyArmComponent> Hl7.Fhir.Model.IResearchStudy.Arm { get { return Arm; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "MedicationStatement", IsResource=true)]
     [DataContract]
-    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IMedicationStatement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicationStatement; } }

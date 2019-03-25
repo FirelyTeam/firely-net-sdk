@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Bundle", IsResource=true)]
     [DataContract]
-    public partial class Bundle : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Bundle : Hl7.Fhir.Model.Resource, Hl7.Fhir.Model.IBundle, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Bundle; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IBundleLinkComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -203,10 +203,22 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "EntryComponent")]
         [DataContract]
-        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IBundleEntryComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EntryComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IBundleLinkComponent> Hl7.Fhir.Model.IBundleEntryComponent.Link { get { return Link; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IBundleSearchComponent Hl7.Fhir.Model.IBundleEntryComponent.Search { get { return Search; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IBundleRequestComponent Hl7.Fhir.Model.IBundleEntryComponent.Request { get { return Request; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IBundleResponseComponent Hl7.Fhir.Model.IBundleEntryComponent.Response { get { return Response; } }
             
             /// <summary>
             /// Links related to this entry
@@ -406,7 +418,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SearchComponent")]
         [DataContract]
-        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IBundleSearchComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SearchComponent"; } }
@@ -550,7 +562,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RequestComponent")]
         [DataContract]
-        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IBundleRequestComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RequestComponent"; } }
@@ -848,7 +860,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ResponseComponent")]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IBundleResponseComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ResponseComponent"; } }
@@ -1085,6 +1097,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IBundleLinkComponent> Hl7.Fhir.Model.IBundle.Link { get { return Link; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IBundleEntryComponent> Hl7.Fhir.Model.IBundle.Entry { get { return Entry; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ISignature Hl7.Fhir.Model.IBundle.Signature { get { return Signature; } }
     
         
         /// <summary>

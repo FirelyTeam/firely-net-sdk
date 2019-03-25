@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+    public partial class Dosage : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDosage, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Dosage"; } }
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DoseAndRateComponent")]
         [DataContract]
-        public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DoseAndRateComponent"; } }
@@ -178,6 +178,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITiming Hl7.Fhir.Model.IDosage.Timing { get { return Timing; } }
     
         
         /// <summary>

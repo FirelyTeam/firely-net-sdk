@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "MessageDefinition", IsResource=true)]
     [DataContract]
-    public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IMessageDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MessageDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "FocusComponent")]
         [DataContract]
-        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMessageDefinitionFocusComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FocusComponent"; } }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "AllowedResponseComponent")]
         [DataContract]
-        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMessageDefinitionAllowedResponseComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AllowedResponseComponent"; } }
@@ -416,6 +416,15 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IMessageDefinition.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IMessageDefinitionFocusComponent> Hl7.Fhir.Model.IMessageDefinition.Focus { get { return Focus; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IMessageDefinitionAllowedResponseComponent> Hl7.Fhir.Model.IMessageDefinition.AllowedResponse { get { return AllowedResponse; } }
     
         
         /// <summary>

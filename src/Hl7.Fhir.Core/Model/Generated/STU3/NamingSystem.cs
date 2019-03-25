@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "NamingSystem", IsResource=true)]
     [DataContract]
-    public partial class NamingSystem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NamingSystem : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.INamingSystem, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "UniqueIdComponent")]
         [DataContract]
-        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INamingSystemUniqueIdComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "UniqueIdComponent"; } }
@@ -289,6 +289,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.INamingSystemUniqueIdComponent> Hl7.Fhir.Model.INamingSystem.UniqueId { get { return UniqueId; } }
     
         
         /// <summary>

@@ -47,12 +47,15 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatedPerson", IsResource=true)]
     [DataContract]
-    public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IRelatedPerson, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.RelatedPerson; } }
         [NotMapped]
         public override string TypeName { get { return "RelatedPerson"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IRelatedPerson.Telecom { get { return Telecom; } }
     
         
         /// <summary>

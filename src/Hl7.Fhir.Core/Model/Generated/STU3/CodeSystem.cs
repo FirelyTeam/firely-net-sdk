@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "CodeSystem", IsResource=true)]
     [DataContract]
-    public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CodeSystem : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICodeSystem, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.CodeSystem; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "FilterComponent")]
         [DataContract]
-        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICodeSystemFilterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FilterComponent"; } }
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "PropertyComponent")]
         [DataContract]
-        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICodeSystemPropertyComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PropertyComponent"; } }
@@ -502,10 +502,19 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptDefinitionComponent")]
         [DataContract]
-        public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptDefinitionComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICodeSystemDesignationComponent> Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent.Designation { get { return Designation; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICodeSystemConceptPropertyComponent> Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent.Property { get { return Property; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent> Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent.Concept { get { return Concept; } }
             
             /// <summary>
             /// Code that identifies concept
@@ -739,7 +748,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DesignationComponent")]
         [DataContract]
-        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICodeSystemDesignationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
@@ -900,7 +909,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ConceptPropertyComponent")]
         [DataContract]
-        public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICodeSystemConceptPropertyComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptPropertyComponent"; } }
@@ -1023,6 +1032,18 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.ICodeSystem.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICodeSystemFilterComponent> Hl7.Fhir.Model.ICodeSystem.Filter { get { return Filter; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICodeSystemPropertyComponent> Hl7.Fhir.Model.ICodeSystem.Property { get { return Property; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICodeSystemConceptDefinitionComponent> Hl7.Fhir.Model.ICodeSystem.Concept { get { return Concept; } }
     
         
         /// <summary>

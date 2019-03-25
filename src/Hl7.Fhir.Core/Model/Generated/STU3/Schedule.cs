@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Schedule", IsResource=true)]
     [DataContract]
-    public partial class Schedule : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Schedule : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ISchedule, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Schedule; } }

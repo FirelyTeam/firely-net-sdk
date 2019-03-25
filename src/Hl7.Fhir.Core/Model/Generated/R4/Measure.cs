@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Measure", IsResource=true)]
     [DataContract]
-    public partial class Measure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Measure : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IMeasure, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Measure; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMeasureGroupComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IMeasurePopulationComponent> Hl7.Fhir.Model.IMeasureGroupComponent.Population { get { return Population; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IMeasureStratifierComponent> Hl7.Fhir.Model.IMeasureGroupComponent.Stratifier { get { return Stratifier; } }
             
             /// <summary>
             /// Meaning of the group
@@ -218,7 +224,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "PopulationComponent")]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMeasurePopulationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
@@ -360,7 +366,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "StratifierComponent")]
         [DataContract]
-        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMeasureStratifierComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierComponent"; } }
@@ -520,7 +526,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ComponentComponent")]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
@@ -662,7 +668,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SupplementalDataComponent")]
         [DataContract]
-        public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMeasureSupplementalDataComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SupplementalDataComponent"; } }
@@ -819,6 +825,18 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IMeasure.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IMeasure.RelatedArtifact { get { return RelatedArtifact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IMeasureGroupComponent> Hl7.Fhir.Model.IMeasure.Group { get { return Group; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IMeasureSupplementalDataComponent> Hl7.Fhir.Model.IMeasure.SupplementalData { get { return SupplementalData; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "DocumentReference", IsResource=true)]
     [DataContract]
-    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IDocumentReference, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DocumentReference; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RelatesToComponent")]
         [DataContract]
-        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDocumentReferenceRelatesToComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatesToComponent"; } }
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ContentComponent")]
         [DataContract]
-        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDocumentReferenceContentComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContentComponent"; } }
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ContextComponent")]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDocumentReferenceContextComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContextComponent"; } }
@@ -490,6 +490,15 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDocumentReferenceRelatesToComponent> Hl7.Fhir.Model.IDocumentReference.RelatesTo { get { return RelatesTo; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDocumentReferenceContentComponent> Hl7.Fhir.Model.IDocumentReference.Content { get { return Content; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IDocumentReferenceContextComponent Hl7.Fhir.Model.IDocumentReference.Context { get { return Context; } }
     
         
         /// <summary>

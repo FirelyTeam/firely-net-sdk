@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "ProcessRequest", IsResource=true)]
     [DataContract]
-    public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IProcessRequest, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ProcessRequest; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ItemsComponent")]
         [DataContract]
-        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IProcessRequestItemsComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
@@ -159,6 +159,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IProcessRequestItemsComponent> Hl7.Fhir.Model.IProcessRequest.Item { get { return Item; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Count")]
     [DataContract]
-    public partial class Count : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Count : Hl7.Fhir.Model.Quantity, Hl7.Fhir.Model.ICount, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Count"; } }

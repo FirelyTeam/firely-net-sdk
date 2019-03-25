@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Substance", IsResource=true)]
     [DataContract]
-    public partial class Substance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Substance : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ISubstance, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Substance; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "InstanceComponent")]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ISubstanceInstanceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "IngredientComponent")]
         [DataContract]
-        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ISubstanceIngredientComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "IngredientComponent"; } }
@@ -305,6 +305,12 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ISubstanceInstanceComponent> Hl7.Fhir.Model.ISubstance.Instance { get { return Instance; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ISubstanceIngredientComponent> Hl7.Fhir.Model.ISubstance.Ingredient { get { return Ingredient; } }
     
         
         /// <summary>

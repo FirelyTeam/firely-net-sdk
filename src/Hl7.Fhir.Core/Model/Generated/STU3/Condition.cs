@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Condition", IsResource=true)]
     [DataContract]
-    public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Condition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICondition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Condition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "StageComponent")]
         [DataContract]
-        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConditionStageComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "StageComponent"; } }
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "EvidenceComponent")]
         [DataContract]
-        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConditionEvidenceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EvidenceComponent"; } }
@@ -268,6 +268,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IConditionEvidenceComponent> Hl7.Fhir.Model.ICondition.Evidence { get { return Evidence; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "ConceptMap", IsResource=true)]
     [DataContract]
-    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IConceptMap, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ConceptMap; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -310,10 +310,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SourceElementComponent")]
         [DataContract]
-        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapSourceElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SourceElementComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapTargetElementComponent> Hl7.Fhir.Model.IConceptMapSourceElementComponent.Target { get { return Target; } }
             
             /// <summary>
             /// Identifies element being mapped
@@ -471,10 +474,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "TargetElementComponent")]
         [DataContract]
-        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapTargetElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TargetElementComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapOtherElementComponent> Hl7.Fhir.Model.IConceptMapTargetElementComponent.DependsOn { get { return DependsOn; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapOtherElementComponent> Hl7.Fhir.Model.IConceptMapTargetElementComponent.Product { get { return Product; } }
             
             /// <summary>
             /// Code that identifies the target element
@@ -726,7 +735,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "OtherElementComponent")]
         [DataContract]
-        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapOtherElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OtherElementComponent"; } }
@@ -944,7 +953,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "UnmappedComponent")]
         [DataContract]
-        public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "UnmappedComponent"; } }

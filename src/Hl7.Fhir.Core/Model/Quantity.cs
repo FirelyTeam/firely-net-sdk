@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Quantity
+    public partial class Quantity : IQuantity
     {
         public Primitives.Quantity? ToQuantity()
         {

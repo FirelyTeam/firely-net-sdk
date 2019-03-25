@@ -47,12 +47,15 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Endpoint", IsResource=true)]
     [DataContract]
-    public partial class Endpoint : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Endpoint : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IEndpoint, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Endpoint; } }
         [NotMapped]
         public override string TypeName { get { return "Endpoint"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IEndpoint.Contact { get { return Contact; } }
     
         
         /// <summary>

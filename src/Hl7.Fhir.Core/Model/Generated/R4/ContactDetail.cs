@@ -47,10 +47,13 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "ContactDetail")]
     [DataContract]
-    public partial class ContactDetail : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContactDetail : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IContactDetail, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "ContactDetail"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IContactDetail.Telecom { get { return Telecom; } }
     
         
         /// <summary>

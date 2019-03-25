@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Model
 #if !NETSTANDARD1_1
     [Serializable]
 #endif
-    public abstract class Primitive : Element
+    public abstract class Primitive : Element, IPrimitive
     {
         [NotMapped]
         public object ObjectValue { get; set; }

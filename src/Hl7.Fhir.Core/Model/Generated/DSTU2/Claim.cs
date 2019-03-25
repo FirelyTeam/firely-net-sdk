@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Claim", IsResource=true)]
     [DataContract]
-    public partial class Claim : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Claim : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IClaim, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Claim; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PayeeComponent")]
         [DataContract]
-        public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClaimPayeeComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PayeeComponent"; } }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DiagnosisComponent")]
         [DataContract]
-        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClaimDiagnosisComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CoverageComponent")]
         [DataContract]
-        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CoverageComponent"; } }
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ItemsComponent")]
         [DataContract]
-        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
@@ -1128,10 +1128,19 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "DetailComponent")]
         [DataContract]
-        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClaimDetailComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IClaimDetailComponent.UnitPrice { get { return UnitPrice; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IClaimDetailComponent.Net { get { return Net; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IClaimSubDetailComponent> Hl7.Fhir.Model.IClaimDetailComponent.SubDetail { get { return SubDetail; } }
             
             /// <summary>
             /// Service instance
@@ -1447,10 +1456,16 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SubDetailComponent")]
         [DataContract]
-        public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IClaimSubDetailComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SubDetailComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IClaimSubDetailComponent.UnitPrice { get { return UnitPrice; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IClaimSubDetailComponent.Net { get { return Net; } }
             
             /// <summary>
             /// Service instance
@@ -1746,7 +1761,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ProsthesisComponent")]
         [DataContract]
-        public partial class ProsthesisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProsthesisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ProsthesisComponent"; } }
@@ -1909,7 +1924,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MissingTeethComponent")]
         [DataContract]
-        public partial class MissingTeethComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MissingTeethComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MissingTeethComponent"; } }
@@ -2050,6 +2065,12 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IClaimPayeeComponent Hl7.Fhir.Model.IClaim.Payee { get { return Payee; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IClaimDiagnosisComponent> Hl7.Fhir.Model.IClaim.Diagnosis { get { return Diagnosis; } }
     
         
         /// <summary>

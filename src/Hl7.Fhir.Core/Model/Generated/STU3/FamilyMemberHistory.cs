@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "FamilyMemberHistory", IsResource=true)]
     [DataContract]
-    public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IFamilyMemberHistory, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.FamilyMemberHistory; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IFamilyMemberHistoryConditionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -197,6 +197,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IFamilyMemberHistoryConditionComponent> Hl7.Fhir.Model.IFamilyMemberHistory.Condition { get { return Condition; } }
     
         
         /// <summary>

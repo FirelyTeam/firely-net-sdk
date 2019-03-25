@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Communication", IsResource=true)]
     [DataContract]
-    public partial class Communication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Communication : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICommunication, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Communication; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PayloadComponent")]
         [DataContract]
-        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICommunicationPayloadComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
@@ -142,6 +142,9 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICommunicationPayloadComponent> Hl7.Fhir.Model.ICommunication.Payload { get { return Payload; } }
     
         
         /// <summary>

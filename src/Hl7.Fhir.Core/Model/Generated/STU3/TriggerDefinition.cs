@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "TriggerDefinition")]
     [DataContract]
-    public partial class TriggerDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class TriggerDefinition : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.ITriggerDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "TriggerDefinition"; } }

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "PaymentNotice", IsResource=true)]
     [DataContract]
-    public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPaymentNotice, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.PaymentNotice; } }

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "PlanDefinition", IsResource=true)]
     [DataContract]
-    public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPlanDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.PlanDefinition; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "GoalComponent")]
         [DataContract]
-        public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionGoalComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "GoalComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IPlanDefinitionGoalComponent.Documentation { get { return Documentation; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionTargetComponent> Hl7.Fhir.Model.IPlanDefinitionGoalComponent.Target { get { return Target; } }
             
             /// <summary>
             /// E.g. Treatment, dietary, behavioral
@@ -255,10 +261,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "TargetComponent")]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionTargetComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IDuration Hl7.Fhir.Model.IPlanDefinitionTargetComponent.Due { get { return Due; } }
             
             /// <summary>
             /// The parameter whose value is to be tracked
@@ -379,10 +388,34 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ActionComponent")]
         [DataContract]
-        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Documentation { get { return Documentation; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionConditionComponent> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Condition { get { return Condition; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IDataRequirement> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Input { get { return Input; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IDataRequirement> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Output { get { return Output; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionRelatedActionComponent> Hl7.Fhir.Model.IPlanDefinitionActionComponent.RelatedAction { get { return RelatedAction; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionParticipantComponent> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Participant { get { return Participant; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionDynamicValueComponent> Hl7.Fhir.Model.IPlanDefinitionActionComponent.DynamicValue { get { return DynamicValue; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IPlanDefinitionActionComponent> Hl7.Fhir.Model.IPlanDefinitionActionComponent.Action { get { return Action; } }
             
             /// <summary>
             /// User-visible prefix for the action (e.g. 1. or A.)
@@ -1179,7 +1212,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionConditionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -1303,7 +1336,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RelatedActionComponent")]
         [DataContract]
-        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionRelatedActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedActionComponent"; } }
@@ -1467,7 +1500,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionParticipantComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -1591,7 +1624,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DynamicValueComponent")]
         [DataContract]
-        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPlanDefinitionDynamicValueComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DynamicValueComponent"; } }
@@ -1710,6 +1743,18 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IPlanDefinition.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IPlanDefinition.RelatedArtifact { get { return RelatedArtifact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPlanDefinitionGoalComponent> Hl7.Fhir.Model.IPlanDefinition.Goal { get { return Goal; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPlanDefinitionActionComponent> Hl7.Fhir.Model.IPlanDefinition.Action { get { return Action; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "OperationDefinition", IsResource=true)]
     [DataContract]
-    public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IOperationDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.OperationDefinition; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IOperationDefinitionParameterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IOperationDefinitionBindingComponent Hl7.Fhir.Model.IOperationDefinitionParameterComponent.Binding { get { return Binding; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IOperationDefinitionParameterComponent> Hl7.Fhir.Model.IOperationDefinitionParameterComponent.Part { get { return Part; } }
             
             /// <summary>
             /// Name in Parameters.parameter.name or in URL
@@ -445,7 +451,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "BindingComponent")]
         [DataContract]
-        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IOperationDefinitionBindingComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "BindingComponent"; } }
@@ -572,7 +578,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "OverloadComponent")]
         [DataContract]
-        public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OverloadComponent"; } }
@@ -711,6 +717,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IOperationDefinitionParameterComponent> Hl7.Fhir.Model.IOperationDefinition.Parameter { get { return Parameter; } }
     
         
         /// <summary>

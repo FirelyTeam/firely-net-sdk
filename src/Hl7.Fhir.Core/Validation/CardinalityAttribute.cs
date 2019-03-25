@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Validation
 
             var count = 1;
 
-            if (value is IList && !ReflectionHelper.IsArray(value))
+            if (value is System.Collections.IList && !ReflectionHelper.IsArray(value))
             {
-                var list = value as IList;
+                var list = value as System.Collections.IList;
                 foreach(var elem in list)
                    if(elem == null) return DotNetAttributeValidation.BuildResult(validationContext,"Repeating element cannot have empty/null values");
                 count = list.Count;

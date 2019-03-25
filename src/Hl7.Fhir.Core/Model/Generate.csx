@@ -80,6 +80,28 @@ public static class StringUtils
         return type.Replace("Hl7.Fhir.Model.Code<", "Code<");
     }
 
+    public static string ToInterfaceName(string className)
+    {
+        return "I" + className;
+    }
+
+    public const string ModelNamespacePrefix = "Hl7.Fhir.Model.";
+
+    public static bool TryGetModelClassName(string type, out string className)
+    {
+        if (type.StartsWith(ModelNamespacePrefix))
+        {
+            className = type.Substring(ModelNamespacePrefix.Length);
+            if (className.StartsWith("Code<"))
+            {
+                className = "Code";
+            }
+            return true;
+        }
+        className = null;
+        return false;
+    }
+
     /// <summary>
     /// Fix the FHIR version of a type - e.g. converts Hl7.Fhir.Model.Patient to Hl7.FhirModel.DSTU2.Patient because Patient is version-specific and 
     /// leaves Hl7.Fhir.Model.Resource 'as is' because Resource is common to all versions
@@ -90,10 +112,10 @@ public static class StringUtils
     /// <returns>Fixed FHIR type</returns>
     public static string FixTypeFhirVersion(string type, string version, Dictionary<string, ResourceDetails> resourcesByName)
     {
-        const string prefix = "Hl7.Fhir.Model.";
-        if (type.StartsWith(prefix) && resourcesByName.ContainsKey(type.Substring(prefix.Length)))
+        var isVersionSpecific = TryGetModelClassName(type, out var className) && resourcesByName.ContainsKey(className);
+        if (isVersionSpecific)
         {
-            return prefix + version + "." + type.Substring(prefix.Length);
+            return ModelNamespacePrefix + version + "." + className;
         }
         return type;
     }
@@ -196,14 +218,31 @@ using Hl7.Fhir.Utility;
     /// Render the C# code of a list of properties
     /// </summary>
     /// <param name="nPropNum">Initial property number - 10, used to set FhirElementAttribute.Order</param>
+    /// <param name="properties">The resource, data type or component properties</param>
     /// <returns>Lines of C# code</returns>
     public static IEnumerable<string> RenderProperties(int nPropNum, IEnumerable<PropertyDetails> properties)
     {
-        foreach (var pd in properties)
+        foreach (var property in properties)
         {
             nPropNum += 10;
             yield return string.Empty;
-            foreach (var line in pd.Render(nPropNum)) yield return line;
+            foreach (var line in property.Render(nPropNum)) yield return line;
+        }
+    }
+
+    /// <summary>
+    /// Renders the properties as explicit interface member when needed
+    /// </summary>
+    /// <param name="rootInterfaceName">The root interface name - eg IPatient ('root' because it is the same also if the property belongs to a component
+    /// and not to the resource itself)</param>
+    /// <param name="properties">The properties to render</param>
+    /// <param name="components">Componens declared by the resource containing this property</param>
+    /// <returns>Code lines</returns>
+    public static IEnumerable<string> RenderInterfaceProperties(string rootInterfaceName, List<PropertyDetails> properties, List<ComponentDetails> components)
+    {
+        foreach (var property in properties)
+        {
+            foreach (var line in property.RenderAsInterfaceIfNeeded(rootInterfaceName, components)) yield return line;
         }
     }
 
@@ -874,6 +913,206 @@ public class ValueSetValue
 }
 
 /// <summary>
+/// Complete description of an auto-generated interface - e.g. IPatient, that access the common properties 
+/// of the various version-specific Patient classes
+/// </summary>
+public class InterfaceDetails
+{
+    /// <summary>
+    /// Versions this interface applies to. 
+    /// </summary>
+    public List<LoadedVersion> Versions;
+
+    /// <summary>
+    /// C# interface name - e.g. 'IPatient'
+    /// </summary>
+    public string Name;
+
+    /// <summary>
+    /// Associated FHIR resource or data type description - e.g. 'Primitive Type boolean'
+    /// </summary>
+    public string Description;
+
+    /// <summary>
+    /// Base interface
+    /// </summary>
+    public string Base;
+
+    /// <summary>
+    /// The C# primitive data type (e.g. bool) - non-null only if this is a primitive type
+    /// </summary>
+    public string PrimitiveTypeName;
+
+    /// <summary>
+    /// Interface properties
+    /// </summary>
+    public List<InterfacePropertyDetails> Properties;
+
+    /// <summary>
+    /// Components interfaces
+    /// </summary>
+    public List<InterfaceDetails> Components;
+
+    public void FixReferencedFhirTypes(string roorInterfaceName, Dictionary<string, ResourceDetails> sharedResourcesByName)
+    {
+        foreach (var property in Properties)
+        {
+            property.FixReferencedFhirTypes(roorInterfaceName, sharedResourcesByName);
+        }
+        if (Components != null)
+        {
+            foreach (var component in Components)
+            {
+                component.FixReferencedFhirTypes(roorInterfaceName, sharedResourcesByName);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Create a C# file containing this interface
+    /// </summary>
+    /// <param name="filePath">Path of the target file, that is overwritten if it already exist</param>
+    public void Write(string filePath)
+    {
+        using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
+        {
+            foreach (var line in StringUtils.RenderFileHeader(Versions)) writer.WriteLine(line);
+            foreach (var line in Render()) writer.WriteLine("    " + line);
+            writer.WriteLine();
+            writer.WriteLine("}");
+        }
+    }
+
+    private IEnumerable<string> Render()
+    {
+        foreach (var line in RenderPrimitive()) yield return line;
+        if (Components != null)
+        {
+            foreach (var component in Components)
+            {
+                yield return string.Empty;
+                foreach (var line in component.RenderPrimitive()) yield return line;
+            }
+        }
+    }
+
+    private IEnumerable<string> RenderPrimitive()
+    {
+        foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
+        yield return $"public partial interface { Name } : { StringUtils.ModelNamespacePrefix }{ Base }";
+
+        yield return $"{{";
+
+        if (!string.IsNullOrEmpty(PrimitiveTypeName))
+        {
+            yield return string.Empty;
+            yield return $"    /// <summary>";
+            yield return $"    /// Primitive value of the element";
+            yield return $"    /// </summary>";
+            yield return $"    { PrimitiveTypeName } Value {{ get; set; }}";
+        }
+        else
+        {
+            foreach (var interfaceProperty in Properties)
+            {
+                yield return string.Empty;
+                foreach (var line in interfaceProperty.Render()) yield return "    " + line;
+            }
+        }
+
+        yield return string.Empty;
+        yield return $"}}";
+    }
+
+}
+
+public class InterfacePropertyDetails
+{
+    /// <summary>
+    /// The name of the C# property - e.g. BirthDateElement
+    /// </summary>
+    public string Name;
+
+    /// <summary>
+    /// C# property data type - e.g. Hl7.Fhir.Model.Date. 
+    /// </summary>
+    public string PropType;
+
+    /// <summary>
+    /// Native C# data type of the property - e.g. string
+    /// Not empty only for property types that can be represented by a native C# type: FhirString as string, FhirDateTime as DateTimeOffset etc
+    /// </summary>
+    public string NativeType;
+
+    /// <summary>
+    /// Native property name - e.g. BirthDate
+    /// </summary>
+    public string NativeName;
+
+    /// <summary>
+    /// True if max cardinality is unlimited = the property is a list
+    /// </summary>
+    public bool IsMultiCard;
+
+    /// <summary>
+    /// True if this is a read-only property
+    /// </summary>
+    public bool ReadOnly;
+
+    /// <summary>
+    /// Summary description of the property - e.g. 'The date of birth for the individual'
+    /// </summary>
+    public string Summary = string.Empty;
+
+    public void FixReferencedFhirTypes(string interfaceName, Dictionary<string, ResourceDetails> sharedResourcesByName)
+    {
+        if (StringUtils.TryGetModelClassName(PropType, out var className))
+        {
+            var isVersionSpecific = !sharedResourcesByName.ContainsKey(className);
+            if (isVersionSpecific)
+            {
+                PropType = StringUtils.ModelNamespacePrefix + StringUtils.ToInterfaceName(className);
+                ReadOnly = true;
+            }
+        }
+        else
+        {
+            // Uses a component...
+            PropType = StringUtils.ModelNamespacePrefix + interfaceName + PropType;
+            ReadOnly = true;
+        }
+    }
+
+    public IEnumerable<string> Render()
+    {
+        foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
+
+        var accessors = ReadOnly ?
+            "get;" :
+            "get; set;";
+
+        var propTypeWithCard = !IsMultiCard ?
+            PropType :
+            ReadOnly ?
+                "IEnumerable<" + PropType + ">" :
+                "List<" + PropType + ">";
+
+        yield return $"{ StringUtils.RemoveCodeNamespace(propTypeWithCard) } { Name } {{ { accessors } }}";
+
+        if (!string.IsNullOrEmpty(NativeName))
+        {
+            yield return string.Empty;
+            foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
+            yield return "/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>";
+            var nativeType = IsMultiCard ?
+                $"IEnumerable<{ NativeType }>" :
+                NativeType;
+            yield return $"{ nativeType  } { NativeName } {{ { accessors } }}";
+        }
+    }
+}
+
+/// <summary>
 /// Complete description of a resource (e.g. Patient) or data type (e.g. Identifier), corresponding to a C# class
 /// </summary>
 public class ResourceDetails
@@ -946,6 +1185,11 @@ public class ResourceDetails
     public bool IsConstraint;
 
     /// <summary>
+    /// Shared interface implemented by the C# class
+    /// </summary>
+    public string Interface;
+
+    /// <summary>
     /// True if this is a resource, false if it is a data type
     /// </summary>
     public bool IsResource()
@@ -961,6 +1205,12 @@ public class ResourceDetails
     public ComponentDetails GetComponent(string name)
     {
         return Components.FirstOrDefault(c => c.Name == name);
+    }
+
+    public string GetPrimitiveTypeName()
+    {
+        if (!IsPrimitive) return null;
+        return PrimitiveTypeName;
     }
 
     /// <summary>
@@ -986,7 +1236,7 @@ public class ResourceDetails
                     string.Join(",", prop.AllowedTypesByVersion[string.Empty]) :
                     string.Join(", ", prop.AllowedTypesByVersion.Select(pair => $"{pair.Key}({ string.Join(",", pair.Value) })"));
             writer.WriteLine(
-                "    {0}: {1}{2}{3} {4} {5}{6}{7}",
+                "    {0}: {1}{2}{3} {4} {5}{6}{7}{8}",
                 prop.Name,
                 prop.PropType,
                 prop.Versions.Count > 1 || prop.Versions.Count == 1 && string.IsNullOrEmpty(prop.Versions.Single()) ?
@@ -995,7 +1245,8 @@ public class ResourceDetails
                 prop.CardMin,
                 prop.CardMax,
                 prop.ReferenceTargets.Count == 0 ? string.Empty : " targets: " + string.Join(",", prop.ReferenceTargets),
-                string.IsNullOrEmpty(allowedTypes) ? string.Empty : " allowed types: " + allowedTypes
+                string.IsNullOrEmpty(allowedTypes) ? string.Empty : " allowed types: " + allowedTypes,
+                string.IsNullOrEmpty(Interface) ? string.Empty : " interface: " + Interface
              );
         }
         foreach (var comp in Components)
@@ -1033,6 +1284,7 @@ public class ResourceDetails
             IsPrimitive = IsPrimitive,
             PrimitiveTypeName = PrimitiveTypeName,
             Pattern = Pattern,
+            Interface = Interface,
             Properties = Properties
                 .Select(prop => prop.Clone(version))
                 .ToList(),
@@ -1102,7 +1354,10 @@ public class ResourceDetails
             Versions[0].Version :
             "All";
         version = "Hl7.Fhir.Model.Version." + version;
-        var isElement = BaseType == "Hl7.Fhir.Model.Element" || BaseType == "Hl7.Fhir.Model.BackboneElement" || BaseType == "Hl7.Fhir.Model.Quantity" || IsPrimitive;
+        var isElement = BaseType == "Hl7.Fhir.Model.Element"
+            || BaseType == "Hl7.Fhir.Model.BackboneElement"
+            || BaseType == "Hl7.Fhir.Model.Quantity"
+            || IsPrimitive;
         foreach (var line in StringUtils.RenderSummary(Description)) yield return line;
         if (!AbstractType)
         {
@@ -1123,7 +1378,10 @@ public class ResourceDetails
         var baseType = !string.IsNullOrEmpty(BaseType) ?
             $"{ BaseType }, " :
             string.Empty;
-        yield return $"public{ isAbstract } partial class { Name } : { baseType }System.ComponentModel.INotifyPropertyChanged";
+        var inter = !string.IsNullOrEmpty(Interface) ?
+            $"Hl7.Fhir.Model.{ Interface }, " :
+            string.Empty;
+        yield return $"public{ isAbstract } partial class { Name } : { baseType }{ inter }System.ComponentModel.INotifyPropertyChanged";
 
         yield return $"{{";
 
@@ -1174,11 +1432,16 @@ public class ResourceDetails
         {
             yield return string.Empty;
             yield return string.Empty;
-            foreach (var line in component.Render(version)) yield return "    " + line;
+            foreach (var line in component.Render(version, Interface, Components)) yield return "    " + line;
         }
 
         if (!IsPrimitive)
         {
+            if (!string.IsNullOrEmpty(Interface))
+            {
+                foreach (var line in StringUtils.RenderInterfaceProperties(Interface, Properties, Components)) yield return "    " + line;
+            }
+
             var nPropNum = BaseType == "Hl7.Fhir.Model.Resource" ?
                 40 :
                 BaseType == "Hl7.Fhir.Model.Element" ? 20 : 80;
@@ -1266,10 +1529,10 @@ public class ResourceDetails
     /// </summary>
     /// <param name="loadedVersions">The FHIR versions XML structure definition data</param>
     /// <param name="valueSetsByUrlByVersion">All value sets that have been mapped to enumerations, indexed by their URL and FHIR version</param>
-    /// <returns>Newly created resources and data types by FHIR version and by name, i.e. a dictionary indexed by FHIR version, 
-    /// with an empty string key representing resources and data types common to all version and 'DSTU2', 'STU3' etc representing the specific version; 
-    /// each value is a dictionary indexed by the class name with the ResourceDetails as values</returns>
-    public static Dictionary<string, Dictionary<string, ResourceDetails>> LoadAll(
+    /// <returns>A tuple with containing newly created resources and data types by FHIR version and by name and created interfaces as a flat list
+    /// The first is a dictionary indexed by FHIR version, with an empty string key representing resources and data types common to all version and 
+    /// 'DSTU2', 'STU3' etc representing the specific version; each value is a dictionary indexed by the class name with the ResourceDetails as values</returns>
+    public static Tuple<Dictionary<string, Dictionary<string, ResourceDetails>>, List<InterfaceDetails>> LoadAll(
         IEnumerable<LoadedVersion> loadedVersions,
         Dictionary<string, Dictionary<string, ValueSet>> valueSetsByUrlByVersion
     )
@@ -1292,8 +1555,8 @@ public class ResourceDetails
             resourcesByNameByVersion.Add(loadedVersion.Version, resourcesByName);
         }
         Patch(resourcesByNameByVersion);
-        ExtractShared(loadedVersions, resourcesByNameByVersion);
-        return resourcesByNameByVersion;
+        var interfaces = ExtractShared(loadedVersions, resourcesByNameByVersion);
+        return Tuple.Create(resourcesByNameByVersion, interfaces);
     }
 
     private static void Patch(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
@@ -1627,8 +1890,9 @@ public class ResourceDetails
         return result;
     }
 
-    private static void ExtractShared(IEnumerable<LoadedVersion> loadedVersions, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    private static List<InterfaceDetails> ExtractShared(IEnumerable<LoadedVersion> loadedVersions, Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
     {
+        var interfaces = new List<InterfaceDetails>();
         var sharedResourcesByName = new Dictionary<string, ResourceDetails>();
         var allNamesInDependencyOrder = resourcesByNameByVersion.Values
             .SelectMany(resourcesByName => TopologicalSort(resourcesByName))
@@ -1688,6 +1952,7 @@ public class ResourceDetails
                     if (versionSpecificReferencedFhirTypes.Any())
                     {
                         Console.WriteLine("{0} references version-specific types: {1}", name, string.Join(", ",versionSpecificReferencedFhirTypes));
+                        merged = false;
                     }
                     else
                     {
@@ -1699,10 +1964,182 @@ public class ResourceDetails
                         }
                     }
                 }
+                if (!merged)
+                {
+                    var inter = TryCreateInterface(resourcesWithSameName);
+                    if (inter != null)
+                    {
+                        interfaces.Add(inter);
+                        foreach (var resource in resourcesWithSameName)
+                        {
+                            resource.Interface = inter.Name;
+                        }
+                    }
+                }
             }
         }
         FixFhirTypes(resourcesByNameByVersion, sharedResourcesByName);
+        foreach(var inter in interfaces)
+        {
+            inter.FixReferencedFhirTypes(inter.Name, sharedResourcesByName);
+        }
         resourcesByNameByVersion.Add(string.Empty, sharedResourcesByName);
+        return interfaces;
+    }
+
+    private static InterfaceDetails TryCreateInterface(List<ResourceDetails> resourcesWithSameName)
+    {
+        var firstResource = resourcesWithSameName[0];
+        var inter = new InterfaceDetails
+        {
+            Versions = new List<LoadedVersion>(firstResource.Versions),
+            Name = StringUtils.ToInterfaceName(firstResource.Name),
+            Description = firstResource.Description,
+            Base = ComputeInterfaceBase(firstResource.BaseType, firstResource.IsPrimitive),
+            PrimitiveTypeName = firstResource.GetPrimitiveTypeName()
+        };
+        var interfacePropertiesByFhirName = CreateInterfaceProperties(firstResource.Properties);
+        var componentInterfacesByName = new Dictionary<string, Tuple<InterfaceDetails, Dictionary<string, InterfacePropertyDetails>>>();
+        foreach(var firstComponent in firstResource.Components)
+        {
+            var componentInterface = new InterfaceDetails
+            {
+                Versions = new List<LoadedVersion>(firstResource.Versions),
+                Name = StringUtils.ToInterfaceName(firstResource.Name + firstComponent.Name),
+                Base = ComputeInterfaceBase(firstComponent.BaseType, false),
+            };
+            var componentInterfacePropertiesByFhirName = CreateInterfaceProperties(firstComponent.Properties);
+            componentInterfacesByName.Add(firstComponent.Name, Tuple.Create(componentInterface, componentInterfacePropertiesByFhirName) );
+        }
+        foreach (var otherResource in resourcesWithSameName.Skip(1))
+        {
+            var newBase = TryMergeInterfaceBase(inter.Base, otherResource.BaseType, otherResource.IsPrimitive);
+            if (newBase == null || inter.PrimitiveTypeName != otherResource.GetPrimitiveTypeName())
+            {
+                return null;
+            }
+            inter.Base = newBase;
+            inter.Versions.AddRange(otherResource.Versions);
+            MergeInterfaceProperties(interfacePropertiesByFhirName, otherResource.Properties);
+            var newComponentInterfacesByName = new Dictionary<string, Tuple<InterfaceDetails, Dictionary<string, InterfacePropertyDetails>>>();
+            foreach (var otherComponent in otherResource.Components)
+            {
+                if (componentInterfacesByName.TryGetValue(otherComponent.Name, out var componentInterfaces))
+                {
+                    var newComponentBase = TryMergeInterfaceBase(componentInterfaces.Item1.Base, otherComponent.BaseType, false);
+                    if (newComponentBase != null)
+                    {
+                        componentInterfaces.Item1.Base = newComponentBase;
+                        MergeInterfaceProperties(componentInterfaces.Item2, otherComponent.Properties);
+                        componentInterfaces.Item1.Versions.AddRange(otherResource.Versions);
+                        newComponentInterfacesByName.Add(otherComponent.Name, componentInterfaces);
+                    }
+                }
+            }
+            componentInterfacesByName = newComponentInterfacesByName;
+        }
+        var componentWithInterfaceNames = new HashSet<string>(componentInterfacesByName.Keys);
+        inter.Components = componentInterfacesByName.Values
+            .Select(tuple => { var i = tuple.Item1; i.Properties = RemovePropertiesReferencingMissingComponents(tuple.Item2.Values, componentWithInterfaceNames); return i; })
+            .ToList();
+        inter.Properties = RemovePropertiesReferencingMissingComponents(interfacePropertiesByFhirName.Values, componentWithInterfaceNames);
+        foreach (var resource in resourcesWithSameName)
+        {
+            foreach (var property in resource.Properties)
+            {
+                if (interfacePropertiesByFhirName.ContainsKey(property.FhirName))
+                {
+                    property.Interface = inter.Name;
+                }
+            }
+            foreach (var componentInterface in componentInterfacesByName)
+            {
+                var component = resource.Components.FirstOrDefault(c => c.Name == componentInterface.Key);
+                if (component != null)
+                {
+                    component.Interface = componentInterface.Value.Item1.Name;
+                    foreach (var property in component.Properties)
+                    {
+                        if (componentInterface.Value.Item2.ContainsKey(property.FhirName))
+                        {
+                            property.Interface = component.Interface;
+                        }
+                    }
+                }
+            }
+        }
+        return inter;
+    }
+
+    private static string TryMergeInterfaceBase(string currentBase, string baseType, bool isPrimitive)
+    {
+        var newBase = ComputeInterfaceBase(baseType, isPrimitive);
+        if (currentBase == newBase) return currentBase;
+        if (currentBase == "IElement" && (newBase == "IBackboneElement" || newBase == "IQuantity")) return currentBase;
+        if (newBase == "IElement" && (currentBase == "IBackboneElement" || currentBase == "IQuantity")) return newBase;
+        if (currentBase == "IBackboneElement" && newBase == "IQuantity") return currentBase;
+        if (newBase == "IBackboneElement" && currentBase == "IQuantity") return newBase;
+        if (currentBase == "IResource" && newBase == "IDomainResource") return currentBase;
+        if (newBase == "IResource" && currentBase == "IDomainResource") return newBase;
+        return null;
+    }
+
+    private static string ComputeInterfaceBase(string baseType, bool isPrimitive)
+    {
+        if (isPrimitive) return "IPrimitive";
+        switch (baseType)
+        {
+            case "Hl7.Fhir.Model.Element": return "IElement";
+            case "Hl7.Fhir.Model.BackboneElement": return "IBackboneElement";
+            case "Hl7.Fhir.Model.Quantity": return "IQuantity";
+            case "Hl7.Fhir.Model.Resource": return "IResource";
+            case "Hl7.Fhir.Model.DomainResource": return "IDomainResource";
+            default: throw new InvalidDataException($"Unknown or not support base type {baseType}");
+        }
+    }
+
+    private static List<InterfacePropertyDetails> RemovePropertiesReferencingMissingComponents(IEnumerable<InterfacePropertyDetails> properties, HashSet<string> componentNames)
+    {
+        var result = new List<InterfacePropertyDetails>();
+        foreach (var property in properties)
+        {
+            if (StringUtils.TryGetModelClassName(property.PropType, out var className ) || componentNames.Contains(property.PropType))
+            {
+                result.Add(property);
+            }
+        }
+        return result;
+    }
+
+    private static Dictionary<string, InterfacePropertyDetails> CreateInterfaceProperties(List<PropertyDetails> properties)
+    {
+        var result = new Dictionary<string, InterfacePropertyDetails>();
+        foreach (var property in properties)
+        {
+            result.Add(property.FhirName, property.ToInterface());
+        }
+        return result;
+    }
+
+    private static void MergeInterfaceProperties(
+        Dictionary<string, InterfacePropertyDetails> interfacePropertiesByFhirName,
+        List<PropertyDetails> properties
+    )
+    {
+        var newInterfacePropertiesByFhirName = new Dictionary<string, InterfacePropertyDetails>();
+        foreach (var property in properties)
+        {
+            if (interfacePropertiesByFhirName.TryGetValue(property.FhirName, out var interfaceProperty)
+                && property.TryMergeInto(interfaceProperty))
+            {
+                newInterfacePropertiesByFhirName.Add(property.FhirName, interfaceProperty);
+            }
+        }
+        interfacePropertiesByFhirName.Clear();
+        foreach(var pair in newInterfacePropertiesByFhirName)
+        {
+            interfacePropertiesByFhirName.Add(pair.Key, pair.Value);
+        }
     }
 
     private static void FixFhirTypes(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion, Dictionary<string, ResourceDetails> sharedResourcesByName)
@@ -1763,6 +2200,11 @@ public class ComponentDetails
     /// Base type for the sub-class (typically BackboneElement)
     /// </summary>
     public string BaseType;
+
+    /// <summary>
+    /// Shared interface implemented by the C# class
+    /// </summary>
+    public string Interface;
 
     /// <summary>
     /// Component properties - corresponding to the C# sub-class properties
@@ -1831,14 +2273,22 @@ public class ComponentDetails
     /// </summary>
     /// <param name="version">Target FHIR version: 'DSTU2' 'STU3' etc. or 'All' if common</param>
     /// <returns>C# code lines</returns>
-    public IEnumerable<string> Render(string version)
+    public IEnumerable<string> Render(string version, string rootInterfaceName, List<ComponentDetails> components)
     {
+        var inter = !string.IsNullOrEmpty(Interface) ?
+            $"{StringUtils.ModelNamespacePrefix}{Interface}, " :
+            string.Empty;
         yield return $"[FhirType({version}, \"{ Name }\")]";
         yield return $"[DataContract]";
-        yield return $"public partial class { Name } : { BaseType }, System.ComponentModel.INotifyPropertyChanged, IBackboneElement";
+        yield return $"public partial class { Name } : { BaseType }, {inter}System.ComponentModel.INotifyPropertyChanged, IComponent";
         yield return $"{{";
         yield return $"    [NotMapped]";
         yield return $"    public override string TypeName {{ get {{ return \"{ Name }\"; }} }}";
+
+        if (!string.IsNullOrEmpty(Interface))
+        {
+            foreach (var line in StringUtils.RenderInterfaceProperties(rootInterfaceName, Properties, components)) yield return "    " + line;
+        }
 
         foreach (var line in StringUtils.RenderProperties(30, Properties)) yield return "    " + line;
 
@@ -2039,6 +2489,11 @@ public class PropertyDetails
     /// </summary>
     public string CardMax;
 
+    /// <summary>
+    /// Interface this property belongs to
+    /// </summary>
+    public string Interface;
+
     public List<string> ReferenceTargets = new List<string>();
 
     /// <summary>
@@ -2181,6 +2636,29 @@ public class PropertyDetails
         return Enumerable.SequenceEqual(first.OrderBy(s => s), second.OrderBy(s => s));
     }
 
+    public InterfacePropertyDetails ToInterface()
+    {
+        return new InterfacePropertyDetails
+        {
+            Name = Name,
+            Summary = Summary,
+            PropType = PropType,
+            NativeType = NativeType,
+            NativeName = NativeName,
+            IsMultiCard = IsMultiCard(),
+            ReadOnly = false
+        };
+    }
+
+    public bool TryMergeInto(InterfacePropertyDetails interfaceProperty)
+    {
+        return Name == interfaceProperty.Name
+            && PropType == interfaceProperty.PropType
+            && NativeType == interfaceProperty.NativeType
+            && NativeName == interfaceProperty.NativeName
+            && IsMultiCard() == interfaceProperty.IsMultiCard;
+    }
+
     public IEnumerable<string> Render(int nPropNum)
     {
         foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
@@ -2289,6 +2767,49 @@ public class PropertyDetails
         return string.Join(",", versions.Select(v => string.IsNullOrEmpty(v) ? "Hl7.Fhir.Model.Version.All" : "Hl7.Fhir.Model.Version." + v));
     }
 
+    /// <summary>
+    /// If needed renders the property as an explicit interface member - ie if the interface defines a member with a different signature than 
+    /// the property itself. For example the IPatient interface defines an 'IEnumerable{IHumanName} Name' property that is not implemented by 
+    /// the `List{xxx.HumanName> Name` properties of the xxx.Patient classes (xxx=FHIR version), so they all need an explicit 
+    /// 'IEnumerable{IHumanName} IPatient.Name' property.
+    /// </summary>
+    /// <param name="rootInterfaceName">The root interface name - eg IPatient ('root' because it is the same also if the property belongs to a component
+    /// and not to the resource itself)</param>
+    /// <param name="components">Componens declared by the resource containing this property</param>
+    /// <returns>Code lines or empty enumeration if rendering as an explicit interface is not needed</returns>
+    public IEnumerable<string> RenderAsInterfaceIfNeeded(string rootInterfaceName, List<ComponentDetails> components)
+    {
+        string interfacePropertyBaseType = null;
+        if (!string.IsNullOrEmpty(Interface))
+        {
+            // The property has an associated interface
+            if (!StringUtils.TryGetModelClassName(PropType, out var className))
+            {
+                // The property type is a component
+                if (!string.IsNullOrEmpty(components?.FirstOrDefault(c => c.Name == PropType)?.Interface))
+                {
+                    // The component has an interface
+                    interfacePropertyBaseType = StringUtils.ModelNamespacePrefix + rootInterfaceName + PropType;
+                }
+            }
+            else if (className.Contains("."))
+            {
+                // The property type is version-specific (eg HumanName)
+                var baseClassName = className.Substring(className.IndexOf('.') + 1);
+                interfacePropertyBaseType = StringUtils.ModelNamespacePrefix + StringUtils.ToInterfaceName(baseClassName);
+            }
+        }
+        if (!string.IsNullOrEmpty(interfacePropertyBaseType))
+        {
+            var interfacePropertyType = IsMultiCard() ?
+                $"IEnumerable<{ interfacePropertyBaseType }>" :
+                interfacePropertyBaseType;
+            yield return string.Empty;
+            yield return "[NotMapped]";
+            yield return $"{ interfacePropertyType } { StringUtils.ModelNamespacePrefix }{ Interface }.{ Name } {{ get {{ return { Name }; }} }}";
+        }
+    }
+
     public IEnumerable<string> RenderAsChildWithName()
     {
         // Exclude special properties encoded as Xml attributes (Element.Id) - not derived from Base
@@ -2346,10 +2867,9 @@ public class PropertyDetails
     public IEnumerable<string> GetReferencedFhirTypes()
     {
         // Ignore AllowedTypes because they are version-specific
-        const string prefix = "Hl7.Fhir.Model.";
-        if (PropType.StartsWith(prefix))
+        if (StringUtils.TryGetModelClassName(PropType, out var className))
         {
-            yield return PropType.Substring(prefix.Length);
+            yield return className;
         }
     }
 
@@ -3011,7 +3531,24 @@ static void DeleteSourceFiles(string directoryPath)
     foreach (var filePath in Directory.GetFiles(directoryPath, "*.cs"))
     {
         Console.WriteLine("Deleting {0}", filePath);
-        File.Delete(filePath);
+        var retries = 5;
+        while (true)
+        {
+            try
+            {
+                File.Delete(filePath);
+                break;
+            }
+            catch
+            {
+                if (retries <= 0)
+                {
+                    throw;
+                }
+                retries--;
+                System.Threading.Thread.Sleep(10);
+            }
+        }
     }
 }
 
@@ -3035,7 +3572,9 @@ valueSetsByUrlByVersion[string.Empty].Add(
             .ToList()
     }
 );
-var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByUrlByVersion);
+var resourcesByNameByVersionAndInterfaces = ResourceDetails.LoadAll(loadedVersions, valueSetsByUrlByVersion);
+var resourcesByNameByVersion = resourcesByNameByVersionAndInterfaces.Item1;
+var interfaces = resourcesByNameByVersionAndInterfaces.Item2;
 
 var generatedDirectory = Path.Combine(rootDirectory, "Generated");
 DeleteSourceFiles(generatedDirectory);
@@ -3080,4 +3619,10 @@ foreach (var pair in resourcesByNameByVersion)
             resource.Write(filePath);
         }
     }
+}
+foreach (var inter in interfaces)
+{
+    var filePath = Path.Combine(generatedDirectory, inter.Name + ".cs");
+    Console.WriteLine("Creating {0}", filePath);
+    inter.Write(filePath);
 }

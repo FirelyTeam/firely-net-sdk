@@ -47,10 +47,13 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Dosage : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IDosage, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Dosage"; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITiming Hl7.Fhir.Model.IDosage.Timing { get { return Timing; } }
     
         
         /// <summary>

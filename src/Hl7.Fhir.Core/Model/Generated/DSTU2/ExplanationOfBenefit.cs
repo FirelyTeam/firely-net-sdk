@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ExplanationOfBenefit", IsResource=true)]
     [DataContract]
-    public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IExplanationOfBenefit, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ExplanationOfBenefit; } }

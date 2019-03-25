@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "AdverseEvent", IsResource=true)]
     [DataContract]
-    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IAdverseEvent, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.AdverseEvent; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SuspectEntityComponent")]
         [DataContract]
-        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IAdverseEventSuspectEntityComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SuspectEntityComponent"; } }
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "CausalityComponent")]
         [DataContract]
-        public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CausalityComponent"; } }
@@ -326,6 +326,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IAdverseEventSuspectEntityComponent> Hl7.Fhir.Model.IAdverseEvent.SuspectEntity { get { return SuspectEntity; } }
     
         
         /// <summary>

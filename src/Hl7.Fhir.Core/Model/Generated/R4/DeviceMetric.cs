@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "DeviceMetric", IsResource=true)]
     [DataContract]
-    public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IDeviceMetric, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DeviceMetric; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "CalibrationComponent")]
         [DataContract]
-        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDeviceMetricCalibrationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CalibrationComponent"; } }
@@ -235,6 +235,12 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITiming Hl7.Fhir.Model.IDeviceMetric.MeasurementPeriod { get { return MeasurementPeriod; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDeviceMetricCalibrationComponent> Hl7.Fhir.Model.IDeviceMetric.Calibration { get { return Calibration; } }
     
         
         /// <summary>

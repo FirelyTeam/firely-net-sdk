@@ -47,12 +47,24 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Library", IsResource=true)]
     [DataContract]
-    public partial class Library : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Library : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ILibrary, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Library; } }
         [NotMapped]
         public override string TypeName { get { return "Library"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.ILibrary.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.ILibrary.RelatedArtifact { get { return RelatedArtifact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IParameterDefinition> Hl7.Fhir.Model.ILibrary.Parameter { get { return Parameter; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDataRequirement> Hl7.Fhir.Model.ILibrary.DataRequirement { get { return DataRequirement; } }
     
         
         /// <summary>

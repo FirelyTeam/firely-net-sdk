@@ -47,12 +47,15 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "GuidanceResponse", IsResource=true)]
     [DataContract]
-    public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IGuidanceResponse, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.GuidanceResponse; } }
         [NotMapped]
         public override string TypeName { get { return "GuidanceResponse"; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDataRequirement> Hl7.Fhir.Model.IGuidanceResponse.DataRequirement { get { return DataRequirement; } }
     
         
         /// <summary>

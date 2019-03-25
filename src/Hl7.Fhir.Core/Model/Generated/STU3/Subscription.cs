@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Subscription", IsResource=true)]
     [DataContract]
-    public partial class Subscription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Subscription : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ISubscription, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Subscription; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ChannelComponent")]
         [DataContract]
-        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ISubscriptionChannelComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ChannelComponent"; } }
@@ -275,6 +275,12 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.ISubscription.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ISubscriptionChannelComponent Hl7.Fhir.Model.ISubscription.Channel { get { return Channel; } }
     
         
         /// <summary>

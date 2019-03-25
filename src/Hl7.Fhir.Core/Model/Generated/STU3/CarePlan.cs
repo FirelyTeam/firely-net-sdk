@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "CarePlan", IsResource=true)]
     [DataContract]
-    public partial class CarePlan : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CarePlan : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICarePlan, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.CarePlan; } }
@@ -57,10 +57,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ActivityComponent")]
         [DataContract]
-        public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICarePlanActivityComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ActivityComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ICarePlanDetailComponent Hl7.Fhir.Model.ICarePlanActivityComponent.Detail { get { return Detail; } }
             
             /// <summary>
             /// Results of the activity
@@ -220,7 +223,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DetailComponent")]
         [DataContract]
-        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICarePlanDetailComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
@@ -667,6 +670,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICarePlanActivityComponent> Hl7.Fhir.Model.ICarePlan.Activity { get { return Activity; } }
     
         
         /// <summary>

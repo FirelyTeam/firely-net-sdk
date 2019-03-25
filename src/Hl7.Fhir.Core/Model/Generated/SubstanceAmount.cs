@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
     
         [FhirType(Hl7.Fhir.Model.Version.All, "ReferenceRangeComponent")]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }

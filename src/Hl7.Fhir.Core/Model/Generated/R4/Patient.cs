@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Patient", IsResource=true)]
     [DataContract]
-    public partial class Patient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Patient; } }
@@ -57,10 +57,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPatientContactComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IHumanName Hl7.Fhir.Model.IPatientContactComponent.Name { get { return Name; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IPatientContactComponent.Telecom { get { return Telecom; } }
             
             /// <summary>
             /// The kind of relationship
@@ -274,7 +280,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "CommunicationComponent")]
         [DataContract]
-        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPatientCommunicationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CommunicationComponent"; } }
@@ -398,7 +404,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPatientLinkComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -522,6 +528,21 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IHumanName> Hl7.Fhir.Model.IPatient.Name { get { return Name; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IPatient.Telecom { get { return Telecom; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPatientContactComponent> Hl7.Fhir.Model.IPatient.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPatientCommunicationComponent> Hl7.Fhir.Model.IPatient.Communication { get { return Communication; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPatientLinkComponent> Hl7.Fhir.Model.IPatient.Link { get { return Link; } }
     
         
         /// <summary>

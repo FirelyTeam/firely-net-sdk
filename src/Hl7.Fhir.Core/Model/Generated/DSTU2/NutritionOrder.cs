@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "NutritionOrder", IsResource=true)]
     [DataContract]
-    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.INutritionOrder, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.NutritionOrder; } }
@@ -57,10 +57,19 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OralDietComponent")]
         [DataContract]
-        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderOralDietComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OralDietComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITiming> Hl7.Fhir.Model.INutritionOrderOralDietComponent.Schedule { get { return Schedule; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.INutritionOrderNutrientComponent> Hl7.Fhir.Model.INutritionOrderOralDietComponent.Nutrient { get { return Nutrient; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.INutritionOrderTextureComponent> Hl7.Fhir.Model.INutritionOrderOralDietComponent.Texture { get { return Texture; } }
             
             /// <summary>
             /// Type of oral diet or diet restrictions that describe what can be consumed orally
@@ -259,7 +268,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "NutrientComponent")]
         [DataContract]
-        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderNutrientComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "NutrientComponent"; } }
@@ -363,7 +372,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TextureComponent")]
         [DataContract]
-        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderTextureComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TextureComponent"; } }
@@ -467,10 +476,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SupplementComponent")]
         [DataContract]
-        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderSupplementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SupplementComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITiming> Hl7.Fhir.Model.INutritionOrderSupplementComponent.Schedule { get { return Schedule; } }
             
             /// <summary>
             /// Type of supplement product requested
@@ -666,10 +678,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "EnteralFormulaComponent")]
         [DataContract]
-        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderEnteralFormulaComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EnteralFormulaComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.INutritionOrderAdministrationComponent> Hl7.Fhir.Model.INutritionOrderEnteralFormulaComponent.Administration { get { return Administration; } }
             
             /// <summary>
             /// Type of enteral or infant formula
@@ -956,10 +971,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AdministrationComponent")]
         [DataContract]
-        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.INutritionOrderAdministrationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AdministrationComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ITiming Hl7.Fhir.Model.INutritionOrderAdministrationComponent.Schedule { get { return Schedule; } }
             
             /// <summary>
             /// Scheduled frequency of enteral feeding
@@ -1076,6 +1094,15 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.INutritionOrderOralDietComponent Hl7.Fhir.Model.INutritionOrder.OralDiet { get { return OralDiet; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.INutritionOrderSupplementComponent> Hl7.Fhir.Model.INutritionOrder.Supplement { get { return Supplement; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.INutritionOrderEnteralFormulaComponent Hl7.Fhir.Model.INutritionOrder.EnteralFormula { get { return EnteralFormula; } }
     
         
         /// <summary>

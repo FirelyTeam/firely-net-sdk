@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "MedicationRequest", IsResource=true)]
     [DataContract]
-    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IMedicationRequest, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicationRequest; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RequesterComponent")]
         [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
@@ -166,10 +166,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DispenseRequestComponent")]
         [DataContract]
-        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DispenseRequestComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IDuration Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent.ExpectedSupplyDuration { get { return ExpectedSupplyDuration; } }
             
             /// <summary>
             /// Time period supply is authorized for
@@ -345,7 +348,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SubstitutionComponent")]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMedicationRequestSubstitutionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
@@ -465,6 +468,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDosage> Hl7.Fhir.Model.IMedicationRequest.DosageInstruction { get { return DosageInstruction; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent Hl7.Fhir.Model.IMedicationRequest.DispenseRequest { get { return DispenseRequest; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IMedicationRequestSubstitutionComponent Hl7.Fhir.Model.IMedicationRequest.Substitution { get { return Substitution; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "PractitionerRole", IsResource=true)]
     [DataContract]
-    public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPractitionerRole, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.PractitionerRole; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "AvailableTimeComponent")]
         [DataContract]
-        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPractitionerRoleAvailableTimeComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AvailableTimeComponent"; } }
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "NotAvailableComponent")]
         [DataContract]
-        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPractitionerRoleNotAvailableComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "NotAvailableComponent"; } }
@@ -394,6 +394,15 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactPoint> Hl7.Fhir.Model.IPractitionerRole.Telecom { get { return Telecom; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPractitionerRoleAvailableTimeComponent> Hl7.Fhir.Model.IPractitionerRole.AvailableTime { get { return AvailableTime; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPractitionerRoleNotAvailableComponent> Hl7.Fhir.Model.IPractitionerRole.NotAvailable { get { return NotAvailable; } }
     
         
         /// <summary>

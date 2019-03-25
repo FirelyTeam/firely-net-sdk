@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "List", IsResource=true)]
     [DataContract]
-    public partial class List : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class List : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IList, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.List; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "EntryComponent")]
         [DataContract]
-        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IListEntryComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EntryComponent"; } }
@@ -232,6 +232,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IListEntryComponent> Hl7.Fhir.Model.IList.Entry { get { return Entry; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "PaymentReconciliation", IsResource=true)]
     [DataContract]
-    public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPaymentReconciliation, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.PaymentReconciliation; } }
@@ -57,10 +57,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DetailsComponent")]
         [DataContract]
-        public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPaymentReconciliationDetailsComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DetailsComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IPaymentReconciliationDetailsComponent.Amount { get { return Amount; } }
             
             /// <summary>
             /// Business identifier of the payment detail
@@ -331,7 +334,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "NotesComponent")]
         [DataContract]
-        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IPaymentReconciliationNotesComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "NotesComponent"; } }
@@ -469,6 +472,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IPaymentReconciliationDetailsComponent> Hl7.Fhir.Model.IPaymentReconciliation.Detail { get { return Detail; } }
     
         
         /// <summary>

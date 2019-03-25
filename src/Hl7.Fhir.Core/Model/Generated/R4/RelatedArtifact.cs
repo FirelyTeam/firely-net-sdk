@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "RelatedArtifact")]
     [DataContract]
-    public partial class RelatedArtifact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class RelatedArtifact : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IRelatedArtifact, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "RelatedArtifact"; } }

@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsCodeOfT { get; private set; }
 
-        public bool IsBackbone { get; private set; }
+        public bool IsComponent { get; private set; }
 
         public bool IsAbstract { get; private set; }
 
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Introspection
                 result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 
-                result.IsBackbone = type.CanBeTreatedAsType(typeof(IBackboneElement));
+                result.IsComponent = type.CanBeTreatedAsType(typeof(IComponent));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
                     throw Error.Argument(nameof(type), "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));

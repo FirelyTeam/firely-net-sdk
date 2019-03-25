@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Signature")]
     [DataContract]
-    public partial class Signature : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Signature : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.ISignature, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Signature"; } }

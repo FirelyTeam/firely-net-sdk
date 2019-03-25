@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "MedicationRequest", IsResource=true)]
     [DataContract]
-    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IMedicationRequest, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicationRequest; } }
@@ -57,10 +57,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DispenseRequestComponent")]
         [DataContract]
-        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DispenseRequestComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IDuration Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent.ExpectedSupplyDuration { get { return ExpectedSupplyDuration; } }
             
             /// <summary>
             /// First fill details
@@ -272,7 +275,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "InitialFillComponent")]
         [DataContract]
-        public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InitialFillComponent"; } }
@@ -376,7 +379,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SubstitutionComponent")]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IMedicationRequestSubstitutionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
@@ -479,6 +482,15 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDosage> Hl7.Fhir.Model.IMedicationRequest.DosageInstruction { get { return DosageInstruction; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IMedicationRequestDispenseRequestComponent Hl7.Fhir.Model.IMedicationRequest.DispenseRequest { get { return DispenseRequest; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.IMedicationRequestSubstitutionComponent Hl7.Fhir.Model.IMedicationRequest.Substitution { get { return Substitution; } }
     
         
         /// <summary>

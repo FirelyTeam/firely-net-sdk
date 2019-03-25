@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Contract", IsResource=true)]
     [DataContract]
-    public partial class Contract : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Contract : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IContract, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Contract; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SignatoryComponent")]
         [DataContract]
-        public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractSignatoryComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SignatoryComponent"; } }
@@ -292,10 +292,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ValuedItemComponent")]
         [DataContract]
-        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractValuedItemComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ValuedItemComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IContractValuedItemComponent.UnitPrice { get { return UnitPrice; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.IMoney Hl7.Fhir.Model.IContractValuedItemComponent.Net { get { return Net; } }
             
             /// <summary>
             /// Contract Valued Item Type
@@ -563,10 +569,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "TermComponent")]
         [DataContract]
-        public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractTermComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TermComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IContractTermComponent> Hl7.Fhir.Model.IContractTermComponent.Group { get { return Group; } }
             
             /// <summary>
             /// Contract Term Number
@@ -915,7 +924,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "TermAgentComponent")]
         [DataContract]
-        public partial class TermAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TermAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TermAgentComponent"; } }
@@ -1023,7 +1032,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "TermValuedItemComponent")]
         [DataContract]
-        public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TermValuedItemComponent"; } }
@@ -1294,7 +1303,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "FriendlyLanguageComponent")]
         [DataContract]
-        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractFriendlyLanguageComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FriendlyLanguageComponent"; } }
@@ -1383,7 +1392,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "LegalLanguageComponent")]
         [DataContract]
-        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractLegalLanguageComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LegalLanguageComponent"; } }
@@ -1472,7 +1481,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ComputableLanguageComponent")]
         [DataContract]
-        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IContractComputableLanguageComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ComputableLanguageComponent"; } }
@@ -1557,6 +1566,21 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContractSignatoryComponent> Hl7.Fhir.Model.IContract.Signer { get { return Signer; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContractTermComponent> Hl7.Fhir.Model.IContract.Term { get { return Term; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContractFriendlyLanguageComponent> Hl7.Fhir.Model.IContract.Friendly { get { return Friendly; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContractLegalLanguageComponent> Hl7.Fhir.Model.IContract.Legal { get { return Legal; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContractComputableLanguageComponent> Hl7.Fhir.Model.IContract.Rule { get { return Rule; } }
     
         
         /// <summary>

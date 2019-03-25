@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "RiskAssessment", IsResource=true)]
     [DataContract]
-    public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IRiskAssessment, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.RiskAssessment; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "PredictionComponent")]
         [DataContract]
-        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IRiskAssessmentPredictionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PredictionComponent"; } }
@@ -272,6 +272,9 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRiskAssessmentPredictionComponent> Hl7.Fhir.Model.IRiskAssessment.Prediction { get { return Prediction; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "CompartmentDefinition", IsResource=true)]
     [DataContract]
-    public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICompartmentDefinition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.CompartmentDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ResourceComponent")]
         [DataContract]
-        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICompartmentDefinitionResourceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
@@ -236,6 +236,12 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.ICompartmentDefinition.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICompartmentDefinitionResourceComponent> Hl7.Fhir.Model.ICompartmentDefinition.Resource { get { return Resource; } }
     
         
         /// <summary>

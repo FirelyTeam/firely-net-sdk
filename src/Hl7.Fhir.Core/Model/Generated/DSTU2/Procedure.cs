@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Procedure", IsResource=true)]
     [DataContract]
-    public partial class Procedure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Procedure : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IProcedure, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Procedure; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IProcedurePerformerComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FocalDeviceComponent")]
         [DataContract]
-        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IProcedureFocalDeviceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FocalDeviceComponent"; } }
@@ -267,6 +267,12 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IProcedurePerformerComponent> Hl7.Fhir.Model.IProcedure.Performer { get { return Performer; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IProcedureFocalDeviceComponent> Hl7.Fhir.Model.IProcedure.FocalDevice { get { return FocalDevice; } }
     
         
         /// <summary>

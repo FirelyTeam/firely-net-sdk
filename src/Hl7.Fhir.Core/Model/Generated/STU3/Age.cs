@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Age")]
     [DataContract]
-    public partial class Age : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Age : Hl7.Fhir.Model.Quantity, Hl7.Fhir.Model.IAge, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Age"; } }

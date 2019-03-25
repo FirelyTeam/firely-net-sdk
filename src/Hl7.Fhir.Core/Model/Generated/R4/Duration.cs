@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "Duration")]
     [DataContract]
-    public partial class Duration : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Duration : Hl7.Fhir.Model.Quantity, Hl7.Fhir.Model.IDuration, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Duration"; } }

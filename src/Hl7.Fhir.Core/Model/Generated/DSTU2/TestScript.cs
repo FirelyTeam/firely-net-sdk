@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TestScript", IsResource=true)]
     [DataContract]
-    public partial class TestScript : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class TestScript : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ITestScript, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.TestScript; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -183,10 +183,16 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "MetadataComponent")]
         [DataContract]
-        public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptMetadataComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MetadataComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITestScriptLinkComponent> Hl7.Fhir.Model.ITestScriptMetadataComponent.Link { get { return Link; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITestScriptCapabilityComponent> Hl7.Fhir.Model.ITestScriptMetadataComponent.Capability { get { return Capability; } }
             
             /// <summary>
             /// Links to the FHIR specification
@@ -289,7 +295,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptLinkComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -432,7 +438,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "CapabilityComponent")]
         [DataContract]
-        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptCapabilityComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CapabilityComponent"; } }
@@ -707,7 +713,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "FixtureComponent")]
         [DataContract]
-        public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptFixtureComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "FixtureComponent"; } }
@@ -867,7 +873,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "VariableComponent")]
         [DataContract]
-        public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptVariableComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "VariableComponent"; } }
@@ -1084,10 +1090,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SetupComponent")]
         [DataContract]
-        public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptSetupComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SetupComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITestScriptSetupActionComponent> Hl7.Fhir.Model.ITestScriptSetupComponent.Action { get { return Action; } }
             
             /// <summary>
             /// Capabilities  that are assumed to function correctly on the FHIR server being tested
@@ -1189,10 +1198,16 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SetupActionComponent")]
         [DataContract]
-        public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptSetupActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SetupActionComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ITestScriptOperationComponent Hl7.Fhir.Model.ITestScriptSetupActionComponent.Operation { get { return Operation; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ITestScriptAssertComponent Hl7.Fhir.Model.ITestScriptSetupActionComponent.Assert { get { return Assert; } }
             
             /// <summary>
             /// The setup operation to perform
@@ -1293,10 +1308,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OperationComponent")]
         [DataContract]
-        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptOperationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITestScriptRequestHeaderComponent> Hl7.Fhir.Model.ITestScriptOperationComponent.RequestHeader { get { return RequestHeader; } }
             
             /// <summary>
             /// The setup operation type that will be executed
@@ -1842,7 +1860,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "RequestHeaderComponent")]
         [DataContract]
-        public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptRequestHeaderComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RequestHeaderComponent"; } }
@@ -1986,7 +2004,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "AssertComponent")]
         [DataContract]
-        public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptAssertComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AssertComponent"; } }
@@ -2720,10 +2738,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TestComponent")]
         [DataContract]
-        public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptTestComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TestComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ITestScriptTestActionComponent> Hl7.Fhir.Model.ITestScriptTestComponent.Action { get { return Action; } }
             
             /// <summary>
             /// Tracking/logging name of this test
@@ -2899,10 +2920,16 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TestActionComponent")]
         [DataContract]
-        public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptTestActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TestActionComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ITestScriptOperationComponent Hl7.Fhir.Model.ITestScriptTestActionComponent.Operation { get { return Operation; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ITestScriptAssertComponent Hl7.Fhir.Model.ITestScriptTestActionComponent.Assert { get { return Assert; } }
             
             /// <summary>
             /// The setup operation to perform
@@ -3003,7 +3030,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TeardownComponent")]
         [DataContract]
-        public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ITestScriptTeardownComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TeardownComponent"; } }
@@ -3090,7 +3117,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TearDownActionComponent")]
         [DataContract]
-        public partial class TearDownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TearDownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TearDownActionComponent"; } }
@@ -3172,6 +3199,24 @@ namespace Hl7.Fhir.Model.DSTU2
         
         
         }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITestScriptMetadataComponent Hl7.Fhir.Model.ITestScript.Metadata { get { return Metadata; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ITestScriptFixtureComponent> Hl7.Fhir.Model.ITestScript.Fixture { get { return Fixture; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ITestScriptVariableComponent> Hl7.Fhir.Model.ITestScript.Variable { get { return Variable; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITestScriptSetupComponent Hl7.Fhir.Model.ITestScript.Setup { get { return Setup; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ITestScriptTestComponent> Hl7.Fhir.Model.ITestScript.Test { get { return Test; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ITestScriptTeardownComponent Hl7.Fhir.Model.ITestScript.Teardown { get { return Teardown; } }
     
         
         /// <summary>

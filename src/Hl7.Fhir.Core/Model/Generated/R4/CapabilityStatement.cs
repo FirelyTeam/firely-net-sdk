@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "CapabilityStatement", IsResource=true)]
     [DataContract]
-    public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.ICapabilityStatement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.CapabilityStatement; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SoftwareComponent")]
         [DataContract]
-        public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementSoftwareComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SoftwareComponent"; } }
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ImplementationComponent")]
         [DataContract]
-        public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementImplementationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ImplementationComponent"; } }
@@ -405,10 +405,25 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RestComponent")]
         [DataContract]
-        public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementRestComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RestComponent"; } }
+            
+            [NotMapped]
+            Hl7.Fhir.Model.ICapabilityStatementSecurityComponent Hl7.Fhir.Model.ICapabilityStatementRestComponent.Security { get { return Security; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementResourceComponent> Hl7.Fhir.Model.ICapabilityStatementRestComponent.Resource { get { return Resource; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementSystemInteractionComponent> Hl7.Fhir.Model.ICapabilityStatementRestComponent.Interaction { get { return Interaction; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementSearchParamComponent> Hl7.Fhir.Model.ICapabilityStatementRestComponent.SearchParam { get { return SearchParam; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementOperationComponent> Hl7.Fhir.Model.ICapabilityStatementRestComponent.Operation { get { return Operation; } }
             
             /// <summary>
             /// client | server
@@ -684,7 +699,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SecurityComponent")]
         [DataContract]
-        public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementSecurityComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SecurityComponent"; } }
@@ -847,10 +862,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ResourceComponent")]
         [DataContract]
-        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementResourceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementResourceInteractionComponent> Hl7.Fhir.Model.ICapabilityStatementResourceComponent.Interaction { get { return Interaction; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementSearchParamComponent> Hl7.Fhir.Model.ICapabilityStatementResourceComponent.SearchParam { get { return SearchParam; } }
             
             /// <summary>
             /// A resource type that is supported
@@ -1499,7 +1520,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ResourceInteractionComponent")]
         [DataContract]
-        public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementResourceInteractionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceInteractionComponent"; } }
@@ -1642,7 +1663,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SearchParamComponent")]
         [DataContract]
-        public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementSearchParamComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SearchParamComponent"; } }
@@ -1860,7 +1881,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "OperationComponent")]
         [DataContract]
-        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementOperationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
@@ -2043,7 +2064,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SystemInteractionComponent")]
         [DataContract]
-        public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementSystemInteractionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SystemInteractionComponent"; } }
@@ -2186,10 +2207,16 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MessagingComponent")]
         [DataContract]
-        public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementMessagingComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MessagingComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementEndpointComponent> Hl7.Fhir.Model.ICapabilityStatementMessagingComponent.Endpoint { get { return Endpoint; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICapabilityStatementSupportedMessageComponent> Hl7.Fhir.Model.ICapabilityStatementMessagingComponent.SupportedMessage { get { return SupportedMessage; } }
             
             /// <summary>
             /// Where messages should be sent
@@ -2367,7 +2394,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "EndpointComponent")]
         [DataContract]
-        public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementEndpointComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EndpointComponent"; } }
@@ -2492,7 +2519,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SupportedMessageComponent")]
         [DataContract]
-        public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementSupportedMessageComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SupportedMessageComponent"; } }
@@ -2638,7 +2665,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "DocumentComponent")]
         [DataContract]
-        public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICapabilityStatementDocumentComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DocumentComponent"; } }
@@ -2817,6 +2844,24 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.ICapabilityStatement.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ICapabilityStatementSoftwareComponent Hl7.Fhir.Model.ICapabilityStatement.Software { get { return Software; } }
+        
+        [NotMapped]
+        Hl7.Fhir.Model.ICapabilityStatementImplementationComponent Hl7.Fhir.Model.ICapabilityStatement.Implementation { get { return Implementation; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICapabilityStatementRestComponent> Hl7.Fhir.Model.ICapabilityStatement.Rest { get { return Rest; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICapabilityStatementMessagingComponent> Hl7.Fhir.Model.ICapabilityStatement.Messaging { get { return Messaging; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICapabilityStatementDocumentComponent> Hl7.Fhir.Model.ICapabilityStatement.Document { get { return Document; } }
     
         
         /// <summary>

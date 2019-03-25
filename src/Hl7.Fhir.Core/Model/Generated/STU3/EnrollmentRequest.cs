@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "EnrollmentRequest", IsResource=true)]
     [DataContract]
-    public partial class EnrollmentRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EnrollmentRequest : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IEnrollmentRequest, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.EnrollmentRequest; } }

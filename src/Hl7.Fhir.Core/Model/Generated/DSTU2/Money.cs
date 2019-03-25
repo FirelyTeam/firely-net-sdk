@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model.DSTU2
 {
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "Quantity")]
     [DataContract]
-    public partial class Money : Hl7.Fhir.Model.Quantity, System.ComponentModel.INotifyPropertyChanged
+    public partial class Money : Hl7.Fhir.Model.Quantity, Hl7.Fhir.Model.IMoney, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "Money"; } }

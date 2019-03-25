@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Support
         // Note: argument needs to be strongly typed (List<T>, not IList<T>) in order to prevent resolving conflicts with generic method below
 
         /// <summary>Determines if the list is <c>null</c> or empty.</summary>
-        public static bool IsNullOrEmpty(this IList list) => list == null || list.Count == 0;
+        public static bool IsNullOrEmpty(this System.Collections.IList list) => list == null || list.Count == 0;
 
         /// <summary>
         /// Determines if the element is <c>null</c> or empty.

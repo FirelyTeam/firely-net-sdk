@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "DetectedIssue", IsResource=true)]
     [DataContract]
-    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IDetectedIssue, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DetectedIssue; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "EvidenceComponent")]
         [DataContract]
-        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EvidenceComponent"; } }
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "MitigationComponent")]
         [DataContract]
-        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IDetectedIssueMitigationComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "MitigationComponent"; } }
@@ -303,6 +303,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDetectedIssueMitigationComponent> Hl7.Fhir.Model.IDetectedIssue.Mitigation { get { return Mitigation; } }
     
         
         /// <summary>

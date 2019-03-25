@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "Composition", IsResource=true)]
     [DataContract]
-    public partial class Composition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Composition : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IComposition, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Composition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "AttesterComponent")]
         [DataContract]
-        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICompositionAttesterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "AttesterComponent"; } }
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RelatesToComponent")]
         [DataContract]
-        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatesToComponent"; } }
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "EventComponent")]
         [DataContract]
-        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICompositionEventComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "EventComponent"; } }
@@ -477,10 +477,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SectionComponent")]
         [DataContract]
-        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.ICompositionSectionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SectionComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.ICompositionSectionComponent> Hl7.Fhir.Model.ICompositionSectionComponent.Section { get { return Section; } }
             
             /// <summary>
             /// Label for section (e.g. for ToC)
@@ -726,6 +729,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICompositionAttesterComponent> Hl7.Fhir.Model.IComposition.Attester { get { return Attester; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICompositionEventComponent> Hl7.Fhir.Model.IComposition.Event { get { return Event; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.ICompositionSectionComponent> Hl7.Fhir.Model.IComposition.Section { get { return Section; } }
     
         
         /// <summary>

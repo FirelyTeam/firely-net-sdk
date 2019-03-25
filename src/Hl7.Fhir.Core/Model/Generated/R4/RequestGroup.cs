@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "RequestGroup", IsResource=true)]
     [DataContract]
-    public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IRequestGroup, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.RequestGroup; } }
@@ -57,10 +57,22 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ActionComponent")]
         [DataContract]
-        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IRequestGroupActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRelatedArtifact> Hl7.Fhir.Model.IRequestGroupActionComponent.Documentation { get { return Documentation; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRequestGroupConditionComponent> Hl7.Fhir.Model.IRequestGroupActionComponent.Condition { get { return Condition; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRequestGroupRelatedActionComponent> Hl7.Fhir.Model.IRequestGroupActionComponent.RelatedAction { get { return RelatedAction; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IRequestGroupActionComponent> Hl7.Fhir.Model.IRequestGroupActionComponent.Action { get { return Action; } }
             
             /// <summary>
             /// User-visible prefix for the action (e.g. 1. or A.)
@@ -669,7 +681,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IRequestGroupConditionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -793,7 +805,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "RelatedActionComponent")]
         [DataContract]
-        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IRequestGroupRelatedActionComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedActionComponent"; } }
@@ -953,6 +965,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IRequestGroupActionComponent> Hl7.Fhir.Model.IRequestGroup.Action { get { return Action; } }
     
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureMap", IsResource=true)]
     [DataContract]
-    public partial class StructureMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class StructureMap : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IStructureMap, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.StructureMap; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "StructureComponent")]
         [DataContract]
-        public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapStructureComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "StructureComponent"; } }
@@ -278,10 +278,16 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapGroupComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapInputComponent> Hl7.Fhir.Model.IStructureMapGroupComponent.Input { get { return Input; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapRuleComponent> Hl7.Fhir.Model.IStructureMapGroupComponent.Rule { get { return Rule; } }
             
             /// <summary>
             /// Human-readable label
@@ -540,7 +546,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "InputComponent")]
         [DataContract]
-        public partial class InputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InputComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapInputComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InputComponent"; } }
@@ -761,10 +767,22 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "RuleComponent")]
         [DataContract]
-        public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapRuleComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "RuleComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapSourceComponent> Hl7.Fhir.Model.IStructureMapRuleComponent.Source { get { return Source; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapTargetComponent> Hl7.Fhir.Model.IStructureMapRuleComponent.Target { get { return Target; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapRuleComponent> Hl7.Fhir.Model.IStructureMapRuleComponent.Rule { get { return Rule; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapDependentComponent> Hl7.Fhir.Model.IStructureMapRuleComponent.Dependent { get { return Dependent; } }
             
             /// <summary>
             /// Name of the rule for internal references
@@ -985,7 +1003,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "SourceComponent")]
         [DataContract]
-        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapSourceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SourceComponent"; } }
@@ -1416,10 +1434,13 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "TargetComponent")]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapTargetComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IStructureMapParameterComponent> Hl7.Fhir.Model.IStructureMapTargetComponent.Parameter { get { return Parameter; } }
             
             /// <summary>
             /// Type or variable this rule applies to
@@ -1771,7 +1792,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapParameterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -1860,7 +1881,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DependentComponent")]
         [DataContract]
-        public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IStructureMapDependentComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DependentComponent"; } }
@@ -2002,6 +2023,15 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IContactDetail> Hl7.Fhir.Model.IStructureMap.Contact { get { return Contact; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IStructureMapStructureComponent> Hl7.Fhir.Model.IStructureMap.Structure { get { return Structure; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IStructureMapGroupComponent> Hl7.Fhir.Model.IStructureMap.Group { get { return Group; } }
     
         
         /// <summary>

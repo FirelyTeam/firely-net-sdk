@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.DSTU2
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ConceptMap", IsResource=true)]
     [DataContract]
-    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IConceptMap, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ConceptMap; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "ContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -183,10 +183,13 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "SourceElementComponent")]
         [DataContract]
-        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapSourceElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SourceElementComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapTargetElementComponent> Hl7.Fhir.Model.IConceptMapSourceElementComponent.Target { get { return Target; } }
             
             /// <summary>
             /// Code System (if value set crosses code systems)
@@ -344,10 +347,16 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "TargetElementComponent")]
         [DataContract]
-        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapTargetElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "TargetElementComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapOtherElementComponent> Hl7.Fhir.Model.IConceptMapTargetElementComponent.DependsOn { get { return DependsOn; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IConceptMapOtherElementComponent> Hl7.Fhir.Model.IConceptMapTargetElementComponent.Product { get { return Product; } }
             
             /// <summary>
             /// System of the target (if necessary)
@@ -599,7 +608,7 @@ namespace Hl7.Fhir.Model.DSTU2
     
         [FhirType(Hl7.Fhir.Model.Version.DSTU2, "OtherElementComponent")]
         [DataContract]
-        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IConceptMapOtherElementComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "OtherElementComponent"; } }

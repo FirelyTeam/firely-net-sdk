@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.STU3
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.STU3, "DataRequirement")]
     [DataContract]
-    public partial class DataRequirement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataRequirement : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IDataRequirement, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override string TypeName { get { return "DataRequirement"; } }
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "CodeFilterComponent")]
         [DataContract]
-        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IDataRequirementCodeFilterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "CodeFilterComponent"; } }
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model.STU3
     
         [FhirType(Hl7.Fhir.Model.Version.STU3, "DateFilterComponent")]
         [DataContract]
-        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, Hl7.Fhir.Model.IDataRequirementDateFilterComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "DateFilterComponent"; } }
@@ -384,6 +384,12 @@ namespace Hl7.Fhir.Model.STU3
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDataRequirementCodeFilterComponent> Hl7.Fhir.Model.IDataRequirement.CodeFilter { get { return CodeFilter; } }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IDataRequirementDateFilterComponent> Hl7.Fhir.Model.IDataRequirement.DateFilter { get { return DateFilter; } }
     
         
         /// <summary>

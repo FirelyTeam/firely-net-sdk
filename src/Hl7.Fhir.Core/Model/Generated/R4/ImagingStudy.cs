@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model.R4
     /// </summary>
     [FhirType(Hl7.Fhir.Model.Version.R4, "ImagingStudy", IsResource=true)]
     [DataContract]
-    public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IImagingStudy, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ImagingStudy; } }
@@ -57,10 +57,13 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "SeriesComponent")]
         [DataContract]
-        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IImagingStudySeriesComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
+            
+            [NotMapped]
+            IEnumerable<Hl7.Fhir.Model.IImagingStudyInstanceComponent> Hl7.Fhir.Model.IImagingStudySeriesComponent.Instance { get { return Instance; } }
             
             /// <summary>
             /// DICOM Series Instance UID for the series
@@ -455,7 +458,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -563,7 +566,7 @@ namespace Hl7.Fhir.Model.R4
     
         [FhirType(Hl7.Fhir.Model.Version.R4, "InstanceComponent")]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, Hl7.Fhir.Model.IImagingStudyInstanceComponent, System.ComponentModel.INotifyPropertyChanged, IComponent
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
@@ -758,6 +761,9 @@ namespace Hl7.Fhir.Model.R4
         
         
         }
+        
+        [NotMapped]
+        IEnumerable<Hl7.Fhir.Model.IImagingStudySeriesComponent> Hl7.Fhir.Model.IImagingStudy.Series { get { return Series; } }
     
         
         /// <summary>
