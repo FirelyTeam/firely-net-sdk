@@ -518,6 +518,55 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void Dstu2EmptyRoundTrip()
+        {
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>
+                {
+                    new Identifier("https://mydomain.com/identifiers/Something", "123"),
+                    new Identifier("https://mydomain.com/identifiers/Spaces", "   "),
+                    new Identifier("https://mydomain.com/identifiers/Empty", string.Empty),
+                    new Identifier("https://mydomain.com/identifiers/Null", null)
+                }
+            };
+
+            var json = FhirDstu2JsonSerializer.SerializeToString(patient);
+            var parsedPatient = FhirDstu2JsonParser.Parse<Patient>(json);
+
+            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            for(var i=0; i<patient.Identifier.Count; i++)
+            {
+                Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
+                if (string.IsNullOrWhiteSpace(patient.Identifier[i].Value))
+                {
+                    Assert.IsNull(parsedPatient.Identifier[i].Value);
+                }
+                else
+                {
+                    Assert.AreEqual(patient.Identifier[i].Value, parsedPatient.Identifier[i].Value);
+                }
+            }
+
+            var xml = FhirDstu2XmlSerializer.SerializeToString(patient);
+            parsedPatient = FhirDstu2XmlParser.Parse<Patient>(xml);
+
+            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            for (var i = 0; i < patient.Identifier.Count; i++)
+            {
+                Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
+                if (string.IsNullOrWhiteSpace(patient.Identifier[i].Value))
+                {
+                    Assert.IsNull(parsedPatient.Identifier[i].Value);
+                }
+                else
+                {
+                    Assert.AreEqual(patient.Identifier[i].Value, parsedPatient.Identifier[i].Value);
+                }
+            }
+        }
+
+        [TestMethod]
         public void NarrativeMustBeValidXml()
         {
             try

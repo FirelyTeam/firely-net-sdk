@@ -119,7 +119,7 @@ namespace Hl7.Fhir.ElementModel
                     switch (Current)
                     {
                         case string s:
-                            return s;
+                            return string.IsNullOrWhiteSpace(s) ? null : s;
                         case Hl7.Fhir.Model.Instant ins:
                             return ins.ToPartialDateTime();
                         case Hl7.Fhir.Model.Time time:
@@ -143,6 +143,7 @@ namespace Hl7.Fhir.ElementModel
                         case Hl7.Fhir.Model.Base64Binary b64:
                             return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
                         case Primitive prim:
+                            if (prim.ObjectValue is string stringObjectValue && string.IsNullOrWhiteSpace(stringObjectValue)) return null;
                             return prim.ObjectValue;
                         default:
                             return null;
