@@ -487,14 +487,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestParserSettings()
         {
-            // Create an invalid patient resource on disk
-            var obs = new Observation()
-            {
-                Id = "1",
-                Comments = " " // Illegal empty value
-            };
-            var nav = obs.ToTypedElement();
-            var xml = nav.ToXml();
+            // Create an invalid resource: empty comments
+            var xml = "<Observation xmlns=\"http://hl7.org/fhir\"><id value=\"1\"/><comments value=\"  \"/></Observation>";
 
             var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
             var filePath = Path.Combine(folderPath, "TestPatient.xml");
@@ -508,7 +502,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Try to access using DirectorySource with default settings
                 var src = new DirectorySource(folderPath);
 
-                var uri = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(obs.TypeName, obs.Id);
+                var uri = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry("Observation", "1");
                 Assert.AreEqual(@"http://example.org/Observation/1", uri);
 
                 // Expecting resolving to fail, because of illegal empty value

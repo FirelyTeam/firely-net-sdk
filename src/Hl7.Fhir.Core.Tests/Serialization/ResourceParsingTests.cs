@@ -303,8 +303,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var json = FhirDstu2JsonSerializer.SerializeToString(patient);
-            var parsedPatient = FhirDstu2JsonParser.Parse<Patient>(json);
+            var json = FhirJsonSerializer.SerializeToString(patient);
+            var parsedPatient = FhirJsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for(var i=0; i<patient.Identifier.Count; i++)
@@ -320,8 +320,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            var xml = FhirDstu2XmlSerializer.SerializeToString(patient);
-            parsedPatient = FhirDstu2XmlParser.Parse<Patient>(xml);
+            var xml = FhirXmlSerializer.SerializeToString(patient);
+            parsedPatient = FhirXmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
