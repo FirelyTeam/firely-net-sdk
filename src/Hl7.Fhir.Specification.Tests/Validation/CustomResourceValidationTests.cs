@@ -14,6 +14,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
     public class CustomResourceValidationTests
     {
         private static string _custom1 = "{\"resourceType\":\"CustomBasic\", \"id\": \"custom1\"}"; //, \"meta\":{\"profile\": [\"http://fire.ly/fhir/StructureDefinition/CustomBasic\"]}}";
+        private static string _bundleWithCustom1 = "{\"resourceType\": \"Bundle\", \"type\": \"collection\", \"entry\": [{\"resource\": " + _custom1 + "}]}";
 
         [Fact]
         public void CustomResourceCanBeValidated()
@@ -52,6 +53,41 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var result = validator.Validate(customTyped);
 
             Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            #endregion
+        }
+
+        [Fact]
+        public void BundleWithCustomResourceCanBeValidated()
+        {
+            #region Read StructureDefinition for Custom Resource
+            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
+            var structureDefNode = FhirJsonNode.Parse(structureDefJson);
+            var structureDef = structureDefNode.ToPoco<StructureDefinition>();
+            var customBasicCanonical = "http://hl7.org/fhir/StructureDefinition/CustomBasic";
+            structureDef.Url = customBasicCanonical; //Change the base of the canonical to avoid the problem in test 'CustomResourceCanBeValidated' and with sdf-7 in STU3.
+            #endregion
+
+            #region Create a Provider that knows this CustomBasic resource
+            var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
+            snapShotGenerator.Update(structureDef);
+
+            var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
+            var provider = new StructureDefinitionSummaryProvider(customResolver);
+            #endregion
+
+            #region Validate Bundle with Custom Resource
+
+            var customNode = FhirJsonNode.Parse(_bundleWithCustom1);
+            var customTyped = customNode.ToTypedElement(provider);
+            var typingErrors = customTyped.VisitAndCatch();
+            Assert.Empty(typingErrors);
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true });
+            var result = validator.Validate(customTyped);
+
+            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            //CK: This is failing with message "The declared type of the element (Resource) is incompatible with that of the instance ('CustomBasic')"},"location":["Bundle.entry[0].resource[0]"]". 
+            //Cause: the implementation of ModelInfo.IsInstanceTypeFor, called from ProfileAssertion.Validate, line 248 (and 255).
             #endregion
         }
 
