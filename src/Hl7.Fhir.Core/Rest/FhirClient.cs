@@ -1058,9 +1058,11 @@ namespace Hl7.Fhir.Rest
                 if (result is OperationOutcome)
                     return null;
 
-                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", response.Request.Method,
-                    response.Request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException(message, _requester.LastResponse.StatusCode);
+                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
+                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
+
+                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
+                throw new FhirOperationException(message, code);
             }
             else
                 return result as TResource;

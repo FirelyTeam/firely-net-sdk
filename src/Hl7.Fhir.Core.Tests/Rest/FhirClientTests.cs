@@ -131,6 +131,14 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [ExpectedException(typeof(FhirOperationException))]
+        public void ReadWrongResourceType()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+
+            var loc = client.Read<Patient>("Location/1");
+        }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Read()
