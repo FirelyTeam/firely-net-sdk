@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -40,12 +40,13 @@ namespace Hl7.Fhir.Serialization
         public Resource Deserialize(Resource existing=null)
         {
             if(_reader.InstanceType is null)
-                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+                ComplexTypeReader.RaiseFormatError(
+                    "Underlying data source was not able to provide the actual instance type of the resource.", _reader.Location);
 
             var mapping = _inspector.FindClassMappingForResource(_reader.InstanceType);
 
             if (mapping == null)
-                throw Error.Format("Asked to deserialize unknown resource '" + _reader.InstanceType + "'", _reader.Location);
+                ComplexTypeReader.RaiseFormatError($"Asked to deserialize unknown resource '{_reader.InstanceType}'", _reader.Location);
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same

@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Introspection
         public void SetupSource()
         {
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-            var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
+            var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
             _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             _bundleElement = new ScopedNode(_parsed.ToTypedElement());

@@ -12,6 +12,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Common parser configuration settings for <see cref="BaseFhirParser"/> and subclasses.</summary>
     public class ParserSettings
     {
         [Obsolete("Due to a bug, the Default has always been ignored, so it is now officially deprecated")]
@@ -58,6 +59,19 @@ namespace Hl7.Fhir.Serialization
             other.DisallowXsiAttributesOnRoot = DisallowXsiAttributesOnRoot;
             other.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
             other.AcceptUnknownMembers = AcceptUnknownMembers;
+            other.PermissiveParsing = PermissiveParsing;
+        }
+
+        /// <summary>
+        /// Copy the necessary settings to PocoBuilderSettings
+        /// </summary>
+        /// <param name="settings">The instance where the settings are copied to.</param>
+        public void CopyTo(PocoBuilderSettings settings)
+        {
+            if (settings == null) throw Error.ArgumentNull(nameof(settings));
+
+            settings.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
+            settings.IgnoreUnknownMembers = AcceptUnknownMembers;
         }
 
         /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>
