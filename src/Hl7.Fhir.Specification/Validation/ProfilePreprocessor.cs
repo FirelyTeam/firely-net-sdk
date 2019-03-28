@@ -21,26 +21,25 @@ namespace Hl7.Fhir.Validation
     {
         private Func<string, StructureDefinition> _profileResolver;
         private Func<StructureDefinition, OperationOutcome> _snapshotGenerator;
-        private StructureDefinitionSummaryProvider.TypeNameMapper _resourceNameMapper;
+        private StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
         private string _path;
         private ProfileAssertion _profiles;
 
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
                 ITypedElement instance, string declaredTypeProfile,
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals,
-                StructureDefinitionSummaryProvider.TypeNameMapper resourceNameMapper = null)
-            //new argument:Func<string,string> resourceNameMapper
+                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
-            _resourceNameMapper = resourceNameMapper;
+            _typeNameMapper = typeNameMapper;
             _path = instance.Location;
 
-            _profiles = new ProfileAssertion(_path, _profileResolver, resourceNameMapper);
+            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper);
 
             if (instance.InstanceType != null)
             {
-                if (_resourceNameMapper != null && _resourceNameMapper(instance.InstanceType, out string canonicalUri))
+                if (_typeNameMapper != null && _typeNameMapper(instance.InstanceType, out string canonicalUri))
                     _profiles.SetInstanceType(canonicalUri);
                 else
                     _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));

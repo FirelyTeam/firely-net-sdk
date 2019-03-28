@@ -22,16 +22,16 @@ namespace Hl7.Fhir.Validation
     {
         private string _path;
         private Func<string, StructureDefinition> _resolver;
-        private StructureDefinitionSummaryProvider.TypeNameMapper _resourceNameMapper;
+        private StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
 
         private List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
         public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
-            StructureDefinitionSummaryProvider.TypeNameMapper resourceNameMapper = null)
+            StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
         {
             _path = path;
             _resolver = resolver;
-            _resourceNameMapper = resourceNameMapper;
+            _typeNameMapper = typeNameMapper;
         }
 
         private ProfileEntry _instanceType;
@@ -243,21 +243,21 @@ namespace Hl7.Fhir.Validation
                 return resolutionOutcome;
             else
                 outcome.Add(resolutionOutcome);
-            
+
             // If we have an instance type, it should be compatible with the declared type on the definition and the stated profiles
             if (InstanceType != null)
             {
                 if (DeclaredType != null)
                 {
                     if (!IsInstanceTypeFor(DeclaredType.Type, InstanceType.Type))
-                        outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
+                        outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')",
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
                     if (!IsInstanceTypeFor(type.Type, InstanceType.Type))
-                        outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
+                        outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'",
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
             }
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Validation
                 if (baseTypes.Count > 1)
                 {
                     var combinedNames = String.Join(" and ", baseTypes);
-                    outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.", 
+                    outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.",
                         Issue.CONTENT_MISMATCHING_PROFILES, _path);
                 }
                 else
@@ -294,101 +294,97 @@ namespace Hl7.Fhir.Validation
             if (superclass == subclass)
                 return true;
 
-            if(!ModelInfo.IsInstanceTypeFor(superclass, subclass) && superclass == typeof(Resource).Name)
-            {
-                if (_resourceNameMapper != null && _resourceNameMapper(subclass, out string dummy) &&
-                    !(ModelInfo.IsDataType(subclass) || ModelInfo.IsPrimitive(subclass)))
-                    return true;
-            }
-
+            if (ModelInfo.IsInstanceTypeFor(superclass, subclass))
+                return true;
+            else if (superclass == typeof(Resource).Name &&
+                _typeNameMapper != null && _typeNameMapper(subclass, out string dummy) &&
+                !(ModelInfo.IsDataType(subclass) || ModelInfo.IsPrimitive(subclass)))
+                return true;
             return false;
-            //if(superclass is resource)
-                //mapper checks subclass 
-                //mapper knows subclass && subclass is not primitive or datatype => true
         }
 
-        public IEnumerable<StructureDefinition> MinimalProfiles
+    public IEnumerable<StructureDefinition> MinimalProfiles
+    {
+        get
         {
-            get
-            {
-                if (_lastMinimalSet != null)
-                    return _lastMinimalSet;
-                        
-                // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
-                // so we can just return that list (we might even remove the ones that are constraints on constraints)
-                if (StatedProfiles.Any())
-                {
-                    // Remove redundant bases, since the snapshots will contain their constraints anyway.
-                    // Note: we're not doing a full closure by resolving all bases for performance sake 
-                    var result = StatedProfiles.ToList();
-                    var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
-                    bases.AddRange(StatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
-                    result.RemoveAll(r => bases.Contains(r.Url));
-                    _lastMinimalSet = result;
-                }
-
-                // If there are no stated profiles, then:
-                //  * If the declared type is a profile, it is more specific than the instance
-                //  * If the declared type is a concrete core type, it is as specific as the instance
-                // In both cases return the declared type.
-                else if (DeclaredType != null &&
-                            ( DeclaredType.IsConstraint ||
-                              (DeclaredType.IsCoreDefinition && DeclaredType.Abstract==false) ))
-                    _lastMinimalSet = new[] { DeclaredType };
-
-                // Else, all we have left is the instance type
-                // If there is no known instance type, we have no profile to validate against
-                else if (InstanceType != null)
-                    _lastMinimalSet = new[] { InstanceType };
-                else
-                    _lastMinimalSet = Enumerable.Empty<StructureDefinition>();
-
+            if (_lastMinimalSet != null)
                 return _lastMinimalSet;
-            }
 
-        }
-
-        private class ProfileEntry
-        {
-            public ProfileEntry(StructureDefinition def)
+            // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
+            // so we can just return that list (we might even remove the ones that are constraints on constraints)
+            if (StatedProfiles.Any())
             {
-                this.StructureDefinition = def;
+                // Remove redundant bases, since the snapshots will contain their constraints anyway.
+                // Note: we're not doing a full closure by resolving all bases for performance sake 
+                var result = StatedProfiles.ToList();
+                var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
+                bases.AddRange(StatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                    .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
+                result.RemoveAll(r => bases.Contains(r.Url));
+                _lastMinimalSet = result;
             }
 
-            public ProfileEntry(string url)
-            {
-                this.Reference = url;
-            }
+            // If there are no stated profiles, then:
+            //  * If the declared type is a profile, it is more specific than the instance
+            //  * If the declared type is a concrete core type, it is as specific as the instance
+            // In both cases return the declared type.
+            else if (DeclaredType != null &&
+                        (DeclaredType.IsConstraint ||
+                          (DeclaredType.IsCoreDefinition && DeclaredType.Abstract == false)))
+                _lastMinimalSet = new[] { DeclaredType };
 
-            public string Reference { get; private set; }
+            // Else, all we have left is the instance type
+            // If there is no known instance type, we have no profile to validate against
+            else if (InstanceType != null)
+                _lastMinimalSet = new[] { InstanceType };
+            else
+                _lastMinimalSet = Enumerable.Empty<StructureDefinition>();
 
-            private StructureDefinition _structureDefinition;
-
-            public StructureDefinition StructureDefinition
-            {
-                get
-                {
-                    if (_structureDefinition == null)
-                        return new StructureDefinition { Url = Reference };
-                    else
-                        return _structureDefinition;
-                }
-                set
-                {
-                    _structureDefinition = value;
-                    Reference = value.Url;
-                }
-            }
-
-            public bool Unresolved
-            {
-                get
-                {
-                    return _structureDefinition == null;
-                }
-            }
+            return _lastMinimalSet;
         }
 
     }
+
+    private class ProfileEntry
+    {
+        public ProfileEntry(StructureDefinition def)
+        {
+            this.StructureDefinition = def;
+        }
+
+        public ProfileEntry(string url)
+        {
+            this.Reference = url;
+        }
+
+        public string Reference { get; private set; }
+
+        private StructureDefinition _structureDefinition;
+
+        public StructureDefinition StructureDefinition
+        {
+            get
+            {
+                if (_structureDefinition == null)
+                    return new StructureDefinition { Url = Reference };
+                else
+                    return _structureDefinition;
+            }
+            set
+            {
+                _structureDefinition = value;
+                Reference = value.Url;
+            }
+        }
+
+        public bool Unresolved
+        {
+            get
+            {
+                return _structureDefinition == null;
+            }
+        }
+    }
+
+}
 }
