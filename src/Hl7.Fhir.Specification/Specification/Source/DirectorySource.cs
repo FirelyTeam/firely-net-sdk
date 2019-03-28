@@ -497,11 +497,42 @@ namespace Hl7.Fhir.Specification.Source
         /// Also accepts relative file paths.
         /// </summary>
         /// <exception cref="InvalidOperationException">More than one file exists with the specified name.</exception>
-        public Stream LoadArtifactByName(string name)
+        public Stream LoadArtifactByName(string filePath)
         {
-            if (name == null) throw Error.ArgumentNull(nameof(name));
-            var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, PathComparison));
-            return fullFileName == null ? null : File.OpenRead(fullFileName);
+            if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
+
+
+            // [WMR 20190219] https://github.com/ewoutkramer/fhir-net-api/issues/875
+            // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
+            //return fullFileName == null ? null : File.OpenRead(fullFileName);
+
+            // Exact match on absolute path, or partial match on relative path
+            bool isMatch(ArtifactSummary summary)
+                => PathComparer.Equals(summary.Origin, filePath)
+                || summary.Origin.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison);
+
+            // Only consider valid summaries for recognized artifacts
+            bool isCandidateArtifact(ArtifactSummary summary)
+                => !(summary is null)
+                && !summary.IsFaulted
+                && !(summary.Origin is null)
+                && isMatch(summary);
+
+            var candidates = GetSummaries().Where(isCandidateArtifact);
+
+            // We might match multiple files; pick best/nearest fit
+            ArtifactSummary match = null;
+            foreach (var candidate in candidates)
+            {
+                if (match is null || candidate.Origin.Length < match.Origin.Length)
+                {
+                    match = candidate;
+                }
+            }
+
+            if (match?.Origin is null) { return null; }
+
+            return File.OpenRead(match.Origin);
         }
 
         #endregion
