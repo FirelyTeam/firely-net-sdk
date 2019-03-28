@@ -13,6 +13,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Validation
 {
@@ -21,13 +22,16 @@ namespace Hl7.Fhir.Validation
     {
         private string _path;
         private Func<string, StructureDefinition> _resolver;
+        private StructureDefinitionSummaryProvider.TypeNameMapper _resourceNameMapper;
 
         private List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
-        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver)
+        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
+            StructureDefinitionSummaryProvider.TypeNameMapper resourceNameMapper = null)
         {
             _path = path;
             _resolver = resolver;
+            _resourceNameMapper = resourceNameMapper;
         }
 
         private ProfileEntry _instanceType;
@@ -245,14 +249,14 @@ namespace Hl7.Fhir.Validation
             {
                 if (DeclaredType != null)
                 {
-                    if (!ModelInfo.IsInstanceTypeFor(DeclaredType.Type, InstanceType.Type))
+                    if (!IsInstanceTypeFor(DeclaredType.Type, InstanceType.Type))
                         outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
-                    if (!ModelInfo.IsInstanceTypeFor(type.Type, InstanceType.Type))
+                    if (!IsInstanceTypeFor(type.Type, InstanceType.Type))
                         outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
@@ -274,7 +278,7 @@ namespace Hl7.Fhir.Validation
                     // The stated profiles should be compatible with the declared type of the element
                     if (DeclaredType != null)
                     {
-                        if (!ModelInfo.IsInstanceTypeFor(DeclaredType.Type, baseTypes.Single()))
+                        if (!IsInstanceTypeFor(DeclaredType.Type, baseTypes.Single()))
                             outcome.AddIssue($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
                                 Issue.CONTENT_MISMATCHING_PROFILES, _path);
                     }
@@ -283,6 +287,24 @@ namespace Hl7.Fhir.Validation
 
             _lastValidationOutcome = outcome;
             return outcome;
+        }
+
+        private bool IsInstanceTypeFor(string superclass, string subclass)
+        {
+            if (superclass == subclass)
+                return true;
+
+            if(!ModelInfo.IsInstanceTypeFor(superclass, subclass) && superclass == typeof(Resource).Name)
+            {
+                if (_resourceNameMapper != null && _resourceNameMapper(subclass, out string dummy) &&
+                    !(ModelInfo.IsDataType(subclass) || ModelInfo.IsPrimitive(subclass)))
+                    return true;
+            }
+
+            return false;
+            //if(superclass is resource)
+                //mapper checks subclass 
+                //mapper knows subclass && subclass is not primitive or datatype => true
         }
 
         public IEnumerable<StructureDefinition> MinimalProfiles

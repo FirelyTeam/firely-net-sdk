@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
@@ -17,6 +18,8 @@ namespace Hl7.Fhir.Validation
 
     public class ValidationSettings
     {
+        public StructureDefinitionSummaryProvider.TypeNameMapper ResourceMapping { get; set; }
+        
         [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         public static readonly ValidationSettings Default = new ValidationSettings();
 
@@ -106,6 +109,7 @@ namespace Hl7.Fhir.Validation
             other.TerminologyService = TerminologyService;
             other.Trace = Trace;
             other.FhirPathCompiler = FhirPathCompiler;
+            other.ResourceMapping = ResourceMapping;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>

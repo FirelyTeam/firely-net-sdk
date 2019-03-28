@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var typingErrors = customTyped.VisitAndCatch();
             Assert.Empty(typingErrors);
 
-            var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true });
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
             Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
@@ -63,17 +63,25 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
             var structureDefNode = FhirJsonNode.Parse(structureDefJson);
             var structureDef = structureDefNode.ToPoco<StructureDefinition>();
-            var customBasicCanonical = "http://hl7.org/fhir/StructureDefinition/CustomBasic";
-            structureDef.Url = customBasicCanonical; //Change the base of the canonical to avoid the problem in test 'CustomResourceCanBeValidated' and with sdf-7 in STU3.
+            var customBasicCanonical = structureDefNode.Children("url").First().Text;
             #endregion
-
+            
             #region Create a Provider that knows this CustomBasic resource
             var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
             snapShotGenerator.Update(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
-            var provider = new StructureDefinitionSummaryProvider(customResolver);
+            var provider = new StructureDefinitionSummaryProvider(customResolver, mapTypeName);
             #endregion
+
+            bool mapTypeName(string typename, out string canonical) //It needs a custom typemapper to properly map CustomBasic to the full canonical url
+            {
+                if (typename == "CustomBasic")
+                    canonical = customBasicCanonical;
+                else
+                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typename;
+                return true;
+            }
 
             #region Validate Bundle with Custom Resource
 
@@ -82,7 +90,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var typingErrors = customTyped.VisitAndCatch();
             Assert.Empty(typingErrors);
 
-            var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true });
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
             Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
