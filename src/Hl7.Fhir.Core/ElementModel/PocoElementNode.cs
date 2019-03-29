@@ -26,8 +26,8 @@ namespace Hl7.Fhir.ElementModel
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
             _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
+            InstanceType = InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
             Definition = Specification.ElementDefinitionSummary.ForRoot(rootName ?? root.TypeName, _mySD.Value);
 
             Location = InstanceType;
@@ -37,13 +37,21 @@ namespace Hl7.Fhir.ElementModel
         private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
         {
             Current = instance;
-            InstanceType = ModelInfo.IsProfiledQuantity(instance.TypeName) ? "Quantity" : instance.TypeName;
             _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
+            InstanceType = determineInstanceType(Current, definition);
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
+        }
+
+        private static string determineInstanceType(object instance, IElementDefinitionSummary summary)
+        {
+            var typeName = !summary.IsChoiceElement && !summary.IsResource ?
+                        summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
+
+            return ModelInfo.IsProfiledQuantity(typeName) ? "Quantity" : typeName;
         }
 
         public IElementDefinitionSummary Definition { get; private set; }
@@ -69,11 +77,11 @@ namespace Hl7.Fhir.ElementModel
                     else
                         arrayIndex += 1;
 
-                    var location = Location == null 
-                        ? child.ElementName 
+                    var location = Location == null
+                        ? child.ElementName
                         : $"{Location}.{child.ElementName}[{arrayIndex}]";
-                    var shortPath = ShortPath == null 
-                        ? child.ElementName 
+                    var shortPath = ShortPath == null
+                        ? child.ElementName
                         : (childElementDef.IsCollection ?
                             $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
                             $"{ShortPath}.{child.ElementName}");
@@ -85,7 +93,7 @@ namespace Hl7.Fhir.ElementModel
                 oldElementName = child.ElementName;
             }
         }
-         
+
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
         /// to be able to read the values from the selected node (if a coding, so can get the value and system)

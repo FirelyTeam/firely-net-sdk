@@ -41,20 +41,21 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(factory.CanCreate(typeof(int?)));
             Assert.IsNotNull(factory.Create(typeof(int?)));
 
+            // 20190329 - removed support for creating ICollection - too expensive at runtime
             // Test handling of collection interfaces
-            object collection = null;
-            Assert.IsTrue(factory.CanCreate(typeof(ICollection<string>)));
-            collection = factory.Create(typeof(ICollection<string>));
-            Assert.IsNotNull(collection);
-            Assert.IsTrue(collection is List<string>);
+            //object collection = null;
+            //Assert.IsTrue(factory.CanCreate(typeof(ICollection<string>)));
+            //collection = factory.Create(typeof(ICollection<string>));
+            //Assert.IsNotNull(collection);
+            //Assert.IsTrue(collection is List<string>);
 
-            Assert.IsTrue(factory.CanCreate(typeof(IList<HumanName>)));
-            Assert.IsNotNull(factory.Create(typeof(ICollection<HumanName>)));
+            //Assert.IsTrue(factory.CanCreate(typeof(IList<HumanName>)));
+            //Assert.IsNotNull(factory.Create(typeof(ICollection<HumanName>)));
             
-            Assert.IsTrue(factory.CanCreate(typeof(IList<int?>)));
-            collection = factory.Create(typeof(ICollection<int?>));
-            Assert.IsNotNull(collection);
-            Assert.IsTrue(collection is List<int?>);
+            //Assert.IsTrue(factory.CanCreate(typeof(IList<int?>)));
+            //collection = factory.Create(typeof(ICollection<int?>));
+            //Assert.IsNotNull(collection);
+            //Assert.IsTrue(collection is List<int?>);
 
             // Test handling of closed generics
             Assert.IsTrue(factory.CanCreate(typeof(Code<Address.AddressUse>)));
