@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Introspection;
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Specification
 
         public bool InSummary => _definition.IsSummary ?? false;
 
-        public bool IsRequired => (_definition.Min ?? 0) > 1;
+        public bool IsRequired => (_definition.Min ?? 0) >= 1;
 
         public XmlRepresentation Representation
         {

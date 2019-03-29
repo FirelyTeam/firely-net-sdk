@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -505,8 +505,10 @@ namespace Hl7.Fhir.Specification.Tests
                 Directory.CreateDirectory(folderPath);
                 File.WriteAllText(filePath, xml);
 
-                // Try to access using DirectorySource with default settings
-                var src = new DirectorySource(folderPath);
+                // Try to access using DirectorySource with default settings, but with PermissiveParsing switch off.
+                var settings = DirectorySourceSettings.CreateDefault();
+                settings.XmlParserSettings.PermissiveParsing = false;
+                var src = new DirectorySource(folderPath, settings);
 
                 var uri = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(obs.TypeName, obs.Id);
                 Assert.AreEqual(@"http://example.org/Observation/1", uri);

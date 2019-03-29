@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -4582,7 +4582,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         // Isue #387
-        // https://github.com/ewoutkramer/fhir-net-api/issues/387
+        // https://github.com/FirelyTeam/fhir-net-api/issues/387
         // Cannot reproduce in STU3?
         // [WMR 20170713] Note: in DSTU2, the QuestionnaireResponse core resource definition
         // specifies an example binding on element "QuestionnaireResponse.group.question.answer.value[x]"
@@ -5092,7 +5092,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20180115]
-        // https://github.com/ewoutkramer/fhir-net-api/issues/510
+        // https://github.com/FirelyTeam/fhir-net-api/issues/510
         // "Missing diff annotation on ElementDefinition.TypeRefComponent"
         [TestMethod]
         public void TestConstrainedByDiff_Type()
@@ -5268,7 +5268,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20180604] Issue #611
-        // https://github.com/ewoutkramer/fhir-net-api/issues/611
+        // https://github.com/FirelyTeam/fhir-net-api/issues/611
 
         [TestMethod]
         public void TestSnapshotForDerivedSlice()
