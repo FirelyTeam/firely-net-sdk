@@ -19,7 +19,7 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private Lazy<PocoComplexTypeSerializationInfo> _mySD;
+        private readonly Lazy<PocoComplexTypeSerializationInfo> _mySD;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
-            _mySD = new Lazy<PocoComplexTypeSerializationInfo>(()=>(PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
+            _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
             Definition = Specification.ElementDefinitionSummary.ForRoot(rootName ?? root.TypeName, _mySD.Value);
 
             Location = InstanceType;

@@ -71,6 +71,6 @@ namespace Hl7.Fhir.ElementModel
             new PocoNavigator(@base, rootName);
 
         public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoElementNode(@base,rootName: rootName);
+            new PocoElementNode(@base, rootName: rootName);
     }
 }

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification
     }
 
 
-    public class PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
+    internal class PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ClassMapping _classMapping;
 
