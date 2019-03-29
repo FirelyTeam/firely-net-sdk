@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Introspection;
@@ -50,15 +50,6 @@ namespace Hl7.Fhir.Serialization
             if (ReflectionHelper.IsNullableType(typeToCreate))
                 typeToCreate = ReflectionHelper.GetNullableArgument(typeToCreate);
 
-            // If type is a typed collection (but not an array), and the type
-            // is not a concrete collection type, but an interface, create a new List of
-            // the given type.
-            if (ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.GetTypeInfo().IsInterface)
-			{
-                var elementType = ReflectionHelper.GetCollectionItemType(typeToCreate);
-                typeToCreate = typeof(List<>).MakeGenericType(elementType);
-            }
-                             
             return Activator.CreateInstance(typeToCreate);
         }
     }

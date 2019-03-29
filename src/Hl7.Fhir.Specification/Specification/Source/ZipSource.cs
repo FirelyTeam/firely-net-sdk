@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -53,9 +53,7 @@ namespace Hl7.Fhir.Specification.Source
             ZipPath = zipPath;
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
-            settings = settings.Clone();
-            settings.IncludeSubDirectories = false;
-            _settings = settings;
+            _settings = settings.Clone();
             _lazySource = new Lazy<DirectorySource>(createSource);
         }
 

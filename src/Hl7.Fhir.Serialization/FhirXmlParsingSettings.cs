@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Utility;
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
         /// </summary>
-        public bool PermissiveParsing { get; set; } // = false;
+        public bool PermissiveParsing { get; set; } = true;
 
 #if !NETSTANDARD1_1
         /// <summary>

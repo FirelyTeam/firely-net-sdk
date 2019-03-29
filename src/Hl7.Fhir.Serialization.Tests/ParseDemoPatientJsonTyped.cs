@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             // Use a single element where an array was expected
             var tp = "{ 'resourceType' : 'Patient', 'identifier' :  { 'value': 'AB60001' }}";
-            var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             var errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must be used here"));
 
             // Use an array where a single value was expected
             tp = "{ 'resourceType' : 'Patient', 'active' : [true,false] }";
-            navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
+            navJson = JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must not be used here"));
         }
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
 
                 ITypedElement getValidatingJsonNav(string jsonText) =>
-                    getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true });
+                    getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true, PermissiveParsing = false });
         }
 
         [TestMethod]
