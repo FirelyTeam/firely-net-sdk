@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -370,6 +370,8 @@ namespace Hl7.Fhir.Serialization
 
             object checkOrder(ITypedElement node, IExceptionSource ies, object state)
             {
+                if (PermissiveParsing) return null;
+
                 var sdSummary = node.Definition;
                 if (sdSummary == null) return null;
 
@@ -390,6 +392,8 @@ namespace Hl7.Fhir.Serialization
 
             object checkRepresentation(ITypedElement node, IExceptionSource ies, object _)
             {
+                if (PermissiveParsing) return null;
+
                 var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
