@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
         /// </summary>
-        public bool PermissiveParsing { get; set; } // = false;
+        public bool PermissiveParsing { get; set; } = true;
 
         /// <summary>
         /// Allow DSTU2-style Json comment members.

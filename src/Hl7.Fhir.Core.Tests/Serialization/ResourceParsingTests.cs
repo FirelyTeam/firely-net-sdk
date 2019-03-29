@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void RequiresHl7Namespace()
         {
             var xml = "<Patient><active value='false' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlParser(new ParserSettings() { PermissiveParsing = false});
 
             try
             {

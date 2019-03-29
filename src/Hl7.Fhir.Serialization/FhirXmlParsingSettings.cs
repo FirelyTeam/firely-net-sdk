@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
         /// </summary>
-        public bool PermissiveParsing { get; set; } // = false;
+        public bool PermissiveParsing { get; set; } = true;
 
 #if !NETSTANDARD1_1
         /// <summary>
