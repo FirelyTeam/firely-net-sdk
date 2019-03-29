@@ -62,7 +62,11 @@ namespace Hl7.Fhir.ElementModel.Adapters
                 .Select(c => new TypedElementToSourceNodeAdapter(this, c))
                 .Where(c => c.Name.MatchesPrefix(name));
 
-        IEnumerable<object> IAnnotated.Annotations(Type type) => Current.Annotations(type);
+        IEnumerable<object> IAnnotated.Annotations(Type type)
+        {
+            return type == typeof(TypedElementToSourceNodeAdapter) || type == typeof(ISourceNode)
+                ? (new[] { this })
+                : Current.Annotations(type);
+        }
     }
-
 }
