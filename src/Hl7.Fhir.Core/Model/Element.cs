@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ElementId != null)  yield return new ElementValue("id", ElementId);
+                if (ElementId != null)  yield return new ElementValue("id", new FhirString(ElementId));
                 foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",p); }
             }
         }
