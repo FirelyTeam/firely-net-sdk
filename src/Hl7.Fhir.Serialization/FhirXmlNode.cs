@@ -370,6 +370,8 @@ namespace Hl7.Fhir.Serialization
 
             object checkOrder(ITypedElement node, IExceptionSource ies, object state)
             {
+                if (PermissiveParsing) return null;
+
                 var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
@@ -391,6 +393,8 @@ namespace Hl7.Fhir.Serialization
 
             object checkRepresentation(ITypedElement node, IExceptionSource ies, object _)
             {
+                if (PermissiveParsing) return null;
+
                 var sdSummary = node.Definition;
                 var serializationDetails = node.GetXmlSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
