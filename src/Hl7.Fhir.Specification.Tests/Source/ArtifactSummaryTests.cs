@@ -348,9 +348,10 @@ namespace Hl7.Fhir.Specification.Tests
             string path = "TestData";
 
             var dirSource = new DirectorySource(path, new DirectorySourceSettings()
-            {
+            { 
                 IncludeSubDirectories = true,
-                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/" }
+                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/"},
+                Masks = new string[] { "*.json", "*.xml", "*.sch" }
             });
 
             var summaries = dirSource.ListSummaries().ToList();
