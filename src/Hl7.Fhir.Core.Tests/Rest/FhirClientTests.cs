@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
+        //Test for github issue https://github.com/FirelyTeam/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         /// <summary>
-        /// Test for showing issue https://github.com/ewoutkramer/fhir-net-api/issues/128
+        /// Test for showing issue https://github.com/FirelyTeam/fhir-net-api/issues/128
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()

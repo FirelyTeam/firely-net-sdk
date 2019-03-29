@@ -37,14 +37,14 @@ and develop branches in this repository below:
 
 |Spec version|Git branch|Core NuGet|Specification NuGet|
 |---|---|---|---|
-|R4|https://github.com/ewoutkramer/fhir-net-api/tree/develop-r4|https://www.nuget.org/packages/Hl7.Fhir.R4/|https://www.nuget.org/packages/Hl7.Fhir.Specification.R4/|
-|STU3|https://github.com/ewoutkramer/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
+|R4|https://github.com/FirelyTeam/fhir-net-api/tree/develop-r4|https://www.nuget.org/packages/Hl7.Fhir.R4/|https://www.nuget.org/packages/Hl7.Fhir.Specification.R4/|
+|STU3|https://github.com/FirelyTeam/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
 |DSTU 2.1|N/A|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
-|DSTU2| https://github.com/ewoutkramer/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
-|DSTU1| https://github.com/ewoutkramer/fhir-net-api/tree/master-dstu1|https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
+|DSTU2| https://github.com/FirelyTeam/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
+|DSTU1| https://github.com/FirelyTeam/fhir-net-api/tree/master-dstu1|https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
   
 ## Support 
-We actively monitor the issues coming in through the GitHub repository at [https://github.com/ewoutkramer/fhir-net-api/issues](https://github.com/ewoutkramer/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
+We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/fhir-net-api/issues](https://github.com/FirelyTeam/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
 
 ## Contributing ##
 We are welcoming contributors!
