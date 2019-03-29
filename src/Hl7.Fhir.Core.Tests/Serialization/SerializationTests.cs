@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         /// <summary>
-        /// This test proves issue 583: https://github.com/ewoutkramer/fhir-net-api/issues/583
+        /// This test proves issue 583: https://github.com/FirelyTeam/fhir-net-api/issues/583
         /// </summary>
         [TestMethod]
         public void SummarizeSerializingTest()
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         /// <summary>
-        /// This test proves issue 657: https://github.com/ewoutkramer/fhir-net-api/issues/657
+        /// This test proves issue 657: https://github.com/FirelyTeam/fhir-net-api/issues/657
         /// </summary>
         [TestMethod]
         public void DateTimeOffsetAccuracyTest()

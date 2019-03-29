@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This unit test proves issue 552: https://github.com/ewoutkramer/fhir-net-api/issues/552
+        /// This unit test proves issue 552: https://github.com/FirelyTeam/fhir-net-api/issues/552
         /// </summary>
         [Fact]
         public void ValidateOidType()
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 423  (https://github.com/ewoutkramer/fhir-net-api/issues/423)
+        /// Test for issue 423  (https://github.com/FirelyTeam/fhir-net-api/issues/423)
         /// </summary>
         [Fact]
         public void ValidateInternalReferenceWithinContainedResources()
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
+        /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
         public async Task RunValueSetExpanderMultiThreaded()
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This test proves issue https://github.com/ewoutkramer/fhir-net-api/issues/617
+        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617
         /// </summary>
         [Fact]
         public void ValidateConditionalResourceInBundle()
