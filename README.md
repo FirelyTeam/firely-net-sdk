@@ -30,8 +30,7 @@ each with breaking changes - so you need to ensure you use the version that is r
 * [DSTU1][dstu1-spec] (published September 2014) is mostly obsolete, and the .NET version for this publication is not maintained anymore.
 * [DSTU2][dstu2-spec] (published October 2015) in widespread use, and still supported by this library and other tooling on the market.
 * [STU3][stu3-spec] (published March 2017) latest release, mature support by this library and most other tooling on the market.
-* [R4][r4-spec] (not yet published), support in alpha by this library. Would not be supported by production systems, since this release is still in development. Expected publication in Q3 2018.
-
+* [R4][r4-spec] (published January 2019), support in alpha by this library. Would not be supported by production systems, since this release is still in development.
 
 Planned release DSTU2.1 was never published by HL7, but you will still find traces of it, in particular we still keep the NuGet package for it available.
 
