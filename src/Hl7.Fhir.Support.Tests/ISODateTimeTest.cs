@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.FhirPath.Tests
 {
-
+    [TestClass]
     public class ISODateTimeTest
     {
         [TestMethod]

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Support.Tests.Model
 {
+    [TestClass]
     public class IssuesTests
     {
         /// <summary>
