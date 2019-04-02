@@ -15,8 +15,13 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null) =>
-            FhirXmlNode.Parse(xml, settings);
+        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
+        {
+            settings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            settings.PermissiveParsing = false;
+            return FhirXmlNode.Parse(xml, settings);
+        }
+
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
@@ -228,12 +233,12 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(11, result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
             result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
+            patient = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }

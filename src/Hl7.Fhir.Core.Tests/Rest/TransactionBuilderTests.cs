@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Test
 
         /// <summary>
         /// Unit test to prove issue 536: 
-        /// https://github.com/ewoutkramer/fhir-net-api/issues/536
+        /// https://github.com/FirelyTeam/fhir-net-api/issues/536
         /// </summary>
         [TestMethod]
         public void TestTransactionWithForwardSlash()
