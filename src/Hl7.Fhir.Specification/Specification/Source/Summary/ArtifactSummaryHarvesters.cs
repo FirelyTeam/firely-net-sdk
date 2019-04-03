@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -308,7 +309,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (elementNode != null)
                     {
                         var childNode = elementNode.Children("element").FirstOrDefault();
-                        if(childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
+                        if (childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
                         {
                             childNode.HarvestValue(properties, RootDefinitionKey, "definition");
                         }
@@ -343,17 +344,52 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         // [WMR 20181218] R4 NEW
+        // [WMR 20190402] Only add if not-empty; values should be serializable primitives
         // StructureDefinition.context is a repeated BackboneElement with children .type and .expression
         static void harvestExtensionContexts(this ISourceNode nav, IDictionary<string, object> properties)
         {
-            var contexts = new List<(string Type, string Expression)>();
+            var sb = new StringBuilder();
             foreach (var child in nav.Children("context"))
             {
                 var type = child.Children("type").FirstOrDefault()?.Text;
                 var expression = child.Children("expression").FirstOrDefault()?.Text;
-                contexts.Add((type, expression));
+                if (sb.Length > 0)
+                {
+                    sb.Append(contextItemSeparator);
+                }
+                sb.Append(type);
+                sb.Append(contextPropertySeparator);
+                sb.Append(expression);
             }
-            properties[ContextKey] = contexts.AsReadOnly();
+            if (sb.Length > 0)
+            {
+                properties[ContextKey] = sb.ToString();
+            }
+        }
+
+        const char contextPropertySeparator = '|';
+        const char contextItemSeparator = '\n';
+
+        static readonly char[] contextPropertySeparators = { contextPropertySeparator };
+        static readonly char[] contextItemSeparators = { contextItemSeparator };
+
+        static List<(string Type, string Expression)> parseContext(string ctx)
+        {
+            if (!string.IsNullOrEmpty(ctx))
+            {
+                var items = ctx.Split(contextItemSeparators, StringSplitOptions.RemoveEmptyEntries);
+                if (items.Length > 0)
+                {
+                    var result = new List<(string Type, string Expression)>(items.Length);
+                    for (int i = 0; i < items.Length; i++)
+                    {
+                        var props = items[i].Split(contextPropertySeparators, 2, StringSplitOptions.RemoveEmptyEntries);
+                        result.Add((props[0], props[1]));
+                    }
+                    return result;
+                };
+            }
+            return null;
         }
 
         /// <summary>Get the <c>StructureDefinition.fhirVersion</c> property value from the specified artifact summary property bag, if available.</summary>
@@ -375,14 +411,19 @@ namespace Hl7.Fhir.Specification.Source
         // <summary>Get the <c>StructureDefinition.context</c> property value from the specified artifact summary property bag, if available.</summary>
         // <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         //public static string[] GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
-        //    => properties.GetValueOrDefault<string[]>(ContextKey);
+        //    => properties.GetValueOrDefault<string[]>(ContextKey).Select(s => );
 
         // [WMR 20181218] R4 NEW
+        // [WMR 20190402] Values should be serializable
         /// <summary>Get the list of <c>StructureDefinition.context</c> property values from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         /// <returns>A read-only list of tuples containing the type and expression of each supported extension context.</returns>
         public static IReadOnlyList<(string Type, string Expression)> GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
-            => properties.GetValueOrDefault<IReadOnlyList<(string Type, string Expression)>>(ContextKey);
+            // => properties.GetValueOrDefault<IReadOnlyList<(string Type, string Expression)>>(ContextKey);
+        {
+            var context = properties.GetValueOrDefault<string>(ContextKey);
+            return !string.IsNullOrWhiteSpace(context) ? parseContext(context).AsReadOnly() : null;
+        }
 
         /// <summary>Get the <c>StructureDefinition.type</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>

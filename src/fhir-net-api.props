@@ -3,7 +3,7 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>1.3.0</VersionPrefix>
-    <VersionSuffix>r4forge1</VersionSuffix>
+    <VersionSuffix>r4forge2</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2013-2019 Firely.  Contains materials (C) HL7 International</Copyright>
