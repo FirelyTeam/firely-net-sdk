@@ -22,7 +22,6 @@ using System.Linq;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
@@ -41,6 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         private readonly DirectorySourceSettings _settings;
         private readonly ArtifactSummaryGenerator _summaryGenerator;
         private readonly ConfigurableNavigatorStreamFactory _navigatorFactory;
+        private readonly NavigatorStreamFactory _navigatorFactoryDelegate;
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 ThrowOnUnsupportedFormat = false
             };
+            _navigatorFactoryDelegate = new NavigatorStreamFactory(_navigatorFactory.Create);
             // Initialize Lazy
             Refresh();
         }
@@ -463,6 +464,8 @@ namespace Hl7.Fhir.Specification.Source
             // However this won't detect Refresh on main tread while bg threads are reading
 
             var summaries = GetSummaries();
+            var factory = _navigatorFactoryDelegate;
+
             foreach (var filePath in filePaths)
             {
                 bool exists = File.Exists(filePath);
@@ -474,7 +477,8 @@ namespace Hl7.Fhir.Specification.Source
                 else if (!summaries.Any(s => PathComparer.Equals(filePath, s.Origin)))
                 {
                     // File was added; generate and add new summary
-                    var newSummaries = _summaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
+                    // [WMR 20190403] Fixed: inject navigator factory delegate
+                    var newSummaries = _summaryGenerator.Generate(filePath, factory, _settings.SummaryDetailsHarvesters);
                     summaries.AddRange(newSummaries);
                     result |= newSummaries.Count > 0;
                 }
@@ -835,12 +839,14 @@ namespace Hl7.Fhir.Specification.Source
             var cnt = paths.Count;
             var scanResult = new List<ArtifactSummary>(cnt);
             var harvesters = _settings.SummaryDetailsHarvesters;
+            var factory = _navigatorFactoryDelegate;
 
             if (!_settings.MultiThreaded)
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = _summaryGenerator.Generate(filePath, harvesters);
+                    // [WMR 20190403] Fixed: inject navigator factory delegate
+                    var summaries = _summaryGenerator.Generate(filePath, factory, harvesters);
 
                     // [WMR 20180423] Generate may return null, e.g. if specified file has unknown extension
                     if (summaries != null)
@@ -876,7 +882,8 @@ namespace Hl7.Fhir.Specification.Source
                         {
                             // Harvest summaries from single file
                             // Save each result to a separate array entry (no locking required)
-                            summaries[i] = _summaryGenerator.Generate(paths[i], harvesters);
+                            // [WMR 20190403] Fixed: inject navigator factory delegate
+                            summaries[i] = _summaryGenerator.Generate(paths[i], factory, harvesters);
                         });
                 }
                 catch (AggregateException aex)

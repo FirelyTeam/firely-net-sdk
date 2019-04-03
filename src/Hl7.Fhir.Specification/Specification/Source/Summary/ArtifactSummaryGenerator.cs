@@ -173,7 +173,9 @@ namespace Hl7.Fhir.Specification.Summary
             {
                 // Get some source file properties
                 var fi = new FileInfo(filePath);
-                result = Generate(fi, navigatorStreamFactory, harvesters);
+                // [WMR 20190403] Fall back to default factory
+                var factory = navigatorStreamFactory ?? DefaultNavigatorStreamFactory.FactoryDelegate;
+                result = Generate(fi, factory, harvesters);
             }
             catch (Exception ex)
             {
@@ -266,7 +268,7 @@ namespace Hl7.Fhir.Specification.Summary
             var result = new List<ArtifactSummary>();
 
             // Factory returns null for unknown file formats
-            if (navStream != null)
+            if (!(navStream is null))
             {
                 try
                 {
@@ -381,8 +383,12 @@ namespace Hl7.Fhir.Specification.Summary
                 // Factory returns null for unknown file formats
                 // [WMR 20190304] Allow DirectorySource to inject ConfigurableNavigatorStreamFactory instance
                 //navStream = DefaultNavigatorStreamFactory.Create(filePath);
-                navStream = navigatorStreamFactory?.Invoke(fi.FullName)
-                         ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
+
+                // [WMR 20190403] WRONG!
+                // ConfigurableNavigatorStreamFactory returns null for unknown file extensions
+                // No need to call DefaultNavigatorStreamFactory (redundant)
+                navStream = navigatorStreamFactory?.Invoke(fi.FullName);
+                    // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
 
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }
