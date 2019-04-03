@@ -1,4 +1,4 @@
-﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -48,6 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
             harvesters[ArtifactSummaryGenerator.ConformanceHarvesters.Length] = HarvestPatientSummary;
 
             var summary = assertSummary(path, harvesters);
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
             var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
@@ -75,6 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             var summary = assertSummary(path);
 
             // Common properties
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
             Assert.IsTrue(summary.ResourceType == ResourceType.ValueSet);
 
@@ -93,6 +95,7 @@ namespace Hl7.Fhir.Specification.Tests
             const string url = @"http://hl7.org/fhir/StructureDefinition/patient-religion";
             var summary = assertSummary(path);
             // Common properties
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
             Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
             // Conformance resource properties
@@ -132,6 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+                Assert.IsTrue(summary.IsBundleEntry);
 
                 var fi = new FileInfo(path);
                 Assert.AreEqual(fi.Length, summary.FileSize);
@@ -208,6 +212,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+                Assert.IsTrue(summary.IsBundleEntry);
 
                 var fi = new FileInfo(path);
                 Assert.AreEqual(fi.Length, summary.FileSize);
