@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
-    internal struct ElementValue
+    public struct ElementValue
     {
         public ElementValue(string name, Base value)
         {

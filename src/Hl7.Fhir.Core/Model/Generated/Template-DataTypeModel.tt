@@ -576,7 +576,7 @@ if (!abstractType){
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren 
+            public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
                 { 
@@ -771,7 +771,7 @@ if (!abstractType){
         }
 
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
+        public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
