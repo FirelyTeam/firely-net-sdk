@@ -3,37 +3,21 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Schema;
-using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Utility;
 using System;
-using System.Linq;
-using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Validation
 {
-    internal static class BindingConfigurator
+    public class IncorrectElementDefinitionException : Exception
     {
-        public static Binding.BindingStrength ToSchemaBindingStrength(this BindingStrength strength) => (Binding.BindingStrength)(int)strength;
-
-        public static Binding ToValidatable(this ElementDefinition.ElementDefinitionBindingComponent binding)
+        public IncorrectElementDefinitionException(string message) : base(message)
         {
-            if (binding.Strength == null)
-                throw new IncorrectElementDefinitionException("Encountered a binding element without a binding strength.");
+        }
 
-            var uri = (binding.ValueSet as FhirUri)?.Value ??
-                        (binding.ValueSet as ResourceReference)?.Reference;
-
-            if (uri == null)
-                throw new IncorrectElementDefinitionException($"Encountered a binding element without either a ValueSet reference or uri");
-
-            return new Binding(uri, binding.Strength.Value.ToSchemaBindingStrength(), abstractAllowed: true, binding.Description);
+        public IncorrectElementDefinitionException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 
