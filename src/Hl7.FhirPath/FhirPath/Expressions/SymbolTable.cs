@@ -178,7 +178,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static void AddVar(this SymbolTable table, string name, object value)
         {
-            table.AddVar(name, new ConstantValue(value));
+            table.AddVar(name, ElementNode.CreateConstant(value));
         }
 
         public static void AddVar(this SymbolTable table, string name, ITypedElement value)

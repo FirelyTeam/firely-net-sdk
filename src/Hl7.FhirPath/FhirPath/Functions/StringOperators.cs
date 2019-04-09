@@ -32,7 +32,7 @@ namespace Hl7.FhirPath.Functions
 
         public static ITypedElement FpIndexOf(this string me, string fragment)
         {
-            return new ConstantValue(me.IndexOf(fragment));
+            return ElementNode.CreateConstant(me.IndexOf(fragment));
         }
 
         public static string FpReplace(this string me, string find, string replace)

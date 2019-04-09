@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Utility;
 using System;
@@ -57,7 +58,7 @@ namespace Hl7.FhirPath.Expressions
         {
             if (value == null) Error.ArgumentNull("value");
 
-            Value = ConstantValue.ToFhirPathValue(value);
+            Value = ElementNode.CreateConstant(value);
 
             if (Value is bool)
                 ExpressionType = TypeInfo.Boolean;

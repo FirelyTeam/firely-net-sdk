@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -17,7 +18,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public override Invokee VisitConstant(FP.ConstantExpression expression, SymbolTable scope)
         {
-            return InvokeeFactory.Return(new ConstantValue(expression.Value));
+            return InvokeeFactory.Return(ElementNode.CreateConstant(expression.Value));
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
@@ -38,7 +39,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression, SymbolTable scope)
         {
-            return InvokeeFactory.Return(FhirValueList.Empty);
+            return InvokeeFactory.Return(ElementNode.EmptyList);
         }
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression, SymbolTable scope)

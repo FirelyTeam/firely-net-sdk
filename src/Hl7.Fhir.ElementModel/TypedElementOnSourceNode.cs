@@ -188,7 +188,7 @@ namespace Hl7.Fhir.ElementModel
 
         private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string,IElementDefinitionSummary> dis, ISourceNode parent, string name)
         {
-            IEnumerable<ISourceNode> childSet = null;
+            IEnumerable<ISourceNode> childSet;
 
             // no name filter: work on all the parent's children
             if (name == null)

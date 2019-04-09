@@ -16,41 +16,17 @@ using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class DomNode<T> : IAnnotatable where T:DomNode<T>
-    {
-        public string Name { get; set; }
-
-        protected List<T> ChildrenInternal = new List<T>();
-
-        internal IEnumerable<T> ChildrenByName(string name = null) =>
-            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
-
-        public T Parent { get; protected set; }
-
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenByName(name));
-
-        public T this[int index] => ChildrenInternal[index];
-
-        private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
-        protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
-
-        protected bool HasAnnotations => _annotations.IsValueCreated;
-
-        public void AddAnnotation(object annotation)
-        {
-            AnnotationsInternal.Add(annotation);
-        }
-
-        public void RemoveAnnotations(Type type)
-        {
-            AnnotationsInternal.RemoveOfType(type);
-        }
-    }
-
-
-
     public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
     {
+        public static ITypedElement CreateConstant(object value) => new ConstantElement(value);
+
+        public static IEnumerable<ITypedElement> CreateConstantList(params object[] values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : CreateConstant(value))
+                : EmptyList;
+
+        public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
+
+
         public IEnumerable<ITypedElement> Children(string name = null) => ChildrenByName(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)

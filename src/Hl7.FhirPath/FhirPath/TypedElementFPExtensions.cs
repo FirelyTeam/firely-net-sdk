@@ -16,7 +16,7 @@ using Hl7.FhirPath.Sprache;
 
 namespace Hl7.FhirPath
 {
-    public static class IValueProviderFPExtensions
+    public static class TypedElementFPExtensions
     {
         public static int MAX_FP_EXPRESSION_CACHE_SIZE = 500;
         private static readonly Cache<string, CompiledExpression> _cache = new Cache<string, CompiledExpression>(expr => Compile(expr), new CacheSettings() { MaxCacheSize = MAX_FP_EXPRESSION_CACHE_SIZE });
