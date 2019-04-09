@@ -241,7 +241,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
-            string json = TestDataHelper.ReadTestData("json-edge-cases.json");
+            string filename = "json-edge-cases.json";
+            string json = TestDataHelper.ReadTestData(filename);
             var tempPath = Path.GetTempPath();
 
             var poco = FhirJsonParser.Parse<Resource>(json);
@@ -257,7 +258,7 @@ namespace Hl7.Fhir.Tests.Serialization
             File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
 
             List<string> errors = new List<string>();
-            JsonAssert.AreSame(json, json2);
+            JsonAssert.AreSame(filename, json, json2, errors);
         }
 
         [TestMethod]

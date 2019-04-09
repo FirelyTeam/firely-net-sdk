@@ -153,7 +153,7 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestSDF11Bug()
         {
-            Assert.True(fixture.UuidProfile.IsBoolean("snapshot.element.first().path = constrainedType", true));
+            Assert.True(fixture.UuidProfile.IsBoolean("snapshot.element.first().path = type", true));
         }
 
         [Fact]
@@ -428,23 +428,23 @@ namespace Hl7.FhirPath.Tests
         {
             fixture.IsTrue(@"Patient.identifier.any(use = 'official')");
             fixture.IsTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() aways returns true
-            fixture.IsTrue(@"Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).item.any(code.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
         [Fact]
         public void TestRepeat()
         {
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group | question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
-            fixture.IsTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item.where(type='group')).count() = 3");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item).count() = 10");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item | item.where(type='group')).count() = 10");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item ).count() = 10");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item).select(code.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item).any(code.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item.where(type='group')).any(code.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
+            fixture.IsTrue(@"Patient.contained.skip(1).repeat(item).any(code.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
 
             fixture.IsTrue(@"Questionnaire.descendants().linkId.distinct()", fixture.Questionnaire);
-            fixture.IsTrue(@"Questionnaire.repeat(group | question).concept.count()", fixture.Questionnaire);
+            fixture.IsTrue(@"Questionnaire.repeat(item).code.count()", fixture.Questionnaire);
         }
 
 
