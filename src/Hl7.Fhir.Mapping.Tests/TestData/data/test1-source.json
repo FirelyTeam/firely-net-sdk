@@ -1,0 +1,269 @@
+﻿{
+  "resourceType": "CTS_Transport",
+  "version": "1.0",
+  "patid": "0001",
+  "sourcesystem": "http:\/\/l-cdms-stage.dmz4.uk-koeln.de\/",
+  "operations": [
+    {
+      "oldstatus": "not_in_house",
+      "newstatus": "in_house",
+      "operationId": "S15388",
+      "type": "statechange",
+      "editor": "https:\/\/clinicalsite.org\/person\/38",
+      "timestamp": "2019-02-22T15:56:39+01:00",
+      "crfid": "Stammdaten"
+    },
+    {
+      "data": [
+        {
+          "blockindex": 0,
+          "groupindex": 0,
+          "itemid": "id_1139",
+          "values": [
+            {
+              "value": "lebt"
+            }
+          ]
+        },
+        {
+          "blockindex": 0,
+          "groupindex": 0,
+          "itemid": "id_1297",
+          "values": [
+            {
+              "value": "2019-01-01T00:00:00+01:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 0,
+          "groupindex": 0,
+          "itemid": "id_803",
+          "values": [
+            {
+              "value": "2019-02-02T00:00:00+01:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1124",
+          "values": [
+            {
+              "value": "Max"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1125",
+          "values": [
+            {
+              "value": "Mustermann"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1126",
+          "values": [
+            {
+              "value": "1995-06-08T00:00:00+02:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1127",
+          "values": [
+            {
+              "value": "Musterstra\u00dfe 120a"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1128",
+          "values": [
+            {
+              "unit": "count",
+              "value": "51673"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1129",
+          "values": [
+            {
+              "value": "Teststadt"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1131",
+          "values": [
+            {
+              "value": "m"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1132",
+          "values": [
+            {
+              "unit": "kg",
+              "value": "85.0"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1133",
+          "values": [
+            {
+              "unit": "cm",
+              "value": "190"
+            }
+          ]
+        },
+        {
+          "blockindex": 1,
+          "groupindex": 0,
+          "itemid": "id_1280",
+          "values": [
+            {
+              "value": "DEU"
+            }
+          ]
+        },
+        {
+          "blockindex": 2,
+          "groupindex": 0,
+          "itemid": "id_1135",
+          "values": [
+            {
+              "value": "Nieraucher"
+            }
+          ]
+        },
+        {
+          "blockindex": 3,
+          "groupindex": 0,
+          "itemid": "id_1273",
+          "values": [
+            {
+              "value": "yes"
+            }
+          ]
+        },
+        {
+          "blockindex": 3,
+          "groupindex": 0,
+          "itemid": "id_1274",
+          "values": [
+            {
+              "value": "yes"
+            }
+          ]
+        },
+        {
+          "blockindex": 3,
+          "groupindex": 0,
+          "itemid": "id_1276",
+          "values": [
+            {
+              "value": "2019-01-01T00:00:00+01:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 3,
+          "groupindex": 0,
+          "itemid": "id_1277",
+          "values": [
+            {
+              "value": "2019-01-01T00:00:00+01:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 4,
+          "groupindex": 0,
+          "itemid": "id_1278",
+          "values": [
+            {
+              "value": "yes"
+            }
+          ]
+        },
+        {
+          "blockindex": 4,
+          "groupindex": 0,
+          "itemid": "id_1279",
+          "values": [
+            {
+              "value": "2019-01-01T00:00:00+01:00"
+            }
+          ]
+        },
+        {
+          "blockindex": 6,
+          "groupindex": 0,
+          "itemid": "id_1267",
+          "values": [
+            {
+              "value": "BARMER GEK"
+            }
+          ]
+        },
+        {
+          "blockindex": 6,
+          "groupindex": 0,
+          "itemid": "id_1268",
+          "values": [
+            {
+              "value": "1234567890abcde"
+            }
+          ]
+        },
+        {
+          "blockindex": 6,
+          "groupindex": 0,
+          "itemid": "id_1269",
+          "values": [
+            {
+              "value": "GKV"
+            }
+          ]
+        },
+        {
+          "blockindex": 6,
+          "groupindex": 0,
+          "itemid": "id_1333",
+          "values": [
+            {
+              "value": "nNGM-IV Fall"
+            }
+          ]
+        }
+      ],
+      "operationId": "D10455",
+      "type": "save",
+      "editor": "https:\/\/clinicalsite.org\/person\/38",
+      "timestamp": "2019-02-26T19:12:52+01:00",
+      "crfid": "Stammdaten"
+    }
+  ]
+}
