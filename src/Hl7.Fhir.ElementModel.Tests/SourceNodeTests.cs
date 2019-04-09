@@ -44,9 +44,8 @@ namespace Hl7.FhirPath.Tests
         public void ClonesOk()
         {
             var patientClone = patient.Clone();
-
-            throw new NotImplementedException();
-            // Implement Equals() and compare
+            var result = patientClone.IsEqualTo(patient);
+            Assert.True(result.Success);
         }
 
         [Fact]

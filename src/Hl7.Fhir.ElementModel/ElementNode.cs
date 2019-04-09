@@ -20,47 +20,30 @@ namespace Hl7.Fhir.ElementModel
     {
         public string Name { get; set; }
 
-        protected List<T> children = new List<T>();
+        protected List<T> ChildrenInternal = new List<T>();
 
         internal IEnumerable<T> ChildrenByName(string name = null) =>
-            name == null ? children : children.Where(c => c.Name == name);
+            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
 
         public T Parent { get; protected set; }
 
         public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenByName(name));
 
-        public T this[int index] => children[index];
+        public T this[int index] => ChildrenInternal[index];
 
-        public string Location
-        {
-            get
-            {
-                if (Parent != null)
-                {
-                    //TODO: Slow - but since we'll change the use of this property to informational 
-                    //(i.e. for error messages), it may not be necessary to improve it.
-                    var basePath = Parent.Location;
-                    int myIndex = Parent.children.IndexOf((T)this);
-                    return $"{basePath}.{Name}[{myIndex}]";
-                }
-                else
-                    return Name;
-            }
-        }
-
-        private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
-        protected List<object> annotations { get { return _annotations.Value; } }
+        private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
+        protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
 
         protected bool HasAnnotations => _annotations.IsValueCreated;
 
         public void AddAnnotation(object annotation)
         {
-            annotations.Add(annotation);
+            AnnotationsInternal.Add(annotation);
         }
 
         public void RemoveAnnotations(Type type)
         {
-            annotations.RemoveOfType(type);
+            AnnotationsInternal.RemoveOfType(type);
         }
     }
 
@@ -108,7 +91,8 @@ namespace Hl7.Fhir.ElementModel
 
                 child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
-            children.Add(child);
+
+            ChildrenInternal.Add(child);
 
             return child;
         }
@@ -151,15 +135,9 @@ namespace Hl7.Fhir.ElementModel
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me.children.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
+                me.ChildrenInternal.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
-        }
-
-        private static ElementNode buildNode(ISourceNode node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
-        {
-            // call some new method on TypedElementOnSourceNode to do the initial conversion 
-            throw new NotImplementedException();
         }
 
         public ElementNode Clone()
@@ -167,11 +145,11 @@ namespace Hl7.Fhir.ElementModel
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
                 Parent = Parent,
-                children = children
+                ChildrenInternal = ChildrenInternal
             };
 
             if (HasAnnotations)
-                copy.annotations.AddRange(annotations);
+                copy.AnnotationsInternal.AddRange(AnnotationsInternal);
 
             return copy;
         }
@@ -186,14 +164,39 @@ namespace Hl7.Fhir.ElementModel
         {
             return (type == typeof(ElementNode) || type == typeof(ITypedElement))
                 ? (new[] { this })
-                : annotations.OfType(type);
+                : AnnotationsInternal.OfType(type);
         }
+
+        public string Location
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.Location;
+
+                    if (Definition?.IsCollection == false)
+                        return $"{basePath}.{Name}";
+                    else
+                    {
+                        var myIndex = Parent.ChildrenInternal.Where(c => c.Name == Name).ToList().IndexOf(this);
+                        return $"{basePath}.{Name}[{myIndex}]";
+                    }
+                    
+                }
+                else
+                    return Name;
+            }
+        }
+
     }
 
 
     public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
     {
-        private IList<T> _wrapped;
+        private readonly IList<T> _wrapped;
 
         internal DomNodeList(IEnumerable<T> nodes)
         {

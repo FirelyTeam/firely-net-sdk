@@ -18,13 +18,13 @@ namespace Hl7.Fhir.ElementModel
     public class SourceNode : DomNode<SourceNode>, ISourceNode, IAnnotated, IResourceTypeSupplier
     {
         public IEnumerable<ISourceNode> Children(string name = null) =>
-            name == null ? children : children.Where(c => c.Name == name);
+            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
 
         public string ResourceType { get; set; }
 
         public string Text { get; set; }
 
-        private SourceNode(string name, string text, string resourceType=null)
+        private SourceNode(string name, string text, string resourceType = null)
         {
             Name = name;
             Text = text;
@@ -35,19 +35,19 @@ namespace Hl7.Fhir.ElementModel
 
         public SourceNode AddRange(IEnumerable<SourceNode> children)
         {
-            base.children.AddRange(children);
-            foreach (var c in base.children) c.Parent = this;
+            base.ChildrenInternal.AddRange(children);
+            foreach (var c in base.ChildrenInternal) c.Parent = this;
 
             return this;
         }
 
-        public static SourceNode Valued(string name, string value, params SourceNode[] children) 
+        public static SourceNode Valued(string name, string value, params SourceNode[] children)
             => new SourceNode(name, value).AddRange(children);
 
-        public static SourceNode Resource(string name, string type, params SourceNode[] children) 
+        public static SourceNode Resource(string name, string type, params SourceNode[] children)
             => new SourceNode(name, null, type).AddRange(children);
 
-        public static SourceNode Node(string name, params SourceNode[] children) 
+        public static SourceNode Node(string name, params SourceNode[] children)
             => new SourceNode(name, null).AddRange(children);
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="recursive"></param>
         /// <param name="annotationsToCopy">Maybe: if null - copy all, if empty, copy none, else specifcy which</param>
         /// <returns></returns>
-        public static SourceNode FromNode(ISourceNode node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null) 
+        public static SourceNode FromNode(ISourceNode node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
             => buildNode(node, recursive, annotationsToCopy);
 
         private static SourceNode buildNode(ISourceNode node, bool recursive, IEnumerable<Type> annotationsToCopy)
@@ -70,9 +70,9 @@ namespace Hl7.Fhir.ElementModel
 
             foreach (var t in annotationsToCopy ?? Enumerable.Empty<Type>())
                 foreach (var ann in node.Annotations(t))
-                        me.AddAnnotation(ann);
+                    me.AddAnnotation(ann);
 
-            if(recursive)
+            if (recursive)
                 me.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy)));
 
             return me;
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.ElementModel
             copy.AddRange(Children().Cast<SourceNode>().Select(c => c.Clone()));
 
             if (HasAnnotations)
-                copy.annotations.AddRange(annotations);
+                copy.AnnotationsInternal.AddRange(AnnotationsInternal);
 
             return copy;
         }
@@ -97,7 +97,24 @@ namespace Hl7.Fhir.ElementModel
         {
             return type == typeof(SourceNode) || type == typeof(ISourceNode) || type == typeof(IResourceTypeSupplier)
                 ? (new[] { this })
-                : annotations.OfType(type);
+                : AnnotationsInternal.OfType(type);
+        }
+
+        public string Location
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.Location;
+                    var myIndex = Parent.ChildrenInternal.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    return $"{basePath}.{Name}[{myIndex}]";
+                }
+                else
+                    return Name;
+            }
         }
     }
 }

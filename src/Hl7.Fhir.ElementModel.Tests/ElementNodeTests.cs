@@ -17,6 +17,8 @@ using System.Linq;
 using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Tests;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -36,69 +38,93 @@ namespace Hl7.FhirPath.Tests
         {
             var patientRoot = ElementNode.Root(provider, "Patient");
 
-            patientRoot
-                .Add(provider, "active", true)
-                .Add(provider, "contact")
-                .Add(provider, "identifier")
-                .Add(provider, "identifier");
+            var containedObs = ElementNode.Root(provider, "Observation", "contained");
+            containedObs.Add(provider, "value", true, "boolean");
+            patientRoot.Add(provider, containedObs);
 
-            patientRoot["identifier"][0]
-                .Add(provider, "system", "http://nu.nl")
-                .Add(provider, "value", "1234567");
+            var activeNode = patientRoot.Add(provider, "active", true);
+            activeNode.Add(provider, "id", "myId1");
+               
+            activeNode.AddAnnotation("a string annotation");
+            var ext1 = activeNode.Add(provider, "extension");
+            ext1.Add(provider, "value", 4, "integer");
+            ext1.Add(provider, "url", "urn:1");
+            var ext2 = activeNode.Add(provider, "extension");
+            ext2.Add(provider, "value", "world!", "string");
+            ext2.Add(provider, "url", "urn:2");
 
-            patientRoot["identifier"][1]
-                .Add(provider, "system", "http://toen.nl")
-                .Add(provider, "value", "7654321")
-                .AddAnnotation(42);
+            var identifier0 = patientRoot.Add(provider, "identifier");
+            identifier0.Add(provider, "system", "http://nu.nl");
+            identifier0.Add(provider, "value", "1234567");
 
-            patientRoot["contact"][0]
-                .Add(provider, "gender", "male")
-                .AddAnnotation("String annotation on contact");
-
-            var containedOrganization = ElementNode.Root(provider, "Organization", "contained")
-                    .Add(provider, "name", "Firely");
-
-            patientRoot.Add(provider, containedOrganization);
+            var identifier1 = patientRoot.Add(provider, "identifier");
+            identifier1.Add(provider, "system", "http://toen.nl");
+            identifier1.Add(provider, "value", "7654321");
 
             return patientRoot;
         }
 
         [Fact]
+        public void TestConstruction()
+        {
+            var data = patient[0];
+            Assert.Equal("contained", data.Name);
+            Assert.Null(data.Value);
+            Assert.Equal("Observation", data.InstanceType);
+
+            data = patient[1];
+            Assert.Equal("active", data.Name);
+            Assert.Equal(true, data.Value);
+            Assert.Equal("boolean", data.InstanceType);
+        }
+
+        [Fact]
         public void SuccessfullyCreated()
         {
-            var xml = patient.ToXml();
+            var pat = new Patient();
+            var containedObs = new Observation();
+            containedObs.Value = new FhirBoolean(true);
+            pat.Contained.Add(containedObs);
+            pat.ActiveElement = new FhirBoolean(true) { ElementId = "myId1" };
+            pat.ActiveElement.AddAnnotation("a string annotation");
+            pat.ActiveElement.SetIntegerExtension("urn:1", 4);
+            pat.ActiveElement.SetStringExtension("urn:2", "world!");
+            pat.Identifier.Add(new Identifier("http://nu.nl", "1234567"));
+            pat.Identifier.Add(new Identifier("http://toen.nl", "7654321"));
+
+            XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
         }
 
         [Fact]
         public void ClonesOk()
         {
             var patientClone = patient.Clone();
-
-            throw new NotImplementedException();
-            // Implement Equals() and compare
+            var result = patientClone.IsEqualTo(patient);
+            Assert.True(result.Success);
         }
 
         [Fact]
         public void KnowsPath()
         {
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.contained[0].valueBoolean[0]", patient[0][0].Location);
-            Assert.Equal("Patient.active[0]", patient[1].Location);
-            Assert.Equal("Patient.active[0].id[0]", patient[1][0].Location);
-            Assert.Equal("Patient.active[0].id[1]", patient[1][1].Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][2][0].Location);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][3][0].Location);
+            Assert.Equal("Patient.contained[0].value", patient[0][0].Location);
+            Assert.Equal("Patient.active", patient[1].Location);
+            Assert.Equal("Patient.active.id", patient[1][0].Location);
+            Assert.Equal("Patient.identifier[0]", patient[2].Location);
+            Assert.Equal("Patient.identifier[1]", patient[3].Location);
+            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].Location);
+            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].Location);
         }
 
         [Fact]
         public void AccessViaIndexers()
         {
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
+            Assert.Equal("Patient.active.extension[1].value", patient["active"][0]["extension"][1]["value"][0].Location);
+            Assert.Equal("Patient.active.extension[1].value", patient["active"]["extension"][1]["value"].Single().Location);
+            Assert.Equal("Patient.active.extension[0].value", patient.Children("active").First()
                                 .Children("extension").First()
                                 .Children("value").First().Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active")
+            Assert.Equal("Patient.active.extension[0].value", patient.Children("active")
                                 .Children("extension").First()
                                 .Children("value").Single().Location);
         }
@@ -113,19 +139,17 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CanQueryNodeAxis()
         {
-            Assert.Equal(6, patient["active"].Descendants().Count());
-            Assert.Equal(7, patient["active"].DescendantsAndSelf().Count());
+            Assert.Equal(7, patient["active"].Descendants().Count());
+            Assert.Equal(8, patient["active"].DescendantsAndSelf().Count());
             Assert.Equal(2, patient["active"]["extension"].Count());
         }
+
 
         [Fact]
         public void KeepsAnnotations()
         {
-            ITypedElement identifier = patient["identifier"][1];
-            Assert.Equal(42, identifier.Annotation<int>());
-
-            ITypedElement contact = patient["contact"][0];
-            Assert.Equal("String annotation on contact", contact.Annotation<string>());
+            ITypedElement identifier = patient["active"][0];
+            Assert.Equal("a string annotation", identifier.Annotation<string>());
         }
 
         [Fact]
@@ -146,7 +170,7 @@ namespace Hl7.FhirPath.Tests
             var root = SourceNode.Node("TestRoot", child1);
             root.ResourceType = "TestR";
             var annotationTypes = new[] { typeof(string) };
-            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy:annotationTypes);
+            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy: annotationTypes);
 
             Assert.False(copiedRoot.Children().Any());
             Assert.Equal(root.Name, copiedRoot.Name);
@@ -164,7 +188,7 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(child1.Name, copiedChild.Name);
             Assert.Equal(child1.Location, copiedChild.Location);
             Assert.Equal(child1.Text, copiedChild.Text);
-            Assert.Equal("The first annotation",(copiedChild as IAnnotated).Annotation<string>());
+            Assert.Equal("The first annotation", (copiedChild as IAnnotated).Annotation<string>());
         }
 
         [Fact]
