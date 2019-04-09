@@ -1,6 +1,12 @@
-﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +14,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    public enum ValidationResult
+    internal enum ValidationResult
     {
         Valid,
         Invalid,
@@ -16,7 +22,7 @@ namespace Hl7.Fhir.Specification.Schema
     }
 
 
-    public enum Weight
+    internal enum Weight
     {
         Information,
         Note,
@@ -28,7 +34,7 @@ namespace Hl7.Fhir.Specification.Schema
     /// <summary>
     /// All semantics about what is wrong goes here
     /// </summary>
-    public class ValidationDetail
+    internal class ValidationDetail
     {
         public readonly int Code;
         public readonly Weight WeightIndication;

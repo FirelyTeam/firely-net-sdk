@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Support
             return ic;
         }
 
-        public Issue(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
+        internal Issue(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
         {
             Code = code;
             Severity = severity;
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_REQUIRED_BINDING = Create(1023, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_NON_REQUIRED_BINDING = Create(1024, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_NOT_BINDABLE = Create(1025, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_TYPE_NOT_BINDEABLE  = Create(1025, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_SLICING_RULE = Create(1026, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -107,7 +107,8 @@ namespace Hl7.Fhir.Support
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue PROFILE_ELEMENTDEF_INCORRECT = Create(2012, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        // public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        [Obsolete("This issue will not be raised by the validator anymore. Use 'PROFILE_ELEMENTDEF_INCORRECT' instead.")] // Obsolete on 20190409 by Marco
+        public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);

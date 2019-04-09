@@ -10,7 +10,7 @@ using System;
 
 namespace Hl7.Fhir.Validation
 {
-    public class IncorrectElementDefinitionException : Exception
+    internal class IncorrectElementDefinitionException : Exception
     {
         public IncorrectElementDefinitionException(string message) : base(message)
         {

@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
@@ -70,8 +78,8 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (!ModelInfo.IsBindable(input.InstanceType))
             {
-                return Issue.CONTENT_ELEMENT_NOT_BINDABLE
-                    .NewOutcomeWithIssue("Validation of binding wih non-bindable instance type '{input.InstanceType}' always succeeds.", input);
+                return Issue.CONTENT_TYPE_NOT_BINDEABLE 
+                    .NewOutcomeWithIssue("Validation of binding with non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             }
 
             var bindable = parseBindable(input);
