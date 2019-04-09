@@ -12,8 +12,10 @@ using System.Diagnostics;
 using Hl7.Fhir.Model;
 using System.IO.Compression;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Specification.Source;
+using System.Collections.Generic;
+using System;
+using Hl7.Fhir.Tests;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -127,11 +129,12 @@ namespace Hl7.Fhir.Serialization.Tests
 
             examplesZip.ExtractToDirectory(examplePath);
 
+            List<string> errors = new List<string>();
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             var sw = new Stopwatch();
             sw.Start();
-            convertFiles(examplePath, intermediate1Path, usingPoco, provider);
+            int convertedFileCount = convertFiles(examplePath, intermediate1Path, usingPoco, provider, errors);
             sw.Stop();
             Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
             sw.Reset();
@@ -139,26 +142,56 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             sw.Start();
-            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider);
+            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider, errors);
             sw.Stop();
-            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            Console.WriteLine("Conversion of {1} files took {0} seconds", sw.ElapsedMilliseconds / 1000, convertedFileCount);
             sw.Reset();
 
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
-            compareFiles(examplePath, intermediate2Path);
+
+            compareFiles(examplePath, intermediate2Path, errors);
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
-
-        private static void convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
+        static bool SkipFile(string file)
         {
+            if (file.Contains(".profile"))
+                return true;
+            if (file.Contains(".schema"))
+                return true;
+            if (file.Contains(".diff"))
+                return true;
+            if (file.Contains("examplescenario-example"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            if (file.Contains("backbone-elements"))
+                return true; // its not really a resource!
+            if (file.Contains("json-edge-cases"))
+                return true; // known issues with binary contained resource having content, not data
+            if (file.Contains("observation-decimal"))
+                return true; // exponential number example is tooo big (and too small)
+            if (file.Contains("package-min-ver"))
+                return true; // not a resource
+            if (file.Contains("choice-elements"))
+                return true; // not a resource
+
+            if (file.Contains("v2-tables"))
+                return true; // this file is known to have a single dud valueset - have reported on Zulip
+                             // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+            return false;
+        }
+
+        private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
+        {
+            int fileCount = 0;
             var files = Directory.EnumerateFiles(inputPath);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
             {
-                if (!isRelevant(file))
+                if (SkipFile(file))
                     continue;
-
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
                 var toExt = ext == ".xml" ? ".json" : ".xml";
@@ -169,35 +202,32 @@ namespace Hl7.Fhir.Serialization.Tests
                 if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
                     continue;
 
-                if (usingPoco)
-                    convertResourcePoco(file, outputFile);
-                else
-                    convertResourceNav(file, outputFile, provider);
-
+                fileCount++;
+                try
+                {
+                    if (usingPoco)
+                        convertResourcePoco(file, outputFile);
+                    else
+                        convertResourceNav(file, outputFile, provider);
+                }
+                catch(Exception ex)
+                {
+                    errors.Add($"{exampleName}{ext}: " + ex.Message);
+                }
             }
 
             Debug.WriteLine("Done!");
+            return fileCount;
         }
 
-
-        private static bool isRelevant(string filename)
-        {
-            if (filename.Contains(".profile")) return false;
-            if (filename.Contains(".schema")) return false;
-            if (filename.Contains(".diff")) return false;
-
-            return true;
-        }
-
-        private static void compareFiles(string expectedPath, string actualPath)
+        private static void compareFiles(string expectedPath, string actualPath, List<string> errors)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
             foreach (string file in files)
             {
-                if (!isRelevant(file))
+                if (SkipFile(file))
                     continue;
-
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
                 string actualFile = Path.Combine(actualPath, exampleName) + extension;
@@ -206,16 +236,19 @@ namespace Hl7.Fhir.Serialization.Tests
                     continue;
 
                 if (!File.Exists(actualFile))
-                    Assert.Fail("File {0}.{1} was not converted and not found in {2}", exampleName, extension,
-                                        actualPath);
+                {
 
-                Debug.WriteLine("Comparing " + exampleName);
+                    errors.Add($"File {exampleName}.{extension} was not converted and not found in {actualPath}");
+                    return;
+                }
 
-                compareFile(file, actualFile);
+                // Debug.WriteLine("Comparing " + exampleName);
+
+                compareFile(file, actualFile, errors);
             }
         }
 
-        private static void compareFile(string expectedFile, string actualFile)
+        private static void compareFile(string expectedFile, string actualFile, List<string> errors)
         {
             if (expectedFile.EndsWith(".xml"))
                 XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
@@ -224,8 +257,8 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 if (new FileInfo(expectedFile).Name != "json-edge-cases.json")
                 {
-                    JsonAssert.AreSame(File.ReadAllText(expectedFile),
-                                        File.ReadAllText(actualFile));
+                    JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
+                                        File.ReadAllText(actualFile), errors);
                 }
             }
         }
@@ -233,9 +266,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         private static void convertResourcePoco(string inputFile, string outputFile)
         {
-            //TODO: call validation after reading
-            if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
-                return;
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
@@ -261,9 +291,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         private static void convertResourceNav(string inputFile, string outputFile, IStructureDefinitionSummaryProvider provider)
         {
-            //TODO: call validation after reading
-            if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
-                return;
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
