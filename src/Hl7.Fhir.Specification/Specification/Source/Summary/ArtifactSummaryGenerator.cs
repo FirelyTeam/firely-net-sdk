@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -13,24 +13,25 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Summary
 {
     /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>
-    /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
+    /// <param name="nav">An <see cref="ISourceNode"/> instance to navigate the artifact.</param>
     /// <param name="properties">A dictionary for storing the harvested summary information.</param>
     /// <returns>
     /// Returns <c>true </c> to indicate that all relevant properties have been harvested from the artifact and the summary is ready to be generated.
     /// Returns <c>false</c> to try and continue harvesting additional summary information.
     /// </returns>
     /// <remarks>
-    /// The specified <see cref="IElementNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
+    /// The specified <see cref="ISourceNode"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
     /// The target method can fetch summary information starting from the current position in a forward direction.
     /// When finished, the navigator should again be positioned on the first nesting level, so any remaining
     /// delegates can continue harvesting additional information from there.
     /// </remarks>
-    public delegate bool ArtifactSummaryHarvester(IElementNavigator nav, ArtifactSummaryPropertyBag properties);
+    public delegate bool ArtifactSummaryHarvester(ISourceNode nav, ArtifactSummaryPropertyBag properties);
 
     /// <summary>
     /// For generating artifact summary information from a file path or <see cref="INavigatorStream"/>,
@@ -285,7 +286,7 @@ namespace Hl7.Fhir.Specification.Summary
                             // Initialize default summary information
                             // Note: not exposed by IElementNavigator, cannot use harvester
                             properties.SetPosition(navStream.Position);
-                            properties.SetTypeName(current.Type);
+                            properties.SetTypeName(current.GetResourceTypeIndicator());
                             properties.SetResourceUri(navStream.Position);
 
                             // Allow caller to modify/enrich harvested properties
@@ -332,7 +333,7 @@ namespace Hl7.Fhir.Specification.Summary
         // Generate summary for a single artifact
         static ArtifactSummary generate(
             ArtifactSummaryPropertyBag props,
-            IElementNavigator nav,
+            ISourceNode nav,
             ArtifactSummaryHarvester[] harvesters)
         {
             Exception error = null;
@@ -347,7 +348,7 @@ namespace Hl7.Fhir.Specification.Summary
 
                     // Catch individual exceptions inside loop, return as AggregateException
                     var errors = new List<Exception>();
-                    if (nav.MoveToFirstChild())
+                    if (nav.Children().Any())
                     {
                         foreach (var harvester in harvesters)
                         {

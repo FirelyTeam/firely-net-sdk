@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Specification;
@@ -29,6 +29,9 @@ namespace Hl7.Fhir.ElementModel
         public static NavigatorPosition ForRoot(ISourceNode element, IStructureDefinitionSummary elementType, string elementName)
         {
             if (elementName == null) throw Error.ArgumentNull(nameof(elementName));
+
+            if (elementType != null && elementType.IsAbstract)
+                throw Error.Argument(nameof(elementType), $"The given type must be a concrete type, '{elementType.TypeName}' is abstract.");
 
             var rootElement = elementType != null ? ElementDefinitionSummary.ForRoot(elementName, elementType) : null;
             return new NavigatorPosition(element, rootElement, elementName, elementType?.TypeName);

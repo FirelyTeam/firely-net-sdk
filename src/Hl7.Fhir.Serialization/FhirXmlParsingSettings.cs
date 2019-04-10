@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Utility;
@@ -12,30 +12,31 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Parser configuration settings for the <see cref="FhirXmlNode"/> class.</summary>
     public class FhirXmlParsingSettings
     {
         /// <summary>
         /// A list of namespaces which are allowed in addition to the normal FHIR namespaces. 
         /// </summary>
         /// <remarks>Normally, the only allowed namespaces are 'http://hl7.org/fhir' and the XHTML namespace.</remarks>
-        public XNamespace[] AllowedExternalNamespaces;
+        public XNamespace[] AllowedExternalNamespaces { get; set; }
 
         /// <summary>
         /// Raise an errors when an xsi:schemaLocation attribute is found on the root.
         /// </summary>
-        public bool DisallowSchemaLocation;
+        public bool DisallowSchemaLocation { get; set; } // = false;
 
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
         /// </summary>
-        public bool PermissiveParsing;
+        public bool PermissiveParsing { get; set; } = true;
 
 #if !NETSTANDARD1_1
         /// <summary>
         /// Validate narrative against the FHIR Xhtml schema.
         /// </summary>
         /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
-        public bool ValidateFhirXhtml;
+        public bool ValidateFhirXhtml { get; set; } // = false;
 #endif
         /// <summary>Default constructor. Creates a new <see cref="FhirXmlParsingSettings"/> instance with default property values.</summary>
         public FhirXmlParsingSettings() { }

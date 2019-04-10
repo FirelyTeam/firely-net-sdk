@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 using System;
 using System.Collections.Generic;
@@ -26,9 +26,9 @@ namespace Hl7.FhirPath.Expressions
         private string _name;
         private SymbolTable _scope;
 
-        public IEnumerable<IElementNavigator> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<IElementNavigator>>();
+            var actualArgs = new List<IEnumerable<ITypedElement>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             if (!focus.Any()) return FhirValueList.Empty;
@@ -47,7 +47,9 @@ namespace Hl7.FhirPath.Expressions
                 {
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
-                    return entry(context, args);
+
+                    var argFuncs = actualArgs.Select(arg => InvokeeFactory.Return(arg));
+                    return entry(context, argFuncs);
                 }
                 catch (TargetInvocationException tie)
                 {

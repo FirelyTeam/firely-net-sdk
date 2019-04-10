@@ -70,7 +70,7 @@
   </test>
   <test name="CSharpTest0018" inputfile="fp-test-patient.xml">
     <expression>Patient.contained.name[0].family.indexOf('qq').empty()</expression>
-    <output type="boolean">true</output>
+    <output type="boolean">false</output> <!--IndexOf == -1 -->
   </test>
   <test name="CSharpTest0019" inputfile="fp-test-patient.xml">
     <expression>Patient.contained.name[0].family.contains('ywo')</expression>

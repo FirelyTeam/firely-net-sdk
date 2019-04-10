@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using System;
@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Net;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
@@ -37,6 +38,9 @@ namespace Hl7.Fhir.Specification.Source
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
 
+        /// <summary>Gets or sets configuration settings that control parsing behavior.</summary>
+        public ParserSettings ParserSettings { get; set; }
+
         /// <summary>Gets or sets the request timeout of the internal <see cref="FhirClient"/> instance.</summary>
         public int TimeOut { get; set; } = DefaultTimeOut;
 
@@ -58,6 +62,8 @@ namespace Hl7.Fhir.Specification.Source
             var id = new ResourceIdentity(uri);
             var client = _clientFactory?.Invoke(id.BaseUri)
                          ?? new FhirClient(id.BaseUri) { Timeout = this.TimeOut };
+
+            client.ParserSettings = this.ParserSettings;
 
             try
             {

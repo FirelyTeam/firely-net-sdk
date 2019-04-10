@@ -3,13 +3,13 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.FhirPath.Parser;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
-using Sprache;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +63,7 @@ namespace Hl7.FhirPath
         {
             Invokee inv = expression.ToEvaluator(Symbols);
 
-            return (IElementNavigator focus, EvaluationContext ctx) =>
+            return (ITypedElement focus, EvaluationContext ctx) =>
                 {
                     var closure = Closure.Root(focus, ctx);
                     return inv(closure, InvokeeFactory.EmptyArgs);

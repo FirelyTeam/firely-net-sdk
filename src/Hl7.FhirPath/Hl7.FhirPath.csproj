@@ -7,7 +7,6 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <Version>$(SupportApiVersion)</Version>
     <PackageId>Hl7.FhirPath</PackageId>
     <Title>HL7 FhirPath evaluator</Title>
     <Summary>Runtime environment for executing HL7 FhirPath queries and invariants.</Summary>

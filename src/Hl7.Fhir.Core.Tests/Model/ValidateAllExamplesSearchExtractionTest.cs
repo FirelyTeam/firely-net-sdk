@@ -1,9 +1,9 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -18,21 +18,37 @@ using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
     public class ValidateSearchExtractionAllExamplesTest
     {
+        public ILookup<ResourceType, ModelInfo.SearchParamDefinition> SpList;
+
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            FhirXmlParser parser = new FhirXmlParser();
+            SpList = ModelInfo.SearchParameters
+                .Where(spd => !String.IsNullOrEmpty(spd.Expression))
+                .Select(spd =>
+                    new { Rt = (ResourceType)Enum.Parse(typeof(ResourceType), spd.Resource), Def = spd })
+                    .ToLookup(ks => ks.Rt, es => es.Def);
+
+            SearchExtractionAllExamplesInternal();
+     //       SearchExtractionAllExamplesInternal();
+        }
+
+
+        private void SearchExtractionAllExamplesInternal()
+        {
+            FhirXmlParser parser = new FhirXmlParser(new ParserSettings { PermissiveParsing = true });
             int errorCount = 0;
             int testFileCount = 0;
-            Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
-            Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
+            var exampleSearchValues = new Dictionary<ModelInfo.SearchParamDefinition, Holder>();
             var zip = TestDataHelper.ReadTestZip("examples.zip");
 
             using (zip)
@@ -69,14 +85,14 @@ namespace Hl7.Fhir.Tests.Model
                 }
             }
 
-            var missingSearchValues = exampleSearchValues.Where(i => i.Value == 0);
+            var missingSearchValues = exampleSearchValues.Where(i => i.Value.count == 0);
 
             if (missingSearchValues.Count() > 0)
             {
                 Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
                 foreach (var item in missingSearchValues)
                 {
-                    Trace.WriteLine("\t" + item.Key);
+                    Trace.WriteLine("\t" + item.Key.Resource.ToString() + "_" + item.Key.Name);
                 }
                 // Trace.WriteLine(outcome.ToString());
                 errorCount++;
@@ -85,19 +101,18 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(140 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
         }
 
-        private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
+        private void ExtractValuesForSearchParameterFromFile(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+            var searchparameters = SpList[resource.ResourceType];
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache
-                string key = resource.ResourceType.ToString() + "_" + index.Name;
-                if (!exampleSearchValues.ContainsKey(key))
-                    exampleSearchValues.Add(key, 0);
+                if (!exampleSearchValues.ContainsKey(index))
+                    exampleSearchValues.Add(index, new Holder());
 
                 // Extract the values from the example
-                ExtractExamplesFromResource(exampleSearchValues, resource, index, key);
+                ExtractExamplesFromResource(exampleSearchValues, resource, index);
             }
 
             // If there are any contained resources, extract index data from those too!
@@ -113,44 +128,52 @@ namespace Hl7.Fhir.Tests.Model
             }
         }
 
-        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
+
+        class Holder
         {
-            var resourceModel = resource.ToElementNavigator();
-            var navigator = resource.ToElementNavigator();
+            public int count;
+        }
+
+       
+  
+        private static void ExtractExamplesFromResource(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource, 
+            ModelInfo.SearchParamDefinition index )
+        {
+            var resourceModel = resource.ToTypedElement();
 
             try
             {
-                var results = resourceModel.Select(index.Expression, new EvaluationContext(navigator));
+                var results = resourceModel.Select(index.Expression, new EvaluationContext(resourceModel));
                 if (results.Count() > 0)
                 {
                     foreach (var t2 in results)
                     {
                         if (t2 != null)
                         {
-                            if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
+                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
-                                exampleSearchValues[key]++;
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
+                                exampleSearchValues[index].count++;
                             }
                             else if (t2.Value is Hl7.FhirPath.ConstantValue)
                             {
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
-                                exampleSearchValues[key]++;
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
+                                exampleSearchValues[index].count++;
                             }
                             else if (t2.Value is bool)
                             {
-                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    Debug.WriteLine((bool)t2.Value);
-                                exampleSearchValues[key]++;
+                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                                //    Debug.WriteLine((bool)t2.Value);
+                                exampleSearchValues[index].count++;
                             }
                             else
                             {
                                 Debug.Write(index.Resource + "." + index.Name + ": ");
                                 Debug.WriteLine(t2.Value);
-                                exampleSearchValues[key]++;
+                                exampleSearchValues[index].count++;
                             }
                         }
                     }

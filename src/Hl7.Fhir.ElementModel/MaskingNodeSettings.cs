@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Utility;
@@ -12,6 +12,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
+    /// <summary>Configuration settings for the <see cref="MaskingNode"/> class.</summary>
     public class MaskingNodeSettings
     {
         /// <summary>
@@ -39,47 +40,47 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Determines how Bundles are masked.
         /// </summary>
-        public PreserveBundleMode PreserveBundle;
+        public PreserveBundleMode PreserveBundle { get; set; } // = PreserveBundleMode.None;
 
         /// <summary>
         /// Include top-level mandatory elements, including all their children
         /// </summary>
-        public bool IncludeMandatory;
+        public bool IncludeMandatory { get; set; } // = false;
 
         /// <summary>
         /// Include all elements marked "in summary" in the definition of the element
         /// </summary>
-        public bool IncludeInSummary;
+        public bool IncludeInSummary { get; set; } // = false;
 
         ///// <summary>
         ///// Include all elements marked "is modifier" in the definition of the element
         ///// </summary>
-        //public bool IncludeIsModifier;
+        //public bool IncludeIsModifier { get; set; } // = false;
 
         /// <summary>
         /// Exclude all elements of type "Narrative"
         /// </summary>
-        public bool ExcludeNarrative;
+        public bool ExcludeNarrative { get; set; } // = false;
 
         /// <summary>
         /// Exclude all elements of type "Markdown"
         /// </summary>
-        public bool ExcludeMarkdown;
+        public bool ExcludeMarkdown { get; set; } // = false;
 
         /// <summary>
         /// Start by including all elements
         /// </summary>
-        public bool IncludeAll;
+        public bool IncludeAll { get; set; } // = false;
 
         /// <summary>
         /// List of names op top-level elements to include, including their children
         /// </summary>
-        public string[] IncludeElements;
+        public string[] IncludeElements { get; set; }
 
         /// <summary>
         /// List of top-level elements to exclude
         /// </summary>
-        public string[] ExcludeElements;
+        public string[] ExcludeElements { get; set; }
 
         /// <summary>Default constructor. Creates a new <see cref="MaskingNodeSettings"/> instance with default property values.</summary>
         public MaskingNodeSettings() { }
@@ -103,8 +104,8 @@ namespace Hl7.Fhir.ElementModel
             other.IncludeMandatory = this.IncludeMandatory;
             other.IncludeInSummary = this.IncludeInSummary;
             // other.IncludeIsModifier = this.IncludeIsModifier;
-            other.ExcludeMarkdown = this.ExcludeMarkdown;
             other.ExcludeNarrative = this.ExcludeNarrative;
+            other.ExcludeMarkdown = this.ExcludeMarkdown;
             other.IncludeAll = this.IncludeAll;
             other.IncludeElements = this.IncludeElements?.ToArray();
             other.ExcludeElements = this.ExcludeElements?.ToArray();

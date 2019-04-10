@@ -1,9 +1,9 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Serialization
         {
             JsonObject = root ?? throw Error.ArgumentNull(nameof(root));
 
-            var rootName = nodeName ?? JsonObject.GetResourceTypeFromObject();
+            var rootName = nodeName ?? ResourceType;
             Name = rootName ?? throw Error.InvalidOperation("Root object has no type indication (resourceType) and therefore cannot be used to construct an FhirJsonNode. " +
                     $"Alternatively, specify a {nameof(nodeName)} using the parameter.");
             Location = Name;
@@ -191,7 +192,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public string ResourceType => JsonObject?.GetResourceTypeFromObject();
+        public string ResourceType => (JsonObject?.GetResourceTypePropertyFromObject(Name)?.Value as JValue)?.Value as string;
 
         public IEnumerable<ISourceNode> Children(string name = null)
         {
@@ -205,9 +206,11 @@ namespace Hl7.Fhir.Serialization
 
             var scanChildren = children.Where(n => n.Key.MatchesPrefix(name));
 
+            var resourceTypeChild = JsonObject.GetResourceTypePropertyFromObject(Name);
+
             foreach (var child in scanChildren)
             {
-                if (isResourceTypeIndicator(child)) continue;
+                if (child.First() == resourceTypeChild) continue;
                 if (processed.Contains(child.Key)) continue;
 
                 (JProperty main, JProperty shadow) = getNextElementPair(child);
@@ -234,10 +237,6 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private bool isResourceTypeIndicator(IGrouping<string, JProperty> child) => 
-            child.Key != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME ?
-                false : child.First().Value.Type == JTokenType.String;
-
         private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string, JProperty> child)
         {
             JProperty main = child.First(), shadow = child.Skip(1).FirstOrDefault();
@@ -256,7 +255,7 @@ namespace Hl7.Fhir.Serialization
             var shadows = makeList(shadow, out var wasArrayShadow);
             bool isArrayElement = wasArrayMain | wasArrayShadow;
 
-            int length = Math.Max(mains.Length, shadows.Length);
+            int length = Math.Max(mains.Count, shadows.Count);
 
             for (var index = 0; index < length; index++)
             {
@@ -264,9 +263,9 @@ namespace Hl7.Fhir.Serialization
                 if (result != null) yield return result;
             }
 
-            JToken at(JToken[] list, int i) => list.Length > i ? list[i] : null;
+            JToken at(IList<JToken> list, int i) => list.Count > i ? list[i] : null;
 
-            JToken[] makeList(JProperty prop, out bool wasArray)
+            IList<JToken> makeList(JProperty prop, out bool wasArray)
             {
                 wasArray = false;
 
@@ -275,7 +274,7 @@ namespace Hl7.Fhir.Serialization
                 else if (prop.Value is JArray array)
                 {
                     wasArray = true;
-                    return array.ToArray();
+                    return array;
                 }
                 else
                     return new[] { prop.Value };
@@ -310,7 +309,7 @@ namespace Hl7.Fhir.Serialization
         private void raiseFormatError(string message, JToken node)
         {
             var (lineNumber, linePosition) = getPosition(node);
-            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format(message, lineNumber, linePosition)));
+            ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(Error.Format("Parser: " + message, lineNumber, linePosition)));
         }
 
         private (int lineNumber, int linePosition) getPosition(JToken node) => 
@@ -354,22 +353,43 @@ namespace Hl7.Fhir.Serialization
 
             object checkXhtml(ITypedElement nav, IExceptionSource ies, object _)
             {
-                if (nav.InstanceType == "xhtml" && _settings.ValidateFhirXhtml)
-                    FhirXmlNode.ValidateXhtml((string)nav.Value, ies, nav);
+                if (!_settings.PermissiveParsing)
+                {
+                    XDocument doc = null;
 
+                    if (nav.InstanceType == "xhtml")
+                    {
+                        try
+                        {
+                            doc = SerializationUtil.XDocumentFromXmlText((string) nav.Value);
+                        }
+                        catch (FormatException ex)
+                        {
+                            ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
+                                new StructuralTypeException(ex.Message)));
+                        }
+                    }
+
+                    if (doc != null && _settings.ValidateFhirXhtml)
+                    {
+                        FhirXmlNode.ValidateXhtml(doc, ies, nav);
+                    }
+                }
                 return null;
             }
 #endif
 
             object checkArrayUse(ITypedElement nav, IExceptionSource ies, object _)
             {
+                if (_settings.PermissiveParsing) return null;
+
                 var sdSummary = nav.Definition;
                 var serializationDetails = nav.GetJsonSerializationDetails();
                 if (sdSummary == null || serializationDetails == null) return null;
 
                 if (sdSummary.IsCollection && serializationDetails.ArrayIndex == null)
                     ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                        new StructuralTypeException($"Since element '{nav.Name}' repeats, an array must be used here.")));
+                        new StructuralTypeException($"Parser: Since element '{nav.Name}' repeats, an array must be used here.")));
 
                 if (!sdSummary.IsCollection && serializationDetails.ArrayIndex != null)
                 {
@@ -377,7 +397,7 @@ namespace Hl7.Fhir.Serialization
                     if (serializationDetails.ArrayIndex == 0)
                     {
                         ies.ExceptionHandler.NotifyOrThrow(nav, ExceptionNotification.Error(
-                            new StructuralTypeException($"Element '{nav.Name}' does not repeat, so an array must not be used here.")));
+                            new StructuralTypeException($"Parser: Element '{nav.Name}' does not repeat, so an array must not be used here.")));
                     }
                 }
 

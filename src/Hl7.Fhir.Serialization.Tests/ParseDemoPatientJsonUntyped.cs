@@ -18,10 +18,13 @@ namespace Hl7.Fhir.Serialization.Tests
         public ISourceNode getJsonNodeU(string json, FhirJsonParsingSettings settings=null) => 
             FhirJsonNode.Parse(json, settings:settings);
 
+        ISourceNode FhirJsonNodeParse(string json, string rootName) =>
+               FhirJsonNode.Parse(json, rootName, new FhirJsonParsingSettings() { PermissiveParsing = false });
+
         [TestMethod]
         public void CanReadThroughUntypedNavigator()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
 #pragma warning disable 612, 618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToTypedElement(), typed: false);
@@ -31,7 +34,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ElementNavPerformanceUntypedJson()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
             ParseDemoPatient.ElementNavPerformance(nav);
         }
@@ -39,7 +42,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectUntypedLocations()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var patient = getJsonNodeU(tp);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
@@ -48,7 +51,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbers()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
 
             ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav);
@@ -79,7 +82,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.json");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = getJsonNodeU(bundle);
 #pragma warning disable 612,618
             ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
@@ -90,7 +93,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CanReadEdgeCases()
         {
-            var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
+            var tpJson = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
             var patient = getJsonNodeU(tpJson, new FhirJsonParsingSettings { AllowJsonComments = true });
 
             Assert.AreEqual("Patient", patient.Name);
@@ -140,66 +143,66 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesArrayMismatch()
         {
-            var nav = FhirJsonNode.Parse("{ 'a': [2,3,4], '_a' : [2,4] }", "test");
+            var nav = FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : [2,4] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': 2, '_a' : [2] }", "test");
+            nav = FhirJsonNodeParse("{ 'a': 2, '_a' : [2] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': [2,3,4], '_a' : {} }", "test");
+            nav = FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : {} }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ '_a': [4,5,6] }", "test");
+            nav = FhirJsonNodeParse("{ '_a': [4,5,6] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': [2,3,4] }", "test");
+            nav = FhirJsonNodeParse("{ 'a': [2,3,4] }", "test");
             Assert.IsTrue(nav.Children().Any());
 
-            nav = FhirJsonNode.Parse("{ 'a': [null,2], '_a' : [{'active':true},null] }", "test");
+            nav = FhirJsonNodeParse("{ 'a': [null,2], '_a' : [{'active':true},null] }", "test");
             Assert.IsTrue(nav.Children().Any());
         }
 
         [TestMethod]
         public void CatchesUnsupportedFeatures()
         {
-            var nav = FhirJsonNode.Parse("{ 'a': '   ' }", "test");
+            var nav = FhirJsonNodeParse("{ 'a': '   ' }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': {}, '_a' : {} }", "test");
+            nav = FhirJsonNodeParse("{ 'a': {}, '_a' : {} }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': {'active':true}, '_a': {'dummy':4} }", "test");
+            nav = FhirJsonNodeParse("{ 'a': {'active':true}, '_a': {'dummy':4} }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ '_a' : {} }", "test");
+            nav = FhirJsonNodeParse("{ '_a' : {} }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': 3, '_a' : 4 }", "test");
+            nav = FhirJsonNodeParse("{ 'a': 3, '_a' : 4 }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': new DateTime() }", "test");
+            nav = FhirJsonNodeParse("{ 'a': new DateTime() }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ '_a': new DateTime() }", "test");
+            nav = FhirJsonNodeParse("{ '_a': new DateTime() }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
         }
 
         [TestMethod]
         public void CatchNullErrors()
         {
-            var nav = FhirJsonNode.Parse("{ 'a': null }", "test");
+            var nav = FhirJsonNodeParse("{ 'a': null }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ '_a': null }", "test");
+            nav = FhirJsonNodeParse("{ '_a': null }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': null, '_a' : null }", "test");
+            nav = FhirJsonNodeParse("{ 'a': null, '_a' : null }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': [null] }", "test");
+            nav = FhirJsonNodeParse("{ 'a': [null] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNode.Parse("{ 'a': [null], '_a': [null] }", "test");
+            nav = FhirJsonNodeParse("{ 'a': [null], '_a': [null] }", "test");
             Assert.ThrowsException<FormatException>(() => nav.VisitAll());
         }
 

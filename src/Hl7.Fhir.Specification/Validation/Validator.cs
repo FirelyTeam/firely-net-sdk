@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
@@ -309,6 +309,9 @@ namespace Hl7.Fhir.Validation
         {
             get
             {
+                // Use a provided compiler
+                if (Settings?.FhirPathCompiler != null)
+                    return Settings.FhirPathCompiler;
 
                 if (_fpCompiler == null)
                 {

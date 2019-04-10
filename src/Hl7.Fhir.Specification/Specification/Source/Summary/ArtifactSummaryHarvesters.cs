@@ -3,17 +3,18 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Specification.Summary;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Summary;
+using Hl7.Fhir.Utility;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source
@@ -137,7 +138,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="NamingSystem"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="NamingSystem"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method through a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsNamingSystemSummary(properties))
             {
@@ -172,6 +173,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static readonly string CanonicalUrlKey = "Conformance.url";
         public static readonly string NameKey = "Conformance.name";
+        public static readonly string VersionKey = "Conformance.version";
         public static readonly string StatusKey = "Conformance.status";
 
         /// <summary>Determines if the specified instance represents summary information about a conformance resource.</summary>
@@ -189,11 +191,12 @@ namespace Hl7.Fhir.Specification.Source
         /// <seealso cref="StructureDefinitionSummaryProperties"/>
         /// <seealso cref="ValueSetSummaryProperties"/>
         /// <seealso cref="ConceptMapSummaryProperties"/>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConformanceSummary(properties))
             {
                 nav.HarvestValue(properties, CanonicalUrlKey, "url");
+                nav.HarvestValue(properties, VersionKey, "version");
                 nav.HarvestValue(properties, NameKey, "name");
                 nav.HarvestValue(properties, StatusKey, "status");
                 return true;
@@ -205,6 +208,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
         public static string GetConformanceCanonicalUrl(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(CanonicalUrlKey);
+
+        /// <summary>Get the <c>version</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of conformance resources.</remarks>
+        public static string GetConformanceVersion(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(VersionKey);
 
         /// <summary>Get the <c>name</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
@@ -241,7 +249,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="StructureDefinition"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="StructureDefinition"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsStructureDefinitionSummary(properties))
             {
@@ -261,18 +269,15 @@ namespace Hl7.Fhir.Specification.Source
 
                     // [WMR 20180725] Also harvest definition property from (first) root element in snapshot/differential
                     // HL7 FHIR website displays this text as introduction on top of each resource/datatype page
-                    if ((nav.Find("snapshot") || nav.Find("differential")))
+                    var elementNode = nav.Children("snapshot").FirstOrDefault() ?? nav.Children("differential").FirstOrDefault();
+                    if (elementNode != null)
                     {
-                        if (nav.MoveToFirstChild("element") && Navigation.ElementDefinitionNavigator.IsRootPath(nav.Name))
+                        var childNode = elementNode.Children("element").FirstOrDefault();
+                        if(childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
                         {
-                            var childNav = nav.Clone();
-                            if (childNav.MoveToFirstChild())
-                            {
-                                childNav.HarvestValue(properties, RootDefinitionKey, "definition");
-                            }
+                            childNode.HarvestValue(properties, RootDefinitionKey, "definition");
                         }
                     }
-
                 }
                 return true;
             }
@@ -280,11 +285,15 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         // Callback for HarvestExtensions, called for each individual extension entry
-        static void harvestExtension(IElementNavigator nav, IDictionary<string, object> properties, string url)
+        static void harvestExtension(ISourceNode nav, IDictionary<string, object> properties, string url)
         {
-            if (StringComparer.Ordinal.Equals(FmmExtensionUrl, url) && nav.MoveToNext("valueInteger"))
+            if (StringComparer.Ordinal.Equals(FmmExtensionUrl, url))
             {
-                properties[MaturityLevelKey] = nav.Value;
+                var child = nav.Children("valueInteger").FirstOrDefault();
+                if (child != null)
+                {
+                    properties[MaturityLevelKey] = child.Text;
+                }
             }
         }
 
@@ -349,7 +358,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="ValueSet"/> resource.</summary>
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsValueSetSummary(properties))
             {
@@ -384,7 +393,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="ConceptMap"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="ConceptMap"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConceptMapSummary(properties))
             {
@@ -405,7 +414,7 @@ namespace Hl7.Fhir.Specification.Source
             }
             return false;
         }
-        
+
         /// <summary>Get the <c>ConceptMap.source[x]</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="ConceptMap"/> resources.</remarks>
         public static string GetConceptMapSource(this IArtifactSummaryPropertyBag properties)

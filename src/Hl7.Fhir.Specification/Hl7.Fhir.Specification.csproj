@@ -8,7 +8,6 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
     <Title>HL7 FHIR Specification support API for DSTU2</Title>
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR DSTU2 (1.0).</Summary>
@@ -51,15 +50,31 @@
       <PackageFlatten>true</PackageFlatten>
     </Content>
   </ItemGroup>
- 
+
   <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
     <Message Text="(Re)creating specification.zip" />
-    <CleanSpecFiles DirectoryName="data" />
+    <Delete Files="specification.zip" />
+    <ZipDirectory
+      SourceDirectory="data"
+      DestinationFile="specification.zip"
+    />
+  </Target>
+
+  <Target Name="CleanSpecZip" AfterTargets="Clean">
+    <Delete Files="specification.zip" />
+  </Target>
+
+<!--
+
+   <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
+    <Message Text="(Re)creating specification.zip" />
+    <CleanSpecFiles DirectoryName="data" /> 
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
+
 
  <Target Name="CleanSpecZip" AfterTargets="Clean">
     <Delete Files="specification.zip" />
   </Target>
-   
+   -->
 </Project>

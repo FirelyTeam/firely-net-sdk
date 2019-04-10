@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System.Xml;
@@ -13,9 +13,9 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Functions
 {
-    public static class ConversionOperators
+    internal static class ConversionOperators
     {
-        private static T getValue<T>(this IElementNavigator val, string name)
+        private static T getValue<T>(this ITypedElement val, string name)
         {
             if (val == null) throw Error.ArgumentNull(name);
             if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
@@ -25,7 +25,7 @@ namespace Hl7.FhirPath.Functions
         }
 
         // FhirPath toInteger() function
-        public static long? ToInteger(this IElementNavigator focus)
+        public static long? ToInteger(this ITypedElement focus)
         {
             var val = focus.getValue<object>("focus");
 
@@ -51,7 +51,7 @@ namespace Hl7.FhirPath.Functions
         }
 
         // FhirPath toDecimal() function
-        public static decimal? ToDecimal(this IElementNavigator focus)
+        public static decimal? ToDecimal(this ITypedElement focus)
         {
             var val = focus.getValue<object>("focus");
 
@@ -78,7 +78,7 @@ namespace Hl7.FhirPath.Functions
 
 
         // FhirPath toString() function
-        public static string ToStringRepresentation(this IElementNavigator focus)
+        public static string ToStringRepresentation(this ITypedElement focus)
         {
             var val = focus.getValue<object>("focus");
 

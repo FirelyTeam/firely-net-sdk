@@ -99,15 +99,14 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void CheckBundleEntryNavigation(ITypedElement node)
         {
-            var nav = node.ToElementNavigator();
-            var entryNav = nav.Select("entry.resource").First();
+            var entryNav = node.Select("entry.resource").First();
             var id = entryNav.Scalar("id");
             Assert.IsNotNull(id);
         }
 
         public static void RoundtripXml(Func<string, object> navCreator)
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
             // will allow whitespace and comments to come through      
             var nav = navCreator(tp);
@@ -140,10 +139,10 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void RoundtripJson(Func<string, object> navCreator)
         {
-            //var tp = File.ReadAllText(@"TestData\fp-test-patient.json");
+            //var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             //compareJson(navCreator, tp);
 
-            var tp = File.ReadAllText(@"TestData\json-edge-cases.json");
+            var tp = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
             compareJson(navCreator, tp);
         }
 

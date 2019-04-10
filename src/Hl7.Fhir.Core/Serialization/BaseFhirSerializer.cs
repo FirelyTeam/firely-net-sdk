@@ -3,13 +3,14 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.ElementModel;
 using System.Linq;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,9 +23,12 @@ namespace Hl7.Fhir.Serialization
             Settings = settings?.Clone() ?? new SerializerSettings();
         }
 
-        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary)
+        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
         {
-            if (summary == SummaryType.False) return instance.ToTypedElement();
+            if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
+
+            if (elements != null && summary != SummaryType.False)
+                throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.False or summary is not specified at all.");
 
             var patchedInstance = (Base)instance.DeepCopy();
 
@@ -42,6 +46,8 @@ namespace Hl7.Fhir.Serialization
                     return MaskingNode.ForData(baseNav);
                 case SummaryType.Count:
                     return MaskingNode.ForCount(baseNav);
+                case SummaryType.False:
+                    return MaskingNode.ForElements(baseNav, elements);
                 default:
                     return baseNav;
             }

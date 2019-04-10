@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -23,16 +23,16 @@ namespace Hl7.Fhir.Serialization
         private FhirJsonSerializationSettings buildFhirJsonWriterSettings() =>
             new FhirJsonSerializationSettings { Pretty = Settings.Pretty };
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False) => 
-            MakeElementStack(instance, summary).ToJson(buildFhirJsonWriterSettings());
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) => 
+            MakeElementStack(instance, summary, elements).ToJson(buildFhirJsonWriterSettings());
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False) => 
-            MakeElementStack(instance, summary).ToJsonBytes(buildFhirJsonWriterSettings());
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) => 
+            MakeElementStack(instance, summary, elements).ToJsonBytes(buildFhirJsonWriterSettings());
 
-        public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False) => 
-            MakeElementStack(instance, summary).ToJObject(buildFhirJsonWriterSettings());
+        public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) => 
+            MakeElementStack(instance, summary, elements).ToJObject(buildFhirJsonWriterSettings());
 
-        public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False) =>
-            MakeElementStack(instance, summary).WriteTo(writer, buildFhirJsonWriterSettings());
+        public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False, string[] elements = null) =>
+            MakeElementStack(instance, summary, elements).WriteTo(writer, buildFhirJsonWriterSettings());
     }
 }

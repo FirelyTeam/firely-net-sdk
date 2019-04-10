@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var message = $"Element '{source.Location}' is missing type information.";
 
-                if (_settings.SkipUnknownElements)
+                if (_settings.IgnoreUnknownElements)
                 {
                     ExceptionHandler.NotifyOrThrow(source, ExceptionNotification.Warning(
                         new MissingTypeInformationException(message)));

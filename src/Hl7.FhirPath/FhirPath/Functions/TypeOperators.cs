@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System.Collections.Generic;
@@ -15,35 +15,35 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class TypeOperators
     {
-        public static bool Is(this IElementNavigator focus, string type)
+        public static bool Is(this ITypedElement focus, string type)
         {
-            if (focus.Type != null)
+            if (focus.InstanceType != null)
             {
-                return focus.Type == type;     // I have no information about classes/subclasses
+                return focus.InstanceType == type;     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
-        public static bool Is(this IEnumerable<IElementNavigator> f, string type)
+        public static bool Is(this IEnumerable<ITypedElement> f, string type)
         {
             var focus = f.First();
 
-            if (focus.Type == null)
+            if (focus.InstanceType == null)
             {
-                return focus.Type == type;     // I have no information about classes/subclasses
+                return focus.InstanceType == type;     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
 
-        public static IEnumerable<IElementNavigator> FilterType(this IEnumerable<IElementNavigator> focus, string typeName)
+        public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName)
         {
             return focus.Where(item => item.Is(typeName));
         }
 
-        public static IElementNavigator CastAs(this IElementNavigator focus, string typeName)
+        public static ITypedElement CastAs(this ITypedElement focus, string typeName)
         {
             if (focus.Is(typeName))
                 return focus;

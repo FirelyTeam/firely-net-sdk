@@ -42,8 +42,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         //    _source = new CachedResolver(
         //        new MultiResolver(
-        //            new BundleExampleResolver(@"TestData\validation"),
-        //            new DirectorySource(@"TestData\validation"),
+        //            new BundleExampleResolver(Path.Combine("TestData", "validation")),
+        //            new DirectorySource(Path.Combine("TestData", "validation")),
         //            new TestProfileArtifactSource(),
         //            new ZipSource("specification.zip")));
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This unit test proves issue 552: https://github.com/ewoutkramer/fhir-net-api/issues/552
+        /// This unit test proves issue 552: https://github.com/FirelyTeam/fhir-net-api/issues/552
         /// </summary>
         [Fact]
         public void ValidateOidType()
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateOverNameRef()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+            var questionnaireXml = File.ReadAllText(Path.Combine("TestData", "validation", "questionnaire-sdc-profile-example-cap.xml"));
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateContained()
         {
-            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void MeasureDeepCopyPerformance()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+            var questionnaireXml = File.ReadAllText(Path.Combine("TestData", "validation", "questionnaire-sdc-profile-example-cap.xml"));
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.NotNull(questionnaire);
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateBundle()
         {
-            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+            var bundleXml = File.ReadAllText(Path.Combine("TestData", "validation", "bundle-contained-references.xml"));
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.NotNull(bundle);
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void RunXsdValidation()
         {
-            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
             var report = _validator.Validate(cpDoc.CreateReader());
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateExtensionExamples()
         {
-            var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
+            var levinXml = File.ReadAllText(Path.Combine("TestData", "validation", "Levin.patient.xml"));
             var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
             DebugDumpOutputXml(levin);
             Assert.NotNull(levin);
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Specification.Tests
             public Resource ResolveByUri(string uri)
             {
                 ResourceIdentity reference = new ResourceIdentity(uri);
-                var filename = $"{reference.Id}.{reference.ResourceType}.xml";
+                var filename = $"{reference.Id}.{reference.ResourceType.ToLower()}.xml";
                 var path = Path.Combine(_path, filename);
 
                 if (File.Exists(path))
@@ -737,15 +737,15 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...
-            // var source = new DirectorySource(@"TestData\validation");
+            // var source = new DirectorySource(Path.Combine("TestData", "validation"));
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
-            var jsonPatient = File.ReadAllText(@"TestData\validation\patient-ck.json");
+            var jsonPatient = File.ReadAllText(Path.Combine("TestData", "validation", "patient-ck.json"));
             var parser = new FhirJsonParser();
             var patient = parser.Parse<Patient>(jsonPatient);
             Assert.NotNull(patient);
 
-            var jsonOrganization = File.ReadAllText(@"TestData\validation\organization-ck.json");
+            var jsonOrganization = File.ReadAllText(Path.Combine("TestData", "validation", "organization-ck.json"));
             var organization = parser.Parse<Organization>(jsonOrganization);
             Assert.NotNull(organization);
 
@@ -765,8 +765,8 @@ namespace Hl7.Fhir.Specification.Tests
                 // This will force the validator to regenerate all snapshots
                 new ClearSnapshotResolver(
                     new MultiResolver(
-                        // new BundleExampleResolver(@"TestData\validation"),
-                        // new DirectorySource(@"TestData\validation"),
+                        // new BundleExampleResolver(Path.Combine("TestData", "validation")),
+                        // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
                         new ZipSource("specification.zip"))));
@@ -796,12 +796,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 423  (https://github.com/ewoutkramer/fhir-net-api/issues/423)
+        /// Test for issue 423  (https://github.com/FirelyTeam/fhir-net-api/issues/423)
         /// </summary>
         [Fact]
         public void ValidateInternalReferenceWithinContainedResources()
         {
-            var obsOverview = File.ReadAllText(@"TestData\validation\observation-list.xml");
+            var obsOverview = File.ReadAllText(Path.Combine("TestData", "validation", "observation-list.xml"));
             var parser = new FhirXmlParser();
 
             var obsList = parser.Parse<List>(obsOverview);
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
+        /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
         public async Task RunValueSetExpanderMultiThreaded()
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Specification.Tests
                 });
             buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
 
-            var careplanXml = File.ReadAllText(@"TestData\validation\careplan-example-integrated.xml");
+            var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
             for (int i = 0; i < nrOfParrallelTasks; i++)
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This test proves issue https://github.com/ewoutkramer/fhir-net-api/issues/617
+        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617
         /// </summary>
         [Fact]
         public void ValidateConditionalResourceInBundle()

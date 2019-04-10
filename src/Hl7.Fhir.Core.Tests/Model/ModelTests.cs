@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -213,23 +213,43 @@ namespace Hl7.Fhir.Tests.Model
         }
 
 
-        //[TestMethod]
-        //public void FindContainedResource()
-        //{
-        //    var cPat1 = new Patient() { Id = "pat1" };
-        //    var cPat2 = new Patient() { Id = "pat2" };
-        //    var pat = new Patient();
+        [TestMethod]
+        public void FindContainedResource()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
+            {
+                Contained = new List<Resource> { cPat1, cPat2 }
+            };
 
-        //    pat.Contained = new List<Resource> { cPat1, cPat2 };
+            var rref = new ResourceReference() { Reference = "#pat2" };
 
-        //    var rref = new ResourceReference() { Reference = "#pat2" };
+            Assert.IsNotNull(pat.FindContainedResource(rref), "#pat2 should be in the contained resources");
+            Assert.IsNotNull(pat.FindContainedResource("#pat1"), "#pat1 should be in the contained resources");
 
-        //    Assert.IsNotNull(pat.FindContainedResource(rref));
-        //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
+            rref.Reference = "#pat3";
+            Assert.IsNull(pat.FindContainedResource(rref));
 
-        //    rref.Reference = "#pat3";
-        //    Assert.IsNull(pat.FindContainedResource(rref));
-        //}
+            Assert.AreEqual(pat, pat.FindContainedResource("#"));
+
+            var pat2 = new Patient();
+            Assert.IsNull(pat2.FindContainedResource("#pat1"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FindContainedResourceExceptionExpected()
+        {
+            var cPat1 = new Patient() { Id = "pat1" };
+            var cPat2 = new Patient() { Id = "pat2" };
+            var pat = new Patient
+            {
+                Contained = new List<Resource> { cPat1, cPat2 }
+            };
+
+            pat.FindContainedResource((ResourceReference)null);
+        }
 
         [TestMethod]
         public void TestListDeepCopy()
@@ -600,6 +620,18 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
             Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+        }
+
+        // [WMR 20181025] Issue #746
+        [TestMethod]
+        public void TestIsCoreModelTypeUri()
+        {
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/Patient")));
+            Assert.IsTrue(ModelInfo.IsCoreModelTypeUri(new Uri("http://hl7.org/fhir/StructureDefinition/string")));
+
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("http://example.org/fhir/StructureDefinition/Patient")));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("/StructureDefinition/Patient", UriKind.Relative)));
+            Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
         }
 
     }

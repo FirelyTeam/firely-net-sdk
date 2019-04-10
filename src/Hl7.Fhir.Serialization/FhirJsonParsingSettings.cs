@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 
@@ -12,24 +12,25 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Parser configuration settings for the <see cref="FhirJsonNode"/> class.</summary>
     public class FhirJsonParsingSettings
     {
         /// <summary>
         /// Do not raise exceptions for recoverable errors.
         /// </summary>
-        public bool PermissiveParsing;
+        public bool PermissiveParsing { get; set; } = true;
 
         /// <summary>
         /// Allow DSTU2-style Json comment members.
         /// </summary>
-        public bool AllowJsonComments;
+        public bool AllowJsonComments { get; set; } // = false;
 
 #if !NETSTANDARD1_1
         /// <summary>
         /// Validate narrative against the FHIR Xhtml schema.
         /// </summary>
         /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
-        public bool ValidateFhirXhtml;
+        public bool ValidateFhirXhtml { get; set; } // = false;
 #endif
 
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>

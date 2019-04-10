@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System.Diagnostics;
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Introspection
         public void SetupSource()
         {
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-            var bundleXml = File.ReadAllText("TestData\\bundle-contained-references.xml");
+            var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
             _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             _bundleElement = new ScopedNode(_parsed.ToTypedElement());
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
                          ".resource.managingOrganization.resolve().id";
 
-            var result = _bundleElement.ToElementNavigator().Select(statement);
+            var result = _bundleElement.Select(statement);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("orgY", result.First().Value);
 
@@ -56,10 +56,10 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var statement = "'http://example.org/doesntexist'.resolve().id";
             var called = false;
-            var result = _bundleElement.ToElementNavigator().Select(statement, new FhirEvaluationContext() { Resolver = resolver });
+            var result = _bundleElement.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
             Assert.IsTrue(called);
 
-            IElementNavigator resolver(string url)
+            ITypedElement resolver(string url)
             {
                 called = true;
                 return null;

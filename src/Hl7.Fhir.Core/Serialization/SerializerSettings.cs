@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 
@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Format the serialized xml or json output.
         /// </summary>
-        public bool Pretty;
+        public bool Pretty { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="SerializerSettings"/> instance with default property values.</summary>
         public SerializerSettings() { }

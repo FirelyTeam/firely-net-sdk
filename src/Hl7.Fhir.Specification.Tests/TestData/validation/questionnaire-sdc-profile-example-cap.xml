@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><Questionnaire xmlns="http://hl7.org/fhir">
+  <id value="questionnaire-sdc-profile-example-cap"/>
   <meta>
     <profile value="http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType" />
   </meta>
-  <id value="questionnaire-sdc-profile-example-cap"/>
   <text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: questionnaire-sdc-profile-example-cap</p><p><b>status</b>: published</p><blockquote><p><b>group</b></p><p><b>linkId</b>: root</p><p><b>title</b>: (Ask Richard)</p><p><b>required</b>: true</p><p><b>repeats</b>: false</p><h3>Groups</h3><table><tr><td>-</td></tr><tr><td>*</td></tr><tr><td>*</td></tr></table></blockquote></div></text><status value="published"/>
   <group>
     <linkId value="root"/>

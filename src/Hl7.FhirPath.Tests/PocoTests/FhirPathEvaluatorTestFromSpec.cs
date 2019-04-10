@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -106,20 +106,20 @@ namespace Hl7.FhirPath.Tests
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = new FhirXmlSerializer().SerializeToString(resource);
-            var npoco = resource.ToElementNavigator();
+            var npoco = resource.ToTypedElement();
             //       FhirPathEvaluatorTest.Render(npoco);
 
-            IEnumerable<IElementNavigator> actual = npoco.Select(expression);
+            IEnumerable<ITypedElement> actual = npoco.Select(expression);
             Assert.Equal(expected.Count(), actual.Count());
 
             expected.Zip(actual, compare).Count();
         }
 
-        private static bool compare(XElement expected, IElementNavigator actual)
+        private static bool compare(XElement expected, ITypedElement actual)
         {
             var type = expected.Attribute("type").Value;
-            var tp = (IElementNavigator)actual;
-            Assert.True(type == tp.Type, "incorrect output type");
+            var tp = (ITypedElement)actual;
+            Assert.True(type == tp.InstanceType, "incorrect output type");
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 
@@ -132,8 +132,8 @@ namespace Hl7.FhirPath.Tests
         // @SuppressWarnings("deprecation")
         private void testBoolean(Model.Resource resource, Model.Base focus, String focusType, String expression, boolean value)
         {
-            var input = focus.ToElementNavigator();
-            var container = resource?.ToElementNavigator();
+            var input = focus.ToTypedElement();
+            var container = resource?.ToTypedElement();
 
             Assert.True(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
@@ -148,7 +148,7 @@ namespace Hl7.FhirPath.Tests
         {
             try
             {
-                var resourceNav = resource.ToElementNavigator();
+                var resourceNav = resource.ToTypedElement();
                 resourceNav.Select(expression);
                 throw new Exception();
             }
@@ -211,10 +211,10 @@ namespace Hl7.FhirPath.Tests
 
                 // Now perform this unit test
                 Model.DomainResource resource = null;
-                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath", "input");
 
                 if (!_cache.ContainsKey(inputfile))
-                {                    
+                {
                     _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(
                         File.ReadAllText(Path.Combine(basepath, inputfile)))));
                 }
@@ -226,7 +226,7 @@ namespace Hl7.FhirPath.Tests
                     runTestItem(item, resource);
                 }
 
-                
+
                 catch (XunitException afe) // (AssertFailedException afe)
                 {
                     output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
@@ -330,7 +330,7 @@ namespace Hl7.FhirPath.Tests
         public void testExtensionDefinitions()
         {
             // obsolete:
-            // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
+            // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText(Path.Combine(TestData", "extension-definitions.xml")));
             var parser = new FhirXmlParser();
             Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 

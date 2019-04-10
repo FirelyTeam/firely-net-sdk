@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -142,12 +142,15 @@ namespace Hl7.Fhir.Rest
                 else
                     result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
             }
-            catch(FormatException fe)
+            catch (FormatException fe) when (!throwOnFormatException)
             {
-                if (throwOnFormatException) throw fe;
+                // if (throwOnFormatException) throw fe;
+
+                // [WMR 20181029] TODO...
+                // ExceptionHandler.NotifyOrThrow(...)_
+
                 return null;
             }
-
             return result;
         }
 
@@ -217,11 +220,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.Annotation<Body>();
-            return body != null ? body.Data : null;
-        }
+        public static byte[] GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {

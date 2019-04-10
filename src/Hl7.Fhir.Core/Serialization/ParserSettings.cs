@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 
@@ -12,6 +12,7 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Common parser configuration settings for <see cref="BaseFhirParser"/> and subclasses.</summary>
     public class ParserSettings
     {
         [Obsolete("Due to a bug, the Default has always been ignored, so it is now officially deprecated")]
@@ -31,6 +32,11 @@ namespace Hl7.Fhir.Serialization
         /// Do not throw when the data has an element that does not map to a property in the Poco.
         /// </summary>
         public bool AcceptUnknownMembers { get; set; }
+
+        /// <summary>
+        /// Do not raise exceptions for recoverable errors.
+        /// </summary>
+        public bool PermissiveParsing { get; set; } = true;
 
         /// <summary>Default constructor. Creates a new <see cref="ParserSettings"/> instance with default property values.</summary>
         public ParserSettings() { }
@@ -53,6 +59,19 @@ namespace Hl7.Fhir.Serialization
             other.DisallowXsiAttributesOnRoot = DisallowXsiAttributesOnRoot;
             other.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
             other.AcceptUnknownMembers = AcceptUnknownMembers;
+            other.PermissiveParsing = PermissiveParsing;
+        }
+
+        /// <summary>
+        /// Copy the necessary settings to PocoBuilderSettings
+        /// </summary>
+        /// <param name="settings">The instance where the settings are copied to.</param>
+        public void CopyTo(PocoBuilderSettings settings)
+        {
+            if (settings == null) throw Error.ArgumentNull(nameof(settings));
+
+            settings.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
+            settings.IgnoreUnknownMembers = AcceptUnknownMembers;
         }
 
         /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>

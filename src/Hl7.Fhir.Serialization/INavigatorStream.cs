@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
  
 using Hl7.Fhir.ElementModel;
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
     }
 
     /// <summary>
-    /// Provides a sequence of <see cref="IElementNavigator"/> instances to efficiently
+    /// Provides a sequence of <see cref="ISourceNode"/> instances to efficiently
     /// extract information from a raw FHIR resource file, independent of the
     /// underlying resource serialization format. Also supports resource bundles.
     /// </summary>
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization
     /// Iteration state is tied to the stream instance.
     /// Nested enumeration is NOT supported.
     /// </remarks>
-    public interface INavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
+    public interface INavigatorStream : ISeekableEnumerator<ISourceNode>, IDisposable
     {
         // * Bundle: ResourceType returns "Bundle" and Current.Type returns type of current entry
         // * Others: ResourceType and Current.Type return the same value

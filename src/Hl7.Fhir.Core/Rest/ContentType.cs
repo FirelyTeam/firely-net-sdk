@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -148,25 +148,37 @@ namespace Hl7.Fhir.Rest
         public static string GetMediaTypeFromHeaderValue(string mediaHeaderValue)
         {
 #if NETSTANDARD1_1
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
-            return headerValue.MediaType.ToLowerInvariant();
+                System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
+                if (headerValue != null)
+                {
+                    return headerValue.MediaType.ToLowerInvariant();
+                }
+                else
+                {
+                    return mediaHeaderValue;
+                }
 #else
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.MediaType.ToLowerInvariant();
-#endif
+            try
+            {
+                var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+                return ct.MediaType.ToLowerInvariant();
+            }
+            catch (System.FormatException)
+            {
+                return mediaHeaderValue;
+            }
+        #endif
         }
 
         public static string GetCharSetFromHeaderValue(string mediaHeaderValue)
-        {
-#if NETSTANDARD1_1
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
-            return headerValue.CharSet;
-#else
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.CharSet;
-#endif
-        }
-    }
-
-
+                {
+        #if NETSTANDARD1_1
+                    System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
+                    return headerValue.CharSet;
+        #else
+                    var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+                    return ct.CharSet;
+        #endif
+                }
+         }
 }

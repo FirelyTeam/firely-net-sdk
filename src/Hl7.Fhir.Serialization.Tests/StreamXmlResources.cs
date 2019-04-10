@@ -1,12 +1,12 @@
-﻿using Hl7.Fhir.Model;
+﻿using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
 
 namespace Hl7.Fhir.Support.Tests.Serialization
 {
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanThroughBundle()
         {
-            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.xml");
+            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "profiles-types.xml"));
             using (var stream = XmlNavigatorStream.FromPath(xmlBundle))
             {
                 Assert.IsTrue(stream.IsBundle);
@@ -26,9 +26,9 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 Assert.IsTrue(stream.MoveNext());
                 Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/dateTime", stream.Position);
 
-                var nav = stream.Current;
-                Assert.IsTrue(nav.MoveToFirstChild("name"));
-                Assert.AreEqual("dateTime", nav.Value);
+                var child = stream.Current.Children("name").FirstOrDefault();
+                Assert.IsNotNull(child);
+                Assert.AreEqual("dateTime", child.Text);
 
                 var current = stream.Position;
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanThroughSingle()
         {
-            var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\fp-test-patient.xml");
+            var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "fp-test-patient.xml"));
             using (var stream = XmlNavigatorStream.FromPath(xmlPatient))
             {
                 Assert.IsFalse(stream.IsBundle);
@@ -67,9 +67,9 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 Assert.AreEqual("http://example.org/Patient/pat1", stream.Position);
                 var current = stream.Position;
 
-                var nav = stream.Current;
-                Assert.IsTrue(nav.MoveToFirstChild("gender"));
-                Assert.AreEqual("male", nav.Value);
+                var child = stream.Current.Children("gender").FirstOrDefault();
+                Assert.IsNotNull(child);
+                Assert.AreEqual("male", child.Text);
 
                 stream.Reset();
                 stream.Seek(current);
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ReadCrap()
         {
             // Try a random other xml file
-            var xmlfile = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\books.xml");
+            var xmlfile = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "source-test", "books.xml"));
 
             using (var stream = XmlNavigatorStream.FromPath(xmlfile))
             {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         [TestMethod]
         public void ScanPerformance()
         {
-            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.xml");
+            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("TestData", "profiles-types.xml"));
 
             var sw = new Stopwatch();
             sw.Start();

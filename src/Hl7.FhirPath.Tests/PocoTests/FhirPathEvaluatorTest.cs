@@ -3,52 +3,53 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
 using System;
-using System.Linq;
-using Hl7.FhirPath.Expressions;
 using System.Diagnostics;
-using Hl7.Fhir.Model;
-using System.Xml.Linq;
-using Xunit;
 using System.IO;
-using Xunit.Abstractions;
+using System.Linq;
+using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.Utility;
 using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Hl7.FhirPath.Expressions;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Hl7.FhirPath.Tests
 {
     public class PatientFixture : IDisposable
     {
-        public IElementNavigator TestInput;
-        public IElementNavigator Questionnaire;
-        public IElementNavigator UuidProfile;
+        public ITypedElement TestInput;
+        public ITypedElement Questionnaire;
+        public ITypedElement UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc;
 
-    
+
         public PatientFixture()
         {
-            var parser = new Hl7.Fhir.Serialization.FhirXmlParser();
+            var parser = new FhirXmlParser();
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             var patient = parser.Parse<Patient>(tpXml);
-            TestInput = patient.ToElementNavigator();
+            TestInput = patient.ToTypedElement();
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
-            Questionnaire = quest.ToElementNavigator();
+            Questionnaire = quest.ToTypedElement();
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
             var uuid = parser.Parse<StructureDefinition>(tpXml);
-            UuidProfile = uuid.ToElementNavigator();
+            UuidProfile = uuid.ToTypedElement();
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -83,7 +84,7 @@ namespace Hl7.FhirPath.Tests
             Assert.True(TestInput.IsBoolean(expr, true));
         }
 
-        public void IsTrue(string expr, IElementNavigator input)
+        public void IsTrue(string expr, ITypedElement input)
         {
             Assert.True(input.IsBoolean(expr, true));
         }
@@ -139,9 +140,11 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestDynaBinding()
         {
-            var input = (SourceNode.Node("root", 
-                    SourceNode.Valued("child", "Hello world!"), 
-                    SourceNode.Valued("child", "4"))).ToElementNavigator();
+#pragma warning disable CS0618 // Type or member is internal
+            var input = SourceNode.Node("root",
+                    SourceNode.Valued("child", "Hello world!"),
+                    SourceNode.Valued("child", "4")).ToTypedElement();
+#pragma warning restore CS0618 // Type or member is internal
 
             Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
@@ -191,7 +194,7 @@ namespace Hl7.FhirPath.Tests
 
 
 
-        
+
 
         [Fact]
         public void TestMath()
@@ -271,7 +274,7 @@ namespace Hl7.FhirPath.Tests
         public void TestLogicalShortcut()
         {
             fixture.IsTrue(@"true or (1/0 = 0)");
-            fixture.IsTrue(@"(false and (1/0 = 0)) = false");            
+            fixture.IsTrue(@"(false and (1/0 = 0)) = false");
         }
 
 
@@ -296,7 +299,7 @@ namespace Hl7.FhirPath.Tests
 
             fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
 
-         //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
+            //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
         [Fact]
@@ -372,13 +375,13 @@ namespace Hl7.FhirPath.Tests
             fixture.IsTrue("@T10:01:02Z !~ @T10:01:55+01:00");
         }
 
-        public static string ToString(IElementNavigator nav)
+        public static string ToString(ITypedElement nav)
         {
             var result = nav.Name;
 
-            if (nav.Type != null)
+            if (nav.InstanceType != null)
             {
-                result += ": " + nav.Type;
+                result += ": " + nav.InstanceType;
             }
 
             if (nav.Value != null) result += " = " + nav.Value;
@@ -549,7 +552,7 @@ namespace Hl7.FhirPath.Tests
 
             fixture.IsTrue("Patient.contained.name[0].family.indexOf('ywo') = 4");
             fixture.IsTrue("Patient.contained.name[0].family.indexOf('') = 0");
-            fixture.IsTrue("Patient.contained.name[0].family.indexOf('qq').empty()");
+            fixture.IsTrue("Patient.contained.name[0].family.indexOf('qq') = -1");
 
             fixture.IsTrue("Patient.contained.name[0].family.contains('ywo')");
             fixture.IsTrue("Patient.contained.name[0].family.contains('ywox')=false");

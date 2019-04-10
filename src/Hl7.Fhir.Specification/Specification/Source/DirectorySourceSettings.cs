@@ -3,10 +3,12 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
@@ -26,6 +28,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
+        // Instance fields
+        ParserSettings _parserSettings = ParserSettings.CreateDefault();
+        FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
+        FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
+
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
         {
@@ -40,19 +47,31 @@ namespace Hl7.Fhir.Specification.Source
             settings.CopyTo(this);
         }
 
+        // Internal ctor
+        internal DirectorySourceSettings(bool includeSubdirectories)
+        {
+            IncludeSubDirectories = includeSubdirectories;
+        }
+
         /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="DirectorySourceSettings"/> instance.</param>
         /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public void CopyTo(DirectorySourceSettings other)
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
+
+            // [WMR 20181025] Clone state
             other.IncludeSubDirectories = this.IncludeSubDirectories;
-            other.Masks = this.Masks;
-            other.Includes = this.Includes;
-            other.Excludes = this.Excludes;
+            other.Masks = (string[])this.Masks.Clone();
+            other.Includes = (string[])this.Includes?.Clone();
+            other.Excludes = (string[])this.Excludes?.Clone();
             other.FormatPreference = this.FormatPreference;
             other.MultiThreaded = this.MultiThreaded;
-            other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
+            other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[])this.SummaryDetailsHarvesters?.Clone();
+            other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
+            other.ParserSettings = new ParserSettings(this.ParserSettings);
+            other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
+            other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
         }
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
@@ -129,7 +148,7 @@ namespace Hl7.Fhir.Specification.Source
             set { Masks = SplitMask(value); }
         }
 
-        internal static string[] SplitMask(string mask) => mask?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
+        static string[] SplitMask(string mask) => mask?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of files in the content directory.
@@ -270,6 +289,42 @@ namespace Hl7.Fhir.Specification.Source
         /// </para>
         /// </summary>
         public bool ExcludeSummariesForUnknownArtifacts { get; set; } // = false;
+
+        /// <summary>
+        /// Gets or sets the configuration settings that control the behavior of the PoCo parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="ParserSettings"/> instance.</value>
+        public ParserSettings ParserSettings
+        {
+            get => _parserSettings;
+            set => _parserSettings = value ?? ParserSettings.CreateDefault();
+        }
+
+        /// <summary>
+        /// Gets the configuration settings that control the behavior of the XML parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirXmlParsingSettings"/> instance.</value>
+        public FhirXmlParsingSettings XmlParserSettings
+        {
+            get => _xmlParserSettings;
+            set => _xmlParserSettings = value?.Clone() ?? FhirXmlParsingSettings.CreateDefault();
+        }
+
+
+        /// <summary>
+        /// Gets the configuration settings that control the behavior of the JSON parser.
+        /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
+        /// </summary>
+        /// <value>A <see cref="FhirJsonParsingSettings"/> instance.</value>
+        public FhirJsonParsingSettings JsonParserSettings
+        {
+            get => _jsonParserSettings;
+            set => _jsonParserSettings = value?.Clone() ?? FhirJsonParsingSettings.CreateDefault();
+        }
+
+        
     }
 
 }

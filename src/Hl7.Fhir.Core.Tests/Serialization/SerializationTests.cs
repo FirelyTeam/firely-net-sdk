@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -53,6 +53,19 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(metaXml, xml);
         }
 
+        [TestMethod]
+        public void ParsePatientXmlNullType()
+        {
+            string xmlPacientTest = TestDataHelper.ReadTestData("TestPatient.xml");
+            
+            var poco = new FhirXmlParser().Parse(xmlPacientTest);
+            
+            Assert.AreEqual(((Patient)poco).Id, "pat1");
+            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
+            Assert.AreEqual(((Patient)poco).Name.First().Family.First(), "Donald");
+            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+        }
+
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
 
@@ -66,6 +79,18 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(metaJson, json);
         }
 
+        [TestMethod]
+        public void ParsePatientJsonNullType()
+        {
+            string jsonPatient = TestDataHelper.ReadTestData("TestPatient.json");
+
+            var poco = new FhirJsonParser().Parse(jsonPatient);
+
+            Assert.AreEqual(((Patient)poco).Id, "pat1");
+            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
+            Assert.AreEqual(((Patient)poco).Name.First().Family.First(), "Donald");
+            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+        }
 
         [TestMethod]
         public void AvoidBOMUse()
@@ -187,6 +212,30 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+        }
+
+        [TestMethod]
+        public void TestElements()
+        {
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+            var elements = new[] { "photo" };
+
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
+            Assert.IsFalse(summaryElements.Contains("<birthDate"));
+            Assert.IsTrue(summaryElements.Contains("<photo"));
+
+            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, elements: elements);
+            Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
+            Assert.IsTrue(noSummarySpecified.Contains("<photo"));
+
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
         }
 
         [TestMethod]
@@ -327,26 +376,55 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var dec6 = 6m;
             var dec60 = 6.0m;
-
-            var obs = new Observation { Value = new FhirDecimal(dec6) };
+            var ext = new FhirDecimal(dec6);
+            var obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+            
             var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual("6", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
-            obs = new Observation { Value = new FhirDecimal(dec60) };
+            Assert.AreEqual("6", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            ext = new FhirDecimal(dec60);
+            obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+
             json = FhirJsonSerializer.SerializeToString(obs);
             obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual("6.0", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         [TestMethod]
         public void TestLongDecimalSerialization()
         {
             var dec = 3.1415926535897932384626433833m;
-            var obs = new Observation { Value = new FhirDecimal(dec) };
+            var ext = new FhirDecimal(dec);
+            var obs = new Observation();
+            obs.AddExtension("http://example.org/DecimalPrecision", ext);
+
             var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = FhirJsonParser.Parse<Observation>(json);
-            Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        [TestMethod]
+        public void TestParseUnkownPolymorphPropertyInJson()
+        {
+            var dec6 = 6m;
+            var ext = new FhirDecimal(dec6);
+            var obs = new Observation{ Value = new FhirDecimal(dec6) };
+            var json = FhirJsonSerializer.SerializeToString(obs);
+            try
+            {
+                var obs2 = FhirJsonParser.Parse<Observation>(json);
+                Assert.Fail("valueDecimal is not a known type for Observation");
+            }
+            catch (FormatException)
+            {
+
+            }
         }
 
         [TestMethod]
@@ -451,7 +529,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
             Assert.IsNotNull(json);
-            var parser = new FhirJsonParser();
+            var parser = new FhirJsonParser { Settings = { PermissiveParsing = true} };
             var vs = parser.Parse<ValueSet>(json);
             Assert.IsNotNull(vs);
 
@@ -606,7 +684,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         /// <summary>
-        /// This test proves issue 583: https://github.com/ewoutkramer/fhir-net-api/issues/583
+        /// This test proves issue 583: https://github.com/FirelyTeam/fhir-net-api/issues/583
         /// </summary>
         [TestMethod]
         public void SummarizeSerializingTest()
@@ -625,16 +703,16 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         /// <summary>
-        /// This test proves issue 657: https://github.com/ewoutkramer/fhir-net-api/issues/657
+        /// This test proves issue 657: https://github.com/FirelyTeam/fhir-net-api/issues/657
         /// </summary>
         [TestMethod]
         public void DateTimeOffsetAccuracyTest()
         {
             var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
-            var json = new FhirJsonSerializer().SerializeToString(patient); 
+            var json = new FhirJsonSerializer().SerializeToString(patient);
             var res = new FhirJsonParser().Parse<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "1");
-           
+
             // Is the parsing still correct without milliseconds?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero)} };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
@@ -642,7 +720,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(patient.IsExactly(res), "2");
 
             // Is the serialization still correct without milliseconds?
-            var json2 = new FhirJsonSerializer().SerializeToString(patient); 
+            var json2 = new FhirJsonSerializer().SerializeToString(patient);
             Assert.AreEqual(json, json2, "3");
 
             // Is the parsing still correct with a few milliseconds and TimeZone?
@@ -654,6 +732,25 @@ namespace Hl7.Fhir.Tests.Serialization
             // Is the serialization still correct with a few milliseconds?
             json2 = new FhirJsonSerializer().SerializeToString(patient);
             Assert.AreEqual(json, json2, "5");
+        }
+
+        [TestMethod]
+        public void SerializerHandlesEmptyChildObjects()
+        {
+            var fhirJsonParser = new FhirJsonParser();
+
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var poco = fhirJsonParser.Parse<Patient>(json);
+
+            Assert.AreEqual(1, poco.Name.Count);
+
+            poco.Meta = new Meta();
+
+            var reserialized = poco.ToJson();
+
+            var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
+
+            Assert.AreEqual(1, newPoco.Name.Count);
         }
     }
 }

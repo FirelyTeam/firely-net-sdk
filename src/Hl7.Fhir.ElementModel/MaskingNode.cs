@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Specification;
@@ -28,6 +28,13 @@ namespace Hl7.Fhir.ElementModel
             {
                 IncludeElements = new[] { "text", "id", "meta" },
                 IncludeMandatory = true, //IncludeIsModifier = true,
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
+            });
+
+        public static MaskingNode ForElements(ITypedElement node, string[] _elements) =>
+            new MaskingNode(node, new MaskingNodeSettings
+            {
+                IncludeElements = _elements ?? new string[] { },
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 

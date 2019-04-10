@@ -15,14 +15,19 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null) =>
-            FhirXmlNode.Parse(xml, settings);
+        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
+        {
+            settings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            settings.PermissiveParsing = false;
+            return FhirXmlNode.Parse(xml, settings);
+        }
+
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
         public void CanReadThroughUntypedNavigator()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
 #pragma warning disable 612,618
             ParseDemoPatient.CanReadThroughNavigator(nav.ToTypedElement(), typed: false);
@@ -32,7 +37,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ElementNavPerformanceUntypedXml()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
             ParseDemoPatient.ElementNavPerformance(nav);
         }
@@ -40,7 +45,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectUntypedLocations()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var patient = getXmlUntyped(tpXml);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
@@ -71,7 +76,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbers()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
 
             ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav);
@@ -80,7 +85,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void TestPermissiveParsing()
         {
-            var tpXml = File.ReadAllText(@"TestData\all-xml-features.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "all-xml-features.xml"));
 
             // will allow whitespace and comments to come through
             var reader = XmlReader.Create(new StringReader(tpXml));
@@ -211,7 +216,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
             var node = getXmlUntyped(bundle);
 #pragma warning disable 612, 618
             ParseDemoPatient.CheckBundleEntryNavigation(node.ToTypedElement());
@@ -221,19 +226,19 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesLowLevelErrors()
         {
-            var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "with-errors.xml"));
             var patient = getXmlUntyped(tpXml);
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
             Assert.AreEqual(11, result.Count);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true });
+            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
             result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
-            patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
+            patient = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
             Assert.AreEqual(0, result.Count);
         }

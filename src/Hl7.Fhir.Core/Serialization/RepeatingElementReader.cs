@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -16,12 +16,12 @@ namespace Hl7.Fhir.Serialization
     internal class RepeatingElementReader
     {
 #pragma warning disable 612, 618
-        private readonly ISourceNode _current;
+        private readonly ITypedElement _current;
         private readonly ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        internal RepeatingElementReader(ISourceNode reader, ParserSettings settings)
+        internal RepeatingElementReader(ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -13,6 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -78,7 +79,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void RequiresHl7Namespace()
         {
             var xml = "<Patient><active value='false' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlParser(new ParserSettings() { PermissiveParsing = false});
 
             try
             {
@@ -286,6 +287,32 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
             Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
+        }
+
+        [TestMethod]
+        public void NarrativeMustBeValidXml()
+        {
+            try
+            {
+                var json =
+                    "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
+                var patient = new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).Parse<Patient>(json);
+
+                Assert.Fail("Should have thrown on invalid Div format");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+            }
+        }
+
+        [TestMethod]
+        public void ParseEmptyContained()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><contained></contained></Patient>";
+            var parser = new FhirXmlParser();
+
+            Assert.ThrowsException<FormatException>(() => parser.Parse<Patient>(xml));
         }
     }
 }

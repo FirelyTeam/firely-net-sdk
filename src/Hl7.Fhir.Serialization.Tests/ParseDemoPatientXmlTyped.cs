@@ -16,14 +16,20 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null) =>
-            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
+        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
+        {
+            settings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            settings.PermissiveParsing = false;
+
+            return XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), settings, tnSettings);
+        }
+            
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
         public void CanReadThroughTypedNavigator()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlNode(tpXml);
             ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
         }
@@ -31,7 +37,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ElementNavPerformanceTypedXml()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlNode(tpXml);
             ParseDemoPatient.ElementNavPerformance(nav.ToSourceNode());
         }
@@ -39,7 +45,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void ProducesCorrectTypedLocations()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var patient = getXmlNode(tpXml);
             ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
@@ -58,8 +64,11 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CompareXmlJsonParseOutcomes()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
+            var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            // If on a Unix platform replace \\r\\n in json strings to \\n.
+            if(Environment.NewLine == "\n")
+                tpJson = tpJson.Replace(@"\r\n", @"\n");
             var navXml = getXmlNode(tpXml);
             var navJson = JsonParsingHelpers.ParseToTypedElement(tpJson, new PocoStructureDefinitionSummaryProvider());
 
@@ -76,7 +85,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void HasLineNumbersTypedXml()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlNode(tpXml);
             ParseDemoPatient.HasLineNumbers<XmlSerializationDetails>(nav.ToSourceNode());
         }
@@ -84,7 +93,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(@"TestData\BundleWithOneEntry.xml");
+            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
             var node = getXmlNode(bundle);
             ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
@@ -99,7 +108,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void PingpongXml()
         {
-            var tp = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var json = navXml.ToJson();
@@ -113,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesBasicTypeErrorsWithUnknownRoot()
         {
-            var tpXml = File.ReadAllText(@"TestData\with-errors.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "with-errors.xml"));
             var patient = getXmlNode(tpXml, tnSettings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
             Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
@@ -122,7 +131,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void CatchesBasicTypeErrors()
         {
-            var tpXml = File.ReadAllText(@"TestData\typeErrors.xml");
+            var tpXml = File.ReadAllText(Path.Combine("TestData", "typeErrors.xml"));
             var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
             Assert.AreEqual(10, result.Count);

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -12,11 +12,15 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
 using System.Numerics;
+using System.Globalization;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
     public static class PrimitiveTypeConverter
     {
+        private static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", ".", "00" };
+
         public static object FromSerializedValue(string value, string primitiveType)
         {
             var type = Primitives.GetNativeRepresentation(primitiveType);
@@ -120,7 +124,14 @@ namespace Hl7.Fhir.Serialization
             if (typeof(DateTime) == to)
                 return ConvertToDatetimeOffset(value).UtcDateTime;  // Obsolete: use DateTimeOffset instead!!
             if (typeof(Decimal) == to)
-                return XmlConvert.ToDecimal(value);
+            {
+                if (FORBIDDEN_DECIMAL_PREFIXES.Any(prefix => value.StartsWith(prefix)) || value.EndsWith("."))
+                {
+                    // decimal cannot start with '+', '-' or '00' and cannot end with '.'
+                    throw new FormatException("Input string was not in a correct format.");
+                }
+                return decimal.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
+            }
             if (typeof(Double) == to)
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
             if (typeof(Int16) == to)

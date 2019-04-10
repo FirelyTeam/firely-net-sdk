@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
  
 using Hl7.Fhir.Model;
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseUrl != null)
                 {
                     var baseDef = _resolver.FindStructureDefinition(baseUrl);
-                    if (ensureSnapshot(baseDef, baseUrl, elem.ToNamedNode()))
+                    if (ensureSnapshot(baseDef, baseUrl, elem.Path))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())

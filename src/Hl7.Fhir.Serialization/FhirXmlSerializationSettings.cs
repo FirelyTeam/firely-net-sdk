@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Utility;
@@ -11,17 +11,33 @@ using System;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Configuration settings for the <see cref="FhirXmlBuilder"/> class.</summary>
     public class FhirXmlSerializationSettings
     {
         /// <summary>
         /// When encountering a member without type information, just skip it instead of reporting an error.
         /// </summary>
-        public bool SkipUnknownElements;
+        [Obsolete("Use IgnoreUnknownElements instead")]
+        public bool SkipUnknownElements {
+            get
+            {
+                return IgnoreUnknownElements;
+            }
+            set
+            {
+                IgnoreUnknownElements = value;
+            }
+        }
+
+        /// <summary>
+        /// When encountering a member without type information, just skip it instead of reporting an error.
+        /// </summary>
+        public bool IgnoreUnknownElements;
 
         /// <summary>
         /// Format the xml output when converted to a string.
         /// </summary>
-        public bool Pretty;
+        public bool Pretty { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="FhirXmlSerializationSettings"/> instance with default property values.</summary>
         public FhirXmlSerializationSettings() { }
@@ -41,7 +57,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-            other.SkipUnknownElements = SkipUnknownElements;
+            other.IgnoreUnknownElements = IgnoreUnknownElements;
             other.Pretty = Pretty;
         }
 
