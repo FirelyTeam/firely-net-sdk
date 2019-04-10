@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
         {
             if (value == null) Error.ArgumentNull("value");
 
-            Value = ElementNode.CreateConstant(value);
+            Value = Primitives.ToPrimitiveValue(value);
 
             if (Value is bool)
                 ExpressionType = TypeInfo.Boolean;

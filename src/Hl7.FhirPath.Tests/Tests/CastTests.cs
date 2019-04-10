@@ -22,21 +22,21 @@ namespace Hl7.FhirPath.Tests
     public class CastTests
     {
         static readonly ITypedElement complex = new ComplexValue();
-        static readonly IEnumerable<ITypedElement> collection = new ITypedElement[] { new ConstantValue(4), new ConstantValue(5), complex };
-        static readonly IEnumerable<ITypedElement> singleV = new ITypedElement[] { new ConstantValue(4) };
-        static readonly IEnumerable<ITypedElement> singleC = new ITypedElement[] { complex };
-        static readonly IEnumerable<ITypedElement> emptyColl = new ITypedElement[] { };
+        static readonly IEnumerable<ITypedElement> collection = ElementNode.CreateConstantList(4, 5, complex);
+        static readonly IEnumerable<ITypedElement> singleV = ElementNode.CreateConstantList(4);
+        static readonly IEnumerable<ITypedElement> singleC = ElementNode.CreateConstantList(complex);
+        static readonly IEnumerable<ITypedElement> emptyColl = ElementNode.EmptyList;
 
         [Fact]
         public void TestUnbox()
         {
 
             Assert.Null(Typecasts.Unbox(emptyColl, typeof(string)));
-            Assert.Equal(collection,Typecasts.Unbox(collection, typeof(IEnumerable<ITypedElement>)));
+            Assert.Equal(collection, Typecasts.Unbox(collection, typeof(IEnumerable<ITypedElement>)));
             Assert.Equal(complex, Typecasts.Unbox(singleC, typeof(ITypedElement)));
 
             Assert.Equal(4L, Typecasts.Unbox(singleV, typeof(long)));
-            Assert.Equal(4L, Typecasts.Unbox(new ConstantValue(4), typeof(long)));
+            Assert.Equal(4L, Typecasts.Unbox(ElementNode.CreateConstant(4), typeof(long)));
 
             Assert.Equal(complex, Typecasts.Unbox(complex, typeof(ITypedElement)));
             Assert.Null(Typecasts.Unbox(null, typeof(string)));
@@ -48,7 +48,7 @@ namespace Hl7.FhirPath.Tests
         public void CastFromNull()
         {
             checkCast<object>(null, null);
-            checkCast<IEnumerable<ITypedElement>>(null, FhirValueList.Empty);
+            checkCast<IEnumerable<ITypedElement>>(null, ElementNode.EmptyList);
             checkCast<ITypedElement>(null, null);
             Assert.False(Typecasts.CanCastTo(null, typeof(bool)));
             checkCast<bool?>(null, null);
@@ -73,8 +73,8 @@ namespace Hl7.FhirPath.Tests
 
             Assert.True(Typecasts.CanCastTo(complex, typeof(IEnumerable<ITypedElement>)));
             var result = (IEnumerable<ITypedElement>)Typecasts.CastTo(complex, typeof(IEnumerable<ITypedElement>));
-            Assert.Equal(complex,result.Single());
-            checkCast<ITypedElement>(complex, complex );
+            Assert.Equal(complex, result.Single());
+            checkCast<ITypedElement>(complex, complex);
             Assert.False(Typecasts.CanCastTo(collection, typeof(bool)));
             Assert.False(Typecasts.CanCastTo(collection, typeof(bool?)));
             Assert.False(Typecasts.CanCastTo(collection, typeof(string)));
@@ -110,7 +110,7 @@ namespace Hl7.FhirPath.Tests
         public void CastNullable()
         {
             checkCast<object>("hi", "hi");
-            
+
             Assert.True(Typecasts.CanCastTo("hi", typeof(IEnumerable<ITypedElement>)));
             var result = (IEnumerable<ITypedElement>)Typecasts.CastTo("hi", typeof(IEnumerable<ITypedElement>));
             Assert.Equal("hi", result.Single().Value);

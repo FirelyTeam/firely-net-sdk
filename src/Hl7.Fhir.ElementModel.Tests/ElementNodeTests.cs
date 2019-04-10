@@ -82,8 +82,7 @@ namespace Hl7.FhirPath.Tests
         public void SuccessfullyCreated()
         {
             var pat = new Patient();
-            var containedObs = new Observation();
-            containedObs.Value = new FhirBoolean(true);
+            var containedObs = new Observation { Value = new FhirBoolean(true) };
             pat.Contained.Add(containedObs);
             pat.ActiveElement = new FhirBoolean(true) { ElementId = "myId1" };
             pat.ActiveElement.AddAnnotation("a string annotation");
