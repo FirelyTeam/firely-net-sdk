@@ -8,13 +8,13 @@ namespace Hl7.Fhir.Model
 {
     internal struct ElementValue
     {
-        public ElementValue(string name, object value)
+        public ElementValue(string name, Base value)
         {
             ElementName = name;
             Value = value;
         }
 
         public string ElementName;
-        public object Value;
+        public Base Value;
     }
 }

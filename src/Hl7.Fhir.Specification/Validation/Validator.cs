@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
@@ -14,6 +14,7 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
@@ -26,7 +27,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace Hl7.Fhir.Validation
 {
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Validation
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
-            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
@@ -276,9 +276,38 @@ namespace Hl7.Fhir.Validation
             outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
             outcome.Add(this.ValidateFp(elementConstraints, instance));
-            outcome.Add(this.ValidateBinding(elementConstraints, instance));
             outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
 
+            // new style validator - has a configure and then execute step.
+            // will be separated when all logic has been converted.
+            var ts = Settings.TerminologyService;
+            if (ts == null)
+            {
+                if (Settings.ResourceResolver == null)
+                {
+                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                    return outcome;
+                }
+
+                ts = new LocalTerminologyService(Settings.ResourceResolver);
+            }
+
+            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
+
+            try
+            {
+                if (elementConstraints.Binding != null)
+                {
+                    Binding b = elementConstraints.Binding.ToValidatable();
+                    outcome.Add(b.Validate(instance, vc));
+                }
+            }
+            catch(IncorrectElementDefinitionException iede)
+            {
+                Trace(outcome, "Incorrect ElementDefinition: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, elementConstraints.Path);
+            }
+            
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
 
@@ -326,42 +355,42 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance)
-        {
-            var outcome = new OperationOutcome();
-            if (definition.Binding == null) return outcome;
+        //internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance)
+        //{
+        //    var outcome = new OperationOutcome();
+        //    if (definition.Binding == null) return outcome;
 
-            var ts = Settings.TerminologyService;
-            if (ts == null)
-            {
-                if (Settings.ResourceResolver == null)
-                {
-                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
-                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
-                    return outcome;
-                }
+        //    var ts = Settings.TerminologyService;
+        //    if (ts == null)
+        //    {
+        //        if (Settings.ResourceResolver == null)
+        //        {
+        //            Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+        //                Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+        //            return outcome;
+        //        }
 
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
-            }
+        //        ts = new LocalTerminologyService(Settings.ResourceResolver);
+        //    }
 
-            var bindingValidator = new BindingValidator(ts, instance.Location);
+        //    var bindingValidator = new BindingValidator(ts, instance.Location);
 
-            try
-            {
-                Element bindable = instance.ParseBindable();
+        //    try
+        //    {
+        //        Element bindable = instance.ParseBindable();
 
-                // If the instance is not bindeable, ignore the Binding specified on the element, 
-                // it's simply not applicable
-                if (bindable != null)
-                    return bindingValidator.ValidateBinding(bindable, definition.Binding);
-            }
-            catch (Exception e)
-            {
-                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
-            }
+        //        // If the instance is not bindeable, ignore the Binding specified on the element, 
+        //        // it's simply not applicable
+        //        if (bindable != null)
+        //            return bindingValidator.ValidateBinding(bindable, definition.Binding);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
+        //    }
 
-            return outcome;
-        }
+        //    return outcome;
+        //}
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNode instance)
         {

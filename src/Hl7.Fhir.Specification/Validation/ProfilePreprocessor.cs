@@ -3,11 +3,12 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
@@ -20,20 +21,29 @@ namespace Hl7.Fhir.Validation
     {
         private Func<string, StructureDefinition> _profileResolver;
         private Func<StructureDefinition, OperationOutcome> _snapshotGenerator;
+        private StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
         private string _path;
         private ProfileAssertion _profiles;
 
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
                 ITypedElement instance, string declaredTypeProfile,
-                IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
+                IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals,
+                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
+            _typeNameMapper = typeNameMapper;
             _path = instance.Location;
 
-            _profiles = new ProfileAssertion(_path, _profileResolver);
+            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper);
 
-            if (instance.InstanceType != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));
+            if (instance.InstanceType != null)
+            {
+                if (_typeNameMapper != null && _typeNameMapper(instance.InstanceType, out string canonicalUri))
+                    _profiles.SetInstanceType(canonicalUri);
+                else
+                    _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));
+            }
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
             // This is only for resources, but I don't bother checking, since this will return empty anyway

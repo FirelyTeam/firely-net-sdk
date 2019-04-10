@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -134,6 +134,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Gets the resource uri.</summary>
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
+
+        /// <summary>Returns <c>true</c> if the summary describes a Bundle entry resource.</summary>
+        public bool IsBundleEntry => properties.IsBundleEntry();
 
         #endregion
 

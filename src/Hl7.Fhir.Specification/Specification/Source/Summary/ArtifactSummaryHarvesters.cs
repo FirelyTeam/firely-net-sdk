@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using System;
@@ -39,6 +39,7 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string PositionKey = "Position";
         public static readonly string TypeNameKey = "TypeName";
         public static readonly string ResourceUriKey = "Uri";
+        public static readonly string IsBundleEntryKey = "IsBundleEntry";
 
         /// <summary>Try to retrieve the property value for the specified key.</summary>
         /// <param name="properties">An artifact summary property bag.</param>
@@ -121,6 +122,15 @@ namespace Hl7.Fhir.Specification.Source
         internal static void SetResourceUri(this ArtifactSummaryPropertyBag properties, string value)
         {
             properties[ResourceUriKey] = value;
+        }
+
+        /// <summary>Returns <c>true</c> if the summary describes a Bundle entry.</summary>
+        public static bool IsBundleEntry(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault(IsBundleEntryKey) is bool b ? b : false;
+
+        internal static void SetIsBundleEntry(this ArtifactSummaryPropertyBag properties, bool value)
+        {
+            properties[IsBundleEntryKey] = value;
         }
     }
 
