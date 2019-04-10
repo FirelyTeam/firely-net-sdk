@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Specification;
@@ -20,16 +20,16 @@ namespace Hl7.Fhir.ElementModel
     {
         public string Name { get; set; }
 
-        protected List<T> ChildrenInternal = new List<T>();
+        protected List<T> ChildList = new List<T>();
 
-        internal IEnumerable<T> ChildrenByName(string name = null) =>
-            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
+        internal IEnumerable<T> ChildrenInternal(string name = null) =>
+            name == null ? ChildList : ChildList.Where(c => c.Name == name);
 
         public T Parent { get; protected set; }
 
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenByName(name));
+        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenInternal(name));
 
-        public T this[int index] => ChildrenInternal[index];
+        public T this[int index] => ChildList[index];
 
         private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.ElementModel
 
     public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
     {
-        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenByName(name);
+        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.ElementModel
                 child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
-            ChildrenInternal.Add(child);
+            ChildList.Add(child);
 
             return child;
         }
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.ElementModel
 
             // Should we throw if type is not found?
             if (sd != null)
-                definition = new TypeRootDefinitionSummary(sd);
+                definition = ElementDefinitionSummary.ForRoot(sd);
 
             return new ElementNode(name ?? type, null, type, definition);
         }
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.ElementModel
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me.ChildrenInternal.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
+                me.ChildList.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
         }
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.ElementModel
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
                 Parent = Parent,
-                ChildrenInternal = ChildrenInternal
+                ChildList = ChildList
             };
 
             if (HasAnnotations)
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.ElementModel
                         return $"{basePath}.{Name}";
                     else
                     {
-                        var myIndex = Parent.ChildrenInternal.Where(c => c.Name == Name).ToList().IndexOf(this);
+                        var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                         return $"{basePath}.{Name}[{myIndex}]";
                     }
                     
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.ElementModel
         public T this[int index] => _wrapped[index];
 
         public DomNodeList<T> this[string name] => 
-            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenByName(name)));
+            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenInternal(name)));
 
         public int Count => _wrapped.Count;
 

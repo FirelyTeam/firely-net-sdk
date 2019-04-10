@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Serialization;
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
             if (elementType.IsAbstract)
                 throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
 
-            var rootTypeDefinition = new TypeRootDefinitionSummary(elementType, Source.Name);
+            var rootTypeDefinition = ElementDefinitionSummary.ForRoot(elementType, Source.Name);
             return (rootType, rootTypeDefinition);
         }
 
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.ElementModel
 
         private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string,IElementDefinitionSummary> dis, ISourceNode parent, string name)
         {
-            IEnumerable<ISourceNode> childSet = null;
+            IEnumerable<ISourceNode> childSet;
 
             // no name filter: work on all the parent's children
             if (name == null)
