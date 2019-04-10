@@ -117,8 +117,8 @@ namespace Hl7.Fhir.Specification
 
             if (pm.IsBackboneElement)
             {
-                var info = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.ElementType);
-                return new ITypeSerializationInfo[] { new PocoComplexTypeSerializationInfo(info) };
+                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
+                return new ITypeSerializationInfo[] { info };
             }
             else
             {              
