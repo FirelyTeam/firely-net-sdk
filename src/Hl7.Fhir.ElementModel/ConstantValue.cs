@@ -18,7 +18,7 @@ namespace Hl7.Fhir.ElementModel
     {
         public ConstantElement(object value, string name = null)
         {
-            Value = Primitives.ToPrimitiveValue(value);
+            Value = Primitives.ConvertToPrimitiveValue(value);
             InstanceType = Primitives.GetPrimitiveTypeName(value);
             Name = name ?? "@constantvalue@";
         }

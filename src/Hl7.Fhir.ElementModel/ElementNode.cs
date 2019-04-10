@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -63,9 +64,16 @@ namespace Hl7.Fhir.ElementModel
             if(child.InstanceType == null && child.Definition != null)
             {
                 if (child.Definition.IsResource || child.Definition.Type.Length > 1)
-                    throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
-
-                child.InstanceType = child.Definition.Type.Single().GetTypeName();
+                {
+                    // We are in a situation where we are on an polymorphic element, but the caller did not specify
+                    // the instance type.  We can try to auto-set it by deriving it from the instance's type, if it is a primitive
+                    if (child.Value != null && Primitives.TryGetPrimitiveTypeName(child.Value, out string instanceType))
+                        child.InstanceType = instanceType;
+                    else
+                        throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
+                }
+                else
+                    child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
             ChildrenInternal.Add(child);
@@ -167,30 +175,6 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-    }
-
-
-    public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
-    {
-        private readonly IList<T> _wrapped;
-
-        internal DomNodeList(IEnumerable<T> nodes)
-        {
-            _wrapped = nodes.ToList();
-        }
-
-        public T this[int index] => _wrapped[index];
-
-        public DomNodeList<T> this[string name] => 
-            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenByName(name)));
-
-        public int Count => _wrapped.Count;
-
-        public bool Contains(T item) => _wrapped.Contains(item);
-
-        public IEnumerator<T> GetEnumerator() => _wrapped.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
     }
 
 }

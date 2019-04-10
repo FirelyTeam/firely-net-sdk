@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
         {
             if (value == null) Error.ArgumentNull("value");
 
-            Value = Primitives.ToPrimitiveValue(value);
+            Value = Primitives.ConvertToPrimitiveValue(value);
 
             if (Value is bool)
                 ExpressionType = TypeInfo.Boolean;

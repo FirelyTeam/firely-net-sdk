@@ -292,7 +292,6 @@ namespace Hl7.Fhir.ElementModel
                 return new[] { this };
             else
                 return Source.Annotations(type);
-
         }
     }
 
