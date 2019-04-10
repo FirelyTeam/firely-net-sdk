@@ -1,18 +1,16 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -143,10 +141,10 @@ namespace Hl7.Fhir.Serialization.Tests
             //compareJson(navCreator, tp);
 
             var tp = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
-            compareJson(navCreator, tp);
+            compareJson(@"TestData\json-edge-cases.json", navCreator, tp);
         }
 
-        private static void compareJson(Func<string, object> navCreator, string expected)
+        private static void compareJson(string filename, Func<string, object> navCreator, string expected)
         {
             var nav = navCreator(expected);
 
@@ -172,8 +170,11 @@ namespace Hl7.Fhir.Serialization.Tests
             else if (nav is ITypedElement ien2) output = ien2.ToJson();
             else
                 throw Error.InvalidOperation("Fix unit test");
-            
-            JsonAssert.AreSame(expected, output);
+
+            List<string> errors = new List<string>();
+            JsonAssert.AreSame(filename, expected, output, errors);
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         public static void CanReadThroughNavigator(ITypedElement n, bool typed)

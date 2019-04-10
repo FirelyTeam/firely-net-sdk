@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 // [WMR 20171023] TODO
@@ -123,7 +123,11 @@ namespace Hl7.Fhir.Specification.Source
         // Internal ctor
         DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
-            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
+            //ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            if (contentDirectory is null) { throw Error.ArgumentNull(nameof(contentDirectory)); }
+            ContentDirectory = Path.GetFullPath(contentDirectory);
+
             // [WMR 20171023] Clone specified settings to prevent shared state
             _settings = settings != null 
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
@@ -137,7 +141,7 @@ namespace Hl7.Fhir.Specification.Source
             Refresh();
         }
 
-        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        /// <summary>Returns the full path to the content directory.</summary>
         public string ContentDirectory { get; }
 
         /// <summary>
@@ -493,11 +497,43 @@ namespace Hl7.Fhir.Specification.Source
         /// Also accepts relative file paths.
         /// </summary>
         /// <exception cref="InvalidOperationException">More than one file exists with the specified name.</exception>
-        public Stream LoadArtifactByName(string name)
+        public Stream LoadArtifactByName(string filePath)
         {
-            if (name == null) throw Error.ArgumentNull(nameof(name));
-            var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, PathComparison));
-            return fullFileName == null ? null : File.OpenRead(fullFileName);
+            if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
+
+            var fullList = GetFilePaths();
+            // [WMR 20190219] https://github.com/ewoutkramer/fhir-net-api/issues/875
+            // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
+            //return fullFileName == null ? null : File.OpenRead(fullFileName);
+
+            // Exact match on absolute path, or partial match on relative path
+            bool isMatch(ArtifactSummary summary)
+                => PathComparer.Equals(summary.Origin, filePath)
+                || summary.Origin.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison);
+
+            // Only consider valid summaries for recognized artifacts
+            bool isCandidateArtifact(ArtifactSummary summary)
+                => !(summary is null)
+                // EK
+                //      && !summary.IsFaulted
+                && !(summary.Origin is null)
+                && isMatch(summary);
+
+            var candidates = GetSummaries().Where(isCandidateArtifact);
+
+            // We might match multiple files; pick best/nearest fit
+            ArtifactSummary match = null;
+            foreach (var candidate in candidates)
+            {
+                if (match is null || candidate.Origin.Length < match.Origin.Length)
+                {
+                    match = candidate;
+                }
+            }
+
+            if (match?.Origin is null) { return null; }
+
+            return File.OpenRead(match.Origin);
         }
 
         #endregion

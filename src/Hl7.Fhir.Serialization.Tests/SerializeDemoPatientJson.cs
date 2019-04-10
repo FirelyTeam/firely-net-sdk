@@ -1,18 +1,13 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -29,7 +24,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var nav = getJsonElement(json);
             var output = nav.ToJson();
-            JsonAssert.AreSame(json, output);
+
+            List<string> errors = new List<string>();
+            JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -54,7 +53,11 @@ namespace Hl7.Fhir.Serialization.Tests
             var pat = pser.Parse<Patient>(tp);
 
             var output = pat.ToJson();
-            JsonAssert.AreSame(tp, output);
+
+            List<string> errors = new List<string>();
+            JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
