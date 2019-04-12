@@ -22,9 +22,9 @@ namespace Hl7.FhirPath.Tests
     public class CastTests
     {
         static readonly ITypedElement complex = new ComplexValue();
-        static readonly IEnumerable<ITypedElement> collection = ElementNode.CreateConstantList(4, 5, complex);
-        static readonly IEnumerable<ITypedElement> singleV = ElementNode.CreateConstantList(4);
-        static readonly IEnumerable<ITypedElement> singleC = ElementNode.CreateConstantList(complex);
+        static readonly IEnumerable<ITypedElement> collection = ElementNode.CreateList(4, 5, complex);
+        static readonly IEnumerable<ITypedElement> singleV = ElementNode.CreateList(4);
+        static readonly IEnumerable<ITypedElement> singleC = ElementNode.CreateList(complex);
         static readonly IEnumerable<ITypedElement> emptyColl = ElementNode.EmptyList;
 
         [Fact]

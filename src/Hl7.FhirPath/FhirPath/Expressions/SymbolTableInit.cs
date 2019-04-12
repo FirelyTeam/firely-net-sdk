@@ -194,7 +194,7 @@ namespace Hl7.FhirPath.Expressions
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = ElementNode.CreateConstantList(element);
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
 
@@ -210,7 +210,7 @@ namespace Hl7.FhirPath.Expressions
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = ElementNode.CreateConstantList(element);
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
 
@@ -235,7 +235,7 @@ namespace Hl7.FhirPath.Expressions
 
                 foreach (ITypedElement element in current)
                 {
-                    var newFocus = ElementNode.CreateConstantList(element);
+                    var newFocus = ElementNode.CreateList(element);
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
 
@@ -256,16 +256,16 @@ namespace Hl7.FhirPath.Expressions
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = ElementNode.CreateConstantList(element);
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == null) return ElementNode.EmptyList;
-                if (result == false) return ElementNode.CreateConstantList(false);
+                if (result == false) return ElementNode.CreateList(false);
             }
 
-            return ElementNode.CreateConstantList(true);
+            return ElementNode.CreateList(true);
         }
 
         private static IEnumerable<ITypedElement> runAny(Closure ctx, IEnumerable<Invokee> arguments)
@@ -275,7 +275,7 @@ namespace Hl7.FhirPath.Expressions
 
             foreach (ITypedElement element in focus)
             {
-                var newFocus = ElementNode.CreateConstantList(element);
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
 
@@ -284,10 +284,10 @@ namespace Hl7.FhirPath.Expressions
 
                 //if (result == null) return ElementNode.EmptyList; -> otherwise this would not be where().exists()
                 //Patient.identifier.any(use = 'official') would return {} if ANY identifier has no 'use' element. Unexpected behaviour, I think
-                if (result == true) return ElementNode.CreateConstantList(true);
+                if (result == true) return ElementNode.CreateList(true);
             }
 
-            return ElementNode.CreateConstantList(false);
+            return ElementNode.CreateList(false);
         }
     }
 }

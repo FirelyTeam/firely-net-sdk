@@ -17,8 +17,7 @@ namespace Hl7.Fhir.ElementModel
 {
     public class SourceNode : DomNode<SourceNode>, ISourceNode, IAnnotated, IResourceTypeSupplier
     {
-        public IEnumerable<ISourceNode> Children(string name = null) =>
-            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
+        public IEnumerable<ISourceNode> Children(string name = null) => ChildrenInternal(name);
 
         public string ResourceType { get; set; }
 
@@ -35,8 +34,8 @@ namespace Hl7.Fhir.ElementModel
 
         public SourceNode AddRange(IEnumerable<SourceNode> children)
         {
-            base.ChildrenInternal.AddRange(children);
-            foreach (var c in base.ChildrenInternal) c.Parent = this;
+            base.ChildList.AddRange(children);
+            foreach (var c in base.ChildList) c.Parent = this;
 
             return this;
         }
@@ -109,7 +108,7 @@ namespace Hl7.Fhir.ElementModel
                     //TODO: Slow - but since we'll change the use of this property to informational 
                     //(i.e. for error messages), it may not be necessary to improve it.
                     var basePath = Parent.Location;
-                    var myIndex = Parent.ChildrenInternal.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                     return $"{basePath}.{Name}[{myIndex}]";
                 }
                 else

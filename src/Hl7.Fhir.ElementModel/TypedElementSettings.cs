@@ -6,7 +6,6 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
-
 using Hl7.Fhir.Utility;
 using System;
 

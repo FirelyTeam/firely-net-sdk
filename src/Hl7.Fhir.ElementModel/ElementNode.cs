@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using Hl7.Fhir.Specification;
@@ -21,14 +21,12 @@ namespace Hl7.Fhir.ElementModel
     {
         public static ITypedElement CreateConstant(object value) => new ConstantElement(value);
 
-        public static IEnumerable<ITypedElement> CreateConstantList(params object[] values) => values != null
+        public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
                 ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : CreateConstant(value))
                 : EmptyList;
 
         public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
-
-
-        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenByName(name);
+        public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
@@ -76,7 +74,7 @@ namespace Hl7.Fhir.ElementModel
                     child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
-            ChildrenInternal.Add(child);
+            ChildList.Add(child);
 
             return child;
         }
@@ -99,7 +97,7 @@ namespace Hl7.Fhir.ElementModel
 
             // Should we throw if type is not found?
             if (sd != null)
-                definition = new TypeRootDefinitionSummary(sd);
+                definition = ElementDefinitionSummary.ForRoot(sd);
 
             return new ElementNode(name ?? type, null, type, definition);
         }
@@ -119,7 +117,7 @@ namespace Hl7.Fhir.ElementModel
                     me.AddAnnotation(ann);
 
             if (recursive)
-                me.ChildrenInternal.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
+                me.ChildList.AddRange(node.Children().Select(c => buildNode(c, recursive: true, annotationsToCopy: annotationsToCopy, me)));
 
             return me;
         }
@@ -129,7 +127,7 @@ namespace Hl7.Fhir.ElementModel
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
                 Parent = Parent,
-                ChildrenInternal = ChildrenInternal
+                ChildList = ChildList
             };
 
             if (HasAnnotations)
@@ -165,7 +163,7 @@ namespace Hl7.Fhir.ElementModel
                         return $"{basePath}.{Name}";
                     else
                     {
-                        var myIndex = Parent.ChildrenInternal.Where(c => c.Name == Name).ToList().IndexOf(this);
+                        var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                         return $"{basePath}.{Name}[{myIndex}]";
                     }
                     
@@ -176,5 +174,4 @@ namespace Hl7.Fhir.ElementModel
         }
 
     }
-
 }

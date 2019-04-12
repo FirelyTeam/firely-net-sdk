@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
 
         private static object any2List(object source)
         {
-            return ElementNode.CreateConstantList(source);
+            return ElementNode.CreateList(source);
         }
 
         private static Cast getImplicitCast(Type from, Type to)

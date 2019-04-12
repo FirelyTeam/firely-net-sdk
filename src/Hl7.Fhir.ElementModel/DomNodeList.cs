@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
+    public class DomNodeList<T> : IEnumerable<T> where T : DomNode<T>
     {
         private readonly IList<T> _wrapped;
 
@@ -23,8 +23,8 @@ namespace Hl7.Fhir.ElementModel
 
         public T this[int index] => _wrapped[index];
 
-        public DomNodeList<T> this[string name] => 
-            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenByName(name)));
+        public DomNodeList<T> this[string name] =>
+            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenInternal(name)));
 
         public int Count => _wrapped.Count;
 
@@ -34,5 +34,4 @@ namespace Hl7.Fhir.ElementModel
 
         IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
     }
-
 }

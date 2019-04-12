@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Serialization;
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.ElementModel
             if (elementType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    throw Error.Argument(nameof(type), $"Cannot locate type information for type '{rootType}'");
+                    throw Error.Format(nameof(type), $"Cannot locate type information for type '{rootType}'");
                 else
                     return (rootType, null);
             }
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
             if (elementType.IsAbstract)
                 throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
 
-            var rootTypeDefinition = new TypeRootDefinitionSummary(elementType, Source.Name);
+            var rootTypeDefinition = ElementDefinitionSummary.ForRoot(elementType, Source.Name);
             return (rootType, rootTypeDefinition);
         }
 
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.ElementModel
             return instanceType;
         }
 
-        private bool tryGetBySuffixedName(Dictionary<string,IElementDefinitionSummary> dis, string name, out IElementDefinitionSummary info)
+        private bool tryGetBySuffixedName(Dictionary<string, IElementDefinitionSummary> dis, string name, out IElementDefinitionSummary info)
         {
             // Simplest case, one on one match between name and element name
             if (dis.TryGetValue(name, out info))
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.ElementModel
             return info != null;
         }
 
-        private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string,IElementDefinitionSummary> dis, ISourceNode parent, string name)
+        private IEnumerable<TypedElementOnSourceNode> enumerateElements(Dictionary<string, IElementDefinitionSummary> dis, ISourceNode parent, string name)
         {
             IEnumerable<ISourceNode> childSet;
 
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.ElementModel
             else
             {
                 var hit = tryGetBySuffixedName(dis, name, out var info);
-                childSet = hit && info.IsChoiceElement ? 
+                childSet = hit && info.IsChoiceElement ?
                     parent.Children(name + "*") :
                     parent.Children(name);
             }
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.ElementModel
 
             foreach (var scan in childSet)
             {
-                var hit = tryGetBySuffixedName(dis,scan.Name, out var info);
+                var hit = tryGetBySuffixedName(dis, scan.Name, out var info);
                 string instanceType = info == null ? null :
                     deriveInstanceType(scan, info);
 
@@ -214,8 +214,8 @@ namespace Hl7.Fhir.ElementModel
                 // child in the instance, complain
                 if (dis.Any() && info == null)
                 {
-                    raiseTypeError($"Encountered unknown element '{scan.Name}' while parsing", this,
-                            warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
+                    raiseTypeError($"Encountered unknown element '{scan.Name}' at location '{scan.Location}' while parsing", this,
+                              warning: _settings.ErrorMode != TypedElementSettings.TypeErrorMode.Report);
 
                     // don't include member, unless we are explicitly told to let it pass
                     if (_settings.ErrorMode != TypedElementSettings.TypeErrorMode.Passthrough)
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.ElementModel
 
         public string ShortPath { get; private set; }
 
-        public override string ToString() => 
+        public override string ToString() =>
             $"{(InstanceType != null ? ($"[{InstanceType}] ") : "")}{Source.ToString()}";
 
         public IEnumerable<object> Annotations(Type type)

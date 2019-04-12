@@ -13,20 +13,20 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class DomNode<T> : IAnnotatable where T:DomNode<T>
+    public class DomNode<T> : IAnnotatable where T : DomNode<T>
     {
         public string Name { get; set; }
 
-        protected List<T> ChildrenInternal = new List<T>();
+        protected List<T> ChildList = new List<T>();
 
-        internal IEnumerable<T> ChildrenByName(string name = null) =>
-            name == null ? ChildrenInternal : ChildrenInternal.Where(c => c.Name == name);
+        internal IEnumerable<T> ChildrenInternal(string name = null) =>
+            name == null ? ChildList : ChildList.Where(c => c.Name == name);
 
         public T Parent { get; protected set; }
 
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenByName(name));
+        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenInternal(name));
 
-        public T this[int index] => ChildrenInternal[index];
+        public T this[int index] => ChildList[index];
 
         private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
@@ -43,5 +43,4 @@ namespace Hl7.Fhir.ElementModel
             AnnotationsInternal.RemoveOfType(type);
         }
     }
-
 }

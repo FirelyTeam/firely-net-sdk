@@ -32,9 +32,9 @@ namespace Hl7.Fhir
                     {
                         return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
                     }).ToArray();
-                    return ElementNode.CreateConstantList(bits);
+                    return ElementNode.CreateList(bits);
                 }
-                return ElementNode.CreateConstantList("?");
+                return ElementNode.CreateList("?");
             });
 
             Patient p = new Patient
