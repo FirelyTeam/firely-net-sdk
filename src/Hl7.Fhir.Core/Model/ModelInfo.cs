@@ -281,12 +281,14 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.SearchParameter,
             FHIRAllTypes.CompartmentDefinition,
             FHIRAllTypes.ImplementationGuide,
+            FHIRAllTypes.GraphDefinition,
             FHIRAllTypes.CodeSystem,
             FHIRAllTypes.ValueSet,
             FHIRAllTypes.ConceptMap,
             FHIRAllTypes.NamingSystem,
             FHIRAllTypes.TestScript,
-            FHIRAllTypes.TestReport
+            FHIRAllTypes.TestReport,
+            FHIRAllTypes.TerminologyCapabilities
         };
 
         /// <summary>
@@ -312,12 +314,14 @@ namespace Hl7.Fhir.Model
             ResourceType.SearchParameter,
             ResourceType.CompartmentDefinition,
             ResourceType.ImplementationGuide,
+            ResourceType.GraphDefinition,
             ResourceType.CodeSystem,
             ResourceType.ValueSet,
             ResourceType.ConceptMap,
             ResourceType.NamingSystem,
             ResourceType.TestScript,
-            ResourceType.TestReport
+            ResourceType.TestReport,
+            ResourceType.TerminologyCapabilities
         };
 
         /// <summary>
@@ -379,7 +383,7 @@ namespace Hl7.Fhir.Model
 
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
-            return type == FHIRAllTypes.SimpleQuantity;
+            return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
         }
         
         public static bool IsProfiledQuantity(string type)
@@ -403,6 +407,7 @@ namespace Hl7.Fhir.Model
         private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
                             FHIRAllTypes.Count, FHIRAllTypes.Money };
         private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
+        private static readonly FHIRAllTypes[] URI_SUBCLASSES = new[] { FHIRAllTypes.Url, FHIRAllTypes.Canonical, FHIRAllTypes.Oid, FHIRAllTypes.Uuid };
         private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
@@ -426,6 +431,8 @@ namespace Hl7.Fhir.Model
                     return QUANTITY_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.String)
                     return STRING_SUBCLASSES.Contains(subclass);
+                else if (superclass == FHIRAllTypes.Uri)
+                    return URI_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.Integer)
                     return INTEGER_SUBCLASSES.Contains(subclass);
                 else
