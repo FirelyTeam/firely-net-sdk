@@ -1,4 +1,4 @@
-﻿/*
+/*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
@@ -140,6 +140,11 @@ namespace Hl7.Fhir.Model
     //        set { throw new NotImplementedException(); }
     //    }
     //}
+
+    public partial class TerminologyCapabilities : IVersionableConformanceResource
+    {
+
+    }
 
     public partial class NamingSystem : IConformanceResource
     {
