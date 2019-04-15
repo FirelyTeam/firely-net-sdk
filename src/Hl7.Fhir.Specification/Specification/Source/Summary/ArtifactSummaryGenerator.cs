@@ -136,42 +136,44 @@ namespace Hl7.Fhir.Specification.Summary
         /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
         /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
         /// </remarks>
+        public List<ArtifactSummary> Generate(string filePath, params ArtifactSummaryHarvester[] harvesters)
+        {
+            return Generate(filePath, DefaultNavigatorStreamFactory.Create, harvesters);
+        }
+
+        /// <summary>
+        /// Generate a list of artifact summary information for a resource file on disk,
+        /// using the specified list of <see cref="ArtifactSummaryHarvester"/> instances.
+        /// <para>
+        /// If the target resource represents a <see cref="Bundle"/> instance, then the generator
+        /// returns a list of summaries for all resource entries contained in the bundle.
+        /// </para>
+        /// </summary>
+        /// <param name="filePath">The file path of the target artifact (or the containing Bundle).</param>
+        /// <param name="navigatorStreamFactory">Function to create an <see cref="INavigatorStream"/> instance for the specified file path.</param>
+        /// <param name="harvesters">
+        /// A list of <see cref="ArtifactSummaryHarvester"/> delegates that the
+        /// generator calls to harvest summary information from each artifact.
+        /// If the harvester list equals <c>null</c> or empty, then the generator will
+        /// harvest only the common default summary properties.
+        /// </param>
+        /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </remarks>
         public List<ArtifactSummary> Generate(
             string filePath,
+            NavigatorStreamFactory navigatorStreamFactory,
             params ArtifactSummaryHarvester[] harvesters)
         {
             List<ArtifactSummary> result = null;
-
-            // Try to create navigator stream factory
-            // May fail if the specified input is invalid => return error summary
-            INavigatorStream navStream = null;
             try
             {
                 // Get some source file properties
                 var fi = new FileInfo(filePath);
-
-                // Local helper method to initialize origin-specific summary properties
-                // All resources from common origin share common property values
-                void InitializeSummaryFromOrigin(ArtifactSummaryPropertyBag properties)
-                {
-                    properties.SetOrigin(filePath);
-                    properties.SetFileSize(fi.Length);
-                    // implicit conversion to DateTimeOffet. This is allowed, because LastWriteTimeUtc is of DateTimeKind.Utc
-                    properties.SetLastModified(fi.LastWriteTimeUtc);
-                    switch (fi.Extension)
-                    {
-                        case FhirFileFormats.XmlFileExtension:
-                            properties.SetSerializationFormat(FhirSerializationFormats.Xml);
-                            break;
-                        case FhirFileFormats.JsonFileExtension:
-                            properties.SetSerializationFormat(FhirSerializationFormats.Json);
-                            break;
-                    }
-                }
-
-                // Factory returns null for unknown file formats
-                navStream = DefaultNavigatorStreamFactory.Create(filePath);
-                result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
+                result = Generate(fi, navigatorStreamFactory, harvesters);
             }
             catch (Exception ex)
             {
@@ -180,9 +182,7 @@ namespace Hl7.Fhir.Specification.Summary
                     ArtifactSummary.FromException(ex, filePath)
                 };
             }
-
             return result;
-
         }
 
         /// <summary>
@@ -283,14 +283,14 @@ namespace Hl7.Fhir.Specification.Summary
                         {
                             var properties = new ArtifactSummaryPropertyBag();
 
+                            // Allow caller to modify/enrich harvested properties
+                            customPropertyInitializer?.Invoke(properties);
+
                             // Initialize default summary information
                             // Note: not exposed by IElementNavigator, cannot use harvester
                             properties.SetPosition(navStream.Position);
                             properties.SetTypeName(current.GetResourceTypeIndicator());
                             properties.SetResourceUri(navStream.Position);
-
-                            // Allow caller to modify/enrich harvested properties
-                            customPropertyInitializer?.Invoke(properties);
 
                             // Generate the final (immutable) ArtifactSummary instance
                             var summary = generate(properties, current, harvesters);
@@ -306,7 +306,20 @@ namespace Hl7.Fhir.Specification.Summary
                 // catch (FormatException)
                 catch (Exception ex)
                 {
-                    result.Add(ArtifactSummary.FromException(ex));
+                    // [WMR 20190305] Inject general file properties (Origin, FileSize, LastModified)
+                    ArtifactSummary summary;
+                    if (customPropertyInitializer is null)
+                    {
+                        summary = ArtifactSummary.FromException(ex);
+                    }
+                    else
+                    {
+                        var properties = new ArtifactSummaryPropertyBag();
+                        // Allow caller to modify/enrich harvested properties
+                        customPropertyInitializer?.Invoke(properties);
+                        summary = new ArtifactSummary(properties, ex);
+                    }
+                    result.Add(summary);
                 }
                 finally
                 {
@@ -329,6 +342,63 @@ namespace Hl7.Fhir.Specification.Summary
 
             return result;
         }
+
+        // ---------- Private Members ----------
+
+        // Generate summaries for the specified FileInfo
+        List<ArtifactSummary> Generate(
+            FileInfo fi,
+            NavigatorStreamFactory navigatorStreamFactory,
+            params ArtifactSummaryHarvester[] harvesters)
+        {
+            List<ArtifactSummary> result = null;
+
+            // Local helper method to initialize origin-specific summary properties
+            // All resources from common origin share common property values
+            void InitializeSummaryFromOrigin(ArtifactSummaryPropertyBag properties)
+            {
+                properties.SetOrigin(fi.FullName);
+                properties.SetFileSize(fi.Length);
+                // implicit conversion to DateTimeOffet. This is allowed, because LastWriteTimeUtc is of DateTimeKind.Utc
+                properties.SetLastModified(fi.LastWriteTimeUtc);
+                switch (fi.Extension)
+                {
+                    case FhirFileFormats.XmlFileExtension:
+                        properties.SetSerializationFormat(FhirSerializationFormats.Xml);
+                        break;
+                    case FhirFileFormats.JsonFileExtension:
+                        properties.SetSerializationFormat(FhirSerializationFormats.Json);
+                        break;
+                }
+            }
+
+            // Try to create navigator stream factory
+            // May fail if the specified input is invalid => return error summary
+            INavigatorStream navStream = null;
+            try
+            {
+                // Factory returns null for unknown file formats
+                // [WMR 20190304] Allow DirectorySource to inject ConfigurableNavigatorStreamFactory instance
+                //navStream = DefaultNavigatorStreamFactory.Create(filePath);
+                navStream = navigatorStreamFactory?.Invoke(fi.FullName)
+                         ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
+
+                result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
+            }
+            catch (Exception ex)
+            {
+                // [WMR 20190305] Initialize general file properties (FileName, FileSize, LastModified)
+                var properties = new ArtifactSummaryPropertyBag();
+                InitializeSummaryFromOrigin(properties);
+                result = new List<ArtifactSummary>
+                {
+                    new ArtifactSummary(properties, ex)
+                };
+            }
+
+            return result;
+        }
+
 
         // Generate summary for a single artifact
         static ArtifactSummary generate(
