@@ -76,6 +76,9 @@ namespace Hl7.Fhir.Serialization
         public static INavigatorStream Create(string path)
             => _factory.Create(path);
 
+        /// <summary><see cref="NavigatorStreamFactory"/> delegate for the <see cref="Create(string)"/> method.</summary>
+        public static readonly NavigatorStreamFactory FactoryDelegate = new NavigatorStreamFactory(Create);
+
         /// <summary>
         /// Creates a new <see cref="INavigatorStream"/> instance to access the contents of a
         /// serialized resource, independent of the underlying resource serialization format.
