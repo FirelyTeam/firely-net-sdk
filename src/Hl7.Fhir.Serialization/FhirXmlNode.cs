@@ -373,7 +373,8 @@ namespace Hl7.Fhir.Serialization
                 if (PermissiveParsing) return null;
 
                 var sdSummary = node.Definition;
-                if (sdSummary == null) return null;
+                var serializationDetails = node.GetXmlSerializationDetails();
+                if (sdSummary == null || serializationDetails == null) return null;
 
                 if (state is OrderRuleState ors)
                 {
