@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // LoadByName should handle duplicate filenames in (different subfolders of) the contentdirectory
-        // https://github.com/ewoutkramer/fhir-net-api/issues/875
+        // https://github.com/FirelyTeam/fhir-net-api/issues/875
 
         [TestMethod]
         public void OpenDuplicateFileNames()

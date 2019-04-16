@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Specification.Source
             if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
 
             var fullList = GetFilePaths();
-            // [WMR 20190219] https://github.com/ewoutkramer/fhir-net-api/issues/875
+            // [WMR 20190219] https://github.com/FirelyTeam/fhir-net-api/issues/875
             // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
             //return fullFileName == null ? null : File.OpenRead(fullFileName);
 
