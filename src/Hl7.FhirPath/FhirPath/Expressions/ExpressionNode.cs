@@ -107,7 +107,6 @@ namespace Hl7.FhirPath.Expressions
 
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
-            if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
             if (arguments == null) throw Error.ArgumentNull("arguments");
 
