@@ -1,10 +1,10 @@
 ﻿/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
- * See the file CONTRIBUTORS for details.
- * 
+* See the file CONTRIBUTORS for details.
+* 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
- */
+* available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+*/
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Summary
                 CodeSystemSummaryProperties.Harvest,
                 ConceptMapSummaryProperties.Harvest,
                 // Fall back for all other conformance resources
-                ConformanceSummaryProperties.Harvest
+                ConformanceSummaryProperties.Harvest,
             };
 
         /// <summary>Singleton. Returns a global default instance.</summary>
@@ -173,7 +173,9 @@ namespace Hl7.Fhir.Specification.Summary
             {
                 // Get some source file properties
                 var fi = new FileInfo(filePath);
-                result = Generate(fi, navigatorStreamFactory, harvesters);
+                // [WMR 20190403] Fall back to default factory
+                var factory = navigatorStreamFactory ?? DefaultNavigatorStreamFactory.FactoryDelegate;
+                result = Generate(fi, factory, harvesters);
             }
             catch (Exception ex)
             {
@@ -266,7 +268,7 @@ namespace Hl7.Fhir.Specification.Summary
             var result = new List<ArtifactSummary>();
 
             // Factory returns null for unknown file formats
-            if (navStream != null)
+            if (!(navStream is null))
             {
                 try
                 {
@@ -381,8 +383,12 @@ namespace Hl7.Fhir.Specification.Summary
                 // Factory returns null for unknown file formats
                 // [WMR 20190304] Allow DirectorySource to inject ConfigurableNavigatorStreamFactory instance
                 //navStream = DefaultNavigatorStreamFactory.Create(filePath);
-                navStream = navigatorStreamFactory?.Invoke(fi.FullName)
-                         ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
+
+                // [WMR 20190403] WRONG!
+                // ConfigurableNavigatorStreamFactory returns null for unknown file extensions
+                // No need to call DefaultNavigatorStreamFactory (redundant)
+                navStream = navigatorStreamFactory?.Invoke(fi.FullName);
+                // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
 
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }

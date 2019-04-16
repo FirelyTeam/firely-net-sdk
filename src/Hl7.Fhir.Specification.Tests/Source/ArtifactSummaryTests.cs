@@ -412,8 +412,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(summary.LastModified);
             }
         }
-
-        [TestMethod]
+     
         public void TestListSummariesWithExcludeFilter()
         {
             string path = "TestData";
