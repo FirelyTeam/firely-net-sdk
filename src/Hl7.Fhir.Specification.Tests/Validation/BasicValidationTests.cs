@@ -6,6 +6,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Concurrent;
@@ -185,7 +186,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now remove the choice available for OID
             var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
-            extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
+            
+            // [WMR 20190415] Fixed after #944
+            // R4: Oid is derived from, and therefore compatible with, Uri
+            // => Must also remove type option "Uri" to force a validation error
+            //extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
+            extValueDef.Type.RemoveAll(t => t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Oid)
+                                         || t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Uri));
+
 
             report = _validator.Validate(extensionInstance, extensionSd);
 
