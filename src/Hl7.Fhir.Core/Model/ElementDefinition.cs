@@ -130,9 +130,14 @@ namespace Hl7.Fhir.Model
                     sb.Append(TypeName);
                     sb.Append(" | ");
                     sb.Append(Code ?? "undefined");
-                    if (Profile != null)
+                    var profiles = ProfileElement;
+                    if (!(profiles is null) && profiles.Count > 0)
                     {
-                        sb.AppendFormat(" : '{0}'", Profile);
+                        sb.AppendFormat(" : '{0}'", profiles[0]?.Value);
+                        if (profiles.Count > 1)
+                        {
+                            sb.Append(" ...");
+                        }
                     }
                     return sb.ToString();
                 }
