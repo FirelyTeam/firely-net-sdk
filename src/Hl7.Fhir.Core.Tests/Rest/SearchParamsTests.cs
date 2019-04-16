@@ -168,6 +168,19 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(Tuple.Create("active", SortOrder.Descending), q.Sort.Skip(2).First());
         }
 
+        [TestMethod]
+        public void Dstu2SortById()
+        {
+            var q = new SearchParams();
+            q.Add("_sort:asc", "_id");
+            Assert.AreEqual(1, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("_id", SortOrder.Ascending), q.Sort.First());
+
+            q = new SearchParams();
+            q.Add("_sort:desc", "_id");
+            Assert.AreEqual(1, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("_id", SortOrder.Descending), q.Sort.First());
+        }
 
         [TestMethod]
         public void ParamOrderHasDefault()
@@ -179,6 +192,20 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(Tuple.Create("birthdate", SortOrder.Ascending), q.Sort.First());
             Assert.AreEqual(Tuple.Create("name", SortOrder.Ascending), q.Sort.Skip(1).First());
             Assert.AreEqual(Tuple.Create("active", SortOrder.Descending), q.Sort.Skip(2).First());
+        }
+
+        [TestMethod]
+        public void SortById()
+        {
+            var q = new SearchParams();
+            q.Add("_sort", "_id");
+            Assert.AreEqual(1, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("_id", SortOrder.Ascending), q.Sort.First());
+
+            q = new SearchParams();
+            q.Add("_sort", "-_id");
+            Assert.AreEqual(1, q.Sort.Count());
+            Assert.AreEqual(Tuple.Create("_id", SortOrder.Descending), q.Sort.First());
         }
 
         [TestMethod]
@@ -404,13 +431,13 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual("Invalid _sort: 'ascz' is not a recognized sort order", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", ",x,"));
-            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty sort element names", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", "a,,b"));
-            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty sort element names", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", "+x"));
-            Assert.AreEqual("Invalid _sort: must be a list of element names, optionally prefixed with '-'", formatException.Message);
+            Assert.AreEqual("Invalid _sort: must be a list of sort element names, optionally prefixed with '-'", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", String.Empty));
             Assert.AreEqual("Invalid _sort: value cannot be empty", formatException.Message);

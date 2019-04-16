@@ -183,9 +183,9 @@ namespace Hl7.Fhir.Rest
                 throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: value cannot be empty");
             var elements = value.Split(',');
             if (elements.Any(f => String.IsNullOrEmpty(f)))
-                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of non-empty element names");
-            if (!elements.All(f => Char.IsLetter(f[0]) || f[0] == '-'))
-                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of element names, optionally prefixed with '-'");
+                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of non-empty sort element names");
+            if (!elements.All(f => Char.IsLetter(f[0]) || f[0] == '_' || f[0] == '-'))
+                throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: must be a list of sort element names, optionally prefixed with '-'");
 
             var oppositeSortOrder = sortOrder == SortOrder.Ascending ?
                 SortOrder.Descending :
