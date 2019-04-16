@@ -19,9 +19,9 @@ namespace Hl7.Fhir.Support
     {
         public const string API_OPERATION_OUTCOME_SYSTEM = "http://hl7.org/fhir/dotnet-api-operation-outcome";
 
-        public readonly int Code;
-        public readonly OperationOutcome.IssueSeverity Severity;
-        public readonly OperationOutcome.IssueType Type;
+        public int Code;
+        public OperationOutcome.IssueSeverity Severity;
+        public OperationOutcome.IssueType Type;
 
         public CodeableConcept ToCodeableConcept(string text = null) => ToCodeableConcept(Code, text);
 
