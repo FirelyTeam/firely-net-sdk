@@ -58,6 +58,8 @@ namespace Hl7.Fhir.Model
             return value?.Value;
         }
 
+        public Canonical(Uri uri) : this(uri?.OriginalString) { }
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value, "^" + Canonical.PATTERN + "$", RegexOptions.Singleline);
