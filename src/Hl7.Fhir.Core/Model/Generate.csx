@@ -855,7 +855,7 @@ public class ValueSet
     {
         public bool Equals(ValueSetValue x, ValueSetValue y)
         {
-            return x.Code == x.Code;
+            return x.Code == y.Code;
         }
 
         public int GetHashCode(ValueSetValue obj)
