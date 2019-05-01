@@ -74,6 +74,8 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestCodingValidation()
         {
+            var dar = "http://terminology.hl7.org/CodeSystem/data-absent-reason";
+
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
                 ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason",
@@ -83,7 +85,7 @@ namespace Hl7.Fhir.Specification.Tests
             var val = binding.ToValidatable();
             var vc = new ValidationContext() { TerminologyService = _termService };
 
-            var c = new Coding("http://hl7.org/fhir/data-absent-reason", "not-a-number");
+            var c = new Coding(dar, "not-a-number");
             var result = val.Validate(c.ToTypedElement(), vc);
             Assert.True(result.Success);
 
@@ -92,11 +94,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
 
             c.Code = "not-a-number";
-            binding.Strength = null;
-            result = val.Validate(c.ToTypedElement(), vc);
-            Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);  // missing binding strength
-
             c.Display = "Not a Number (NaN)";
             binding.Strength = BindingStrength.Required;
             result = val.Validate(c.ToTypedElement(), vc);
@@ -127,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
                 ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason",
-                Strength = BindingStrength.Required
+                Strength = BindingStrength.Preferred
             };
 
             var val = binding.ToValidatable();

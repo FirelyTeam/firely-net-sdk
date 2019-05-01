@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir http://hl7.org/fhir/STU3/bundle.xsd" xmlns="http://hl7.org/fhir">
+<Bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://hl7.org/fhir http://hl7.org/fhir/R4/bundle.xsd"
+    xmlns="http://hl7.org/fhir">
   <meta>
     <profile value="http://nictiz.nl/fhir/StructureDefinition/Bundle-MedicationOverview"/>
   </meta>
@@ -9,7 +11,7 @@
       <List xmlns="http://hl7.org/fhir">
         <meta>
           <profile value="http://nictiz.nl/fhir/StructureDefinition/MedicationOverview"/>
-        </meta>        
+        </meta>
         <status value="current"/>
         <mode value="snapshot"/>
         <code>
@@ -29,7 +31,8 @@
         </entry>
         <entry>
           <item>
-            <reference value="MedicationDispense/medicationadministrationagreement-example"/>
+            <reference
+                value="MedicationDispense/medicationadministrationagreement-example"/>
           </item>
         </entry>
         <entry>
@@ -37,7 +40,7 @@
             <reference value="MedicationStatement/medicationuse-example"/>
           </item>
         </entry>
-      </List>      
+      </List>
     </resource>
   </entry>
   <entry>
@@ -45,9 +48,11 @@
       <MedicationRequest xmlns="http://hl7.org/fhir">
         <id value="medicationAgreement-example"/>
         <meta>
-          <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationAgreement"/>
+          <profile
+              value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationAgreement"/>
         </meta>
-        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-Duration">
+        <extension
+            url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-Duration">
           <valueDuration>
             <value value="4"/>
             <unit value="week"/>
@@ -55,7 +60,8 @@
             <code value="wk"/>
           </valueDuration>
         </extension>
-        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
+        <extension
+            url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
           <valuePeriod>
             <start value="2016-06-15"/>
             <end value="2016-07-13"/>
@@ -77,10 +83,8 @@
         </subject>
         <authoredOn value="2016-06-15"/>
         <requester>
-          <agent>
-            <reference value="Practitioner/example"/>
-            <display value="H.Huis"/>
-          </agent>
+          <reference value="Practitioner/example"/>
+          <display value="H.Huis"/>
         </requester>
         <reasonCode>
           <text value="Diabetus Mellitus"/>
@@ -110,10 +114,12 @@
               <display value="Oraal"/>
             </coding>
           </route>
-          <doseQuantity>
-            <value value="2"/>
-            <unit value="tablet"/>
-          </doseQuantity>
+          <doseAndRate>
+            <doseQuantity>
+              <value value="2"/>
+              <unit value="tablet"/>
+            </doseQuantity>
+          </doseAndRate>
         </dosageInstruction>
       </MedicationRequest>
     </resource>
@@ -125,7 +131,8 @@
         <meta>
           <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse"/>
         </meta>
-        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-AsAgreedIndicator">
+        <extension
+            url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-AsAgreedIndicator">
           <valueBoolean value="true"/>
         </extension>
         <identifier>
@@ -137,6 +144,10 @@
           <reference value="Medication/example"/>
           <display value="Ibuprofen"/>
         </medicationReference>
+        <subject>
+          <reference value="Patient/nl-core-patient-example-1"/>
+          <display value="dhr. P. Jansen"/>
+        </subject>
         <effectivePeriod>
           <start value="2016-06-27"/>
           <end value="2016-06-30"/>
@@ -146,11 +157,6 @@
           <reference value="Patient/nl-core-patient-example-1"/>
           <display value="dhr. P. Jansen"/>
         </informationSource>
-        <subject>
-          <reference value="Patient/nl-core-patient-example-1"/>
-          <display value="dhr. P. Jansen"/>
-        </subject>
-        <taken value="y"/>
         <reasonCode>
           <text value="Pijn"/>
         </reasonCode>
@@ -176,10 +182,12 @@
               <display value="Oraal"/>
             </coding>
           </route>
-          <doseQuantity>
-            <value value="1"/>
-            <unit value="tablet"/>
-          </doseQuantity>
+          <doseAndRate>
+            <doseQuantity>
+              <value value="1"/>
+              <unit value="tablet"/>
+            </doseQuantity>
+          </doseAndRate>
         </dosage>
       </MedicationStatement>
     </resource>
@@ -189,15 +197,19 @@
       <MedicationDispense xmlns="http://hl7.org/fhir">
         <id value="medicationadministrationagreement-example"/>
         <meta>
-          <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement"/>
+          <profile
+              value="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement"
+                    />
         </meta>
-        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
+        <extension
+            url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
           <valuePeriod>
             <start value="2016-06-17"/>
             <end value="2016-08-07"/>
           </valuePeriod>
         </extension>
-        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement-ReasonForDispense">
+        <extension
+            url="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement-ReasonForDispense">
           <valueString value="Eczeem oogleden"/>
         </extension>
         <identifier>
@@ -229,18 +241,20 @@
               <display value="Cutaan"/>
             </coding>
           </route>
-          <rateRatio>
-            <numerator>
-              <value value="2"/>
-              <unit value="zalf"/>
-            </numerator>
-            <denominator>
-              <value value="1"/>
-              <unit value="day"/>
-              <system value="http://unitsofmeasure.org"/>
-              <code value="d"/>
-            </denominator>
-          </rateRatio>
+          <doseAndRate>
+            <rateRatio>
+              <numerator>
+                <value value="2"/>
+                <unit value="zalf"/>
+              </numerator>
+              <denominator>
+                <value value="1"/>
+                <unit value="day"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="d"/>
+              </denominator>
+            </rateRatio>
+          </doseAndRate>
         </dosageInstruction>
         <dosageInstruction>
           <sequence value="2"/>
@@ -252,18 +266,20 @@
               <display value="Cutaan"/>
             </coding>
           </route>
-          <rateRatio>
-            <numerator>
-              <value value="1"/>
-              <unit value="zalf"/>
-            </numerator>
-            <denominator>
-              <value value="1"/>
-              <unit value="day"/>
-              <system value="http://unitsofmeasure.org"/>
-              <code value="d"/>
-            </denominator>
-          </rateRatio>
+          <doseAndRate>
+            <rateRatio>
+              <numerator>
+                <value value="1"/>
+                <unit value="zalf"/>
+              </numerator>
+              <denominator>
+                <value value="1"/>
+                <unit value="day"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="d"/>
+              </denominator>
+            </rateRatio>
+          </doseAndRate>
         </dosageInstruction>
         <dosageInstruction>
           <sequence value="3"/>
@@ -275,18 +291,20 @@
               <display value="Cutaan"/>
             </coding>
           </route>
-          <rateRatio>
-            <numerator>
-              <value value="3"/>
-              <unit value="zalf"/>
-            </numerator>
-            <denominator>
-              <value value="1"/>
-              <unit value="week"/>
-              <system value="http://unitsofmeasure.org"/>
-              <code value="w"/>
-            </denominator>
-          </rateRatio>
+          <doseAndRate>
+            <rateRatio>
+              <numerator>
+                <value value="3"/>
+                <unit value="zalf"/>
+              </numerator>
+              <denominator>
+                <value value="1"/>
+                <unit value="week"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="w"/>
+              </denominator>
+            </rateRatio>
+          </doseAndRate>
         </dosageInstruction>
       </MedicationDispense>
     </resource>

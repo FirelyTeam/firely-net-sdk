@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public void CustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
-            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
+            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R4.json");
             var structureDefNode = FhirJsonNode.Parse(structureDefJson);
             var customBasicCanonical = structureDefNode.Children("url").First().Text;
             #endregion
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public void BundleWithCustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
-            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
+            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R4.json");
             var structureDefNode = FhirJsonNode.Parse(structureDefJson);
             var structureDef = structureDefNode.ToPoco<StructureDefinition>();
             var customBasicCanonical = structureDefNode.Children("url").First().Text;

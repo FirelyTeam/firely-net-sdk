@@ -45,7 +45,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="TestData\CustomBasic-StructureDefinition-R3.json" />
+    <None Remove="TestData\CustomBasic-StructureDefinition-R4.json" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\ResourcesInSubfolder.zip" />
   </ItemGroup>

@@ -3311,10 +3311,8 @@
         },
         "authoredOn": "2004-10-09",
         "requester": {
-          "agent": {
             "reference": "urn:oid:2.16.528.1.1007.3.1.900014719",
             "display": "Huisarts 123"
-          }
         },
         "dosageInstruction": [
           {
