@@ -22,7 +22,6 @@ using System.Linq;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
@@ -41,6 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         private readonly DirectorySourceSettings _settings;
         private readonly ArtifactSummaryGenerator _summaryGenerator;
         private readonly ConfigurableNavigatorStreamFactory _navigatorFactory;
+        private readonly NavigatorStreamFactory _navigatorFactoryDelegate;
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
@@ -123,7 +123,11 @@ namespace Hl7.Fhir.Specification.Source
         // Internal ctor
         DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
-            ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
+            //ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            if (contentDirectory is null) { throw Error.ArgumentNull(nameof(contentDirectory)); }
+            ContentDirectory = Path.GetFullPath(contentDirectory);
+
             // [WMR 20171023] Clone specified settings to prevent shared state
             _settings = settings != null 
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
@@ -133,11 +137,12 @@ namespace Hl7.Fhir.Specification.Source
             {
                 ThrowOnUnsupportedFormat = false
             };
+            _navigatorFactoryDelegate = new NavigatorStreamFactory(_navigatorFactory.Create);
             // Initialize Lazy
             Refresh();
         }
 
-        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        /// <summary>Returns the full path to the content directory.</summary>
         public string ContentDirectory { get; }
 
         /// <summary>
@@ -459,6 +464,8 @@ namespace Hl7.Fhir.Specification.Source
             // However this won't detect Refresh on main tread while bg threads are reading
 
             var summaries = GetSummaries();
+            var factory = _navigatorFactoryDelegate;
+
             foreach (var filePath in filePaths)
             {
                 bool exists = File.Exists(filePath);
@@ -470,7 +477,8 @@ namespace Hl7.Fhir.Specification.Source
                 else if (!summaries.Any(s => PathComparer.Equals(filePath, s.Origin)))
                 {
                     // File was added; generate and add new summary
-                    var newSummaries = _summaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
+                    // [WMR 20190403] Fixed: inject navigator factory delegate
+                    var newSummaries = _summaryGenerator.Generate(filePath, factory, _settings.SummaryDetailsHarvesters);
                     summaries.AddRange(newSummaries);
                     result |= newSummaries.Count > 0;
                 }
@@ -493,11 +501,43 @@ namespace Hl7.Fhir.Specification.Source
         /// Also accepts relative file paths.
         /// </summary>
         /// <exception cref="InvalidOperationException">More than one file exists with the specified name.</exception>
-        public Stream LoadArtifactByName(string name)
+        public Stream LoadArtifactByName(string filePath)
         {
-            if (name == null) throw Error.ArgumentNull(nameof(name));
-            var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, PathComparison));
-            return fullFileName == null ? null : File.OpenRead(fullFileName);
+            if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
+
+            var fullList = GetFilePaths();
+            // [WMR 20190219] https://github.com/FirelyTeam/fhir-net-api/issues/875
+            // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
+            //return fullFileName == null ? null : File.OpenRead(fullFileName);
+
+            // Exact match on absolute path, or partial match on relative path
+            bool isMatch(ArtifactSummary summary)
+                => PathComparer.Equals(summary.Origin, filePath)
+                || summary.Origin.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison);
+
+            // Only consider valid summaries for recognized artifacts
+            bool isCandidateArtifact(ArtifactSummary summary)
+                => !(summary is null)
+                // EK
+                //      && !summary.IsFaulted
+                && !(summary.Origin is null)
+                && isMatch(summary);
+
+            var candidates = GetSummaries().Where(isCandidateArtifact);
+
+            // We might match multiple files; pick best/nearest fit
+            ArtifactSummary match = null;
+            foreach (var candidate in candidates)
+            {
+                if (match is null || candidate.Origin.Length < match.Origin.Length)
+                {
+                    match = candidate;
+                }
+            }
+
+            if (match?.Origin is null) { return null; }
+
+            return File.OpenRead(match.Origin);
         }
 
         #endregion
@@ -824,19 +864,21 @@ namespace Hl7.Fhir.Specification.Source
             return summaries;
         }
 
-        private List<ArtifactSummary> harvestSummaries(List<string> paths)
+        List<ArtifactSummary> harvestSummaries(List<string> paths)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
             var cnt = paths.Count;
             var scanResult = new List<ArtifactSummary>(cnt);
             var harvesters = _settings.SummaryDetailsHarvesters;
+            var factory = _navigatorFactoryDelegate;
 
             if (!_settings.MultiThreaded)
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = _summaryGenerator.Generate(filePath, harvesters);
+                    // [WMR 20190403] Fixed: inject navigator factory delegate
+                    var summaries = _summaryGenerator.Generate(filePath, factory, harvesters);
 
                     // [WMR 20180423] Generate may return null, e.g. if specified file has unknown extension
                     if (summaries != null)
@@ -872,7 +914,8 @@ namespace Hl7.Fhir.Specification.Source
                         {
                             // Harvest summaries from single file
                             // Save each result to a separate array entry (no locking required)
-                            summaries[i] = _summaryGenerator.Generate(paths[i], harvesters);
+                            // [WMR 20190403] Fixed: inject navigator factory delegate
+                            summaries[i] = _summaryGenerator.Generate(paths[i], factory, harvesters);
                         });
                 }
                 catch (AggregateException aex)
@@ -915,14 +958,11 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             // Always use the current Xml/Json parser settings
-            var settings = _settings;
-            var factory = _navigatorFactory;
-            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
-            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
+            var factory = GetNavigatorStreamFactory();
 
             // Also use the current PoCo parser settings
             var pocoSettings = PocoBuilderSettings.CreateDefault();
-            settings.ParserSettings?.CopyTo(pocoSettings);
+            _settings.ParserSettings?.CopyTo(pocoSettings);
 
             T result = null;
 
@@ -949,6 +989,16 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             return result;
+        }
+
+        /// <summary>Return <see cref="ConfigurableNavigatorStreamFactory"/> instance, updated with current Xml/Json parser settings.</summary>
+        ConfigurableNavigatorStreamFactory GetNavigatorStreamFactory()
+        {
+            var settings = _settings;
+            var factory = _navigatorFactory;
+            settings.XmlParserSettings.CopyTo(factory.XmlParsingSettings);
+            settings.JsonParserSettings.CopyTo(factory.JsonParsingSettings);
+            return factory;
         }
 
         #endregion
