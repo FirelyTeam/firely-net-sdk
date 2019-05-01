@@ -403,6 +403,25 @@ namespace Hl7.Fhir.Model
             return type == typeof(SimpleQuantity) || type == typeof(MoneyQuantity);
         }
 
+
+        public static bool IsBindable(string type)
+        {
+            switch (type)
+            {
+                // This is the fixed list, for all FHIR versions
+                case "code":
+                case "Coding":
+                case "CodeableConcept":
+                case "Quantity":
+                case "string":
+                case "uri":
+                case "Extension":       // for backwards compat with DSTU2
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -485,6 +504,7 @@ namespace Hl7.Fhir.Model
 
     public static class ModelInfoExtensions
     {
+        [Obsolete("Use ModelInfo.GetFhirTypeNameForType() instead.")]       // Obsoleted on 20181213 by EK
         public static string GetCollectionName(this Type type)
         {
             if (type.CanBeTreatedAsType(typeof(Resource)))

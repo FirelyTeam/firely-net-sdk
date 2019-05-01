@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
 
@@ -41,11 +42,6 @@
     <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
     <None Remove="TestData\typeErrors.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
   </ItemGroup>
 
   <ItemGroup>

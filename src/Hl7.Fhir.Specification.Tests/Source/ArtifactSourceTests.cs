@@ -412,5 +412,70 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-   }
+        // LoadByName should handle duplicate filenames in (different subfolders of) the contentdirectory
+        // https://github.com/FirelyTeam/fhir-net-api/issues/875
+
+        [TestMethod]
+        public void OpenDuplicateFileNames()
+        {
+            var testPath = prepareExampleDirectory(out int numFiles);
+
+            // Additional temporary folder without read permissions
+            const string subFolderName = "sub";
+            var fullSubFolderPath = Path.Combine(testPath, subFolderName);
+            Directory.CreateDirectory(fullSubFolderPath);
+
+            string srcPath = Path.Combine("TestData", "snapshot-test", "WMR");
+            const string srcFile = "MyBasic.structuredefinition.xml";
+
+            // Create duplicate files in content directory and subfolder
+            copy(srcPath, srcFile, testPath);
+            copy(srcPath, srcFile, fullSubFolderPath);
+
+            var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
+
+            Resource OpenStream(string filePath)
+            {
+                using (var stream = dirSource.LoadArtifactByName(filePath))
+                {
+                    return new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                }
+            }
+
+            // Retrieve artifacts by full path
+
+            var rootFilePath = Path.Combine(testPath, srcFile);
+            Assert.IsTrue(File.Exists(rootFilePath));
+            var res = OpenStream(rootFilePath);
+            Assert.IsNotNull(res);
+            // Modify the resource id and save back
+            var dupId = res.Id;
+            var rootId = Guid.NewGuid().ToString();
+            res.Id = rootId;
+            var xml = new FhirXmlSerializer().SerializeToString(res);
+
+            var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
+            Assert.IsTrue(File.Exists(dupFilePath));
+            res = OpenStream(dupFilePath);
+            Assert.IsNotNull(res);
+            // Verify that we received the duplicate file from subfolder,
+            // not the modified file in the root content directory
+            Assert.AreEqual(dupId, res.Id);
+            Assert.AreNotEqual(rootId, res.Id);
+
+            // Retrieve artifact by file name
+            // Should return nearest match, i.e. from content directory
+            res = OpenStream(srcFile);
+            Assert.IsNotNull(res);
+            Assert.AreEqual(dupId, res.Id);
+
+            // Retrieve artifact by relative path
+            // Should return duplicate from subfolder
+            var relPath = Path.Combine(subFolderName, srcFile);
+            res = OpenStream(relPath);
+            Assert.IsNotNull(res);
+            Assert.AreEqual(dupId, res.Id);
+        }
+
+    }
 }
