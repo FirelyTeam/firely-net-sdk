@@ -20,6 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.FhirPath.Tests
 {
+    [TestClass]
     public class SourceNodeTests
     {
         readonly SourceNode patient;
