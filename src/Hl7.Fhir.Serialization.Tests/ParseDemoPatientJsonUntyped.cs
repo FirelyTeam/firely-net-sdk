@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CatchesUnsupportedFeatures()
         {
             var nav = FhirJsonNodeParse("{ 'a': '   ' }", "test");
-            Assert.ThrowsException<FormatException>(() => nav.VisitAll());
+            ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
             nav = FhirJsonNodeParse("{ 'a': {}, '_a' : {} }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
