@@ -79,7 +79,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual("boolean", data.InstanceType);
         }
 
-        [Fact]
+        [TestMethod]
         public void SuccessfullyCreated()
         {
             var pat = new Patient();
@@ -95,15 +95,15 @@ namespace Hl7.FhirPath.Tests
             XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
         }
 
-        [Fact]
+        [TestMethod]
         public void ClonesOk()
         {
             var patientClone = patient.Clone();
             var result = patientClone.IsEqualTo(patient);
-            Assert.True(result.Success);
+            Assert.IsTrue(result.Success);
         }
 
-        [Fact]
+        [TestMethod]
         public void KnowsPath()
         {
             Assert.AreEqual("Patient", patient.Location);

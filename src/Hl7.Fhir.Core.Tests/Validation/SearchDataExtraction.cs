@@ -26,6 +26,10 @@ using Hl7.Fhir.FhirPath;
 using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
+#if NET40
+using ICSharpCode.SharpZipLib.Zip;
+#endif
+using Hl7.Fhir.Tests;
 
 namespace HealthConnex.Fhir.Server.Tests
 {
@@ -48,7 +52,11 @@ namespace HealthConnex.Fhir.Server.Tests
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
+#if NET40
+            var zip = new ZipArchive(new ZipFile(examplesZip));
+#else
             var zip = ZipFile.OpenRead(examplesZip);
+#endif
             using (zip)
             {
                 foreach (var entry in zip.Entries)

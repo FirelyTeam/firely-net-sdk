@@ -78,7 +78,11 @@ namespace Hl7.Fhir.Specification
             _classMapping.PropertyMappings
                 .Where(pm => !pm.RepresentsValueElement)
                 .Select(pm => (IElementDefinitionSummary)new PocoElementSerializationInfo(pm))
+#if NET40
+                .ToReadOnlyCollection();
+#else
                 .ToList();
+#endif
         public IElementDefinitionSummary GetElement(string name) =>
             _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement && pm.Name == name)
                 .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();                
