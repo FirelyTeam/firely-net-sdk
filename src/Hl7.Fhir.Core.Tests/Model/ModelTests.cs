@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
 using System;
@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -368,6 +369,16 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.HumanName));
             Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Oid));
+
+            // FHIR: Canonical derives from Uri (not from String)
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Canonical));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Url));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.String, FHIRAllTypes.Canonical));
+
+            // FHIR: Money derives from Quantity; MoneyQuantity is a profile on Quantity
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Quantity, FHIRAllTypes.Money));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Quantity, FHIRAllTypes.MoneyQuantity));
+            Assert.IsTrue(ModelInfo.IsProfiledQuantity(FHIRAllTypes.MoneyQuantity));
         }
 
         [TestMethod]
@@ -557,5 +568,145 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
         }
 
+
+        // [WMR 20190413] NEW
+
+        IEnumerable<Type> FhirCsTypes => ModelInfo.FhirCsTypeToString.Keys;
+
+        [TestMethod]
+        public void TestIsConformanceResource()
+        {
+            // Verify that ModelInfo.IsConformanceResource overloads returns true for all types that implement IConformanceResource
+            foreach (var type in FhirCsTypes)
+            {
+                //var supportsInterface = typeof(IConformanceResource).IsAssignableFrom(type);
+                var supportsInterface = type.CanBeTreatedAsType(typeof(IConformanceResource));
+                Assert.AreEqual(supportsInterface, ModelInfo.IsConformanceResource(type));
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.AreEqual(supportsInterface, ModelInfo.IsConformanceResource(typeName));
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.AreEqual(supportsInterface, ModelInfo.IsConformanceResource(typeFlag));
+            }
+        }
+
+        [TestMethod]
+        public void TestIsPrimitive()
+        {
+            // Verify that ModelInfo.IsPrimitive overloads returns true for all types derived from Primitive
+            foreach (var type in FhirCsTypes)
+            {
+                var isPrimitive = type.CanBeTreatedAsType(typeof(Primitive));
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.IsNotNull(typeName);
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(typeFlag.HasValue);
+                Assert.AreEqual(isPrimitive, ModelInfo.IsPrimitive(type));
+                Assert.AreEqual(isPrimitive, ModelInfo.IsPrimitive(typeName));
+                Assert.AreEqual(isPrimitive, ModelInfo.IsPrimitive(typeFlag.Value));
+            }
+        }
+
+        [TestMethod]
+        public void TestIsDataType()
+        {
+            // Verify that ModelInfo.IsDataType returns true for all types derived from Element but not from Primitive
+            foreach (var type in FhirCsTypes)
+            {
+                var isDataType =
+                    type == typeof(Resource)
+                    || type == typeof(DomainResource)
+                    || (type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(Primitive)));
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.IsNotNull(typeName);
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(typeFlag.HasValue);
+                Assert.AreEqual(isDataType, ModelInfo.IsDataType(type));
+                Assert.AreEqual(isDataType, ModelInfo.IsDataType(typeName));
+                Assert.AreEqual(isDataType, ModelInfo.IsDataType(typeFlag.Value));
+            }
+        }
+
+        [TestMethod]
+        public void TestIsReference()
+        {
+            // Verify that ModelInfo.IsReference overloads returns true for type (Resource)Reference
+            foreach (var type in FhirCsTypes)
+            {
+                var isReference = type == typeof(ResourceReference);
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.IsNotNull(typeName);
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(typeFlag.HasValue);
+                Assert.AreEqual(isReference, ModelInfo.IsReference(type));
+                Assert.AreEqual(isReference, ModelInfo.IsReference(typeName));
+                Assert.AreEqual(isReference, ModelInfo.IsReference(typeFlag.Value));
+            }
+        }
+
+        [TestMethod]
+        public void TestIsProfiledQuantity()
+        {
+            // Verify that ModelInfo.IsProfiledQuantity overloads returns true for SimpleQuantity & MoneyQuantity
+            foreach (var type in FhirCsTypes)
+            {
+                var isProfiledQuantity = type == typeof(SimpleQuantity) || type == typeof(MoneyQuantity);
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.IsNotNull(typeName);
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(typeFlag.HasValue);
+                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(type));
+                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(typeName));
+                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(typeFlag.Value));
+            }
+        }
+
+        [TestMethod]
+        public void TestTypeHierarchy()
+        {
+            // Verify ModelInfo methods are in agreement with the actual type hierarchy
+            // - ModelInfo.IsInstanceTypeFor
+            // - ModelInfo.IsCoreSuperType
+            // - ModelInfo.IsProfiledQuantity
+            var types = ModelInfo.FhirCsTypeToString.Keys;
+            foreach (var type in types)
+            {
+                Assert.IsTrue(ModelInfo.IsCoreModelType(type));
+                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                Assert.IsNotNull(typeName);
+                Assert.IsTrue(ModelInfo.IsCoreModelType(typeName));
+                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(typeFlag.HasValue);
+
+                if (!ModelInfo.IsCoreSuperType(type))
+                {
+                    var baseType = type.BaseType;
+                    while (!ModelInfo.IsCoreSuperType(baseType))
+                    {
+                        // Skip intermediate abstract types, e.g. Primitive<T>
+                        if (ModelInfo.IsCoreModelType(baseType))
+                        {
+                            var baseTypeName = ModelInfo.GetFhirTypeNameForType(baseType);
+                            Assert.IsNotNull(baseTypeName);
+                            var baseTypeFlag = ModelInfo.FhirTypeNameToFhirType(baseTypeName);
+                            Assert.IsTrue(baseTypeFlag.HasValue);
+
+                            // FHIR: MoneyQuantity & SimpleQuantity are defined as profiles on Quantity (not derived)
+                            // API: MoneyQuantity & SimpleQuantity are derived from Quantity
+                            if (ModelInfo.IsProfiledQuantity(type))
+                            {
+                                Assert.AreEqual(typeof(Quantity), baseType);
+                                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(baseTypeName, typeName));
+                                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(baseTypeFlag.Value, typeFlag.Value));
+                                break;
+                            }
+
+                            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(baseTypeName, typeName));
+                            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(baseTypeFlag.Value, typeFlag.Value));
+                        }
+                        baseType = baseType.BaseType;
+                    }
+                }
+            }
+        }
     }
 }

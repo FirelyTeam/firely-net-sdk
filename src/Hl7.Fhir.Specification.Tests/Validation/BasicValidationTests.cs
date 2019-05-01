@@ -6,6 +6,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Concurrent;
@@ -133,7 +134,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This unit test proves issue 552: https://github.com/ewoutkramer/fhir-net-api/issues/552
+        /// This unit test proves issue 552: https://github.com/FirelyTeam/fhir-net-api/issues/552
         /// </summary>
         [Fact]
         public void ValidateOidType()
@@ -185,7 +186,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now remove the choice available for OID
             var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
-            extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
+            
+            // [WMR 20190415] Fixed after #944
+            // R4: Oid is derived from, and therefore compatible with, Uri
+            // => Must also remove type option "Uri" to force a validation error
+            //extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
+            extValueDef.Type.RemoveAll(t => t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Oid)
+                                         || t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Uri));
+
 
             report = _validator.Validate(extensionInstance, extensionSd);
 
@@ -812,7 +820,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 423  (https://github.com/ewoutkramer/fhir-net-api/issues/423)
+        /// Test for issue 423  (https://github.com/FirelyTeam/fhir-net-api/issues/423)
         /// </summary>
         [Fact]
         public void ValidateInternalReferenceWithinContainedResources()
@@ -843,7 +851,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 556 (https://github.com/ewoutkramer/fhir-net-api/issues/556) 
+        /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
@@ -887,7 +895,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This test proves issue https://github.com/ewoutkramer/fhir-net-api/issues/617
+        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617
         /// </summary>
         [Fact]
         public void ValidateConditionalResourceInBundle()

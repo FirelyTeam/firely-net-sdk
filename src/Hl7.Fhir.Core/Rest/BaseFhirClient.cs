@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.Model;
+﻿/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
@@ -725,8 +733,8 @@ namespace Hl7.Fhir.Rest
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
         /// <param name="bundle">The bundled creates, updates and deleted</param>
-        /// <returns>A bundle as returned by the server after it has processed the transaction, or null
-        /// if an error occurred.</returns>
+        /// <returns>A bundle as returned by the server after it has processed the transaction, or 
+        /// a FhirOperationException will be thrown if an error occurred.</returns>
         public Task<Bundle> TransactionAsync(Bundle bundle)
         {
             if (bundle == null) throw new ArgumentNullException(nameof(bundle));
@@ -738,8 +746,8 @@ namespace Hl7.Fhir.Rest
         /// Send a set of creates, updates and deletes to the server to be processed in one transaction
         /// </summary>
         /// <param name="bundle">The bundled creates, updates and deleted</param>
-        /// <returns>A bundle as returned by the server after it has processed the transaction, or null
-        /// if an error occurred.</returns>
+        /// <returns>A bundle as returned by the server after it has processed the transaction, or 
+        /// a FhirOperationException will be thrown if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
         {
             return TransactionAsync(bundle).WaitResult();
@@ -1015,9 +1023,12 @@ namespace Hl7.Fhir.Rest
                 if (result is OperationOutcome)
                     return null;
 
-                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", response.Request.Method,
-                    response.Request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException(message, Requester.LastStatusCode.Value);
+                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
+                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
+
+                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
+                throw new FhirOperationException(message, code);
+
             }
             else
                 return result as TResource;
