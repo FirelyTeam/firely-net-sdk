@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
                         testFileCount++;
                         // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
-                        resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+                        //resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
                         resource.AddDefaultConstraints();
                         var outcome = new OperationOutcome();
                         resource.ValidateInvariants(outcome);
@@ -191,12 +191,12 @@ namespace Hl7.Fhir.Tests.Serialization
                         resource.AddDefaultConstraints();
                         if (invariantCache.ContainsKey(resource.ResourceType.ToString()))
                         {
-                            resource.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
+                            ((IInvariantConstraints)resource).InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
                         }
                         var outcome = new OperationOutcome();
                         resource.ValidateInvariants(outcome);
                         // Debug.WriteLine("Key: " + String.Join(", ", resource.InvariantConstraints.Select(s => s.Key)));
-                        foreach (var item in resource.InvariantConstraints)
+                        foreach (var item in ((IInvariantConstraints)resource).InvariantConstraints)
                         {
                             if (checkedCode.Contains(item.Key))
                                 continue;

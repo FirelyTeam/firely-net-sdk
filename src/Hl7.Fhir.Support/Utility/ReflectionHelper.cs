@@ -47,6 +47,19 @@ namespace Hl7.Fhir.Utility
             return (attributes.Count() > 0) ? (T)attributes.First() : null;
         }
 
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        public static IEnumerable<T> GetAttributesOnEnum<T>(this Enum enumVal) where T : System.Attribute
+        {
+            var type = enumVal.GetType();
+            var memInfo = type.GetTypeInfo().GetDeclaredField(enumVal.ToString());
+            var attributes = memInfo.GetCustomAttributes(typeof(T), false);
+            return (attributes.Count() > 0) ? (IEnumerable<T>)attributes : null;
+        }
 
         public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {

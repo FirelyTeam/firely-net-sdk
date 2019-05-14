@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
+using System.Text.RegularExpressions;
 #if !NETSTANDARD1_1
 using System.Runtime.Serialization;
 #endif
@@ -47,6 +48,8 @@ namespace Hl7.Fhir.Rest
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
     public class ResourceIdentity : Uri
     {
+        public const string HISTORY = "_history";
+
         /// <summary>
         /// Creates an Resource Identity instance for a Resource given a resource's location.
         /// </summary>
@@ -76,13 +79,13 @@ namespace Hl7.Fhir.Rest
                 if (baseUri == null)
                 {
                     return versionId != null ?
-                        string.Format("{0}/{1}/{2}/{3}", resourceType, id, TransactionBuilder.HISTORY, versionId) :
+                        string.Format("{0}/{1}/{2}/{3}", resourceType, id, HISTORY, versionId) :
                         string.Format("{0}/{1}", resourceType, id);
                 }
                 else
                 {
                     if (versionId != null)
-                        return construct(baseUri, resourceType, id, TransactionBuilder.HISTORY, versionId);
+                        return construct(baseUri, resourceType, id, HISTORY, versionId);
                     else
                         return construct(baseUri, resourceType, id);
                 }
@@ -201,13 +204,6 @@ namespace Hl7.Fhir.Rest
             return new ResourceIdentity(null, null, id, null, ResourceIdentityForm.Local);
         }
 
-
-        public static ResourceIdentity Core(FHIRAllTypes type)
-        {
-            return ResourceIdentity.Core(type.GetLiteral());
-        }
-
-
         public const string CORE_BASE_URL = "http://hl7.org/fhir/StructureDefinition/";
 
         public static ResourceIdentity Core(string type)
@@ -215,6 +211,33 @@ namespace Hl7.Fhir.Rest
             return new ResourceIdentity(CORE_BASE_URL + type);
         }
 
+
+        public static ResourceIdentity Core(FHIRAllTypes type)
+        {
+            return ResourceIdentity.Core(type.GetLiteral());
+        }
+        
+        public static bool IsRestResourceIdentity(string url)
+        {
+            if (url == null) return false;
+
+            if (url.Contains("$"))
+                return false; // This is an operation, so not a resource identity
+
+
+            var RESTURI_PATTERN = @"((http | https)://([A-Za-z0-9\\\/\.\:\%\$])*)?(";
+            RESTURI_PATTERN += @"[A-Z][A-Za-z ]*";
+            RESTURI_PATTERN += @")\/[A-Za-z0-9\-\.]{1,64}(\/_history\/[A-Za-z0-9\-\.]{1,64})?";
+
+            return Regex.IsMatch(url, RESTURI_PATTERN);
+        }
+
+        public static bool IsRestResourceIdentity(Uri uri)
+        {
+            if (uri == null) return false;
+
+            return IsRestResourceIdentity(uri.OriginalString);
+        }
 
         private static bool isAbsoluteUrl(string url)
         {
@@ -306,13 +329,14 @@ namespace Hl7.Fhir.Rest
 
                 var history = -1;
                 for(var index=0; index<count; index++) 
-                    if(components[index] == TransactionBuilder.HISTORY) history = index;
+                    if(components[index] == HISTORY) history = index;
                 if (history > -1 && history == count - 1) return; // illegal use, there's just a _history component, but no version id
 
                 int resourceTypePos = (history > -1) ? history - 2 : count - 2;
 
                 ResourceType = components[resourceTypePos];
-                if (!ModelInfo.IsKnownResource(ResourceType))
+                var isKnownResourcePattern = @"(^[A-Z][A-Za-z]*$)";
+                if (!Regex.IsMatch(ResourceType, isKnownResourcePattern))
                 {
                     ResourceType = null;
                     return;
@@ -534,17 +558,7 @@ namespace Hl7.Fhir.Rest
             return IsTargetOf(new ResourceIdentity(reference.OriginalString));
         }
 
-        public static bool IsRestResourceIdentity(string url)
-        {
-            return HttpUtil.IsRestResourceIdentity(url);
-        }
-
-        public static bool IsRestResourceIdentity(Uri uri)
-        {
-            if (uri == null) return false;
-
-            return HttpUtil.IsRestResourceIdentity(uri.OriginalString);
-        }
+        
 
     }
 

@@ -88,8 +88,8 @@ namespace Hl7.Fhir.Model
 
             return FindContainedResource(new ResourceReference(reference));
         }
-            
-        
+
+
 
     }
 }

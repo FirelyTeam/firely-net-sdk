@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Utility
             var attr = e.GetAttributeOnEnum<DescriptionAttribute>();
             return attr?.Description ?? e.ToString();
         }
-
+        
         private static Dictionary<Type, EnumMapping> _cache = new Dictionary<Type, EnumMapping>();
         private static Object _cacheLock = new Object();
 

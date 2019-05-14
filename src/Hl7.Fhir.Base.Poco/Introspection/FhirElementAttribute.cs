@@ -30,6 +30,7 @@
 
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections;
@@ -40,7 +41,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public sealed class FhirElementAttribute : ValidationAttribute
     {
         readonly string name;
@@ -68,6 +69,8 @@ namespace Hl7.Fhir.Introspection
         public bool InSummary { get; set; }
 
         public Type TypeRedirect { get; set; }
+
+        public EnumFhirVersion FhirVersion { get; set; }
 
         // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
         // FhirElement while validating. This allows us to extend validation into each FhirElement,

@@ -15,6 +15,7 @@ namespace Hl7.Fhir.Rest
 {
     public class TransactionBuilder
     {
+        [Obsolete("Use the HISTORY const from ResourceIdentity instead")]
         public const string HISTORY = "_history";
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";

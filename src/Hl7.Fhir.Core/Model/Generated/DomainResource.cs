@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DomainResource", IsResource=true)]
     [DataContract]
-    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged, IInvariantConstraints
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DomainResource; } }
@@ -151,7 +151,8 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            base.AddDefaultConstraints();
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
 
             InvariantConstraints.Add(DomainResource_DOM_2);
             InvariantConstraints.Add(DomainResource_DOM_1);
@@ -230,6 +231,9 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
+        
     }
-    
+
 }

@@ -62,6 +62,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
             // Inspect the HL7.Fhir.Model assembly
             inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+            inspector.Import(typeof(DomainResource).GetTypeInfo().Assembly);
 
             // Check for presence of some basic ingredients
             Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));

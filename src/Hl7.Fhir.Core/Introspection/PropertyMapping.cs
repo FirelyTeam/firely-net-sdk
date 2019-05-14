@@ -9,9 +9,11 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
@@ -49,11 +51,15 @@ namespace Hl7.Fhir.Introspection
 
             PropertyMapping result = new PropertyMapping();
 
-            var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+            var elementAttributes = prop.GetCustomAttributes<FhirElementAttribute>();
+            FhirElementAttribute elementAttr = null;
+            if (elementAttributes != null)
+                elementAttr = elementAttributes.FirstOrDefault(e => e.FhirVersion == EnumFhirVersion.Default || e.FhirVersion == AssemblyUtil.AssemblyVersion);
+
             var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
             var allowedTypes = prop.GetCustomAttribute<Validation.AllowedTypesAttribute>();
 
-            result.Name = determinePropertyName(prop);
+            result.Name = determinePropertyName(prop, elementAttr);
             result.ImplementingType = prop.PropertyType;
 
             result.InSummary = elementAttr?.InSummary ?? false;
@@ -81,6 +87,14 @@ namespace Hl7.Fhir.Introspection
             // * for a choice, ImplementingType = Any, but FhirType[] contains the possible choices
             // * some elements (e.g. Extension.url) have ImplementingType = string, but FhirType = FhirUri, etc.
             if (allowedTypes != null)
+                if(allowedTypes.AllowOpenTypes)
+                {
+                    var CsTypes = new List<Type>();
+                    foreach (var type in ModelInfo.OpenTypes)
+                        CsTypes.Add(ModelInfo.GetTypeForFhirType(type.GetLiteral()));
+                    result.FhirType = CsTypes.ToArray();
+                }
+            else
                 result.FhirType = allowedTypes.Types;
             else if (elementAttr?.TypeRedirect != null)
                 result.FhirType = new[] { elementAttr.TypeRedirect };
@@ -104,9 +118,9 @@ namespace Hl7.Fhir.Introspection
             return result;
         }
 
-        private static string determinePropertyName(PropertyInfo prop)
+        private static string determinePropertyName(PropertyInfo prop, FhirElementAttribute elementAttr)
         {
-            var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+            //var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
 
             if(elementAttr != null && elementAttr.Name != null)
                 return elementAttr.Name;

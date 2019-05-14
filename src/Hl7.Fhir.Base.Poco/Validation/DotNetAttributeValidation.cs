@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Validation
         }
      
 
-        internal static ValidationResult BuildResult(ValidationContext context, string message, params object[] messageArgs)
+        public static ValidationResult BuildResult(ValidationContext context, string message, params object[] messageArgs)
         {
             var resultMessage = String.Format(message, messageArgs);
 

@@ -73,20 +73,20 @@ namespace Hl7.Fhir.Model
             [EnumLiteral("delete", "http://hl7.org/fhir/resource-validation-mode")]
             Delete,
         }
-        
+
         /// <summary>
         /// Logical id of this artifact
         /// </summary>
-        [FhirElement("id", InSummary=true, Order=10)]
+        [FhirElement("id", InSummary = true, Order = 10)]
         [DataMember]
         public Hl7.Fhir.Model.Id IdElement
         {
             get { return _IdElement; }
             set { _IdElement = value; OnPropertyChanged("IdElement"); }
         }
-        
+
         private Hl7.Fhir.Model.Id _IdElement;
-        
+
         /// <summary>
         /// Logical id of this artifact
         /// </summary>
@@ -98,14 +98,14 @@ namespace Hl7.Fhir.Model
             get { return IdElement != null ? IdElement.Value : null; }
             set
             {
-                if(value == null)
-                  IdElement = null; 
+                if (value == null)
+                    IdElement = null;
                 else
-                  IdElement = new Hl7.Fhir.Model.Id(value);
+                    IdElement = new Hl7.Fhir.Model.Id(value);
                 OnPropertyChanged("Id");
             }
         }
-        
+
         /// <summary>
         /// Metadata about the resource
         /// </summary>
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopy();
+                if(IdElement != null) dest.IdElement = IdElement;
                 if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Meta)Meta.DeepCopy();
                 if(ImplicitRulesElement != null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)ImplicitRulesElement.DeepCopy();
                 if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
@@ -199,30 +199,30 @@ namespace Hl7.Fhir.Model
             else
             	throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
-        
+
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Resource;
-            if(otherT == null) return false;
-            
-            if( !DeepComparable.Matches(IdElement, otherT.IdElement)) return false;
-            if( !DeepComparable.Matches(Meta, otherT.Meta)) return false;
-            if( !DeepComparable.Matches(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
-            if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
-            
+            if (otherT == null) return false;
+
+            if (!DeepComparable.Matches(IdElement, otherT.IdElement)) return false;
+            if (!DeepComparable.Matches(Meta, otherT.Meta)) return false;
+            if (!DeepComparable.Matches(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
+            if (!DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
+
             return true;
         }
-        
+
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Resource;
-            if(otherT == null) return false;
-            
-            if( !DeepComparable.IsExactly(IdElement, otherT.IdElement)) return false;
-            if( !DeepComparable.IsExactly(Meta, otherT.Meta)) return false;
-            if( !DeepComparable.IsExactly(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
-            if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
-            
+            if (otherT == null) return false;
+
+            if (!DeepComparable.IsExactly(IdElement, otherT.IdElement)) return false;
+            if (!DeepComparable.IsExactly(Meta, otherT.Meta)) return false;
+            if (!DeepComparable.IsExactly(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
+            if (!DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
+
             return true;
         }
 

@@ -37,16 +37,6 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
-    public interface IExtendable
-    {
-        List<Extension> Extension { get; set; }
-    }
-
-    public interface IModifierExtendable : IExtendable
-    {
-        List<Extension> ModifierExtension { get; set; }
-    }
-
     public static class ExtensionExtensions
     {
         public static IEnumerable<Extension> AllExtensions(this IExtendable extendable)

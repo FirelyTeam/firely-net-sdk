@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
         static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
-            = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
+            = Enum.GetValues(typeof(FHIRAllTypes)).Cast<FHIRAllTypes>().Where(t=>IsValidType(t)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
 
         static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
             = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
@@ -126,6 +126,17 @@ namespace Hl7.Fhir.Model
         public static Type GetTypeForFhirType(string name)
         {
             return FhirTypeToCsType.TryGetValue(name, out var result) ? result : null;
+        }
+
+        private static bool IsValidType(FHIRAllTypes type)
+        {
+            var attr = type.GetAttributesOnEnum<EnumFhirVersionAttribute>();
+            if (attr == null)
+                return true;
+            else if (attr.Any(a => a.FhirVersion == EnumFhirVersion.Default || a.FhirVersion == AssemblyUtil.AssemblyVersion))
+                return true;
+
+            return false;
         }
 
         /// <summary>Returns the FHIR type name represented by the specified C# <see cref="Type"/>, or <c>null</c>.</summary>
@@ -447,6 +458,56 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
+
+        public static readonly FHIRAllTypes[] OpenTypes =
+        {
+            FHIRAllTypes.Address,
+            FHIRAllTypes.Age,
+            FHIRAllTypes.Annotation,
+            FHIRAllTypes.Attachment,
+            FHIRAllTypes.Base64Binary,
+            FHIRAllTypes.Boolean,
+            FHIRAllTypes.Code,
+            FHIRAllTypes.CodeableConcept,
+            FHIRAllTypes.Coding,
+            FHIRAllTypes.ContactDetail,
+            FHIRAllTypes.ContactPoint,
+            FHIRAllTypes.Contributor,
+            FHIRAllTypes.Count,
+            FHIRAllTypes.DataRequirement,
+            FHIRAllTypes.Date,
+            FHIRAllTypes.DateTime,
+            FHIRAllTypes.Decimal,
+            FHIRAllTypes.Distance,
+            FHIRAllTypes.Dosage,
+            FHIRAllTypes.Duration,
+            FHIRAllTypes.HumanName,
+            FHIRAllTypes.Id,
+            FHIRAllTypes.Identifier,
+            FHIRAllTypes.Instant,
+            FHIRAllTypes.Integer,
+            FHIRAllTypes.Markdown,
+            FHIRAllTypes.Money,
+            FHIRAllTypes.ParameterDefinition,
+            FHIRAllTypes.Period,
+            FHIRAllTypes.PositiveInt,
+            FHIRAllTypes.Quantity,
+            FHIRAllTypes.Range,
+            FHIRAllTypes.Ratio,
+            FHIRAllTypes.Reference,
+            FHIRAllTypes.RelatedArtifact,
+            FHIRAllTypes.SampledData,
+            FHIRAllTypes.Signature,
+            FHIRAllTypes.String,
+            FHIRAllTypes.Time,
+            FHIRAllTypes.Timing,
+            FHIRAllTypes.TriggerDefinition,
+            FHIRAllTypes.UnsignedInt,
+            FHIRAllTypes.Uri,
+            FHIRAllTypes.UsageContext,
+            FHIRAllTypes.Uuid
+        };
+
     }
 
     public static class ModelInfoExtensions
@@ -460,5 +521,4 @@ namespace Hl7.Fhir.Model
                     "Cannot determine collection name, type {0} is not a resource type", type.Name));
         }
     }
-
 }

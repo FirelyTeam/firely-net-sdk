@@ -148,7 +148,6 @@ namespace Hl7.Fhir.ElementModel
                 else
                 {
                     instanceType = info.Type.OfType<IStructureDefinitionReference>().Select(t => t.ReferredType).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
-
                     if (String.IsNullOrEmpty(instanceType))
                         raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current);
                 }

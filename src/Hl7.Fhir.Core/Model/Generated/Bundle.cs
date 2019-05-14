@@ -1382,10 +1382,11 @@ namespace Hl7.Fhir.Model
             Human = "must be a resource unless there's a request or response",
             Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
         };
-
+        
         public override void AddDefaultConstraints()
         {
-            base.AddDefaultConstraints();
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
 
             InvariantConstraints.Add(Bundle_BDL_7);
             InvariantConstraints.Add(Bundle_BDL_9);

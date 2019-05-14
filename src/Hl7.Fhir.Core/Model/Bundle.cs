@@ -43,7 +43,7 @@ using System.Diagnostics;
 namespace Hl7.Fhir.Model
 {    
     [InvokeIValidatableObject]
-    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
+    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject, IInvariantConstraints
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class EntryComponent
@@ -134,6 +134,9 @@ namespace Hl7.Fhir.Model
             get { return getLink(ATOM_LINKREL_ALTERNATE); }
             set { setLink(ATOM_LINKREL_ALTERNATE, value); }
         }
+
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
 
         private Uri getLink(string rel)
         {

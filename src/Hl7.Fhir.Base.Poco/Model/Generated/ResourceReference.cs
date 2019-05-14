@@ -84,11 +84,44 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Reference");
             }
         }
-        
+
+        /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        [FhirElement("type", InSummary = true, Order = 40, FhirVersion = EnumFhirVersion.R4)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri TypeElement
+        {
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        }
+
+        private Hl7.Fhir.Model.FhirUri _TypeElement;
+
+        /// <summary>
+        /// Type the reference refers to (e.g. "Patient")
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Type
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    TypeElement = null;
+                else
+                    TypeElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Type");
+            }
+        }
+
         /// <summary>
         /// Logical reference, when literal reference is not known
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=40)]
+        [FhirElement("identifier", InSummary=true, Order=40, FhirVersion=EnumFhirVersion.STU3)]
+        [FhirElement("identifier", InSummary=true, Order=50, FhirVersion=EnumFhirVersion.R4)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {

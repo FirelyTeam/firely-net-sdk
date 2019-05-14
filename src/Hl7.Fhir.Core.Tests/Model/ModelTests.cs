@@ -300,11 +300,14 @@ namespace Hl7.Fhir.Tests.Model
             {
                 var type = (FHIRAllTypes)i;
                 var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
-                var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
-                Assert.IsTrue(type2.HasValue);
-                Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
-                var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
-                Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
+                if (typeName != null)
+                {
+                    var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
+                    Assert.IsTrue(type2.HasValue);
+                    Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
+                    var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
+                    Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
+                }
             }
         }
 

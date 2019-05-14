@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Diagnostics;
-using System.Text;
-
-/*
-  Copyright (c) 2011+, HL7, Inc.
+﻿/*
+  Copyright (c) 2011-2013, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -37,30 +28,13 @@ using System.Text;
 
 */
 
-//
-// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
-//
-namespace Hl7.Fhir.Model
-{
-    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                StringBuilder sb = new StringBuilder();
-                if (!string.IsNullOrEmpty(this.Code))
-                    sb.AppendFormat(" Code=\"{0}\"", Code);
-                if (!string.IsNullOrEmpty(this.Display))
-                    sb.AppendFormat(" Display=\"{0}\"", Display);
-                if (!string.IsNullOrEmpty(this.System))
-                    sb.AppendFormat(" System=\"{0}\"", System);
 
-                return sb.ToString();
-            }
-        }
+namespace Hl7.Fhir.Utility
+{
+    public enum EnumFhirVersion
+    {
+        Default,
+        STU3,
+        R4
     }
 }
