@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 LinkId = "linkid",
                 Text = "TEXT"
             });
-
+            
             Assert.IsNull(q.Meta, "Meta element has not been created.");
             var qfull = FhirXmlSerializer.SerializeToString(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
@@ -214,6 +214,32 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestIncludeMandatory()
+        {
+            var l = new Library();
+            l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
+            l.Id = "testId";
+            l.Language = "testLang";
+            var summaryElements = FhirXmlSerializer.SerializeToString(l, Fhir.Rest.SummaryType.Count);
+            
+            Assert.IsFalse(summaryElements.Contains("<language"));
+            Assert.IsTrue(summaryElements.Contains("<type>"));
+            Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
+            
+            var customMaskingNode = new MaskingNode(new ScopedNode(l.ToTypedElement()), new MaskingNodeSettings
+            {
+                IncludeMandatory = true,
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
+            });
+
+            var result = customMaskingNode.ToXml(settings: new FhirXmlSerializationSettings());
+
+            Assert.IsFalse(result.Contains("<language>"));
+            Assert.IsTrue(result.Contains("<type>"));
+            Assert.IsFalse(result.Contains("<id value=\"testId\""));
+        }
+
+        [TestMethod]
         public void TestElements()
         {
             var p = new Patient
@@ -222,7 +248,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
             };
             var elements = new[] { "photo" };
-
+            
             var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));

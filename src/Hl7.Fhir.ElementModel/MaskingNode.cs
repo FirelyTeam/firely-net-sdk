@@ -65,10 +65,12 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private MaskingNode(MaskingNode parent, ITypedElement source)
+        private MaskingNode(MaskingNode parent, ITypedElement source, bool? includeAll = null)
         {
             Source = source;
-            _settings = parent._settings;
+            _settings = parent._settings.Clone();
+            if (includeAll.HasValue)
+                _settings.IncludeAll = includeAll.Value;
             ExceptionHandler = parent.ExceptionHandler;
         }
 
@@ -152,6 +154,6 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public IEnumerable<ITypedElement> Children(string name = null) =>
-            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c));
+            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c, _settings.IncludeMandatory && !Source.Location.StartsWith("Bundle") ? (bool?)true : (bool?)null));
     }
 }
