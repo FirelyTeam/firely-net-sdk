@@ -176,6 +176,24 @@ namespace Hl7.Fhir.ElementModel
                     //TODO: Slow - but since we'll change the use of this property to informational 
                     //(i.e. for error messages), it may not be necessary to improve it.
                     var basePath = Parent.Location;
+                    var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    return $"{basePath}.{Name}[{myIndex}]";
+
+                }
+                else
+                    return Name;
+            }
+        }
+
+        public string ShortPath
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.ShortPath;
 
                     if (Definition?.IsCollection == false)
                         return $"{basePath}.{Name}";
@@ -184,13 +202,11 @@ namespace Hl7.Fhir.ElementModel
                         var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                         return $"{basePath}.{Name}[{myIndex}]";
                     }
-                    
                 }
                 else
                     return Name;
             }
         }
-
     }
 
 
