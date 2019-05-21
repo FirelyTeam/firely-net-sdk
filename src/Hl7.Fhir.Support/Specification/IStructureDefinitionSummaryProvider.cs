@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification
         bool IsAbstract { get; }
         bool IsResource { get; }
 
-        IEnumerable<IElementDefinitionSummary> GetElements();
+        IReadOnlyCollection<IElementDefinitionSummary> GetElements();
     }
 
     public interface IStructureDefinitionReference : ITypeSerializationInfo

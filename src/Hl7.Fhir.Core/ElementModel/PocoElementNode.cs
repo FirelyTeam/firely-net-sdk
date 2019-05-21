@@ -28,7 +28,7 @@ namespace Hl7.Fhir.ElementModel
             Current = root;
             _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
             InstanceType = InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
-            Definition = Specification.ElementDefinitionSummary.ForRoot(rootName ?? root.TypeName, _mySD.Value);
+            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD.Value, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
