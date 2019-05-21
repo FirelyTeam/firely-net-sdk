@@ -14,13 +14,13 @@ using Hl7.Fhir.Support.Model;
 
 namespace Hl7.Fhir.ElementModel
 {
-    internal class ConstantElement : ITypedElement, IElementDefinitionSummary, IStructureDefinitionSummary
+    internal class PrimitiveElement : ITypedElement, IElementDefinitionSummary, IStructureDefinitionSummary
     {
-        public ConstantElement(object value, string name = null)
+        public PrimitiveElement(object value, string name = null)
         {
             Value = Primitives.ConvertToPrimitiveValue(value);
             InstanceType = Primitives.GetPrimitiveTypeName(value);
-            Name = name ?? "@constantvalue@";
+            Name = name ?? "@primitivevalue@";
         }
 
         public string Name { get; private set; }
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.ElementModel
 
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
 
-        public ITypedElement Clone() => new ConstantElement(Value);
+        public ITypedElement Clone() => new PrimitiveElement(Value);
 
         public IEnumerable<ITypedElement> Children(string name = null) => Enumerable.Empty<ITypedElement>();
         IReadOnlyCollection<IElementDefinitionSummary> IStructureDefinitionSummary.GetElements() => throw new NotImplementedException();

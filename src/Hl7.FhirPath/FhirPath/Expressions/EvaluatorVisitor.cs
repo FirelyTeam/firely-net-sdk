@@ -18,7 +18,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public override Invokee VisitConstant(FP.ConstantExpression expression, SymbolTable scope)
         {
-            return InvokeeFactory.Return(ElementNode.CreateConstant(expression.Value));
+            return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value));
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)

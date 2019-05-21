@@ -19,10 +19,15 @@ namespace Hl7.Fhir.ElementModel
 {
     public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
     {
-        public static ITypedElement CreateConstant(object value) => new ConstantElement(value);
+        /// <summary>
+        /// Creates an implementation of ITypedElement that represents a primitive value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITypedElement ForPrimitive(object value) => new PrimitiveElement(value);
 
         public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
-                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : CreateConstant(value))
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
                 : EmptyList;
 
         public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();

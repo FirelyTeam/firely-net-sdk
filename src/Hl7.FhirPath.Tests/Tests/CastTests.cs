@@ -36,7 +36,7 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(complex, Typecasts.Unbox(singleC, typeof(ITypedElement)));
 
             Assert.Equal(4L, Typecasts.Unbox(singleV, typeof(long)));
-            Assert.Equal(4L, Typecasts.Unbox(ElementNode.CreateConstant(4), typeof(long)));
+            Assert.Equal(4L, Typecasts.Unbox(ElementNode.ForPrimitive(4), typeof(long)));
 
             Assert.Equal(complex, Typecasts.Unbox(complex, typeof(ITypedElement)));
             Assert.Null(Typecasts.Unbox(null, typeof(string)));

@@ -54,7 +54,7 @@ namespace Hl7.FhirPath.Expressions
 
         private static object any2ValueProvider(object source)
         {
-            return ElementNode.CreateConstant(source);
+            return ElementNode.ForPrimitive(source);
         }
 
         private static object any2List(object source)

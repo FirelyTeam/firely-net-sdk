@@ -13,7 +13,7 @@ namespace Hl7.FhirPath.Functions
             return focus.Navigate("extension")
                 .Where(es => es.Navigate("url")
                 .Single()
-                .IsEqualTo(ElementNode.CreateConstant(url)));
+                .IsEqualTo(ElementNode.ForPrimitive(url)));
         }
 
         public static IEnumerable<ITypedElement> Trace(this IEnumerable<ITypedElement> focus, string name, EvaluationContext ctx)
