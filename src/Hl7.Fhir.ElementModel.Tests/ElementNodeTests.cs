@@ -65,6 +65,37 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
+        public void TestAutoDeriveTypeForPolymorphicElement()
+        {
+            // Explicit types will be passed through on polymorphic elements
+            var obs = ElementNode.Root(provider, "Observation");
+            var value = obs.Add(provider, "value", true, "boolean");
+            Assert.Equal("boolean", value.InstanceType);
+
+            // But if you leave the type out, Add() will try to determine the type
+            obs = ElementNode.Root(provider, "Observation");
+            value = obs.Add(provider, "value", true);  // without an explicit type
+            Assert.Equal("boolean", value.InstanceType);
+
+            // complex types are untouched
+            var id = obs.Add(provider, "identifier");
+            Assert.Equal("Identifier", id.InstanceType);
+
+            // so are unvalued primitive non-polymorphic elements
+            var act = obs.Add(provider, "status");
+            Assert.Equal("code", act.InstanceType);
+
+            // and valued non-polymorhpic primitives
+            act = obs.Add(provider, "status", "registered");
+            Assert.Equal("code", act.InstanceType);
+
+            // actual type from definition will always win
+            var data = ElementNode.Root(provider, "SampledData");
+            var dims = data.Add(provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
+            Assert.Equal("positiveInt", dims.InstanceType);
+        }
+
+        [Fact]
         public void TestConstruction()
         {
             var data = patient[0];
@@ -82,8 +113,7 @@ namespace Hl7.FhirPath.Tests
         public void SuccessfullyCreated()
         {
             var pat = new Patient();
-            var containedObs = new Observation();
-            containedObs.Value = new FhirBoolean(true);
+            var containedObs = new Observation { Value = new FhirBoolean(true) };
             pat.Contained.Add(containedObs);
             pat.ActiveElement = new FhirBoolean(true) { ElementId = "myId1" };
             pat.ActiveElement.AddAnnotation("a string annotation");
