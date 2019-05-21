@@ -6,7 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -57,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
         {
             if (value == null) Error.ArgumentNull("value");
 
-            Value = ConstantValue.ToFhirPathValue(value);
+            Value = Primitives.ConvertToPrimitiveValue(value);
 
             if (Value is bool)
                 ExpressionType = TypeInfo.Boolean;
@@ -107,7 +109,6 @@ namespace Hl7.FhirPath.Expressions
 
         public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
-            if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
             if (arguments == null) throw Error.ArgumentNull("arguments");
 

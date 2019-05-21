@@ -21,10 +21,10 @@ namespace Vonk.Core.Tests.Support
         {
             var specSource = ZipSource.CreateValidationSource();
 
-            Resources = specSource.FindAll<DataElement>().ToDictionary<DataElement, string>(sd => sd.Url);
+            Resources = specSource.FindAll<ValueSet>().ToDictionary<ValueSet, string>(sd => sd.Url);
             //By putting all the url's in a dictionary we can be sure there are no duplicates. 
         }
-        public Dictionary<string, DataElement> Resources { get; private set; }
+        public Dictionary<string, ValueSet> Resources { get; private set; }
     }
 
     public class FhirPathExtensionsTests : IClassFixture<SpecZipResourcesFixture>
@@ -42,7 +42,7 @@ namespace Vonk.Core.Tests.Support
         {
             return new[]
             {
-                new object[]{ "Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)) },
+                new object[]{ "Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => TypedElementFPExtensions.Select(nav, expr, context)) },
                 new object[]{ "Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context))},
             };
         }
@@ -63,9 +63,9 @@ namespace Vonk.Core.Tests.Support
         [Trait("TestCategory", "LongRunner")]
         public async T.Task MassiveParallelSelectsShouldBeCorrect(string testDescriptor, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
-            var actual = new ConcurrentBag<(string canonical, DataElement resource)>();
-            var buffer = new BufferBlock<DataElement>();
-            var processor = new ActionBlock<DataElement>(r =>
+            var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
+            var buffer = new BufferBlock<ValueSet>();
+            var processor = new ActionBlock<ValueSet>(r =>
                 {
                     var typedElement = r.ToTypedElement();
                     var evalContext = new EvaluationContext(typedElement);

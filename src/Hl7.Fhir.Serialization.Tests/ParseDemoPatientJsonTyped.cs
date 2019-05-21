@@ -1,9 +1,9 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -85,7 +85,10 @@ namespace Hl7.Fhir.Serialization.Tests
             var navXml = XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider());
             var json = navXml.ToJson();
 
-            JsonAssert.AreSame(tp, json);
+            List<string> errors = new List<string>();
+            JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]

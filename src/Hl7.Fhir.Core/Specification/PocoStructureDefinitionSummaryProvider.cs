@@ -71,13 +71,13 @@ namespace Hl7.Fhir.Specification
         public bool IsAbstract => _classMapping.IsAbstract;
         public bool IsResource => _classMapping.IsResource;
 
-        public IEnumerable<IElementDefinitionSummary> GetElements() =>
+        public IReadOnlyCollection<IElementDefinitionSummary> GetElements() =>
             _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement).Select(pm =>
-            (IElementDefinitionSummary)new PocoElementSerializationInfo(pm));
+            (IElementDefinitionSummary)new PocoElementSerializationInfo(pm)).ToList();
 
         public IElementDefinitionSummary GetElement(string name) =>
             _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement && pm.Name == name)
-                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();                
+                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();
     }
 
     internal struct PocoTypeReferenceInfo : IStructureDefinitionReference

@@ -62,7 +62,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(1L, new ConstantValue(true).ToDecimal());
             Assert.AreEqual(0L, new ConstantValue(false).ToDecimal());
             Assert.IsNull(new ConstantValue(2).ToDecimal());
-//            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
+            //            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
             Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToDecimal());
         }
 
@@ -70,8 +70,8 @@ namespace Hl7.FhirPath.Tests
         public void CheckTypeDetermination()
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
-            
-            
+
+
             Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
             Test.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
             Test.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
@@ -116,7 +116,6 @@ namespace Hl7.FhirPath.Tests
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
         }
-
 
         [TestMethod]
         public void TestFhirPathTrace()
@@ -164,6 +163,29 @@ namespace Hl7.FhirPath.Tests
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
+        }
+
+        [TestMethod]
+        public void TestFhirPathCombine2()
+        {
+            var cs = new Hl7.Fhir.Model.CodeSystem() { Id = "pat45" };
+            cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
+            {
+                Code = "5", Display = "Five"
+            });
+            var nav = cs.ToTypedElement();
+
+            EvaluationContext ctx = new EvaluationContext();
+            var result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);
+            Assert.IsTrue(result);
+
+            cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
+            {
+                Code = "5",
+                Display = "Five"
+            });
+            result = nav.Predicate("concept.code.combine($this.descendants().concept.code).isDistinct()", ctx);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]

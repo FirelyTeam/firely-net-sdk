@@ -189,9 +189,68 @@ namespace Hl7.Fhir.Serialization
                 {
                     using (var entryReader = _reader.ReadSubtree())
                     {
-                        var entryUrl = readFullUrl(entryReader);
+#if true
+                        // [WMR 20190304] #890 Also return entries with missing fullUrl property
 
-                        if (entryUrl != null && (fullUrl == null || entryUrl == fullUrl))
+                        bool IsFhirElement(string elemName)
+                            => entryReader.NodeType == XmlNodeType.Element
+                            && entryReader.NamespaceURI == XmlNs.FHIR
+                            && entryReader.LocalName == elemName;
+
+                        // Consume <entry>
+                        if (entryReader.Read() && IsFhirElement("entry"))
+                        {
+                            // Consume <fullUrl> or <resource>
+                            if (entryReader.Read())
+                            {
+                                string entryUrl = null;
+                                bool foundResource;
+                                if (IsFhirElement("fullUrl"))
+                                {
+                                    if (entryReader.MoveToAttribute("value"))
+                                    {
+                                        entryUrl = entryReader.Value;
+                                        entryReader.MoveToElement();
+                                    }
+                                    foundResource = entryReader.ReadToNextSibling("resource", XmlNs.FHIR);
+                                }
+                                else
+                                {
+                                    foundResource = IsFhirElement("resource");
+                                }
+                                if (foundResource)
+                                {
+                                    // To be on the safe side, only include anonymous
+                                    // resources w/o id if PermissiveParsing equals true
+                                    if (entryUrl is null && !ParserSettings.PermissiveParsing)
+                                    {
+                                        return false;
+                                    }
+                                    if (fullUrl is null || fullUrl == entryUrl)
+                                    {
+                                        var resourceNode = (XElement)XElement.ReadFrom(entryReader);
+                                        if (!(resourceNode is null))
+                                        {
+                                            var resource = resourceNode.Elements().FirstOrDefault();
+                                            if (!(resource is null))
+                                            {
+                                                _current = (resource, entryUrl);
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+#else
+                        // [WMR 20190304] Original logic skips entries w/o fullUrl
+
+                        var entryUrl = readFullUrl(entryReader);
+                        emptyUrl = entryUrl is null;
+
+                        // [WMR 20190304] return bundle entries w/o fullUrl
+                        //if (entryUrl != null && (fullUrl == null || entryUrl == fullUrl))
+                        if (fullUrl is null || entryUrl == fullUrl)
                         {
                             if (entryReader.ReadToNextSibling("resource", XmlNs.FHIR))
                             {
@@ -208,6 +267,7 @@ namespace Hl7.Fhir.Serialization
                                 }
                             }
                         }
+#endif
                     }
                 }
                 while (_reader.ReadToNextSibling("entry", XmlNs.FHIR));
@@ -238,7 +298,9 @@ namespace Hl7.Fhir.Serialization
                     }
                 }
 
-                if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
+                // [WMR 20190304] return instances w/o Resource Id
+                //if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
+                if (fullUrl is null || canonicalUrl == fullUrl)
                 {
                     _current = (resourceNode, canonicalUrl);
                     return true;
@@ -312,7 +374,6 @@ namespace Hl7.Fhir.Serialization
                     return result;
                 }
             }
-
             return null;
         }
 
