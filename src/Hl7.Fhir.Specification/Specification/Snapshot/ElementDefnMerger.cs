@@ -241,6 +241,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         if (diff.ElementId != null) { result.ElementId = diff.ElementId; }
                         result.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         result.CodeElement = mergePrimitiveElement(snap.CodeElement, diff.CodeElement);
+
                         result.ProfileElement = mergeCanonicals(snap.ProfileElement, diff.ProfileElement);
                         result.TargetProfileElement = mergeCanonicals(snap.TargetProfileElement, diff.TargetProfileElement);
 
@@ -304,8 +305,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Merge list of canonical urls (e.g. profiles) in diff with snap
+            // [WMR 20190429] R4 NEW
+            // Custom merging behavior for ElementDefinition.type.(target)Profile
+            // differential is allowed to REMOVE profiles from base
+            // Use differential profile collection if not empty, otherwise fall back to snapshot (no merging)
             List<Canonical> mergeCanonicals(List<Canonical> snap, List<Canonical> diff)
-                => mergeCollection(snap, diff, matchCanonicals);
+                //=> mergeCollection(snap, diff, matchCanonicals);
+            {
+                return diff is null || diff.Count == 0 ? snap : diff;
+            }
 
             // Merge differential extensions with snapshot extensions
             // Match extensions on url
