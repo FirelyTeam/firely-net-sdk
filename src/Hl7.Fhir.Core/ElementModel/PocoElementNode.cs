@@ -19,16 +19,16 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly Lazy<PocoComplexTypeSerializationInfo> _mySD;
+        private readonly PocoComplexTypeSerializationInfo _mySD;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
+            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
             InstanceType = InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
-            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD.Value, rootName ?? root.TypeName);
+            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel
         private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = new Lazy<PocoComplexTypeSerializationInfo>(() => (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType()));
+            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
             InstanceType = determineInstanceType(Current, definition);
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (name == null || child.ElementName == name)
                 {
-                    var childElementDef = _mySD.Value.GetElement(child.ElementName);
+                    var childElementDef = _mySD.GetElement(child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;

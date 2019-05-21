@@ -34,7 +34,7 @@ namespace Hl7.Fhir
                     }).ToArray();
                     return ElementNode.CreateList(bits);
                 }
-                return ElementNode.CreateList(new object[] { "?" });
+                return ElementNode.CreateList("?");
             });
 
             Patient p = new Patient
