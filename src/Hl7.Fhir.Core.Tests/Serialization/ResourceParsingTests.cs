@@ -279,6 +279,57 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
         }
 
+
+        [TestMethod]
+        public void EmptyRoundTrip()
+        {
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>
+                {
+                    new Identifier("https://mydomain.com/identifiers/Something", "123"),
+                    new Identifier("https://mydomain.com/identifiers/Spaces", "   "),
+                    new Identifier("https://mydomain.com/identifiers/Empty", string.Empty),
+                    new Identifier("https://mydomain.com/identifiers/Null", null)
+                }
+            };
+
+            var json = FhirJsonSerializer.SerializeToString(patient);
+            var parsedPatient = FhirJsonParser.Parse<Patient>(json);
+
+            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            for (var i = 0; i < patient.Identifier.Count; i++)
+            {
+                Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
+                if (string.IsNullOrWhiteSpace(patient.Identifier[i].Value))
+                {
+                    Assert.IsNull(parsedPatient.Identifier[i].Value);
+                }
+                else
+                {
+                    Assert.AreEqual(patient.Identifier[i].Value, parsedPatient.Identifier[i].Value);
+                }
+            }
+
+            var xml = FhirXmlSerializer.SerializeToString(patient);
+            parsedPatient = FhirXmlParser.Parse<Patient>(xml);
+
+            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            for (var i = 0; i < patient.Identifier.Count; i++)
+            {
+                Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
+                if (string.IsNullOrWhiteSpace(patient.Identifier[i].Value))
+                {
+                    Assert.IsNull(parsedPatient.Identifier[i].Value);
+                }
+                else
+                {
+                    Assert.AreEqual(patient.Identifier[i].Value, parsedPatient.Identifier[i].Value);
+                }
+            }
+        }
+
+
         [TestMethod]
         public void SerializeNarrativeWithQuotes()
         {
