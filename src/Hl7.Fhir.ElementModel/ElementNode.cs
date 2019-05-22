@@ -49,7 +49,7 @@ namespace Hl7.Fhir.ElementModel
 
 
 
-    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
     {
         public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
 
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            return (type == typeof(ElementNode) || type == typeof(ITypedElement))
+            return (type == typeof(ElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 ? (new[] { this })
                 : AnnotationsInternal.OfType(type);
         }
