@@ -2079,7 +2079,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "vsd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2088,7 +2088,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "compose.include.all((concept.exists() or filter.exists()) implies system.exists())",
             Key = "vsd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2097,7 +2097,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "compose.include.all(concept.empty() or filter.empty())",
             Key = "vsd-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2106,7 +2106,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "compose.include.all(valueSet.exists() or system.exists())",
             Key = "vsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2115,7 +2115,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "expansion.contains.all(code.exists() or display.exists())",
             Key = "vsd-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2124,7 +2124,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "expansion.contains.all(code.exists() or abstract = true)",
             Key = "vsd-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2133,7 +2133,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "expansion.contains.all(code.empty() or system.exists())",
             Key = "vsd-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ServiceRequest_PRR_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "orderDetail.empty() or code.exists()",
             Key = "prr-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

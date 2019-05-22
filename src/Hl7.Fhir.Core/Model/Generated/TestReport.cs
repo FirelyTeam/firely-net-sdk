@@ -1599,7 +1599,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent TestReport_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "setup.action.all(operation.exists() xor assert.exists())",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TestReport_INV_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "test.action.all(operation.exists() xor assert.exists())",
             Key = "inv-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

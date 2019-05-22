@@ -1430,7 +1430,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "oralDiet.exists() or supplement.exists() or enteralFormula.exists()",
             Key = "nor-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

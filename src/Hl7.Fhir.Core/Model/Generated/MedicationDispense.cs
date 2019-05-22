@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent MedicationDispense_MDD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared",
             Key = "mdd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

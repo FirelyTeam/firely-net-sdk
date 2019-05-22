@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent AppointmentResponse_APR_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "participantType.exists() or actor.exists()",
             Key = "apr-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

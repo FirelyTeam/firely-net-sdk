@@ -36,9 +36,12 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
-                // Skip any best practice constraints until that setting is available
-                if (constraintElement.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") == true)
-                    continue;
+                if (v.Settings.EnableConstraintBestPractices)
+                    if (constraintElement.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") == true)
+                        constraintElement.Severity = ElementDefinition.ConstraintSeverity.Error;
+                    else
+                        constraintElement.Severity = ElementDefinition.ConstraintSeverity.Warning;
+
                 bool success = false;
                
                 try

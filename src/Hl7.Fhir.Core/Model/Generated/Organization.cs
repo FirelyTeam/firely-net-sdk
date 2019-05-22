@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(identifier.count() + name.count()) > 0",
             Key = "org-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "telecom.all(where(use = 'home').empty())",
             Key = "org-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "address.all(where(use = 'home').empty())",
             Key = "org-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

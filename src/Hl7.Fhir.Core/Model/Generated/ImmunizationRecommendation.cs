@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ImmunizationRecommendation_IMR_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
             Key = "imr-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

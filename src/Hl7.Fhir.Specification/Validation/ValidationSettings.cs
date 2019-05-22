@@ -90,6 +90,11 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public bool EnableXsdValidation { get; set; } // = false;
 
+        /// <summary>
+        /// If set to true, the validator will treat as error the violations of the invariants marked as best practices
+        /// /// </summary>
+        public bool EnableConstraintBestPractices { get; set; } // = false;
+
         /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
         public ValidationSettings() { }
 

@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "kind != 'root' or uniqueId.all(type != 'uuid')",
             Key = "nsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "nsd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
             Key = "nsd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

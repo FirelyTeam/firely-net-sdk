@@ -1449,7 +1449,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent AuditEvent_SEV_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entity.all(name.empty() or query.empty())",
             Key = "sev-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

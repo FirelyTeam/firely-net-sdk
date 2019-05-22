@@ -1323,7 +1323,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_9 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "children().element.where(path.contains('.').not()).label.empty() and children().element.where(path.contains('.').not()).code.empty() and children().element.where(path.contains('.').not()).requirements.empty()",
             Key = "sdf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1332,7 +1332,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind!='logical'  and differential.element.first().path.contains('.').not()) implies differential.element.first().type.empty()",
             Key = "sdf-15a",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_19 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (differential.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')) and snapshot.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')))",
             Key = "sdf-19",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.element.all(id) and snapshot.element.id.trace('ids').isDistinct()",
             Key = "sdf-16",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "kind!='logical'  implies snapshot.element.first().type.empty()",
             Key = "sdf-15",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_18 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "contextInvariant.exists() implies type = 'Extension'",
             Key = "sdf-18",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_17 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "differential.element.all(id) and differential.element.id.trace('ids').isDistinct()",
             Key = "sdf-17",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_23 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(snapshot | differential).element.all(path.contains('.').not() implies sliceName.empty())",
             Key = "sdf-23",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "kind != 'logical' implies snapshot.empty() or snapshot.element.first().path = type",
             Key = "sdf-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1404,7 +1404,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_22 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (snapshot.element.defaultValue.empty() and differential.element.defaultValue.empty())",
             Key = "sdf-22",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1413,7 +1413,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_14 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.element.all(id.exists()) and differential.element.all(id.exists())",
             Key = "sdf-14",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1422,7 +1422,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "derivation = 'constraint' or snapshot.element.select(path).isDistinct()",
             Key = "sdf-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1431,7 +1431,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_21 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "differential.element.defaultValue.exists() implies (derivation = 'specialization')",
             Key = "sdf-21",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "sdf-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1449,7 +1449,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_6 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.exists() or differential.exists()",
             Key = "sdf-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1458,7 +1458,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "type != 'Extension' or derivation = 'specialization' or (context.exists())",
             Key = "sdf-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "abstract = true or baseDefinition.exists()",
             Key = "sdf-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1476,7 +1476,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "mapping.all(name.exists() or uri.exists())",
             Key = "sdf-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1485,7 +1485,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.all((%resource.kind = 'logical' or element.first().path = %resource.type) and element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')))",
             Key = "sdf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1494,7 +1494,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.all(element.all(definition.exists() and min.exists() and max.exists()))",
             Key = "sdf-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1503,7 +1503,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8B = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.all(element.all(base.exists()))",
             Key = "sdf-8b",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_10 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "snapshot.element.all(binding.empty() or binding.valueSet.exists() or binding.description.exists())",
             Key = "sdf-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1521,7 +1521,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_20 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "differential.all(element.where(path.contains('.').not()).slicing.empty())",
             Key = "sdf-20",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1530,7 +1530,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8A = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "differential.all((%resource.kind = 'logical' or element.first().path.startsWith(%resource.type)) and (element.tail().not() or  element.tail().all(path.startsWith(%resource.differential.element.first().path.replaceMatches('\\\\..*','')&'.'))))",
             Key = "sdf-8a",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
