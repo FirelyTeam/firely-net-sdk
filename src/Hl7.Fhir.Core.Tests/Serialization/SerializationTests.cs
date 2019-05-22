@@ -237,6 +237,27 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(result.Contains("<language>"));
             Assert.IsTrue(result.Contains("<type>"));
             Assert.IsFalse(result.Contains("<id value=\"testId\""));
+
+            var b = new Bundle
+            {
+                TypeElement = new Code<Bundle.BundleType> { Value = Bundle.BundleType.Collection },
+                Entry = new List<Bundle.EntryComponent>()
+                {
+                    new Bundle.EntryComponent { Resource = l }
+                },
+                Id = "bundle-id"
+            };
+
+            var customMaskingNodeForBundle = new MaskingNode(new ScopedNode(b.ToTypedElement()), new MaskingNodeSettings
+            {
+                IncludeMandatory = true,
+                PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
+            });
+
+            result = customMaskingNodeForBundle.ToXml(settings: new FhirXmlSerializationSettings());
+            
+            Assert.IsTrue(result.Contains("<type value=\"collection\""));
+            Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
 
         [TestMethod]

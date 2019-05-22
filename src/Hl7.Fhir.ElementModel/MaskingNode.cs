@@ -16,6 +16,12 @@ namespace Hl7.Fhir.ElementModel
 {
     public class MaskingNode : ITypedElement, IAnnotated, IExceptionSource
     {
+
+        /// <summary>
+        /// Set to true when a complex type property is mandatory so all its children need to be included
+        /// </summary>
+        private bool IncludeAll { get; set;}
+
         public static MaskingNode ForSummary(ITypedElement node) =>
             new MaskingNode(node, new MaskingNodeSettings
             {
@@ -65,12 +71,11 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private MaskingNode(MaskingNode parent, ITypedElement source, bool? includeAll = null)
+        private MaskingNode(MaskingNode parent, ITypedElement source, bool includeAll)
         {
             Source = source;
-            _settings = parent._settings.Clone();
-            if (includeAll.HasValue)
-                _settings.IncludeAll = includeAll.Value;
+            _settings = parent._settings;
+            IncludeAll = includeAll;
             ExceptionHandler = parent.ExceptionHandler;
         }
 
@@ -115,7 +120,7 @@ namespace Hl7.Fhir.ElementModel
                     // else fall through
             }
 
-            var included = _settings.IncludeAll;
+            var included = _settings.IncludeAll || IncludeAll;
 
             var ed = scope.Definition;
             if (ed != null)
@@ -154,6 +159,6 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public IEnumerable<ITypedElement> Children(string name = null) =>
-            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c, _settings.IncludeMandatory && !Source.Location.StartsWith("Bundle") ? (bool?)true : (bool?)null));
+            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c, _settings.IncludeMandatory && !Source.Location.Equals("Bundle") ? true : false));
     }
 }
