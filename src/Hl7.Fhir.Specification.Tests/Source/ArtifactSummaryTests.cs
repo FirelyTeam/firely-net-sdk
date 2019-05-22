@@ -343,6 +343,25 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public void TestListSummariesWithExcludeFilter()
+        {
+            string path = "TestData";
+
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
+            {
+                IncludeSubDirectories = true,
+                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/", "*.zip" }
+            });
+
+            var summaries = dirSource.ListSummaries().ToList();
+            Assert.IsNotNull(summaries);
+
+            // Verify invalid files in folder 'grahame-validation-examples' are excluded
+            var errors = dirSource.ListSummaryErrors().ToList();
+            Assert.AreEqual(0, errors.Count);
+        }
+        
         // [WMR 20190305] Belongs to pull request #890
         [TestMethod, Ignore]
         public void TestSummarizeAnonymousResources()
@@ -412,24 +431,6 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(summary.LastModified);
             }
         }
-     
-        public void TestListSummariesWithExcludeFilter()
-        {
-            string path = "TestData";
 
-            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
-            { 
-                IncludeSubDirectories = true,
-                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/"},
-                Masks = new string[] { "*.json", "*.xml", "*.sch" }
-            });
-
-            var summaries = dirSource.ListSummaries().ToList();
-            Assert.IsNotNull(summaries);
-
-            // Verify invalid files in folder 'grahame-validation-examples' are excluded
-            var errors = dirSource.ListSummaryErrors().ToList();
-            Assert.AreEqual(0, errors.Count);
-        }
     }
 }
