@@ -415,6 +415,36 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
+        public void TestConstraintBestPractices()
+        {
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source});
+
+            Patient p = new Patient
+            {
+                Active = true
+            };
+
+            var result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(0, result.Warnings);
+            Assert.Equal(0, result.Errors);
+
+            validator.Settings.ConstraintBestPractices = ConstraintBestPractices.Enabled;
+            result = validator.Validate(p);
+            Assert.False(result.Success);
+            Assert.Equal(0, result.Warnings);
+            Assert.Equal(1, result.Errors);
+            Assert.Contains("Instance failed constraint dom-6 \"A resource should have narrative for robust management\"", result.Issue[0].ToString());
+
+            validator.Settings.ConstraintBestPractices = ConstraintBestPractices.Disabled;
+            result = validator.Validate(p);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);
+            Assert.Contains("Instance failed constraint dom-6 \"A resource should have narrative for robust management\"", result.Issue[0].ToString());
+            Assert.Equal(0, result.Errors);
+        }
+
+        [Fact]
         public void ValidateOverNameRef()
         {
             var questionnaireXml = File.ReadAllText(Path.Combine("TestData", "validation", "questionnaire-with-incorrect-fixed-type.xml"));
