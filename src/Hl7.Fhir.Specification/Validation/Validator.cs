@@ -349,6 +349,8 @@ namespace Hl7.Fhir.Validation
                     symbolTable.AddFhirExtensions();
 
                     _fpCompiler = new FhirPathCompiler(symbolTable);
+
+                    Settings.FhirPathCompiler = _fpCompiler;
                 }
 
                 return _fpCompiler;
