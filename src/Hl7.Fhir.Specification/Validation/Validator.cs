@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Validation
             outcome.Add(this.ValidatePattern(elementConstraints, instance));
             outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
-            outcome.Add(this.ValidateFp(elementConstraints, instance));
+            outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
             outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
 
             // new style validator - has a configure and then execute step.
