@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
         {
             if (_nav.Current == null && !_nav.MoveToFirstChild())
-                return new List<IElementDefinitionSummary>();
+                return new IElementDefinitionSummary[0];
 
             return getElements(_nav).ToList();
         }

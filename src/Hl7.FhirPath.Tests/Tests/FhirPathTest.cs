@@ -34,42 +34,42 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void ConvertToInteger()
         {
-            Assert.AreEqual(1L, new ConstantValue(1).ToInteger());
-            Assert.AreEqual(2L, new ConstantValue("2").ToInteger());
-            Assert.IsNull(new ConstantValue("2.4").ToInteger());
-            Assert.AreEqual(1L, new ConstantValue(true).ToInteger());
-            Assert.AreEqual(0L, new ConstantValue(false).ToInteger());
-            Assert.IsNull(new ConstantValue(2.4m).ToInteger());
-            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToInteger());
+            Assert.AreEqual(1L, ElementNode.ForPrimitive(1).ToInteger());
+            Assert.AreEqual(2L, ElementNode.ForPrimitive("2").ToInteger());
+            Assert.IsNull(ElementNode.ForPrimitive("2.4").ToInteger());
+            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToInteger());
+            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToInteger());
+            Assert.IsNull(ElementNode.ForPrimitive(2.4m).ToInteger());
+            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToInteger());
         }
 
         [TestMethod]
         public void ConvertToString()
         {
-            Assert.AreEqual("hoi", new ConstantValue("hoi").ToString());
-            Assert.AreEqual("3.4", new ConstantValue(3.4m).ToString());
-            Assert.AreEqual("4", new ConstantValue(4L).ToString());
-            Assert.AreEqual("true", new ConstantValue(true).ToString());
-            Assert.AreEqual("false", new ConstantValue(false).ToString());
-            Assert.IsNotNull(new ConstantValue(DateTimeOffset.Now).ToString());
+            Assert.AreEqual("hoi", ElementNode.ForPrimitive("hoi").ToString());
+            Assert.AreEqual("3.4", ElementNode.ForPrimitive(3.4m).ToString());
+            Assert.AreEqual("4", ElementNode.ForPrimitive(4L).ToString());
+            Assert.AreEqual("true", ElementNode.ForPrimitive(true).ToString());
+            Assert.AreEqual("false", ElementNode.ForPrimitive(false).ToString());
+            Assert.IsNotNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToString());
         }
 
         [TestMethod]
         public void ConvertToDecimal()
         {
-            Assert.AreEqual(1m, new ConstantValue(1m).ToDecimal());
-            Assert.AreEqual(2.01m, new ConstantValue("2.01").ToDecimal());
-            Assert.AreEqual(1L, new ConstantValue(true).ToDecimal());
-            Assert.AreEqual(0L, new ConstantValue(false).ToDecimal());
-            Assert.IsNull(new ConstantValue(2).ToDecimal());
-            //            Assert.Null(new ConstantValue("2").ToDecimal());   Not clear according to spec
-            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToDecimal());
+            Assert.AreEqual(1m, ElementNode.ForPrimitive(1m).ToDecimal());
+            Assert.AreEqual(2.01m, ElementNode.ForPrimitive("2.01").ToDecimal());
+            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToDecimal());
+            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToDecimal());
+            Assert.IsNull(ElementNode.ForPrimitive(2).ToDecimal());
+            //            Assert.Null(ElementNode.ForPrimitive("2").ToDecimal());   Not clear according to spec
+            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToDecimal());
         }
 
         [TestMethod]
         public void CheckTypeDetermination()
         {
-            var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
+            var values = ElementNode.CreateList(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
 
 
             Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
@@ -84,7 +84,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestItemSelection()
         {
-            var values = FhirValueList.Create(1, 2, 3, 4, 5, 6, 7);
+            var values = ElementNode.CreateList(1, 2, 3, 4, 5, 6, 7);
 
             Assert.AreEqual((Int64)1, values.Item(0).Single().Value);
             Assert.AreEqual((Int64)3, values.Item(2).Single().Value);

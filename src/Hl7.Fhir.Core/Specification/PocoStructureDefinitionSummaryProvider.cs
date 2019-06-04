@@ -88,9 +88,10 @@ namespace Hl7.Fhir.Specification
                 .Where(pm => !pm.RepresentsValueElement)
                 .Select(pm => (IElementDefinitionSummary)new PocoElementSerializationInfo(pm))
                 .ToList();
+                
         public IElementDefinitionSummary GetElement(string name) =>
             _classMapping.PropertyMappings.Where(pm => !pm.RepresentsValueElement && pm.Name == name)
-                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();                
+                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(s)).SingleOrDefault();
     }
 
     internal struct PocoTypeReferenceInfo : IStructureDefinitionReference

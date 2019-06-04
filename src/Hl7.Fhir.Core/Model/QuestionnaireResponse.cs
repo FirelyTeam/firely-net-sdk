@@ -42,7 +42,7 @@ using System.Text;
 //
 namespace Hl7.Fhir.Model
 {
-    public partial class Questionnaire
+    public partial class QuestionnaireResponse
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class ItemComponent
@@ -58,6 +58,8 @@ namespace Hl7.Fhir.Model
                         sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
                     if (!string.IsNullOrEmpty(this.Text))
                         sb.AppendFormat(" Text=\"{0}\"", Text);
+                    if (this._Item != null)
+                        sb.AppendFormat(" Item.Count={0}", this._Item.Count);
 
                     return sb.ToString();
                 }
