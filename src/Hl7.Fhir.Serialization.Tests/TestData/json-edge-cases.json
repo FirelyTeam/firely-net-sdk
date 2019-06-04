@@ -3,10 +3,11 @@
   "identifier": [
     {
       "period": { "start": "2001-05-06" },
-      "assigner": { "display": "Acme Healthcare" },
+      "assigner": { "display": "Acme\u202fHealthcare" },
       "use": "usual",
       "system": "urn:oid:1.2.36.146.595.217.0.1",
-      "value": "12345"
+      "value": "12345",
+      "_value": { "fhir_comments": [ "     seems like a likely choice     " ] }
     }
   ],
   "managingOrganization": { "reference": "Organization/1" },
@@ -25,7 +26,7 @@
         "James"
       ],
       "use": "official",
-      "family": "Chalmers"
+      "family": [ "Chalmers" ]
     },
     {
       "given": [ "Jim" ],
@@ -84,8 +85,8 @@
       "valueDecimal": 3.141592653589793
     },
     {
-      "url": "http://example.org/fhir/StructureDefinition/max-decimal-precision",
-      "valueDecimal": 1.00065022141624642
+      "url": "http://example.org/fhir/StructureDefinition/avogadro",
+      "valueDecimal": 602214162464240000000000
     }
   ],
   "gender": "male",
@@ -111,7 +112,7 @@
   "multipleBirthInteger": 3,
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <table>\n        <tbody>\n          <tr>\n            <td>Name</td>\n            <td>Peter James <b>Chalmers</b> (&quot;Jim&quot;)</td>\n          </tr>\n          <tr>\n            <td>Address</td>\n            <td>534 Erewhon, Pleasantville, Vic, 3999</td>\n          </tr>\n          <tr>\n            <td>Contacts</td>\n            <td>Home: unknown. Work: (03) 5555 6473</td>\n          </tr>\n          <tr>\n            <td>Id</td>\n            <td>MRN: 12345 (Acme Healthcare)</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><span>text left out</span></div>"
   },
   "contained": [
     {
@@ -125,7 +126,7 @@
       "id": "org3141",
       "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>Good Health Clinic</p>\n    </div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Good Health Clinic<\/p><\/div>"
       },
       "identifier": [
         {
@@ -139,19 +140,49 @@
   "contact": [
     {
       "name": {
-        "family": "du Marché",
-        "_family": {
-          "extension": [
-            {
-              "url": "http://example.org/fhir/StructureDefinition/qualifier",
-              "valueString": "VV"
-            },
-            {
-              "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
-              "valueCode": "ASKU"
-            }
-          ]
-        },
+        "family": [
+          null,
+          "du",
+          null,
+          "Marché",
+          null
+        ],
+        "_family": [
+          {
+            "extension": [
+              {
+                "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
+                "valueCode": "ASKU"
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "extension": [
+              {
+                "url": "http://example.org/fhir/StructureDefinition/qualifier",
+                "valueCode": "VV"
+              }
+            ]
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
+                "valueCode": "ASKU"
+              }
+            ]
+          },
+          null,
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/nullFlavor",
+                "valueCode": "ASKU"
+              }
+            ]
+          }
+        ],
         "_given": [
           null,
           {
@@ -189,7 +220,7 @@
       ]
     }
   ],
-  "generalPractitioner": [ { "reference": "#org3141" } ],
+  "careProvider": [ { "reference": "#org3141" } ],
   "telecom": [
     { "use": "home" },
     {
