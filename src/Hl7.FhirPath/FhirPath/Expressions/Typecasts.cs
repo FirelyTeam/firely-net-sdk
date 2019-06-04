@@ -54,12 +54,12 @@ namespace Hl7.FhirPath.Expressions
 
         private static object any2ValueProvider(object source)
         {
-            return new ConstantValue(source);
+            return ElementNode.ForPrimitive(source);
         }
 
         private static object any2List(object source)
         {
-            return FhirValueList.Create(source);
+            return ElementNode.CreateList(source);
         }
 
         private static Cast getImplicitCast(Type from, Type to)
@@ -154,7 +154,7 @@ namespace Hl7.FhirPath.Expressions
 
             //if source == null, or unboxed source == null....
             if (to == typeof(IEnumerable<ITypedElement>))
-                return FhirValueList.Empty;
+                return ElementNode.EmptyList;
             if (to.IsNullable())
                 return null;
             else

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Rest
         public Task<Bundle> SearchAsync(SearchParams q, string resourceType = null)
         {
             var tx = new TransactionBuilder(Endpoint).Search(q,resourceType).ToBundle();
-            return executeAsync<Bundle>(tx, HttpStatusCode.OK);
+            return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted });
         }
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource

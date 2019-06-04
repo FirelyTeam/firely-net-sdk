@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 
     internal static class FpConstraintValidationExtensions
     {
-        public static OperationOutcome ValidateFp(this Validator v, ElementDefinition definition, ScopedNode instance)
+        public static OperationOutcome ValidateFp(this Validator v, string structureDefinitionUrl, ElementDefinition definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
 
@@ -58,7 +58,18 @@ namespace Hl7.Fhir.Validation
                     var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
                         Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
-                    v.Trace(outcome, text, issue, instance);
+                    // just use the constraint description in the error message, as this is to explain the issue
+                    // to a human, the code for the error should be in the coding
+                    var outcomeIssue = new OperationOutcome.IssueComponent()
+                    {
+                        Severity = issue.Severity,
+                        Code = issue.Type,
+                        Details = issue.ToCodeableConcept(text),
+                        Diagnostics = constraintElement.GetFhirPathConstraint(), // Putting the fhirpath expression of the invariant in the diagnostics
+                        Location = new string[] { instance.Location }
+                    };
+                    outcomeIssue.Details.Coding.Add(new Coding(structureDefinitionUrl, constraintElement.Key, constraintElement.Human));
+                    outcome.AddIssue(outcomeIssue);
                 }
             }
 
