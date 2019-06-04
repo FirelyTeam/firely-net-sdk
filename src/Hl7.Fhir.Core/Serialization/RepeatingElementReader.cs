@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
 
             IList result = existing;
 
-            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ImplementingType);
+            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
             var reader = new DispatchingReader(_current, Settings, arrayMode: true);
             result.Add(reader.Deserialize(prop, memberName));

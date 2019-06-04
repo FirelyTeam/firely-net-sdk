@@ -21,13 +21,13 @@ namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class RoundtripTest
-    { 
+    {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXmlPoco()
         {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
-                "Roundtripping xml->json->xml", usingPoco: true, provider:null);
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
         }
 
         [TestMethod]
@@ -93,27 +93,6 @@ namespace Hl7.Fhir.Serialization.Tests
             doRoundTrip(examples, baseTestPath, usingPoco, provider);
         }
 
-
-
-        //[TestMethod]
-        //public void CompareIntermediate2Xml()
-        //{
-        //    // You can use this method to compare just the input against intermediate2, much faster than
-        //    // unpacking and converting first. This only works AFTER a previous test has already converted
-        //    // xml -> json -> xml
-        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\intermediate2");
-        //}
-
-        //[TestMethod]
-        //public void CompareIntermediate2Json()
-        //{
-        //    // You can use this method to compare just the input against intermediate2, much faster than
-        //    // unpacking and converting first. This only works AFTER a previous test has already converted
-        //    // json -> xml -> json
-        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\intermediate2");
-        //}
-
-
         private static void createEmptyDir(string baseTestPath)
         {
             if (Directory.Exists(baseTestPath)) Directory.Delete(baseTestPath, true);
@@ -134,17 +113,22 @@ namespace Hl7.Fhir.Serialization.Tests
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             var sw = new Stopwatch();
             sw.Start();
-            int convertedFileCount = convertFiles(examplePath, intermediate1Path, usingPoco, provider, errors);
+
+            long processedFileCount = convertFiles(examplePath, intermediate1Path, usingPoco, provider, errors);
+
             sw.Stop();
-            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            var seconds = sw.ElapsedMilliseconds / 1000;
+            Trace.WriteLine($"Conversion of {processedFileCount} files took {seconds} seconds ({((double)processedFileCount) / seconds:0.0} files/sec)");
             sw.Reset();
 
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             sw.Start();
-            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider, errors);
+
+            processedFileCount = convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider, errors);
             sw.Stop();
-            Console.WriteLine("Conversion of {1} files took {0} seconds", sw.ElapsedMilliseconds / 1000, convertedFileCount);
+            seconds = sw.ElapsedMilliseconds / 1000;
+            Trace.WriteLine($"Conversion of {processedFileCount} files took {seconds} seconds ({((double)processedFileCount) / seconds:0.0} files/sec)");
             sw.Reset();
 
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
@@ -182,12 +166,13 @@ namespace Hl7.Fhir.Serialization.Tests
             return false;
         }
 
-        private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
+        private static long convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
             var files = Directory.EnumerateFiles(inputPath);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
+            int filesProcessed = 0;
             foreach (string file in files)
             {
                 if (SkipFile(file))
@@ -210,7 +195,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     else
                         convertResourceNav(file, outputFile, provider);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     errors.Add($"{exampleName}{ext}: " + ex.Message);
                 }
@@ -301,8 +286,8 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
-                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
+                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider,
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true });
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }

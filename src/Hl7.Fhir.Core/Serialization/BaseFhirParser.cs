@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
         }
 
-        internal static ModelInspector Inspector
+        public static ModelInspector Inspector
         {
             get
             {
