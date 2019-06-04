@@ -6699,7 +6699,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            // Expecting single issue about invalid slice name on SimpleQuantity root element
             var outcome = generator.Outcome;
             Assert.IsNull(outcome);
 
@@ -6722,6 +6721,122 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current);
             // Verify profile inherits constraint from external targetProfile on Reference
             Assert.AreEqual(1, nav.Current.Min);
+        }
+
+        // [WMR 20190604] NEW - Test bug reported by Marten
+        [TestMethod]
+        public void TestConstrainedByDiff_Meta()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Person.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Person),
+                Name = "MyPerson",
+                Url = "http://example.org/fhir/StructureDefinition/MyPerson",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        //new ElementDefinition("Person") { },
+                        new ElementDefinition("Person.meta.security")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    new ElementDefinition.DiscriminatorComponent()
+                                    {
+                                        Type = ElementDefinition.DiscriminatorType.Value,
+                                        Path = "system"
+                                    }
+                                },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+
+                        new ElementDefinition("Person.meta.security")
+                        {
+                            SliceName = "sliceSecurity"
+                        },
+                        new ElementDefinition("Person.meta.security.system")
+                        {
+                            Min = 1,
+                            Fixed = new FhirUri(@"http://mirjams.example.org/MirjamsCodeSystem")
+                        },
+                        new ElementDefinition("Person.meta.security.code")
+                        {
+                            Min = 1
+                        },
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.GenerateAnnotationsOnConstraints = true;
+            var generator = _generator = new SnapshotGenerator(multiResolver, settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+
+            dumpOutcome(generator.Outcome);
+            //dumpBaseElems(expanded.Snapshot.Element);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var outcome = generator.Outcome;
+            Assert.IsNull(outcome);
+
+            // DEBUGGING
+            var elems = expanded.Snapshot.Element;
+            for (int i = 0; i < elems.Count; i++)
+            {
+                var elem = elems[i];
+                Debug.WriteLine($"{i,3}: {elem.ElementId}" + (elem.IsConstrainedByDiff() ? " *" : ""));
+
+                // Show constraints on child properties
+                Debug.WriteLineIf(elem.MinElement.IsConstrainedByDiff(), "     Min *");
+                Debug.WriteLineIf(elem.Slicing.IsConstrainedByDiff(), "     Slicing *");
+                Debug.WriteLineIf(elem.SliceNameElement.IsConstrainedByDiff(), "     SliceName *");
+                Debug.WriteLineIf(elem.Fixed.IsConstrainedByDiff(), "     Fixed *");
+            }
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Person.meta"));
+            Assert.IsNotNull(nav.Current);
+            Assert.IsFalse(nav.Current.IsConstrainedByDiff());
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify that all elements preceding Person.meta.security are unconstrained
+            while (nav.PathName != "security")
+            {
+                Assert.IsFalse(nav.Current.IsConstrainedByDiff());
+                Assert.IsTrue(nav.MoveToNext());
+            }
+
+            // Verify that element Person.meta.security::slicing is constrained
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsTrue(nav.Current.Slicing.IsConstrainedByDiff());
+            //Assert.IsTrue(nav.Current.IsConstrainedByDiff());
+
+            // Verify that element Person.meta.security:sliceSecurity is constrained
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("sliceSecurity", nav.Current.SliceName);
+            Assert.IsTrue(nav.Current.IsConstrainedByDiff());
+
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify constraints on children of named slice
+            do
+            {
+                Assert.IsFalse(nav.Current.IsConstrainedByDiff());
+                if (nav.PathName == "system" || nav.PathName == "code")
+                {
+                    Assert.IsTrue(nav.Current.MinElement.IsConstrainedByDiff());
+                }
+            } while (nav.MoveToNext());
         }
     }
 }
