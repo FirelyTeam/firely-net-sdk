@@ -50,9 +50,6 @@ namespace Hl7.Fhir.Model
 
             if (this.Contained != null)
             {
-                if (!Contained.OfType<DomainResource>().All(dr => dr.Text == null))
-                    result.Add(new ValidationResult("Resource has contained resources with narrative"));
-
                 if (!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
                     result.Add(new ValidationResult("Resource has contained resources with nested contained resources"));
             }
