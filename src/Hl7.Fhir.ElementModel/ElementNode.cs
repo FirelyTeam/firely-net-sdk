@@ -26,7 +26,22 @@ namespace Hl7.Fhir.ElementModel
         /// <returns></returns>
         public static ITypedElement ForPrimitive(object value) => new PrimitiveElement(value);
 
+        /// <summary>
+        /// Create a fixed length set of values (but also support variable number of parameter values)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
+                : EmptyList;
+
+        /// <summary>
+        /// Create a variable list of values using an enumeration
+        /// - so doesn't have to be converted to an array in memory (issue with larger dynamic lists)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values != null
                 ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
                 : EmptyList;
 
