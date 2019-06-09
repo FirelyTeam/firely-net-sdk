@@ -6,7 +6,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath
 {
-    public class TypeInfo
+    public class TypeInfo : IEquatable<TypeInfo>
     {
         public static readonly TypeInfo Boolean = new TypeInfo("boolean");
         public static readonly TypeInfo String = new TypeInfo("string");
@@ -42,17 +42,6 @@ namespace Hl7.FhirPath
         public string Name { get; protected set; }
 
         public bool IsBuiltin { get; private set; }
-
-        public override bool Equals(object obj)
-        {
-            if (Object.ReferenceEquals(this, obj))
-                return true;
-
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            return Name == ((TypeInfo)obj).Name;
-        }
 
         public static TypeInfo ForNativeType(Type nativeType)
         {
@@ -96,36 +85,22 @@ namespace Hl7.FhirPath
                 return false;
         }
 
-        public bool Equals(TypeInfo typeRef)
-        {
-            if (Object.ReferenceEquals(this, typeRef))
-                return true;
+        public override string ToString() => Name;
 
-            if (typeRef == null)
-                return false;
-
-            return Name == typeRef.Name;
-        }
+        public override bool Equals(object obj) => Equals(obj as TypeInfo);
+        public bool Equals(TypeInfo other) => other != null && 
+            Name == other.Name && IsBuiltin == other.IsBuiltin;
 
         public override int GetHashCode()
-       {
-            return Name.GetHashCode();
-        }
-
-        public static bool operator ==(TypeInfo a, TypeInfo b)
         {
-            if (System.Object.ReferenceEquals(a, b))
-                return true;
-
-            if (((object)a == null) || ((object)b == null))
-                return false;
-
-            return a.Name == b.Name;
+            var hashCode = -568888154;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + IsBuiltin.GetHashCode();
+            return hashCode;
         }
 
-        public static bool operator !=(TypeInfo a, TypeInfo b)
-        {
-            return !(a == b);
-        }
+        public static bool operator ==(TypeInfo left, TypeInfo right) => EqualityComparer<TypeInfo>.Default.Equals(left, right);
+
+        public static bool operator !=(TypeInfo left, TypeInfo right) => !(left == right);
     } 
 }
