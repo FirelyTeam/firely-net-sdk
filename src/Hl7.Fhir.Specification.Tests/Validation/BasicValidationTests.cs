@@ -57,6 +57,72 @@ namespace Hl7.Fhir.Specification.Tests
         //    _validator = new Validator(ctx);
         //}
 
+        [Fact]
+        public void ValidateCircularReference()
+        {
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/2", Value = "2" } }
+            };
+
+            var refPatient = new Patient
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/3", Value = "3" } },
+                Link = new List<Patient.LinkComponent>()
+                {
+                    new Patient.LinkComponent
+                    {
+                        Other = new ResourceReference
+                        {
+                            Reference = "Patient/2",
+                        },
+                        Type = Patient.LinkType.Seealso
+                    }
+                }
+            };
+
+            patient.Link = new List<Patient.LinkComponent>()
+            {
+                new Patient.LinkComponent
+                {
+                    Other = new ResourceReference
+                    {
+                        Reference = "Patient/3",
+                    },
+                    Type = Patient.LinkType.Seealso
+                }
+            };
+
+            var source =
+                    new MultiResolver(
+                        new DirectorySource(@"TestData\validation"),
+                        new ZipSource("specification.zip"));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = false,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += onGetExampleResource;
+            var report = validator.Validate(patient);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
+            {
+                if (e.Reference.Contains("3"))
+                    e.Result = refPatient.ToTypedElement();
+                else
+                    e.Result = patient.ToTypedElement();
+            };
+        }
 
         [Fact]
         public void TestEmptyElement()
