@@ -15,6 +15,7 @@ namespace Hl7.FhirPath
         public static readonly TypeInfo DateTime = new TypeInfo("datetime");
         public static readonly TypeInfo Time = new TypeInfo("time");
         public static readonly TypeInfo Any = new TypeInfo("any");
+        public static readonly TypeInfo Void = new TypeInfo("void");
 
         private TypeInfo(string name)
         {
