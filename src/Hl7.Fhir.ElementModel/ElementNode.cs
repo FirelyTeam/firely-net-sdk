@@ -50,9 +50,10 @@ namespace Hl7.Fhir.ElementModel
             return _childDefinitions;
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child)
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child, string name = null)
         {
-            if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set.");
+            var childName = child.Name ?? name;
+            if (childName == null) throw Error.Argument($"The ElementNode given should have its Name property set or the '{nameof(name)}' parameter should be given.");
 
             child.Parent = this;
 
@@ -60,7 +61,7 @@ namespace Hl7.Fhir.ElementModel
             // we think it should be - this way you can safely first create a node representing
             // an independently created root for a resource of datatype, and then add it to the tree.
             var childDefs = getChildDefinitions(provider ?? throw Error.ArgumentNull(nameof(provider)));
-            var childDef = childDefs.Where(cd => cd.ElementName == child.Name).SingleOrDefault();
+            var childDef = childDefs.Where(cd => cd.ElementName == childName).SingleOrDefault();
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
             
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.ElementModel
                 {
                     // We are in a situation where we are on an polymorphic element, but the caller did not specify
                     // the instance type.  We can try to auto-set it by deriving it from the instance's type, if it is a primitive
-                    if (child.Value != null && Primitives.TryGetPrimitiveTypeName(child.Value, out string instanceType))
+                    if (child.Value != null && Primitives.TryGetPrimitiveTypeName(child.Value.GetType(), out string instanceType))
                         child.InstanceType = instanceType;
                     else
                         throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
