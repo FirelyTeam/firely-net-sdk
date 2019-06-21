@@ -35,7 +35,7 @@ namespace Hl7.Fhir.ElementModel
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             InstanceType = instanceType;
             Value = value;
             Definition = definition;
@@ -52,20 +52,69 @@ namespace Hl7.Fhir.ElementModel
 
         public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child, string name = null)
         {
-            var childName = child.Name ?? name;
-            if (childName == null) throw Error.Argument($"The ElementNode given should have its Name property set or the '{nameof(name)}' parameter should be given.");
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (child == null) throw new ArgumentNullException(nameof(child));
 
+            importChild(provider, child, name);
+            return child;
+        }
+
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value = null, string instanceType = null)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+
+            var child = new ElementNode(name, value, instanceType, null);
+
+            // Add() will supply the definition and the instanceType (if necessary)
+            return Add(provider, child);
+        }
+
+        public void ReplaceWith(IStructureDefinitionSummaryProvider provider, ElementNode node)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (node == null) throw new ArgumentNullException(nameof(node));
+
+            if (Parent == null) throw Error.Argument("Current node is a root node and cannot be replaced.");
+            Parent.Replace(provider, this, node);
+        }
+
+        public void Replace(IStructureDefinitionSummaryProvider provider, ElementNode oldChild, ElementNode newChild)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (oldChild == null) throw new ArgumentNullException(nameof(oldChild));
+            if (newChild == null) throw new ArgumentNullException(nameof(newChild));
+
+            int childIndex = ChildList.IndexOf(oldChild);
+            if (childIndex == -1) throw Error.Argument("Node to be replaced is not one of the children of this node");
+            importChild(provider, newChild, oldChild.Name, childIndex);
+            Remove(oldChild);
+        }
+
+        /// <summary>
+        /// Will update the child to reflect it being a child of this element, but will not yet add the child at any position within this element
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="child"></param>
+        /// <param name="name"></param>
+        private void importChild(IStructureDefinitionSummaryProvider provider, ElementNode child, string name, int? position=null)
+        {
+            child.Name = name ?? child.Name;
+            if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set or the '{nameof(name)}' parameter should be given.");
+
+            // Remove this child from the current parent (if any), then reassign to me
+            if (child.Parent != null) Parent.Remove(child);
             child.Parent = this;
-
+            
             // If we add a child, we better overwrite it's definition with what
             // we think it should be - this way you can safely first create a node representing
             // an independently created root for a resource of datatype, and then add it to the tree.
             var childDefs = getChildDefinitions(provider ?? throw Error.ArgumentNull(nameof(provider)));
-            var childDef = childDefs.Where(cd => cd.ElementName == childName).SingleOrDefault();
+            var childDef = childDefs.Where(cd => cd.ElementName == child.Name).SingleOrDefault();
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
-            
-            if(child.InstanceType == null && child.Definition != null)
+
+            if (child.InstanceType == null && child.Definition != null)
             {
                 if (child.Definition.IsResource || child.Definition.Type.Length > 1)
                 {
@@ -80,17 +129,10 @@ namespace Hl7.Fhir.ElementModel
                     child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
-            ChildList.Add(child);
-
-            return child;
-        }
-
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value=null, string instanceType = null)
-        {
-            var child = new ElementNode(name, value, instanceType, null);
-
-            // Add() will supply the definition and the instanceType (if necessary)
-            return Add(provider, child); 
+            if(position == null || position >= ChildList.Count)
+                ChildList.Add(child);
+            else
+                ChildList.Insert(position.Value, child);
         }
 
         public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null)
@@ -109,7 +151,10 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
-            => buildNode(node, recursive, annotationsToCopy, null);
+        {
+            if (node == null) throw new ArgumentNullException(nameof(node));
+            return buildNode(node, recursive, annotationsToCopy, null);
+        }
 
         private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
         {
@@ -128,7 +173,20 @@ namespace Hl7.Fhir.ElementModel
             return me;
         }
 
-        public ElementNode Clone()
+        public bool Remove(ElementNode child)
+        {
+            if (child == null) throw new ArgumentNullException(nameof(child));
+
+            var success = ChildList.Remove(child);
+            if (success) child.Parent = null;
+
+            return success;
+        }
+
+        [Obsolete("The Clone() function actually only performs a shallow copy, so this function has been renamed to ShallowCopy()")]
+        public ElementNode Clone() => ShallowCopy();
+
+        public ElementNode ShallowCopy()
         {
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
@@ -150,6 +208,8 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
             return (type == typeof(ElementNode) || type == typeof(ITypedElement))
                 ? (new[] { this })
                 : AnnotationsInternal.OfType(type);
