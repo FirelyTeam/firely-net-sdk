@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -19,7 +20,7 @@ namespace Hl7.Fhir.Validation
     internal static class ChildConstraintValidationExtensions
     {
         internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, 
-            ScopedNode instance, bool allowAdditionalChildren)
+            ScopedNode instance, bool allowAdditionalChildren, List<Tuple<string,string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
@@ -41,13 +42,13 @@ namespace Hl7.Fhir.Validation
             // Recursively validate my children
             foreach (var match in matchResult.Matches)
             {
-                outcome.Add(validator.ValidateMatch(match, instance));
+                outcome.Add(validator.ValidateMatch(match, instance, validatedResources));
             }
 
             return outcome;
         }
 
-        private static OperationOutcome ValidateMatch(this Validator validator, Match match, ScopedNode parent)
+        private static OperationOutcome ValidateMatch(this Validator validator, Match match, ScopedNode parent, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 
@@ -84,7 +85,7 @@ namespace Hl7.Fhir.Validation
                 // Since the ChildNameMatcher currently does the matching, this will never go wrong
             }
 
-            outcome.Add(bucket.Validate(validator, parent));
+            outcome.Add(bucket.Validate(validator, parent, validatedResources: validatedResources));
 
             return outcome;
         }

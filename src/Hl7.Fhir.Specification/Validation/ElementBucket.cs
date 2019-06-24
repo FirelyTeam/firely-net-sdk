@@ -10,6 +10,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.ElementModel;
+using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
 {
@@ -37,13 +39,13 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
+        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string,string>> validatedResources = null)
         {
             var outcome = base.Validate(validator, errorLocation);
 
             foreach(var member in Members)
             {
-                outcome.Include(Validator.Validate(member, Root));
+                outcome.Include(Validator.Validate(member, Root, validatedResources: validatedResources));
             }
 
             return outcome;

@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Validation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Validation
 
         public abstract bool Add(ITypedElement instance);
   
-        public virtual OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
+        public virtual OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 

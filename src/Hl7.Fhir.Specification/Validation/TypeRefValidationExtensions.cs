@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, List<string> validatedResources)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
 
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, List<string> validatedResources)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr, List<string> validatedResources)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
         {
             return validate;
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<string> validatedResources)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -117,11 +117,6 @@ namespace Hl7.Fhir.Validation
 
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
-
-            if (validatedResources.Contains(reference))
-                return outcome;
-
-            validatedResources.Add(reference);
 
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
@@ -143,6 +138,11 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
+                    if (validatedResources.Any(v => v.Item1 == reference && v.Item2 == typeRef.TargetProfile))
+                        return outcome;
+
+                    validatedResources.Add(new Tuple<string, string>(reference, typeRef.TargetProfile));
+
                     referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance.Location);
                 }
                 catch (Exception e)

@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Specification.Validation;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -113,7 +114,7 @@ namespace Hl7.Fhir.Validation
             return false;
         }
 
-        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
+        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string, string>> validatedResources = null)
         {
             OperationOutcome outcome = new OperationOutcome();
 

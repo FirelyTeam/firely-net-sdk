@@ -13,6 +13,7 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -98,9 +99,9 @@ namespace Hl7.Fhir.Validation
             return Entry.Add(candidate);
         }
 
-        public OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
+        public OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string, string>> validatedResources = null)
         {
-            var outcome = Entry.Validate(validator, errorLocation);   // Validate against entry slice, e.g. cardinality
+            var outcome = Entry.Validate(validator, errorLocation, validatedResources: validatedResources);   // Validate against entry slice, e.g. cardinality
 
             var lastMatchingSlice = -1;
             var openTailInUse = false;
@@ -157,7 +158,7 @@ namespace Hl7.Fhir.Validation
             // Finally, add any validation items on the elements that made it into the child slices
             foreach (var slice in ChildSlices)
             {
-                var sliceOutcome = slice.Validate(validator, errorLocation);
+                var sliceOutcome = slice.Validate(validator, errorLocation, validatedResources: validatedResources);
                 foreach (var issue in sliceOutcome.Issue)
                 {
                     // Only add the issue from the slice outcome if the entry validation did not already catch
