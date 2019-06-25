@@ -135,7 +135,7 @@ namespace Hl7.Fhir.ElementModel
                 ChildList.Insert(position.Value, child);
         }
 
-        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null)
+        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null, object value=null)
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.ElementModel
             if (sd != null)
                 definition = ElementDefinitionSummary.ForRoot(sd);
 
-            return new ElementNode(name ?? type, null, type, definition);
+            return new ElementNode(name ?? type, value, type, definition);
         }
 
         public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
