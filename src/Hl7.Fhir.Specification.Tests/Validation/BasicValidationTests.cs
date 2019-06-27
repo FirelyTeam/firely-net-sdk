@@ -570,32 +570,24 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidateCarePlan()
         {
-            var eoc = new EpisodeOfCare
-            {
-                Identifier = new List<Identifier>() { new Identifier { System = "EpisodeOfCare/example", Value = "example" } },
-                Status = EpisodeOfCare.EpisodeOfCareStatus.Active,
-                Patient = new ResourceReference
-                {
-                    Reference = "Patient/23"
-                }
-            };
-
             var patient = new Patient
             {
-                Identifier = new List<Identifier>() { new Identifier { System = "Patient/23", Value = "23" } }
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/23", Value = "23" } },
+                Active = true,               
             };
 
             var cp = new CarePlan
             {
-                Status = CarePlan.CarePlanStatus.Active,
+                Status = RequestStatus.Active,
                 Intent = CarePlan.CarePlanIntent.Plan,
                 Subject = new ResourceReference
                 {
                     Reference = "Patient/23"
                 },
-                Context = new ResourceReference
+                
+                Author = new ResourceReference
                 {
-                    Reference = "EpisodeOfCare/example"
+                    Reference = "Patient/23"
                 }
             };
             
@@ -623,10 +615,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
             {
-                if (e.Reference.Contains("EpisodeOfCare"))
-                    e.Result = eoc.ToTypedElement();
-                else
-                    e.Result = patient.ToTypedElement();
+                e.Result = patient.ToTypedElement();
             };
         }
 
