@@ -19,8 +19,10 @@ namespace Hl7.Fhir.ElementModel
     {
         public PrimitiveElement(object value, string name = null)
         {
+            if (value == null)  throw new ArgumentNullException(nameof(value));
+
             Value = Primitives.ConvertToPrimitiveValue(value);
-            InstanceType = Primitives.GetPrimitiveTypeName(value);
+            InstanceType = Primitives.GetPrimitiveTypeName(value.GetType());
             Name = name ?? "@primitivevalue@";
         }
 

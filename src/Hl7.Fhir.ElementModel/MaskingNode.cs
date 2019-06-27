@@ -16,6 +16,12 @@ namespace Hl7.Fhir.ElementModel
 {
     public class MaskingNode : ITypedElement, IAnnotated, IExceptionSource
     {
+
+        /// <summary>
+        /// Set to true when a complex type property is mandatory so all its children need to be included
+        /// </summary>
+        private bool _includeAll { get; set;}
+
         public static MaskingNode ForSummary(ITypedElement node) =>
             new MaskingNode(node, new MaskingNodeSettings
             {
@@ -65,10 +71,11 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private MaskingNode(MaskingNode parent, ITypedElement source)
+        private MaskingNode(MaskingNode parent, ITypedElement source, bool includeAll)
         {
             Source = source;
             _settings = parent._settings;
+            _includeAll = includeAll;
             ExceptionHandler = parent.ExceptionHandler;
         }
 
@@ -91,16 +98,12 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementDefinitionSummary Definition => Source.Definition;
 
-        private bool included(ITypedElement node)
+        private (bool included, bool mandatory) included(ITypedElement node)
         {
-            // Trivially, we will include the root
-            if (!node.Location.Contains(".")) return true;
-
             var scope = getScope(node);
 
-            //bool atTopLevel() =>
-            //    // check whether there is a single path separator -> path looks like 'Resource.xxxxx'
-            //    node.LocalLocation.IndexOf('.') == node.LocalLocation.LastIndexOf('.');
+            // Trivially, we will include the root
+            if (!scope.Location.Contains(".")) return (true,false);
 
             bool atRootBundle() => atBundle() && scope.ParentResource == null;
             bool atBundle() => scope.NearestResourceType == "Bundle";
@@ -109,16 +112,19 @@ namespace Hl7.Fhir.ElementModel
             {
                 case MaskingNodeSettings.PreserveBundleMode.All when atBundle():
                 case MaskingNodeSettings.PreserveBundleMode.Root when atRootBundle():
-                    return true;
-                    // else fall through
+                    return (true,false);
+
+                // fall through...
             }
 
-            var included = _settings.IncludeAll;
+            var included = _settings.IncludeAll || _includeAll;
 
+            bool mandatory=false;         // included because it's required & includeMandatory is on
             var ed = scope.Definition;
             if (ed != null)
             {
-                included |= _settings.IncludeMandatory && ed.IsRequired;
+                mandatory = _settings.IncludeMandatory && ed.IsRequired;
+                included |= mandatory;
                 included |= _settings.IncludeInSummary && ed.InSummary;
             }
 
@@ -127,7 +133,7 @@ namespace Hl7.Fhir.ElementModel
             included |= _settings.IncludeElements?.Any(matches) ?? false;
 
             if (_settings.ExcludeElements?.Any(matches) == true)
-                return false;
+                return (false,false);
 
             bool matches(string filter)
             {
@@ -135,11 +141,10 @@ namespace Hl7.Fhir.ElementModel
                 return loc == f || loc.StartsWith(f + ".") || loc.StartsWith(f + "[");    // include matches + children
             }
 
+            if (_settings.ExcludeMarkdown && scope.InstanceType == "markdown") return (false,false);
+            if (_settings.ExcludeNarrative & scope.InstanceType == "Narrative") return (false,false);
 
-            if (_settings.ExcludeMarkdown && scope.InstanceType == "markdown") return false;
-            if (_settings.ExcludeNarrative & scope.InstanceType == "Narrative") return false;
-
-            return included;
+            return (included,mandatory);
         }
 
 
@@ -152,6 +157,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public IEnumerable<ITypedElement> Children(string name = null) =>
-            Source.Children(name).Where(c => included(c)).Select(c => new MaskingNode(this, c));
+            from c in Source.Children(name)
+            let inc = included(c)
+            where inc.included
+            select new MaskingNode(this, c, inc.mandatory);
     }
 }
