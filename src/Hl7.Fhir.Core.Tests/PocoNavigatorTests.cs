@@ -28,10 +28,10 @@ namespace Hl7.Fhir
             {
                 if (f is IEnumerable<ITypedElement>)
                 {
-                    object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
+                    var bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
                         return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
-                    }).ToArray();
+                    });
                     return ElementNode.CreateList(bits);
                 }
                 return ElementNode.CreateList("?");

@@ -567,6 +567,68 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(report.Success);
         }
 
+        [Fact]
+        public void ValidateCarePlan()
+        {
+            var eoc = new EpisodeOfCare
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "EpisodeOfCare/example", Value = "example" } },
+                Status = EpisodeOfCare.EpisodeOfCareStatus.Active,
+                Patient = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                }
+            };
+
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/23", Value = "23" } }
+            };
+
+            var cp = new CarePlan
+            {
+                Status = CarePlan.CarePlanStatus.Active,
+                Intent = CarePlan.CarePlanIntent.Plan,
+                Subject = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                },
+                Context = new ResourceReference
+                {
+                    Reference = "EpisodeOfCare/example"
+                }
+            };
+            
+            var source = 
+                    new MultiResolver(
+                        new DirectorySource(@"TestData\validation"),
+                        new ZipSource("specification.zip"));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = false,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += onGetExampleResource;
+            var report = validator.Validate(cp);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
+            {
+                if (e.Reference.Contains("EpisodeOfCare"))
+                    e.Result = eoc.ToTypedElement();
+                else
+                    e.Result = patient.ToTypedElement();
+            };
+        }
 
         [Fact]
         public void ValidateBundle()
