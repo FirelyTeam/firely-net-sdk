@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
+                    throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
                         $"please supply a type argument.");
                 else
                     return (rootType, null);
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.ElementModel
             }
 
             if (elementType.IsAbstract)
-                throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
+                throw Error.Format(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
 
             var rootTypeDefinition = ElementDefinitionSummary.ForRoot(elementType, Source.Name);
             return (rootType, rootTypeDefinition);
