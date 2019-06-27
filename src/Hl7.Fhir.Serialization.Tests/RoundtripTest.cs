@@ -16,9 +16,6 @@ using Hl7.Fhir.Specification.Source;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Tests;
-using Hl7.Fhir.Specification.Source;
-using System.Collections.Generic;
-using System;
 
 namespace Hl7.Fhir.Serialization.Tests
 {

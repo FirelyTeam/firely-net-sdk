@@ -28,14 +28,14 @@ namespace Hl7.Fhir.Rest
 {
     public static class HttpToEntryExtensions
     {
-        private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
         internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
         {
-            var result = new Bundle.EntryComponent();
-
-            result.Response = new Bundle.ResponseComponent();
+            var result = new Bundle.EntryComponent
+            {
+                Response = new Bundle.ResponseComponent()
+            };
             result.Response.Status = ((int)response.StatusCode).ToString();
             result.Response.SetHeaders(response.Headers);
 
@@ -63,8 +63,10 @@ namespace Hl7.Fhir.Rest
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
                         result.Resource.Id = ri.Id;
-                        result.Resource.Meta = new Meta();
-                        result.Resource.Meta.VersionId = ri.VersionId;
+                        result.Resource.Meta = new Meta
+                        {
+                            VersionId = ri.VersionId
+                        };
                         result.Resource.ResourceBase = ri.BaseUri;
                     }
                 }
@@ -96,15 +98,8 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static string getContentType(HttpWebResponse response)
-        {
-            if (!String.IsNullOrEmpty(response.ContentType))
-            {
-                return ContentType.GetMediaTypeFromHeaderValue(response.ContentType);
-            }
-            else
-                return null;
-        }
+        private static string getContentType(HttpWebResponse response) => 
+            !String.IsNullOrEmpty(response.ContentType) ? ContentType.GetMediaTypeFromHeaderValue(response.ContentType) : null;
 
         private static Encoding getCharacterEncoding(HttpWebResponse response)
         {
@@ -121,9 +116,7 @@ namespace Hl7.Fhir.Rest
         }      
 
         internal static Resource ParseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
-        {           
-            Resource result= null;
-
+        {
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
             if (fhirType == ResourceFormat.Unknown)
@@ -135,14 +128,14 @@ namespace Hl7.Fhir.Rest
                 throw new UnsupportedBodyTypeException(
                         "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
+            Resource result;
             try
             {
-                if (fhirType == ResourceFormat.Json)
-                    result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
-                else
-                    result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
+                result = fhirType == ResourceFormat.Json
+                    ? new FhirJsonParser(settings).Parse<Resource>(bodyText)
+                    : new FhirXmlParser(settings).Parse<Resource>(bodyText);
             }
-            catch (FormatException fe) when (!throwOnFormatException)
+            catch (FormatException) when (!throwOnFormatException)
             {
                 // if (throwOnFormatException) throw fe;
 
@@ -192,25 +185,18 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        internal static Binary MakeBinaryResource(byte[] data, string contentType)
-        {
-            var binary = new Binary();
-
-            binary.Data = data;
-            binary.ContentType = contentType;
-
-            return binary;
-        }
+        internal static Binary MakeBinaryResource(byte[] data, string contentType) => 
+            new Binary
+            {
+                Data = data,
+                ContentType = contentType
+            };
 
 
         public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
         {
             var body = interaction.GetBody();
-
-            if (body != null)
-                return DecodeBody(body, Encoding.UTF8);
-            else
-                return null;
+            return body != null ? DecodeBody(body, Encoding.UTF8) : null;
         }
 
 
