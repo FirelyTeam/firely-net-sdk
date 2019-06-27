@@ -137,24 +137,37 @@ namespace Hl7.FhirPath.Tests
         public void KnowsPath()
         {
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.contained[0].value", patient[0][0].Location);
-            Assert.Equal("Patient.active", patient[1].Location);
-            Assert.Equal("Patient.active.id", patient[1][0].Location);
+            Assert.Equal("Patient.contained[0].value[0]", patient[0][0].Location);
+            Assert.Equal("Patient.active[0]", patient[1].Location);
+            Assert.Equal("Patient.active[0].id[0]", patient[1][0].Location);
             Assert.Equal("Patient.identifier[0]", patient[2].Location);
             Assert.Equal("Patient.identifier[1]", patient[3].Location);
-            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].Location);
-            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][1][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][2][0].Location);
+        }
+
+        [Fact]
+        public void KnowsShortPath()
+        {
+            Assert.Equal("Patient", patient.ShortPath);
+            Assert.Equal("Patient.contained[0].value", patient[0][0].ShortPath);
+            Assert.Equal("Patient.active", patient[1].ShortPath);
+            Assert.Equal("Patient.active.id", patient[1][0].ShortPath);
+            Assert.Equal("Patient.identifier[0]", patient[2].ShortPath);
+            Assert.Equal("Patient.identifier[1]", patient[3].ShortPath);
+            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].ShortPath);
+            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].ShortPath);
         }
 
         [Fact]
         public void AccessViaIndexers()
         {
-            Assert.Equal("Patient.active.extension[1].value", patient["active"][0]["extension"][1]["value"][0].Location);
-            Assert.Equal("Patient.active.extension[1].value", patient["active"]["extension"][1]["value"].Single().Location);
-            Assert.Equal("Patient.active.extension[0].value", patient.Children("active").First()
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
                                 .Children("extension").First()
                                 .Children("value").First().Location);
-            Assert.Equal("Patient.active.extension[0].value", patient.Children("active")
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active")
                                 .Children("extension").First()
                                 .Children("value").Single().Location);
         }

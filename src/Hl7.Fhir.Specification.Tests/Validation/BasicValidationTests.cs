@@ -567,6 +567,57 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(report.Success);
         }
 
+        [Fact]
+        public void ValidateCarePlan()
+        {
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/23", Value = "23" } },
+                Active = true,               
+            };
+
+            var cp = new CarePlan
+            {
+                Status = RequestStatus.Active,
+                Intent = CarePlan.CarePlanIntent.Plan,
+                Subject = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                },
+                
+                Author = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                }
+            };
+            
+            var source = 
+                    new MultiResolver(
+                        new DirectorySource(@"TestData\validation"),
+                        new ZipSource("specification.zip"));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = false,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += onGetExampleResource;
+            var report = validator.Validate(cp);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
+            {
+                e.Result = patient.ToTypedElement();
+            };
+        }
 
         [Fact]
         public void ValidateBundle()
