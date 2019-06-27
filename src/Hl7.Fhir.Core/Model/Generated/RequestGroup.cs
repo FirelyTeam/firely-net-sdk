@@ -1328,7 +1328,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent RequestGroup_RQG_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "action.all(resource.exists() != action.exists())",
             Key = "rqg-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

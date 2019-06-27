@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent CareTeam_CTM_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
             Key = "ctm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

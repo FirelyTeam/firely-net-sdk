@@ -2707,7 +2707,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent StructureMap_SMP_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "smp-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2716,7 +2716,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureMap_SMP_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.rule.target.all(context.exists() implies contextType.exists())",
             Key = "smp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2725,7 +2725,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent StructureMap_SMP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.rule.target.all(element.exists() implies context.exists())",
             Key = "smp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

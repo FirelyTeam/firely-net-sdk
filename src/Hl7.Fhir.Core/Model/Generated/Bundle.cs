@@ -1356,7 +1356,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_7 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(type = 'history') or entry.where(fullUrl.exists()).select(fullUrl&resource.meta.versionId).isDistinct()",
             Key = "bdl-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1365,7 +1365,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_9 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
             Key = "bdl-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1374,7 +1374,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entry.all(request.exists() = (%resource.type = 'batch' or %resource.type = 'transaction' or %resource.type = 'history'))",
             Key = "bdl-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entry.all(response.exists() = (%resource.type = 'batch-response' or %resource.type = 'transaction-response' or %resource.type = 'history'))",
             Key = "bdl-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_12 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "type = 'message' implies entry.first().resource.is(MessageHeader)",
             Key = "bdl-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1401,7 +1401,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "total.empty() or (type = 'searchset') or (type = 'history')",
             Key = "bdl-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1410,7 +1410,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entry.search.empty() or (type = 'searchset')",
             Key = "bdl-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1419,7 +1419,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_11 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "type = 'document' implies entry.first().resource.is(Composition)",
             Key = "bdl-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_10 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "type = 'document' implies (meta.lastUpdated.hasValue())",
             Key = "bdl-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1437,7 +1437,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_8 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entry.all(fullUrl.contains('/_history/').not())",
             Key = "bdl-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1446,7 +1446,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "entry.all(resource.exists() or request.exists() or response.exists())",
             Key = "bdl-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

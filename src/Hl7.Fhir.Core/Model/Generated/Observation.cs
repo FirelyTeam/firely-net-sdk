@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "dataAbsentReason.empty() or value.empty()",
             Key = "obs-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "referenceRange.all(low.exists() or high.exists() or text.exists())",
             Key = "obs-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

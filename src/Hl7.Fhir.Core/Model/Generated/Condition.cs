@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Condition_CON_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code='entered-in-error').empty() or clinicalStatus.empty()",
             Key = "con-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "abatement.empty() or clinicalStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-clinical' and (code='resolved' or code='remission' or code='inactive')).exists()",
             Key = "con-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -567,7 +567,8 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
+			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(true), Url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice"} },  
             Expression = "clinicalStatus.exists() or verificationStatus='entered-in-error' or category.select($this='problem-list-item').empty()",
             Key = "con-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -576,7 +577,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "stage.all(summary.exists() or assessment.exists())",
             Key = "con-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -585,7 +586,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "evidence.all(code.exists() or detail.exists())",
             Key = "con-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

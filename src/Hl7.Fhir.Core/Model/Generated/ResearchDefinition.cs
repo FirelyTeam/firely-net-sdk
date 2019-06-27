@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ResearchDefinition_RSD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "rsd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

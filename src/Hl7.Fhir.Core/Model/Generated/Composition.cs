@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "section.all(text.exists() or entry.exists() or section.exists())",
             Key = "cmp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "section.all(emptyReason.empty() or entry.empty())",
             Key = "cmp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

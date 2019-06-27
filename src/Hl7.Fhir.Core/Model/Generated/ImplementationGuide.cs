@@ -4665,7 +4665,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "ig-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -4674,7 +4674,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "definition.resource.fhirVersion.all(%context.fhirVersion contains $this)",
             Key = "ig-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -4683,7 +4683,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "definition.all(resource.groupingId.all(%context.grouping.id contains $this))",
             Key = "ig-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

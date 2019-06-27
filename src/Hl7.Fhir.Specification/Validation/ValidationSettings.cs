@@ -15,6 +15,13 @@ using System;
 
 namespace Hl7.Fhir.Validation
 {
+    public enum ConstraintBestPractices
+    {
+        Ignore,
+        Enabled,
+        Disabled
+    }
+
     /// <summary>Configuration settings for the <see cref="Validator"/> class.</summary>
     public class ValidationSettings
     {
@@ -89,6 +96,11 @@ namespace Hl7.Fhir.Validation
         /// .NET XSD validation prior to running profile validation
         /// </summary>
         public bool EnableXsdValidation { get; set; } // = false;
+
+        /// <summary>
+        /// If set to enabled, the validator will treat as error the violations of the invariants marked as best practices, if disabled they will be marked as warnings.
+        /// </summary>
+        public ConstraintBestPractices ConstraintBestPractices { get; set; } // = Ignore;
 
         /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
         public ValidationSettings() { }

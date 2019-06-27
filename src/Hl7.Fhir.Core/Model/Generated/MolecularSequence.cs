@@ -2765,7 +2765,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "coordinateSystem = 1 or coordinateSystem = 0",
             Key = "msq-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2774,7 +2774,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_6 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
             Key = "msq-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2783,7 +2783,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
             Key = "msq-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

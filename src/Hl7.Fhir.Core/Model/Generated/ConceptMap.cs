@@ -1652,7 +1652,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "cmd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1661,7 +1661,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
             Key = "cmd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1670,7 +1670,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
             Key = "cmd-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1679,7 +1679,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.unmapped.all((mode = 'fixed') implies code.exists())",
             Key = "cmd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

@@ -3551,7 +3551,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_7 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "document.select(profile&mode).isDistinct()",
             Key = "cpb-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3560,7 +3560,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_16 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind!='requirements') or (implementation.exists().not() and software.exists().not())",
             Key = "cpb-16",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3569,7 +3569,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_15 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind != 'capability') or (implementation.exists().not() and software.exists())",
             Key = "cpb-15",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3578,7 +3578,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "messaging.endpoint.empty() or kind = 'instance'",
             Key = "cpb-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3587,7 +3587,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_14 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind != 'instance') or implementation.exists()",
             Key = "cpb-14",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3596,7 +3596,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(description.count() + software.count() + implementation.count()) > 0",
             Key = "cpb-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3605,7 +3605,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "rest.exists() or messaging.exists() or document.exists()",
             Key = "cpb-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3614,7 +3614,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "cpb-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3623,7 +3623,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_9 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "rest.all(resource.select(type).isDistinct())",
             Key = "cpb-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -3632,7 +3632,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_12 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "rest.resource.all(searchParam.select(name).isDistinct())",
             Key = "cpb-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

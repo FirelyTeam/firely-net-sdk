@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Parameters_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

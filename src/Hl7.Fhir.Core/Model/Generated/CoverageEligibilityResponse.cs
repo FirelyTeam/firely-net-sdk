@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent CoverageEligibilityResponse_CES_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "insurance.item.all(category.exists() xor productOrService.exists())",
             Key = "ces-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

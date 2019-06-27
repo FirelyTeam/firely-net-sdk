@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "education.all(documentType.exists() or reference.exists())",
             Key = "imm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

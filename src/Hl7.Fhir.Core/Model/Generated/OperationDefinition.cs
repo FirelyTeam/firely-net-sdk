@@ -1626,7 +1626,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "opd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1635,7 +1635,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "parameter.all(type.exists() or part.exists())",
             Key = "opd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1644,7 +1644,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "parameter.all(searchType.exists() implies type = 'string')",
             Key = "opd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1653,7 +1653,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "parameter.all(targetProfile.exists() implies (type = 'Reference' or type = 'canonical'))",
             Key = "opd-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

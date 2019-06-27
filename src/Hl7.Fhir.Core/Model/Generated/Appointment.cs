@@ -830,7 +830,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "Appointment.cancelationReason.exists() implies (Appointment.status='no-show' or Appointment.status='cancelled')",
             Key = "app-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled' | 'waitlist'))",
             Key = "app-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "start.exists() = end.exists()",
             Key = "app-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "participant.all(type.exists() or actor.exists())",
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
