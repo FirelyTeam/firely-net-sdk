@@ -48,15 +48,15 @@ namespace Hl7.Fhir.Support.Tests.Utils
         }
 
 
+        //Test only works on STU3+
+        //[TestMethod]
+        //public void GetInfoFromEnumMember()
+        //{
+        //    var t = FHIRAllTypes.Markdown;
 
-        [TestMethod]
-        public void GetInfoFromEnumMember()
-        {
-            var t = FHIRAllTypes.Markdown;
-
-            Assert.AreEqual("markdown", t.GetLiteral());
-            Assert.AreEqual("markdown", t.GetDocumentation());
-        }
+        //    Assert.AreEqual("markdown", t.GetLiteral());
+        //    Assert.AreEqual("markdown", t.GetDocumentation());
+        //}
 
         [TestMethod]
         public void EnumParsingPerformance()

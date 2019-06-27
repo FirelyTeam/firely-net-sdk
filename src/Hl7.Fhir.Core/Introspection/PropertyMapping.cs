@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Introspection
         public bool InSummary { get; private set; }
         public bool IsMandatoryElement { get; private set; }
 
-        public Type ImplementingType { get; private set; }
+        public Type ElementType { get; private set; }
         public bool IsBackboneElement { get; private set; }
 
         public int Order { get; private set; }
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Introspection
             var allowedTypes = prop.GetCustomAttribute<Validation.AllowedTypesAttribute>();
 
             result.Name = determinePropertyName(prop);
-            result.ImplementingType = prop.PropertyType;
+            result.ElementType = prop.PropertyType;
 
             result.InSummary = elementAttr?.InSummary ?? false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
@@ -69,12 +69,12 @@ namespace Hl7.Fhir.Introspection
             result.IsCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
 
             // Get to the actual (native) type representing this element
-            if (result.IsCollection) result.ImplementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
-            if (ReflectionHelper.IsNullableType(result.ImplementingType)) result.ImplementingType = ReflectionHelper.GetNullableArgument(result.ImplementingType);
-            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ImplementingType);
+            if (result.IsCollection) result.ElementType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (ReflectionHelper.IsNullableType(result.ElementType)) result.ElementType = ReflectionHelper.GetNullableArgument(result.ElementType);
+            result.IsPrimitive = isAllowedNativeTypeForDataTypeValue(result.ElementType);
 
-            result.IsBackboneElement = result.ImplementingType.CanBeTreatedAsType(typeof(IBackboneElement));
-            foundTypes.Add(result.ImplementingType);
+            result.IsBackboneElement = result.ElementType.CanBeTreatedAsType(typeof(IBackboneElement));
+            foundTypes.Add(result.ElementType);
 
             // Derive the C# type that represents which types are allowed for this element.
             // This may differ from the ImplementingType in several ways:
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Introspection
             else if (elementAttr?.TypeRedirect != null)
                 result.FhirType = new[] { elementAttr.TypeRedirect };
             else
-                result.FhirType = new[] { result.ImplementingType };
+                result.FhirType = new[] { result.ElementType };
 
             // Check wether this property represents a native .NET type
             // marked to receive the class' primitive value in the fhir serialization

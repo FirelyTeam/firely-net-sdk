@@ -16,6 +16,18 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+     <DocumentationFile>bin\Debug\net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+   </PropertyGroup>
+
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+     <DocumentationFile>bin\Release\net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+   </PropertyGroup>
+   <ItemGroup>
+     <Compile Remove="Rest\Search\**" />
+     <EmbeddedResource Remove="Rest\Search\**" />
+     <None Remove="Rest\Search\**" />
+   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Rest\Search\**" />
     <EmbeddedResource Remove="Rest\Search\**" />

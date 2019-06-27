@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Hl7.Fhir.Core.Tests
+namespace Hl7.Fhir.Specification.Tests
 {
     public class xUnitBug
     {
@@ -13,6 +13,5 @@ namespace Hl7.Fhir.Core.Tests
         public void WillPreventBugInxUnitTestRunner()
         {
         }
-
     }
 }
