@@ -148,6 +148,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KnowsShortPath()
         {
+            var patient = createPatient();
+
             Assert.Equal("Patient", patient.ShortPath);
             Assert.Equal("Patient.contained[0].value", patient[0][0].ShortPath);
             Assert.Equal("Patient.active", patient[1].ShortPath);
@@ -161,6 +163,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void AccessViaIndexers()
         {
+            var patient = createPatient();
+
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
             Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
