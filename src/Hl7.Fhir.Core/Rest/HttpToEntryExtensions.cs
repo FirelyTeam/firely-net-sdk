@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
                 DateTimeOffset dateTimeOffset = new DateTimeOffset();
                 bool success = DateTimeOffset.TryParse(response.Headers[HttpUtil.LASTMODIFIED], out dateTimeOffset);
                 if (!success)
-                    throw new FormatException($"String \"{response.Headers[HttpUtil.LASTMODIFIED]}\" was not recognized as a valid DateTime");
+                    throw new FormatException($"Last-Modified header has value '{response.Headers[HttpUtil.LASTMODIFIED]}', which is not recognized as a valid DateTime");
                 result.Response.LastModified = dateTimeOffset;
             }
 #else
