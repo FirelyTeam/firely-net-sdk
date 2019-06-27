@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
     {
         /// <summary>
         /// Creates an implementation of ITypedElement that represents a primitive value
@@ -26,7 +26,22 @@ namespace Hl7.Fhir.ElementModel
         /// <returns></returns>
         public static ITypedElement ForPrimitive(object value) => new PrimitiveElement(value);
 
+        /// <summary>
+        /// Create a fixed length set of values (but also support variable number of parameter values)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
+                : EmptyList;
+
+        /// <summary>
+        /// Create a variable list of values using an enumeration
+        /// - so doesn't have to be converted to an array in memory (issue with larger dynamic lists)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values != null
                 ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
                 : EmptyList;
 
@@ -209,8 +224,7 @@ namespace Hl7.Fhir.ElementModel
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
-
-            return (type == typeof(ElementNode) || type == typeof(ITypedElement))
+            return (type == typeof(ElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 ? (new[] { this })
                 : AnnotationsInternal.OfType(type);
         }
@@ -224,6 +238,24 @@ namespace Hl7.Fhir.ElementModel
                     //TODO: Slow - but since we'll change the use of this property to informational 
                     //(i.e. for error messages), it may not be necessary to improve it.
                     var basePath = Parent.Location;
+                    var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    return $"{basePath}.{Name}[{myIndex}]";
+
+                }
+                else
+                    return Name;
+            }
+        }
+
+        public string ShortPath
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.ShortPath;
 
                     if (Definition?.IsCollection == false)
                         return $"{basePath}.{Name}";
@@ -232,12 +264,10 @@ namespace Hl7.Fhir.ElementModel
                         var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                         return $"{basePath}.{Name}[{myIndex}]";
                     }
-                    
                 }
                 else
                     return Name;
             }
         }
-
     }
 }
