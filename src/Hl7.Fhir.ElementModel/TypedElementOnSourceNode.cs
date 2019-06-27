@@ -56,7 +56,7 @@ namespace Hl7.Fhir.ElementModel
             }
 
             if (elementType.IsAbstract)
-                throw Error.Format(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
+                throw Error.Argument(nameof(elementType), $"The type of a node must be a concrete type, '{elementType.TypeName}' is abstract.");
 
             var rootTypeDefinition = ElementDefinitionSummary.ForRoot(elementType, Source.Name);
             return (rootType, rootTypeDefinition);
