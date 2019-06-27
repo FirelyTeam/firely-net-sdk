@@ -46,7 +46,13 @@ namespace Hl7.Fhir.Rest
 
 #if NETSTANDARD1_1
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
-                    result.Response.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
+            {
+                DateTimeOffset dateTimeOffset = new DateTimeOffset();
+                bool success = DateTimeOffset.TryParse(response.Headers[HttpUtil.LASTMODIFIED], out dateTimeOffset);
+                if (!success)
+                    throw new FormatException($"Last-Modified header has value '{response.Headers[HttpUtil.LASTMODIFIED]}', which is not recognized as a valid DateTime");
+                result.Response.LastModified = dateTimeOffset;
+            }
 #else
             result.Response.LastModified = response.LastModified;
 #endif
