@@ -465,22 +465,27 @@ namespace Hl7.Fhir.Specification.Source
 
             var summaries = GetSummaries();
             var factory = _navigatorFactoryDelegate;
+            var generator = _summaryGenerator;
+            var harvesters = _settings.SummaryDetailsHarvesters;
 
             foreach (var filePath in filePaths)
             {
-                bool exists = File.Exists(filePath);
-                if (!exists)
+                // Always remove existing summaries
+                var isRemoved = summaries.RemoveAll(s => PathComparer.Equals(filePath, s.Origin)) > 0;
+
+                // [WMR 20190528] Fixed: also update existing summaries!
+                if (File.Exists(filePath))
                 {
-                    // File was deleted; remove associated summaries
-                    result |= summaries.RemoveAll(s => PathComparer.Equals(filePath, s.Origin)) > 0;
-                }
-                else if (!summaries.Any(s => PathComparer.Equals(filePath, s.Origin)))
-                {
-                    // File was added; generate and add new summary
+                    // File was added/changed; generate and add new summary
                     // [WMR 20190403] Fixed: inject navigator factory delegate
-                    var newSummaries = _summaryGenerator.Generate(filePath, factory, _settings.SummaryDetailsHarvesters);
+                    var newSummaries = generator.Generate(filePath, factory, harvesters);
                     summaries.AddRange(newSummaries);
                     result |= newSummaries.Count > 0;
+                }
+                else
+                {
+                    // File was removed
+                    result |= isRemoved;
                 }
             }
             return result;

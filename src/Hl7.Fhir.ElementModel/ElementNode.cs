@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -16,41 +17,20 @@ using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class DomNode<T> : IAnnotatable where T:DomNode<T>
-    {
-        public string Name { get; set; }
-
-        protected List<T> ChildList = new List<T>();
-
-        internal IEnumerable<T> ChildrenInternal(string name = null) =>
-            name == null ? ChildList : ChildList.Where(c => c.Name == name);
-
-        public T Parent { get; protected set; }
-
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenInternal(name));
-
-        public T this[int index] => ChildList[index];
-
-        private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
-        protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
-
-        protected bool HasAnnotations => _annotations.IsValueCreated;
-
-        public void AddAnnotation(object annotation)
-        {
-            AnnotationsInternal.Add(annotation);
-        }
-
-        public void RemoveAnnotations(Type type)
-        {
-            AnnotationsInternal.RemoveOfType(type);
-        }
-    }
-
-
-
     public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
     {
+        /// <summary>
+        /// Creates an implementation of ITypedElement that represents a primitive value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITypedElement ForPrimitive(object value) => new PrimitiveElement(value);
+
+        public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
+                : EmptyList;
+
+        public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
         public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
@@ -87,9 +67,16 @@ namespace Hl7.Fhir.ElementModel
             if(child.InstanceType == null && child.Definition != null)
             {
                 if (child.Definition.IsResource || child.Definition.Type.Length > 1)
-                    throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
-
-                child.InstanceType = child.Definition.Type.Single().GetTypeName();
+                {
+                    // We are in a situation where we are on an polymorphic element, but the caller did not specify
+                    // the instance type.  We can try to auto-set it by deriving it from the instance's type, if it is a primitive
+                    if (child.Value != null && Primitives.TryGetPrimitiveTypeName(child.Value, out string instanceType))
+                        child.InstanceType = instanceType;
+                    else
+                        throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
+                }
+                else
+                    child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
             ChildList.Add(child);
@@ -208,29 +195,4 @@ namespace Hl7.Fhir.ElementModel
             }
         }
     }
-
-
-    public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
-    {
-        private readonly IList<T> _wrapped;
-
-        internal DomNodeList(IEnumerable<T> nodes)
-        {
-            _wrapped = nodes.ToList();
-        }
-
-        public T this[int index] => _wrapped[index];
-
-        public DomNodeList<T> this[string name] => 
-            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenInternal(name)));
-
-        public int Count => _wrapped.Count;
-
-        public bool Contains(T item) => _wrapped.Contains(item);
-
-        public IEnumerator<T> GetEnumerator() => _wrapped.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
-    }
-
 }

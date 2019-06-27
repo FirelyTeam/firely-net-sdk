@@ -22,22 +22,21 @@ namespace Hl7.FhirPath.Expressions
             _name = name;
         }
 
-
-        private string _name;
-        private SymbolTable _scope;
+        private readonly string _name;
+        private readonly SymbolTable _scope;
 
         public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
             var actualArgs = new List<IEnumerable<ITypedElement>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
-            if (!focus.Any()) return FhirValueList.Empty;
+            if (!focus.Any()) return ElementNode.EmptyList;
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa=>!aa.Any())) return FhirValueList.Empty;
+            if (actualArgs.Any(aa=>!aa.Any())) return ElementNode.EmptyList;
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 

@@ -42,7 +42,7 @@ namespace Vonk.Core.Tests.Support
         {
             return new[]
             {
-                new object[]{ "Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)) },
+                new object[]{ "Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => TypedElementFPExtensions.Select(nav, expr, context)) },
                 new object[]{ "Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context))},
             };
         }

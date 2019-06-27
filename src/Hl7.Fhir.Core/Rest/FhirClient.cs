@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Rest
             else
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted });
         }
 
         private Resource internalOperation(string operationName, string type = null, string id = null,
