@@ -74,6 +74,14 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void UnauthorizedSearch()
+        {
+            var client = new FhirDstu2Client("http://fhir.careevolution.com/master.adapter1.webclient/api/fhir");
+            var fhirOperationException = Assert.ThrowsException<FhirOperationException>( () => client.Search<Patient>(new[] { "family=Demosky" } ) );
+            Assert.AreEqual(HttpStatusCode.Unauthorized, fhirOperationException.Status);
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void HapiDstu2Search()
         {
             var client = new FhirDstu2Client("http://hapi.fhir.org/baseDstu2");
@@ -130,7 +138,6 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        [Ignore]    // Uses Grahame test server, that mostly does not work
         public void FetchConformance()
         {
             var client = new FhirDstu2Client(testEndpoint);

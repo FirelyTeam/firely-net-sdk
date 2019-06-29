@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, r4outcomeIssue.Expression));
 
             var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2XmlParser.Parse<OperationOutcome>(xml));
-            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));
+            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression'"));
         }
 
         [TestMethod]
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(Enumerable.SequenceEqual(outcomeIssue.Expression, r4outcomeIssue.Expression));
 
             var exception = Assert.ThrowsException<FormatException>(() => FhirDstu2JsonParser.Parse<OperationOutcome>(json));
-            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression' while parsing"));
+            Assert.IsTrue(exception.Message.Contains("Encountered unknown element 'expression'"));
         }
     }
 }
