@@ -112,5 +112,26 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
         }
 
+        [TestMethod]
+        public void TestAppendNewLine()
+        {
+            var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
+
+            var nav = getXmlElement(xml);
+            var output = nav.ToXml();
+            Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
+            var pretty = nav.ToXml(new FhirXmlSerializationSettings { Pretty = true });
+            Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
+            var lastLine = pretty.Split('\n').Last();
+            Assert.IsFalse(string.IsNullOrEmpty(lastLine));
+
+            var p = (new FhirXmlParser()).Parse<Patient>(xml);
+            output = (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToString(p);
+            lastLine = output.Split('\n').Last();
+            Assert.IsTrue(string.IsNullOrEmpty(lastLine));
+            pretty = (new FhirXmlSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
+            lastLine = pretty.Split('\n').Last();
+            Assert.IsTrue(string.IsNullOrEmpty(lastLine));
+        }
     }
 }
