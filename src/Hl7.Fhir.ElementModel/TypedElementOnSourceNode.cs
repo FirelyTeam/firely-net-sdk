@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
+                    throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
                         $"please supply a type argument.");
                 else
                     return (rootType, null);
