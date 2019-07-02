@@ -1,0 +1,11 @@
+﻿{
+  "resourceType": "CodeSystem",
+  "status": "active",
+  "content": "complete",
+  "concept": [
+    {
+      "code": "",
+      "display": "Empty code"
+    }
+  ]
+}

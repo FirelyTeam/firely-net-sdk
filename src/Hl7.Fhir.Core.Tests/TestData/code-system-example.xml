@@ -1,0 +1,8 @@
+﻿<CodeSystem xmlns="http://hl7.org/fhir">
+  <status value="active" />
+  <content value="complete" />
+  <concept>
+    <code value=" " />
+    <display value="Empty code" />
+  </concept>
+</CodeSystem>

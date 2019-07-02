@@ -1,7 +1,11 @@
-﻿using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests.Source
 {
@@ -32,6 +36,23 @@ namespace Hl7.Fhir.Specification.Tests.Source
 
             Assert.IsNotNull(summaries, "Collection of summeries should not be null");
             Assert.AreEqual(1, summaries.Count(), "In the zipfile there is 1 resource in the root folder.");
+        }
+
+        [TestMethod]
+        public void Testttt()
+        {
+
+            ISourceNode ns1 = SourceNode.Resource("NamingSystem", "NamingSystem",
+                            SourceNode.Valued("id", "ns1"),
+                            SourceNode.Valued("name", "ns1"),
+                            SourceNode.Valued("status", "active"),
+                            SourceNode.Valued("kind", "identifier"),
+                            SourceNode.Valued("date", DateTimeOffset.UtcNow.ToFhirDateTime()));
+
+            var source = ZipSource.CreateValidationSource();
+            var sdsp = new StructureDefinitionSummaryProvider(source);
+            var p = ns1.ToTypedElement(sdsp);
+            var ns = p.ToJson();
         }
     }
 }
