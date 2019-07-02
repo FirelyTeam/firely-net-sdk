@@ -44,8 +44,6 @@
     <None Remove="TestData\CustomBasic-StructureDefinition-R3.json" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\ResourcesInSubfolder.zip" />
-    <None Remove="TestData\validation\DocumentReference.json" />
-    <None Remove="TestData\validation\DocumentReference.xml" />
   </ItemGroup>
 
   <!--
@@ -65,17 +63,6 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System">
-      <HintPath>System</HintPath>
-    </Reference>
-    <Reference Include="System.Data">
-      <HintPath>System.Data</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>System.Xml</HintPath>
-    </Reference>
   </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 

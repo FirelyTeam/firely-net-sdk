@@ -34,8 +34,6 @@
     </Content>
     <Compile Remove="OldJsonAssert.cs" />
     <Compile Remove="Rest\NewSearchParamsTests.cs" />
-    <None Remove="TestData\code-system-example.json" />
-    <None Remove="TestData\code-system-example.xml" />
     <None Remove="TestData\fp-test-patient.xml" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />

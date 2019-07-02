@@ -14,8 +14,6 @@ using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -158,50 +156,6 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
-
-
-        [TestMethod]
-        public void TestEmptyAttribute()
-        {
-            //var cs = new CodeSystem
-            //{
-            //    StatusElement = new Code<PublicationStatus>(PublicationStatus.Active),
-            //    ContentElement = new Code<CodeSystem.CodeSystemContentMode>(CodeSystem.CodeSystemContentMode.Complete),
-            //    Concept = new List<CodeSystem.ConceptDefinitionComponent>()
-            //    {
-            //        new CodeSystem.ConceptDefinitionComponent
-            //        {
-            //            CodeElement = new Code(" "),
-            //            DisplayElement = new FhirString("Empty code")
-            //        }
-            //    }
-            //};
-
-            //ISourceNode ns1 = SourceNode.Resource("NamingSystem", "NamingSystem",
-            //                SourceNode.Valued("id", "ns1"),
-            //                SourceNode.Valued("name", "ns1"),
-            //                SourceNode.Valued("status", "active"),
-            //                SourceNode.Valued("kind", "identifier"),
-            //                SourceNode.Valued("date", DateTimeOffset.UtcNow.ToFhirDateTime()),
-            //                SourceNode.Node("uniqueId",
-            //                        SourceNode.Node("",
-            //                            SourceNode.Valued("type", "oid"),
-            //                            SourceNode.Valued("value", "2.16.840.1.113883.6.96")),
-            //                        SourceNode.Node("",
-            //                            SourceNode.Valued("type", "uri"),
-            //                            SourceNode.Valued("value", "http://snomed.info/sct"))));
-
-            //var p = ns1.ToTypedElement();
-            //var ns = p.ToJson();
-
-            //var xml = TestDataHelper.ReadTestData("code-system-example.xml");
-            //var xmlParsed = FhirXmlNode.Parse(xml, new FhirXmlParsingSettings { PermissiveParsing = false });
-            //var poco = xmlParsed.ToPoco();
-
-            var json = TestDataHelper.ReadTestData("code-system-example.json");
-            var jsonParsed = FhirJsonNode.Parse(json, null, new FhirJsonParsingSettings { PermissiveParsing = true });
-            //poco = jsonParsed.ToPoco();
-        }
 
         [TestMethod]
         public void ParsePerfJson()
