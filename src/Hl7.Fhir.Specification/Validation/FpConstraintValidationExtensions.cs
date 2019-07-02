@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 
     internal static class FpConstraintValidationExtensions
     {
-        public static OperationOutcome ValidateFp(this Validator v, string structureDefinitionUrl, ElementDefinition definition, ScopedNode instance)
+        public static OperationOutcome ValidateFp(this Validator v, string structureDefinitionUrl, ElementDefinition definition, IScopedNode instance)
         {
             var outcome = new OperationOutcome();
 

@@ -14,21 +14,21 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
+    public class ScopedNode : IScopedNode
     {
         private class Cache
         {
             public readonly object _lock = new object();
 
             public string Id;
-            public IEnumerable<ScopedNode> ContainedResources;
-            public IEnumerable<BundledResource> BundledResources;
+            public IEnumerable<IScopedNode> ContainedResources;
+            public IEnumerable<IBundledResource> BundledResources;
             public string FullUrl;
         }
 
         private Cache _cache = new Cache();
 
-        public readonly ITypedElement Current = null;
+        public ITypedElement Current { get; internal set; }
 
         public ScopedNode(ITypedElement wrapped)
         {
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.ElementModel
                 ies.ExceptionHandler = (o, a) => ExceptionHandler.NotifyOrThrow(o, a);
         }
 
-        private ScopedNode(ScopedNode parent, ScopedNode parentResource, ITypedElement wrapped)
+        public ScopedNode(IScopedNode parent, IScopedNode parentResource, ITypedElement wrapped)
         {
             Current = wrapped;
             ExceptionHandler = parent.ExceptionHandler;
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.ElementModel
         /// <remarks>
         /// When the node is the inital root, there is no parent.
         /// </remarks>
-        public readonly ScopedNode ParentResource;
+        public IScopedNode ParentResource { get; internal set; }
 
         public string LocalLocation => ParentResource == null ? Location :
                         $"{ParentResource.InstanceType}.{Location.Substring(ParentResource.Location.Length + 1)}";
@@ -85,14 +85,14 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                var scan = this;
+                IScopedNode scan = this;
 
                 while (scan.ParentResource != null && scan.ParentResource.InstanceType != "Bundle")
                 {
                     scan = scan.ParentResource;
                 }
 
-                return scan;
+                return scan as ITypedElement;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.ElementModel
         /// Get the list of container parents in a list, nearest parent first.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ScopedNode> ParentResources()
+        public IEnumerable<IScopedNode> ParentResources()
         {
             var scan = this.ParentResource;
 
@@ -128,24 +128,24 @@ namespace Hl7.Fhir.ElementModel
             return _cache.Id;
         }
 
-        public IEnumerable<ScopedNode> ContainedResources()
+        public IEnumerable<IScopedNode> ContainedResources()
         {
             if (_cache.ContainedResources == null)
             {
                 _cache.ContainedResources = AtResource ? 
-                    this.Children("contained").Cast<ScopedNode>():
-                    Enumerable.Empty<ScopedNode>();
+                    this.Children("contained").Cast<IScopedNode>():
+                    Enumerable.Empty<IScopedNode>();
             }
             return _cache.ContainedResources;
         }
 
-        public class BundledResource
+        public class BundledResource : IBundledResource
         {
-            public string FullUrl;
-            public ScopedNode Resource;
+            public string FullUrl { get; set; }
+            public IScopedNode Resource { get; set; }
         }
 
-        public IEnumerable<BundledResource> BundledResources()
+        public IEnumerable<IBundledResource> BundledResources()
         {
             if (_cache.BundledResources == null)
             {
@@ -182,13 +182,20 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ScopedNode))
+            if (type == typeof(ScopedNode) || type == typeof(IScopedNode))
                 return new[] { this };
             else
                 return Current.Annotations(type);
         }
 
         public IEnumerable<ITypedElement> Children(string name = null) =>
-            Current.Children(name).Select(c => new ScopedNode(this, this.ParentResource, c));
+            Current.Children(name).Select(c => new ScopedNode(this as IScopedNode, this.ParentResource, c));
+    }
+
+
+    public interface IBundledResource
+    {
+        string FullUrl { get; set; }
+        IScopedNode Resource { get; set; }
     }
 }

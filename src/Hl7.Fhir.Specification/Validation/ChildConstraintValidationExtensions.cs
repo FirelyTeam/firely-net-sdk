@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
     internal static class ChildConstraintValidationExtensions
     {
         internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, 
-            ScopedNode instance, bool allowAdditionalChildren, List<Tuple<string,string>> validatedResources = null)
+            IScopedNode instance, bool allowAdditionalChildren, List<Tuple<string,string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static OperationOutcome ValidateMatch(this Validator validator, Match match, ScopedNode parent, List<Tuple<string, string>> validatedResources = null)
+        private static OperationOutcome ValidateMatch(this Validator validator, Match match, IScopedNode parent, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 

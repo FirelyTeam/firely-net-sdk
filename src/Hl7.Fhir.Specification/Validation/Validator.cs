@@ -13,6 +13,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
         private FhirPathCompiler _fpCompiler;
-        
+
 #if REUSE_SNAPSHOT_GENERATOR
         SnapshotGenerator _snapshotGenerator;
 
@@ -169,7 +170,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var instance = elementNav as ScopedNode ?? new ScopedNode(elementNav);
+            IScopedNode instance = elementNav as ScopedNodeWrapper ?? new ScopedNodeWrapper(elementNav as ScopedNode ?? new ScopedNode(elementNav));
 
             validatedResources = validatedResources ?? new List<Tuple<string, string>>();
 
@@ -194,7 +195,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, ScopedNode instance, List<Tuple<string, string>> validatedResources)
+        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, IScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             return () => validateElement(nav, instance, validatedResources);
         }
@@ -202,7 +203,7 @@ namespace Hl7.Fhir.Validation
 
         //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
-        private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance, List<Tuple<string, string>> validatedResources)
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, IScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -265,8 +266,8 @@ namespace Hl7.Fhir.Validation
                     // No inline-children, so validation depends on the presence of a <type> or <contentReference>
                     if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                     {
-                            outcome.Add(this.ValidateType(elementConstraints, instance, validatedResources));
-                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance, validatedResources));
+                        outcome.Add(this.ValidateType(elementConstraints, instance, validatedResources));
+                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance, validatedResources));
                     }
                     else
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
@@ -305,11 +306,11 @@ namespace Hl7.Fhir.Validation
                     outcome.Add(b.Validate(instance, vc));
                 }
             }
-            catch(IncorrectElementDefinitionException iede)
+            catch (IncorrectElementDefinitionException iede)
             {
                 Trace(outcome, "Incorrect ElementDefinition: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, elementConstraints.Path);
             }
-            
+
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
 
@@ -396,7 +397,7 @@ namespace Hl7.Fhir.Validation
         //    return outcome;
         //}
 
-        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNode instance, List<Tuple<string, string>> validatedResources = null)
+        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IScopedNode instance, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 
@@ -489,8 +490,8 @@ namespace Hl7.Fhir.Validation
 
         private string toStringRepresentation(ITypedElement vp)
         {
-            return vp == null || vp.Value == null ? 
-                null : 
+            return vp == null || vp.Value == null ?
+                null :
                 PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 
@@ -647,5 +648,176 @@ namespace Hl7.Fhir.Validation
         All,
         Any,
         Once
+    }
+
+
+    internal class ScopedNodeWrapper : IScopedNode
+    {
+        private class Cache
+        {
+            public readonly object _lock = new object();
+
+            public string Id;
+            public IEnumerable<IScopedNode> ContainedResources;
+            public IEnumerable<IBundledResource> BundledResources;
+            public string FullUrl;
+        }
+
+        private Cache _cache = new Cache();
+
+        private IScopedNode _current;
+
+        public ScopedNodeWrapper(IScopedNode scopedNode)
+        {
+            ValidatedProfiles = new List<ValidatedProfile>();
+            _current = scopedNode;
+            ParentResource = scopedNode.ParentResource;
+        }
+        
+        private ScopedNodeWrapper(IScopedNode parent, IScopedNode parentResource, IScopedNode scopedNode)
+        {
+            ValidatedProfiles = new List<ValidatedProfile>();
+            _current = scopedNode;
+            ParentResource = parent.AtResource ? parent : parentResource;
+        }
+
+        public ITypedElement Current => _current.Current;
+
+        public string Name => _current.Name;
+
+        public string InstanceType => _current.InstanceType;
+
+        public object Value => _current.Value;
+
+        public string Location => _current.Location;
+
+        public IElementDefinitionSummary Definition => _current.Definition;
+
+        public ExceptionNotificationHandler ExceptionHandler { get { return _current.ExceptionHandler; } set { _current.ExceptionHandler = value; } }
+
+        //private IScopedNode parentResource;
+        public IScopedNode ParentResource
+        {
+            get; internal set;
+        }
+        
+        public string LocalLocation => _current.LocalLocation;
+
+        public bool AtResource => _current.AtResource;
+        public ITypedElement ResourceContext
+        {
+            get
+            {
+                IScopedNode scan = this;
+
+                while (scan.ParentResource != null && scan.ParentResource.InstanceType != "Bundle")
+                {
+                    scan = scan.ParentResource;
+                }
+
+                return scan as ITypedElement;
+            }
+        }
+
+        public IEnumerable<ITypedElement> Children(string name = null) => _current.Children(name).Select(t => new ScopedNodeWrapper(this, this.ParentResource, t as ScopedNode));
+            //Current.Children(name).Select(c => new ScopedNodeWrapper(new ScopedNode(this as IScopedNode, this.ParentResource, c)));
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            if (type == typeof(ScopedNodeWrapper) || type == typeof(IScopedNode))
+                return new[] { this };
+            else
+                return Current.Annotations(type);
+        }
+
+        public IEnumerable<IBundledResource> BundledResources()
+        {
+
+            if (_cache.BundledResources == null)
+            {
+                if (InstanceType == "Bundle")
+                    _cache.BundledResources = from e in this.Children("entry")
+                                              let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
+                                              let resource = e.Children("resource").FirstOrDefault() as ScopedNodeWrapper
+                                              select new BundledResource { FullUrl = fullUrl, Resource = resource };
+                else
+                    _cache.BundledResources = Enumerable.Empty<BundledResource>();
+            }
+
+            return _cache.BundledResources;
+        }
+
+        public string Id()
+        {
+            if (_cache.Id == null)
+            {
+                _cache.Id = AtResource ? "#" + Current.Children("id").FirstOrDefault()?.Value as string : null;
+            }
+
+            return _cache.Id;
+        }
+
+        public IEnumerable<IScopedNode> ParentResources()
+        {
+            var scan = this.ParentResource;
+
+            while (scan != null)
+            {
+                yield return scan;
+
+                scan = scan.ParentResource;
+            }
+        }
+
+        public string FullUrl()
+        {
+            if (_cache.FullUrl == null)
+            {
+                foreach (var parent in ParentResources())
+                {
+                    if (parent.InstanceType == "Bundle")
+                    {
+                        var fullUrl = parent.BundledResources()
+                            .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))
+                            ?.FullUrl;
+                        if (fullUrl != null) _cache.FullUrl = fullUrl;
+                    }
+                }
+            }
+
+            return _cache.FullUrl;
+        }
+
+        public IEnumerable<IScopedNode> ContainedResources()
+        {
+            return _current.ContainedResources();
+            //if (_cache.ContainedResources == null)
+            //{
+            //    _cache.ContainedResources = AtResource ?
+            //        this.Children("contained").Cast<IScopedNode>() :
+            //        Enumerable.Empty<IScopedNode>();
+            //}
+            //return _cache.ContainedResources;
+        }
+        
+        public List<ValidatedProfile> ValidatedProfiles { get; set; }
+        
+        public class BundledResource : IBundledResource
+        {
+            public string FullUrl { get; set; }
+            public IScopedNode Resource { get; set; }
+        }
+    }
+    
+    public class ValidatedProfile
+    {
+        public string Profile { get; }
+        public bool Success { get; }
+
+        public ValidatedProfile(string profile, bool success)
+        {
+            Profile = profile;
+            Success = success;
+        }
     }
 }

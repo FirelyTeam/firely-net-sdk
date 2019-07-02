@@ -62,11 +62,13 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var patient = new Patient
             {
+                Id = "2",
                 Identifier = new List<Identifier>() { new Identifier { System = "Patient/2", Value = "2" } }
             };
 
             var refPatient = new Patient
             {
+                Id = "3",
                 Identifier = new List<Identifier>() { new Identifier { System = "Patient/3", Value = "3" } },
                 Link = new List<Patient.LinkComponent>()
                 {
@@ -77,6 +79,58 @@ namespace Hl7.Fhir.Specification.Tests
                             Reference = "Patient/2",
                         },
                         Type = Patient.LinkType.Seealso
+                    },
+                    new Patient.LinkComponent
+                    {
+                        Other = new ResourceReference
+                        {
+                            Reference = "#pat1",
+                        },
+                        Type = Patient.LinkType.Seealso
+                    },
+                    new Patient.LinkComponent
+                    {
+                        Other = new ResourceReference
+                        {
+                            Reference = "#pat2",
+                        },
+                        Type = Patient.LinkType.Seealso
+                    }
+                }
+                ,
+                Contained = new List<Resource>()
+                {
+                    new Patient
+                    {
+                        Id = "pat1",
+                        Identifier = new List<Identifier>() { new Identifier { System = "pat1", Value = "pat1" } },
+                        Link = new List<Patient.LinkComponent>()
+                        {
+                            new Patient.LinkComponent
+                            {
+                                Other = new ResourceReference
+                                {
+                                    Reference = "Patient/2",
+                                },
+                                Type = Patient.LinkType.Seealso
+                            }
+                        }
+                    },
+                    new Patient
+                    {
+                        Id = "pat2",
+                        Identifier = new List<Identifier>() { new Identifier { System = "pat2", Value = "pat2" } },
+                        Link = new List<Patient.LinkComponent>()
+                        {
+                            new Patient.LinkComponent
+                            {
+                                Other = new ResourceReference
+                                {
+                                    Reference = "#pat1",
+                                },
+                                Type = Patient.LinkType.Seealso
+                            }
+                        }
                     }
                 }
             };

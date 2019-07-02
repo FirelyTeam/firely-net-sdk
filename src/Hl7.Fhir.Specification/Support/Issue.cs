@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_NAME_DOESNT_MATCH_DEFINITION = Create(1029, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_CIRCULAR_REFERENCE = Create(1030, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
 
         public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);

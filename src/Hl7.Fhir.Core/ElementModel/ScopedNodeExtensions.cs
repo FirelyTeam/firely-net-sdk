@@ -16,7 +16,7 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class ScopedNodeExtensions
     {
-        public static string MakeAbsolute(this ScopedNode node, string reference) =>
+        public static string MakeAbsolute(this IScopedNode node, string reference) =>
                      node.MakeAbsolute(new ResourceIdentity(reference)).ToString();
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel
         /// <param name="identity"></param>
         /// <returns></returns>
         /// <remarks>See https://www.hl7.org/fhir/bundle.html#references for more information</remarks>
-        public static ResourceIdentity MakeAbsolute(this ScopedNode node, ResourceIdentity identity)
+        public static ResourceIdentity MakeAbsolute(this IScopedNode node, ResourceIdentity identity)
         {
             if (identity.IsRelativeRestUrl)
             {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.ElementModel
         {
             // Then, resolve the url within the instance data first - this is only
             // possibly if we have a ScopedNavigator at hand
-            if (element is ScopedNode scopedNode)
+            if (element is IScopedNode scopedNode)
             {
                 var identity = scopedNode.MakeAbsolute(new ResourceIdentity(reference));
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.ElementModel
             else
                 return null;
 
-            ScopedNode locateResource(ResourceIdentity identity)
+            IScopedNode locateResource(ResourceIdentity identity)
             {
                 var url = identity.ToString();
 

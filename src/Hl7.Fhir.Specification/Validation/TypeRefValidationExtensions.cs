@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, List<Tuple<string, string>> validatedResources)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, IScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
 
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, List<Tuple<string, string>> validatedResources)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
         {
             return validate;
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, IScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -139,8 +139,10 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     if (validatedResources.Any(v => v.Item1 == reference && v.Item2 == typeRef.TargetProfile))
+                    {
+                        outcome.AddIssue($"Circular reference found for {reference} resource.", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
                         return outcome;
-
+                    }
                     validatedResources.Add(new Tuple<string, string>(reference, typeRef.TargetProfile));
 
                     referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance.Location);
@@ -160,11 +162,20 @@ namespace Hl7.Fhir.Validation
                 // References within the instance are dealt with within the same validator,
                 // references to external entities will operate within a new instance of a validator (and hence a new tracking context).
                 // In both cases, the outcome is included in the result.
-                OperationOutcome childResult;
-
+                OperationOutcome childResult = new OperationOutcome();
+                
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
+                    var validatedProfiles = referencedResource is ScopedNodeWrapper sn ? sn.ValidatedProfiles : null;
+                    if (validatedProfiles == null || !validatedProfiles.Any(p => p.Profile == typeRef.TargetProfile))
+                    {
+                        childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
+                        validatedProfiles.Add(new ValidatedProfile(typeRef.TargetProfile, childResult.Success));
+                    }
+                    else
+                    {
+                        childResult.AddIssue($"Circular reference found for {reference} resource.", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
+                    }
                 }
                 else
                 {
@@ -185,7 +196,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static ITypedElement resolveReference(this Validator validator, ScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static ITypedElement resolveReference(this Validator validator, IScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 
