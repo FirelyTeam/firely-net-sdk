@@ -949,6 +949,31 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
+        /// This test should show that the rng-2 constraint is totally ignored (it's
+        /// incorrect in DSTU2 and STU3), but others are not.
+        /// </summary>
+        [Fact]
+        public void IgnoreRng2FPConstraint()
+        {           
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+
+            var instance = new Observation();
+
+            // this should not trigger rng-2
+            instance.Value = new Range()
+            {
+                Low = new SimpleQuantity() { Value = 5, Code = "kg", System = "ucum.org" },
+                High = new SimpleQuantity() { Value = 4, Code = "kg", System = "ucum.org" },
+            };
+          
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success);
+            Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
+            Assert.Equal(0, report.Warnings);
+        }
+
+
+        /// <summary>
         /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617
         /// </summary>
         [Fact]
