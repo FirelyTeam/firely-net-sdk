@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, IScopedNode instance, List<Tuple<string, string>> validatedResources)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
 
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IScopedNode instance, List<Tuple<string, string>> validatedResources)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, BaseScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
         {
             return validate;
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, IScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, BaseScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static ITypedElement resolveReference(this Validator validator, IScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static ITypedElement resolveReference(this Validator validator, BaseScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 

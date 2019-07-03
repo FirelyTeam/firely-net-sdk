@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            IScopedNode instance = elementNav as ScopedNodeWrapper ?? new ScopedNodeWrapper(elementNav as ScopedNode ?? new ScopedNode(elementNav));
+            BaseScopedNode instance = elementNav as ScopedNodeWrapper ?? new ScopedNodeWrapper(elementNav as ScopedNode ?? new ScopedNode(elementNav));
 
             validatedResources = validatedResources ?? new List<Tuple<string, string>>();
 
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, IScopedNode instance, List<Tuple<string, string>> validatedResources)
+        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             return () => validateElement(nav, instance, validatedResources);
         }
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Validation
 
         //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
-        private OperationOutcome validateElement(ElementDefinitionNavigator definition, IScopedNode instance, List<Tuple<string, string>> validatedResources)
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Validation
         //    return outcome;
         //}
 
-        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IScopedNode instance, List<Tuple<string, string>> validatedResources = null)
+        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, BaseScopedNode instance, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 
@@ -651,30 +651,30 @@ namespace Hl7.Fhir.Validation
     }
 
 
-    internal class ScopedNodeWrapper : IScopedNode
+    internal class ScopedNodeWrapper : BaseScopedNode
     {
         private class Cache
         {
             public readonly object _lock = new object();
 
             public string Id;
-            public IEnumerable<IScopedNode> ContainedResources;
+            public IEnumerable<BaseScopedNode> ContainedResources;
             public IEnumerable<IBundledResource> BundledResources;
             public string FullUrl;
         }
 
         private Cache _cache = new Cache();
 
-        private IScopedNode _current;
+        private BaseScopedNode _current;
 
-        public ScopedNodeWrapper(IScopedNode scopedNode)
+        public ScopedNodeWrapper(BaseScopedNode scopedNode)
         {
             ValidatedProfiles = new List<ValidatedProfile>();
             _current = scopedNode;
             ParentResource = scopedNode.ParentResource;
         }
         
-        private ScopedNodeWrapper(IScopedNode parent, IScopedNode parentResource, IScopedNode scopedNode)
+        private ScopedNodeWrapper(BaseScopedNode parent, BaseScopedNode parentResource, BaseScopedNode scopedNode)
         {
             ValidatedProfiles = new List<ValidatedProfile>();
             _current = scopedNode;
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Validation
         public ExceptionNotificationHandler ExceptionHandler { get { return _current.ExceptionHandler; } set { _current.ExceptionHandler = value; } }
 
         //private IScopedNode parentResource;
-        public IScopedNode ParentResource
+        public BaseScopedNode ParentResource
         {
             get; internal set;
         }
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Validation
         {
             get
             {
-                IScopedNode scan = this;
+                BaseScopedNode scan = this;
 
                 while (scan.ParentResource != null && scan.ParentResource.InstanceType != "Bundle")
                 {
@@ -719,12 +719,12 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        public IEnumerable<ITypedElement> Children(string name = null) => _current.Children(name).Select(t => new ScopedNodeWrapper(this, this.ParentResource, t as ScopedNode));
+        public override IEnumerable<ITypedElement> Children(string name = null) => _current.Children(name).Select(t => new ScopedNodeWrapper(this, this.ParentResource, t as ScopedNode));
             //Current.Children(name).Select(c => new ScopedNodeWrapper(new ScopedNode(this as IScopedNode, this.ParentResource, c)));
 
-        public IEnumerable<object> Annotations(Type type)
+        public override IEnumerable<object> Annotations(Type type)
         {
-            if (type == typeof(ScopedNodeWrapper) || type == typeof(IScopedNode))
+            if (type == typeof(ScopedNodeWrapper) || type == typeof(BaseScopedNode))
                 return new[] { this };
             else
                 return Current.Annotations(type);
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Validation
             return _cache.Id;
         }
 
-        public IEnumerable<IScopedNode> ParentResources()
+        public IEnumerable<BaseScopedNode> ParentResources()
         {
             var scan = this.ParentResource;
 
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Validation
             return _cache.FullUrl;
         }
 
-        public IEnumerable<IScopedNode> ContainedResources()
+        public IEnumerable<BaseScopedNode> ContainedResources()
         {
             return _current.ContainedResources();
             //if (_cache.ContainedResources == null)
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Validation
         public class BundledResource : IBundledResource
         {
             public string FullUrl { get; set; }
-            public IScopedNode Resource { get; set; }
+            public BaseScopedNode Resource { get; set; }
         }
     }
     

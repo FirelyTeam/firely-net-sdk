@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
         public static MatchResult Match(ElementDefinitionNavigator definitionParent, ITypedElement instanceParent)
         {
             var definitionElements = harvestDefinitionNames(definitionParent);
-            var elementsToMatch = instanceParent.Children().Cast<IScopedNode>().ToList();
+            var elementsToMatch = instanceParent.Children().Cast<BaseScopedNode>().ToList();
 
             List<Match> matches = new List<Match>();
 
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Validation
     internal class MatchResult
     {
         public List<Match> Matches;
-        public List<IScopedNode> UnmatchedInstanceElements;
+        public List<BaseScopedNode> UnmatchedInstanceElements;
     }
 
     [System.Diagnostics.DebuggerDisplay(@"\{{Definition.DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
