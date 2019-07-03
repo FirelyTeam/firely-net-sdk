@@ -418,6 +418,25 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);           // 20 warnings about valueset too complex
         }
 
+        [Fact]
+        public void ValidateInstant()
+        {
+            var docRef = SourceNode.Resource("DocumentReference", "DocumentReference",
+                SourceNode.Valued("id", "example"),
+                SourceNode.Valued("status", "current"),
+                SourceNode.Valued("type", null,
+                    SourceNode.Valued("coding", null,
+                        SourceNode.Valued("system", "http://loinc.org"),
+                        SourceNode.Valued("code", "34108-1"),
+                        SourceNode.Valued("display", "Outpatient Note"))),
+                SourceNode.Valued("indexed", "2005-12-24T09:43:41"));
+
+            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()));
+            Assert.False(report.Success);
+            Assert.Equal(2, report.Errors);
+            Assert.Equal(0, report.Warnings);
+            Assert.Contains("does not match regex", report.Issue[0].Details.Text);
+        }
 
         [Fact]
         public void ValidateChoiceWithConstraints()
