@@ -19,6 +19,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool Pretty { get; set; } // = false;
 
+        /// <summary>
+        /// Add new line at the end of the serialized xml or json output.
+        /// </summary>
+        public bool AppendNewLine { get; set; } // = false;
+
         /// <summary>Default constructor. Creates a new <see cref="SerializerSettings"/> instance with default property values.</summary>
         public SerializerSettings() { }
 
@@ -38,6 +43,7 @@ namespace Hl7.Fhir.Serialization
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
             other.Pretty = Pretty;
+            other.AppendNewLine = AppendNewLine;
         }
 
         /// <summary>Creates a new <see cref="SerializerSettings"/> object that is a copy of the current instance.</summary>
