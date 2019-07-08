@@ -26,6 +26,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool Pretty { get; set; } // = false;
 
+        /// <summary>
+        /// Add new line at the end of the json output when converted to a string.
+        /// </summary>
+        public bool AppendNewLine { get; set; } // = false;
+
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
         public FhirJsonSerializationSettings() {  }
 
@@ -46,6 +51,7 @@ namespace Hl7.Fhir.Serialization
 
             other.IgnoreUnknownElements = IgnoreUnknownElements;
             other.Pretty = Pretty;
+            other.AppendNewLine = AppendNewLine;
         }
 
         /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> object that is a copy of the current instance.</summary>

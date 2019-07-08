@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Utility
             }
         }
 
-        public static string WriteXmlToString(Action<XmlWriter> serializer, bool pretty=false)
+        public static string WriteXmlToString(Action<XmlWriter> serializer, bool pretty=false, bool appendNewLine = false)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Utility
             {
                 serializer(xw);
                 xw.Flush();
-                return sb.ToString();
+                return appendNewLine ? sb.AppendLine().ToString() : sb.ToString();
             }
         }
 
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Utility
             return doc;
         }
 
-        public static string WriteJsonToString(Action<JsonWriter> serializer, bool pretty=false)
+        public static string WriteJsonToString(Action<JsonWriter> serializer, bool pretty = false, bool appendNewLine = false)
         {
             StringBuilder resultBuilder = new StringBuilder();
 
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Utility
                 jw.Formatting = pretty ? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None;
                 serializer(jw);
                 jw.Flush();
-                return resultBuilder.ToString();
+                return appendNewLine ? resultBuilder.AppendLine().ToString() : resultBuilder.ToString();
             }
         }
 
