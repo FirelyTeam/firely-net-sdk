@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Specification.Tests
                         SourceNode.Valued("system", "http://loinc.org"),
                         SourceNode.Valued("code", "34108-1"),
                         SourceNode.Valued("display", "Outpatient Note"))),
-                SourceNode.Valued("indexed", "2005-12-24T09:43:41"));
+                SourceNode.Valued("date", "2005-12-24T09:43:41"));
 
             var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()));
             Assert.False(report.Success);
