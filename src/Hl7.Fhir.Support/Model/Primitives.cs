@@ -20,49 +20,51 @@ namespace Hl7.Fhir.Support.Model
 
 
         /// <summary>
-        /// Derives the basic FHIR type name from a C# primitive.
+        /// Derives the basic FHIR type name from a C# primitive type.
         /// </summary>
-        /// <param name="value">Value to determine the type for.</param>
+        /// <param name="dotNetType">Value to determine the type for.</param>
         /// <returns></returns>
         /// <remarks>This function maps a primitive .NET value unto the subset of types supported by FhirPath.</remarks>
-        public static string GetPrimitiveTypeName(object value)
+        public static string GetPrimitiveTypeName(Type dotNetType)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (dotNetType == null) throw new ArgumentNullException(nameof(dotNetType));
 
-            if (TryGetPrimitiveTypeName(value, out string result))
+            if (TryGetPrimitiveTypeName(dotNetType, out string result))
                 return result;            
             else
-                throw Error.NotSupported($"Don't know which primitive ITypedElement value represents an instance of .NET type {value.GetType().Name} (with value '{value}').");
+                throw Error.NotSupported($"Don't know which primitive ITypedElement value represents an instance of .NET type {dotNetType.Name}.");
         }
 
 
         /// <summary>
-        /// Derives the basic FHIR type name from a C# primitive.
+        /// Derives the basic FHIR type name from a C# primitive type.
         /// </summary>
-        /// <param name="value">Value to determine the type for.</param>
+        /// <param name="dotNetType">The Value to determine the type for.</param>
         /// <param name="typeName">Primitive type name for the .NET primitive, or null.</param>
         /// <returns>Returns false if the function was unable to map the .NET type to a FHIR type.</returns>
         /// <remarks>This function maps a primitive .NET value unto the subset of types supported by FhirPath.</remarks>
-        public static bool TryGetPrimitiveTypeName(object value, out string typeName)
+        public static bool TryGetPrimitiveTypeName(Type dotNetType, out string typeName)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (dotNetType == null) throw new ArgumentNullException(nameof(dotNetType));
 
-            if (value is Boolean)
+            if (t<Boolean>())
                 typeName = "boolean";
-            else if (value is Int32 || value is Int16 || value is Int64 || value is UInt16 || value is UInt32 || value is UInt64)
+            else if (t<Int32>() || t<Int16>() || t<Int64>() || t<UInt16>() || t<UInt32>() || t<UInt64>())
                 typeName = "integer";
-            else if (value is PartialTime)
+            else if (t<PartialTime>())
                 typeName = "time";
-            else if (value is PartialDateTime || value is DateTimeOffset)
+            else if (t<PartialDateTime>() || t<DateTimeOffset>())
                 typeName = "dateTime";
-            else if (value is float || value is double || value is Decimal)
+            else if (t<float>() || t<double>() || t<Decimal>() )
                 typeName = "decimal";
-            else if (value is String || value is char || value is Uri)
+            else if (t<string>() || t<char>() || t<Uri>() )
                 typeName = "string";
             else
                 typeName = null;
 
             return typeName != null;
+
+            bool t<A>() => dotNetType == typeof(A);
         }
 
 
@@ -81,6 +83,12 @@ namespace Hl7.Fhir.Support.Model
                 throw Error.NotSupported($"Don't know how to convert an instance of .NET type {value.GetType().Name} (with value '{value}') to a primitive ITypedElement value");
         }
 
+        /// <summary>
+        /// Tries to converts a primitive .NET value to a primitive FHIR-supported primitive value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="primitiveValue">A primitive value that is directly supported in FHIR and the .Value attribute of ITypedElement.</param>
+        /// <returns>Whether the conversion succeeded.</returns>
         public static bool TryConvertToPrimitiveValue(object value, out object primitiveValue)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));

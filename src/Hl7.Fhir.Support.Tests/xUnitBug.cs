@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Hl7.Fhir.Support.Tests
+namespace Hl7.Fhir.Core.Tests
 {
     public class xUnitBug
     {

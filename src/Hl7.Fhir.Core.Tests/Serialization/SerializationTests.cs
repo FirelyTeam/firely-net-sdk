@@ -193,6 +193,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qData.Contains("<title value=\"TITLE\""));
             Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
 
+            // 20190709 - some asserts have been changed as we have now included
+            // non-mandatory fields of mandatory top-level fields. This resulted
+            // from the discussion on PR978, where it became clear it is inconsistent
+            // to not include members of mandatory top-level complex types. EK
             q.Meta = new Meta { VersionId = "v2" };
             var qText = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
@@ -200,10 +204,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qText.Contains("Test Questionnaire"));
             Assert.IsTrue(qText.Contains("<meta"));
             Assert.IsTrue(qText.Contains("<status value=\"published\""));
-            Assert.IsFalse(qText.Contains("<text value=\"TEXT\""));
+            Assert.IsTrue(qText.Contains("<text value=\"TEXT\""));
             Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
-            Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
-            Assert.IsFalse(qText.Contains("<linkId value=\"linkid\""));
+            Assert.IsTrue(qText.Contains("<title value=\"TITLE\""));
+            Assert.IsTrue(qText.Contains("<linkId value=\"linkid\""));
             Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...

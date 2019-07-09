@@ -11,6 +11,7 @@ using Hl7.Fhir.Specification;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Support.Model;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -18,8 +19,10 @@ namespace Hl7.Fhir.ElementModel
     {
         public PrimitiveElement(object value, string name = null)
         {
+            if (value == null)  throw new ArgumentNullException(nameof(value));
+
             Value = Primitives.ConvertToPrimitiveValue(value);
-            InstanceType = Primitives.GetPrimitiveTypeName(value);
+            InstanceType = Primitives.GetPrimitiveTypeName(value.GetType());
             Name = name ?? "@primitivevalue@";
         }
 
@@ -68,5 +71,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<ITypedElement> Children(string name = null) => Enumerable.Empty<ITypedElement>();
         IReadOnlyCollection<IElementDefinitionSummary> IStructureDefinitionSummary.GetElements() => throw new NotImplementedException();
-    }
+
+        public override string ToString() => Value != null ? PrimitiveTypeConverter.ConvertTo<string>(Value) : "";
+        }
 }
