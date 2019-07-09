@@ -139,10 +139,8 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     if (validatedResources.Any(v => v.Item1 == reference && v.Item2 == typeRef.TargetProfile))
-                    {
-                        outcome.AddIssue($"The resource {reference} has already been validated before or it part of a circular referencing", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
                         return outcome;
-                    }
+
                     validatedResources.Add(new Tuple<string, string>(reference, typeRef.TargetProfile));
 
                     referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance.Location);
@@ -172,10 +170,6 @@ namespace Hl7.Fhir.Validation
                         validatedProfiles.Add(new ValidatedProfile(typeRef.TargetProfile, ValidatedProfile.Status.Pending));
                         childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
                         validatedProfiles.Single(p => p.Profile == typeRef.TargetProfile).Success = childResult.Success ? ValidatedProfile.Status.Success : ValidatedProfile.Status.Fail;
-                    }
-                    else
-                    {
-                        childResult.AddIssue($"The resource {reference} has already been validated before or it part of a circular referencing", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
                     }
                 }
                 else

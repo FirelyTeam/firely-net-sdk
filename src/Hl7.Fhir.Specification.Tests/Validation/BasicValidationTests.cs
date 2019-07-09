@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Specification.Tests
             var report = validator.Validate(patient);
 
             Assert.True(report.Success);
-            Assert.Equal(5, report.Warnings);
+            Assert.Equal(0, report.Warnings);
             Assert.Equal(0, report.Errors);
 
             report = validator.Validate(bundle);
 
             Assert.True(report.Success);
-            Assert.Equal(5, report.Warnings);
+            Assert.Equal(0, report.Warnings);
             Assert.Equal(0, report.Errors);
 
             void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(careplan, careplanSd);
             //output.WriteLine(report.ToString());
             Assert.True(report.Success);
-            Assert.Equal(28, report.Warnings);            // 3x invariant
+            Assert.Equal(0, report.Warnings);            // 3x invariant
 
         }
 
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
-            Assert.Equal(28, report.Warnings);            // 3x missing invariant
+            Assert.Equal(0, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(bundle);
 
             Assert.True(report.Success);
-            Assert.Equal(1, report.Warnings);   // 2 warnings about valueset too complex
+            Assert.Equal(0, report.Warnings);   // 2 warnings about valueset too complex
         }
 
 
