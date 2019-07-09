@@ -31,7 +31,8 @@ namespace Hl7.Fhir.ElementModel
         private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
 
-        protected bool HasAnnotations => _annotations.IsValueCreated;
+        protected bool HasAnnotations =>
+            _annotations.IsValueCreated == true && _annotations.Value.Any();
 
         public void AddAnnotation(object annotation)
         {
