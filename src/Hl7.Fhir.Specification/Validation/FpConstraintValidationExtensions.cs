@@ -36,6 +36,11 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
+                // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
+                // should be removed from STU3/R4 once we get the new normative version
+                // of FP up, which could do comparisons between quantities.
+                if (constraintElement.Key == "rng-2") continue;
+
                 bool success = false;
                
                 try

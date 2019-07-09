@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Language.Debugging;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
@@ -16,7 +17,7 @@ using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
-    public abstract class Expression
+    public abstract class Expression : IEquatable<Expression>
     {
         internal const string OP_PREFIX = "builtin.";
         internal static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
@@ -25,37 +26,36 @@ namespace Hl7.FhirPath.Expressions
         {
             ExpressionType = type;
         }
+
+        protected Expression(TypeInfo type, ISourcePositionInfo location) : this(type)
+        {
+            Location = location;           
+        }
+
+        public ISourcePositionInfo Location { get; }
+
         public TypeInfo ExpressionType { get; protected set; }
 
         public abstract T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope);
 
-        public override bool Equals(object obj)
-        {
-            if (obj is Expression && obj != null)
-            {
-                return ((Expression)obj).ExpressionType == ExpressionType;
-            }
-            else
-                return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return ExpressionType.GetHashCode();
-        }
+        public override bool Equals(object obj) => Equals(obj as Expression);
+        public bool Equals(Expression other) => other != null && EqualityComparer<TypeInfo>.Default.Equals(ExpressionType, other.ExpressionType);
+        public override int GetHashCode() => -28965461 + EqualityComparer<TypeInfo>.Default.GetHashCode(ExpressionType);
+        public static bool operator ==(Expression left, Expression right) => EqualityComparer<Expression>.Default.Equals(left, right);
+        public static bool operator !=(Expression left, Expression right) => !(left == right);
     }
 
 
     public class ConstantExpression : Expression
     {
-        public ConstantExpression(object value, TypeInfo type) : base(type)
+        public ConstantExpression(object value, TypeInfo type, ISourcePositionInfo location = null) : base(type, location)
         {
             if (value == null) Error.ArgumentNull("value");
 
             Value = value;
         }
 
-        public ConstantExpression(object value) : base(TypeInfo.Any)
+        public ConstantExpression(object value, ISourcePositionInfo location = null) : base(TypeInfo.Any, location)
         {
             if (value == null) Error.ArgumentNull("value");
 
@@ -107,14 +107,12 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
+        public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments, ISourcePositionInfo location = null) : base(type, location)
         {
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
-            if (arguments == null) throw Error.ArgumentNull("arguments");
-
             Focus = focus;
             FunctionName = name;
-            Arguments = arguments;
+            Arguments = arguments ?? throw Error.ArgumentNull("arguments");
         }
 
         public Expression Focus { get; private set; }
@@ -279,9 +277,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(TypeInfo.Any)
         {
-            if (contents == null) throw Error.ArgumentNull("contents");
-
-            Contents = contents;
+            Contents = contents ?? throw Error.ArgumentNull("contents");
         }
 
         public IEnumerable<Expression> Contents { get; private set;  }
@@ -312,11 +308,9 @@ namespace Hl7.FhirPath.Expressions
 
     public class VariableRefExpression : Expression
     {
-        public VariableRefExpression(string name) : base(TypeInfo.Any)
+        public VariableRefExpression(string name, ISourcePositionInfo location = null) : base(TypeInfo.Any, location)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-
-            Name = name;
+            Name = name ?? throw Error.ArgumentNull("name");
         }
 
         public string Name { get; private set; }

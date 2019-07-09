@@ -41,15 +41,15 @@ namespace Hl7.Fhir.Serialization
             source.ToTypedElement().WriteTo(destination, settings);
 #pragma warning restore 612, 618
         public static string ToJson(this ITypedElement source, FhirJsonSerializationSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
 
         public static string ToJson(this ISourceNode source, FhirJsonSerializationSettings settings = null)
-            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
+            => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
 
 #pragma warning disable 612, 618
         [Obsolete("Please consider switching to ITypedElement (which is what the new parsers return).")]
         public static string ToJson(this IElementNavigator source, FhirJsonSerializationSettings settings = null)
-              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false);
+              => SerializationUtil.WriteJsonToString(writer => source.WriteTo(writer, settings), settings?.Pretty ?? false, settings?.AppendNewLine ?? false);
 #pragma warning restore 612, 618
 
         public static byte[] ToJsonBytes(this ITypedElement source, FhirJsonSerializationSettings settings = null)

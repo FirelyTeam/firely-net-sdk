@@ -6,7 +6,7 @@
 // Generated Shared Enumeration: ResourceType
 
 // Generated Shared Enumeration: OperationParameterUse
-	// Used in model class (type): ParameterDefinition.use
+// Used in model class (type): ParameterDefinition.use
 
 // Generated Shared Enumeration: FilterOperator
 
@@ -27,7 +27,7 @@
 // Generated Shared Enumeration: ActionPrecheckBehavior
 
 // Generated Shared Enumeration: BindingStrength
-	// Used in model class (type): ElementDefinition.binding.strength
+// Used in model class (type): ElementDefinition.binding.strength
 
 // Generated Shared Enumeration: ParticipationStatus
 
@@ -46,7 +46,7 @@
 // Generated Shared Enumeration: ActionParticipantType
 
 // Generated Shared Enumeration: DaysOfWeek
-	// Used in model class (type): Timing.repeat.dayOfWeek
+// Used in model class (type): Timing.repeat.dayOfWeek
 
 // Generated Shared Enumeration: ActionRelationshipType
 
@@ -63,8 +63,8 @@
 // Generated Shared Enumeration: MessageSignificanceCategory
 
 // Generated Shared Enumeration: FHIRAllTypes
-	// Used in model class (type): DataRequirement.type
-	// Used in model class (type): ParameterDefinition.type
+// Used in model class (type): DataRequirement.type
+// Used in model class (type): ParameterDefinition.type
 
 // Generated Shared Enumeration: PublicationStatus
 

@@ -26,14 +26,6 @@ namespace Hl7.FhirPath.Tests
     {
         readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
-        readonly ElementNode patient;
-
-        public ElementNodeTests()
-        {
-            patient = createPatient();
-        }
-
-
         private ElementNode createPatient()
         {
             var patientRoot = ElementNode.Root(provider, "Patient");
@@ -98,6 +90,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestConstruction()
         {
+            var patient = createPatient();
+
             var data = patient[0];
             Assert.Equal("contained", data.Name);
             Assert.Null(data.Value);
@@ -112,6 +106,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void SuccessfullyCreated()
         {
+            var patient = createPatient();
+
             var pat = new Patient();
             var containedObs = new Observation { Value = new FhirBoolean(true) };
             pat.Contained.Add(containedObs);
@@ -128,7 +124,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void ClonesOk()
         {
-            var patientClone = patient.Clone();
+            var patient = createPatient();
+            var patientClone = patient.ShallowCopy();
             var result = patientClone.IsEqualTo(patient);
             Assert.True(result.Success);
         }
@@ -136,25 +133,44 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KnowsPath()
         {
+            var patient = createPatient();
+
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.contained[0].value", patient[0][0].Location);
-            Assert.Equal("Patient.active", patient[1].Location);
-            Assert.Equal("Patient.active.id", patient[1][0].Location);
+            Assert.Equal("Patient.contained[0].value[0]", patient[0][0].Location);
+            Assert.Equal("Patient.active[0]", patient[1].Location);
+            Assert.Equal("Patient.active[0].id[0]", patient[1][0].Location);
             Assert.Equal("Patient.identifier[0]", patient[2].Location);
             Assert.Equal("Patient.identifier[1]", patient[3].Location);
-            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].Location);
-            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][1][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][2][0].Location);
+        }
+
+        [Fact]
+        public void KnowsShortPath()
+        {
+            var patient = createPatient();
+
+            Assert.Equal("Patient", patient.ShortPath);
+            Assert.Equal("Patient.contained[0].value", patient[0][0].ShortPath);
+            Assert.Equal("Patient.active", patient[1].ShortPath);
+            Assert.Equal("Patient.active.id", patient[1][0].ShortPath);
+            Assert.Equal("Patient.identifier[0]", patient[2].ShortPath);
+            Assert.Equal("Patient.identifier[1]", patient[3].ShortPath);
+            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].ShortPath);
+            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].ShortPath);
         }
 
         [Fact]
         public void AccessViaIndexers()
         {
-            Assert.Equal("Patient.active.extension[1].value", patient["active"][0]["extension"][1]["value"][0].Location);
-            Assert.Equal("Patient.active.extension[1].value", patient["active"]["extension"][1]["value"].Single().Location);
-            Assert.Equal("Patient.active.extension[0].value", patient.Children("active").First()
+            var patient = createPatient();
+
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
                                 .Children("extension").First()
                                 .Children("value").First().Location);
-            Assert.Equal("Patient.active.extension[0].value", patient.Children("active")
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active")
                                 .Children("extension").First()
                                 .Children("value").Single().Location);
         }
@@ -162,6 +178,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KnowsChildren()
         {
+            var patient = createPatient();
+
             Assert.False(patient["active"][0]["id"].Children().Any());
             Assert.False(patient["active"]["id"].Children().Any());
         }
@@ -169,6 +187,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CanQueryNodeAxis()
         {
+            var patient = createPatient();
+
             Assert.Equal(7, patient["active"].Descendants().Count());
             Assert.Equal(8, patient["active"].DescendantsAndSelf().Count());
             Assert.Equal(2, patient["active"]["extension"].Count());
@@ -178,6 +198,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KeepsAnnotations()
         {
+            var patient = createPatient();
+
             ITypedElement identifier = patient["active"][0];
             Assert.Equal("a string annotation", identifier.Annotation<string>());
         }
@@ -192,33 +214,58 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void FromNodeClonesCorrectly()
+        public void CheckRemove()
         {
-            var child1 = SourceNode.Valued("child1", "a value");
-            child1.AddAnnotation("The first annotation");
+            var patient = createPatient();
+            Assert.Equal(2, patient.Children("identifier").Count());
 
-            var root = SourceNode.Node("TestRoot", child1);
-            root.ResourceType = "TestR";
-            var annotationTypes = new[] { typeof(string) };
-            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy: annotationTypes);
+            patient.Remove(patient.Children("identifier").First() as ElementNode);
+            Assert.Single(patient.Children("identifier"));
 
-            Assert.False(copiedRoot.Children().Any());
-            Assert.Equal(root.Name, copiedRoot.Name);
-            Assert.Equal(root.Location, copiedRoot.Location);
-            Assert.Equal(root.Text, copiedRoot.Text);
-            Assert.Equal(root.ResourceType, copiedRoot.ResourceType);
-            Assert.Null((root as IAnnotated).Annotation<string>());
+            patient.Remove(patient.Children("identifier").First() as ElementNode);
+            Assert.Empty(patient.Children("identifier"));
 
-            copiedRoot = SourceNode.FromNode(root, recursive: true, annotationsToCopy: annotationTypes);
-            Assert.True(copiedRoot.Children().Any());
-            Assert.Null((root as IAnnotated).Annotation<string>());
+            var anotherPatient = createPatient();
 
-            var copiedChild = copiedRoot.Children().Single();
-            Assert.False(copiedChild.Children().Any());
-            Assert.Equal(child1.Name, copiedChild.Name);
-            Assert.Equal(child1.Location, copiedChild.Location);
-            Assert.Equal(child1.Text, copiedChild.Text);
-            Assert.Equal("The first annotation", (copiedChild as IAnnotated).Annotation<string>());
+            Assert.False(patient.Remove(anotherPatient["identifier"].First()));
+        }
+
+        [Fact]
+        public void ReplaceChildInElement()
+        {
+            var patient = createPatient();
+
+            var newActive = ElementNode.Root(provider, "boolean");
+            newActive.Value = false;
+            patient.Replace(provider, patient["active"].Single(), newActive);
+            Assert.Single(patient["active"]);
+            Assert.Equal(false, patient["active"].Single().Value);
+
+            var newIdentifier = ElementNode.Root(provider, "Identifier");
+            newIdentifier.Add(provider, "system", "http://nos.nl");
+            newIdentifier.Add(provider, "value", "1234");
+            patient["identifier"].Last().ReplaceWith(provider, newIdentifier);
+            Assert.Equal(2, patient["identifier"].Count());
+            Assert.Equal(newIdentifier, patient["identifier"].Last());
+        }
+
+        [Fact]
+        public void FromElementClonesCorrectly()
+        {
+            var patient = createPatient();
+
+            var newElement = ElementNode.FromElement(patient, recursive: true, annotationsToCopy: new[] { typeof(string) });
+            Assert.Equal(4, newElement.Children().Count());
+
+            var activeChild = newElement["active"].Single();
+            Assert.True((bool)activeChild.Value);
+            Assert.True(activeChild.Annotations<string>().Single() == "a string annotation");
+
+            var identifierSystemChild = newElement["identifier"][0]["system"].Single();
+            
+            // check whether we really have a clone by changing the copy
+            identifierSystemChild.Value = "http://dan.nl";
+            Assert.Equal("http://nu.nl",patient["identifier"][0]["system"].Single().Value);
         }
 
         [Fact]
