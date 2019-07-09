@@ -507,6 +507,45 @@ namespace Hl7.Fhir.Specification.Tests
                 fileNames = source.ListArtifactNames().ToList();
                 Assert.AreEqual(1, fileNames.Count);
                 Assert.AreEqual(srcFileName, fileNames[0]);
+
+                // [WMR 20190528] Update file and refresh source
+                var summaries = source.ListSummaries().ToList();
+                Assert.IsNotNull(summaries);
+                Assert.AreEqual(1, summaries.Count);
+                var summary = summaries[0];
+                var uri = summary.ResourceUri;
+                const string uriPrefix = @"http://example.org/Patient/";
+                Assert.IsTrue(uri.StartsWith(uriPrefix));
+                var id = uri.Substring(uriPrefix.Length);
+                Assert.AreEqual("pat1", id);
+
+                // Update the resource id
+                Patient patient = null;
+                using (var nav = DefaultNavigatorStreamFactory.Create(tmpFilePath))
+                {
+                    Assert.IsTrue(nav.MoveNext());
+                    var node = nav.Current;
+                    Assert.IsNotNull(node);
+                    patient = node.ToPoco<Patient>();
+                }
+                Assert.IsNotNull(patient);
+                Assert.AreEqual(patient.Id, "pat1");
+                patient.Id = "CHANGED";
+                var serializer = new FhirXmlSerializer();
+                var xml = serializer.SerializeToString(patient);
+                File.WriteAllText(tmpFilePath, xml);
+
+                // Verify that Refresh updates the summary information
+                Refresh(tmpFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(srcFileName, fileNames[0]);
+
+                summaries = source.ListSummaries().ToList();
+                Assert.AreEqual(1, summaries.Count);
+                summary = summaries[0];
+                Assert.AreEqual(uriPrefix + patient.Id, summary.ResourceUri);
+
             }
             finally
             {

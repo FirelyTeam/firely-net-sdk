@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -16,46 +17,40 @@ using System.Threading;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class DomNode<T> : IAnnotatable where T:DomNode<T>
+    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable, IShortPathGenerator
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Creates an implementation of ITypedElement that represents a primitive value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ITypedElement ForPrimitive(object value) => new PrimitiveElement(value);
 
-        protected List<T> ChildList = new List<T>();
+        /// <summary>
+        /// Create a fixed length set of values (but also support variable number of parameter values)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<ITypedElement> CreateList(params object[] values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
+                : EmptyList;
 
-        internal IEnumerable<T> ChildrenInternal(string name = null) =>
-            name == null ? ChildList : ChildList.Where(c => c.Name == name);
+        /// <summary>
+        /// Create a variable list of values using an enumeration
+        /// - so doesn't have to be converted to an array in memory (issue with larger dynamic lists)
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<ITypedElement> CreateList(IEnumerable<object> values) => values != null
+                ? values.Select(value => value == null ? null : value is ITypedElement ? (ITypedElement)value : ForPrimitive(value))
+                : EmptyList;
 
-        public T Parent { get; protected set; }
-
-        public DomNodeList<T> this[string name] => new DomNodeList<T>(ChildrenInternal(name));
-
-        public T this[int index] => ChildList[index];
-
-        private readonly Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
-        protected List<object> AnnotationsInternal { get { return _annotations.Value; } }
-
-        protected bool HasAnnotations => _annotations.IsValueCreated;
-
-        public void AddAnnotation(object annotation)
-        {
-            AnnotationsInternal.Add(annotation);
-        }
-
-        public void RemoveAnnotations(Type type)
-        {
-            AnnotationsInternal.RemoveOfType(type);
-        }
-    }
-
-
-
-    public class ElementNode : DomNode<ElementNode>, ITypedElement, IAnnotated, IAnnotatable
-    {
+        public static readonly IEnumerable<ITypedElement> EmptyList = Enumerable.Empty<ITypedElement>();
         public IEnumerable<ITypedElement> Children(string name = null) => ChildrenInternal(name);
 
         internal ElementNode(string name, object value, string instanceType, IElementDefinitionSummary definition)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             InstanceType = instanceType;
             Value = value;
             Definition = definition;
@@ -70,12 +65,62 @@ namespace Hl7.Fhir.ElementModel
             return _childDefinitions;
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child)
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, ElementNode child, string name = null)
         {
-            if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set.");
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (child == null) throw new ArgumentNullException(nameof(child));
 
+            importChild(provider, child, name);
+            return child;
+        }
+
+        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value = null, string instanceType = null)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+
+            var child = new ElementNode(name, value, instanceType, null);
+
+            // Add() will supply the definition and the instanceType (if necessary)
+            return Add(provider, child);
+        }
+
+        public void ReplaceWith(IStructureDefinitionSummaryProvider provider, ElementNode node)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (node == null) throw new ArgumentNullException(nameof(node));
+
+            if (Parent == null) throw Error.Argument("Current node is a root node and cannot be replaced.");
+            Parent.Replace(provider, this, node);
+        }
+
+        public void Replace(IStructureDefinitionSummaryProvider provider, ElementNode oldChild, ElementNode newChild)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (oldChild == null) throw new ArgumentNullException(nameof(oldChild));
+            if (newChild == null) throw new ArgumentNullException(nameof(newChild));
+
+            int childIndex = ChildList.IndexOf(oldChild);
+            if (childIndex == -1) throw Error.Argument("Node to be replaced is not one of the children of this node");
+            importChild(provider, newChild, oldChild.Name, childIndex);
+            Remove(oldChild);
+        }
+
+        /// <summary>
+        /// Will update the child to reflect it being a child of this element, but will not yet add the child at any position within this element
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="child"></param>
+        /// <param name="name"></param>
+        private void importChild(IStructureDefinitionSummaryProvider provider, ElementNode child, string name, int? position=null)
+        {
+            child.Name = name ?? child.Name;
+            if (child.Name == null) throw Error.Argument($"The ElementNode given should have its Name property set or the '{nameof(name)}' parameter should be given.");
+
+            // Remove this child from the current parent (if any), then reassign to me
+            if (child.Parent != null) Parent.Remove(child);
             child.Parent = this;
-
+            
             // If we add a child, we better overwrite it's definition with what
             // we think it should be - this way you can safely first create a node representing
             // an independently created root for a resource of datatype, and then add it to the tree.
@@ -83,29 +128,29 @@ namespace Hl7.Fhir.ElementModel
             var childDef = childDefs.Where(cd => cd.ElementName == child.Name).SingleOrDefault();
 
             child.Definition = childDef ?? child.Definition;    // if we don't know about the definition, stick with the old one (if any)
-            
-            if(child.InstanceType == null && child.Definition != null)
+
+            if (child.InstanceType == null && child.Definition != null)
             {
                 if (child.Definition.IsResource || child.Definition.Type.Length > 1)
-                    throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
-
-                child.InstanceType = child.Definition.Type.Single().GetTypeName();
+                {
+                    // We are in a situation where we are on an polymorphic element, but the caller did not specify
+                    // the instance type.  We can try to auto-set it by deriving it from the instance's type, if it is a primitive
+                    if (child.Value != null && Primitives.TryGetPrimitiveTypeName(child.Value.GetType(), out string instanceType))
+                        child.InstanceType = instanceType;
+                    else
+                        throw Error.Argument("The ElementNode given should have its InstanceType property set, since the element is a choice or resource.");
+                }
+                else
+                    child.InstanceType = child.Definition.Type.Single().GetTypeName();
             }
 
-            ChildList.Add(child);
-
-            return child;
+            if(position == null || position >= ChildList.Count)
+                ChildList.Add(child);
+            else
+                ChildList.Insert(position.Value, child);
         }
 
-        public ElementNode Add(IStructureDefinitionSummaryProvider provider, string name, object value=null, string instanceType = null)
-        {
-            var child = new ElementNode(name, value, instanceType, null);
-
-            // Add() will supply the definition and the instanceType (if necessary)
-            return Add(provider, child); 
-        }
-
-        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null)
+        public static ElementNode Root(IStructureDefinitionSummaryProvider provider, string type, string name=null, object value=null)
         {
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
             if (type == null) throw Error.ArgumentNull(nameof(type));
@@ -117,11 +162,14 @@ namespace Hl7.Fhir.ElementModel
             if (sd != null)
                 definition = ElementDefinitionSummary.ForRoot(sd);
 
-            return new ElementNode(name ?? type, null, type, definition);
+            return new ElementNode(name ?? type, value, type, definition);
         }
 
         public static ElementNode FromElement(ITypedElement node, bool recursive = true, IEnumerable<Type> annotationsToCopy = null)
-            => buildNode(node, recursive, annotationsToCopy, null);
+        {
+            if (node == null) throw new ArgumentNullException(nameof(node));
+            return buildNode(node, recursive, annotationsToCopy, null);
+        }
 
         private static ElementNode buildNode(ITypedElement node, bool recursive, IEnumerable<Type> annotationsToCopy, ElementNode parent)
         {
@@ -140,7 +188,20 @@ namespace Hl7.Fhir.ElementModel
             return me;
         }
 
-        public ElementNode Clone()
+        public bool Remove(ElementNode child)
+        {
+            if (child == null) throw new ArgumentNullException(nameof(child));
+
+            var success = ChildList.Remove(child);
+            if (success) child.Parent = null;
+
+            return success;
+        }
+
+        [Obsolete("The Clone() function actually only performs a shallow copy, so this function has been renamed to ShallowCopy()")]
+        public ElementNode Clone() => ShallowCopy();
+
+        public ElementNode ShallowCopy()
         {
             var copy = new ElementNode(Name, Value, InstanceType, Definition)
             {
@@ -162,7 +223,8 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<object> Annotations(Type type)
         {
-            return (type == typeof(ElementNode) || type == typeof(ITypedElement))
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            return (type == typeof(ElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
                 ? (new[] { this })
                 : AnnotationsInternal.OfType(type);
         }
@@ -176,6 +238,24 @@ namespace Hl7.Fhir.ElementModel
                     //TODO: Slow - but since we'll change the use of this property to informational 
                     //(i.e. for error messages), it may not be necessary to improve it.
                     var basePath = Parent.Location;
+                    var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
+                    return $"{basePath}.{Name}[{myIndex}]";
+
+                }
+                else
+                    return Name;
+            }
+        }
+
+        public string ShortPath
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    //TODO: Slow - but since we'll change the use of this property to informational 
+                    //(i.e. for error messages), it may not be necessary to improve it.
+                    var basePath = Parent.ShortPath;
 
                     if (Definition?.IsCollection == false)
                         return $"{basePath}.{Name}";
@@ -184,37 +264,10 @@ namespace Hl7.Fhir.ElementModel
                         var myIndex = Parent.ChildList.Where(c => c.Name == Name).ToList().IndexOf(this);
                         return $"{basePath}.{Name}[{myIndex}]";
                     }
-                    
                 }
                 else
                     return Name;
             }
         }
-
     }
-
-
-    public class DomNodeList<T> : IEnumerable<T> where T:DomNode<T>
-    {
-        private readonly IList<T> _wrapped;
-
-        internal DomNodeList(IEnumerable<T> nodes)
-        {
-            _wrapped = nodes.ToList();
-        }
-
-        public T this[int index] => _wrapped[index];
-
-        public DomNodeList<T> this[string name] => 
-            new DomNodeList<T>(_wrapped.SelectMany(c => c.ChildrenInternal(name)));
-
-        public int Count => _wrapped.Count;
-
-        public bool Contains(T item) => _wrapped.Contains(item);
-
-        public IEnumerator<T> GetEnumerator() => _wrapped.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
-    }
-
 }

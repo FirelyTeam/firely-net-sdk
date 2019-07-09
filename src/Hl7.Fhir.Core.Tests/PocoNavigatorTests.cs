@@ -28,13 +28,13 @@ namespace Hl7.Fhir
             {
                 if (f is IEnumerable<ITypedElement>)
                 {
-                    object[] bits = (f as IEnumerable<ITypedElement>).Select(i =>
+                    var bits = (f as IEnumerable<ITypedElement>).Select(i =>
                     {
                         return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
-                    }).ToArray();
-                    return FhirValueList.Create(bits);
+                    });
+                    return ElementNode.CreateList(bits);
                 }
-                return FhirValueList.Create(new object[] { "?" });
+                return ElementNode.CreateList("?");
             });
 
             Patient p = new Patient

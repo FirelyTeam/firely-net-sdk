@@ -418,6 +418,25 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);           // 20 warnings about valueset too complex
         }
 
+        [Fact]
+        public void ValidateInstant()
+        {
+            var docRef = SourceNode.Resource("DocumentReference", "DocumentReference",
+                SourceNode.Valued("id", "example"),
+                SourceNode.Valued("status", "current"),
+                SourceNode.Valued("type", null,
+                    SourceNode.Valued("coding", null,
+                        SourceNode.Valued("system", "http://loinc.org"),
+                        SourceNode.Valued("code", "34108-1"),
+                        SourceNode.Valued("display", "Outpatient Note"))),
+                SourceNode.Valued("indexed", "2005-12-24T09:43:41"));
+
+            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()));
+            Assert.False(report.Success);
+            Assert.Equal(2, report.Errors);
+            Assert.Equal(0, report.Warnings);
+            Assert.Contains("does not match regex", report.Issue[0].Details.Text);
+        }
 
         [Fact]
         public void ValidateChoiceWithConstraints()
@@ -521,6 +540,68 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(report.Success);
         }
 
+        [Fact]
+        public void ValidateCarePlan()
+        {
+            var eoc = new EpisodeOfCare
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "EpisodeOfCare/example", Value = "example" } },
+                Status = EpisodeOfCare.EpisodeOfCareStatus.Active,
+                Patient = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                }
+            };
+
+            var patient = new Patient
+            {
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/23", Value = "23" } }
+            };
+
+            var cp = new CarePlan
+            {
+                Status = CarePlan.CarePlanStatus.Active,
+                Intent = CarePlan.CarePlanIntent.Plan,
+                Subject = new ResourceReference
+                {
+                    Reference = "Patient/23"
+                },
+                Context = new ResourceReference
+                {
+                    Reference = "EpisodeOfCare/example"
+                }
+            };
+            
+            var source = 
+                    new MultiResolver(
+                        new DirectorySource(@"TestData\validation"),
+                        new ZipSource("specification.zip"));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = false,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += onGetExampleResource;
+            var report = validator.Validate(cp);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
+            {
+                if (e.Reference.Contains("EpisodeOfCare"))
+                    e.Result = eoc.ToTypedElement();
+                else
+                    e.Result = patient.ToTypedElement();
+            };
+        }
 
         [Fact]
         public void ValidateBundle()
@@ -885,6 +966,31 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.Equal(nrOfParrallelTasks, successes);
         }
+
+        /// <summary>
+        /// This test should show that the rng-2 constraint is totally ignored (it's
+        /// incorrect in DSTU2 and STU3), but others are not.
+        /// </summary>
+        [Fact]
+        public void IgnoreRng2FPConstraint()
+        {           
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+
+            var instance = new Observation();
+
+            // this should not trigger rng-2
+            instance.Value = new Range()
+            {
+                Low = new SimpleQuantity() { Value = 5, Code = "kg", System = "ucum.org" },
+                High = new SimpleQuantity() { Value = 4, Code = "kg", System = "ucum.org" },
+            };
+          
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success);
+            Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
+            Assert.Equal(0, report.Warnings);
+        }
+
 
         /// <summary>
         /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617

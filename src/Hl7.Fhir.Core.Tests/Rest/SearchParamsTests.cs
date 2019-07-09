@@ -238,6 +238,21 @@ namespace Hl7.Fhir.Test.Rest
         }
 
         [TestMethod]
+        public void ParseAndSerializeSortParams()
+        {
+            var q = new SearchParams();
+      
+            q.Add("_sort", "-sorted,sorted2,_lastUpdated");
+      
+            var output = q.ToUriParamList().ToQueryString();
+            Assert.AreEqual("_sort=-sorted%2Csorted2%2C_lastUpdated", output);
+
+            var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
+            Assert.AreEqual(q.Query, q2.Query);     
+            CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList()); 
+        }
+
+        [TestMethod]
         public void AcceptEmptyGenericParam()
         {
             var q = new SearchParams();

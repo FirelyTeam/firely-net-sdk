@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel
             if (rootType == null)
             {
                 if (_settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    throw Error.Argument(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
+                    throw Error.Format(nameof(type), $"Cannot determine the type of the root element at '{Source.Location}', " +
                         $"please supply a type argument.");
                 else
                     return (rootType, null);
@@ -76,9 +76,13 @@ namespace Hl7.Fhir.ElementModel
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        private void raiseTypeError(string message, object source, bool warning = false)
+        private void raiseTypeError(string message, object source, bool warning = false, string location = null)
         {
-            var exc = new StructuralTypeException("Type checking the data: " + message);
+            var exMessage = $"Type checking the data: {message}";
+            if (!string.IsNullOrEmpty(location))
+                exMessage += $" (at {location})";
+
+            var exc = new StructuralTypeException(exMessage);
             var notification = warning ?
                 ExceptionNotification.Warning(exc) :
                 ExceptionNotification.Error(exc);
@@ -112,7 +116,7 @@ namespace Hl7.Fhir.ElementModel
 
                 if (!Primitives.IsPrimitive(InstanceType))
                 {
-                    raiseTypeError($"Since type {InstanceType} is not a primitive, it cannot have a value", Source);
+                    raiseTypeError($"Since type {InstanceType} is not a primitive, it cannot have a value", Source, location: Source.Location);
                     return null;
                 }
 
@@ -124,7 +128,7 @@ namespace Hl7.Fhir.ElementModel
                 }
                 catch (FormatException fe)
                 {
-                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {InstanceType}: '{fe.Message}'.", Source);
+                    raiseTypeError($"Literal '{sourceText}' cannot be interpreted as a {InstanceType}: '{fe.Message}'.", Source, location: Source.Location);
                     return sourceText;
                 }
             }
@@ -138,11 +142,11 @@ namespace Hl7.Fhir.ElementModel
             if (info.IsResource)
             {
                 instanceType = resourceTypeIndicator;
-                if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually contain one", current);
+                if (instanceType == null) raiseTypeError($"Element '{current.Name}' should contain a resource, but does not actually contain one", current, location: current.Location);
             }
             else if (!info.IsResource && resourceTypeIndicator != null)
             {
-                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{resourceTypeIndicator}'.", current);
+                raiseTypeError($"Element '{current.Name}' is not a contained resource, but seems to contain a resource of type '{resourceTypeIndicator}'.", current, location: current.Location);
                 instanceType = resourceTypeIndicator;
             }
             else if (info.IsChoiceElement)
@@ -151,7 +155,7 @@ namespace Hl7.Fhir.ElementModel
 
                 if (String.IsNullOrEmpty(suffix))
                 {
-                    raiseTypeError($"Choice element '{current.Name}' is not suffixed with a type.", current);
+                    raiseTypeError($"Choice element '{current.Name}' is not suffixed with a type.", current, location: current.Location);
                     instanceType = null;
                 }
                 else
@@ -159,7 +163,7 @@ namespace Hl7.Fhir.ElementModel
                     instanceType = info.Type.OfType<IStructureDefinitionReference>().Select(t => t.ReferredType).FirstOrDefault(t => String.Compare(t, suffix, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (String.IsNullOrEmpty(instanceType))
-                        raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current);
+                        raiseTypeError($"Choice element '{current.Name}' is suffixed with unexpected type '{suffix}'", current, location: current.Location);
                 }
             }
             else
@@ -246,7 +250,7 @@ namespace Hl7.Fhir.ElementModel
                 // No type information available for the type representing the children....
 
                 if (InstanceType != null && _settings.ErrorMode == TypedElementSettings.TypeErrorMode.Report)
-                    raiseTypeError($"Encountered unknown type '{InstanceType}'", Source);
+                    raiseTypeError($"Encountered unknown type '{InstanceType}'", Source, location: Source.Location);
 
                 // Don't go on with the (untyped) children, unless explicitly told to do so
                 if (_settings.ErrorMode != TypedElementSettings.TypeErrorMode.Passthrough)
@@ -292,7 +296,6 @@ namespace Hl7.Fhir.ElementModel
                 return new[] { this };
             else
                 return Source.Annotations(type);
-
         }
     }
 

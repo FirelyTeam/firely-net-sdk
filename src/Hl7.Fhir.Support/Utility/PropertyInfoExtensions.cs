@@ -1,4 +1,12 @@
-﻿#if USE_CODE_GEN
+﻿/* 
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+#if USE_CODE_GEN
 
 using System;
 using System.Reflection;

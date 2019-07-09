@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
                     if (!string.IsNullOrEmpty(this.LinkId))
                         sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
                     if (!string.IsNullOrEmpty(this.Text))
-                        sb.AppendFormat(" Title=\"{0}\"", Text);
+                        sb.AppendFormat(" Text=\"{0}\"", Text);
 
                     return sb.ToString();
                 }

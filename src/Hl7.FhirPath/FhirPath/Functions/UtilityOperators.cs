@@ -8,11 +8,12 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class UtilityOperators
     {
-        private static readonly Action<string> WriteLine = (string s) => Debug.WriteLine(s);
-
         public static IEnumerable<ITypedElement> Extension(this IEnumerable<ITypedElement> focus, string url)
         {
-            return focus.Navigate("extension").Where(es => es.Navigate("url").Single().IsEqualTo(new ConstantValue(url)));
+            return focus.Navigate("extension")
+                .Where(es => es.Navigate("url")
+                .Single()
+                .IsEqualTo(ElementNode.ForPrimitive(url)));
         }
 
         public static IEnumerable<ITypedElement> Trace(this IEnumerable<ITypedElement> focus, string name, EvaluationContext ctx)

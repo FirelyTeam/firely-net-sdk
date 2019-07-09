@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Specification.Summary
                 // ConfigurableNavigatorStreamFactory returns null for unknown file extensions
                 // No need to call DefaultNavigatorStreamFactory (redundant)
                 navStream = navigatorStreamFactory?.Invoke(fi.FullName);
-                // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
+                    // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
 
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }
