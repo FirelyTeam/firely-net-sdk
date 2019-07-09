@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         //    _validator = new Validator(ctx);
         //}
-
+        
         [Fact]
         public void ValidateCircularReference()
         {
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Id = "2",
                 Identifier = new List<Identifier>() { new Identifier { System = "Patient/2", Value = "2" } }
             };
-
+            
             var refPatient = new Patient
             {
                 Id = "3",
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 Other = new ResourceReference
                                 {
-                                    Reference = "Patient/2",
+                                    Reference = "#pat2",
                                 },
                                 Type = Patient.LinkType.Seealso
                             }
@@ -147,6 +147,12 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
+            var bundle = new Bundle
+            {
+                TypeElement = new Code<Bundle.BundleType>(Bundle.BundleType.Collection),
+                Entry = new List<Bundle.EntryComponent>() { new Bundle.EntryComponent { Resource = patient } }
+            };
+
             var source =
                     new MultiResolver(
                         new DirectorySource(@"TestData\validation"),
@@ -166,7 +172,13 @@ namespace Hl7.Fhir.Specification.Tests
             var report = validator.Validate(patient);
 
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(5, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            report = validator.Validate(bundle);
+
+            Assert.True(report.Success);
+            Assert.Equal(5, report.Warnings);
             Assert.Equal(0, report.Errors);
 
             void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
@@ -588,7 +600,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(careplan, careplanSd);
             //output.WriteLine(report.ToString());
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);            // 3x invariant
+            Assert.Equal(28, report.Warnings);            // 3x invariant
 
         }
 
@@ -690,7 +702,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);            // 3x missing invariant
+            Assert.Equal(28, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -790,7 +802,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(bundle);
 
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);   // 2 warnings about valueset too complex
+            Assert.Equal(1, report.Warnings);   // 2 warnings about valueset too complex
         }
 
 

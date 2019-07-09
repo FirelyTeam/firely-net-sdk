@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Validation
                 {
                     if (validatedResources.Any(v => v.Item1 == reference && v.Item2 == typeRef.TargetProfile))
                     {
-                        outcome.AddIssue($"Circular reference found for {reference} resource.", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
+                        outcome.AddIssue($"The resource {reference} has already been validated before or it part of a circular referencing", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
                         return outcome;
                     }
                     validatedResources.Add(new Tuple<string, string>(reference, typeRef.TargetProfile));
@@ -169,12 +169,13 @@ namespace Hl7.Fhir.Validation
                     var validatedProfiles = referencedResource is ScopedNodeWrapper sn ? sn.ValidatedProfiles : null;
                     if (validatedProfiles == null || !validatedProfiles.Any(p => p.Profile == typeRef.TargetProfile))
                     {
+                        validatedProfiles.Add(new ValidatedProfile(typeRef.TargetProfile, ValidatedProfile.Status.Pending));
                         childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
-                        validatedProfiles.Add(new ValidatedProfile(typeRef.TargetProfile, childResult.Success));
+                        validatedProfiles.Single(p => p.Profile == typeRef.TargetProfile).Success = childResult.Success ? ValidatedProfile.Status.Success : ValidatedProfile.Status.Fail;
                     }
                     else
                     {
-                        childResult.AddIssue($"Circular reference found for {reference} resource.", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
+                        childResult.AddIssue($"The resource {reference} has already been validated before or it part of a circular referencing", Issue.CONTENT_CIRCULAR_REFERENCE, referencedResource);
                     }
                 }
                 else

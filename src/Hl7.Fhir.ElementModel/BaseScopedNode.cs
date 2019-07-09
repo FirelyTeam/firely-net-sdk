@@ -10,34 +10,35 @@ namespace Hl7.Fhir.ElementModel
 {
     public abstract class BaseScopedNode : ITypedElement, IAnnotated, IExceptionSource
     {
-        public ITypedElement Current { get; }
-        public BaseScopedNode ParentResource { get; }
-        public string LocalLocation { get; }
-        public bool AtResource { get; }
+        public virtual ITypedElement Current { get; protected set; }
+        public virtual BaseScopedNode ParentResource { get; protected set; }
+        public virtual string LocalLocation => ParentResource == null ? Location :
+                        $"{ParentResource.InstanceType}.{Location.Substring(ParentResource.Location.Length + 1)}";
+        public virtual bool AtResource => Current.Definition?.IsResource ?? false;
         public virtual IEnumerable<IBundledResource> BundledResources()
         {
-            if (_cache.BundledResources == null)
+            if (CacheInstance.BundledResources == null)
             {
                 if (InstanceType == "Bundle")
-                    _cache.BundledResources = from e in this.Children("entry")
+                    CacheInstance.BundledResources = from e in this.Children("entry")
                                               let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
                                               let resource = e.Children("resource").FirstOrDefault() as BaseScopedNode
                                               select new BundledResource { FullUrl = fullUrl, Resource = resource };
                 else
-                    _cache.BundledResources = Enumerable.Empty<BundledResource>();
+                    CacheInstance.BundledResources = Enumerable.Empty<BundledResource>();
             }
 
-            return _cache.BundledResources;
+            return CacheInstance.BundledResources;
         }
 
         public virtual string Id()
         {
-            if (_cache.Id == null)
+            if (CacheInstance.Id == null)
             {
-                _cache.Id = AtResource ? "#" + Current.Children("id").FirstOrDefault()?.Value as string : null;
+                CacheInstance.Id = AtResource ? "#" + Current.Children("id").FirstOrDefault()?.Value as string : null;
             }
 
-            return _cache.Id;
+            return CacheInstance.Id;
         }        
 
         public virtual IEnumerable<BaseScopedNode> ParentResources()
@@ -54,7 +55,7 @@ namespace Hl7.Fhir.ElementModel
 
         public virtual string FullUrl()
         {
-            if (_cache.FullUrl == null)
+            if (CacheInstance.FullUrl == null)
             {
                 foreach (var parent in ParentResources())
                 {
@@ -63,23 +64,23 @@ namespace Hl7.Fhir.ElementModel
                         var fullUrl = parent.BundledResources()
                             .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))
                             ?.FullUrl;
-                        if (fullUrl != null) _cache.FullUrl = fullUrl;
+                        if (fullUrl != null) CacheInstance.FullUrl = fullUrl;
                     }
                 }
             }
 
-            return _cache.FullUrl;
+            return CacheInstance.FullUrl;
         }
 
         public virtual IEnumerable<BaseScopedNode> ContainedResources()
         {
-            if (_cache.ContainedResources == null)
+            if (CacheInstance.ContainedResources == null)
             {
-                _cache.ContainedResources = AtResource?
-                    this.Children("contained").Cast<BaseScopedNode>():
+                CacheInstance.ContainedResources = AtResource?
+                    this.Children("contained").Cast<BaseScopedNode>().ToList():
                     Enumerable.Empty<BaseScopedNode>();
             }
-            return _cache.ContainedResources;
+            return CacheInstance.ContainedResources;
         }
 
 
@@ -103,26 +104,25 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public string Name { get; }
-        public string InstanceType { get; }
-        public object Value { get; }
-        public string Location { get; }
-        public IElementDefinitionSummary Definition { get; }
+        public virtual string Name => Current.Name;
+        public virtual string InstanceType => Current.InstanceType;
+        public virtual object Value => Current.Value;
+        public virtual string Location => Current.Location;
+        public virtual IElementDefinitionSummary Definition => Current.Definition;
 
         //IExceptionSource
         public virtual ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        private class Cache
+        protected class Cache
         {
-            public readonly object _lock = new object();
-
             public string Id;
             public IEnumerable<BaseScopedNode> ContainedResources;
             public IEnumerable<IBundledResource> BundledResources;
+            public IEnumerable<BaseScopedNode> Children;
             public string FullUrl;
         }
 
-        private Cache _cache = new Cache();
+        protected Cache CacheInstance = new Cache();
 
         public class BundledResource : IBundledResource
         {
