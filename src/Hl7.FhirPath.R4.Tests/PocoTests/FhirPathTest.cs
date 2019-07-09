@@ -9,18 +9,19 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using System;
-using System.Linq;
-using Hl7.FhirPath.Functions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.Primitives;
+using Hl7.FhirPath.Functions;
+using Hl7.FhirPath.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks.Dataflow;
 
-namespace Hl7.FhirPath.Tests
+namespace Hl7.FhirPath.R4.Tests
 {
     [TestClass]
     public class FhirPathTest
@@ -171,7 +172,8 @@ namespace Hl7.FhirPath.Tests
             var cs = new Hl7.Fhir.Model.CodeSystem() { Id = "pat45" };
             cs.Concept.Add(new CodeSystem.ConceptDefinitionComponent()
             {
-                Code = "5", Display = "Five"
+                Code = "5",
+                Display = "Five"
             });
             var nav = cs.ToTypedElement();
 

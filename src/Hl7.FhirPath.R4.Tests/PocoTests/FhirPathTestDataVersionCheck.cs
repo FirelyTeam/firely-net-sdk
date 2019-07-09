@@ -1,12 +1,12 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Xml;
 
-namespace Hl7.FhirPath.Tests
+namespace Hl7.FhirPath.R4.Tests
 {
     /// <summary>
     /// All this is to do is read all the unit test data to ensure that they are all compatible with STU3
@@ -18,10 +18,9 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void VerifyAllTestDataFhirPath()
         {
-            string location = typeof(FhirPathTest).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location) + "\\TestData";
+            var path = TestData.GetTestDataBasePath();
             Console.WriteLine(path);
-            List <string> issues = new List<string>();
+            List<string> issues = new List<string>();
             ValidateFolder(path, path, issues);
             Assert.AreEqual(0, issues.Count);
         }
@@ -90,7 +89,7 @@ namespace Hl7.FhirPath.Tests
 
         private void RenameElement(XmlElement element, string oldValue, string newValue, XmlNamespaceManager nm)
         {
-            var nodes = element.SelectNodes("fhir:" +oldValue, nm);
+            var nodes = element.SelectNodes("fhir:" + oldValue, nm);
             foreach (XmlElement elem in nodes)
             {
                 XmlElement n = element.OwnerDocument.CreateElement(newValue, "http://hl7.org/fhir");

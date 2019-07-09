@@ -9,11 +9,6 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
@@ -21,10 +16,16 @@ using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
+using Hl7.FhirPath.Tests;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Hl7.FhirPath.Tests
+namespace Hl7.FhirPath.R4.Tests
 {
     public class PatientFixture : IDisposable
     {
