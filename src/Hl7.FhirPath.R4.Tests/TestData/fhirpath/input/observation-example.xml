@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><Observation xmlns="http://hl7.org/fhir">
+	<id value="example"/>
+	<!--    the mandatory quality flags:    -->
+	<text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example</p><p><b>status</b>: final</p><p><b>category</b>: Vital Signs <span>(Details : {http://terminology.hl7.org/CodeSystem/observation-category code &#39;vital-signs&#39; = &#39;Vital Signs&#39;, given as &#39;Vital Signs&#39;})</span></p><p><b>code</b>: Body Weight <span>(Details : {LOINC code &#39;29463-7&#39; = &#39;Body weight&#39;, given as &#39;Body Weight&#39;}; {LOINC code &#39;3141-9&#39; = &#39;Body weight Measured&#39;, given as &#39;Body weight Measured&#39;}; {SNOMED CT code &#39;27113001&#39; = &#39;Body weight&#39;, given as &#39;Body weight&#39;}; {http://acme.org/devices/clinical-codes code &#39;body-weight&#39; = &#39;body-weight&#39;, given as &#39;Body Weight&#39;})</span></p><p><b>subject</b>: <a>Patient/example</a></p><p><b>encounter</b>: <a>Encounter/example</a></p><p><b>effective</b>: 28/03/2016</p><p><b>value</b>: 185 lbs<span> (Details: UCUM code [lb_av] = &#39;lb_av&#39;)</span></p></div></text><status value="final"/>
+	<!--   category code is A code that classifies the general type of observation being made. This is used for searching, sorting and display purposes.  -->
+	<category>
+		<coding>
+			<system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+			<code value="vital-signs"/>
+			<display value="Vital Signs"/>
+		</coding>
+	</category>
+	<!--   
+    Observations are often coded in multiple code systems.
+      - LOINC provides codes of varying granularity (though not usefully more specific in this particular case) and more generic LOINCs  can be mapped to more specific codes as shown here
+      - snomed provides a clinically relevant code that is usually less granular than LOINC
+      - the source system provides its own code, which may be less or more granular than LOINC
+     -->
+	<code>
+		<!--    LOINC - always recommended to have a LOINC code    -->
+		<coding>
+			<system value="http://loinc.org"/>
+			<code value="29463-7"/> <!--  more generic methodless LOINC  -->
+			<display value="Body Weight"/>
+		</coding>
+		<coding>
+			<system value="http://loinc.org"/>
+			<code value="3141-9"/><!--  translation is more specific method = measured LOINC  -->
+			<display value="Body weight Measured"/>
+		</coding>
+		<!--    SNOMED CT Codes - becoming more common    -->
+		<coding>
+			<system value="http://snomed.info/sct"/>
+			<code value="27113001"/>
+			<display value="Body weight"/>
+		</coding>
+		<!--    Also, a local code specific to the source system    -->
+		<coding>
+			<system value="http://acme.org/devices/clinical-codes"/>
+			<code value="body-weight"/>
+			<display value="Body Weight"/>
+		</coding>
+	</code>
+	<subject>
+		<reference value="Patient/example"/>
+	</subject>
+	<encounter>
+		<reference value="Encounter/example"/>
+	</encounter>
+	<effectiveDateTime value="2016-03-28"/>
+	<!--    In FHIR, units may be represented twice. Once in the
+    agreed human representation, and once in a coded form.
+    Both is best, since it's not always possible to infer
+    one from the other in code.
+
+    When a computable unit is provided, UCUM (http://unitsofmeasure.org)
+    is always preferred, but it doesn't provide notional units (such as
+    "tablet"), etc. For these, something else is required (e.g. SNOMED CT)
+      -->
+	<valueQuantity>
+		<value value="185"/>
+		<unit value="lbs"/>
+		<system value="http://unitsofmeasure.org"/>
+		<code value="[lb_av]"/>
+	</valueQuantity>
+</Observation>

@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
+    <ContainsTests>true</ContainsTests>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\**\*.xml;TestData\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\fhirpath\tests-fhir-r2.xml.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+    <ProjectReference Include="..\Hl7.FhirPath.Tests\Hl7.FhirPath.Tests.csproj" />
+    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="FluentAssertions" Version="5.4.2" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" />
+  </ItemGroup>
+
+</Project>

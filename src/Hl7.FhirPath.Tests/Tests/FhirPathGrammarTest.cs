@@ -6,15 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using Hl7.FhirPath;
-using Hl7.FhirPath.Parser;
-using Hl7.FhirPath.Expressions;
-using Hl7.FhirPath.Sprache;
-
-using Xunit;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.FhirPath.Expressions;
+using Hl7.FhirPath.Parser;
+using Hl7.FhirPath.Sprache;
+using Xunit;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -45,14 +41,14 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.InvocationExpression.End();
 
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.That, "childname"));
-           // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
+            // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
 
             AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any));
             AssertParser.SucceedsMatch(parser, "doSomething ( ) ", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any));
             AssertParser.SucceedsMatch(parser, "doSomething ( 3.14 ) ", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any,
                                 new ConstantExpression(3.14m)));
 
-            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.That,"doSomething", TypeInfo.Any,
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.That, "doSomething", TypeInfo.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m), new ConstantExpression(3L),
                         AxisExpression.This,
                         new FunctionCallExpression(AxisExpression.That, "somethingElse", TypeInfo.Any, new ConstantExpression(true))));
@@ -60,7 +56,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.That, "as", TypeInfo.Any, new ConstantExpression("Patient")));
 
             AssertParser.FailsMatch(parser, "$that");
-       //     AssertParser.FailsMatch(parser, "as(Patient.identifier)");
+            //     AssertParser.FailsMatch(parser, "as(Patient.identifier)");
             AssertParser.FailsMatch(parser, "as('Patient')");
             AssertParser.FailsMatch(parser, "doSomething(");
         }
@@ -70,7 +66,7 @@ namespace Hl7.FhirPath.Tests
         {
             var parser = Grammar.Term.End();
 
-            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This,"childname"));
+            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This, "childname"));
             AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
             AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any));
             AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any,
@@ -95,7 +91,7 @@ namespace Hl7.FhirPath.Tests
                             new ConstantExpression("11179-de-is-data-element-concept")));
 
             AssertParser.SucceedsMatch(parser, "%\"vs-administrative-gender\"",
-                new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String, 
+                new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String,
                     new ConstantExpression("administrative-gender")));
         }
 
@@ -115,7 +111,7 @@ namespace Hl7.FhirPath.Tests
             //AssertParser.FailsMatch(parser, "Patient . name");
             //AssertParser.FailsMatch(parser, "Patient .name");
         }
-        
+
         [Fact]
         public void FhirPath_Gramm_Expression_Indexer()
         {
@@ -134,7 +130,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.FailsMatch(parser, "Patient.name[]");
             AssertParser.FailsMatch(parser, "Patient.name[4,]");
             AssertParser.FailsMatch(parser, "Patient.name[4,5]");
-            
+
         }
 
         [Fact]
@@ -156,10 +152,10 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.MulExpression.End();
 
             AssertParser.SucceedsMatch(parser, "Patient.name", patientName);
-            AssertParser.SucceedsMatch(parser, "4* Patient.name", new BinaryExpression('*', new ConstantExpression(4),patientName));
+            AssertParser.SucceedsMatch(parser, "4* Patient.name", new BinaryExpression('*', new ConstantExpression(4), patientName));
             AssertParser.SucceedsMatch(parser, "5 div 6", constOp("div", 5, 6));
 
-            AssertParser.FailsMatch(parser,"4*");
+            AssertParser.FailsMatch(parser, "4*");
             // AssertParser.FailsMatch(parser, "5div6");    oops
         }
 
@@ -204,11 +200,11 @@ namespace Hl7.FhirPath.Tests
                         new BinaryExpression("and", constOp("<", 4, 5), constOp(">", 5, 4)),
                         constOp("<=", 4, 6)),
                     constOp(">=", 6, 5)));
-                
+
             AssertParser.FailsMatch(parser, "<>");
         }
 
-   
+
         [Fact]
         public void FhirPath_Gramm_Eq()
         {

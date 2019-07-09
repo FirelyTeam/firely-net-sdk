@@ -13,7 +13,7 @@ using Xunit;
 using Xunit.Abstractions;
 using T = System.Threading.Tasks;
 
-namespace Vonk.Core.Tests.Support
+namespace Vonk.FhirPath.R4.Tests
 {
     public class SpecZipResourcesFixture
     {
