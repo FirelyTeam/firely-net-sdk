@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Serialization
         {
             var details = node.GetJsonSerializationDetails();
             object value = node.Definition != null ? node.Value : details?.OriginalValue ?? node.Value;
-            var objectInShadow = node.InstanceType != null ? Primitives.IsPrimitive(node.InstanceType) : details.UsesShadow;
+            var objectInShadow = node.InstanceType != null ? Primitives.IsPrimitive(node.InstanceType) : details?.UsesShadow ?? false;
 
             JToken first = value != null ? buildValue(value) : null;
             JObject second = buildChildren(node);

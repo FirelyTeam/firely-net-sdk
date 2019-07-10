@@ -14,6 +14,11 @@ using System.IO;
 
 namespace Hl7.Fhir.Serialization
 {
+    /// <summary>Delegate to create an <see cref="INavigatorStream"/> instance for the specified file path specification.</summary>
+    /// <param name="filePath">The full path to a FHIR resource.</param>
+    /// <returns>An <see cref="INavigatorStream"/> instance, or <c>null</c> if the file format is not recognized.</returns>
+    public delegate INavigatorStream NavigatorStreamFactory(string filePath);
+
     /// <summary>
     /// Factory to create new <see cref="INavigatorStream"/> instances for navigating
     /// serialized resources, independent of the underlying resource serialization format.
@@ -70,6 +75,9 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Supports FHIR resource files with ".xml" and ".json" extensions.</remarks>
         public static INavigatorStream Create(string path)
             => _factory.Create(path);
+
+        /// <summary><see cref="NavigatorStreamFactory"/> delegate for the <see cref="Create(string)"/> method.</summary>
+        public static readonly NavigatorStreamFactory FactoryDelegate = new NavigatorStreamFactory(Create);
 
         /// <summary>
         /// Creates a new <see cref="INavigatorStream"/> instance to access the contents of a

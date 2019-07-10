@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "member.empty() or (actual = true)",
             Key = "grp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

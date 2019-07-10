@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "age.exists() or estimatedAge.empty()",
             Key = "fhs-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "age.empty() or born.empty()",
             Key = "fhs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

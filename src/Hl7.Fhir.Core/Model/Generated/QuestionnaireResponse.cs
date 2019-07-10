@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all((answer.exists() and item.exists()).not())",
             Key = "qrs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><ValueSet xmlns="http://hl7.org/fhir">
+	<id value="example-expansion"/>
+	<meta>
+		<!--    many expansions are not shareable, but this one is    -->
+		<profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset"/>
+	</meta>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			<table class="grid">
+				<tr>
+					<td>http://loinc.org</td>
+					<td>14647-2</td>
+					<td>Cholesterol [Moles/volume] in Serum or Plasma</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<b>Additional Cholesterol codes</b>
+					</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>2093-3</td>
+					<td>Cholesterol [Mass/volume] in Serum or Plasma</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>48620-9</td>
+					<td>Cholesterol [Mass/volume] in Serum or Plasma ultracentrifugate</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>9342-7</td>
+					<td>Cholesterol [Percentile]</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<b>Cholesterol Ratios</b>
+					</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>2096-6</td>
+					<td>Cholesterol/Triglyceride [Mass Ratio] in Serum or Plasma</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>35200-5</td>
+					<td>Cholesterol/Triglyceride [Mass Ratio] in Serum or Plasma</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>48089-7</td>
+					<td>Cholesterol/Apolipoprotein B [Molar ratio] in Serum or Plasma</td>
+				</tr>
+				<tr>
+					<td>http://loinc.org</td>
+					<td>55838-7</td>
+					<td>Cholesterol/Phospholipid [Molar ratio] in Serum or Plasma</td>
+				</tr>
+			</table>
+		</div>
+	</text>
+	<url value="http://hl7.org/fhir/ValueSet/example-expansion"/>
+	<version value="20150622"/>
+	<name value="LOINC Codes for Cholesterol in Serum/Plasma"/>
+	<status value="draft"/>
+	<experimental value="true"/>
+	<!--    Expansions that are not intended for persistence often do not have 
+   all the metadata. But this one, intended for persistence, does    -->
+	<date value="2015-06-22"/>
+	<publisher value="FHIR Project team"/>
+	<contact>
+		<telecom>
+			<system value="url"/>
+			<value value="http://hl7.org/fhir"/>
+		</telecom>
+	</contact>
+	<description value="This is an example value set that includes all the LOINC codes for serum/plasma cholesterol from v2.36."/>
+	<copyright value="This content from LOINC&#xAE; is copyright &#xA9; 1995 Regenstrief Institute, Inc. and the LOINC Committee, and available at no cost under the license at http://loinc.org/terms-of-use."/>
+	<!--    it's optional whether to include the content logical definition, but 
+	  when an expansion is being persisted, it's better to do so (avoids
+		subsequent mystification as to what the intent was)
+	   -->
+	<compose>
+		<include>
+			<system value="http://loinc.org"/>
+			<filter>
+				<property value="parent"/>
+				<op value="="/>
+				<value value="LP43571-6"/>
+			</filter>
+		</include>
+	</compose>
+	<!--   
+  	ok, and now the expansion 
+      -->
+	<expansion>
+		<!--    a reference to the original content - if there is one. Note that 
+		when you store an expansion, there often won't be one    -->
+		<extension url="http://hl7.org/fhir/StructureDefinition/valueset-expansionSource">
+			<valueUri value="http://hl7.org/fhir/ValueSet/example-extensional"/>
+		</extension>
+		<!--    always assigned to any expansion, this is cacheable id    -->
+		<identifier value="urn:uuid:42316ff8-2714-4680-9980-f37a6d1a71bc"/>
+		<!--    this instance of expansion    -->
+		<timestamp value="2015-06-22T13:56:07Z"/>
+		<!--    it's useful to routinely fill out the total    -->
+		<total value="8"/>
+		<!--    providing an offset - implies that this expansion was requested using paging -    -->
+		<offset value="0"/>
+		<!--    
+		  now, parameters that describe how the expansion was generated.
+			These may help with managing caching, or limit its use 
+			(e.g. this expansion was generated for a text filter)    -->
+		<parameter>
+			<!--    for now, parameter names and values are server specific.
+			   it is likely these will be standardised in a future version.
+				 
+				 This example: underlying LOINC version    -->
+			<name value="version"/>
+			<valueString value="2.50"/>
+		</parameter>
+		<!--    and the actual expansion    -->
+		<!--    
+		  this expansion is made as a hierarchy - a preferred code, followed by two 
+			sets of codes categorized by a label. This is to help a human user 
+			navigate the list (e.g. in a picklist)
+			
+			Note that the hierarchy might not have anything to do with the
+			definitions of the codes (e.g. could be divided into common and less common)
+			
+			Building a hierarchy like this is not explicitly specified in a standard value set,
+			but may be controlled by extensions, the expansion profile, or just performed
+			by the expansion service.
+		   -->
+		<contains>
+			<system value="http://loinc.org"/>
+			<!--    
+				the version can be specified for either the expansion, or
+				each individual codes. Technically, these aren't quite the same 
+				thing, but it would be pretty weird for them to differ using LOINC
+			   -->
+			<version value="2.50"/>
+			<code value="14647-2"/>
+			<display value="Cholesterol [Moles/volume] in Serum or Plasma"/>
+		</contains>
+		<contains>
+			<abstract value="true"/>
+			<display value="Cholesterol codes"/>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="2093-3"/>
+				<display value="Cholesterol [Mass/volume] in Serum or Plasma"/>
+			</contains>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="48620-9"/>
+				<display value="Cholesterol [Mass/volume] in Serum or Plasma ultracentrifugate"/>
+			</contains>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="9342-7"/>
+				<display value="Cholesterol [Percentile]"/>
+			</contains>
+		</contains>
+		<contains>
+			<abstract value="true"/>
+			<display value="Cholesterol Ratios"/>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="2096-6"/>
+				<display value="Cholesterol/Triglyceride [Mass Ratio] in Serum or Plasma"/>
+			</contains>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="35200-5"/>
+				<display value="Cholesterol/Triglyceride [Mass Ratio] in Serum or Plasma"/>
+			</contains>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="48089-7"/>
+				<display value="Cholesterol/Apolipoprotein B [Molar ratio] in Serum or Plasma"/>
+			</contains>
+			<contains>
+				<system value="http://loinc.org"/>
+				<version value="2.50"/>
+				<code value="55838-7"/>
+				<display value="Cholesterol/Phospholipid [Molar ratio] in Serum or Plasma"/>
+			</contains>
+		</contains>
+	</expansion>
+</ValueSet>

@@ -20,10 +20,7 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable, IFhirClient
     {
-        // [Obsolete]
         public abstract event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-
-        // [Obsolete]
         public abstract event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         protected IRequester Requester { get; set; }
@@ -382,10 +379,6 @@ namespace Hl7.Fhir.Rest
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
-        private TResource internalUpdate<TResource>(TResource resource, Bundle tx) where TResource : Resource
-        {
-            return internalUpdateAsync(resource, tx).WaitResult();
-        }
         #endregion
 
         #region Delete
@@ -608,7 +601,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
         {
-            string collection = typeof(TResource).GetCollectionName();
+            string collection = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
         /// <summary>
@@ -718,11 +711,6 @@ namespace Hl7.Fhir.Rest
                 history = new TransactionBuilder(Endpoint).ResourceHistory(resourceType, id, summary, pageSize, since);
 
             return executeAsync<Bundle>(history.ToBundle(), HttpStatusCode.OK);
-        }
-        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null,
-            int? pageSize = null, SummaryType summary = SummaryType.False)
-        {
-            return internalHistoryAsync(resourceType, id, since, pageSize, summary).WaitResult();
         }
 
         #endregion
@@ -868,13 +856,7 @@ namespace Hl7.Fhir.Rest
             else
                 tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
-        }
-
-        private Resource internalOperation(string operationName, string type = null, string id = null,
-            string vid = null, Parameters parameters = null, bool useGet = false)
-        {
-            return internalOperationAsync(operationName, type, id, vid, parameters, useGet).WaitResult();
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted });
         }
 
         #endregion
@@ -943,47 +925,12 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-
-        // TODO: Depending on type of response, update identity & always update lastupdated?
-
-        private void updateIdentity(Resource resource, ResourceIdentity identity)
-        {
-            if (resource.Meta == null) resource.Meta = new Meta();
-
-            if (resource.Id == null)
-            {
-                resource.Id = identity.Id;
-                resource.VersionId = identity.VersionId;
-            }
-        }
-
-
-        private void setResourceBase(Resource resource, string baseUri)
-        {
-            resource.ResourceBase = new Uri(baseUri);
-
-            if (resource is Bundle)
-            {
-                var bundle = resource as Bundle;
-                foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
-                    entry.Resource.ResourceBase = new Uri(baseUri, UriKind.RelativeOrAbsolute);
-            }
-        }
-
         // Original
-        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
-        {
-            return executeAsync<TResource>(tx, new[] { expect }).WaitResult();
-        }
         public Task<TResource> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
         {
             return executeAsync<TResource>(tx, new[] { expect });
         }
         // Original
-        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            return executeAsync<TResource>(tx, expect).WaitResult();
-        }
 
         private async Task<TResource> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
         {
@@ -1049,7 +996,8 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            CapabilityStatement conf = null;
+            CapabilityStatement conf;
+
             try
             {
                 conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version

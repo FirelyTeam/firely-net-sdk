@@ -28,13 +28,13 @@
 
 */
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
 using System.Diagnostics;
-using Hl7.Fhir.Utility;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
@@ -236,7 +236,8 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR Reference type.</summary>
         public static bool IsReference(Type type)
         {
-            return IsReference(type.Name);
+            return type.CanBeTreatedAsType(typeof(ResourceReference));
+            //return IsReference(type.Name);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR Reference type.</summary>
@@ -251,7 +252,8 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static bool IsConformanceResource(Type type)
         {
-            return IsConformanceResource(type.Name);
+            return type.CanBeTreatedAsType(typeof(IConformanceResource));
+            //return IsConformanceResource(type.Name);
         }
 
         /// <summary>
@@ -281,12 +283,14 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.SearchParameter,
             FHIRAllTypes.CompartmentDefinition,
             FHIRAllTypes.ImplementationGuide,
+            FHIRAllTypes.GraphDefinition,
             FHIRAllTypes.CodeSystem,
             FHIRAllTypes.ValueSet,
             FHIRAllTypes.ConceptMap,
             FHIRAllTypes.NamingSystem,
             FHIRAllTypes.TestScript,
-            FHIRAllTypes.TestReport
+            //FHIRAllTypes.TestReport,
+            FHIRAllTypes.TerminologyCapabilities
         };
 
         /// <summary>
@@ -312,12 +316,14 @@ namespace Hl7.Fhir.Model
             ResourceType.SearchParameter,
             ResourceType.CompartmentDefinition,
             ResourceType.ImplementationGuide,
+            ResourceType.GraphDefinition,
             ResourceType.CodeSystem,
             ResourceType.ValueSet,
             ResourceType.ConceptMap,
             ResourceType.NamingSystem,
             ResourceType.TestScript,
-            ResourceType.TestReport
+            //ResourceType.TestReport,
+            ResourceType.TerminologyCapabilities
         };
 
         /// <summary>
@@ -335,9 +341,10 @@ namespace Hl7.Fhir.Model
 
         /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
-            // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
 
-        
+        /// <summary>Determines if the specified value represents the type of a core Resource, Datatype or primitive.</summary>
+        public static bool IsCoreModelType(Type type) => FhirCsTypeToString.ContainsKey(type);
+
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
         /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
@@ -368,6 +375,15 @@ namespace Hl7.Fhir.Model
                 type == FHIRAllTypes.BackboneElement;
         }
 
+        public static bool IsCoreSuperType(Type type)
+        {
+            return
+                type == typeof(Resource) ||
+                type == typeof(DomainResource) ||
+                type == typeof(Element) ||
+                type == typeof(BackboneElement);
+        }
+
         public static bool IsCoreSuperType(string type)
         {
             var fat = FhirTypeNameToFhirType(type);
@@ -379,9 +395,33 @@ namespace Hl7.Fhir.Model
 
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
-            return type == FHIRAllTypes.SimpleQuantity;
+            return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
         }
-        
+
+        public static bool IsProfiledQuantity(Type type)
+        {
+            return type == typeof(SimpleQuantity) || type == typeof(MoneyQuantity);
+        }
+
+
+        public static bool IsBindable(string type)
+        {
+            switch (type)
+            {
+                // This is the fixed list, for all FHIR versions
+                case "code":
+                case "Coding":
+                case "CodeableConcept":
+                case "Quantity":
+                case "string":
+                case "uri":
+                case "Extension":       // for backwards compat with DSTU2
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -400,9 +440,20 @@ namespace Hl7.Fhir.Model
             return IsInstanceTypeFor(superType.Value, subType.Value);
         }
 
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
+        {
+            var superType = GetFhirTypeNameForType(superclass);
+            var subType = GetFhirTypeNameForType(subclass);
+
+            if (subType == null || superType == null) return false;
+
+            return IsInstanceTypeFor(superType, subType);
+        }
+
         private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
                             FHIRAllTypes.Count, FHIRAllTypes.Money };
         private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
+        private static readonly FHIRAllTypes[] URI_SUBCLASSES = new[] { FHIRAllTypes.Url, FHIRAllTypes.Canonical, FHIRAllTypes.Oid, FHIRAllTypes.Uuid };
         private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
@@ -426,6 +477,8 @@ namespace Hl7.Fhir.Model
                     return QUANTITY_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.String)
                     return STRING_SUBCLASSES.Contains(subclass);
+                else if (superclass == FHIRAllTypes.Uri)
+                    return URI_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.Integer)
                     return INTEGER_SUBCLASSES.Contains(subclass);
                 else
@@ -438,15 +491,20 @@ namespace Hl7.Fhir.Model
             return new Canonical("http://hl7.org/fhir/StructureDefinition/" + typename);
         }
 
+        public static Canonical CanonicalUriForFhirCoreType(Type type)
+        {
+            return CanonicalUriForFhirCoreType(GetFhirTypeNameForType(type));
+        }
+
         public static Canonical CanonicalUriForFhirCoreType(FHIRAllTypes type)
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
-
     }
 
     public static class ModelInfoExtensions
     {
+        [Obsolete("Use ModelInfo.GetFhirTypeNameForType() instead.")]       // Obsoleted on 20181213 by EK
         public static string GetCollectionName(this Type type)
         {
             if (type.CanBeTreatedAsType(typeof(Resource)))

@@ -12,10 +12,10 @@ using System.Diagnostics;
 using Hl7.Fhir.Model;
 using System.IO.Compression;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Specification.Source;
 using System.Collections.Generic;
 using System;
+using Hl7.Fhir.Tests;
 
 namespace Hl7.Fhir.Serialization.Tests
 {

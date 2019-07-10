@@ -1547,7 +1547,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent InsurancePlan_IPN_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(identifier.count() + name.count()) > 0",
             Key = "ipn-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

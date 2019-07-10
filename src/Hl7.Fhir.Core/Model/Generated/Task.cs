@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Task_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "lastModified.exists().not() or authoredOn.exists().not() or lastModified >= authoredOn",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

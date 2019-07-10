@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Goal_GOL_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "target.all((detail.exists() and measure.exists()) or detail.exists().not())",
             Key = "gol-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

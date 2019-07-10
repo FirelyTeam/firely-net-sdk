@@ -1212,7 +1212,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "patient.exists() or scope.coding.where(system='something' and code='adr').exists().not()",
             Key = "ppc-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "patient.exists() or scope.coding.where(system='something' and code='treatment').exists().not()",
             Key = "ppc-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "patient.exists() or scope.coding.where(system='something' and code='patient-privacy').exists().not()",
             Key = "ppc-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "patient.exists() or scope.coding.where(system='something' and code='research').exists().not()",
             Key = "ppc-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1248,7 +1248,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "policy.exists() or policyRule.exists()",
             Key = "ppc-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

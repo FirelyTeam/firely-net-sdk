@@ -17,63 +17,154 @@ using System.Linq;
 using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Tests;
 
 namespace Hl7.FhirPath.Tests
 {
     public class ElementNodeTests
     {
-        SourceNode patient;
+        readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
-        public ITypedElement getXmlNode(string xml) => 
-            FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
-
-        public ElementNodeTests()
+        private ElementNode createPatient()
         {
-            var annotatedNode = SourceNode.Valued("id", "myId1");
-            (annotatedNode as IAnnotatable).AddAnnotation("a string annotation");
+            var patientRoot = ElementNode.Root(provider, "Patient");
 
-            patient = SourceNode.Node("Patient", 
-                SourceNode.Resource("contained", "Observation", SourceNode.Valued("valueBoolean", "true")),
-                SourceNode.Valued("active", "true",
-                   annotatedNode,
-                   SourceNode.Valued("id", "myId2"),
-                   SourceNode.Node("extension",
-                       SourceNode.Valued("value", "4")),
-                   SourceNode.Node("extension",
-                       SourceNode.Valued("value", "world!"))));
+            var containedObs = ElementNode.Root(provider, "Observation", "contained");
+            containedObs.Add(provider, "value", true, "boolean");
+            patientRoot.Add(provider, containedObs);
+
+            var activeNode = patientRoot.Add(provider, "active", true);
+            activeNode.Add(provider, "id", "myId1");
+               
+            activeNode.AddAnnotation("a string annotation");
+            var ext1 = activeNode.Add(provider, "extension");
+            ext1.Add(provider, "value", 4, "integer");
+            ext1.Add(provider, "url", "urn:1");
+            var ext2 = activeNode.Add(provider, "extension");
+            ext2.Add(provider, "value", "world!", "string");
+            ext2.Add(provider, "url", "urn:2");
+
+            var identifier0 = patientRoot.Add(provider, "identifier");
+            identifier0.Add(provider, "system", "http://nu.nl");
+            identifier0.Add(provider, "value", "1234567");
+
+            var identifier1 = patientRoot.Add(provider, "identifier");
+            identifier1.Add(provider, "system", "http://toen.nl");
+            identifier1.Add(provider, "value", "7654321");
+
+            return patientRoot;
+        }
+
+        [Fact]
+        public void TestAutoDeriveTypeForPolymorphicElement()
+        {
+            // Explicit types will be passed through on polymorphic elements
+            var obs = ElementNode.Root(provider, "Observation");
+            var value = obs.Add(provider, "value", true, "boolean");
+            Assert.Equal("boolean", value.InstanceType);
+
+            // But if you leave the type out, Add() will try to determine the type
+            obs = ElementNode.Root(provider, "Observation");
+            value = obs.Add(provider, "value", true);  // without an explicit type
+            Assert.Equal("boolean", value.InstanceType);
+
+            // complex types are untouched
+            var id = obs.Add(provider, "identifier");
+            Assert.Equal("Identifier", id.InstanceType);
+
+            // so are unvalued primitive non-polymorphic elements
+            var act = obs.Add(provider, "status");
+            Assert.Equal("code", act.InstanceType);
+
+            // and valued non-polymorhpic primitives
+            act = obs.Add(provider, "status", "registered");
+            Assert.Equal("code", act.InstanceType);
+
+            // actual type from definition will always win
+            var data = ElementNode.Root(provider, "SampledData");
+            var dims = data.Add(provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
+            Assert.Equal("positiveInt", dims.InstanceType);
         }
 
         [Fact]
         public void TestConstruction()
         {
+            var patient = createPatient();
+
             var data = patient[0];
             Assert.Equal("contained", data.Name);
-            Assert.Null(data.Text);
-            Assert.Equal("Observation", data.ResourceType);
-            Assert.Single(data.Children());
+            Assert.Null(data.Value);
+            Assert.Equal("Observation", data.InstanceType);
 
             data = patient[1];
             Assert.Equal("active", data.Name);
-            Assert.Equal("true", data.Text);
-            Assert.Equal(4, data.Children().Count());
+            Assert.Equal(true, data.Value);
+            Assert.Equal("boolean", data.InstanceType);
         }
 
+        [Fact]
+        public void SuccessfullyCreated()
+        {
+            var patient = createPatient();
+
+            var pat = new Patient();
+            var containedObs = new Observation { Value = new FhirBoolean(true) };
+            pat.Contained.Add(containedObs);
+            pat.ActiveElement = new FhirBoolean(true) { ElementId = "myId1" };
+            pat.ActiveElement.AddAnnotation("a string annotation");
+            pat.ActiveElement.SetIntegerExtension("urn:1", 4);
+            pat.ActiveElement.SetStringExtension("urn:2", "world!");
+            pat.Identifier.Add(new Identifier("http://nu.nl", "1234567"));
+            pat.Identifier.Add(new Identifier("http://toen.nl", "7654321"));
+
+            XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
+        }
+
+        [Fact]
+        public void ClonesOk()
+        {
+            var patient = createPatient();
+            var patientClone = patient.ShallowCopy();
+            var result = patientClone.IsEqualTo(patient);
+            Assert.True(result.Success);
+        }
 
         [Fact]
         public void KnowsPath()
         {
+            var patient = createPatient();
+
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.contained[0].valueBoolean[0]", patient[0][0].Location);
+            Assert.Equal("Patient.contained[0].value[0]", patient[0][0].Location);
             Assert.Equal("Patient.active[0]", patient[1].Location);
             Assert.Equal("Patient.active[0].id[0]", patient[1][0].Location);
-            Assert.Equal("Patient.active[0].id[1]", patient[1][1].Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][2][0].Location);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][3][0].Location);
+            Assert.Equal("Patient.identifier[0]", patient[2].Location);
+            Assert.Equal("Patient.identifier[1]", patient[3].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[1][1][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[1][2][0].Location);
+        }
+
+        [Fact]
+        public void KnowsShortPath()
+        {
+            var patient = createPatient();
+
+            Assert.Equal("Patient", patient.ShortPath);
+            Assert.Equal("Patient.contained[0].value", patient[0][0].ShortPath);
+            Assert.Equal("Patient.active", patient[1].ShortPath);
+            Assert.Equal("Patient.active.id", patient[1][0].ShortPath);
+            Assert.Equal("Patient.identifier[0]", patient[2].ShortPath);
+            Assert.Equal("Patient.identifier[1]", patient[3].ShortPath);
+            Assert.Equal("Patient.active.extension[0].value", patient[1][1][0].ShortPath);
+            Assert.Equal("Patient.active.extension[1].value", patient[1][2][0].ShortPath);
         }
 
         [Fact]
         public void AccessViaIndexers()
         {
+            var patient = createPatient();
+
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
             Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
@@ -87,6 +178,8 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void KnowsChildren()
         {
+            var patient = createPatient();
+
             Assert.False(patient["active"][0]["id"].Children().Any());
             Assert.False(patient["active"]["id"].Children().Any());
         }
@@ -94,89 +187,93 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void CanQueryNodeAxis()
         {
-            Assert.Equal(6, patient["active"].Descendants().Count());
-            Assert.Equal(7, patient["active"].DescendantsAndSelf().Count());
+            var patient = createPatient();
+
+            Assert.Equal(7, patient["active"].Descendants().Count());
+            Assert.Equal(8, patient["active"].DescendantsAndSelf().Count());
             Assert.Equal(2, patient["active"]["extension"].Count());
         }
 
-        [Fact]
-        public void CanNavigateOverNode()
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var nav = patient.ToElementNavigator();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            Assert.Equal("Patient", nav.Name);
-            Assert.True(nav.MoveToFirstChild());
-            Assert.True(nav.MoveToNext());
-            Assert.Equal("active", nav.Name);
-           // Assert.Equal("boolean", nav.Type);
-            Assert.False(nav.MoveToNext());
-
-            Assert.Equal("true", nav.Value);
-            Assert.True(nav.MoveToFirstChild("id"));
-            Assert.Equal("id", nav.Name);
-            Assert.False(nav.MoveToFirstChild());
-            Assert.True(nav.MoveToNext());
-            Assert.Equal("id", nav.Name);
-            Assert.True(nav.MoveToNext("extension"));
-            Assert.Equal("extension", nav.Name);
-            Assert.True(nav.MoveToFirstChild());
-            Assert.Equal("value", nav.Name);
-        }
 
         [Fact]
         public void KeepsAnnotations()
         {
-            ISourceNode firstIdNode = patient[1][0];
-            Assert.Equal("a string annotation", firstIdNode.Annotation<string>());
-            Assert.Equal("a string annotation", patient["active"]["id"].First().Annotation<string>());
-        }
+            var patient = createPatient();
 
-        // Test clone()
+            ITypedElement identifier = patient["active"][0];
+            Assert.Equal("a string annotation", identifier.Annotation<string>());
+        }
 
         [Fact]
-        public void ReadsFromNav()
+        public void CanBuildFromITypedElement()
         {
-            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var nav = getXmlNode(tpXml).ToSourceNode();
-            var nodes = SourceNode.FromNode(nav);
-            Assert.True(nav.IsEqualTo(nodes).Success);
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var patientElem = (new FhirXmlParser()).Parse(tpXml).ToTypedElement();
+            var nodes = ElementNode.FromElement(patientElem);
+            Assert.True(patientElem.IsEqualTo(nodes).Success);
         }
 
+        [Fact]
+        public void CheckRemove()
+        {
+            var patient = createPatient();
+            Assert.Equal(2, patient.Children("identifier").Count());
 
-        //[Fact]
-        //public void CanUseBackboneTypeForEntry()
-        //{
-        //    var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
-        //    var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
-        //    var bundle = FhirJsonNode.Parse(bundleJson);
-        //    var typedBundle = bundle.ToTypedElement(_sdsProvider, "Bundle");
+            patient.Remove(patient.Children("identifier").First() as ElementNode);
+            Assert.Single(patient.Children("identifier"));
 
-        //    //Type of entry is BackboneElement, but you can't set that, see below.
-        //    Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
+            patient.Remove(patient.Children("identifier").First() as ElementNode);
+            Assert.Empty(patient.Children("identifier"));
+
+            var anotherPatient = createPatient();
+
+            Assert.False(patient.Remove(anotherPatient["identifier"].First()));
+        }
+
+        [Fact]
+        public void ReplaceChildInElement()
+        {
+            var patient = createPatient();
+
+            var newActive = ElementNode.Root(provider, "boolean");
+            newActive.Value = false;
+            patient.Replace(provider, patient["active"].Single(), newActive);
+            Assert.Single(patient["active"]);
+            Assert.Equal(false, patient["active"].Single().Value);
+
+            var newIdentifier = ElementNode.Root(provider, "Identifier");
+            newIdentifier.Add(provider, "system", "http://nos.nl");
+            newIdentifier.Add(provider, "value", "1234");
+            patient["identifier"].Last().ReplaceWith(provider, newIdentifier);
+            Assert.Equal(2, patient["identifier"].Count());
+            Assert.Equal(newIdentifier, patient["identifier"].Last());
+        }
+
+        [Fact]
+        public void FromElementClonesCorrectly()
+        {
+            var patient = createPatient();
+
+            var newElement = ElementNode.FromElement(patient, recursive: true, annotationsToCopy: new[] { typeof(string) });
+            Assert.Equal(4, newElement.Children().Count());
+
+            var activeChild = newElement["active"].Single();
+            Assert.True((bool)activeChild.Value);
+            Assert.True(activeChild.Annotations<string>().Single() == "a string annotation");
+
+            var identifierSystemChild = newElement["identifier"][0]["system"].Single();
             
-        //    var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
-
-        //    //What DOES work:
-        //    var typedEntry = entry.ToTypedElement(_sdsProvider, "Element"); //But you can't use BackboneElement here, see below.
-        //    Assert.Equal("Element", typedEntry.InstanceType);
-
-        //    //But this leads to a System.ArgumentException: 
-        //    //Type BackboneElement is not a mappable Fhir datatype or resource
-        //    //Parameter name: type
-        //    typedEntry = entry.ToTypedElement(_sdsProvider, "BackboneElement");
-        //    Assert.Equal("BackboneElement", typedEntry.InstanceType);
-        //    // Expected to be able to use BackboneElement as type for the entry SourceNode;
-        //}
+            // check whether we really have a clone by changing the copy
+            identifierSystemChild.Value = "http://dan.nl";
+            Assert.Equal("http://nu.nl",patient["identifier"][0]["system"].Single().Value);
+        }
 
         [Fact]
         public void CannotUseAbstractType()
         {
-            var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
             var bundle = FhirJsonNode.Parse(bundleJson);
-            var typedBundle = bundle.ToTypedElement(_sdsProvider, "Bundle");
+            var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
             //Type of entry is BackboneElement, but you can't set that, see below.
             Assert.Equal("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
@@ -186,12 +283,13 @@ namespace Hl7.FhirPath.Tests
             try
             {
                 var typedEntry =
-                    entry.ToTypedElement(_sdsProvider, "Element");
+                    entry.ToTypedElement(provider, "Element");
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
             }
             catch (ArgumentException)
             {
             }
         }
+
     }
 }

@@ -24,11 +24,11 @@ namespace Hl7.Fhir.Serialization
 
         public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
         
-        private FhirXmlParsingSettings buildNodeSettings(ParserSettings settings) =>
+        private static FhirXmlParsingSettings buildNodeSettings(ParserSettings settings) =>
                 new FhirXmlParsingSettings
                 {
-                    DisallowSchemaLocation = Settings.DisallowXsiAttributesOnRoot,
-                    PermissiveParsing = Settings.PermissiveParsing
+                    DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
+                    PermissiveParsing = settings.PermissiveParsing
                 };
 
         public Base Parse(string xml, Type dataType = null)

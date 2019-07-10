@@ -1659,7 +1659,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Measure_MEA_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.stratifier.all((code | description | criteria).exists() xor component.exists())",
             Key = "mea-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1668,7 +1668,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Measure_MEA_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "mea-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

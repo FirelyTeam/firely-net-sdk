@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent List_LST_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "mode = 'working' or entry.date.empty()",
             Key = "lst-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent List_LST_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "mode = 'changes' or entry.deleted.empty()",
             Key = "lst-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent List_LST_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "emptyReason.empty() or entry.empty()",
             Key = "lst-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Linkage_LNK_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.count()>1",
             Key = "lnk-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

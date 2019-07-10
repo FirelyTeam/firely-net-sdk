@@ -24,9 +24,10 @@ namespace Hl7.Fhir.Validation
         {
             // TODO: Should check whether the discriminator is a valid child path of root. Wait until we have the
             // definition walker, which would walk across references if necessary.
+            // TODO: Brian I think Pattern is actually supported too
             foreach (var d in discriminator)
             {
-                if (d.Type != ElementDefinition.DiscriminatorType.Value)
+                if (d.Type != ElementDefinition.DiscriminatorType.Value && d.Type != ElementDefinition.DiscriminatorType.Pattern)
                     throw Error.NotImplemented($"Slicing with a discriminator of type '{d.Type}' is not yet supported by this validator.");
             }
 

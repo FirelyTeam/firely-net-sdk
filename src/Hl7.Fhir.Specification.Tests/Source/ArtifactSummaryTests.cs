@@ -1,4 +1,4 @@
-﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -48,6 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
             harvesters[ArtifactSummaryGenerator.ConformanceHarvesters.Length] = HarvestPatientSummary;
 
             var summary = assertSummary(path, harvesters);
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
             var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
@@ -75,6 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             var summary = assertSummary(path);
 
             // Common properties
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
             Assert.IsTrue(summary.ResourceType == ResourceType.ValueSet);
 
@@ -93,6 +95,7 @@ namespace Hl7.Fhir.Specification.Tests
             const string url = @"http://hl7.org/fhir/StructureDefinition/patient-religion";
             var summary = assertSummary(path);
             // Common properties
+            Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
             Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
             // Conformance resource properties
@@ -120,7 +123,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesTypesJson()
         {
-            string path = Path.Combine("TestData", "profiles-types.json");
+            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-types.json"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
@@ -132,6 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+                Assert.IsTrue(summary.IsBundleEntry);
 
                 var fi = new FileInfo(path);
                 Assert.AreEqual(fi.Length, summary.FileSize);
@@ -196,7 +200,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            string path = Path.Combine("TestData", "profiles-resources.xml");
+            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-resources.xml"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
@@ -208,6 +212,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+                Assert.IsTrue(summary.IsBundleEntry);
 
                 var fi = new FileInfo(path);
                 Assert.AreEqual(fi.Length, summary.FileSize);
@@ -279,6 +284,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
+            path = Path.GetFullPath(path);
             var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
@@ -377,6 +383,95 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
 
+        }
+
+        [TestMethod]
+        public void TestListSummariesWithExcludeFilter()
+        {
+            string path = "TestData";
+
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
+            {
+                IncludeSubDirectories = true,
+                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/", "*.zip" }
+            });
+
+            var summaries = dirSource.ListSummaries().ToList();
+            Assert.IsNotNull(summaries);
+
+            // Verify invalid files in folder 'grahame-validation-examples' are excluded
+            var errors = dirSource.ListSummaryErrors().ToList();
+            Assert.AreEqual(0, errors.Count);
+        }
+        
+        // [WMR 20190305] Belongs to pull request #890
+        [TestMethod, Ignore]
+        public void TestSummarizeAnonymousResources()
+        {
+            // Parse anonymous resources & bundles entries (w/o ResourceId)
+            string path = Path.GetFullPath(@"TestData\summary-test");
+
+            Console.WriteLine("Extracting summaries from path: " + path);
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings()
+            {
+                IncludeSubDirectories = true,
+                Mask = "*.xml|*.json",
+                // Enable PermissiveParsing to include anonymous resources w/o ResourceId
+                // Note: must inject all desired settings into ctor; child classes clone the relevant subsettings
+                // XmlNavigatorStream does not "see" updates to DirectorySource.XmlParseSettings
+                XmlParserSettings = new FhirXmlParsingSettings() { PermissiveParsing = true },
+                JsonParserSettings = new FhirJsonParsingSettings() { PermissiveParsing = true }
+            });
+
+            var summaries = dirSource.ListSummaries().ToList();
+            Debug.Print($"Found {summaries.Count} artifacts:");
+            foreach (var summary in summaries)
+            {
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+            }
+
+            // Expecting *all* artifacts to be recognized, including entries w/o ResourceId
+            var UnknownArtefacts = summaries.Where(s => s.ResourceType is null);
+            Console.WriteLine("Unrecognized artefacts:");
+            foreach (var summary in UnknownArtefacts)
+            {
+                Console.WriteLine(Path.GetFileName(summary.Origin) + (summary.IsFaulted ? " - " + summary.Error?.Message : ""));
+            }
+            Assert.IsTrue(!UnknownArtefacts.Any());
+
+            // Expecting to find some artifacts w/o ResourceId
+            var AnonymousArtefacts = summaries.Where(s => s.ResourceUri is null);
+            Console.WriteLine("Anonymous artefacts:");
+            foreach (var summary in AnonymousArtefacts)
+            {
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+            }
+            Assert.AreEqual(6, AnonymousArtefacts.Count());
+        }
+
+        [TestMethod]
+        public void TestErrorSummaries()
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\grahame-validation-examples");
+            var dirSource = new DirectorySource(path, false);
+            var summaries = dirSource.ListSummaries().ToList();
+            Assert.IsNotNull(summaries);
+
+            // Expecting 4 error summaries:
+            //   list-bad-syntax.xml
+            //   list-xhtml-xxe1.xml
+            //   list-xhtml-xxe2.xml
+            //   manifest.json
+            var errors = dirSource.ListSummaryErrors().ToList();
+            Assert.AreNotEqual(0, errors.Count);
+            foreach (var summary in errors)
+            {
+                Assert.IsNotNull(summary.Error);
+                // Verify that the error summary includes general file properties
+                Assert.IsNotNull(summary.Origin);
+                Assert.IsNotNull(summary.FileSize);
+                Assert.IsNotNull(summary.LastModified);
+            }
         }
 
     }

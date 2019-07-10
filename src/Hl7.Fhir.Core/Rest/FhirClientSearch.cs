@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Rest
         public Task<Bundle> SearchAsync(SearchParams q, string resourceType = null)
         {
             var tx = new TransactionBuilder(Endpoint).Search(q,resourceType).ToBundle();
-            return executeAsync<Bundle>(tx, HttpStatusCode.OK);
+            return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted });
         }
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdAsync(typeof(TResource).GetCollectionName(), id, includes, pageSize, revIncludes);
+            return SearchByIdAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdUsingPostAsync(typeof(TResource).GetCollectionName(), id, includes, pageSize, revIncludes);
+            return SearchByIdUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
         /// <summary>

@@ -2147,7 +2147,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "tcp-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2156,7 +2156,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind != 'instance') or implementation.exists()",
             Key = "tcp-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2165,7 +2165,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(description.count() + software.count() + implementation.count()) > 0",
             Key = "tcp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2174,7 +2174,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind!='requirements') or (implementation.exists().not() and software.exists().not())",
             Key = "tcp-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2183,7 +2183,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(kind != 'capability') or (implementation.exists().not() and software.exists())",
             Key = "tcp-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -2192,7 +2192,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent TerminologyCapabilities_TCP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "codeSystem.all(version.count() > 1 implies version.all(code.exists()))",
             Key = "tcp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

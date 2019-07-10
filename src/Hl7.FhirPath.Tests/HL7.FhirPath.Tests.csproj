@@ -12,8 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
 
@@ -25,20 +23,7 @@
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestData\**\*.xml;TestData\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Remove="TestData\fhirpath\extension-definitions.xml" />
-    <Content Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />  
   </ItemGroup>
 
   <ItemGroup>

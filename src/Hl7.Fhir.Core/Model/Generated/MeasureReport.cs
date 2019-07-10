@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent MeasureReport_MRP_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "group.stratifier.stratum.all(value.exists() xor component.exists())",
             Key = "mrp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent MeasureReport_MRP_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "(type != 'data-collection') or group.exists().not()",
             Key = "mrp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

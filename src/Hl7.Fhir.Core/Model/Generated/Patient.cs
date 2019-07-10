@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "contact.all(name.exists() or telecom.exists() or address.exists() or organization.exists())",
             Key = "pat-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

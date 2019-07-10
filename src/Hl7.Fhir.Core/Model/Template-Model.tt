@@ -575,8 +575,17 @@ if(!abstractType) {
                 string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
                 string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
                 string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
+
+				string extensionValue = null;
+				string url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice";
+				var extensionNodes = node.SelectNodes("fhir:extension", nsR);
+				foreach (XmlNode en in extensionNodes)
+					if (en.Attributes["url"].Value == url)
+						extensionValue = en.SelectSingleNode("fhir:valueBoolean/@value", nsR).Value;
+
 #>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
-        {
+        {<# if(!string.IsNullOrEmpty(extensionValue)){ #> 
+			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(<#= extensionValue #>), Url = "<#= url #>"} }, <# } #> 
             Expression = "<#= expression.Replace(@"\", @"\\").Replace("\"", "\\\"") #>",
             Key = "<#= key #>",
             Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,

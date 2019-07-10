@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><Questionnaire xmlns="http://hl7.org/fhir">
+  <id value="3141"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <pre>
+            1.Comorbidity?
+              1.1 Cardial Comorbidity
+                1.1.1 Angina?
+                1.1.2 MI?
+              1.2 Vascular Comorbidity?
+              ...
+            Histopathology
+              Abdominal
+                pT category?
+              ...
+          </pre>
+    </div>
+  </text>
+  <url value="http://hl7.org/fhir/Questionnaire/3141"/>
+  <title value="Cancer Quality Forum Questionnaire 2012"/>
+  <status value="draft"/>
+  <subjectType value="Patient"/>
+  <date value="2012-01"/>
+  <item>
+    <linkId value="1"/>
+    <code>
+      <system value="http://example.org/system/code/sections"/>
+      <code value="COMORBIDITY"/>
+    </code>
+    <type value="group"/>
+    <item>
+      <linkId value="1.1"/>
+      <code>
+        <system value="http://example.org/system/code/questions"/>
+        <code value="COMORB"/>
+      </code>
+      <prefix value="1"/>
+      <type value="choice"/>
+      <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+      <item>
+        <linkId value="1.1.1"/>
+        <code>
+          <system value="http://example.org/system/code/sections"/>
+          <code value="CARDIAL"/>
+        </code>
+        <type value="group"/>
+        <enableWhen>
+          <question value="1.1"/>
+          <operator value="="/>
+          <answerCoding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0136"/>
+            <code value="Y"/>
+          </answerCoding>
+        </enableWhen>
+        <item>
+          <linkId value="1.1.1.1"/>
+          <code>
+            <system value="http://example.org/system/code/questions"/>
+            <code value="COMORBCAR"/>
+          </code>
+          <prefix value="1.1"/>
+          <type value="choice"/>
+          <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          <item>
+            <linkId value="1.1.1.1.1"/>
+            <code>
+              <system value="http://example.org/system/code/questions"/>
+              <code value="COMCAR00"/>
+              <display value="Angina Pectoris"/>
+            </code>
+            <code>
+              <system value="http://snomed.info/sct"/>
+              <code value="194828000"/>
+              <display value="Angina (disorder)"/>
+            </code>
+            <prefix value="1.1.1"/>
+            <type value="choice"/>
+            <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          </item>
+          <item>
+            <linkId value="1.1.1.1.2"/>
+            <code>
+              <system value="http://snomed.info/sct"/>
+              <code value="22298006"/>
+              <display value="Myocardial infarction (disorder)"/>
+            </code>
+            <prefix value="1.1.2"/>
+            <type value="choice"/>
+            <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+          </item>
+        </item>
+        <item>
+          <linkId value="1.1.1.2"/>
+          <code>
+            <system value="http://example.org/system/code/questions"/>
+            <code value="COMORBVAS"/>
+          </code>
+          <prefix value="1.2"/>
+          <type value="choice"/>
+          <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
+        </item>
+      </item>
+    </item>
+  </item>
+  <item>
+    <linkId value="2"/>
+    <code>
+      <system value="http://example.org/system/code/sections"/>
+      <code value="HISTOPATHOLOGY"/>
+    </code>
+    <type value="group"/>
+    <item>
+      <linkId value="2.1"/>
+      <code>
+        <system value="http://example.org/system/code/sections"/>
+        <code value="ABDOMINAL"/>
+      </code>
+      <type value="group"/>
+      <item>
+        <linkId value="2.1.2"/>
+        <code>
+          <system value="http://example.org/system/code/questions"/>
+          <code value="STADPT"/>
+          <display value="pT category"/>
+        </code>
+        <type value="choice"/>
+      </item>
+    </item>
+  </item>
+</Questionnaire>

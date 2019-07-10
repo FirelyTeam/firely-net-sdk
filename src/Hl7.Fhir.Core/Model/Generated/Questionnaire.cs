@@ -1709,7 +1709,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "descendants().linkId.isDistinct()",
             Key = "que-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1718,7 +1718,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "que-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1727,7 +1727,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_9 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(type!='display' or readOnly.empty())",
             Key = "que-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1736,7 +1736,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_8 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all((type!='group' and type!='display') or initial.empty())",
             Key = "que-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1745,7 +1745,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_6 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(type!='display' or (required.empty() and repeats.empty()))",
             Key = "que-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1754,7 +1754,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_5 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all((type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty()))",
             Key = "que-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1763,7 +1763,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_4 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(answerOption.empty() or answerValueSet.empty())",
             Key = "que-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1772,7 +1772,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(type!='display' or code.empty())",
             Key = "que-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1781,7 +1781,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_10 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all((type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty())",
             Key = "que-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1790,7 +1790,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all((type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty()))",
             Key = "que-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1799,7 +1799,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_13 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(repeats=true or initial.count() <= 1)",
             Key = "que-13",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1808,7 +1808,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_11 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(answerOption.empty() or initial.empty())",
             Key = "que-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1817,7 +1817,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_12 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.all(enableWhen.count() > 2 implies enableBehavior.exists())",
             Key = "que-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1826,7 +1826,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_7 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "item.enableWhen.all(operator = 'exists' implies (answer is Boolean))",
             Key = "que-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

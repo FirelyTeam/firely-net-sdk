@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent EvidenceVariable_EVV_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "evv-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

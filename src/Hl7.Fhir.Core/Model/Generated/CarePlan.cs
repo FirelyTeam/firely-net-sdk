@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent CarePlan_CPL_3 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "activity.all(detail.empty() or reference.empty())",
             Key = "cpl-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

@@ -1793,7 +1793,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent CodeSystem_CSD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "concept.code.combine($this.descendants().concept.code).isDistinct()",
             Key = "csd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1802,7 +1802,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent CodeSystem_CSD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "csd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

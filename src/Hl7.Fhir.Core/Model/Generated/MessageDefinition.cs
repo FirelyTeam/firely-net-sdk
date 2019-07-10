@@ -1051,7 +1051,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent MessageDefinition_MSD_0 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
             Key = "msd-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent MessageDefinition_MD_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "focus.all(max='*' or (max.toInteger() > 0))",
             Key = "md-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,

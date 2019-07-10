@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
         
 
         public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_1 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
             Key = "ait-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
         };
 
         public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_2 = new ElementDefinition.ConstraintComponent()
-        {
+        { 
             Expression = "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
             Key = "ait-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
