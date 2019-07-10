@@ -7,54 +7,60 @@
  */
 
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
-        public static void AreSame(string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual, List<string> errors)
         {
             var exp = SerializationUtil.JObjectFromJsonText(expected);
             var act = SerializationUtil.JObjectFromJsonText(actual);
 
-            AreSame(exp, act);
+            AreSame(filename, exp, act, errors);
         }
 
-        public static void AreSame(JToken expected, JToken actual)
+        public static void AreSame(string filename, JToken expected, JToken actual, List<string> errors)
         {
             if (expected.Type != actual.Type)
-                throw new AssertFailedException($"Token types are not the same at {actual.Path} (actual: {actual.Type}, expected: {expected.Type})");
+            {
+                errors.Add($"{filename}: Token types are not the same at {actual.Path} (actual: {actual.Type}, expected: {expected.Type})");
+                return;
+            }
 
             switch (expected)
             {
                 case JValue exV:
                     {
                         JValue acV = (JValue)actual;
-                        compareValues(exV.Value, acV.Value, expected.Path);
+                        compareValues(filename, exV.Value, acV.Value, expected.Path, errors);
                         return;
                     }
                 case JProperty exP:
                     {
                         JProperty acP = (JProperty)actual;
                         if (exP.Name != acP.Name)
-                            throw new AssertFailedException($"Expected element '{exP.Name}', actual '{acP.Name}' at '{exP.Path}'");
-                        AreSame(exP.Value, acP.Value);
+                        {
+                            errors.Add($"{filename}: Expected element '{exP.Name}', actual '{acP.Name}' at '{exP.Path}'");
+                            return;
+                        }
+                        AreSame(filename, exP.Value, acP.Value, errors);
                         return;
                     }             
                 case JContainer exC:
                     {
                         JContainer acC = (JContainer)actual;
-                        areSame(exC, acC);
+                        areSame(filename, exC, acC, errors);
                         return;
                     }
             }
         }
 
-        private static void areSame(JContainer expected, JContainer actual)
+        private static void areSame(string filename, JContainer expected, JContainer actual, List<string> errors)
         {
             bool isRelevant(JToken t)
             {
@@ -84,24 +90,30 @@ namespace Hl7.Fhir.Tests
             var actualList = actuals.ToList();
 
             if (expectedList.Count != actualList.Count)
-                throw new AssertFailedException($"Number of elements are not the same in container {expected.Path ?? actual.Path}");
+            {
+                errors.Add($"{filename}: Number of elements are not the same in container {expected.Path ?? actual.Path}");
+                return;
+            }
 
             for (int elemNr = 0; elemNr < expectedList.Count(); elemNr++)
             {
                 var ex = expectedList[elemNr];
                 var ac = actualList[elemNr];
 
-                AreSame(ex, ac);
+                AreSame(filename, ex, ac, errors);
             }
         }
 
-        public static void compareValues(object exp, object act, string path)
+        public static void compareValues(string filename, object exp, object act, string path, List<string> errors)
         {
             if (exp == null && act == null) return;
             else if (exp != null && act != null)
             {
                 if(exp.GetType() != act.GetType())
-                    throw new AssertFailedException($"The types of the values are not the same at '{path}'");
+                {
+                    errors.Add($"{filename}: The types of the values are not the same at '{path}'");
+                    return;
+                }
 
                 object expected = exp;
                 object actual = act;
@@ -135,12 +147,14 @@ namespace Hl7.Fhir.Tests
 
                 if (!Object.Equals(expected,actual))
                 {
-                    throw new AssertFailedException($"Values are not equal at '{path}', expected '{expected}', actual '{actual}'");
+                    errors.Add($"{filename}: Values are not equal at '{path}', expected '{expected}', actual '{actual}'");
+                    return;
                 }
             }
             else
             {
-                throw new AssertFailedException($"One of the values (but not both) are null at '{path}'");
+                errors.Add($"{filename}: One of the values (but not both) are null at '{path}'");
+                return;
             }
         }
     }

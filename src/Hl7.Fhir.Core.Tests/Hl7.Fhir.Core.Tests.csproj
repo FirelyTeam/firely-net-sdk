@@ -35,6 +35,10 @@
     <Compile Remove="OldJsonAssert.cs" />
     <Compile Remove="Rest\NewSearchParamsTests.cs" />
     <None Remove="TestData\fp-test-patient.xml" />
+    <None Remove="TestData\summary\summary-data.json" />
+    <None Remove="TestData\summary\summary-false.json" />
+    <None Remove="TestData\summary\summary-text.json" />
+    <None Remove="TestData\summary\summary-true.json" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
     <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">

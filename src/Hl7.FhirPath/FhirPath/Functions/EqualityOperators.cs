@@ -151,13 +151,6 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-
-
-        private static IEnumerable<ITypedElement> childrenOrEmpty(this ITypedElement focus)
-        {
-            return (focus is ITypedElement ien) ? ien.Children() : FhirValueList.Empty;
-        }
-
         public static bool IsEquivalentTo(this string a, string b)
         {
             if (b == null) return false;

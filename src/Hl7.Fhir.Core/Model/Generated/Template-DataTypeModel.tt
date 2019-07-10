@@ -32,7 +32,6 @@
     docTypes.Load(System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\..\\Source\\profiles-types.xml");
     System.Xml.XmlNamespaceManager nsT = new System.Xml.XmlNamespaceManager(docTypes.NameTable);
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
-
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
 	// string fhirVersion = "1.0.2";
 #>

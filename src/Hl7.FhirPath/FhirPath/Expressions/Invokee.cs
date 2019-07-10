@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
                 if (typeof(A) != typeof(EvaluationContext))
                 {
                     var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !focus.Any()) return FhirValueList.Empty;
+                    if (propNull && !focus.Any()) return ElementNode.EmptyList;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus)));
                 }
@@ -76,13 +76,13 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return FhirValueList.Empty;
+                if (propNull && !focus.Any()) return ElementNode.EmptyList;
 
                 if (typeof(B) != typeof(EvaluationContext))
                 {
                     var newCtx = ctx.Nest(focus);
                     var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argA.Any()) return FhirValueList.Empty;
+                    if (propNull && !argA.Any()) return ElementNode.EmptyList;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
                 }
@@ -99,15 +99,15 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return FhirValueList.Empty;
+                if (propNull && !focus.Any()) return ElementNode.EmptyList;
                 var newCtx = ctx.Nest(focus);
                 var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return FhirValueList.Empty;
+                if (propNull && !argA.Any()) return ElementNode.EmptyList;
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
                     var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argB.Any()) return FhirValueList.Empty;
+                    if (propNull && !argB.Any()) return ElementNode.EmptyList;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
                         Typecasts.CastTo<C>(argB)));
@@ -126,18 +126,18 @@ namespace Hl7.FhirPath.Expressions
             return (ctx, args) =>
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return FhirValueList.Empty;
+                if (propNull && !focus.Any()) return ElementNode.EmptyList;
 
                 var newCtx = ctx.Nest(focus);
                 var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return FhirValueList.Empty;
+                if (propNull && !argA.Any()) return ElementNode.EmptyList;
                 var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argB.Any()) return FhirValueList.Empty;
+                if (propNull && !argB.Any()) return ElementNode.EmptyList;
 
                 if (typeof(D) != typeof(EvaluationContext))
                 {
                     var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
-                    if (propNull && !argC.Any()) return FhirValueList.Empty;
+                    if (propNull && !argC.Any()) return ElementNode.EmptyList;
 
                     return Typecasts.CastTo<IEnumerable<ITypedElement>>(func(Typecasts.CastTo<A>(focus),
                                  Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));

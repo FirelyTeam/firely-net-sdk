@@ -23,26 +23,17 @@ namespace Hl7.Fhir.Support
         public OperationOutcome.IssueSeverity Severity;
         public OperationOutcome.IssueType Type;
 
-        public CodeableConcept ToCodeableConcept(string text = null)
-        {
-            return ToCodeableConcept(Code, text);
-        }
+        public CodeableConcept ToCodeableConcept(string text = null) => ToCodeableConcept(Code, text);
 
-        public static CodeableConcept ToCodeableConcept(int issueCode, string text = null)
-        {
-            return new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
-        }
+        public static CodeableConcept ToCodeableConcept(int issueCode, string text = null) => 
+            new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null)
-        {
-            return ToIssueComponent(message, location?.Location);
-        }
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null) => 
+            ToIssueComponent(message, location?.Location);
 
         [Obsolete("Use ToIssueComponent(string message, ITypedElement location = null) instead")]
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
-        {
-            return ToIssueComponent(message, location?.Location);
-        }
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null) =>
+            ToIssueComponent(message, location?.Location);
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
         {
@@ -51,22 +42,26 @@ namespace Hl7.Fhir.Support
 
             // var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
             var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type };
+
+            // Put numeric code + readable message into a CodeableConcept
             ic.Details = ToCodeableConcept(message);
 
             if (path != null) ic.Location = new List<string> { path };
-            if (message != null) ic.Details = ToCodeableConcept(message);
 
             return ic;
         }
 
-
-        /// <summary>Factory method.</summary>
-        internal static Issue Create(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
+        internal Issue(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
         {
-            return new Issue() { Code = code, Severity = severity, Type = type };
+            Code = code;
+            Severity = severity;
+            Type = type;
         }
+        /// <summary>Factory method.</summary>
+        public static Issue Create(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type) =>
+            new Issue(code, severity, type);
 
-        // Validation resouce instance errors
+        // Validation resource instance errors
         public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = Create(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN = Create(1001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_INCORRECT_TYPE = Create(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -77,8 +72,8 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_DOES_NOT_MATCH_PATTERN_VALUE = Create(1009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE = Create(1010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE = Create(1011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT = Create(1012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT = Create(1013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT = Create(1012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invariant);
+        public static readonly Issue CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT = Create(1013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invariant);
         public static readonly Issue CONTENT_REFERENCE_OF_INVALID_KIND = Create(1015, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE = Create(1016, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_UNPARSEABLE_REFERENCE = Create(1017, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -89,7 +84,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_REQUIRED_BINDING = Create(1023, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INVALID_FOR_NON_REQUIRED_BINDING = Create(1024, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_TYPE_NOT_BINDEABLE = Create(1025, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_TYPE_NOT_BINDEABLE  = Create(1025, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_SLICING_RULE = Create(1026, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -111,6 +106,8 @@ namespace Hl7.Fhir.Support
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = Create(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue PROFILE_ELEMENTDEF_INCORRECT = Create(2012, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
+        [Obsolete("This issue will not be raised by the validator anymore. Use 'PROFILE_ELEMENTDEF_INCORRECT' instead.")] // Obsolete on 20190409 by Marco
         public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Unsupported 

@@ -249,6 +249,14 @@ namespace Hl7.Fhir.Rest
         /// operation rather than the full resource
         /// </summary>
         [EnumLiteral("OperationOutcome")]
-        OperationOutcome
+        OperationOutcome,
+
+        /// <summary>
+        /// Prefer to run the operation as an asynchronous request
+        /// (http://hl7.org/fhir/r4/async.html)
+        /// - This may also be applicable in prior versions (though not part of that stamdard)
+        /// </summary>
+        [EnumLiteral("respond-async")]
+        RespondAsync
     }
 }
