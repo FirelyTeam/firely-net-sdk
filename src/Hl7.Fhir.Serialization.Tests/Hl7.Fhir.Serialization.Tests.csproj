@@ -52,12 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\ExceptionAssert.cs" Link="ExceptionAssert.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
