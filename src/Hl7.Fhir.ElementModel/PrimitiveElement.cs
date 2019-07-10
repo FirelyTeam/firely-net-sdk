@@ -6,6 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Support.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Hl7.Fhir.ElementModel
 {
     internal class PrimitiveElement : ITypedElement, IElementDefinitionSummary, IStructureDefinitionSummary
