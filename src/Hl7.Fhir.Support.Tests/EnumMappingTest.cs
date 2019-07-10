@@ -52,11 +52,46 @@ namespace Hl7.Fhir.Support.Tests.Utils
         [TestMethod]
         public void GetInfoFromEnumMember()
         {
-            var t = FHIRAllTypes.Markdown;
+            var t = TestAdministrativeGender.Male;
 
-            Assert.AreEqual("markdown", t.GetLiteral());
-            Assert.AreEqual("markdown", t.GetDocumentation());
+            Assert.AreEqual("male", t.GetLiteral());
+            Assert.AreEqual("Male", t.GetDocumentation());
         }
+
+
+        /// <summary>
+        /// The gender of a person used for administrative purposes.
+        /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
+        /// </summary>
+        [FhirEnumeration("TestAdministrativeGender")]
+        public enum TestAdministrativeGender
+        {
+            /// <summary>
+            /// Male<br/>
+            /// (system: http://hl7.org/fhir/administrative-gender)
+            /// </summary>
+            [EnumLiteral("male", "http://hl7.org/fhir/administrative-gender"), Utility.Description("Male")]
+            Male,
+            /// <summary>
+            /// Female<br/>
+            /// (system: http://hl7.org/fhir/administrative-gender)
+            /// </summary>
+            [EnumLiteral("female", "http://hl7.org/fhir/administrative-gender"), Utility.Description("Female")]
+            Female,
+            /// <summary>
+            /// Other<br/>
+            /// (system: http://hl7.org/fhir/administrative-gender)
+            /// </summary>
+            [EnumLiteral("other", "http://hl7.org/fhir/administrative-gender"), Utility.Description("Other")]
+            Other,
+            /// <summary>
+            /// Unknown<br/>
+            /// (system: http://hl7.org/fhir/administrative-gender)
+            /// </summary>
+            [EnumLiteral("unknown", "http://hl7.org/fhir/administrative-gender"), Utility.Description("Unknown")]
+            Unknown,
+        }
+
 
         [TestMethod]
         public void EnumParsingPerformance()
@@ -65,7 +100,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
             sw.Start();
 
             for(var i=0; i < 10000; i++)
-                EnumUtility.ParseLiteral<AdministrativeGender>("male");
+                EnumUtility.ParseLiteral<TestAdministrativeGender>("male");
 
             sw.Stop();
 
@@ -76,11 +111,11 @@ namespace Hl7.Fhir.Support.Tests.Utils
         [TestMethod]
         public void TestEnumMapping()
         {
-            Assert.AreEqual(AdministrativeGender.Male, EnumUtility.ParseLiteral<AdministrativeGender>("male"));
-            Assert.IsNull(EnumUtility.ParseLiteral<AdministrativeGender>("maleX"));
+            Assert.AreEqual(TestAdministrativeGender.Male, EnumUtility.ParseLiteral<TestAdministrativeGender>("male"));
+            Assert.IsNull(EnumUtility.ParseLiteral<TestAdministrativeGender>("maleX"));
             Assert.AreEqual(X.a, EnumUtility.ParseLiteral<X>("a"));
 
-            Assert.AreEqual("Male",AdministrativeGender.Male.GetDocumentation());
+            Assert.AreEqual("Male",TestAdministrativeGender.Male.GetDocumentation());
             Assert.AreEqual("a", X.a.GetDocumentation()); // default documentation = name of item
         }
 
