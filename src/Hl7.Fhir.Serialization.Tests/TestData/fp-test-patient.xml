@@ -1,27 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir" 
+<Patient xmlns="http://hl7.org/fhir"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://contoso.com/People http://contoso.com/schemas/people.xsd">
   <!-- Comments here -->
-  <id value="pat1"/>   <!-- where's this comment? -->
+  <id value="pat1"/>
+  <!-- where's this comment? -->
   <text>
     <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+    </div>
   </text>
   <!-- comment on contained -->
   <contained>
     <!-- Where does this end up?-->
-    <Patient>      
+    <Patient>
       <!-- Maybe here ?-->
-      <id value="1"/>     
+      <id value="1"/>
       <identifier>
         <system value="http://hl7.org/fhir/sid/us-ssn" />
-        <value value=" 444222222 "/>  <!-- has spaces around it to test trimming -->
+        <value value=" 444222222 "/>
+        <!-- has spaces around it to test trimming -->
       </identifier>
       <active value ="true"/>
       <name id="firstname">
-        <!-- See if this is roundtripped -->        
+        <!-- See if this is roundtripped -->
         <use value="official"/>
         <family value="Everywoman"/>
         <given value="Eve"/>
@@ -36,8 +40,8 @@
         <system value="phone"/>
         <value value="555-555-2003"/>
         <use value="work"/>
-		<rank value="1"/>
-	  </telecom>
+        <rank value="1"/>
+      </telecom>
       <gender value="female"/>
       <birthDate value="1973-05-31"/>
       <address>
@@ -209,12 +213,12 @@
     <family value="Donald"/>
     <given value="Duck"/>
   </name>
-      <telecom>
-        <system value="phone"/>
-        <value value="555-555-2003"/>
-        <use value="work"/>
-		<rank value="1"/>
-	  </telecom>
+  <telecom>
+    <system value="phone"/>
+    <value value="555-555-2003"/>
+    <use value="work"/>
+    <rank value="1"/>
+  </telecom>
   <gender value="male">
     <extension url="http://example.org/StructureDefinition/real-gender">
       <valueCode value="metrosexual" />

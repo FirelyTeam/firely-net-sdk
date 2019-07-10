@@ -61,9 +61,9 @@ namespace Hl7.Fhir.Serialization
         }
 
         public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
-        private const string FMT_YEAR = "{0:D4}";
-        private const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
-        private const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
+        //private const string FMT_YEAR = "{0:D4}";
+        //private const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
+        //private const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
 
         private static string convertToXmlString(object value)
         {
