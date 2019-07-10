@@ -187,7 +187,7 @@ namespace Hl7.FhirPath.Expressions
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message));
+                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message), e);
                 }
             };
         }

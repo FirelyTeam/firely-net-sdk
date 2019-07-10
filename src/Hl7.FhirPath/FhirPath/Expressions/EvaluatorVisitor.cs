@@ -60,10 +60,23 @@ namespace Hl7.FhirPath.Expressions
             if (expression.Name == "resource")
                 return InvokeeFactory.GetResource;
 
+            // Resolve any variables provided externally
+            // (as they may over-ride the internally provided one)
+            if (scope.SupportsExternalVariable != null && scope.SupportsExternalVariable(expression.Name))
+                return (Closure ctx, IEnumerable<Invokee> args) =>
+                {
+                    return ctx.EvaluationContext.ResolveVariable(expression.Name);
+                };
 
-            // Variables are still functions without arguments. For now variables are treated separately here,
-            //Functions are handled elsewhere.
-            return resolve(scope, expression.Name, Enumerable.Empty<Type>());
+            // Resolve any internal variables (e.g. %ucum)
+            if (scope.HasInternalVariable(expression.Name))
+                return (Closure ctx, IEnumerable<Invokee> args) =>
+                {
+                    return scope.ResolveInternalVariable(expression.Name);
+                };
+
+            // This variable is not known to the Execution environment, so error out the expression compilation
+            throw Error.Argument("Unknown variable '{0}'".FormatWith(expression.Name));
         }
 
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)

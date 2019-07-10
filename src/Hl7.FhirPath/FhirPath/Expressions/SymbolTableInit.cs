@@ -156,6 +156,7 @@ namespace Hl7.FhirPath.Expressions
             t.AddVar("loinc", "http://loinc.org");
             t.AddVar("ucum", "http://unitsofmeasure.org");
 
+            // What are these 2 things? Don't look like core routines
             t.Add("builtin.coreexturl", (object f, string id) => getCoreExtensionUrl(id));
             t.Add("builtin.corevsurl", (object f, string id) => getCoreValueSetUrl(id));
 

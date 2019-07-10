@@ -122,6 +122,28 @@ namespace Hl7.FhirPath.Expressions
 
             return entry != null ? entry.Body : null;
         }
+
+        #region << Support Variables >>
+        public Func<string, bool> SupportsExternalVariable { get; set; }
+
+        internal bool HasInternalVariable(string name)
+        {
+            if (_internalVariables.ContainsKey(name))
+                return true;
+            if (Parent?.HasInternalVariable(name) == true)
+                return true;
+            return false;
+        }
+
+        internal IEnumerable<ITypedElement> ResolveInternalVariable(string name)
+        {
+            if (_internalVariables.ContainsKey(name))
+                return _internalVariables[name];
+            return Parent.ResolveInternalVariable(name);
+        }
+
+        internal Dictionary<string, IEnumerable<ITypedElement>> _internalVariables = new Dictionary<string, IEnumerable<ITypedElement>>();
+        #endregion
     }
 
 
@@ -183,14 +205,17 @@ namespace Hl7.FhirPath.Expressions
 
         public static void AddVar(this SymbolTable table, string name, ITypedElement value)
         {
-            table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
+            if (table._internalVariables.ContainsKey(name))
+                table._internalVariables[name] = ElementNode.CreateList(value);
+            else
+                table._internalVariables.Add(name, ElementNode.CreateList(value));
         }
 
         #region Obsolete members
         [Obsolete("Use AddVar(this SymbolTable table, string name, ITypedElement value) instead. Obsolete since 2018-10-17")]
         public static void AddVar(this SymbolTable table, string name, IElementNavigator value)
         {
-            table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value.ToTypedElement()));
+            table._internalVariables.Add(name, ElementNode.CreateList(value.ToTypedElement()));
         }
         #endregion
     }

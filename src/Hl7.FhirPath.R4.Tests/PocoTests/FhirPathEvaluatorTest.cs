@@ -18,6 +18,7 @@ using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Tests;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -104,6 +105,141 @@ namespace Hl7.FhirPath.R4.Tests
 
             this.fixture = fixture;
             this.output = output;
+        }
+
+        [Fact]
+        public void VariablesPart1()
+        {
+            var context = new FhirEvaluationContext(fixture.TestInput);
+            SymbolTable stWithVars = new SymbolTable(FhirPathCompiler.DefaultSymbolTable);
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("42"));
+            var compiler = new FhirPathCompiler(stWithVars);
+            var expr = compiler.Compile("birthDate.toString()");
+            var result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-25", result);
+
+            expr = compiler.Compile("%interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("42", result);
+
+            expr = compiler.Compile("birthDate.toString() + %interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2542", result);
+
+            // ensure that the repeated calls to the routine don't return the same value, and that it is evaluated as required.
+            stWithVars = new SymbolTable(FhirPathCompiler.DefaultSymbolTable);
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("45"));
+            compiler = new FhirPathCompiler(stWithVars);
+
+            expr = compiler.Compile("birthDate.toString() + %interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2545", result);
+
+            // and test switching the value in the variable using the same compiled expression
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("47"));
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2547", result);
+        }
+
+        [Fact]
+        public void VariablesPart2()
+        {
+            var context = new FhirEvaluationContext(fixture.TestInput);
+            SymbolTable stWithVars = new SymbolTable(FhirPathCompiler.DefaultSymbolTable);
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("42"));
+            var compiler = new FhirPathCompiler(stWithVars);
+
+            try
+            {
+                var badExpr = compiler.Compile("%interestingValue2");
+                Assert.False(false, "expected to have an argument exception thrown for an unknown variable");
+            }
+            catch (ArgumentException ex)
+            {
+                // expecting this exception to be thrown, and that it identifies the unknown variable
+                Assert.Contains("interestingValue2", ex.Message);
+            }
+
+            var expr = compiler.Compile("birthDate.toString()");
+            var result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-25", result);
+
+            expr = compiler.Compile("%interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("42", result);
+
+            expr = compiler.Compile("birthDate.toString() + %interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2542", result);
+
+            // ensure that the repeated calls to the routine don't return the same value, and that it is evaluated as required.
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("45"));
+            expr = compiler.Compile("birthDate.toString() + %interestingValue");
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2545", result);
+
+            // Last adjustment, switch the value and use the compiled expressions
+            stWithVars.AddVar("interestingValue", ElementNode.ForPrimitive("47"));
+            result = expr.Scalar(fixture.TestInput, context);
+            Assert.Equal("1974-12-2547", result);
+        }
+
+        [Fact]
+        public void VariablesPart3()
+        {
+            // this set of examples show using externally provided variable data
+            // (so you don't need to use an internal dictionary, and could be database or other technique driven)
+            var context = new FhirEvaluationContext(fixture.TestInput);
+            SymbolTable stWithVars = new SymbolTable(FhirPathCompiler.DefaultSymbolTable);
+            var compiler = new FhirPathCompiler(stWithVars);
+            Dictionary<string, IEnumerable<ITypedElement>> variables = new Dictionary<string, IEnumerable<ITypedElement>>();
+
+            stWithVars.SupportsExternalVariable = (string name) =>
+            {
+                return variables.ContainsKey(name);
+            };
+            context.ExternalVariableResolver = (string name) =>
+            {
+                if (variables.ContainsKey(name))
+                    return variables[name];
+                // throw new ArgumentException($"variable '{name}' was not defined");
+                return ElementNode.EmptyList;
+            };
+
+            string testExpression = "%x * %x + %y * %y = %z * %z";
+            try
+            {
+                var badExpr = compiler.Compile(testExpression);
+                Assert.False(false, "expected to have an argument exception thrown for an unknown variable");
+            }
+            catch (ArgumentException ex)
+            {
+                // expecting this exception to be thrown, and that it identifies the unknown variable
+                Assert.Contains("x", ex.Message);
+            }
+
+            variables.Add("x", ElementNode.CreateList(ElementNode.ForPrimitive(3)));
+            variables.Add("y", ElementNode.CreateList(ElementNode.ForPrimitive(4)));
+            variables.Add("z", ElementNode.CreateList(ElementNode.ForPrimitive(5)));
+
+            var expr = compiler.Compile(testExpression);
+            var result = (bool)expr.Scalar(fixture.TestInput, context);
+            Assert.True(result);
+
+            variables["z"] = ElementNode.CreateList(ElementNode.ForPrimitive(6));
+
+            result = (bool)expr.Scalar(fixture.TestInput, context);
+            Assert.False(result);
+
+            // test what happens if the variable no longer exists (gasp!)
+            variables.Remove("z");
+
+            // predicate will pass, as the z resolves to an empty collection, so the entire expression is nothing, which resolves to true as a predicate
+            result = expr.Predicate(fixture.TestInput, context);
+
+            // as a scalar the result will return null
+            var scalarResult = expr.Scalar(fixture.TestInput, context);
+            Assert.Null(scalarResult);
         }
 
         [Fact]

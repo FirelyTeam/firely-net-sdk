@@ -22,6 +22,15 @@ namespace Hl7.FhirPath
 
         public Action<string, IEnumerable<ITypedElement>> Tracer { get; set; }
 
+        public Func<string, IEnumerable<ITypedElement>> ExternalVariableResolver { private get; set; }
+
+        public IEnumerable<ITypedElement> ResolveVariable(string name)
+        {
+            if (ExternalVariableResolver != null)
+                return ExternalVariableResolver(name);
+            return ElementNode.EmptyList;
+        }
+
         #region Obsolete members
         [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions.")]
         public static readonly EvaluationContext Default = new EvaluationContext();
