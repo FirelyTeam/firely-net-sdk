@@ -18,7 +18,7 @@ namespace Hl7.Fhir.ElementModel
     {
         public PrimitiveElement(object value, string name = null)
         {
-            if (value == null)  throw new ArgumentNullException(nameof(value));
+            if (value == null) throw new ArgumentNullException(nameof(value));
 
             Value = Primitives.ConvertToPrimitiveValue(value);
             InstanceType = Primitives.GetPrimitiveTypeName(value.GetType());
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.ElementModel
         bool IElementDefinitionSummary.IsResource => false;
 
 
-         ITypeSerializationInfo[] IElementDefinitionSummary.Type => new[] { this };
+        ITypeSerializationInfo[] IElementDefinitionSummary.Type => new[] { this };
 
         string IElementDefinitionSummary.NonDefaultNamespace => null;
 

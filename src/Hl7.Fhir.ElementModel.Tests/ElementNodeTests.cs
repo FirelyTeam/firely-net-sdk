@@ -136,13 +136,13 @@ namespace Hl7.FhirPath.Tests
             var patient = createPatient();
 
             Assert.AreEqual("Patient", patient.Location);
-            Assert.AreEqual("Patient.contained[0].value", patient[0][0].Location);
-            Assert.AreEqual("Patient.active", patient[1].Location);
-            Assert.AreEqual("Patient.active.id", patient[1][0].Location);
+            Assert.AreEqual("Patient.contained[0].value[0]", patient[0][0].Location);
+            Assert.AreEqual("Patient.active[0]", patient[1].Location);
+            Assert.AreEqual("Patient.active[0].id[0]", patient[1][0].Location);
             Assert.AreEqual("Patient.identifier[0]", patient[2].Location);
             Assert.AreEqual("Patient.identifier[1]", patient[3].Location);
-            Assert.AreEqual("Patient.active.extension[0].value", patient[1][1][0].Location);
-            Assert.AreEqual("Patient.active.extension[1].value", patient[1][2][0].Location);
+            Assert.AreEqual("Patient.active[0].extension[0].value[0]", patient[1][1][0].Location);
+            Assert.AreEqual("Patient.active[0].extension[1].value[0]", patient[1][2][0].Location);
         }
 
         [TestMethod]
@@ -165,12 +165,12 @@ namespace Hl7.FhirPath.Tests
         {
             var patient = createPatient();
 
-            Assert.AreEqual("Patient.active.extension[1].value", patient["active"][0]["extension"][1]["value"][0].Location);
-            Assert.AreEqual("Patient.active.extension[1].value", patient["active"]["extension"][1]["value"].Single().Location);
-            Assert.AreEqual("Patient.active.extension[0].value", patient.Children("active").First()
+            Assert.AreEqual("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
+            Assert.AreEqual("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
+            Assert.AreEqual("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
                                 .Children("extension").First()
                                 .Children("value").First().Location);
-            Assert.AreEqual("Patient.active.extension[0].value", patient.Children("active")
+            Assert.AreEqual("Patient.active[0].extension[0].value[0]", patient.Children("active")
                                 .Children("extension").First()
                                 .Children("value").Single().Location);
         }
