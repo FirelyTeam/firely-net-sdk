@@ -9,14 +9,12 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
-using System;
 using Xunit;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Linq;
 using Hl7.Fhir.Serialization;
 using System.IO;
-using Hl7.Fhir.Specification;
 
 namespace Hl7.FhirPath.Tests
 {
