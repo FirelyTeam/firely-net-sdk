@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
             Assert.IsNull(EnumUtility.ParseLiteral<TestAdministrativeGender>("maleX"));
             Assert.AreEqual(X.a, EnumUtility.ParseLiteral<X>("a"));
 
-            Assert.AreEqual("Male", TestAdministrativeGender.Male.GetDocumentation());
+            Assert.AreEqual("Male",TestAdministrativeGender.Male.GetDocumentation());
             Assert.AreEqual("a", X.a.GetDocumentation()); // default documentation = name of item
         }
 

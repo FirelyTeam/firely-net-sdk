@@ -2,7 +2,7 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-    <VersionPrefix>1.3.0</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
@@ -13,7 +13,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageReleaseNotes>See http://docs.simplifier.net/fhirnetapi/releasenotes.html</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
+    <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
   <ItemGroup>
