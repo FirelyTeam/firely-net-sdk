@@ -218,8 +218,8 @@ namespace Hl7.Fhir.Specification.Source
         private string GetCacheKey()
         {
             Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
-            var versionInfo =  assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
-            var productInfo = assembly.GetCustomAttribute(typeof(AssemblyProductAttribute)) as AssemblyProductAttribute;
+            var versionInfo =  assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var productInfo = assembly.GetCustomAttribute<AssemblyProductAttribute>();
             return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }
 

@@ -546,7 +546,14 @@ namespace Hl7.Fhir.Rest
             {
                 // Return a null bundle, can not return simply null because this is a task
                 Bundle nullValue = null;
+#if NET40
+                TaskCompletionSource<Bundle> completionSource = new TaskCompletionSource<Bundle>();
+                completionSource.SetResult(nullValue);
+
+                return completionSource.Task;
+#else
                 return System.Threading.Tasks.Task.FromResult(nullValue);
+#endif
             }
         }
         /// <summary>
@@ -561,9 +568,9 @@ namespace Hl7.Fhir.Rest
             return ContinueAsync(current, direction).WaitResult();
         }
 
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
 
         private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary, string[] revIncludes)
         {
@@ -597,7 +604,7 @@ namespace Hl7.Fhir.Rest
             return q;
         }
 
-        #endregion
+#endregion
     }
 
     public enum PageDirection

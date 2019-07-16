@@ -10,7 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+#if NET40
+using ICSharpCode.SharpZipLib.Zip;
+#else
 using System.IO.Compression;
+#endif
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -78,11 +82,18 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
+#if NET40
+            ExtractToDirectory(_zipPath, dir.FullName);
+
+            if (File.Exists(Path.Combine(dir.FullName, "fhir-all-xsd.zip")))
+                ExtractToDirectory(Path.Combine(dir.FullName, "fhir-all-xsd.zip"), dir.FullName);
+#else
             ZipFile.ExtractToDirectory(_zipPath, dir.FullName);
 
             // and also extract the contained zip in there too with all the xsds in there
             if (File.Exists(Path.Combine(dir.FullName, "fhir-all-xsd.zip")))
                 ZipFile.ExtractToDirectory(Path.Combine(dir.FullName, "fhir-all-xsd.zip"), dir.FullName);
+#endif
 
             // Set the last write time to be equal to the write time of the zip file,
             // this way, we can compare this time to the write times of newer zips and
@@ -120,5 +131,40 @@ namespace Hl7.Fhir.Specification.Source
                         
             return zipCacheDir;
         }
+
+#if NET40
+        private void ExtractToDirectory(string zipFilePath, string directory)
+        {
+            byte[] buffer = new byte[4096];
+
+            using (ZipFile zipFile = new ZipFile(zipFilePath))
+            {
+                foreach (ZipEntry entry in zipFile)
+                {
+                    using (Stream entryStream = zipFile.GetInputStream(entry))
+                    {
+                        string fullPath = Path.Combine(directory, entry.Name.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar));
+                        FileInfo entryFileInfo = new FileInfo(fullPath);
+
+                        if (!Directory.Exists(entryFileInfo.DirectoryName))
+                        {
+                            Directory.CreateDirectory(entryFileInfo.DirectoryName);
+                        }
+
+                        using (FileStream entryOutputStream = File.Create(fullPath))
+                        {
+                            int bytesRead = entryStream.Read(buffer, 0, 4096);
+
+                            while (bytesRead > 0)
+                            {
+                                entryOutputStream.Write(buffer, 0, bytesRead);
+                                bytesRead = entryStream.Read(buffer, 0, 4096);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+#endif
     }
 }

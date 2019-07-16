@@ -7,6 +7,7 @@
  */
 
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
