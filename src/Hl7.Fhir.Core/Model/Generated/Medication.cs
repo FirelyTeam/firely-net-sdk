@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
+            public override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
+            public override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
+            public override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
+            public override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren
+        public override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
