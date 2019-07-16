@@ -144,6 +144,6 @@ namespace Hl7.Fhir.Model
         /// Finally returns child nodes defined by the current class.
         /// </summary>
         [NotMapped]
-        internal virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
+        public virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
     }
 }
