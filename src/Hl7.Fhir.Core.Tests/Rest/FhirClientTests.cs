@@ -42,6 +42,19 @@ namespace Hl7.Fhir.Tests.Rest
         // public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
         public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r4");
 
+#if !NETCOREAPP2_1
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
+        {
+            // Ignore SSL certificate errors
+            ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+               | (SecurityProtocolType)3072
+               | (SecurityProtocolType)768
+               | SecurityProtocolType.Ssl3;
+        }
+#endif
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -1273,14 +1286,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()
         {
-            Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            byte[] arr;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                arr = ms.ToArray();
-            }
-
+            byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
             var client = new FhirClient(testEndpoint);
 
             var binary = new Binary() { Data = arr, ContentType = "image/png" };

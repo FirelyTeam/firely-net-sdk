@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            Assert.ThrowsException<FhirOperationException>(act, "the patient is no longer on the server");
+            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
 
 
             Console.WriteLine("Test Completed");

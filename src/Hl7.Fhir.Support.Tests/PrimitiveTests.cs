@@ -10,14 +10,24 @@ namespace Hl7.Fhir.Support.Tests.Model
     [TestClass]
     public class PrimitiveTests
     {
-        [DataRow(typeof(PartialDateTime), "dateTime")]
-        [DataRow(typeof(UInt16), "integer")]
-        [DataRow(typeof(Boolean), "boolean")]
-        [DataTestMethod]
-        public void GetPrimitiveName(Type native, string expected)
+        [TestMethod]
+        public void GetPrimitiveName()
         {
-            Assert.IsTrue(Primitives.TryGetPrimitiveTypeName(native, out var actual));
-            Assert.AreEqual(expected, actual);
+            Dictionary<Type, string> data = new Dictionary<Type, string>
+            {
+                { typeof(PartialDateTime), "dateTime" },
+                { typeof(UInt16), "integer" },
+                { typeof(Boolean), "boolean" }
+            };
+
+            foreach (var pair in data)
+            {
+                var native = pair.Key;
+                var expected = pair.Value;
+
+                Assert.IsTrue(Primitives.TryGetPrimitiveTypeName(native, out var actual));
+                Assert.AreEqual(expected, actual);
+            }
         }
 
         [TestMethod]
@@ -72,16 +82,26 @@ namespace Hl7.Fhir.Support.Tests.Model
                         return null;\
                         */
 
-        [DataRow("decimal", typeof(decimal))]
-        [DataRow("url", typeof(string))]
-        [DataRow("string", typeof(string))]
-        [DataRow("time", typeof(PartialTime))]
-        [DataRow("positiveInt", typeof(long))]
-        [DataTestMethod]
-        public void GetNativeRepresentation(string fhirType, Type native)
+        [TestMethod]
+        public void GetNativeRepresentation()
         {
-            Assert.IsTrue(Primitives.TryGetNativeRepresentation(fhirType, out var actual));
-            Assert.AreEqual(native, actual);
+            Dictionary<string, Type> data = new Dictionary<string, Type>
+            {
+                { "decimal", typeof(decimal) },
+                { "url", typeof(string) },
+                { "string", typeof(string) },
+                { "time", typeof(PartialTime) },
+                { "positiveInt", typeof(long) }
+            };
+
+            foreach(var pair in data)
+            {
+                var fhirType = pair.Key;
+                var native = pair.Value;
+
+                Assert.IsTrue(Primitives.TryGetNativeRepresentation(fhirType, out var actual));
+                Assert.AreEqual(native, actual);
+            }
         }
 
         [TestMethod]

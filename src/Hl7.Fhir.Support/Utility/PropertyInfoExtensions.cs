@@ -18,7 +18,11 @@ namespace Hl7.Fhir.Utility
     {
         public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
+#if NET40
+            MethodInfo getMethod = propertyInfo.GetGetMethod();
+#else
             MethodInfo getMethod = propertyInfo.GetMethod;
+#endif
 
             if (getMethod == null)
                 throw new InvalidOperationException("Property has no get method.");
@@ -48,7 +52,11 @@ namespace Hl7.Fhir.Utility
 
         public static Action<T, object> GetValueSetter<T>(this PropertyInfo propertyInfo)
         {
+#if NET40
+            MethodInfo setMethod = propertyInfo.GetSetMethod();
+#else
             MethodInfo setMethod = propertyInfo.SetMethod;
+#endif
 
             if (setMethod == null)
                 throw new InvalidOperationException("Property has no set method.");

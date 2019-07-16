@@ -90,7 +90,12 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestFormUrlEncoding()
         {
+            // The URL encoding logic in Microsoft.Net.Http doesn't encode single quotes or parentheses, unlike System.Net.Http
+#if NET40
+            string expected = "Key=%3C%26%3E%22'%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40!%23%C2%A4%25%2F()%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
+#else
             string expected = "Key=%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
+#endif
 
             string specialCharacters = "<&>\"'äëïoæøå€$£@!#¤%/()=?|§¨^\\[]{}";
             var  endpoint = new Uri("http://myserver.org/fhir");

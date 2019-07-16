@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net40;netstandard1.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -23,30 +23,37 @@
     <None Remove="Rest\Search\**" />
   </ItemGroup>
 
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+  </ItemGroup>
+
    <ItemGroup>
      <Compile Remove="Serialization\JsonNavFhirReader.cs" />
      <Compile Remove="Serialization\XmlNavFhirReader.cs" />
    </ItemGroup>
  
-  <ItemGroup>    
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+    <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' and '$(TargetFramework)' != 'net40' ">
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
 
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  
   <ItemGroup>
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />
