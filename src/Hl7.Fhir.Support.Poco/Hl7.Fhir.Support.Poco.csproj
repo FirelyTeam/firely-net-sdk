@@ -8,7 +8,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the POCO classes for FHIR, parsing/serialization of FHIR data</Description>
+    <Description>This is the support library for working with the POCO representation of HL7's FHIR model data</Description>
     <RepositoryType>git</RepositoryType>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
   </PropertyGroup>
