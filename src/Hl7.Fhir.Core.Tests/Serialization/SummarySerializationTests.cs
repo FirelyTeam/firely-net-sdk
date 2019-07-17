@@ -180,10 +180,10 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
             Assert.IsTrue(noSummarySpecified.Contains("<photo"));
 
-            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
-            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
-            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
-            Assert.ThrowsException<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
         }
 
         [TestMethod]
@@ -239,91 +239,111 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<type"));
         }
 
-        [DataTestMethod]
-        [DataRow("summary\\bundle-summary-true.json", SummaryType.True)]
-        [DataRow("summary\\bundle-summary-false.json", SummaryType.False)]
-        [DataRow("summary\\bundle-summary-data.json", SummaryType.Data)]
-        [DataRow("summary\\bundle-summary-text.json", SummaryType.Text)]
-        [DataRow("summary\\bundle-summary-count.json", SummaryType.Count)]
-        [DataRow("summary\\bundle-summary-true.xml", SummaryType.True)]
-        [DataRow("summary\\bundle-summary-false.xml", SummaryType.False)]
-        [DataRow("summary\\bundle-summary-data.xml", SummaryType.Data)]
-        [DataRow("summary\\bundle-summary-text.xml", SummaryType.Text)]
-        [DataRow("summary\\bundle-summary-count.xml", SummaryType.Count)]
-        public void TestBundleWithSummaryJson(string expectedFile, SummaryType mode)
+        [TestMethod]
+        public void TestBundleWithSummaryJson()
         {
-            var patientOne = new Patient
+            Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
-
-                Id = "patient-one",
-                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
-                Meta = new Meta { VersionId = "eric-clapton" },
-
-                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
-
-                Active = true,
-                BirthDate = "2015-07-09",
-                Gender = AdministrativeGender.Male
+                { "summary\\bundle-summary-true.json", SummaryType.True },
+                { "summary\\bundle-summary-false.json", SummaryType.False },
+                { "summary\\bundle-summary-data.json", SummaryType.Data },
+                { "summary\\bundle-summary-text.json", SummaryType.Text },
+                { "summary\\bundle-summary-count.json", SummaryType.Count },
+                { "summary\\bundle-summary-true.xml", SummaryType.True },
+                { "summary\\bundle-summary-false.xml", SummaryType.False },
+                { "summary\\bundle-summary-data.xml", SummaryType.Data },
+                { "summary\\bundle-summary-text.xml", SummaryType.Text },
+                { "summary\\bundle-summary-count.xml", SummaryType.Count }
             };
 
-            var patientTwo = new Patient()
+            foreach (var pair in data)
             {
-                Id = "patient-two",
-                Active = true,
-                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
-                Meta = new Meta { VersionId = "bb-king" },
-                Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
-            };
+                var expectedFile = pair.Key;
+                var mode = pair.Value;
 
-            var bundle = new Bundle()
-            {
-                Id = "my-bundle",
-                Total = 1803,
-                Type = Bundle.BundleType.Searchset,
-                Entry = new List<Bundle.EntryComponent> {
-                    new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
-                    new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
-                }
-            };
+                var patientOne = new Patient
+                {
 
-            bool inJson = Path.GetExtension(expectedFile) == ".json";
-            var actualData = inJson ? FhirJsonSerializer.SerializeToString(bundle, mode) :
-                                FhirXmlSerializer.SerializeToString(bundle, mode);
-            var expectedData = TestDataHelper.ReadTestData(expectedFile);
-            Assert.AreEqual(actualData, expectedData);
+                    Id = "patient-one",
+                    Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
+                    Meta = new Meta { VersionId = "eric-clapton" },
+
+                    Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                    Active = true,
+                    BirthDate = "2015-07-09",
+                    Gender = AdministrativeGender.Male
+                };
+
+                var patientTwo = new Patient()
+                {
+                    Id = "patient-two",
+                    Active = true,
+                    Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                    Meta = new Meta { VersionId = "bb-king" },
+                    Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
+                };
+
+                var bundle = new Bundle()
+                {
+                    Id = "my-bundle",
+                    Total = 1803,
+                    Type = Bundle.BundleType.Searchset,
+                    Entry = new List<Bundle.EntryComponent> {
+                        new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
+                        new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
+                    }
+                };
+
+                bool inJson = Path.GetExtension(expectedFile) == ".json";
+                var actualData = inJson ? FhirJsonSerializer.SerializeToString(bundle, mode) :
+                                    FhirXmlSerializer.SerializeToString(bundle, mode);
+                var expectedData = TestDataHelper.ReadTestData(expectedFile);
+                Assert.AreEqual(actualData, expectedData);
+            }
         }
 
-        [DataTestMethod]
-        [DataRow("summary\\summary-true.json", SummaryType.True)]
-        [DataRow("summary\\summary-false.json", SummaryType.False)]
-        [DataRow("summary\\summary-data.json", SummaryType.Data)]
-        [DataRow("summary\\summary-text.json", SummaryType.Text)]
-        [DataRow("summary\\summary-true.xml", SummaryType.True)]
-        [DataRow("summary\\summary-false.xml", SummaryType.False)]
-        [DataRow("summary\\summary-data.xml", SummaryType.Data)]
-        [DataRow("summary\\summary-text.xml", SummaryType.Text)]
-        public void TestResourceWithSummary(string expectedFile, SummaryType mode)
+        [TestMethod]
+        public void TestResourceWithSummary()
         {
-            var patientOne = new Patient
+            Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
-
-                Id = "patient-one",
-                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
-                Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
-
-                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
-
-                Active = true,
-                BirthDate = "2015-07-09",
-                Gender = AdministrativeGender.Male
+                { "summary\\summary-true.json", SummaryType.True },
+                { "summary\\summary-false.json", SummaryType.False },
+                { "summary\\summary-data.json", SummaryType.Data },
+                { "summary\\summary-text.json", SummaryType.Text },
+                { "summary\\summary-true.xml", SummaryType.True },
+                { "summary\\summary-false.xml", SummaryType.False },
+                { "summary\\summary-data.xml", SummaryType.Data },
+                { "summary\\summary-text.xml", SummaryType.Text }
             };
 
-            // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
-            bool inJson = Path.GetExtension(expectedFile) == ".json";
-            var actualData = inJson ? FhirJsonSerializer.SerializeToString(patientOne, mode) :
-                                FhirXmlSerializer.SerializeToString(patientOne, mode);
-            var expectedData = TestDataHelper.ReadTestData(expectedFile);
-            Assert.AreEqual(expectedData, actualData);
+            foreach (var pair in data)
+            {
+                var expectedFile = pair.Key;
+                var mode = pair.Value;
+
+                var patientOne = new Patient
+                {
+
+                    Id = "patient-one",
+                    Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
+                    Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
+
+                    Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                    Active = true,
+                    BirthDate = "2015-07-09",
+                    Gender = AdministrativeGender.Male
+                };
+
+                // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
+                bool inJson = Path.GetExtension(expectedFile) == ".json";
+                var actualData = inJson ? FhirJsonSerializer.SerializeToString(patientOne, mode) :
+                                    FhirXmlSerializer.SerializeToString(patientOne, mode);
+                var expectedData = TestDataHelper.ReadTestData(expectedFile);
+                Assert.AreEqual(expectedData, actualData);
+            }
         }
 
         [TestMethod]

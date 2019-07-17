@@ -173,7 +173,8 @@ namespace Hl7.Fhir.Tests.Rest
             var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
             var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
 
-            await System.Threading.Tasks.Task.WhenAll(bundleTask, bundle2Task);
+            await bundleTask;
+            await bundle2Task;
 
             var bundle = (Bundle)bundleTask.Result;
             Assert.IsTrue(bundle.Entry.Any());
