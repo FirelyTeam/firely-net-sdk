@@ -174,7 +174,10 @@ namespace Hl7.Fhir.Core.AsyncTests
             var task2 = client.SearchAsync<Patient>(srchParams);
             var task3 = client.SearchAsync<Patient>(srchParams);
 
-            await Task.WhenAll(task1, task2, task3);
+            await task1;
+            await task2;
+            await task3;
+
             var result1 = task1.Result;
 
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -214,7 +217,10 @@ namespace Hl7.Fhir.Core.AsyncTests
             var task2 = client.SearchUsingPostAsync<Patient>(srchParams);
             var task3 = client.SearchUsingPostAsync<Patient>(srchParams);
 
-            await Task.WhenAll(task1, task2, task3);
+            await task1;
+            await task2;
+            await task3;
+
             var result1 = task1.Result;
 
             Assert.IsTrue(result1.Entry.Count >= 1);

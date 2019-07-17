@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
             var sw = new Stopwatch();
             sw.Start();
 
-            for(var i=0; i < 10000; i++)
+            for (var i = 0; i < 10000; i++)
                 EnumUtility.ParseLiteral<TestAdministrativeGender>("male");
 
             sw.Stop();
