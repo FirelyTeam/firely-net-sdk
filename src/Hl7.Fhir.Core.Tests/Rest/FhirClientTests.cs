@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         // public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
-        public static Uri testEndpoint = new Uri("http://vonk.fire.ly");
+        public static Uri testEndpoint = new Uri("https://vonk.fire.ly");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
@@ -41,6 +41,19 @@ namespace Hl7.Fhir.Tests.Rest
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
 
         public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
+
+#if !NETCOREAPP2_1
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
+        {
+            // Ignore SSL certificate errors
+            ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+               | (SecurityProtocolType)3072
+               | (SecurityProtocolType)768
+               | SecurityProtocolType.Ssl3;
+        }
+#endif
 
         [TestInitialize]
         public void TestInitialize()
@@ -1115,14 +1128,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()
         {
-            Image img = Image.FromFile(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            byte[] arr;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                arr = ms.ToArray();
-            }
-
+            byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
             var client = new FhirClient(testEndpoint);
 
             var binary = new Binary() { Content = arr, ContentType = "image/png" };

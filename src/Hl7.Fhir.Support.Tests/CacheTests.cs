@@ -1,7 +1,10 @@
 ﻿using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+// TODO: Find alternative for .NET 4.0
+#if !NET40
 using System.Threading.Tasks.Dataflow;
+#endif
 
 namespace Hl7.Fhir.Support.Tests
 {
@@ -37,6 +40,7 @@ namespace Hl7.Fhir.Support.Tests
             Assert.AreEqual("FHIR", result);
         }
 
+#if !NET40
         [TestMethod]
         [TestCategory("LongRunner")]
         public void AddingItemsParallel()
@@ -65,5 +69,6 @@ namespace Hl7.Fhir.Support.Tests
             stopwatch.Stop();
             TestContext.WriteLine($"Using cache with 20.000 items takes {stopwatch.Elapsed.TotalMilliseconds}ms");
         }
+#endif
     }
 }
