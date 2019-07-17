@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.ElementModel.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7089FA86-6527-4DFA-8018-AFEF25D74A48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Support.Poco", "Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj", "{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -185,6 +187,18 @@ Global
 		{26A16F92-E601-48CE-A258-0D339F44DED8}.Release|x64.Build.0 = Release|Any CPU
 		{26A16F92-E601-48CE-A258-0D339F44DED8}.Release|x86.ActiveCfg = Release|Any CPU
 		{26A16F92-E601-48CE-A258-0D339F44DED8}.Release|x86.Build.0 = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|x64.Build.0 = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Debug|x86.Build.0 = Debug|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|x64.ActiveCfg = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|x64.Build.0 = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{46021A7F-DA2C-4BB0-BF5C-F53637CE6EDE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
