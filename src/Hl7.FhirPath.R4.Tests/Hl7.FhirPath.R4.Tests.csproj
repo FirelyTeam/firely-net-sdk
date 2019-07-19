@@ -17,16 +17,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestData\fhirpath\tests-fhir-r2.xml.bak" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath.Tests\Hl7.FhirPath.Tests.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
 
   <ItemGroup>
