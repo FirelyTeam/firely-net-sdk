@@ -12,8 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
@@ -40,16 +41,6 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Remove="OldJsonAssert.cs" />
-    <Compile Remove="Rest\NewSearchParamsTests.cs" />
-    <None Remove="TestData\fp-test-patient.xml" />
-    <None Remove="TestData\summary\summary-data.json" />
-    <None Remove="TestData\summary\summary-false.json" />
-    <None Remove="TestData\summary\summary-text.json" />
-    <None Remove="TestData\summary\summary-true.json" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\ExceptionAssert.cs" Link="ExceptionAssert.cs" />
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -61,16 +52,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="TestData\fp-test-patient.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>  
-  
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
