@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t31"/>
+  <url value="urn:uuid:e9d11ae4-b7be-40c2-9c19-c9a1c4861428"/>
+  <name value="t31"/>
+  <status value="draft"/>
+  <description value="fixture for #31: Propagate extensions from differential to snapshot"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Parameters"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Parameters">
+      <path value="Parameters"/>
+    </element>
+    <element id="Parameters.parameter">
+      <path value="Parameters.parameter"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="name"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Parameters.parameter:string">
+      <path value="Parameters.parameter"/>
+      <sliceName value="string"/>
+    </element>
+    <element id="Parameters.parameter:string.name">
+      <path value="Parameters.parameter.name"/>
+      <fixedString value="string"/>
+    </element>
+    <element id="Parameters.parameter:string.valueString">
+      <extension url="http://hl7.org/fhir/StructureDefinition/regex">
+        <valueString value="(a)*"/>
+      </extension>
+      <path value="Parameters.parameter.valueString"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <maxLength value="2"/>
+    </element>
+    <element id="Parameters.parameter:string.valueString.extension:translation">
+      <path value="Parameters.parameter.valueString.extension"/>
+      <sliceName value="translation"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/translation"/>
+      </type>
+    </element>
+    <element id="Parameters.parameter:string.valueString.extension:translation.extension:content">
+      <path value="Parameters.parameter.valueString.extension.extension"/>
+      <sliceName value="content"/>
+    </element>
+    <element id="Parameters.parameter:string.valueString.extension:translation.extension:content.valueString">
+      <extension url="http://hl7.org/fhir/StructureDefinition/regex">
+        <valueString value="(b)*"/>
+      </extension>
+      <path value="Parameters.parameter.valueString.extension.extension.valueString"/>
+      <sliceName value="content"/>
+      <maxLength value="2"/>
+    </element>
+  </differential>
+</StructureDefinition>

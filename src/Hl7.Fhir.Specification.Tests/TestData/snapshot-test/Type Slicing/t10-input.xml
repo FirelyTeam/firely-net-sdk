@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t10"/>
+  <url value="urn:uuid:772b9182-39d3-45fd-b01c-e09df0a5cf6c"/>
+  <name value="t10"/>
+  <status value="draft"/>
+  <description value="fixture for #10: Simple slicing"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="use"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.identifier"/>
+      <sliceName value="name1"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.use"/>
+      <fixedCode value="usual"/>
+    </element>
+    <element>
+      <path value="Patient.identifier"/>
+      <sliceName value="name2"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.use"/>
+      <fixedCode value="official"/>
+    </element>
+  </differential>
+</StructureDefinition>
