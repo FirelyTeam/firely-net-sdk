@@ -1903,6 +1903,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 clonedDiffRoot.EnsureBaseComponent(null, true);
                 sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
 #endif
+                // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
+                ElementDefnMerger.InitializeConstraintSource(clonedDiffRoot.Constraint, diffRoot.Path);
+
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return clonedDiffRoot;
             }
