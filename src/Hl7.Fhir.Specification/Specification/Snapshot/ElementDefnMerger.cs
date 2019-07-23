@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -136,7 +136,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
                 // additional identical constraints inherited from e.g. BackboneElement.
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
+                // [WMR 20190723] R4 NEW: Initialize Constraint.source property
+                //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, ElementDefinitionNavigator.GetPathRoot(diff.Path));
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -319,6 +321,67 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Match extensions on url
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
                 => mergeCollection(snap, diff, matchExtensions);
+
+            List<ElementDefinition.ConstraintComponent> mergeConstraints(
+                List<ElementDefinition.ConstraintComponent> snap,
+                List<ElementDefinition.ConstraintComponent> diff,
+                string source)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopy());
+                        // Properly merge matching collection items
+                        foreach (var diffItem in diff)
+                        {
+                            // [WMR 20190723] FIX #1052: WRONG! Initializing .source breaks matching...
+                            // Instead, match element constraints on id
+                            //var idx = snap.FindIndex(e => matchExactly(e, diffItem));
+                            var idx = snap.FindIndex(e => IsEqualString(e.Key, diffItem.Key));
+
+                            ElementDefinition.ConstraintComponent mergedItem;
+                            if (idx < 0)
+                            {
+                                // No match; add diff item
+                                mergedItem = (ElementDefinition.ConstraintComponent)diffItem.DeepCopy();
+                                result.Add(mergedItem);
+                            }
+                            else
+                            {
+                                // Match; merge diff with snap
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
+                            }
+                            onConstraint(mergedItem);
+                        }
+                    }
+
+                    // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
+                    InitializeConstraintSource(result, source);
+
+                }
+                return result;
+            }
+
+            // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
+            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source)
+            {
+                foreach (var constraint in constraints)
+                {
+                    if (string.IsNullOrEmpty(constraint.Source))
+                    {
+                        constraint.Source = source;
+                    }
+                }
+            }
 
             // Merge two collections
             // Differential collection items replace/overwrite matching snapshot collection items
