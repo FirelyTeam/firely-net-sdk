@@ -137,6 +137,7 @@ namespace Hl7.FhirPath.R4.Tests
 
         enum ErrorType
         {
+            True,
             Syntax,
             Semantics
         }
@@ -146,20 +147,23 @@ namespace Hl7.FhirPath.R4.Tests
             try
             {
                 resource.Select(expression);
-                throw new Exception();
+                Assert.True(false, "Should have been invalid");
             }
             catch (FormatException)
             {
-                if (type != ErrorType.Syntax) throw new Exception();
+                if (!correctCategory(ErrorType.Syntax)) Assert.True(false, "Invalid should have been of type syntax");
             }
             catch (InvalidCastException)
             {
-                if (type != ErrorType.Semantics) throw new Exception();
+                if (!correctCategory(ErrorType.Semantics)) Assert.True(false, "Invalid should have been of type semantics");
             }
             catch (InvalidOperationException)
             {
-                if (type != ErrorType.Semantics) throw new Exception();
+                if (!correctCategory(ErrorType.Semantics)) Assert.True(false, "Invalid should have been of type semantics2");
             }
+
+            bool correctCategory(ErrorType t) =>
+                type == t || type == ErrorType.True;
         }
 
         Dictionary<string, Model.DomainResource> _cache = new Dictionary<string, Model.DomainResource>();
@@ -183,7 +187,8 @@ namespace Hl7.FhirPath.R4.Tests
             output.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
             // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
-            Assert.True(103 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            // EK 20190722: Improving the support for normative FP, we've now gone down to 95
+            Assert.True(95 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)
@@ -219,28 +224,14 @@ namespace Hl7.FhirPath.R4.Tests
                 }
 
 
-                catch (XunitException afe) // (AssertFailedException afe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + afe.Message);
-                    numFailed += 1;
-                }
-                catch (InvalidOperationException ioe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + ioe.Message);
-                    numFailed += 1;
-                }
-                catch (FormatException fe)
-                {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    output.WriteLine("   " + fe.Message);
-                    numFailed += 1;
-                }
                 catch (Exception e)
                 {
-                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    //throw e;
+                    output.WriteLine($"FAIL: {groupName} - {name}: {expression}");
+                    if (!(e is XunitException))
+                        output.WriteLine($"   ({e.GetType().Name}) {e.Message}");
+                    else
+                        output.WriteLine($"   {e.Message}");
+                    numFailed += 1;
                 }
             }
         }
@@ -258,6 +249,8 @@ namespace Hl7.FhirPath.R4.Tests
 
                 if (invalid == "syntax")
                     errorType = ErrorType.Syntax;
+                else if (invalid == "true")
+                    errorType = ErrorType.True;
                 else if (invalid == "semantic")
                     errorType = ErrorType.Semantics;
                 else

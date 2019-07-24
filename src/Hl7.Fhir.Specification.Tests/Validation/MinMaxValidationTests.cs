@@ -43,6 +43,7 @@ namespace Hl7.Fhir.Validation
                 MinMaxValidationExtensions.Compare(Model.Primitives.PartialDateTime.Parse("1972-12-01T13:00:00Z"),
                     new Model.Instant(new DateTimeOffset(1972, 12, 01, 14, 00, 00, TimeSpan.Zero))));
             Assert.Equal(0, MinMaxValidationExtensions.Compare(Model.Primitives.PartialTime.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(Model.Primitives.PartialDate.Parse("2016-02-01"), new Model.Date("2016-01-01")));
             Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Model.FhirDecimal(2.14m)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Model.Integer(3)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Model.FhirString("bbb")));
