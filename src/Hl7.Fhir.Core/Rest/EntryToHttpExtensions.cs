@@ -19,8 +19,8 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
-            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry,
+            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -29,14 +29,8 @@ namespace Hl7.Fhir.Rest
 
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
-
-            // Create an absolute uri when the interaction.Url is relative.
-            var uri = new Uri(interaction.Url, UriKind.RelativeOrAbsolute);
-            if (!uri.IsAbsoluteUri)
-            {
-                uri = HttpUtil.MakeAbsoluteToBase(uri, baseUrl);
-            }
-            var location = new RestUrl(uri);
+            
+            var location = new RestUrl(interaction.Url);
 
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
@@ -89,7 +83,7 @@ namespace Hl7.Fhir.Rest
                     && (entry.HasAnnotation<TransactionBuilder.InteractionType>()
                     && entry.Annotation<TransactionBuilder.InteractionType>() == TransactionBuilder.InteractionType.Search)
                     && entry.Resource is Parameters;
-                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, searchUsingPost, out body);
+                setBodyAndContentType(request, entry.Resource, format, searchUsingPost, out body);
             }
 
             // PCL doesn't support setting the length (and in this case will be empty anyway)
@@ -140,7 +134,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, bool searchUsingPost, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool searchUsingPost, out byte[] body)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 

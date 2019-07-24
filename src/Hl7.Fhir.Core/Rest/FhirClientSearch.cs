@@ -14,7 +14,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient
+    public partial class BaseFhirClient
     {
         #region Search Execution
 

@@ -131,6 +131,27 @@ namespace Hl7.Fhir.Rest
 
             return location;
         }
+        
+        internal static Exception BuildFhirOperationException(HttpStatusCode status, Resource body)
+        {
+            string message;
+
+            if (status.IsInformational())
+                message = $"Operation resulted in an informational response ({status})";
+            else if (status.IsRedirection())
+                message = $"Operation resulted in a redirection response ({status})";
+            else if (status.IsClientError())
+                message = $"Operation was unsuccessful because of a client error ({status})";
+            else
+                message = $"Operation was unsuccessful, and returned status {status}";
+
+            if (body is OperationOutcome outcome)
+                return new FhirOperationException($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
+            else if (body != null)
+                return new FhirOperationException($"{message}. Body contains a {body.TypeName}.", status);
+            else
+                return new FhirOperationException($"{message}. Body has no content.", status);
+        }
 
         public static bool IsWithin(this Uri me, Uri other)
         {

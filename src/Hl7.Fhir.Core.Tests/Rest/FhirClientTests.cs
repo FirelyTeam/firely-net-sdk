@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
-            client.CompressRequestBody = true;
+            client.Settings.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
             client.OnAfterResponse += Client_OnAfterResponse;
 
