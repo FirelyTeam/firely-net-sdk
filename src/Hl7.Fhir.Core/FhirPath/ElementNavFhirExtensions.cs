@@ -127,7 +127,7 @@ namespace Hl7.Fhir.FhirPath
                 }
                 if (result is Model.Primitives.PartialDateTime dt)
                 {
-                    return new FhirDateTime(dt.ToUniversalTime());
+                    return new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime());
                 }
                 else
                 {
