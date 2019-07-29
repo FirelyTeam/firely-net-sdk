@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
         public Primitives.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
-                return Primitives.PartialDateTime.FromDateTime(Value.Value);
+                return Primitives.PartialDateTime.FromDateTimeOffset(Value.Value);
             else
                 return null;
         }

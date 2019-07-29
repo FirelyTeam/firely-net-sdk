@@ -23,22 +23,6 @@ namespace Hl7.Fhir.Specification.Tests
     public class JsonNavigatorTests
     {
         [TestMethod]
-        public void TestConstruct()
-        {
-            var nav = buildNav();
-
-            // At root;
-            Assert.AreEqual(XPathNodeType.Root,nav.NodeType);
-            Assert.IsFalse(nav.IsEmptyElement);
-            Assert.AreEqual(String.Empty, nav.Name);
-            Assert.AreEqual(String.Empty, nav.LocalName);
-            Assert.AreEqual(String.Empty, nav.NamespaceURI);
-            Assert.AreEqual(String.Empty, nav.Prefix);
-            Assert.IsTrue(nav.Value.StartsWith("pat12001-05-06Acme Healthcareusualurn:oid:1.2.36.146.595.217.0.112345Organization/1http://hl7.org/fhir/example-do-not-use#recordStatusarchivedPeterJamesofficialChalmersJimusualhttp://hl7.org/fhir/example-do-not-use#Patient.avatar#pic1Duck imageurn:example-do-not-use:pi3.141592653589793male1974-12http://hl7.org/fhir/example-do-not-use#DateTime.calendargregoriantruehome534 Erewhon StPleasantVilleVic3999ASKUhttp://hl7.org/fhir/Profileiso-21090#nullFlavor3generated<div xmlns=\"http://www.w3.org/1999/xhtml\">"));
-        }
-
-
-        [TestMethod]
         public void TestRootToChild()
         {
             var nav = buildNav();
