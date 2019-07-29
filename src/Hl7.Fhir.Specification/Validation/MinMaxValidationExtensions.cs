@@ -35,6 +35,8 @@ namespace Hl7.Fhir.Validation
 
             else if (instance is Model.Primitives.PartialTime && definition is Time t)
                 return instance.CompareTo(t.ToTime());
+            else if (instance is Model.Primitives.PartialDate && definition is Date dt)
+                return instance.CompareTo(dt.ToPartialDate());
 
             else if (instance is decimal && definition is FhirDecimal d)
                 return instance.CompareTo(d.Value.Value);
