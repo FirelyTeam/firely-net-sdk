@@ -12,6 +12,7 @@ using Hl7.FhirPath;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.FhirPath.Expressions;
 using Hl7.Fhir.ElementModel;
+using System.IO;
 
 namespace Hl7.Fhir
 {
@@ -21,7 +22,7 @@ namespace Hl7.Fhir
         [TestMethod] 
         public void QuestionnaireResponseFhirpathPocoTest()
         {
-            var xml = TestDataHelper.ReadTestData("Large-QuestionnaireResponse.xml");
+            var xml = File.ReadAllText(@"TestData\Large-QuestionnaireResponse.xml");
 
             var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
 
