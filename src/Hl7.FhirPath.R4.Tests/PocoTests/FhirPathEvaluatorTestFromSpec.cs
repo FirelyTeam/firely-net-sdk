@@ -10,105 +10,35 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 using boolean = System.Boolean;
 using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
 using Model = Hl7.Fhir.Model;
 
 namespace Hl7.FhirPath.R4.Tests
 {
-    static class ConverterExtensions
-    {
-        public static void setValue(this Model.Quantity me, double? value)
-        {
-            if (value.HasValue)
-                me.Value = (decimal)value.Value;
-            else
-                me.Value = null;
-        }
-        public static void setUnit(this Model.Quantity me, string value)
-        {
-            me.Unit = value;
-        }
-        public static void setCode(this Model.Quantity me, string value)
-        {
-            me.Code = value;
-        }
-        public static void setSystem(this Model.Quantity me, string value)
-        {
-            me.System = value;
-        }
-        public static void setValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me, string value)
-        {
-            me.ValueSet = value;
-        }
-        public static Model.Canonical getValueSet(this Model.ElementDefinition.ElementDefinitionBindingComponent me)
-        {
-            return me.ValueSetElement;
-        }
-
-        public static Model.Range setLow(this Model.Range me, Model.SimpleQuantity value)
-        {
-            me.Low = value;
-            return me;
-        }
-        public static Model.Range setHigh(this Model.Range me, Model.SimpleQuantity value)
-        {
-            me.High = value;
-            return me;
-        }
-
-        public static Model.RiskAssessment.PredictionComponent addPrediction(this Model.RiskAssessment me)
-        {
-            var item = new Model.RiskAssessment.PredictionComponent();
-            me.Prediction.Add(item);
-            return item;
-        }
-        public static List<Model.RiskAssessment.PredictionComponent> getPrediction(this Model.RiskAssessment me)
-        {
-            return me.Prediction;
-        }
-
-        public static Model.Element getProbability(this Model.RiskAssessment.PredictionComponent me)
-        {
-            return me.Probability;
-        }
-        public static Model.RiskAssessment.PredictionComponent setProbability(this Model.RiskAssessment.PredictionComponent me, Model.Element value)
-        {
-            me.Probability = value;
-            return me;
-        }
-    }
-
-
+    [TestClass]
     public class FhirPathTests
     {
-        private readonly ITestOutputHelper output;
-
-        public FhirPathTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
+        public TestContext TestContext { get; set; }
 
         private void testPredicate(ITypedElement resource, String expression, IEnumerable<XElement> expected)
         {
             var expectedTypedValue = boolean.Parse(expected.First().Value);
 
             var result = resource.Predicate(expression);
-            Assert.Equal(expectedTypedValue, result);
+            Assert.AreEqual(expectedTypedValue, result);
         }
 
         private void test(ITypedElement resource, String expression, IEnumerable<XElement> expected)
         {
             IEnumerable<ITypedElement> actual = resource.Select(expression);
-            Assert.Equal(expected.Count(), actual.Count());
+            Assert.AreEqual(expected.Count(), actual.Count());
 
             expected.Zip(actual, compare).Count();
         }
@@ -117,11 +47,11 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var type = expected.Attribute("type").Value;
             var tp = (ITypedElement)actual;
-            Assert.Equal(type, tp.InstanceType);
+            Assert.AreEqual(type, tp.InstanceType);
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 
-            Assert.Equal(expected.Value, actual.ToStringRepresentation());
+            Assert.AreEqual(expected.Value, actual.ToStringRepresentation());
 
             return true;
         }
@@ -132,7 +62,7 @@ namespace Hl7.FhirPath.R4.Tests
             var input = focus.ToTypedElement();
             var container = resource?.ToTypedElement();
 
-            Assert.True(input.IsBoolean(expression, value, new EvaluationContext(container)));
+            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
 
         enum ErrorType
@@ -147,19 +77,19 @@ namespace Hl7.FhirPath.R4.Tests
             try
             {
                 resource.Select(expression);
-                Assert.True(false, "Should have been invalid");
+                Assert.IsTrue(false, "Should have been invalid");
             }
             catch (FormatException)
             {
-                if (!correctCategory(ErrorType.Syntax)) Assert.True(false, "Invalid should have been of type syntax");
+                if (!correctCategory(ErrorType.Syntax)) Assert.Fail("Invalid should have been of type syntax");
             }
             catch (InvalidCastException)
             {
-                if (!correctCategory(ErrorType.Semantics)) Assert.True(false, "Invalid should have been of type semantics");
+                if (!correctCategory(ErrorType.Semantics)) Assert.Fail("Invalid should have been of type semantics");
             }
             catch (InvalidOperationException)
             {
-                if (!correctCategory(ErrorType.Semantics)) Assert.True(false, "Invalid should have been of type semantics2");
+                if (!correctCategory(ErrorType.Semantics)) Assert.Fail("Invalid should have been of type semantics2");
             }
 
             bool correctCategory(ErrorType t) =>
@@ -171,7 +101,7 @@ namespace Hl7.FhirPath.R4.Tests
         int numFailed = 0;
         int totalTests = 0;
 
-        [Fact(), Trait("Area", "FhirPathFromSpec")]
+        [TestMethod]
         public void TestPublishedTests()
         {
             var path = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath");
@@ -179,16 +109,16 @@ namespace Hl7.FhirPath.R4.Tests
 
             foreach (var file in files)
             {
-                output.WriteLine($"==== Running tests from file '{file}' ====");
+                TestContext.WriteLine($"==== Running tests from file '{file}' ====");
                 runTests(file);
-                output.WriteLine(Environment.NewLine);
+                TestContext.WriteLine(Environment.NewLine);
             }
 
-            output.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
+            TestContext.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
+            // TODO 20190709: we know that 175 tests are still failing. In the next release we make sure that these test will succeed again.
             // EK 20190722: Improving the support for normative FP, we've now gone down to 95
-            Assert.True(175 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            Assert.AreEqual(175,numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)
@@ -226,11 +156,8 @@ namespace Hl7.FhirPath.R4.Tests
 
                 catch (Exception e)
                 {
-                    output.WriteLine($"FAIL: {groupName} - {name}: {expression}");
-                    if (!(e is XunitException))
-                        output.WriteLine($"   ({e.GetType().Name}) {e.Message}");
-                    else
-                        output.WriteLine($"   {e.Message}");
+                    TestContext.WriteLine($"FAIL: {groupName} - {name}: {expression}");
+                    TestContext.WriteLine($"   ({e.GetType().Name}) {e.Message}");
                     numFailed += 1;
                 }
             }
@@ -275,7 +202,7 @@ namespace Hl7.FhirPath.R4.Tests
             }
         }
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod]
         public void testTyping()
         {
             Model.ElementDefinition ed = new Model.ElementDefinition();
@@ -284,7 +211,7 @@ namespace Hl7.FhirPath.R4.Tests
             testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSet", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod]
         public void testDecimalRA()
         {
             Model.RiskAssessment r = new Model.RiskAssessment();
@@ -319,7 +246,7 @@ namespace Hl7.FhirPath.R4.Tests
           }
         */
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod]
         public void testExtensionDefinitions()
         {
             // obsolete:

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Reflection;
-using System.Text;
 #if NET40
 using System.Linq;
 using ICSharpCode.SharpZipLib.Zip;
