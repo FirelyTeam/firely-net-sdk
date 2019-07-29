@@ -29,7 +29,7 @@ namespace Hl7.Fhir
             SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "dateadd",
                 (PartialDateTime f, string field, long amount) =>
                 {
-                    DateTimeOffset dto = f.ToUniversalTime();
+                    DateTimeOffset dto = f.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime();
                     int value = (int)amount;
 
                     // Need to convert the amount and field to compensate for partials
@@ -44,7 +44,7 @@ namespace Hl7.Fhir
                         case "mi": dto = dto.AddMinutes(value); break;
                         case "ss": dto = dto.AddSeconds(value); break;
                     }
-                    PartialDateTime changedDate = PartialDateTime.Parse(PartialDateTime.FromDateTime(dto).ToString().Substring(0, f.ToString().Length));
+                    PartialDateTime changedDate = PartialDateTime.Parse(PartialDateTime.FromDateTimeOffset(dto).ToString().Substring(0, f.ToString().Length));
                     return changedDate;
                 });
 
