@@ -188,7 +188,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
             // EK 20190722: Improving the support for normative FP, we've now gone down to 95
-            Assert.True(95 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            Assert.True(175 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)

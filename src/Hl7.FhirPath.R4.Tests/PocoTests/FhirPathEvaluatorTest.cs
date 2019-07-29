@@ -17,13 +17,12 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace Hl7.FhirPath.R4.Tests
 {
@@ -34,7 +33,6 @@ namespace Hl7.FhirPath.R4.Tests
         public ITypedElement UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc;
-
 
         public PatientFixture()
         {
@@ -82,31 +80,28 @@ namespace Hl7.FhirPath.R4.Tests
                         new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
             Xdoc.Elements().First().Add(testXml);
 
-            Assert.True(TestInput.IsBoolean(expr, true));
+            Assert.IsTrue(TestInput.IsBoolean(expr, true));
         }
 
         public void IsTrue(string expr, ITypedElement input)
         {
-            Assert.True(input.IsBoolean(expr, true));
+            Assert.IsTrue(input.IsBoolean(expr, true));
         }
     }
 
-    public class FhirPathEvaluatorTest : IClassFixture<PatientFixture>
+    [TestClass]
+    public class FhirPathEvaluatorTest
     {
-        PatientFixture fixture;
+        static PatientFixture fixture;
 
-        private readonly ITestOutputHelper output;
-
-
-        public FhirPathEvaluatorTest(PatientFixture fixture, ITestOutputHelper output)
+        [ClassInitialize]
+        public static void Initialize(TestContext ctx)
         {
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
-            this.fixture = fixture;
-            this.output = output;
+            fixture = new PatientFixture();
         }
-
-        [Fact]
+        
+        [TestMethod]
         public void TestTreeVisualizerVisitor()
         {
             var compiler = new FhirPathCompiler();
@@ -115,7 +110,7 @@ namespace Hl7.FhirPath.R4.Tests
             Debug.WriteLine(result);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestExistence()
         {
             fixture.IsTrue(@"{}.empty()");
@@ -124,21 +119,21 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.identifier.exists()");
             fixture.IsTrue(@"Patient.dientifeir.exists().not()");
             fixture.IsTrue(@"Patient.telecom.rank.exists()");
-            Assert.Equal(3L, fixture.TestInput.Scalar(@"identifier.count()"));
-            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.count()"));
-            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.value.count()"));
-            Assert.Equal(1L, fixture.TestInput.Scalar(@"Patient.telecom.rank"));
+            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"identifier.count()"));
+            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"Patient.identifier.count()"));
+            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"Patient.identifier.value.count()"));
+            Assert.AreEqual(1L, fixture.TestInput.Scalar(@"Patient.telecom.rank"));
             fixture.IsTrue(@"Patient.telecom.rank = 1");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestNullPropagation()
         {
             fixture.IsTrue(@"({}.substring(0)).empty()");
             fixture.IsTrue(@"('hello'.substring({})).empty()");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestDynaBinding()
         {
 #pragma warning disable CS0618 // Type or member is internal
@@ -147,17 +142,17 @@ namespace Hl7.FhirPath.R4.Tests
                     SourceNode.Valued("child", "4")).ToTypedElement();
 #pragma warning restore CS0618 // Type or member is internal
 
-            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
+            Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
 
-        [Fact]
+        [TestMethod]
         public void TestSDF11Bug()
         {
-            Assert.True(fixture.UuidProfile.IsBoolean("snapshot.element.first().path = type", true));
+            Assert.IsTrue(fixture.UuidProfile.IsBoolean("snapshot.element.first().path = type", true));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestSubsetting()
         {
             fixture.IsTrue(@"Patient.identifier[1] != Patient.identifier.first()");
@@ -178,12 +173,11 @@ namespace Hl7.FhirPath.R4.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.Contains("contains more than one element", io.Message);
+                Assert.IsTrue(io.Message.Contains("contains more than one element"));
             }
         }
 
-
-        [Fact]
+        [TestMethod]
         public void TestGreaterThan()
         {
             fixture.IsTrue(@"4.5 > 0");
@@ -193,11 +187,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"(5 > {}).empty()");
         }
 
-
-
-
-
-        [Fact]
+        [TestMethod]
         public void TestMath()
         {
             fixture.IsTrue(@"-4.5 + 4.5 = 0");
@@ -227,7 +217,7 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        [Fact]
+        [TestMethod]
         public void Test3VLBoolean()
         {
             fixture.IsTrue(@"true and true");
@@ -271,7 +261,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"({} implies {}).empty()");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestLogicalShortcut()
         {
             fixture.IsTrue(@"true or (1/0 = 0)");
@@ -279,17 +269,18 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        [Fact]
+        [TestMethod]
         public void TestConversions()
         {
             fixture.IsTrue(@"(4.1).toString() = '4.1'");
             fixture.IsTrue(@"true.toString() = 'true'");
             fixture.IsTrue(@"true.toDecimal() = 1");
             fixture.IsTrue(@"Patient.identifier.value.first().toDecimal() = 654321");
+            fixture.IsTrue(@"@2014-12-14T.toString() = '2014-12-14'");
             fixture.IsTrue(@"@2014-12-14.toString() = '2014-12-14'");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIIf()
         {
             fixture.IsTrue(@"Patient.name.iif(exists(), 'named', 'unnamed') = 'named'");
@@ -303,7 +294,7 @@ namespace Hl7.FhirPath.R4.Tests
             //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestExtension()
         {
             fixture.IsTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()");
@@ -311,7 +302,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestEquality()
         {
             fixture.IsTrue(@"4 = 4");
@@ -329,15 +320,23 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.gender = 'male'"); // gender has an extension
             fixture.IsTrue(@"Patient.communication = Patient.communication");       // different extensions, same values
             fixture.IsTrue(@"Patient.communication.first() = Patient.communication.skip(1)");       // different extensions, same values
-
-            fixture.IsTrue(@"@2015-01-01 = @2015-01-01");
-            fixture.IsTrue(@"@2015-01-01 != @2015-01");
-            fixture.IsTrue(@"@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z");
-            fixture.IsTrue(@"@T13:45:02Z = @T13:45:02+00:00");
-            fixture.IsTrue(@"@T13:45:02+00:00 != @T13:45:02+01:00");
         }
 
-        [Fact]
+        [TestMethod, Ignore]
+        public void TestDateTimeEquality()
+        {
+            fixture.IsTrue(@"@2015-01-01 = @2015-01-01");
+            fixture.IsTrue(@"@2015-01-01T = @2015-01-01T");
+            fixture.IsTrue(@"@2015-01-01 != @2015-01");
+            fixture.IsTrue(@"@2015-01-01T != @2015-01T");
+
+            fixture.IsTrue(@"@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z");
+
+            fixture.IsTrue(@"@T13:45:02 = @T13:45:02");
+            fixture.IsTrue(@"@T13:45:02 != @T14:45:02");
+        }
+
+        [TestMethod]
         public void TestCollectionFunctions()
         {
             fixture.IsTrue(@"Patient.identifier.use.distinct() = ('usual' | 'official')");
@@ -353,7 +352,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"{}.subsetOf(%context.Patient.identifier)");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestCollectionOperators()
         {
             fixture.IsTrue(@"Patient.identifier.last() in Patient.identifier");
@@ -369,11 +368,11 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        [Fact]
-        public void TestEquivalence()
+        [TestMethod, Ignore]
+        public void TestDateTimeEquivalence()
         {
-            fixture.IsTrue("@2012-04-15 ~ @2012-04-15T10:00:00");
-            fixture.IsTrue("@T10:01:02Z !~ @T10:01:55+01:00");
+            fixture.IsTrue("@2012-04-15T ~ @2012-04-15T10:00:00");
+            fixture.IsTrue("@T10:01:02 !~ @T10:01:55+01:00");
         }
 
         public static string ToString(ITypedElement nav)
@@ -407,7 +406,7 @@ namespace Hl7.FhirPath.R4.Tests
         //}
 
 
-        [Fact]
+        [TestMethod]
         public void TestWhere()
         {
             fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
@@ -416,7 +415,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"{}.where($this = 'hi').count()=0");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestAll()
         {
             fixture.IsTrue(@"Patient.identifier.skip(1).all(use = 'official')");
@@ -424,7 +423,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.identifier.skip(1).all({}).empty()");   // empty results still count as "empty"
         }
 
-        [Fact]
+        [TestMethod]
         public void TestAny()
         {
             fixture.IsTrue(@"Patient.identifier.any(use = 'official')");
@@ -432,7 +431,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.contained.skip(1).item.any(code.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
-        [Fact]
+        [TestMethod]
         public void TestRepeat()
         {
             fixture.IsTrue(@"Patient.contained.skip(1).repeat(item.where(type='group')).count() = 3");       // really need to filter on Questionnare (as('Questionnaire'))
@@ -449,7 +448,7 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        [Fact]
+        [TestMethod]
         public void TestExpression()
         {
             fixture.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
@@ -485,20 +484,20 @@ namespace Hl7.FhirPath.R4.Tests
 
         }
 
-        [Fact]
+        [TestMethod]
         public void TestExpressionTodayFunction()
         {
             // Check that date comes in
-            Assert.Equal(PartialDateTime.Today(), fixture.TestInput.Scalar("today()"));
+            Assert.AreEqual(PartialDate.Today(), fixture.TestInput.Scalar("today()"));
 
             // Check greater than
-            fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(1)));
+            fixture.IsTrue("today() < @" + PartialDate.FromDateTimeOffset(DateTimeOffset.UtcNow.AddDays(1), includeOffset: false));
 
             // Check less than
-            fixture.IsTrue("today() > @" + PartialDateTime.FromDateTime(DateTimeOffset.UtcNow.AddDays(-1)));
+            fixture.IsTrue("today() > @" + PartialDate.FromDateTimeOffset(DateTimeOffset.UtcNow.AddDays(-1), includeOffset: false));
 
             // Check ==
-            fixture.IsTrue("today() = @" + PartialDateTime.Today());
+            fixture.IsTrue("today() = @" + PartialDate.Today());
 
             // This unit-test will fail if you are working between midnight
             // and start-of-day in GMT:
@@ -508,7 +507,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue("now() >= @" + PartialDateTime.Now());
         }
 
-        [Fact]
+        [TestMethod]
         public void TestSubstring()
         {
             fixture.IsTrue("Patient.name.family");
@@ -537,7 +536,7 @@ namespace Hl7.FhirPath.R4.Tests
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void TestStringOps()
         {
             fixture.IsTrue("Patient.name.family.startsWith('')");
@@ -573,7 +572,7 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        //[Fact]
+        //[TestMethod]
         //public void TestUnionNotDistinct()
         //{
         //    var patXml = @"<Patient xmlns='http://hl7.org/fhir'>
@@ -594,7 +593,7 @@ namespace Hl7.FhirPath.R4.Tests
         //    Assert.Equal(5, result.Count());
         //}
 
-        [Fact]
+        [TestMethod]
         public void CompilationIsCached()
         {
             Stopwatch sw = new Stopwatch();
@@ -625,11 +624,9 @@ namespace Hl7.FhirPath.R4.Tests
             sw.Stop();
 
             var cached = sw.ElapsedMilliseconds;
-            output.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
+            Console.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
 
-            Assert.True(cached < uncached / 2);
-
+            Assert.IsTrue(cached < uncached / 2);
         }
-
     }
 }

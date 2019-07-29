@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (typed)
             {
                 Assert.AreEqual("date", bd.InstanceType);
-                Assert.AreEqual(PartialDateTime.Parse("1974-12-25"), bd.Value);
+                Assert.AreEqual(PartialDate.Parse("1974-12-25"), bd.Value);
             }
             else
                 Assert.AreEqual("1974-12-25", bd.Value);
