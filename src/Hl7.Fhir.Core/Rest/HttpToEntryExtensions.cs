@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Rest
                 else
                     result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
             }
-            catch (FormatException fe) when (!throwOnFormatException)
+            catch (FormatException) when (!throwOnFormatException)
             {
                 // if (throwOnFormatException) throw fe;
 
