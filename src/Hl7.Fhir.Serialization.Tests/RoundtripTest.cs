@@ -172,7 +172,6 @@ namespace Hl7.Fhir.Serialization.Tests
             var files = Directory.EnumerateFiles(inputPath);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
-            int filesProcessed = 0;
             foreach (string file in files)
             {
                 if (SkipFile(file))
