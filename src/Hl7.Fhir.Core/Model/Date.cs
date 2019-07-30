@@ -85,6 +85,13 @@ namespace Hl7.Fhir.Model
             return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
         }
 
+        public Primitives.PartialDate? ToPartialDate()
+        {
+            if (Value != null)
+                return Primitives.PartialDate.Parse(Value);
+            else
+                return null;
+        }
 
         public Primitives.PartialDateTime? ToPartialDateTime()
         {
