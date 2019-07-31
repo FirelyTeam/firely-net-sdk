@@ -1,0 +1,39 @@
+﻿/* 
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Schema;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Validation.Schema;
+using System;
+
+namespace Hl7.Fhir.Specification.Specification.Source
+{
+    internal class ElementSchemaResolver : IResourceResolver, ISchemaResolver
+    {
+        private readonly IResourceResolver _wrapped;
+
+        public ElementSchemaResolver(IResourceResolver wrapped)
+        {
+            _wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
+        }
+
+        public ElementSchema GetSchema(Uri schemaUri)
+        {
+            var sd = this.FindStructureDefinition(schemaUri.OriginalString);
+
+            if (sd == null) return null;
+
+            return new SchemaConverter(this).Convert(sd);
+        }
+
+        public Resource ResolveByCanonicalUri(string uri) => _wrapped.ResolveByCanonicalUri(uri);
+
+        public Resource ResolveByUri(string uri) => _wrapped.ResolveByUri(uri);
+    }
+}

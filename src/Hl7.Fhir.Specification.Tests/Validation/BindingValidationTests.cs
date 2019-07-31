@@ -5,6 +5,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Validation.Schema;
 using System.Linq;
 using Xunit;
 
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var validator = binding.ToValidatable();
-            var vc = new ValidationContext() { TerminologyService = _termService };
+            var vc = new ValidationContext(); // TODO MV Validation { TerminologyService = _termService };
             // Non-bindeable things should succeed
             Element v = new FhirBoolean(true);
             var node = v.ToTypedElement();
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var val = binding.ToValidatable();
-            var vc = new ValidationContext() { TerminologyService = _termService };
+            var vc = new ValidationContext(); // TODO MV Validation { TerminologyService = _termService };
 
             var c = new Coding(dar, "not-a-number");
             var result = val.Validate(c.ToTypedElement(), vc);
@@ -128,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var val = binding.ToValidatable();
-            var vc = new ValidationContext() { TerminologyService = _termService };
+            var vc = new ValidationContext(); // TODO MV Validation { TerminologyService = _termService };
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding(null, null, "Just some display text"));
@@ -140,7 +141,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, switch to a required binding
             binding.Strength = BindingStrength.Required;
             val = binding.ToValidatable();
-           
+
             // Then, with no code at all in a CC with a required binding
             result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
@@ -168,7 +169,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var val = binding.ToValidatable();
-            var vc = new ValidationContext() { TerminologyService = _termService };
+            var vc = new ValidationContext(); // TODO MV Validation { TerminologyService = _termService };
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));

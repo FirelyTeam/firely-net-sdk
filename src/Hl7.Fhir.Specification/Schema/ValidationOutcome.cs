@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,14 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    internal enum ValidationResult
-    {
-        Valid,
-        Invalid,
-        Undecided
-    }
-
-
+   
     internal enum Weight
     {
         Information,

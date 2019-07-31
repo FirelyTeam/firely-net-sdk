@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Schema;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -130,13 +131,15 @@ namespace Hl7.Fhir.Specification.Schema
             return Strength == BindingStrength.Required ? outcome : new OperationOutcome();
         }
 
-        private OperationOutcome callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
+        private OperationOutcome callService(ITerminologyServiceNEW svc, string location, string canonical, string code = null, string system = null, string display = null,
                 Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
         {
             try
             {
-                var outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
-                                coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
+                // TODO MV: validation: still todo
+                //                var outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
+                //                                coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
+                var outcome = new OperationOutcome();
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
                 return outcome;
             }
@@ -163,7 +166,7 @@ namespace Hl7.Fhir.Specification.Schema
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"No code found in {source.InstanceType} with a required binding.", source);
-                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && 
+                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) &&
                                 Strength == BindingStrength.Extensible:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"Extensible binding requires code or text.", source);
@@ -186,6 +189,11 @@ namespace Hl7.Fhir.Specification.Schema
                 props.Add(new JProperty("description", Description));
 
             return new JProperty("binding", props);
+        }
+
+        Assertions IValidatable.Validate(ITypedElement input, ValidationContext vc)
+        {
+            throw new NotImplementedException();
         }
     }
 }

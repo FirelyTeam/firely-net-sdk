@@ -6,15 +6,20 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-    internal class ValidationContext
+    internal class XmlOrder : IAssertion
     {
-        public ITerminologyService TerminologyService;
+        private int _order;
 
-        public IExceptionSource ExceptionSink;
+        public XmlOrder(int xmlOrder)
+        {
+            _order = xmlOrder;
+        }
+
+        public JToken ToJson() => new JProperty("xml-order", _order);
     }
 }
