@@ -7,8 +7,8 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
+using Hl7.Fhir.Validation.Schema;
 
 namespace Hl7.Fhir.Specification.Schema
 {

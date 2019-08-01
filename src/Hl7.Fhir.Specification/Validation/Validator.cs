@@ -349,18 +349,22 @@ namespace Hl7.Fhir.Validation
 
             if (elementConstraints.Binding != null)
                 validator.Add(elementConstraints.Binding.ToValidatable());
-
+            // TODO MV 20190801 Validation: this has to go to ElementSchema
+            /*
             if (elementConstraints.MinValue != null)
                 validator.Add(elementConstraints.MinValue.ToValidatable(MinMax.MinValue));
 
             if (elementConstraints.MaxValue != null)
                 validator.Add(elementConstraints.MaxValue.ToValidatable(MinMax.MaxValue));
-
+            
             if (elementConstraints.MaxLength.HasValue)
                 validator.Add(elementConstraints.ToValidatable());
 
+            if (elementConstraints.Fixed != null)
+                validator.Add(elementConstraints.ToValidatable());
+            
             outcome.Add(validator.Validate(instance));
-
+            */
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();

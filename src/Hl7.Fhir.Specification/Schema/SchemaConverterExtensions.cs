@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
@@ -23,6 +24,9 @@ namespace Hl7.Fhir.Specification.Schema
 
             var elements = new List<IAssertion>()
                 .MaybeAdd(BuildMaxLength(def))
+                .MaybeAdd(BuildFixed(def))
+                .MaybeAdd(BuildMinValue(def))
+                .MaybeAdd(BuildMaxValue(def))
                 //.MaybeAdd(BuildElementRegEx(def))
                 //.MaybeAdd(BuildTypeRefRegEx(def))
                 //.MaybeAdd(BuildMinItems(def))
@@ -33,9 +37,16 @@ namespace Hl7.Fhir.Specification.Schema
             return new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), elements);
         }
 
+        private static IAssertion BuildMinValue(ElementDefinition def) =>
+            def.MinValue != null ? new MinMaxValueValidator(def.MinValue.ToTypedElement(), MinMax.MinValue) : null;
 
+        private static IAssertion BuildMaxValue(ElementDefinition def) =>
+            def.MaxValue != null ? new MinMaxValueValidator(def.MaxValue.ToTypedElement(), MinMax.MaxValue) : null;
 
-        private static MaxLength BuildMaxLength(ElementDefinition def) =>
+        private static IAssertion BuildFixed(ElementDefinition def) =>
+            def.Fixed != null ? new Fixed(def.Fixed.ToTypedElement()) : null;
+
+        private static IAssertion BuildMaxLength(ElementDefinition def) =>
             def.IsPrimitiveValueConstraint() && def.Type.Count == 1 && def.MaxLength.HasValue
             ? new MaxLength(def.MaxLength.Value) : null;
 

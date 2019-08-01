@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Linq;
 using System.Runtime.Serialization;

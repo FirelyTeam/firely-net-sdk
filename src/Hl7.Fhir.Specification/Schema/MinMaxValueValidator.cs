@@ -12,6 +12,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Schema;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace Hl7.Fhir.Specification.Schema
@@ -24,47 +25,42 @@ namespace Hl7.Fhir.Specification.Schema
         MaxValue
     }
 
-    internal static class MinMaxValueConfigurator
+    /*
+     * Element Id	ElementDefinition.minValue[x]
+     * Definition	The minimum allowed value for the element. The value is inclusive. This is allowed for the types date, dateTime, instant, time, decimal, integer, and Quantity.
+     * 
+     * Cardinality	0..1
+     * Type	        date|dateTime|instant|time|decimal|integer|positiveInt|unsignedInt|Quantity
+     * Comments	    Except for date/date/instant, the type of the minValue[x] SHALL be the same as the specified type of the element. For the date/dateTime/instant values, the type of minValue[x] SHALL be either the same, or a Duration which specifies a relative time limit to the current time. The duration value is positive, and is subtracted from the current clock to determine the minimum allowable value. A minimum value for a Quantity is interpreted as an canonical minimum - e.g. you cannot provide 100mg if the minimum value is 10g.
+     */
+
+    /*
+     *  Element Id	ElementDefinition.maxValue[x]
+     *  Definition	The maximum allowed value for the element. The value is inclusive. This is allowed for the types date, dateTime, instant, time, decimal, integer, and Quantity.
+     *  
+     *  Cardinality	0..1
+     *  Type	    date|dateTime|instant|time|decimal|integer|positiveInt|unsignedInt|Quantity
+     *  Comments	Except for date/date/instant, the type of the maxValue[x] SHALL be the same as the specified type of the element. For the date/dateTime/instant values, the type of maxValue[x] SHALL be either the same, or a Duration which specifies a relative time limit to the current time. The duration value is positive, and is added to the current clock to determine the maximum allowable value. A maximum value for a Quantity is interpreted as an canonical maximum - e.g. you cannot provide 10g if the maximum value is 50mg.
+     */
+
+    internal class MinMaxValueValidator : IAssertion, IValidatable
     {
-        public static MinMaxValueValidator ToValidatable(this Element definition, MinMax elementName)
+        private readonly ITypedElement _value;
+        private readonly MinMax _minMaxType;
+
+        public MinMaxValueValidator(ITypedElement value, MinMax minMaxType)
         {
-            if (definition == null)
-                throw new IncorrectElementDefinitionException("Not exptected");
+            _value = value ?? throw new IncorrectElementDefinitionException($"{nameof(value)} cannot be null");
+            _minMaxType = minMaxType;
 
             // Min/max are only defined for ordered types
-            if (!definition.GetType().IsOrderedFhirType())
+            if (!IsOrderedType(_value.InstanceType))
             {
-                throw new IncorrectElementDefinitionException($"{elementName.GetLiteral()} was given in ElementDefinition, but type '{definition.TypeName}' is not an ordered type");
+                throw new IncorrectElementDefinitionException($"{value.Name} was given in ElementDefinition, but type '{value.InstanceType}' is not an ordered type");
             }
-
-            return new MinMaxValueValidator(definition, elementName);
-        }
-    }
-
-    internal class MinMaxValueValidator : IValidatable
-    {
-        private readonly Element _value;
-        private readonly MinMax _elementName;
-
-        public MinMaxValueValidator(Element value, MinMax elementName)
-        {
-            _value = value;
-            _elementName = elementName;
         }
 
-        public OperationOutcome Validate(ITypedElement input, ValidationContext vc)
-        {
-            if (input == null) throw Error.ArgumentNull(nameof(input));
-
-            var outcome = new OperationOutcome();
-
-            if (_value != null)
-                outcome.Add(validateMinMaxValue(_value, input, (_elementName == MinMax.MinValue ? -1 : 1), _elementName.GetLiteral()));
-
-            return outcome;
-        }
-
-        private static OperationOutcome validateMinMaxValue(Element definition, ITypedElement instance,
+        private static OperationOutcome validateMinMaxValue(ITypedElement definition, ITypedElement instance,
                 int comparisonOutcome, string elementName)
         {
             var outcome = new OperationOutcome();
@@ -73,7 +69,7 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 try
                 {
-                    var instanceValue = instance.GetComparableValue(definition.GetType());
+                    var instanceValue = instance.GetComparableValue(definition.InstanceType);
 
                     if (instanceValue != null)
                     {
@@ -99,6 +95,41 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         Assertions IValidatable.Validate(ITypedElement input, ValidationContext vc)
+        {
+            if (input == null) throw Error.ArgumentNull(nameof(input));
+
+            var outcome = new OperationOutcome();
+
+            if (_value != null)
+                outcome.Add(validateMinMaxValue(_value, input, (_minMaxType == MinMax.MinValue ? -1 : 1), _minMaxType.GetLiteral()));
+            return Assertions.Failure;
+            //return outcome;
+        }
+
+        /// <summary>
+        /// TODO Validation: this should be altered and moved to a more generic place, and should be more sophisticated
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool IsOrderedType(string type)
+        {
+            switch (type)
+            {
+                case "date":
+                case "dateTime":
+                case "instant":
+                case "time":
+                case "decimal":
+                case "integer":
+                case "positiveInt":
+                case "unsignedInt":
+                case "Quantity": return true;
+                default:
+                    return false;
+            }
+        }
+
+        public JToken ToJson()
         {
             throw new NotImplementedException();
         }
