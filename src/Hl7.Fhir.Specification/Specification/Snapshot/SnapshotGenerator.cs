@@ -1086,12 +1086,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                                 rebasedRootElem.Path = diff.Path;
 
-#if CACHE_ROOT_ELEMDEF
-                                // [WMR 20190806] Paranoia: never clone temporary internal annotation
-                                Debug.Assert(!(rebasedRootElem.HasSnapshotElementAnnotation()));
-                                //rebasedRootElem.RemoveSnapshotElementAnnotations(); // Paranoia...
-#endif
-
                                 // Merge the type profile root element; no need to expand children
                                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
                             }
