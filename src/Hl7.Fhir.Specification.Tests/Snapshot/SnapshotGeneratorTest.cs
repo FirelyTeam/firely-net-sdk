@@ -39,6 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         SnapshotGenerator _generator;
+        ZipSource _zipSource;
         IResourceResolver _testResolver;
         TimingSource _source;
 
@@ -62,11 +63,8 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _testResolver = new CachedResolver(
-                new MultiResolver(
-                    // _source,
-                    new ZipSource("specification.zip"),
-                    _source));
+            _zipSource = new ZipSource("specification.zip");
+            _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
         [TestMethod]
@@ -1891,6 +1889,93 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20190805] Updated, verify base annotation on extension definition root element
+        // Should point to core "Extension", not "Element"
+        [TestMethod]
+        public void TestBaseAnnotations_ExtensionDefinition()
+        {
+            const string url = @"http://example.org/fhir/StructureDefinition/MyTestExtension";
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "MyTestExtension",
+                Url = url,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension")
+                        {
+                            Short = "TEST"
+                        },
+                        new ElementDefinition("Extension.url")
+                        {
+                            Fixed = new FhirString(url)
+                        }
+                    }
+                }
+            };
+
+            var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.GenerateAnnotationsOnConstraints = true;
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+
+                // Replace root element and re-expand
+                var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
+                
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
+
+                Assert.IsNotNull(coreExtension);
+                coreExtension.Snapshot = null;
+                _generator.Update(coreExtension);
+
+                Assert.IsTrue(coreExtension.HasSnapshot);
+                var coreDiffRoot = coreExtension.Differential.Element[0];
+                var coreSnapRoot = coreExtension.Snapshot.Element[0];
+
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                Debug.Assert(!coreDiffRoot.HasSnapshotElementAnnotation());
+
+                var userDiffRoot = (ElementDefinition)coreDiffRoot.DeepCopy();
+
+                sd.Differential.Element[0] = userDiffRoot;
+
+                var expanded = _generator.Generate(sd);
+                dumpOutcome(_generator.Outcome);
+                assertBaseDefs(expanded, settings);
+
+                var userSnapRoot = expanded[0];
+                Assert.AreNotSame(coreSnapRoot, userSnapRoot);
+                Assert.IsTrue(userSnapRoot.TryGetAnnotation<BaseDefAnnotation>(out var anno));
+                Assert.AreEqual("Extension", anno.BaseStructureDefinition.Name);
+                Assert.AreEqual("Extension", anno.BaseElementDefinition.Path);
+
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                Debug.Assert(!userDiffRoot.HasSnapshotElementAnnotation());
+
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
         // [WMR 20170714] NEW
         // Annotated Base Element for backbone elements is not included in base structuredefinition ?
 
@@ -2031,15 +2116,20 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
-            var elems = sd.Snapshot.Element;
+            Debug.WriteLine("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
+            assertBaseDefs(sd.Snapshot.Element, settings);
+        }
+
+        static void assertBaseDefs(List<ElementDefinition> elems, SnapshotGeneratorSettings settings)
+        {
             Assert.IsNotNull(elems);
             Assert.IsTrue(elems.Count > 0);
 
-            var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
+            //var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
-            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
-            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
-            Debug.Print(new string('=', 100));
+            Debug.WriteLine("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
+            Debug.WriteLine(new string('=', 100));
+
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
@@ -7167,7 +7257,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new Fhir.Validation.TestProfileArtifactSource();
             var testResolver = new CachedResolver(
                 new MultiResolver(
-                    new ZipSource("specification.zip"),
+                    _zipSource, //new ZipSource("specification.zip"),
                     src));
             var generator = _generator = new SnapshotGenerator(testResolver, _settings);
 
