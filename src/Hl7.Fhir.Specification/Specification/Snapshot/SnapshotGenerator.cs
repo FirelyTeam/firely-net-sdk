@@ -1074,17 +1074,35 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-                            // Expand and merge (only!) the root element of the external type profile
-                            // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
-                            var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
-                            if (typeRootElem == null) { return false; }
 
-                            // Rebase before merging
-                            var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
-                            rebasedRootElem.Path = diff.Path;
+                            if (!profileRef.IsComplex)
+                            {
+                                // Expand and merge (only!) the root element of the external type profile
+                                // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
+                                var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
+                                if (typeRootElem == null) { return false; }
 
-                            // Merge the type profile root element; no need to expand children
-                            mergeElementDefinition(snap.Current, rebasedRootElem, false);
+                                // Rebase before merging
+                                var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
+                                rebasedRootElem.Path = diff.Path;
+
+#if CACHE_ROOT_ELEMDEF
+                                // [WMR 20190806] Paranoia: never clone temporary internal annotation
+                                Debug.Assert(!(rebasedRootElem.HasSnapshotElementAnnotation()));
+                                //rebasedRootElem.RemoveSnapshotElementAnnotations(); // Paranoia...
+#endif
+
+                                // Merge the type profile root element; no need to expand children
+                                mergeElementDefinition(snap.Current, rebasedRootElem, false);
+                            }
+                            else
+                            {
+                                // [WMR 20190723] TODO
+                                // For complex extension child element, do NOT merge from root element!
+                                // Instead, merge with matching child element (similar to above)
+                                Debug.Fail("TODO");
+                                throw new NotSupportedException();
+                            }
                         }
                     }
                 }
