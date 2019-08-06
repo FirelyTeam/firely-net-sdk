@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
-            if (targetElement != null)
+            if (!(targetElement is null))
             {
                 // New element with type profile
                 var newElement = (ElementDefinition)targetElement.DeepCopy();
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var primaryDiffType = diff.Current.PrimaryType();
 
             StructureDefinition typeStructure = null;
-            if (primaryDiffType != null)
+            if (!(primaryDiffType is null))
             {
 
                 var primarySnapType = snap.Current.PrimaryType();

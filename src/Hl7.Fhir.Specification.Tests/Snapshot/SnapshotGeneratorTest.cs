@@ -1986,9 +1986,9 @@ namespace Hl7.Fhir.Specification.Tests
             var baseProfile = e.BaseProfile;
             Assert.IsNotNull(baseProfile);
             Debug.WriteLine("[SnapshotBaseProfileHandler] Profile #{0} '{1}' BaseDefinition = '{2}'".FormatWith(profile.GetHashCode(), profile.Url, profile.BaseDefinition));
-            Debug.Print("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
+            Debug.WriteLine("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
             var rootElem = baseProfile.Snapshot.Element[0];
-            Debug.Print("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
+            Debug.WriteLine("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
             Assert.AreEqual(profile.BaseDefinition, baseProfile.Url);
         }
 
@@ -2004,7 +2004,7 @@ namespace Hl7.Fhir.Specification.Tests
             // When the snapshot generator expands external profiles, then this handler is called once for each
             // profile in the base hierarchy, starting at the root profile, e.g. Resource => DomainResource => Patient.
             // Each time we recreate the annotation, so the final annotation contains a reference to the immediate base.
-            if (ann != null)
+            if (!(ann is null))
             {
                 elem.RemoveAnnotations<BaseDefAnnotation>();
             }
@@ -2023,7 +2023,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var changed = elem.IsConstrainedByDiff();
                 Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
-                Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
+                Debug.WriteLine("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
 
@@ -2031,15 +2031,19 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
-            var elems = sd.Snapshot.Element;
+            Debug.WriteLine("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
+            assertBaseDefs(sd.Snapshot.Element, settings);
+        }
+
+        static void assertBaseDefs(List<ElementDefinition> elems, SnapshotGeneratorSettings settings)
+        {
             Assert.IsNotNull(elems);
             Assert.IsTrue(elems.Count > 0);
 
-            var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
+            //var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
-            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
-            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
-            Debug.Print(new string('=', 100));
+            Debug.WriteLine("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
+            Debug.WriteLine(new string('=', 100));
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
