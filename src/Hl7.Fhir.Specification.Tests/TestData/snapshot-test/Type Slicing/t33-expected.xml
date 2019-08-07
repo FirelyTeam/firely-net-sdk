@@ -4691,12 +4691,6 @@
       <isSummary value="false"/>
     </element>
     <element id="ExplanationOfBenefit.addItem.adjudication.extension:someExt">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="ExplanationOfBenefit.addItem.adjudication.extension"/>
       <sliceName value="someExt"/>
       <short value="unknown | asked | temp | notasked | masked | unsupported | astext | error"/>

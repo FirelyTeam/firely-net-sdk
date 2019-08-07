@@ -325,7 +325,7 @@
     </element>
     <element id="Patient.modifierExtension">
       <path value="Patient.modifierExtension"/>
-      <slicing id="6">
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -350,12 +350,6 @@
       <isSummary value="false"/>
     </element>
     <element id="Patient.modifierExtension:name1">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Patient.modifierExtension"/>
       <sliceName value="name1"/>
       <short value="Time of day of birth"/>

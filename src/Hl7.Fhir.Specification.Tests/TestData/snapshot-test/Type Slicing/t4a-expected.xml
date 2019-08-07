@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="t12a"/>
+  <id value="t4"/>
   <text>
     <status value="generated"/>
     <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29,21 +29,16 @@
           </th>
         </tr>
         <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white;">
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck4.png)" class="hierarchy">
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck0.png)" class="hierarchy">
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
-            <img src="icon_extension_simple.png" alt="." style="background-color: white; background-color: inherit" title="Simple Extension" class="hierarchy"/> 
-            <span title="Extension URL = http://hl7.org/fhir/StructureDefinition/patient-birthTime">patient-birthTime</span>
-            <a name="Patient.extension"> </a>
+            <img src="icon_element.gif" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy"/> 
+            <span title="... some more doco">telecom</span>
+            <a name="Patient.contact.telecom"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="nulldatatypes.html#dateTime">dateTime</a>
-          </td>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Time of day of birth
-            <br/>
-            <span style="font-weight:bold">URL: </span>http://hl7.org/fhir/StructureDefinition/patient-birthTime
-          </td>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
         </tr>
 
         <tr>
@@ -57,10 +52,10 @@
       </table>
     </div>
   </text>
-  <url value="urn:uuid:37c463da-eac0-4b17-b15d-a3e524d9ebdf"/>
-  <name value="t12a"/>
+  <url value="urn:uuid:71e0a5a6-95bf-4e04-aa6a-4af0ebef3f29"/>
+  <name value="t4"/>
   <status value="draft"/>
-  <description value="fixture for #12a: slicing on extensions, no set up of slicing, single slice"/>
+  <description value="fixture for #4: test appending documentation"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -304,16 +299,11 @@
     </element>
     <element id="Patient.extension">
       <path value="Patient.extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
+      <short value="Additional content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -326,41 +316,10 @@
       </type>
       <isModifier value="false"/>
       <isSummary value="false"/>
-    </element>
-    <element id="Patient.extension:name1">
-      <path value="Patient.extension"/>
-      <sliceName value="name1"/>
-      <short value="Time of day of birth"/>
-      <definition value="The time of day that the Patient was born. This includes the date to ensure that the timezone information can be communicated effectively."/>
-      <min value="1"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthTime"/>
-      </type>
-      <condition value="ele-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
-        <source value="Extension"/>
-      </constraint>
-      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
     </element>
     <element id="Patient.modifierExtension">
       <path value="Patient.modifierExtension"/>
@@ -955,7 +914,7 @@
     <element id="Patient.contact.telecom">
       <path value="Patient.contact.telecom"/>
       <short value="A contact detail for the person"/>
-      <definition value="A contact detail for the person, e.g. a telephone number or an email address."/>
+      <definition value="A contact detail for the person, e.g. a telephone number or an email address.&#xD;&#xA; some more doco"/>
       <comment value="Contact may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification."/>
       <requirements value="People have (primary) ways to contact them in some way such as phone, email."/>
       <min value="0"/>
@@ -1536,14 +1495,9 @@
     </element>
   </snapshot>
   <differential>
-    <element id="Patient.extension:name1">
-      <path value="Patient.extension"/>
-      <sliceName value="name1"/>
-      <min value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthTime"/>
-      </type>
+    <element id="Patient.contact.telecom">
+      <path value="Patient.contact.telecom"/>
+      <definition value="... some more doco"/>
     </element>
   </differential>
 </StructureDefinition>

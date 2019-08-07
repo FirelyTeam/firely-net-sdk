@@ -802,7 +802,7 @@
     </element>
     <element id="OperationOutcome.issue.details.text.extension">
       <path value="OperationOutcome.issue.details.text.extension"/>
-      <slicing id="7">
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -1005,7 +1005,7 @@
     </element>
     <element id="OperationOutcome.issue.details.text.extension:translation.value[x]:string.extension">
       <path value="OperationOutcome.issue.details.text.extension.value[x].extension"/>
-      <slicing id="8">
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>

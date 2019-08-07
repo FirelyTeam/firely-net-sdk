@@ -2141,15 +2141,15 @@
         <code value="Quantity"/>
       </type>
     </element>
-    <element id="Observation.value[x]:Quantity">
+    <element id="Observation.value[x]:valueQuantity">
       <path value="Observation.value[x]"/>
-      <sliceName value="Quantity"/>
+      <sliceName value="valueQuantity"/>
       <short value="some text for quantity"/>
       <type>
         <code value="Quantity"/>
       </type>
     </element>
-    <element id="Observation.value[x]:Quantity.value">
+    <element id="Observation.value[x]:valueQuantity.value">
       <path value="Observation.value[x].value"/>
       <min value="1"/>
     </element>

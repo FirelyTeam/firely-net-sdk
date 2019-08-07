@@ -350,12 +350,6 @@
       <isSummary value="false"/>
     </element>
     <element id="Patient.modifierExtension:name1">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Patient.modifierExtension"/>
       <sliceName value="name1"/>
       <short value="Time of day of birth"/>
@@ -391,12 +385,6 @@
       <isModifier value="false"/>
     </element>
     <element id="Patient.modifierExtension:name2">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Patient.modifierExtension"/>
       <sliceName value="name2"/>
       <short value="Mother&#39;s Maiden name"/>

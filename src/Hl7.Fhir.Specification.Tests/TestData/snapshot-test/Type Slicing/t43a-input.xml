@@ -30,7 +30,7 @@
     </element>
     <element>
       <path value="Observation.value[x]"/>
-      <sliceName value="valueQuantity"/>
+      <sliceName value="Quantity"/>
       <short value="some text for quantity"/>
       <type>
         <code value="Quantity"/>

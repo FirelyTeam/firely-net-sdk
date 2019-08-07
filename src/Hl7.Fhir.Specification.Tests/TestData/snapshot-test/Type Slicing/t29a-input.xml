@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="t29"/>
+  <id value="t29a"/>
   <url value="urn:uuid:8371f159-76b3-41f7-a66f-bde129e7e603"/>
-  <name value="t29"/>
+  <name value="t29a"/>
   <status value="draft"/>
   <description value="fixture for #29: Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
   <kind value="resource"/>
@@ -53,7 +53,7 @@
     </element>
     <element>
       <path value="Parameters.parameter.part.valueCoding"/>
-      <sliceName value="valueCoding"/>
+      <sliceName value="Coding"/>
       <min value="1"/>
       <type>
         <code value="Coding"/>

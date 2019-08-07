@@ -304,7 +304,7 @@
     </element>
     <element id="Patient.extension">
       <path value="Patient.extension"/>
-      <slicing id="1">
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -312,14 +312,8 @@
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
-	  
-	  <!-- [WMR 20190723] WRONG! Actual value inherited from DomainResource.extension
       <short value="Extension"/>
       <definition value="An Extension"/>
-	  -->
-	  <short value="Additional content defined by implementations"/>
-	  <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-	  
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -334,23 +328,12 @@
       <isSummary value="false"/>
     </element>
     <element id="Patient.extension:name1">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Patient.extension"/>
       <sliceName value="name1"/>
       <short value="Time of day of birth"/>
       <definition value="The time of day that the Patient was born. This includes the date to ensure that the timezone information can be communicated effectively."/>
       <min value="1"/>
-	  
-	  <!-- [WMR 20190723] WRONG! Inherits Max=1 from target extension definition "patient-birthTime", root element "Extension"
       <max value="*"/>
-	  -->
-	  <max value="1"/>
-	  
       <base>
         <path value="DomainResource.extension"/>
         <min value="0"/>
@@ -380,23 +363,12 @@
       <isModifier value="false"/>
     </element>
     <element id="Patient.extension:name2">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Patient.extension"/>
       <sliceName value="name2"/>
       <short value="Mother&#39;s Maiden name"/>
       <definition value="Mother&#39;s maiden (unmarried) name, commonly collected to help verify patient identity."/>
       <min value="0"/>
-	  
-	  <!-- [WMR 20190723] WRONG! Inherits Max=1 from target extension definition "patient-birthTime", root element "Extension"
       <max value="*"/>
-	  -->
-	  <max value="1"/>
-	  
       <base>
         <path value="DomainResource.extension"/>
         <min value="0"/>
