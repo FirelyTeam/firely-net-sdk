@@ -1094,8 +1094,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // [WMR 20190723] TODO
                                 // For complex extension child element, do NOT merge from root element!
                                 // Instead, merge with matching child element (similar to above)
-                                Debug.Fail("TODO");
-                                throw new NotSupportedException();
+                                //Debug.Fail("TODO");
+                                throw new NotSupportedException("TODO");
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-﻿<snapshot-generation-tests>
+<snapshot-generation-tests>
   <test gen="true" id="t1">
     <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t1-output').snapshot.element.select(path) = fixture('patient').snapshot.element.select(path)"/>
     <rule text="The snapshot elements must be the same - check short description" fhirpath="fixture('t1-output').snapshot.element.all(aliasAs('A').short = fixture('patient').snapshot.element.where(path = alias('A').path).short)"/>
@@ -17,6 +17,9 @@
   </test>
   <test gen="true" id="t4">
     <rule text="The patient.identifier documentation must be right" fhirpath="fixture('t4-output').snapshot.element.where(path = 'Patient.identifier').definition.trace('definition') != '... some more doco'"/>
+  </test>
+  <test gen="true" id="t4a">
+    <rule text="The patient.contact.identifier documentation must be right" fhirpath="fixture('t4a-output').snapshot.element.where(path = 'Patient.contact.telecom').definition.trace('definition') != '... some more doco'"/>
   </test>
   <test gen="true" id="t5">
     <rule text="The patient.deceased type must be right" fhirpath="fixture('t5-output').snapshot.element.where(base.path = 'Patient.deceased[x]').type.code = 'dateTime'"/>
@@ -139,9 +142,10 @@
   <test gen="true" id="t22">
     <rule text="element count increased by 76" fhirpath="fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 76"/>
   </test>
-  <test gen="true" id="t23">
+  <test gen="true" sort="true" id="t23">
     <rule text="element count increased by ??" fhirpath="fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 11"/>
   </test>
+  <test gen="true" id="t23a" fail="true"/>
   <test gen="true" id="t24b" register="t24a">
     <rule text="Element count of profile a is increased by 22 from base Patient" fhirpath="fixture('t24b-output').snapshot.element.count().trace('t24ao') = fixture('patient').snapshot.element.count().trace('t24Patient') + 22"/>
     <rule text="Element count of profile b is identical to profile a" fhirpath="fixture('t24b-output').snapshot.element.count().trace('t24bo') = fixture('t24b-include').snapshot.element.count().trace('t24ao')"/>
@@ -160,6 +164,7 @@
     <rule text="Element count must be increased by 15" fhirpath="fixture('t29-output').snapshot.element.count().trace('t29o') = fixture('parameters').snapshot.element.count().trace('t29') + 16"/>
     <rule text="There is an element with id 'Parameters.parameter.part:foo.id'" fhirpath="fixture('t29-output').snapshot.element.where(id = 'Parameters.parameter.part:foo.id').count()=1"/>
   </test>
+  <test gen="true" sort="true" id="t29a" fail="true"/>
   <test gen="true" sort="true" id="t30b" include="t30a">
     <rule text="Snapshot doesn't result in an error'" fhirpath="fixture('t30b-output').snapshot.element.count().trace('t30bo')&gt;1"/>
   </test>
@@ -207,6 +212,7 @@
     <rule text="The element definition for value[x] quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity').check(exists(), 'no slice').sliceName = 'valueQuantity'"/>
     <rule text="The element definition for value[x].value quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity.value').check(exists(), 'no slice').min = 1"/>
   </test>
+  <test gen="true" sort="true" id="t43a" fail="true"/>
   <test gen="true" sort="true" id="t44">
     <rule text="There should be 9 element definitions for value[x] (base + quantity + walking into quantity" fhirpath="fixture('t44-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 9"/>
     <rule text="The element definition for value[x] should have 1 type" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]').type.count().trace('count') = 1"/>
@@ -214,4 +220,10 @@
     <rule text="The element definition for value[x] quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity').check(exists(), 'no slice').sliceName = 'valueQuantity'"/>
     <rule text="The element definition for value[x].value quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity.value').check(exists(), 'no slice').min = 1"/>
   </test>
+  <test gen="true" sort="true" id="t45" register="t45-defn"/>
+  <test gen="true" id="samply1"/>
+  <!-- <test gen="true" id="au1" include="au1a"/> -->
+  <test gen="true" id="au2"/>
+  <test gen="true" id="au3"/>
+  <test gen="true" id="dv1"/>
 </snapshot-generation-tests>

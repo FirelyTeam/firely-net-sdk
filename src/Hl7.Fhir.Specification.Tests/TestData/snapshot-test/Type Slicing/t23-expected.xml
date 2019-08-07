@@ -78,16 +78,13 @@
             <img src="tbl_blank.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_slice.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_element.gif" alt="." style="background-color: #F7F7F7; background-color: inherit" title="Element" class="hierarchy"/> 
-            <span title="null">gender</span>
-            <a name="Patient.contact.gender"> </a>
+            <span title="null">telecom</span>
+            <a name="Patient.contact.telecom"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
+          <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">1..</td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
-          <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="font-weight:bold">Fixed Value: </span>
-            <span style="color: darkgreen">male</span>
-          </td>
         </tr>
 
         <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white;">
@@ -96,13 +93,16 @@
             <img src="tbl_blank.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_end_slice.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_element.gif" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy"/> 
-            <span title="null">telecom</span>
-            <a name="Patient.contact.telecom"> </a>
+            <span title="null">gender</span>
+            <a name="Patient.contact.gender"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">1..</td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
+            <span style="font-weight:bold">Fixed Value: </span>
+            <span style="color: darkgreen">male</span>
+          </td>
         </tr>
 
         <tr>
@@ -1406,6 +1406,7 @@
       <type>
         <code value="code"/>
       </type>
+      <fixedCode value="male"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -1931,13 +1932,13 @@
       <path value="Patient.contact"/>
       <sliceName value="males"/>
     </element>
-    <element id="Patient.contact:males.gender">
-      <path value="Patient.contact.gender"/>
-      <fixedCode value="male"/>
-    </element>
     <element id="Patient.contact:males.telecom">
       <path value="Patient.contact.telecom"/>
       <min value="1"/>
+    </element>
+    <element id="Patient.contact:males.gender">
+      <path value="Patient.contact.gender"/>
+      <fixedCode value="male"/>
     </element>
   </differential>
 </StructureDefinition>

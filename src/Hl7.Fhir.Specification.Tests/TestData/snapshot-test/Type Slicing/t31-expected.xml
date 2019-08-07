@@ -805,7 +805,7 @@
     </element>
     <element id="Parameters.parameter:string.value[x].extension">
       <path value="Parameters.parameter.value[x].extension"/>
-      <slicing id="9">
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -829,12 +829,6 @@
       <isSummary value="false"/>
     </element>
     <element id="Parameters.parameter:string.value[x].extension:translation">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
-        <valueCode value="normative"/>
-      </extension>
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
-        <valueCode value="4.0.0"/>
-      </extension>
       <path value="Parameters.parameter.value[x].extension"/>
       <sliceName value="translation"/>
       <short value="Language Translation (Localization)"/>

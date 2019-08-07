@@ -137,7 +137,7 @@
             <img src="tbl_blank.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_end_slice.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_datatype.gif" alt="." style="background-color: white; background-color: inherit" title="Data Type" class="hierarchy"/> 
-            <span title="Slice Coding: null">valueCoding</span>
+            <span title="Slice valueCoding: null">valueCoding</span>
             <a name="Parameters.parameter.part.valueCoding"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
@@ -1077,15 +1077,15 @@
         <code value="Coding"/>
       </type>
     </element>
-    <element id="Parameters.parameter.part:foo.valueCoding:Coding">
+    <element id="Parameters.parameter.part:foo.valueCoding:valueCoding">
       <path value="Parameters.parameter.part.valueCoding"/>
-      <sliceName value="Coding"/>
+      <sliceName value="valueCoding"/>
       <min value="1"/>
       <type>
         <code value="Coding"/>
       </type>
     </element>
-    <element id="Parameters.parameter.part:foo.valueCoding:Coding.code">
+    <element id="Parameters.parameter.part:foo.valueCoding:valueCoding.code">
       <path value="Parameters.parameter.part.valueCoding.code"/>
       <min value="1"/>
     </element>
