@@ -1,15 +1,10 @@
 ﻿/* 
- * Copyright (c) 2018, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2019, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
-
-// [WMR 20170411] HACK - suppress infinite recursion
-// TODO: Properly handle recursive type declarations
-// Don't throw exception but emit OperationOutcome issue(s) and continue
-#define HACK_STU3_RECURSION
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
@@ -305,8 +300,8 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestTypeSlicingExample37() => TestTypeSlicingExample("t37");
         [TestMethod]
         public void TestTypeSlicingExample38() => TestTypeSlicingExample("t38");
-        [TestMethod]
-        public void TestTypeSlicingExample39() => TestTypeSlicingExample("t39");
+        //[TestMethod]
+        //public void TestTypeSlicingExample39() => TestTypeSlicingExample("t39");
         [TestMethod]
         public void TestTypeSlicingExample40() => TestTypeSlicingExample("t40");
         [TestMethod]
