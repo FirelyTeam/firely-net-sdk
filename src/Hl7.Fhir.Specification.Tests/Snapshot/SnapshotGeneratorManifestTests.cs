@@ -1,4 +1,9 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿// [WMR 20190808] Enable to serialize the generated snapshot to disk, for debugging purposes
+#define SERIALIZE_OUTPUT
+// [WMR 20190808] Enable to log the generated and expected snapshot element paths to the console
+#define LOG_OUTPUT
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -11,6 +16,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -18,12 +24,34 @@ using System.Xml.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+    // SnapshotGenerator unit tests from HL7 FHIR repository, by Grahame
+    // Source: https://github.com/hapifhir/org.hl7.fhir.core
+    // https://github.com/hapifhir/org.hl7.fhir.core/tree/master/org.hl7.fhir.r5/src/test/resources/snapshot-generation
+    // * Index all structures
+    // * Process all tests specified in manifest.xml
+    // * Each test specifies { id, input file, expected output file, fhirpath rules }
+    // * Run SnapshotGenerator on input
+    // * Execute fhirpath rules to verify the generated output
+    // * Also compare the generated output with expected output
+
+    // How to prevent Debug.Assert from interrupting unit test:
+    // http://netitude.bc3tech.net/2013/11/04/keep-debug-assert-windows-from-halting-your-unit-tests/
+
+    //
+    // BUG: T16 - Invalid expansion of extension 'ISO-AddressUse'; expands to latitude/longitude...?! WRONG!
+    // TODO: Merge pull request for 1067: Invalid root element base
+    //
+
     [TestClass]
     public class SnapshotGeneratorManifestTests
     {
         const string ManifestPath = @"TestData\snapshot-test\Type Slicing";
         const string ManifestFileName = "manifest.xml";
         //const string ExtensionsPath = @"C:\Users\Michel\.fhir\packages\simplifier.core.r4.extensions-4.0.0\package";
+
+        const string inputFileNameFormat = "{0}-input.xml";
+        const string outputFileNameFormat = "{0}-output.xml";
+        const string expectedFileNameFormat = "{0}-expected.xml";
 
         static readonly FhirXmlParsingSettings _fhirXmlParserSettings = new FhirXmlParsingSettings()
         {
@@ -35,7 +63,7 @@ namespace Hl7.Fhir.Specification.Tests
         //    PermissiveParsing = false
         //};
 
-        ParserSettings _parserSettings = new ParserSettings()
+        static readonly ParserSettings _parserSettings = new ParserSettings()
         {
             PermissiveParsing = false
         };
@@ -43,7 +71,8 @@ namespace Hl7.Fhir.Specification.Tests
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {
             IncludeSubDirectories = true,
-            Includes = new string[] { "*.xml", "*.json" },
+            // Exclude expected output, to prevent canonical url conflicts
+            Includes = new string[] { "*-input.xml", "*input.json" },
             FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
@@ -54,9 +83,17 @@ namespace Hl7.Fhir.Specification.Tests
             GenerateSnapshotForExternalProfiles = true
         };
 
+        static readonly SerializerSettings _serializerSettings = new SerializerSettings()
+        {
+            Pretty = true
+        };
+
+        static readonly FhirXmlParser _fhirXmlParser = new FhirXmlParser(_parserSettings);
+        static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
+        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer(_serializerSettings);
+
         DirectorySource _dirSource;
-        FhirXmlParser _fhirXmlParser;
-        FhirJsonParser _fhirJsonParser;
+        IResourceResolver _resolver;
         SnapshotGenerator _snapGen;
         SnapshotGenerationManifest _manifest;
         FhirPathCompiler _fhirPathCompiler;
@@ -71,23 +108,56 @@ namespace Hl7.Fhir.Specification.Tests
             SnapshotEvaluationContext.AddSymbols(symbols);
             _fhirPathCompiler = new FhirPathCompiler(symbols);
 
-            //var path = Path.Combine(TestContext.)
-            var dirSource = _dirSource = new DirectorySource(ManifestPath, _dirSourceSettings);
-            //var extensionSource = new DirectorySource(ExtensionsPath, _dirSourceSettings);
-            var timingSource = new TimingSource(dirSource);
-            var resolver = new CachedResolver(
+
+            //
+            // TODO
+            // Load input from disk, do NOT use DirectorySource
+            // SnapshotGenerator only needs access to core resources, and maybe extensions
+            // Hide all other input files, to prevent canonical url resolving conflicts
+
+
+            // Create unfiltered DirectorySource to access input & expected
+            // Create filtered DirectorySource to resolve from input only
+            // (ignore expected to prevent canonical url resolving conflicts)
+            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+
+            _dirSource = new DirectorySource(path, _dirSourceSettings);
+            var timingSource = new TimingSource(_dirSource);
+            _resolver = new CachedResolver(
                 new MultiResolver(
                     new ZipSource("specification.zip"),
-                    timingSource //,extensionSource
+                    timingSource
+            //,extensionSource
             ));
+            //_resolver = new CachedResolver(new ZipSource(ZipSource.SpecificationZipFileName));
 
-            _fhirXmlParser = new FhirXmlParser(_parserSettings);
-            _fhirJsonParser = new FhirJsonParser(_parserSettings);
-
-            _snapGen = new SnapshotGenerator(resolver, _snapGenSettings);
+            _snapGen = new SnapshotGenerator(_resolver, _snapGenSettings);
 
             _manifest = ReadManifest();
+
+            //FixInput();
         }
+
+        //void FixInput()
+        //{
+        //    // Fix known issues in test input
+
+        //    // * t16: Fix canonical url, cannot be same as t15
+        //    var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+        //    var id = "t16";
+        //    var inputFilePath = Path.Combine(path, string.Format(inputFileNameFormat, id));
+        //    var input = Load(inputFilePath);
+        //    Assert.IsNotNull(input);
+        //    //input.Url = "urn:uuid:b94f9d67-5ad1-44df-850d-33a933800f41";
+        //    input.Url = "urn:uuid:" + new Guid().ToString();
+        //    Save(inputFilePath, input);
+
+        //    var expectedFilePath = Path.Combine(path, string.Format(expectedFileNameFormat, id));
+        //    var expected = Load(expectedFilePath);
+        //    Assert.IsNotNull(expected);
+        //    expected.Url = input.Url;
+        //    Save(expectedFilePath, expected);
+        //}
 
         /// <summary>Run all tests</summary>
         [Ignore]
@@ -122,8 +192,37 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public void Test_t12a() => ExecuteTest("t12a");
         [TestMethod] public void Test_t13() => ExecuteTest("t13");
         [TestMethod] public void Test_t14() => ExecuteTest("t14");
+
+        // FAILS
+        // Input specifies:
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // Expected output contains:
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // Generated output contains:
+        // - (2x) Patient.address.extension.extension.value[x]
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // Note: generated is correct, expected is incorrect
+        // SnapGen SHOULD emit [x] element
+        // TODO: SnapGen should also emit <slicing> node on type sliced [x] element
         [TestMethod] public void Test_t15() => ExecuteTest("t15");
+
+        // FAILS
+        // Input specifies:
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
+        // -      Patient.address.extension 'ISO-AddressUse'
+        // Expected output contains:
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
+        // -      Patient.address.extension 'ISO-AddressUse'
+        // Generated output contains:
+        // - (2x) Patient.address.extension.extension.value[x]
+        // - (2x) Patient.address.extension.extension.valueDecimal
+        // - (2x) Patient.address.extension.extension.valueDecimal.extension.value[x]
+        // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
+        // -      Patient.address.extension 'ISO-AddressUse' + 16 children
         [TestMethod] public void Test_t16() => ExecuteTest("t16");
+
         [TestMethod] public void Test_t17() => ExecuteTest("t17");
         [TestMethod] public void Test_t18() => ExecuteTest("t18");
         [TestMethod] public void Test_t19() => ExecuteTest("t19");
@@ -166,9 +265,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         void ExecuteTest(SnapshotGenerationManifestTest test)
         {
-            const string inputFileNameFormat = "{0}-input.xml";
-            const string expectedFileNameFormat = "{0}-expected.xml";
-
             Console.WriteLine($"Executing test: {test.Id}");
 
             Assert.IsNotNull(test);
@@ -178,19 +274,41 @@ namespace Hl7.Fhir.Specification.Tests
             var inputFilePath = Path.Combine(path, string.Format(inputFileNameFormat, test.Id));
             var expectedFilePath = Path.Combine(path, string.Format(expectedFileNameFormat, test.Id));
 
-            var input = LoadStructure(inputFilePath);
-            var expected = LoadStructure(expectedFilePath);
+            var input = Load(test.Id, inputFileNameFormat);
+            var expected = Load(test.Id, expectedFileNameFormat);
 
             var output = (StructureDefinition)input.DeepCopy();
             _snapGen.Update(output);
-            Assert.IsNull(_snapGen.Outcome, "The SnapshotGenerator reported one or more issues:\r\n" + _snapGen.Outcome?.ToString());
+
+            // Some test profiles specify unresolved references
+            //Assert.IsNull(_snapGen.Outcome, "The SnapshotGenerator reported one or more issues:\r\n" + _snapGen.Outcome?.ToString());
+            //Assert.IsTrue(output.HasSnapshot);
+            if (!(_snapGen.Outcome is null))
+            {
+                Console.WriteLine("The SnapshotGenerator reported one or more issues:");
+                Console.WriteLine(_snapGen.Outcome?.ToString());
+            }
+
+#if SERIALIZE_OUTPUT
+            // Serialize the generated output to disk, for debugging purposes
+            SaveOutput(test.Id, output);
+#endif
+#if LOG_OUTPUT
+            // Log the generated and expected output to the console, for debugging purposes
+            expected.Snapshot.Element.Log($"Expected snapshot has #{expected.Snapshot.Element.Count} elements:");
+            Console.WriteLine();
+
+            output.Snapshot.Element.Log($"Generated snapshot has #{output.Snapshot.Element.Count} elements:");
+            Console.WriteLine();
+#endif
+
             Assert.IsTrue(output.HasSnapshot);
 
             // Verify rules against generated snapshot
             var rules = test.Rule;
             if (!(rules is null))
             {
-                var ctx = new SnapshotEvaluationContext(input, expected);
+                var ctx = new SnapshotEvaluationContext(_resolver, test.Id, output);
                 for (int i = 0; i < rules.Length; i++)
                 {
                     VerifyRule(output, ctx, test, i);
@@ -205,15 +323,23 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = output.ToTypedElement();
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
-            Assert.IsTrue(expr.Predicate(nav, ctx));
+            Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
 
-        StructureDefinition LoadStructure(string filePath)
+        static StructureDefinition Load(string id, string fileNameFormat)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+            var inputFilePath = Path.Combine(path, string.Format(fileNameFormat, id));
+            return Load(inputFilePath);
+        }
+
+        static StructureDefinition Load(string filePath)
         {
             //Assert.IsTrue(File.Exists(filePath));
             if (File.Exists(filePath))
             {
-                using (var stream = _dirSource.LoadArtifactByName(filePath))
+                //using (var stream = _dirSource.LoadArtifactByName(filePath))
+                using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
                     return _fhirXmlParser.Parse<StructureDefinition>(reader);
@@ -223,7 +349,8 @@ namespace Hl7.Fhir.Specification.Tests
             filePath = Path.ChangeExtension(filePath, "json");
             if (File.Exists(filePath))
             {
-                using (var stream = _dirSource.LoadArtifactByName(filePath))
+                //using (var stream = _dirSource.LoadArtifactByName(filePath))
+                using (var stream = File.OpenRead(filePath))
                 using (var textReader = new StreamReader(stream))
                 using (var reader = new JsonTextReader(textReader))
                 {
@@ -231,8 +358,23 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
 
-            Assert.Fail("File not found: '{filePath}'");
+            Assert.Fail($"File not found: '{filePath}'");
             return null;
+        }
+
+        [Conditional("SERIALIZE_OUTPUT")]
+        static void SaveOutput(string id, StructureDefinition output)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+            var outputFilePath = Path.Combine(path, string.Format(outputFileNameFormat, id));
+            Console.WriteLine($"Serialize generated output to: '{outputFilePath}'");
+            Save(outputFilePath, output);
+        }
+
+        static void Save(string filePath, Base output)
+        {
+            var xml = _fhirXmlSerializer.SerializeToString(output);
+            File.WriteAllText(filePath, xml);
         }
 
         static SnapshotGenerationManifest ReadManifest()
@@ -245,197 +387,144 @@ namespace Hl7.Fhir.Specification.Tests
                 return (SnapshotGenerationManifest)serializer.Deserialize(fs);
             }
         }
-    }
 
-    // Custom context for accessing input & expected result
-    class SnapshotEvaluationContext : FhirEvaluationContext
-    {
-        Dictionary<string, ITypedElement> _aliases;
-
-        public SnapshotEvaluationContext(StructureDefinition input, StructureDefinition expected) : base(input)
+        // Custom context for accessing input & expected result
+        class SnapshotEvaluationContext : FhirEvaluationContext
         {
-            Input = input.ToTypedElement();
-            Expected = expected.ToTypedElement();
-        }
+            Dictionary<string, ITypedElement> _aliases;
 
-        public ITypedElement Input { get; }
-
-        public ITypedElement Expected { get; }
-
-        Dictionary<string, ITypedElement> Aliases => _aliases ?? (_aliases = new Dictionary<string, ITypedElement>());
-
-        public void AddAlias(string id, ITypedElement elem) => Aliases[id] = elem;
-
-        public ITypedElement Alias(string id) => Aliases[id];
-
-        // Custom FhirPath method implementations
-
-        public static void AddSymbols(SymbolTable symbols)
-        {
-            symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("fixture", Fixture);
-            symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("aliasAs", AliasAs);
-            symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("alias", Alias);
-        }
-
-        public static ITypedElement Fixture(ITypedElement elem, string id, EvaluationContext ctx)
-        {
-            if (ctx is SnapshotEvaluationContext sctx)
+            public SnapshotEvaluationContext(IResourceResolver resolver, string id, StructureDefinition generated) : base(generated)
             {
-                if (id.EndsWith("-output")) { return sctx.Expected; }
-                if (id == sctx.Input.Name) { return sctx.Input; }
+                TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
+                if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
+                Generated = generated.ToTypedElement();
+                Id = id ?? throw new ArgumentNullException(nameof(id));
+                Assert.AreEqual(id, generated.Id);
             }
-            return null;
-        }
 
-        public static ITypedElement AliasAs(ITypedElement elem, string id, EvaluationContext ctx)
-        {
-            if (ctx is SnapshotEvaluationContext sctx)
+            public string Id { get; }
+
+            public IResourceResolver TestResolver { get; }
+
+            public ITypedElement Generated { get; }
+
+            // Custom FhirPath method implementations
+
+            Dictionary<string, ITypedElement> Aliases => _aliases ?? (_aliases = new Dictionary<string, ITypedElement>());
+
+            void AddAlias(string alias, ITypedElement elem) => Aliases[alias] = elem;
+
+            ITypedElement Alias(string alias) => Aliases[alias];
+
+            ITypedElement Fixture(string name)
             {
-                sctx.AddAlias(id, elem);
-            }
-            return elem;
-        }
+                if (name == $"{Id}-output") { return Generated; }
 
-        public static ITypedElement Alias(ITypedElement elem, string id, EvaluationContext ctx)
-        {
-            if (ctx is SnapshotEvaluationContext sctx)
+                // Also expose previously generated outputs, e.g. t16 depends on t15
+                if (name.EndsWith("-output"))
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath, name + ".xml");
+                    if (!File.Exists(filePath))
+                    {
+                        filePath = Path.ChangeExtension(filePath, "json");
+                    }
+                    return Load(filePath).ToTypedElement();
+                }
+
+                // Otherwise assume name refers to a core resource, e.g. 'patient'
+                // Names are specified in lower case, try to find matching core typename
+                var typeName = ModelInfo.FhirTypeToCsType.Keys.FirstOrDefault(key => StringComparer.OrdinalIgnoreCase.Equals(name, key));
+                if (!(typeName is null))
+                {
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToTypedElement();
+                }
+
+                Console.WriteLine($"WARNING! Unresolved fixture: '{name}'");
+                return null;
+            }
+
+            public static void AddSymbols(SymbolTable symbols)
             {
-                return sctx.Alias(id);
+                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("fixture", Fixture);
+                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("aliasAs", AliasAs);
+                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("alias", Alias);
             }
-            return null;
+
+            public static ITypedElement Fixture(ITypedElement elem, string name, EvaluationContext ctx)
+                => ctx is SnapshotEvaluationContext sctx ? sctx.Fixture(name) : null;
+
+            public static ITypedElement AliasAs(ITypedElement elem, string id, EvaluationContext ctx)
+            {
+                if (ctx is SnapshotEvaluationContext sctx)
+                {
+                    sctx.AddAlias(id, elem);
+                }
+                return elem;
+            }
+
+            public static ITypedElement Alias(ITypedElement elem, string id, EvaluationContext ctx)
+                => ctx is SnapshotEvaluationContext sctx ? sctx.Alias(id) : null;
         }
+
+        // Serializable classes for parsing manifest.xml
+
+        [Serializable()]
+        [DesignerCategory("code")]
+        [XmlType(AnonymousType = true)]
+        [XmlRoot("snapshot-generation-tests", Namespace = "", IsNullable = false)]
+        public class SnapshotGenerationManifest
+        {
+            [XmlElement("test")]
+            public SnapshotGenerationManifestTest[] Test { get; set; }
+        }
+
+        [Serializable()]
+        [DesignerCategory("code")]
+        [XmlType(AnonymousType = true)]
+        public class SnapshotGenerationManifestTest
+        {
+            [XmlElement("rule")]
+            public SnapshotGenerationManifestTestRule[] Rule { get; set; }
+
+            [XmlAttribute("gen")]
+            public bool Gen { get; set; }
+
+            //[XmlIgnore()]
+            //public bool GenSpecified { get; set; }
+
+            [XmlAttribute("id")]
+            public string Id { get; set; }
+
+            [XmlAttribute("sort")]
+            public bool Sort { get; set; }
+
+            //[XmlIgnore()]
+            //public bool SortSpecified { get; set; }
+
+            [XmlAttribute("fail")]
+            public bool Fail { get; set; }
+
+            //[XmlIgnore()]
+            //public bool FailSpecified { get; set; }
+
+            [XmlAttribute("register")]
+            public string Register { get; set; }
+
+            [XmlAttribute("include")]
+            public string Include { get; set; }
+        }
+
+        [Serializable()]
+        [DesignerCategory("code")]
+        [XmlType(AnonymousType = true)]
+        public class SnapshotGenerationManifestTestRule
+        {
+            [XmlAttribute("text")]
+            public string Text { get; set; }
+
+            [XmlAttribute("fhirpath")]
+            public string FhirPath { get; set; }
+        }
+
     }
-
-    // Serializable class for manifest.xml
-
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    [XmlRoot("snapshot-generation-tests", Namespace = "", IsNullable = false)]
-    public class SnapshotGenerationManifest
-    {
-
-        SnapshotGenerationManifestTest[] _test;
-
-        [XmlElement("test")]
-        public SnapshotGenerationManifestTest[] Test
-        {
-            get => _test;
-            set => _test = value;
-        }
-    }
-
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public class SnapshotGenerationManifestTest
-    {
-
-        SnapshotGenerationManifestTestRule[] _rule;
-
-        bool _gen;
-        bool _genSpecified;
-        string _id;
-        bool _sort;
-        bool _sortSpecified;
-        bool _fail;
-        bool _failSpecified;
-        string _register;
-        string _include;
-
-        [XmlElement("rule")]
-        public SnapshotGenerationManifestTestRule[] Rule
-        {
-            get => _rule;
-            set => _rule = value;
-        }
-
-        [XmlAttribute("gen")]
-        public bool Gen
-        {
-            get => _gen;
-            set => _gen = value;
-        }
-
-        [XmlIgnore()]
-        public bool GenSpecified
-        {
-            get => _genSpecified;
-            set => _genSpecified = value;
-        }
-
-        [XmlAttribute("id")]
-        public string Id
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        [XmlAttribute("sort")]
-        public bool Sort
-        {
-            get => _sort;
-            set => _sort = value;
-        }
-
-        [XmlIgnore()]
-        public bool SortSpecified
-        {
-            get => _sortSpecified;
-            set => _sortSpecified = value;
-        }
-
-        [XmlAttribute("fail")]
-        public bool Fail
-        {
-            get => _fail;
-            set => _fail = value;
-        }
-
-        [XmlIgnore()]
-        public bool FailSpecified
-        {
-            get => _failSpecified;
-            set => _failSpecified = value;
-        }
-
-        [XmlAttribute("register")]
-        public string Register
-        {
-            get => _register;
-            set => _register = value;
-        }
-
-        [XmlAttribute("include")]
-        public string Include
-        {
-            get => _include;
-            set => _include = value;
-        }
-    }
-
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public class SnapshotGenerationManifestTestRule
-    {
-
-        string _text;
-        string _fhirpath;
-
-        [XmlAttribute("text")]
-        public string Text
-        {
-            get => _text;
-            set => _text = value;
-        }
-
-        [XmlAttribute("fhirpath")]
-        public string FhirPath
-        {
-            get => _fhirpath;
-            set => _fhirpath = value;
-        }
-    }
-
 }

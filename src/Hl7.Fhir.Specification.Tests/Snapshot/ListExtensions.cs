@@ -41,6 +41,28 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [Conditional("DEBUG")]
+        public static void Log(this List<ElementDefinition> elements, string header = null)
+        {
+            if (!string.IsNullOrEmpty(header))
+            {
+                Console.WriteLine(header);
+            }
+            for (int i = 0; i < elements.Count; i++)
+            {
+                var elem = elements[i];
+                Console.Write(elem.Path);
+                if (!string.IsNullOrEmpty(elem.SliceName))
+                {
+                    Console.Write(" '" + elem.SliceName + "'");
+                }
+                if (!(elem.Slicing is null))
+                {
+                    Console.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));
+                }
+                Console.WriteLine("");
+            }
+        }
 
     }
 }
