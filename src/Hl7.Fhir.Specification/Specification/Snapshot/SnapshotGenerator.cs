@@ -1507,6 +1507,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Debug.Assert(diff.Current.Name != null);
             Debug.Assert(snap.Current.SliceName == null
+                
+                // [WMR 20190808] Handle new named slice in derived profile
+                // - base profile is sliced, diff profile introduces another named slice
+                // - snap is positioned on (last) named base slice
+                // - diff is positioned on new named base slice (introduced by derived profile)
+                // - sliceBase is positioned on base slice group
+                || (!(sliceBase is null))
+
                 // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
                 || snap.Path == "Composition.section"
                 || diff.Current.SliceName == null

@@ -398,6 +398,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Determine if the base profile is introducing a slice entry 
             var snapIsSliced = snapNav.Current.Slicing != null;
 
+            // [WMR 20190808] NEW - Initialize default slice base element *before* repositoning snapNav
+            // By default, new/unmatched named slices inherit from the associated sliced element
+            if (sliceBase is null)
+            {
+                sliceBase = initSliceBase(snapNav);
+            }
+
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
             if (diffNav.Current.SliceName != null)
@@ -406,7 +413,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName);
                 if (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffNav.Current.SliceName))
                 {
-                    snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName);
+                    if (snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName))
+                    {
+                        // [WMR 20190808] Found matching named slice in base, overrides default base element
+                        sliceBase = initSliceBase(snapNav);
+                    }
                 }
             }
 
@@ -447,11 +458,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
+            // [WMR 20190808] WRONG! Move to top - determine slice base element *before* repositioning base to matching named slice
             // [WMR 20170308] NEW - Clone slice base element
-            if (sliceBase == null)
-            {
-                sliceBase = initSliceBase(snapNav);
-            }
+            //if (sliceBase == null)
+            //{
+            //    sliceBase = initSliceBase(snapNav);
+            //}
 
             // Note: if slice entry is missing from diff, then we fall back to the inherited base slicing entry
             // Strictly not valid according to FHIR rules, but we can cope
