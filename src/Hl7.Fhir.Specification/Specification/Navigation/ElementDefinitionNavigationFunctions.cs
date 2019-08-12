@@ -95,7 +95,9 @@ namespace Hl7.Fhir.Specification.Navigation
             return otherName != null
                 && IsChoiceTypeElement(choiceName)
                 && otherName.Length > (choiceName.Length - 3)
-                && String.Compare(choiceName, 0, otherName, 0, choiceName.Length - 3) == 0;
+                && String.Compare(choiceName, 0, otherName, 0, choiceName.Length - 3) == 0
+                // [WMR 20190812] Do NOT match '[x]' element to itself
+                && otherName != choiceName;
         }
 
         /// <summary>Determines if the specified element path matches a base element path.</summary>
