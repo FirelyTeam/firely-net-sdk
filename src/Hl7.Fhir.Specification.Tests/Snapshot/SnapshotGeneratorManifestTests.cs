@@ -504,17 +504,31 @@ namespace Hl7.Fhir.Specification.Tests
         // Fix known invalid invariants in input manifest
         static void FixManifest(SnapshotGenerationManifest manifest)
         {
-            var t15 = manifest.Test.FirstOrDefault(t => t.Id == "t15");
-            FixManifest_T15(t15);
+            FixManifest_T15(manifest.Test);
+            FixManifest_T16(manifest.Test);
         }
 
-        static void FixManifest_T15(SnapshotGenerationManifestTest test)
+        static void FixManifest_T15(SnapshotGenerationManifestTest[] tests)
         {
+            // [WMR 20190812] Expecting +2 "value[x]" elements
             const string originalExpression = @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 27";
             const string fixedExpression = @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 29";
 
+            var test = tests.FirstOrDefault(t => t.Id == "t15");
             Assert.IsNotNull(test);
-            Assert.AreEqual("t15", test.Id);
+            var rule = test.Rule.FirstOrDefault(r => r.FhirPath == originalExpression);
+            Assert.IsNotNull(rule);
+            rule.FhirPath = fixedExpression;
+        }
+
+        static void FixManifest_T16(SnapshotGenerationManifestTest[] tests)
+        {
+            // [WMR 20190812] Expecting +2 "value[x]" elements
+            const string originalExpression = @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 17";
+            const string fixedExpression = @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 19";
+
+            var test = tests.FirstOrDefault(t => t.Id == "t16");
+            Assert.IsNotNull(test);
             var rule = test.Rule.FirstOrDefault(r => r.FhirPath == originalExpression);
             Assert.IsNotNull(rule);
             rule.FhirPath = fixedExpression;
