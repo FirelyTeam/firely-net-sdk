@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteIf(elem.SliceName != null, " '" + elem.SliceName + "'");
                 if (elem.Slicing != null)
                 {
-                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));
+                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator.Select(d => d.Type + ":" + d.Path)));
                 }
                 Debug.WriteLine("");
             }
