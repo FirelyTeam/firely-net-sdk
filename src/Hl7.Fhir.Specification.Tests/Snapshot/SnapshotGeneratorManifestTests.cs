@@ -7,6 +7,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.FhirPath;
@@ -92,6 +93,7 @@ namespace Hl7.Fhir.Specification.Tests
         static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
         static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer(_serializerSettings);
 
+        string _testPath;
         DirectorySource _dirSource;
         IResourceResolver _resolver;
         SnapshotGenerator _snapGen;
@@ -119,9 +121,12 @@ namespace Hl7.Fhir.Specification.Tests
             // Create unfiltered DirectorySource to access input & expected
             // Create filtered DirectorySource to resolve from input only
             // (ignore expected to prevent canonical url resolving conflicts)
-            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+            _testPath = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
 
-            _dirSource = new DirectorySource(path, _dirSourceSettings);
+            // Fix known issues in test input (BEFORE initializing the DirectorySource!)
+            FixInput();
+
+            _dirSource = new DirectorySource(_testPath, _dirSourceSettings);
             var timingSource = new TimingSource(_dirSource);
             _resolver = new CachedResolver(
                 new MultiResolver(
@@ -134,30 +139,127 @@ namespace Hl7.Fhir.Specification.Tests
             _snapGen = new SnapshotGenerator(_resolver, _snapGenSettings);
 
             _manifest = ReadManifest();
-
-            //FixInput();
         }
 
-        //void FixInput()
-        //{
-        //    // Fix known issues in test input
+        // Fix known issues in test input
+        void FixInput()
+        {
+            Fix_t15();
+            Fix_t16();
+            Fix_au3();
+        }
 
-        //    // * t16: Fix canonical url, cannot be same as t15
-        //    var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
-        //    var id = "t16";
-        //    var inputFilePath = Path.Combine(path, string.Format(inputFileNameFormat, id));
-        //    var input = Load(inputFilePath);
-        //    Assert.IsNotNull(input);
-        //    //input.Url = "urn:uuid:b94f9d67-5ad1-44df-850d-33a933800f41";
-        //    input.Url = "urn:uuid:" + new Guid().ToString();
-        //    Save(inputFilePath, input);
+        // t15: insert missing slice introduction elements 'Patient.address.extension.extension.value[x]'
+        // before actual type slices 'Patient.address.extension.extension.valueDecimal'
+        void Fix_t15()
+        {
+            const string id = "t15";
+            Console.WriteLine($"Fix input '{id}'");
 
-        //    var expectedFilePath = Path.Combine(path, string.Format(expectedFileNameFormat, id));
-        //    var expected = Load(expectedFilePath);
-        //    Assert.IsNotNull(expected);
-        //    expected.Url = input.Url;
-        //    Save(expectedFilePath, expected);
-        //}
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            var expected = Load(expectedFilePath);
+            Assert.IsNotNull(expected);
+
+            InsertTypeSlicingIntro(expected.Snapshot);
+            Save(expectedFilePath, expected);
+        }
+
+        // t15: insert missing slice introduction elements '...value[x]'
+        // before actual type slices e.g. '...valueDecimal'
+        void InsertTypeSlicingIntro(StructureDefinition.SnapshotComponent snapshot)
+        {
+            Assert.IsNotNull(snapshot);
+
+            const string VALUE_X = "value[x]";
+
+            var renamedValues = snapshot.Element.Where(e => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(VALUE_X, e.GetNameFromPath()));
+
+            var nav = new ElementDefinitionNavigator(snapshot.Element);
+            foreach (var elem in renamedValues)
+            {
+                Assert.IsTrue(nav.MoveTo(elem));
+                if (!nav.MoveToPrevious(VALUE_X))
+                {
+                    var valueElem = new ElementDefinition(elem.GetParentNameFromPath() + "." + VALUE_X)
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                            {
+                                ElementDefinition.DiscriminatorComponent.ForTypeSlice()
+                            }
+                        }
+                    };
+                    nav.InsertBefore(valueElem);
+                }
+            }
+
+            snapshot.Element = nav.ToListOfElements();
+        }
+
+        // t16: Fix invalid slice names, replace illegal period "." characters
+        void Fix_t16()
+        {
+            const string id = "t16";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var inputFilePath = Path.Combine(_testPath, string.Format(inputFileNameFormat, id));
+            var input = Load(inputFilePath);
+            Assert.IsNotNull(input);
+            FixSliceNames(input.Differential.Element);
+            Save(inputFilePath, input);
+
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            var expected = Load(expectedFilePath);
+            Assert.IsNotNull(expected);
+            FixSliceNames(expected.Differential.Element);
+            FixSliceNames(expected.Snapshot.Element);
+            InsertTypeSlicingIntro(expected.Snapshot);
+            Save(expectedFilePath, expected);
+        }
+
+        // au3: binding.valueSetReference => binding.valueSet
+        // STU3: ElementDefinition.binding.valueSet[x] : { Uri, Reference }
+        // R4:   ElementDefinition.binding.valueSet    : Canonical
+        void Fix_au3()
+        {
+            const string id = "au3";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var inputFilePath = Path.ChangeExtension(Path.Combine(_testPath, string.Format(inputFileNameFormat, id)), "json");
+            FixBindingValueSet(inputFilePath);
+
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            FixBindingValueSet(expectedFilePath);
+        }
+
+        static void FixBindingValueSet(string filePath)
+        {
+            var original =
+                "\"valueSetReference\": {\r\n"
+                + "            \"reference\": \"http://hl7.org.au/fhir/ch/v1/ValueSet/ncdhc-observation-category\"\r\n"
+                + "          }";
+            var replacement = "\"valueSet\": \"http://hl7.org.au/fhir/ch/v1/ValueSet/ncdhc-observation-category\",";
+
+            var input = File.ReadAllText(filePath);
+            var corrected = input.Replace(original, replacement);
+            if (corrected != input)
+            {
+                File.WriteAllText(filePath, corrected);
+            }
+        }
+
+        static void FixSliceNames(List<ElementDefinition> elem) => elem.ForEach(e => FixSliceName(e));
+
+        static void FixSliceName(ElementDefinition elem)
+        {
+            if (!string.IsNullOrEmpty(elem.SliceName) && elem.SliceName.Contains("."))
+            {
+                var sliceName = elem.SliceName.Replace(".", "-");
+                Console.WriteLine($"Element '{elem.ElementId}': Fix invalid sliceName '{elem.SliceName}' => '{sliceName}'");
+                elem.SliceName = sliceName;
+            }
+        }
 
         /// <summary>Run all tests</summary>
         [Ignore]
@@ -220,7 +322,10 @@ namespace Hl7.Fhir.Specification.Tests
         // - (2x) Patient.address.extension.extension.valueDecimal
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.value[x]
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
-        // -      Patient.address.extension 'ISO-AddressUse' + 16 children
+        // -      Patient.address.extension 'ISO-AddressUse'
+
+        // TODO: Merge pull request 1067
+
         [TestMethod] public void Test_t16() => ExecuteTest("t16");
 
         [TestMethod] public void Test_t17() => ExecuteTest("t17");
@@ -259,6 +364,12 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public void Test_samply1() => ExecuteTest("samply1");
         //[TestMethod] public void Test_au1() => ExecuteTest("au1");
         [TestMethod] public void Test_au2() => ExecuteTest("au2");
+
+        // FAILS: System.FormatException
+        // Type checking the data: Encountered unknown element 'valueSetReference' at location
+        // 'StructureDefinition.differential[0].element[2].binding[0].valueSetReference[0]' while parsing
+        // STU3: ElementDefinition.binding.valueSet[x] : { Uri, Reference }
+        // R4:   ElementDefinition.binding.valueSet    : Canonical
         [TestMethod] public void Test_au3() => ExecuteTest("au3");
 
         void ExecuteTest(string id) => ExecuteTest(_manifest.Test.FirstOrDefault(t => t.Id == id));
@@ -270,9 +381,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(test);
             Assert.IsNotNull(test.Id);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
-            var inputFilePath = Path.Combine(path, string.Format(inputFileNameFormat, test.Id));
-            var expectedFilePath = Path.Combine(path, string.Format(expectedFileNameFormat, test.Id));
+            var inputFilePath = Path.Combine(_testPath, string.Format(inputFileNameFormat, test.Id));
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, test.Id));
 
             var input = Load(test.Id, inputFileNameFormat);
             var expected = Load(test.Id, expectedFileNameFormat);
@@ -308,7 +418,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rules = test.Rule;
             if (!(rules is null))
             {
-                var ctx = new SnapshotEvaluationContext(_resolver, test.Id, output);
+                var ctx = new SnapshotEvaluationContext(_testPath, _resolver, test.Id, output);
                 for (int i = 0; i < rules.Length; i++)
                 {
                     VerifyRule(output, ctx, test, i);
@@ -326,10 +436,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
 
-        static StructureDefinition Load(string id, string fileNameFormat)
+        StructureDefinition Load(string id, string fileNameFormat)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
-            var inputFilePath = Path.Combine(path, string.Format(fileNameFormat, id));
+            //var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
+            var inputFilePath = Path.Combine(_testPath, string.Format(fileNameFormat, id));
             return Load(inputFilePath);
         }
 
@@ -384,17 +494,41 @@ namespace Hl7.Fhir.Specification.Tests
             var serializer = new XmlSerializer(typeof(SnapshotGenerationManifest));
             using (var fs = new FileStream(fullPath, FileMode.Open))
             {
-                return (SnapshotGenerationManifest)serializer.Deserialize(fs);
+                var manifest = (SnapshotGenerationManifest)serializer.Deserialize(fs);
+                // Fix known invalid invariants
+                FixManifest(manifest);
+                return manifest;
             }
+        }
+
+        // Fix known invalid invariants in input manifest
+        static void FixManifest(SnapshotGenerationManifest manifest)
+        {
+            var t15 = manifest.Test.FirstOrDefault(t => t.Id == "t15");
+            FixManifest_T15(t15);
+        }
+
+        static void FixManifest_T15(SnapshotGenerationManifestTest test)
+        {
+            const string originalExpression = @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 27";
+            const string fixedExpression = @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 29";
+
+            Assert.IsNotNull(test);
+            Assert.AreEqual("t15", test.Id);
+            var rule = test.Rule.FirstOrDefault(r => r.FhirPath == originalExpression);
+            Assert.IsNotNull(rule);
+            rule.FhirPath = fixedExpression;
         }
 
         // Custom context for accessing input & expected result
         class SnapshotEvaluationContext : FhirEvaluationContext
         {
             Dictionary<string, ITypedElement> _aliases;
+            string _testPath;
 
-            public SnapshotEvaluationContext(IResourceResolver resolver, string id, StructureDefinition generated) : base(generated)
+            public SnapshotEvaluationContext(string testPath, IResourceResolver resolver, string id, StructureDefinition generated) : base(generated)
             {
+                _testPath = testPath ?? throw new ArgumentNullException(nameof(testPath));
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
                 Generated = generated.ToTypedElement();
@@ -423,7 +557,8 @@ namespace Hl7.Fhir.Specification.Tests
                 // Also expose previously generated outputs, e.g. t16 depends on t15
                 if (name.EndsWith("-output"))
                 {
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath, name + ".xml");
+                    //var filePath = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath, name + ".xml");
+                    var filePath = Path.Combine(_testPath, name + ".xml");
                     if (!File.Exists(filePath))
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
