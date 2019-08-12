@@ -139,7 +139,7 @@ namespace Hl7.Fhir.ElementModel
                         case Hl7.Fhir.Model.Time time:
                             return time.ToTime();
                         case Hl7.Fhir.Model.Date dt:
-                            return dt.ToPartialDateTime();
+                            return dt.ToPartialDate();
                         case FhirDateTime fdt:
                             return fdt.ToPartialDateTime();
                         case Hl7.Fhir.Model.Integer fint:

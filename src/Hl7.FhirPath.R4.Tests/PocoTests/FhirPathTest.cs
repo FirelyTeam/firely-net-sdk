@@ -33,38 +33,106 @@ namespace Hl7.FhirPath.R4.Tests
         public TestContext TestContext { get; set; }
 
         [TestMethod]
+        public void ConvertToBoolean()
+        {
+            var areTrue = ElementNode.CreateList(true, "TruE", "Yes", "y", "t", "1", "1.0", 1L, 1m, 1.0m).ToList();
+            areTrue.ForEach(o => Assert.IsTrue(o.ToBoolean().Value));
+            areTrue.ForEach(o => Assert.IsTrue(o.ConvertsToBoolean()));
+
+            var areFalse = ElementNode.CreateList(false, "fAlse", "nO", "N", "f", "0", "0.0", 0L, 0m, 0.0m).ToList();
+            areFalse.ForEach(o => Assert.IsFalse(o.ToBoolean().Value));
+            areFalse.ForEach(o => Assert.IsTrue(o.ConvertsToBoolean()));
+
+            var wrong = ElementNode.CreateList("truex", "falsx", "not", "tr", -1L, 2L, 2.0m, 1.1m).ToList();
+            wrong.ForEach(o => Assert.IsNull(o.ToBoolean()));
+            wrong.ForEach(o => Assert.IsFalse(o.ConvertsToBoolean()));
+        }
+
+        [TestMethod]
         public void ConvertToInteger()
         {
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(1).ToInteger());
-            Assert.AreEqual(2L, ElementNode.ForPrimitive("2").ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive("2.4").ToInteger());
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToInteger());
-            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive(2.4m).ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToInteger());
+            var inputs = ElementNode.CreateList(1L, "2", -4L, "-5", "+4", true, false);
+            var vals = new[] { 1L, 2L, -4L, -5L, 4L, 1L, 0L };
+
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.i.ToInteger(), c.v));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToInteger()));
+
+            var wrong = ElementNode.CreateList("2.4", "++6", "2,6", "no", "false", DateTimeOffset.Now).ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToInteger()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToInteger()));
+        }
+
+
+        [TestMethod]
+        public void ConvertToDecimal()
+        {
+            var inputs = ElementNode.CreateList(1L, 2m, "2", "3.14", -4.4m, true, false);
+            var vals = new[] { 1m, 2m, 2m, 3.14m, -4.4m, 1m, 0m };
+
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.i.ToDecimal(), c.v));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToDecimal()));
+
+            var wrong = ElementNode.CreateList("hi", "++6", "2,6", "no", "false", DateTimeOffset.Now).ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToDecimal()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToDecimal()));
+        }
+
+        [TestMethod]
+        public void ConvertToDateTime()
+        {
+            var now = PartialDateTime.Parse("2019-01-11T15:47:00+01:00");
+            var inputs = ElementNode.CreateList(new DateTimeOffset(2019, 1, 11, 15, 47, 00, new TimeSpan(1, 0, 0)),
+                                "2019-01", "2019-01-11T15:47:00+01:00");
+            var vals = new[] { now, PartialDateTime.Parse("2019-01"), now };
+
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.i.ToDateTime(), c.v));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToDateTime()));
+
+            var wrong = ElementNode.CreateList("hi", 2.6m, false, PartialTime.Parse("16:05:49")).ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToDateTime()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToDateTime()));
+        }
+
+
+        [TestMethod]
+        public void ConvertToTime()
+        {
+            var now = PartialTime.Parse("15:47:00+01:00");
+            var inputs = ElementNode.CreateList(now, "T12:05:45");
+            var vals = new[] { now, PartialTime.Parse("12:05:45") };
+
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.i.ToTime(), c.v));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToTime()));
+
+            var wrong = ElementNode.CreateList(new DateTimeOffset(2019, 1, 11, 15, 47, 00, new TimeSpan(1, 0, 0)),
+                "hi", 2.6m, false).ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToTime()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToTime()));
         }
 
         [TestMethod]
         public void ConvertToString()
         {
-            Assert.AreEqual("hoi", ElementNode.ForPrimitive("hoi").ToString());
-            Assert.AreEqual("3.4", ElementNode.ForPrimitive(3.4m).ToString());
-            Assert.AreEqual("4", ElementNode.ForPrimitive(4L).ToString());
-            Assert.AreEqual("true", ElementNode.ForPrimitive(true).ToString());
-            Assert.AreEqual("false", ElementNode.ForPrimitive(false).ToString());
-            Assert.IsNotNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToString());
-        }
+            var inputs = ElementNode.CreateList("hoi", 4L, 3.4m, true, false, PartialTime.Parse("15:47:00+01:00"),
+                PartialDateTime.Parse("2019-01-11T15:47:00+01:00"));
+            var vals = new[] { "hoi", "4", "3.4", "true", "false", "15:47:00+01:00", "2019-01-11T15:47:00+01:00" };
 
-        [TestMethod]
-        public void ConvertToDecimal()
-        {
-            Assert.AreEqual(1m, ElementNode.ForPrimitive(1m).ToDecimal());
-            Assert.AreEqual(2.01m, ElementNode.ForPrimitive("2.01").ToDecimal());
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToDecimal());
-            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToDecimal());
-            Assert.IsNull(ElementNode.ForPrimitive(2).ToDecimal());
-            //            Assert.Null(ElementNode.ForPrimitive("2").ToDecimal());   Not clear according to spec
-            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToDecimal());
+            inputs.Zip(vals, (i, v) => (i, v))
+                .ToList()
+                .ForEach(c => Assert.AreEqual(c.v, c.i.ToString()));
+            inputs.ToList().ForEach(c => Assert.IsTrue(c.ConvertsToString()));
+
+            var wrong = new[] { HumanName.ForFamily("Kramer").WithGiven("Ewout").ToTypedElement() }.ToList();
+            wrong.ForEach(c => Assert.IsNull(c.ToStringRepresentation()));
+            wrong.ForEach(c => Assert.IsFalse(c.ConvertsToString()));
         }
 
         [TestMethod]

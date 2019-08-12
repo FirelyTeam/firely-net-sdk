@@ -1,0 +1,797 @@
+<QuestionnaireResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://hl7.org/fhir ../publish/fhir-all.xsd" xmlns="http://hl7.org/fhir">
+  <id value="27e83aac53ae4a9888c4a5bb647958e9"/>
+  <meta>
+    <versionId value="1"/>
+    <lastUpdated value="2017-04-10T10:54:15.22+10:00"/>
+  </meta>
+  <questionnaire value="Questionnaire/demo-fhirpath"/>
+  <status value="completed"/>
+  <authored value="2017-04-10T00:54:14.688Z"/>
+  <item>
+    <linkId value="Section-A"/>
+    <text value="A. Patient and employer details"/>
+    <item>
+      <linkId value="WCCNumberPrefix"/>
+      <text value="Prefix"/>
+      <answer>
+        <valueString value="1234567a"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="WCCNumberSuffix"/>
+      <text value="Suffix"/>
+      <answer>
+        <valueString value="3000000012"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="SoftwareName"/>
+      <text value="Software Name"/>
+      <answer>
+        <valueString value="BP"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="SoftwareVersion"/>
+      <text value="Software Version"/>
+      <answer>
+        <valueString value="1.8.4.642"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="WorkerFamilyName"/>
+      <text value="Family Name"/>
+      <answer>
+        <valueString value="Smith"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="WorkerGivenNames"/>
+      <text value="Given Names"/>
+      <answer>
+        <valueString value="Dick"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ClaimNumberPrefix"/>
+      <text value="Claim #"/>
+    </item>
+    <item>
+      <linkId value="ClaimNumberSuffix"/>
+      <text value="/"/>
+    </item>
+    <item>
+      <linkId value="ClaimReference"/>
+      <text value="Ref"/>
+    </item>
+    <item>
+      <linkId value="EmployerName"/>
+      <text value="Employer Name"/>
+      <answer>
+        <valueCoding>
+          <system value="ValueSet/employers"/>
+          <code value="19526609"/>
+          <display value="Coles Group Supply Chain Pty Ltd"/>
+        </valueCoding>
+      </answer>
+    </item>
+    <item>
+      <linkId value="WorkerDateOfBirth"/>
+      <text value="Date of Birth"/>
+      <answer>
+        <valueDate value="1945-01-01"/>
+      </answer>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-B"/>
+    <text value="B. Injury details and assessment"/>
+    <item>
+      <linkId value="ExaminationDate"/>
+      <text value="I examined you on"/>
+      <answer>
+        <valueDate value="2017-04-10"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="DateOfInjury"/>
+      <text value="For injury(s)/condition(s) you stated occurred /developed on"/>
+      <answer>
+        <valueDate value="2017-04-05"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="StatedCause"/>
+      <text value="The stated cause was"/>
+      <answer>
+        <valueString
+            value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one"
+                />
+      </answer>
+    </item>
+    <item>
+      <linkId value="InjuryConsistentStatedCause"/>
+      <text
+          value="The injury(s)/condition(s) you presented with is/are consistent with your stated cause(s)"/>
+      <answer>
+        <valueCoding>
+          <system value="0c877fcb-7cfe-4074-b9dd-00de63e115e7"/>
+          <code value="Y"/>
+          <display value="Yes"/>
+        </valueCoding>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ConditionCode"/>
+      <text value="New condition or recurrence of  pre-existing condition"/>
+      <answer>
+        <valueCoding>
+          <system value="beaa22a6-a4f8-421d-9b88-c4997825a119"/>
+          <code value="N"/>
+          <display value="New Condition"/>
+        </valueCoding>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ClinicalDiagnosis"/>
+      <text
+          value="My clinical diagnosis/es based on my examination of you and other available information is"/>
+      <answer>
+        <valueString
+            value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test on"
+                />
+      </answer>
+    </item>
+    <item>
+      <linkId value="OtherClinicalFindings"/>
+      <text value="Other comments/clinical findings"/>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-C"/>
+    <text value="C. Certification"/>
+    <item>
+      <linkId value="C1"/>
+      <text
+          value="Have recovered from your injury/condition and are fit to return to your normal duties"/>
+      <answer>
+        <valueBoolean value="true"/>
+        <item>
+          <linkId value="C1fields"/>
+          <item>
+            <linkId value="DateReturnToNormalDuties"/>
+            <text value="Return to your normal duties and hours on"/>
+            <answer>
+              <valueDate value="2017-05-01"/>
+            </answer>
+          </item>
+          <item>
+            <linkId value="FurtherTreatment"/>
+            <text value="Some further treatment may be required"/>
+            <answer>
+              <valueBoolean value="true"/>
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+    <item>
+      <linkId value="C4"/>
+      <text
+          value="Are fit to perform suitable duties that accommodate your functional abilities"/>
+      <answer>
+        <valueBoolean value="true"/>
+        <item>
+          <linkId value="C4fields"/>
+          <item>
+            <linkId value="SuitableDutiesFrom"/>
+            <text value="From"/>
+            <answer>
+              <valueDate value="2017-04-15"/>
+            </answer>
+          </item>
+          <item>
+            <linkId value="SuitableDutiesTo"/>
+            <text value="To"/>
+            <answer>
+              <valueDate value="2017-04-30"/>
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+    <item>
+      <linkId value="C7"/>
+      <text
+          value="Are medically unfit to undertake suitable duties while recovering from your injury for the period"/>
+      <answer>
+        <valueBoolean value="true"/>
+        <item>
+          <linkId value="C7fields"/>
+          <item>
+            <linkId value="UnfitSuitableDutiesFrom"/>
+            <text value="From"/>
+            <answer>
+              <valueDate value="2017-04-10"/>
+            </answer>
+          </item>
+          <item>
+            <linkId value="UnfitSuitableDutiesTo"/>
+            <text value="To"/>
+            <answer>
+              <valueDate value="2017-04-14"/>
+            </answer>
+          </item>
+          <item>
+            <linkId value="UnfitSuitableDutiesReason"/>
+            <text value="Reason"/>
+            <answer>
+              <valueString
+                  value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one."
+                            />
+            </answer>
+          </item>
+          <item>
+            <linkId value="C11"/>
+            <text
+                value="I estimate you should have functional capacity to return to work"/>
+            <answer>
+              <valueBoolean value="true"/>
+              <item>
+                <linkId value="C11fields"/>
+                <item>
+                  <linkId value="CapacityRTWDays"/>
+                  <text value="in"/>
+                </item>
+                <item>
+                  <linkId value="CapacityRTWWeeks"/>
+                  <text value="days  in"/>
+                </item>
+                <item>
+                  <linkId value="CapacityRTWUncertain"/>
+                  <text value="weeks OR  uncertain at this stage"/>
+                  <answer>
+                    <valueBoolean value="true"/>
+                  </answer>
+                </item>
+              </item>
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ReviewDate"/>
+      <text value="I would like to review your progress on"/>
+      <answer>
+        <valueDate value="2017-04-11"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="NextConsultation"/>
+      <text value="or at your next medical consultation"/>
+      <answer>
+        <valueBoolean value="true"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="CertificationComments"/>
+      <text value="Comments"/>
+      <answer>
+        <valueString
+            value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one"
+                />
+      </answer>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-D"/>
+    <text value="D. Treatment plan"/>
+    <item>
+      <linkId value="1557925D-117A-4066-80B6-4688AC1BB285"/>
+      <item>
+        <linkId value="D2"/>
+        <text value="Medical specialist"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="D2fields"/>
+            <item>
+              <linkId value="ReferralMedicalSpecialist"/>
+              <text value="Medical specialist (Name &amp; specialty)"/>
+              <answer>
+                <valueString
+                    value="test 1 test one. test 1 test one. test 1 test one. test 1 te"
+                                />
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+      <item>
+        <linkId value="D4"/>
+        <text value="Psychologist"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="D4fields"/>
+            <item>
+              <linkId value="ReferralPsychologist"/>
+              <text value="Psychologist (Name)"/>
+              <answer>
+                <valueString
+                    value="test 1 test one. test 1 test one. test 1 test one. test 1 te"
+                                />
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+      <item>
+        <linkId value="D6"/>
+        <text value="Physiotherapist"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="D6fields"/>
+            <item>
+              <linkId value="ReferralPhysiotherapist"/>
+              <text value="Physiotherapist (Name)"/>
+              <answer>
+                <valueString
+                    value="test 1 test one. test 1 test one. test 1 test one. test 1 te"
+                                />
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+      <item>
+        <linkId value="D8"/>
+        <text value="Other"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="D8fields"/>
+            <item>
+              <linkId value="ReferralOther"/>
+              <text value="Other (Name &amp; discipline)"/>
+              <answer>
+                <valueString
+                    value="test 1 test one. test 1 test one. test 1 test one. test 1 te"
+                                />
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+    </item>
+    <item>
+      <linkId value="TreatmentPlan"/>
+      <text
+          value="The following treatment plan is aimed at assisting your recovery and return to work"/>
+      <answer>
+        <valueString
+            value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one"
+                />
+      </answer>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-E"/>
+    <text value="E. Functional ability"/>
+    <item>
+      <linkId value="9488b6e9-619a-470d-b6d6-e30ca1c2b99e"/>
+      <text value="I recommend"/>
+      <item>
+        <linkId value="E19"/>
+        <text value="A graduated increase in working hours"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="E19fields"/>
+            <item>
+              <linkId value="GraduatedIncreaseOverWeeks"/>
+              <text value="over"/>
+              <answer>
+                <valueInteger value="3"/>
+              </answer>
+            </item>
+            <item>
+              <linkId value="GraduatedIncreaseHoursFrom"/>
+              <text value="weeks from"/>
+              <answer>
+                <valueDecimal value="5"/>
+              </answer>
+            </item>
+            <item>
+              <linkId value="GraduatedIncreaseHoursTo"/>
+              <text value="hours a day to your normal hours/"/>
+              <answer>
+                <valueDecimal value="8"/>
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+      <item>
+        <linkId value="E23"/>
+        <text value="Non-consecutive working days"/>
+        <answer>
+          <valueBoolean value="true"/>
+          <item>
+            <linkId value="E23fields"/>
+            <item>
+              <linkId value="NonConsecutiveDays"/>
+              <text value="for a period of"/>
+              <answer>
+                <valueInteger value="3"/>
+              </answer>
+            </item>
+            <item>
+              <linkId value="NonConsecutiveWeeks"/>
+              <text value="days or"/>
+              <answer>
+                <valueInteger value="3"/>
+              </answer>
+            </item>
+          </item>
+        </answer>
+      </item>
+      <item>
+        <linkId value="MoreOptionsInformation"/>
+        <text
+            value="I would like more information about the options available for your return to work"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+      <item>
+        <linkId value="RecoveryRTWPlan"/>
+        <text value="I would like a copy of your recovery and return to work plan"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+    </item>
+    <item>
+      <linkId value="Restriction"/>
+      <text value="No restrictions"/>
+      <answer>
+        <valueBoolean value="false"/>
+        <item>
+          <linkId value="E1fields-PartA"/>
+          <text value="Physical Function"/>
+          <item>
+            <linkId value="Sitting"/>
+            <text value="Sitting"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="Y"/>
+                <display value="Can"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Standing"/>
+            <text value="Standing/walking"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="M"/>
+                <display value="With modifications"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Kneeling"/>
+            <text value="Kneeling/squatting"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="M"/>
+                <display value="With modifications"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Carrying"/>
+            <text value="Carrying/holding/lifting"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="Y"/>
+                <display value="Can"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Reaching"/>
+            <text value="Reaching above shoulder"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="N"/>
+                <display value="Cannot"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Bending"/>
+            <text value="Bending"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="Y"/>
+                <display value="Can"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="UseAffectedBodyPart"/>
+            <text value="Use of affected body part ability"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="M"/>
+                <display value="With modifications"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Neck"/>
+            <text value="Neck movement"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="Y"/>
+                <display value="Can"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Climbing"/>
+            <text value="Climbing steps/stairs/ladders"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="N"/>
+                <display value="Cannot"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Driving"/>
+            <text value="Driving"/>
+            <answer>
+              <valueCoding>
+                <system value="873dc647-912b-4ae4-837f-3808fa44171f"/>
+                <code value="Y"/>
+                <display value="Can"/>
+              </valueCoding>
+            </answer>
+          </item>
+        </item>
+        <item>
+          <linkId value="E1fields-PartB"/>
+          <text value="Mental health function"/>
+          <item>
+            <linkId value="Attention"/>
+            <text value="Attention/concentration"/>
+            <answer>
+              <valueCoding>
+                <system value="04efb7f2-16e6-4501-9896-3e8353372713"/>
+                <code value="P"/>
+                <display value="Partially affected"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Memory"/>
+            <text value="Memory (short term and/or long term)"/>
+            <answer>
+              <valueCoding>
+                <system value="04efb7f2-16e6-4501-9896-3e8353372713"/>
+                <code value="Y"/>
+                <display value="Affected"/>
+              </valueCoding>
+            </answer>
+          </item>
+          <item>
+            <linkId value="Judgement"/>
+            <text value="Judgement (ability to make decisions)"/>
+            <answer>
+              <valueCoding>
+                <system value="04efb7f2-16e6-4501-9896-3e8353372713"/>
+                <code value="P"/>
+                <display value="Partially affected"/>
+              </valueCoding>
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+    <item>
+      <linkId value="E15"/>
+      <text value="Other functional considerations"/>
+      <answer>
+        <valueBoolean value="false"/>
+        <item>
+          <linkId value="E15fields"/>
+          <item>
+            <linkId value="OtherFunctionalComments"/>
+            <text value="Comments"/>
+            <answer>
+              <valueString
+                  value="Details of capacity or limitations that will assist in the identification of suitable duties need to be entered with a condition prefix i.e.:&#xA;&#xA;Sitting - test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. &#xA;&#xA;Standing/walking - &#xA;&#xA;Kneeling/squatting - &#xA;&#xA;Carrying/holding/lifting - &#xA;&#xA;Reaching above shoulder - test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test &#xA;&#xA;Bending - &#xA;&#xA;Use of affected body part ability - &#xA;&#xA;Neck movement - test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test  &#xA;&#xA;Climbing steps/stairs/ladders - &#xA;&#xA;Driving - &#xA;&#xA;Attention/concentration - &#xA;&#xA;Memory(short term and/or long term) - &#xA;&#xA;Judgement (ability to make decisions) - &#xA;&#xA;Other functional considerations -dddd"
+                            />
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+    <item>
+      <linkId value="E17"/>
+      <text
+          value="I have prescribed medication(s) that could impact upon your ability to undertake some activities"/>
+      <answer>
+        <valueBoolean value="true"/>
+        <item>
+          <linkId value="E17fields"/>
+          <item>
+            <linkId value="PrescribedMedicationDetails"/>
+            <text value="Details"/>
+            <answer>
+              <valueString
+                  value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one."
+                            />
+            </answer>
+          </item>
+        </item>
+      </answer>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-F"/>
+    <text value="F. Communication"/>
+    <item>
+      <linkId value="0B432B1B-18E6-4659-B0ED-713E54F5EFA5"/>
+      <item>
+        <linkId value="PreferredContactPhone"/>
+        <text value="Phone"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+      <item>
+        <linkId value="PreferredContactEmail"/>
+        <text value="Email"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+      <item>
+        <linkId value="PreferredContactFax"/>
+        <text value="Fax"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+      <item>
+        <linkId value="PreferredContactWriting"/>
+        <text value="Writing"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+      <item>
+        <linkId value="PreferredContactVisit"/>
+        <text value="Visit"/>
+        <answer>
+          <valueBoolean value="true"/>
+        </answer>
+      </item>
+    </item>
+    <item>
+      <linkId value="CaseManagerToContact"/>
+      <text
+          value="Case Manager to contact me once they have received this certificate (where a claim exists)"/>
+      <answer>
+        <valueBoolean value="false"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="EmployerToContact"/>
+      <text
+          value="Employer to contact me once they have received this certificate (where a claim exists)"/>
+      <answer>
+        <valueBoolean value="false"/>
+      </answer>
+    </item>
+  </item>
+  <item>
+    <linkId value="Section-G"/>
+    <text value="G. Doctor's details"/>
+    <item>
+      <linkId value="ProviderName"/>
+      <text value="Doctor's Name"/>
+      <answer>
+        <valueString value="Frederick Findacure"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderAddressLine1"/>
+      <text value="Address line1"/>
+      <answer>
+        <valueString value="1 Best Avenue"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderAddressLine2"/>
+      <text value="Address line2"/>
+      <answer>
+        <valueString value="test 1 test one. test 1 test o"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderSuburb"/>
+      <text value="Suburb"/>
+      <answer>
+        <valueString value="Practiceland"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderState"/>
+      <text value="State"/>
+      <answer>
+        <valueString value="QLD"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderPostcode"/>
+      <text value="Postcode"/>
+      <answer>
+        <valueString value="4001"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderTelephone"/>
+      <text value="Phone"/>
+      <answer>
+        <valueString value="0744444444"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderMedicareNo"/>
+      <text value="Provider Number"/>
+      <answer>
+        <valueString value="1234567a"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderEMail"/>
+      <text value="Email Address"/>
+      <answer>
+        <valueString
+            value="test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one. test 1 test one"
+                />
+      </answer>
+    </item>
+    <item>
+      <linkId value="ProviderFax"/>
+      <text value="Fax"/>
+      <answer>
+        <valueString value="0744444445"/>
+      </answer>
+    </item>
+    <item>
+      <linkId value="CompletionDate"/>
+      <text value="Completion Date"/>
+      <answer>
+        <valueDate value="2017-04-10"/>
+      </answer>
+    </item>
+  </item>
+</QuestionnaireResponse>
