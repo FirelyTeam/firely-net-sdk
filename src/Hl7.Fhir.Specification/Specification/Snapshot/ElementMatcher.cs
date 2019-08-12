@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -390,26 +390,32 @@ namespace Hl7.Fhir.Specification.Snapshot
             return sliceBase;
         }
 
+        /// <summary>Returns <c>true</c> if the specified element has a slicing component (<see cref="ElementDefinition.Slicing"/> is not <c>null</c>).</summary>
+        static bool HasSlicingComponent(this ElementDefinition elem) => !(elem.Slicing is null);
+
         static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementDefinitionNavigator sliceBase = null)
         {
             var result = new List<MatchInfo>();
 
             // [WMR 20170406] NEW: Fix for Vadim issue - handle profile constraints on complex extension child elements 
             // Determine if the base profile is introducing a slice entry 
-            var snapIsSliced = snapNav.Current.Slicing != null;
+            var snapIsSliced = snapNav.Current.HasSlicingComponent();
 
-            // [WMR 20190808] NEW - Initialize default slice base element *before* repositoning snapNav
+            // [WMR 20181212] NEW - Initialize default slice base element *before* repositoning snapNav
             // By default, new/unmatched named slices inherit from the associated sliced element
             if (sliceBase is null)
             {
                 sliceBase = initSliceBase(snapNav);
             }
+            // Save reference to the original, unnamed slice base element in snapNav
+            // Any following new (unmatched) slices introduced by diffNav inherit from this
+            var orgSliceBase = sliceBase;
 
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
-            if (diffNav.Current.SliceName != null)
+            if (!string.IsNullOrEmpty(diffNav.Current.SliceName))
             {
-                // [WMR 20181211] R4: Fixed
+                // [WMR 20181212] R4: Fixed
                 // snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName);
                 if (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffNav.Current.SliceName))
                 {
@@ -423,13 +429,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Bookmark the initial slice base element
             var snapSliceBase = snapNav.Bookmark();
-            var baseIsSliced = snapNav.Current.Slicing != null;
+            var baseIsSliced = snapNav.Current.HasSlicingComponent();
 
             // For the first entries with explicit slicing information (or implicit if this is an extension),
             // generate a match between the base's unsliced element and the first entry in the diff
 
             var isExtension = diffNav.Current.IsExtension();
-            var diffIsSliced = diffNav.Current.Slicing != null;
+            var diffIsSliced = diffNav.Current.HasSlicingComponent();
 
             // Extract the discriminator from diff or base slice entry
             var discriminator = diffIsSliced ? diffNav.Current.Slicing.Discriminator.ToList() : snapNav.Current.Slicing?.Discriminator.ToList();
@@ -485,7 +491,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => if the element has type extension and a type profile, we assume it represents
                 // a concrete extension slice and not the extension slicing entry.
                 var elem = diffNav.Current;
-                if (elem.SliceName == null && !isExtensionSlice(elem))
+                if (elem.SliceName is null && !isExtensionSlice(elem))
                 {
                     // Generate match for constraint on existing slice entry
                     var match = new MatchInfo()
@@ -513,6 +519,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
+                var diffElem = diffNav.Current;
+
                 // [WMR 20180604] Fix for issue #611
                 // "Bug: Snapshot Generator fails for derived profiles with sparse constraints on _some_ existing named slices"
                 // => First advance to matching named slice in snap;
@@ -520,23 +528,36 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Match => Merge named slice in diff to existing named slice in snap
                 // No match => Add new named slice (after all existing slices in snap)
                 // Only try to match named slices; always add unnamed (extension) slices in-order
-                if (diffNav.Current.SliceName != null
-                    // [WMR 20181211] R4: inspect ElementDefinition.sliceIsConstraining
-                    // "If set to true, an ancestor profile SHALL have a slicing definition with this name.
-                    // If set to false, no ancestor profile is permitted to have a slicing definition with this name."
-                    //&& (diffNav.Current.SliceIsConstraining == true)
+                if (!(diffElem.SliceName is null)
+                // [WMR 20181211] R4: inspect ElementDefinition.sliceIsConstraining
+                // "If set to true, an ancestor profile SHALL have a slicing definition with this name.
+                // If set to false, no ancestor profile is permitted to have a slicing definition with this name."
+                //&& (diffElem.SliceIsConstraining == true)
                 )
                 {
-                    //while (snapNav.Current.SliceName != diffNav.Current.SliceName && snapNav.MoveToNextSlice())
-                    while (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffNav.Current.SliceName)
+                    //while (snapNav.Current.SliceName != diffElem.SliceName && snapNav.MoveToNextSlice())
+
+                    while (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffElem.SliceName)
                             && snapNav.MoveToNextSlice())
                     {
                         //
                     }
                 }
 
+                // [WMR 20181212] Re-determine sliceBase for following (re-)slices
+                // if diffNav introduces re-slices, then inherit from current named base slice in snapNav
+                // e.g. match reslice "a\b" in diff to slice "a" in snap
+                // Otherwise, if diffNav introduces new slices, then inherit from unnamed base slice in snapNav
+                // e.g. match new slice "c" in diff to slice intro in snap
+                if (!StringComparer.Ordinal.Equals(diffElem.SliceName, sliceBase.Current.SliceName)
+                    && !ElementDefinitionNavigator.IsDirectResliceOf(diffElem.SliceName, sliceBase.Current.SliceName))
+                {
+                    // diff introduces new slice to existing slice group; match to generic, unnamed base in snapNav
+                    sliceBase = orgSliceBase;
+                }
+
                 // Named slice with a slice entry introduces a re-slice
-                if (diffNav.Current.Slicing != null)
+                if (!(diffElem.Slicing is null))
                 {
                     // Recursively collect nested re-slice matches
                     // Re-use the existing slice base for the internal re-slices defined within the same profile
