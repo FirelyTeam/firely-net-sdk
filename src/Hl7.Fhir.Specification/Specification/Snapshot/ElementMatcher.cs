@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Try to match nameXXXXX to name[x]
             var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, diffName));
 
-            if (matchingChoice != null)
+            if (!(matchingChoice is null))
             {
                 // [WMR 20170406] Match on current element? Then don't advance to next!
                 // return snapNav.MoveToNext(matchingChoice);
@@ -195,11 +195,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160906] WRONG! Also need to handle complex extensions
             var diffIsExtension = diffNav.Current.IsExtension() &&
                 (
-                    diffNav.Current.PrimaryTypeProfile() != null                            // Extension element in a profile
+                    !(diffNav.Current.PrimaryTypeProfile() is null)                         // Extension element in a profile
                     || ElementDefinitionNavigator.GetPathRoot(diffNav.Path) == "Extension"  // Complex extension child element
                 );
-            bool baseIsSliced = snapNav.Current.Slicing != null;
-            bool diffIsSliced = diffIsExtension || diffNav.Current.Slicing != null;
+            bool baseIsSliced = snapNav.Current.HasSlicingComponent();
+            bool diffIsSliced = diffIsExtension || diffNav.Current.HasSlicingComponent();
 
             if (baseIsSliced || diffIsSliced)
             {
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // but there is no matching constraint in base profile for that path
                 // Detect if the base profile has renamed the choice type element
                 var candidate = findRenamedChoiceElement(snapNav, diffName);
-                if (candidate != null)
+                if (!(candidate is null))
                 {
                     // Generate warning that a profile further constraining a
                     // renamed choice type element cannot refer to the original element name,
@@ -593,9 +593,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         static bool isExtensionSlice(ElementDefinition element) => isExtensionSlice(element.Type.FirstOrDefault());
 
         static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
-            => type != null
+            => !(type is null)
                && type.Code == FHIRAllTypes.Extension.GetLiteral()
-               && type.Profile != null;
+               && !(type.Profile is null);
 
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
@@ -603,8 +603,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, 
                     List<ElementDefinition.DiscriminatorComponent> discriminators, MatchInfo match)
         {
-            Debug.Assert(match != null);                    // Caller should initialize match
-            Debug.Assert(diffNav.Current.Slicing == null);  // Caller must handle reslicing
+            Debug.Assert(!(match is null));                     // Caller should initialize match
+            Debug.Assert(diffNav.Current.Slicing is null);      // Caller must handle reslicing
 
             // 1. If the diff slice has a name, than match base slice by name
             var diffSliceName = diffNav.Current.SliceName;
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Note: if value is missing (null), then fall back to original (STU3) behavior,
                 // i.e. match implies constraint on existing slice, otherwise new slice
                 var isConstraining = diffNav.Current.SliceIsConstraining;
-                if (isConstraining != null && isConstraining != isMatch)
+                if (!(isConstraining is null) && isConstraining != isMatch)
                 {
                     // Invalid slice name
                     // - Either a constraining named slice WITHOUT matching named slice in base profile
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
             // if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
-            if (discriminators != null && (discriminators.Count != 1 || !isUrlDiscriminator(discriminators.FirstOrDefault())))
+            if (!(discriminators is null) && (discriminators.Count != 1 || !isUrlDiscriminator(discriminators.FirstOrDefault())))
             {
                 // Invalid extension discriminator; generate issue and ignore
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
         static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator)
-            => discriminator != null
+            => !(discriminator is null)
                && discriminator.Type == ElementDefinition.DiscriminatorType.Value
                && SnapshotGenerator.IsEqualPath(discriminator.Path, ElementDefinition.DiscriminatorComponent.ExtensionDiscriminatorPath);
 
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // [WMR 20170411] TODO: update for STU3?
 
-            if (discriminators != null)
+            if (!(discriminators is null))
             {
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
-                if (nav.Current != null && nav.Current.IsChoice())
+                if (!(nav.Current is null) && nav.Current.IsChoice())
                 {
                     result.Add(nav.PathName);
                 }
@@ -944,8 +944,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
-                if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
+                if (!(snapNav.Current is null) && !(snapNav.Current.SliceName is null)) bPos += $" '{snapNav.Current.SliceName}'";
+                if (!(diffNav.Current is null) && !(diffNav.Current.SliceName is null)) dPos += $" '{diffNav.Current.SliceName}'";
 
                 Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
             }
@@ -969,8 +969,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
             // [WMR 20160719] Add name, if not null
-            if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
-            if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
+            if (!(snapNav.Current is null) && !(snapNav.Current.SliceName is null)) bPos += $" '{snapNav.Current.SliceName}'";
+            if (!(diffNav.Current is null) && !(diffNav.Current.SliceName is null)) dPos += $" '{diffNav.Current.SliceName}'";
 
             Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
 
