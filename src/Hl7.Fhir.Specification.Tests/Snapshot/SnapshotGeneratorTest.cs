@@ -755,7 +755,6 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
 
-
             // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
             // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
@@ -794,6 +793,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
             verifier.VerifyElement("Patient.extension.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
             verifier.VerifyElement("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:researchAuth/grandfatheredResAuth.value[x]");
 
             // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
@@ -3887,7 +3887,7 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition SlicedNationalPatientProfile => new StructureDefinition()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            BaseDefinition = NationalPatientProfile.Url,
             Name = "SlicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/SlicedNationalPatientProfile",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
@@ -4082,7 +4082,7 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition ReslicedNationalPatientProfile => new StructureDefinition()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            BaseDefinition = NationalPatientProfile.Url,
             Name = "ReslicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/ReslicedNationalPatientProfile",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
@@ -4103,7 +4103,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         Min = 1,
                         // Append to comment inherited from base
-                        Comment = new Markdown("...SlicedNationalPatientProfile")
+                        Comment = new Markdown("...ReslicedNationalPatientProfile")
                     }
                     // Slice: bsn
                     ,new ElementDefinition("Patient.identifier")
@@ -4155,8 +4155,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = NationalPatientProfile;
             var profile = ReslicedNationalPatientProfile;
-
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
+
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
@@ -4204,7 +4204,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("*", nav.Current.Max);
             // Slice entry should inherit Comments from base element, merged with diff constraints
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile\r\nReslicedNationalPatientProfile", nav.Current.Comment?.Value);
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
