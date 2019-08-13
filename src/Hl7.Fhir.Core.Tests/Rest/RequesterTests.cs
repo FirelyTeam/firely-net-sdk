@@ -23,17 +23,17 @@ namespace Hl7.Fhir.Test
         {
             // just try a few
             var tx = new TransactionBuilder("http://myserver.org/fhir").ServerHistory();
-            Assert.AreEqual(TransactionBuilder.InteractionType.History, tx.ToBundle().Entry[0].Annotation<TransactionBuilder.InteractionType>());
+            Assert.AreEqual(InteractionType.History, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
             tx = new TransactionBuilder("http://myserver.org/fhir").ServerOperation("$everything", null);
-            Assert.AreEqual(TransactionBuilder.InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<TransactionBuilder.InteractionType>());
+            Assert.AreEqual(InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
             var p = new Patient();
             tx = new TransactionBuilder("http://myserver.org/fhir").Create(p);
-            Assert.AreEqual(TransactionBuilder.InteractionType.Create, tx.ToBundle().Entry[0].Annotation<TransactionBuilder.InteractionType>());
+            Assert.AreEqual(InteractionType.Create, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
             tx = new TransactionBuilder("http://myserver.org/fhir").Search(new SearchParams().Where("name=ewout"), resourceType: "Patient");
-            Assert.AreEqual(TransactionBuilder.InteractionType.Search, tx.ToBundle().Entry[0].Annotation<TransactionBuilder.InteractionType>());
+            Assert.AreEqual(InteractionType.Search, tx.ToBundle().Entry[0].Annotation<InteractionType>());
         }
 
         [TestMethod]

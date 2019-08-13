@@ -7,46 +7,15 @@
  */
 
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Rest
 {
     public partial class FhirClient : BaseFhirClient, IFhirClient
     {
-        #region BaseFhirClient
-
-        //private Requester _requester;
-
-        ///// <summary>
-        ///// The last transaction result that was executed on this connection to the FHIR server
-        ///// </summary>
-        //public Bundle.ResponseComponent LastResult => _requester.LastResult?.Response;
-        //public byte[] LastBody => LastResult?.GetBody();
-        //public string LastBodyAsText => LastResult?.GetBodyAsText();
-        //public Resource LastBodyAsResource => _requester.LastResult?.Resource;
-
-        ///// <summary>
-        ///// The default endpoint for use with operations that use discrete id/version parameters
-        ///// instead of explicit uri endpoints. This will always have a trailing "/"
-        ///// </summary>
-        //public Uri Endpoint
-        //{
-        //    get;
-        //    private set;
-        //}
-
-        #endregion
-
-
         /// <summary>
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
@@ -173,8 +142,7 @@ namespace Hl7.Fhir.Rest
             set => Settings.PreferredParameterHandling = value;
         }
 
-
-#if NET_COMPRESSION
+        
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -196,7 +164,6 @@ namespace Hl7.Fhir.Rest
             get => Settings.CompressRequestBody;
             set => Settings.CompressRequestBody = value;
         }
-#endif
 
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
         public ParserSettings ParserSettings
@@ -208,14 +175,14 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpWebRequest LastRequest { get { return (Requester as Requester)?.LastRequest; } }
+        public HttpWebRequest LastRequest { get { return LastClientRequest as HttpWebRequest; } }
 
         /// <summary>
         /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpWebResponse LastResponse { get { return (Requester as Requester)?.LastResponse; } }
+        public HttpWebResponse LastResponse { get { return LastClientResponse as HttpWebResponse; } }
         
         #endregion
         

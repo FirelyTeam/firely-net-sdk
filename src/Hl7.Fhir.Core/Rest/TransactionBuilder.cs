@@ -18,6 +18,10 @@ namespace Hl7.Fhir.Rest
         public const string HISTORY = "_history";
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";
+        /// <summary>
+        /// "_count" found as a parameter on the REST History operation URL
+        /// </summary>
+        public const string HISTORY_PARAM_COUNT = SearchParams.SEARCH_PARAM_COUNT;
 
         private Bundle _result;
         private readonly Uri _baseUrl;
@@ -36,24 +40,7 @@ namespace Hl7.Fhir.Rest
             : this(baseUri.OriginalString, type)
         {
         }
-
-
-        internal enum InteractionType
-        {
-            Search,
-            Unspecified,
-            Read,
-            VRead,
-            Update,
-            Delete,
-            Create,
-            Capabilities,
-            History,
-            Operation,
-            Transaction,
-            Patch
-        }
-
+        
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
             var newEntry = new Bundle.EntryComponent();
@@ -214,7 +201,7 @@ namespace Hl7.Fhir.Rest
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History);
 
             if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
-            if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
+            if(pageSize.HasValue) path.AddParam(HISTORY_PARAM_COUNT, pageSize.Value.ToString());
             if(since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
 
             addEntry(entry, path);

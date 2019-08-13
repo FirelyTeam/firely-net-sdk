@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,14 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.ResponseComponent LastResult => Requester.LastResult?.Response;
+        public Bundle.ResponseComponent LastResult { get; private set; }
 
         public byte[] LastBody => LastResult?.GetBody();
         public string LastBodyAsText => LastResult?.GetBodyAsText();
-        public Resource LastBodyAsResource => Requester.LastResult?.Resource;
+        public Resource LastBodyAsResource { get; private set; }
+
+        protected object LastClientRequest { get; set; }
+        protected object LastClientResponse { get; set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
@@ -411,6 +415,8 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
+
+
         public TResource Create<TResource>(TResource resource, SearchParams condition) where TResource : Resource
         {
             return CreateAsync(resource, condition).WaitResult();
@@ -870,12 +876,49 @@ namespace Hl7.Fhir.Rest
             verifyServerVersion();
 
             var request = tx.Entry[0];
-            var response = await Requester.ExecuteAsync(request).ConfigureAwait(false);
+            // tx (-> ITyped)? -> entryRequest 
+            // entry -> ITyped -> tx
+            var entryRequest = request.ToTypedEntryResponse(Settings);
 
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
+            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, new PocoStructureDefinitionSummaryProvider());
+
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(entryResponse.Status))
             {
-                Enum.TryParse<HttpStatusCode>(response.Response.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
+                Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
+                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(entryResponse.Status), code);
+            }
+
+            Bundle.EntryComponent response = null;
+            try
+            {
+                response = entryResponse.ToBundleEntry(Settings.ParserSettings);
+
+                if (!entryResponse.IsSuccessful())
+                {
+                    LastResult = response.Response;
+                    LastBodyAsResource = response.Resource;
+
+                    Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
+                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource);
+                }
+                else if(entryResponse.BodyException != null)
+                {
+                    var errorResult = new Bundle.EntryComponent();
+                    errorResult.Response = new Bundle.ResponseComponent();
+                    errorResult.Response.Status = entryResponse.Status;
+
+                    OperationOutcome operationOutcome = OperationOutcome.ForException(entryResponse.BodyException, OperationOutcome.IssueType.Invalid);
+                    
+                    LastResult = errorResult.Response;
+                    LastBodyAsResource = errorResult.Resource;
+                    
+                    Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
+                    throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
+                }
+            }
+            catch (AggregateException ae)
+            {
+                throw ae.GetBaseException();
             }
 
             Resource result;
