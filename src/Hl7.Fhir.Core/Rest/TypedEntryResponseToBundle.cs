@@ -112,23 +112,9 @@ namespace Hl7.Fhir.Rest
         public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
         {
             var body = interaction.GetBody();
-            return body != null ? DecodeBody(body, Encoding.UTF8) : null;
+            return body != null ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
         }
-
-        internal static string DecodeBody(byte[] body, Encoding enc)
-        {
-            if (body == null) return null;
-            if (enc == null) enc = Encoding.UTF8;
-
-            // [WMR 20160421] Explicit disposal
-            // return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
-            using (var stream = new MemoryStream(body))
-            using (var reader = new StreamReader(stream, enc, true))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
+        
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.RemoveAnnotations<Body>();

@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = request.ToTypedEntryResponse(Settings);
+            var entryRequest = request.ToEntryRequest(Settings);
 
             var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, new PocoStructureDefinitionSummaryProvider());
 

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Rest
 {
     public static class BundleToEntryRequest
     {
-        public static EntryRequest ToTypedEntryResponse(this Bundle.EntryComponent entry, FhirClientSettings settings)
+        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings)
         {
             var result = new EntryRequest
             {
