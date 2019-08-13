@@ -415,16 +415,41 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Otherwise remain at the current slice entry or unsliced element
             if (!string.IsNullOrEmpty(diffNav.Current.SliceName))
             {
+
                 // [WMR 20181212] R4: Fixed
-                // snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName);
-                if (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffNav.Current.SliceName))
+                if (snapNav.IsSliceBase(diffNav.Current.SliceName))
                 {
-                    if (snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.SliceName))
+                    // Match/merge with current snapNav
+                }
+                else if (snapNav.MoveToSliceBase(diffNav.Current.SliceName))
+                {
+                    // Found matching named slice in base, overrides default base element
+                    sliceBase = initSliceBase(snapNav);
+                }
+
+#if false
+                // [WMR 20190813] TODO: Handle SliceIsConstraining
+                // If true, indicates that this slice definition is constraining a slice definition with the same name in an inherited profile.
+                // If false, the slice is not overriding any slice in an inherited profile.
+                // If missing, the slice might or might not be overriding a slice in an inherited profile, depending on the sliceName.
+                // If set to true, an ancestor profile SHALL have a slicing definition with this name.
+                // If set to false, no ancestor profile is permitted to have a slicing definition with this name.
+                // => Verify and emit issues if invalid
+
+                var isConstraining = diffNav.Current.SliceIsConstraining;
+                if (isConstraining.HasValue)
+                {
+                    var isMatch = StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffNav.Current.SliceName);
+                    if (isConstraining.Value && !isMatch)
                     {
-                        // [WMR 20190808] Found matching named slice in base, overrides default base element
-                        sliceBase = initSliceBase(snapNav);
+                        var issue = SnapshotGenerator.CreateIssueSliceNameIllegalMatch(diffNav.Current);
+                    }
+                    else if (!isConstraining.Value && isMatch)
+                    {
+                        var issue = SnapshotGenerator.CreateIssueSliceNameNoMatch(diffNav.Current);
                     }
                 }
+#endif
             }
 
             // Bookmark the initial slice base element
@@ -452,7 +477,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
                     // [WMR 20170308] If this is a recursive call (e.g. named slice with slicing component = reslice),
                     // then explicitly override default base with specified slice base element
-                    SliceBase = sliceBase
+                    SliceBase = sliceBase,
                 });
 
                 // Skip any existing slicing entry in the differential; below we process the actual slices
@@ -521,38 +546,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var diffElem = diffNav.Current;
 
-                // [WMR 20180604] Fix for issue #611
-                // "Bug: Snapshot Generator fails for derived profiles with sparse constraints on _some_ existing named slices"
-                // => First advance to matching named slice in snap;
-                // skip (consume) all preceding (unconstrained) named slices in snap
-                // Match => Merge named slice in diff to existing named slice in snap
-                // No match => Add new named slice (after all existing slices in snap)
-                // Only try to match named slices; always add unnamed (extension) slices in-order
-                if (!(diffElem.SliceName is null)
-                // [WMR 20181211] R4: inspect ElementDefinition.sliceIsConstraining
-                // "If set to true, an ancestor profile SHALL have a slicing definition with this name.
-                // If set to false, no ancestor profile is permitted to have a slicing definition with this name."
-                //&& (diffElem.SliceIsConstraining == true)
-                )
-                {
-                    //while (snapNav.Current.SliceName != diffElem.SliceName && snapNav.MoveToNextSlice())
+                // [WMR 20190813] FIXED
+                // Initialize SliceBase for re-slices to matching named slice in base (A/B => A)
 
-                    while (!StringComparer.Ordinal.Equals(snapNav.Current.SliceName, diffElem.SliceName)
-                            && snapNav.MoveToNextSlice())
-                    {
-                        //
-                    }
+                if (snapNav.MoveToSliceBase(diffNav.Current.SliceName))
+                {
+                    // Found matching named slice in base, overrides default base element
+                    sliceBase = initSliceBase(snapNav);
                 }
-
-                // [WMR 20181212] Re-determine sliceBase for following (re-)slices
-                // if diffNav introduces re-slices, then inherit from current named base slice in snapNav
-                // e.g. match reslice "a\b" in diff to slice "a" in snap
-                // Otherwise, if diffNav introduces new slices, then inherit from unnamed base slice in snapNav
-                // e.g. match new slice "c" in diff to slice intro in snap
-                if (!StringComparer.Ordinal.Equals(diffElem.SliceName, sliceBase.Current.SliceName)
-                    && !ElementDefinitionNavigator.IsDirectResliceOf(diffElem.SliceName, sliceBase.Current.SliceName))
+                else
                 {
-                    // diff introduces new slice to existing slice group; match to generic, unnamed base in snapNav
                     sliceBase = orgSliceBase;
                 }
 
@@ -561,22 +564,29 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // Recursively collect nested re-slice matches
                     // Re-use the existing slice base for the internal re-slices defined within the same profile
+                    var bm = diffNav.Bookmark();
                     var reslices = constructSliceMatch(snapNav, diffNav, sliceBase);
                     result.AddRange(reslices);
+
+                    // diffNav may have moved forward into child re-slices
+                    // Move back up to re-sliced parent; loop will advance to the next sibling slice
+                    // Important: After exiting loop, explicitly skip any remaining, already processed re-slices (below)
+                    diffNav.ReturnToBookmark(bm);
                 }
                 else
                 {
                     // Create a separate base instance for each slice
                     var match = new MatchInfo()
                     {
-                        // BaseBookmark = snapNav.Bookmark(),
+                        //BaseBookmark = snapNav.Bookmark(),
                         BaseBookmark = snapSliceBase,
+
                         DiffBookmark = diffNav.Bookmark(),
                         SliceBase = sliceBase
                     };
                     matchSlice(snapNav, diffNav, discriminator, match);
                     result.Add(match);
-                    
+
                     // Match to base slice? Then consume and advance to next
                     if (match.Action == MatchAction.Merge)
                     {
@@ -584,7 +594,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
 
-            } while (diffNav.MoveToNextSliceAtAnyLevel());
+            // Scan only sibling slices at the current level
+            // Child re-slices are handled by recursive call above
+            } while (diffNav.MoveToNextSlice());
+
+            // Consume any remaining re-slices
+            // Allready processed by recursive call above
+            while (diffNav.MoveToNextSliceAtAnyLevel()) { }
 
             return result;
         }
@@ -939,15 +955,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
                 }
-
-                var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
-                var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
-
-                // [WMR 20160719] Add name, if not null
-                if (!(snapNav.Current is null) && !(snapNav.Current.SliceName is null)) bPos += $" '{snapNav.Current.SliceName}'";
-                if (!(diffNav.Current is null) && !(diffNav.Current.SliceName is null)) dPos += $" '{diffNav.Current.SliceName}'";
-
-                Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+                var msg = FormatMatch(match, snapNav, diffNav);
+                Debug.WriteLine(msg);
             }
 
             snapNav.ReturnToBookmark(sbm);
@@ -964,19 +973,38 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.InvalidOperation("Found unreachable bookmark in matches");
             }
-
-            var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
-            var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
-
-            // [WMR 20160719] Add name, if not null
-            if (!(snapNav.Current is null) && !(snapNav.Current.SliceName is null)) bPos += $" '{snapNav.Current.SliceName}'";
-            if (!(diffNav.Current is null) && !(diffNav.Current.SliceName is null)) dPos += $" '{diffNav.Current.SliceName}'";
-
-            Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+            var msg = FormatMatch(match, snapNav, diffNav);
+            Debug.WriteLine(msg);
 
             snapNav.ReturnToBookmark(sbm);
             diffNav.ReturnToBookmark(dbm);
         }
+
+        public static string FormatMatch(ElementMatcher.MatchInfo match, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            var msg = $"B:{FormatPath(snapNav)} <-- {match.Action.ToString()} --> D:{FormatPath(diffNav)}";
+            if (!(match.SliceBase is null))
+            {
+                msg += $" -- SliceBase: {FormatPath(match.SliceBase)}";
+            }
+            if (!(match.Issue is null))
+            {
+                msg += $" -- Issue: {match.Issue}";
+            }
+            return msg;
+        }
+
+        static string FormatPath(ElementDefinitionNavigator nav)
+        {
+            if (nav.Current is null) { return "(none)"; }
+            var result = nav.Path;
+            if (!string.IsNullOrEmpty(nav.Current.SliceName))
+            {
+                result += " '" + nav.Current.SliceName + "'";
+            }
+            return result;
+        }
+
     }
 
 }
