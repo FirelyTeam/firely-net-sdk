@@ -73,7 +73,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             IncludeSubDirectories = true,
             // Exclude expected output, to prevent canonical url conflicts
-            Includes = new string[] { "*-input.xml", "*input.json" },
+            // Also include duplicate input file "t24a", conflicts with "t24a-input"
+            Excludes = new string[] { "manifest.xml", "*-expected*", "*-output*", "t24a.xml" },
             FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
@@ -144,9 +145,37 @@ namespace Hl7.Fhir.Specification.Tests
         // Fix known issues in test input
         void FixInput()
         {
+            Fix_t4a();
             Fix_t15();
             Fix_t16();
             Fix_au3();
+        }
+
+        // t4a: update id from "t4" to "t4a"
+        void Fix_t4a()
+        {
+            const string id = "t4a";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var inputFilePath = Path.Combine(_testPath, string.Format(inputFileNameFormat, id));
+            var input = Load(inputFilePath);
+            Assert.IsNotNull(input);
+            if (input.Id != id)
+            {
+                input.Id = id;
+                Save(inputFilePath, input);
+            }
+
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            var expected = Load(expectedFilePath);
+            Assert.IsNotNull(expected);
+            FixSliceNames(expected.Differential.Element);
+            FixSliceNames(expected.Snapshot.Element);
+            if (expected.Id != id)
+            {
+                expected.Id = id;
+                Save(expectedFilePath, expected);
+            }
         }
 
         // t15: insert missing slice introduction elements 'Patient.address.extension.extension.value[x]'
@@ -295,7 +324,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public void Test_t13() => ExecuteTest("t13");
         [TestMethod] public void Test_t14() => ExecuteTest("t14");
 
-        // FAILS
+        // FAILS - FIXED
         // Input specifies:
         // - (2x) Patient.address.extension.extension.valueDecimal
         // Expected output contains:
@@ -308,7 +337,7 @@ namespace Hl7.Fhir.Specification.Tests
         // TODO: SnapGen should also emit <slicing> node on type sliced [x] element
         [TestMethod] public void Test_t15() => ExecuteTest("t15");
 
-        // FAILS
+        // FAILS - FIXED
         // Input specifies:
         // - (2x) Patient.address.extension.extension.valueDecimal
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
@@ -334,7 +363,7 @@ namespace Hl7.Fhir.Specification.Tests
         //[TestMethod] public void Test_t20() => ExecuteTest("t20");
         [TestMethod] public void Test_t21() => ExecuteTest("t21");
 
-        // FAILS
+        // FAILS - FIXED
         // Expected output expands 'validDate' extensions
         // 3 x 4 = 12 elements (.id, .extension, .url, .valueDateTime)
         // Generated output does NOT expand extension children
@@ -344,29 +373,58 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public void Test_t23() => ExecuteTest("t23");
         //[TestMethod] public void Test_t23a() => ExecuteTest("t23a");
         //[TestMethod] public void Test_t24() => ExecuteTest("t24");
+        [TestMethod] public void Test_t24a() => ExecuteTest("t24a");
         [TestMethod] public void Test_t24b() => ExecuteTest("t24b");
         //[TestMethod] public void Test_t25() => ExecuteTest("t25");
-        [TestMethod] public void Test_t26() => ExecuteTest("t26");
+
+        // FAILS!
+        // [WMR 20190814] t26-input and t26-expected are exactly equal, only specify differential...?
+        [TestMethod, Ignore] public void Test_t26() => ExecuteTest("t26");
+
         [TestMethod] public void Test_t27() => ExecuteTest("t27");
+
+        // FAILS! TODO
+        // [WMR 20190814] TODO: Fix invalid snapshot, esp. nested extension 'language'
+        // Differential: OperationOutcome.issue.details.text.extension.valueString.extension
+        // Snapshot:     OperationOutcome.issue.details.text.extension.extension - WRONG!!!
         [TestMethod] public void Test_t28() => ExecuteTest("t28");
+
+        // FAILS! TODO
         [TestMethod] public void Test_t29() => ExecuteTest("t29");
+
         [TestMethod] public void Test_t29a() => ExecuteTest("t29a");
         //[TestMethod] public void Test_t30() => ExecuteTest("t30");
+        [TestMethod] public void Test_t30b() => ExecuteTest("t30b");
         [TestMethod] public void Test_t31() => ExecuteTest("t31");
         [TestMethod] public void Test_t32() => ExecuteTest("t32");
         [TestMethod] public void Test_t33() => ExecuteTest("t33");
         [TestMethod] public void Test_t34() => ExecuteTest("t34");
         [TestMethod] public void Test_t35() => ExecuteTest("t35");
         [TestMethod] public void Test_t36() => ExecuteTest("t36");
+
+        // FAILS! TODO
+        // Typo in element path: "MedicationRequiest.dosageInstruction.timing.event"
+        // Note: "MedicationRequiest" should be "MedicationRequest"
+        // SnapGen throws exception WRONG! should report OperationOutcome issue
         [TestMethod] public void Test_t37() => ExecuteTest("t37");
+
         [TestMethod] public void Test_t38() => ExecuteTest("t38");
         //[TestMethod] public void Test_t39() => ExecuteTest("t39");
         [TestMethod] public void Test_t40() => ExecuteTest("t40");
         [TestMethod] public void Test_t41() => ExecuteTest("t41");
         [TestMethod] public void Test_t42() => ExecuteTest("t42");
+        
+        // FAILS! TODO
         [TestMethod] public void Test_t43() => ExecuteTest("t43");
+
+
         //[TestMethod] public void Test_t43a() => ExecuteTest("t43a");
+
+        // FAILS! TODO
+        // Rename element implies type constraint
+        // e.g. "valueQuantity" w/o type constraints implies type = Quantity
         [TestMethod] public void Test_t44() => ExecuteTest("t44");
+
         [TestMethod] public void Test_t45() => ExecuteTest("t45");
         [TestMethod] public void Test_samply1() => ExecuteTest("samply1");
         //[TestMethod] public void Test_au1() => ExecuteTest("au1");
@@ -392,7 +450,8 @@ namespace Hl7.Fhir.Specification.Tests
             var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, test.Id));
 
             var input = Load(test.Id, inputFileNameFormat);
-            var expected = Load(test.Id, expectedFileNameFormat);
+            var expected = test.Fail ? null : Load(test.Id, expectedFileNameFormat);
+            Assert.IsTrue(test.Fail || expected.HasSnapshot);
 
             var output = (StructureDefinition)input.DeepCopy();
             _snapGen.Update(output);
@@ -412,23 +471,33 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
 #if LOG_OUTPUT
             // Log the generated and expected output to the console, for debugging purposes
-            expected.Snapshot.Element.Log($"Expected snapshot has #{expected.Snapshot.Element.Count} elements:");
-            Console.WriteLine();
+            if (!(expected is null))
+            {
+                expected.Snapshot.Element.Log($"Expected snapshot has #{expected.Snapshot.Element.Count} elements:");
+                Console.WriteLine();
+            }
 
             output.Snapshot.Element.Log($"Generated snapshot has #{output.Snapshot.Element.Count} elements:");
             Console.WriteLine();
 #endif
 
-            Assert.IsTrue(output.HasSnapshot);
-
-            // Verify rules against generated snapshot
-            var rules = test.Rule;
-            if (!(rules is null))
+            if (test.Fail)
             {
-                var ctx = new SnapshotEvaluationContext(_testPath, _resolver, test.Id, output);
-                for (int i = 0; i < rules.Length; i++)
+                Assert.IsNotNull(_snapGen.Outcome, "SnapshotGenerator completed succesfully. Expecting OperationOutcome issues...");
+            }
+            else
+            {
+                Assert.IsTrue(output.HasSnapshot);
+
+                // Verify rules against generated snapshot
+                var rules = test.Rule;
+                if (!(rules is null))
                 {
-                    VerifyRule(output, ctx, test, i);
+                    var ctx = new SnapshotEvaluationContext(_testPath, _resolver, test.Id, input, output);
+                    for (int i = 0; i < rules.Length; i++)
+                    {
+                        VerifyRule(output, ctx, test, i);
+                    }
                 }
             }
         }
@@ -534,6 +603,20 @@ namespace Hl7.Fhir.Specification.Tests
                 @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 11",
                 @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 12");
 
+            // [WMR 20190814] Insert missing test rule for t24a (inherited by t24b)
+            var testList = manifest.Test.ToList();
+            var idx = testList.FindIndex(t => t.Id == "t24b");
+            Assert.IsTrue(idx >= 0);
+            testList.Insert(idx, new SnapshotGenerationManifestTest()
+            {
+                Id = "t24a"
+            });
+            manifest.Test = testList.ToArray();
+
+            FixTestRule("t24b",
+                "fixture('t24b-output').snapshot.element.count().trace('t24bo') = fixture('t24b-include').snapshot.element.count().trace('t24ao')",
+                "fixture('t24b-output').snapshot.element.count().trace('t24bo') = fixture('t24a-output').snapshot.element.count().trace('t24ao')");
+
             void FixTestRule(string id, string originalExpression, string fixedExpression)
             {
                 var test = manifest.Test.FirstOrDefault(t => t.Id == id);
@@ -551,19 +634,35 @@ namespace Hl7.Fhir.Specification.Tests
             Dictionary<string, ITypedElement> _aliases;
             string _testPath;
 
-            public SnapshotEvaluationContext(string testPath, IResourceResolver resolver, string id, StructureDefinition generated) : base(generated)
+            public SnapshotEvaluationContext(
+                string testPath, IResourceResolver resolver, string id,
+                StructureDefinition input, StructureDefinition generated) : base(generated)
             {
                 _testPath = testPath ?? throw new ArgumentNullException(nameof(testPath));
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
+                if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
+                Input = input.ToTypedElement();
                 Generated = generated.ToTypedElement();
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
+                this.Tracer = this.Trace;
+            }
+
+            void Trace(string msg, IEnumerable<ITypedElement> elems)
+            {
+                Console.WriteLine($"[TRACE] {msg}:");
+                foreach (var elem in elems)
+                {
+                    Console.WriteLine($"[TRACE] '{elem.Name}' : {elem.InstanceType}{(elem.HasValue() ? $" = '{elem.Value.ToString()}'" : null)}");
+                }
             }
 
             public string Id { get; }
 
             public IResourceResolver TestResolver { get; }
+
+            public ITypedElement Input { get; }
 
             public ITypedElement Generated { get; }
 
@@ -577,10 +676,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             ITypedElement Fixture(string name)
             {
+                if (name == $"{Id}-input") { return Input; }
                 if (name == $"{Id}-output") { return Generated; }
 
-                // Also expose previously generated outputs, e.g. t16 depends on t15
-                if (name.EndsWith("-output"))
+                // Also expose previous inputs & generated outputs, e.g. t16 depends on t15
+                if (name.EndsWith("-output") || name.EndsWith("-input"))
                 {
                     //var filePath = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath, name + ".xml");
                     var filePath = Path.Combine(_testPath, name + ".xml");
@@ -603,12 +703,16 @@ namespace Hl7.Fhir.Specification.Tests
                 return null;
             }
 
+            // Add custom FHIRPath methods for unit testing
             public static void AddSymbols(SymbolTable symbols)
             {
                 symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("fixture", Fixture);
                 symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("aliasAs", AliasAs);
                 symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("alias", Alias);
+                symbols.Add<ITypedElement, bool, string, EvaluationContext, ITypedElement>("check", Check);
             }
+
+            // Custom FHIRPath methods for unit testing
 
             public static ITypedElement Fixture(ITypedElement elem, string name, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Fixture(name) : null;
@@ -624,6 +728,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             public static ITypedElement Alias(ITypedElement elem, string id, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Alias(id) : null;
+
+            public static ITypedElement Check(ITypedElement elem, bool condition, string message, EvaluationContext ctx)
+            {
+                Assert.IsTrue(condition, $"[CHECK] '{elem.Name}' {message}");
+                //if (!condition)
+                //{
+                //    Console.WriteLine($"[CHECK] '{elem.Name}' {message}");
+                //}
+                return elem;
+            }
         }
 
         // Serializable classes for parsing manifest.xml
@@ -646,14 +760,20 @@ namespace Hl7.Fhir.Specification.Tests
             [XmlElement("rule")]
             public SnapshotGenerationManifestTestRule[] Rule { get; set; }
 
+            [XmlAttribute("id")]
+            public string Id { get; set; }
+
+            [XmlAttribute("register")]
+            public string Register { get; set; }
+
+            [XmlAttribute("include")]
+            public string Include { get; set; }
+
             [XmlAttribute("gen")]
             public bool Gen { get; set; }
 
             //[XmlIgnore()]
             //public bool GenSpecified { get; set; }
-
-            [XmlAttribute("id")]
-            public string Id { get; set; }
 
             [XmlAttribute("sort")]
             public bool Sort { get; set; }
@@ -667,11 +787,6 @@ namespace Hl7.Fhir.Specification.Tests
             //[XmlIgnore()]
             //public bool FailSpecified { get; set; }
 
-            [XmlAttribute("register")]
-            public string Register { get; set; }
-
-            [XmlAttribute("include")]
-            public string Include { get; set; }
         }
 
         [Serializable()]

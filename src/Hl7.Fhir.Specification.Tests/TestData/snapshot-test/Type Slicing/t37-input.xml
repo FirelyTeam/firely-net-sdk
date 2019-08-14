@@ -22,10 +22,7 @@
       <path value="MedicationRequest.dosageInstruction.timing"/>
     </element>
     <element>
-	  <!-- [WMR 20190723] FIXED
       <path value="MedicationRequiest.dosageInstruction.timing.event"/>
-	  -->
-	  <path value="MedicationRequest.dosageInstruction.timing.event"/>
       <mustSupport value="true"/>
     </element>
     <element>
