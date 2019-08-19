@@ -1074,6 +1074,50 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
+                            // Resolve and merge referenced external type profile
+
+                            // [WMR 20190723] NEW
+                            // EXCEPT for complex reference to profile and (extension) child element:
+                            // "{url}#{element}", e.g. http://hl7.org/fhir/StructureDefinition/patient-nationality#code
+                            // Target extension profile has already been merged via (grand)parent extension element
+                            // => Do nothing; continue merging profile constraints on extension child elements
+                            //
+                            // Note: profile constraint on complex extension child element only needs to specify
+                            // the correct slice name of the child element. Complex reference to profile & element
+                            // is allowed, but not required.
+                            // Example:
+                            //
+                            //
+                            // <!-- Introduce profile extension -->
+                            // <element>
+                            //   <path value="Patient.extension"/>
+                            //   <type>
+                            //     <code value="Extension"/>
+                            //     <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality"/>
+                            //   </type>
+                            // </element>
+                            // <!-- Slicing entry for extension child elements -->
+                            // <element>
+                            //   <slicing>
+                            //     <discriminator>
+                            //       <type value="value"/>
+                            //       <path value="url"/>
+                            //     </discriminator>
+                            //     <ordered value="false"/>
+                            //     <rules value="open"/>
+                            //   </slicing>                         */
+                            // </element>
+                            // <!-- Profile constraint on extension child element "code" -->
+                            // <element>
+                            //   <path value="Patient.extension.extension"/>
+                            //   <!-- REQUIRED: Slice name of the constrained extension child element -->
+                            //   <sliceName value="code"/>
+                            //   <!-- OPTIONAL: Complex reference to extension profile and element -->
+                            //   <type>
+                            //     <code value="Extension"/>
+                            //     <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality#code"/>
+                            //   </type>
+                            // </element>
 
                             if (!profileRef.IsComplex)
                             {
@@ -1091,11 +1135,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             else
                             {
-                                // [WMR 20190723] TODO
-                                // For complex extension child element, do NOT merge from root element!
-                                // Instead, merge with matching child element (similar to above)
-                                //Debug.Fail("TODO");
-                                throw new NotSupportedException("TODO");
+                                // Url bookmark #name should match the specified sliceName
+                                // Note: ignore bookmark; always use the specified sliceName
+                                if (!StringComparer.Ordinal.Equals(diff.Current.SliceName, profileRef.ElementName))
+                                {
+                                    addIssueInvalidComplexProfileReference(diff.Current);
+                                }
                             }
                         }
                     }
