@@ -7277,5 +7277,57 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), elem.Type[0].Code);
         }
 
+        // [WMR 20190819] Verify behavior
+        // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Validator.20error.20for.20modified.20binding.20strength
+        [TestMethod]
+        public void TestBindingStrengthConstraint()
+        {
+            StructureDefinition SpecimenProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Specimen.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Specimen),
+                Name = nameof(SpecimenProfile),
+                Url = "http://example.org/fhir/StructureDefinition/SpecimenProfile",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Renamed element w/o any constraints implies type constraint
+                        new ElementDefinition("Specimen.collection.fastingStatus[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.CodeableConcept.GetLiteral()
+                                }
+                            },
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                            {
+                                Strength = BindingStrength.Required
+                            }
+                        },
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SpecimenProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            //dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            //Assert.IsTrue(nav.JumpToFirst("Specimen.collection.fastingStatus[x]");
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToChild("collection"));
+            Assert.IsTrue(nav.MoveToChild("fastingStatus[x]"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Binding);
+            Assert.AreEqual(BindingStrength.Required, elem.Binding.Strength);
+        }
+
     }
 }
