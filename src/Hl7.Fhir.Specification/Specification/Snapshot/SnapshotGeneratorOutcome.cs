@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal static OperationOutcome.IssueComponent CreateIssueMissingSliceEntry(ElementDefinition elementDef)
         {
             var location = elementDef.Path;
-            return PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT.ToIssueComponent(
+            return PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY.ToIssueComponent(
                 $"The slice group at {location} does not start with a slice entry element",
                 location
             );
