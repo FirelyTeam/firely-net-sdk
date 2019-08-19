@@ -1534,6 +1534,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Support implicit type constraints on renamed elements
                 applyImplicitChoiceTypeConstraint(snap, diff);
 
+                // [WMR 20190819] NEW: Auto-generate default slice name for (implicit) type slices
+                if (string.IsNullOrEmpty(snap.Current.SliceName) && string.IsNullOrEmpty(diff.Current.SliceName))
+                {
+                    snap.Current.SliceName = diff.PathName;
+                }
+
                 snap.Current.Path = diff.Current.Path;
             }
 
