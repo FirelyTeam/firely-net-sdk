@@ -61,18 +61,36 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Content errors
 
+        // [WMR 20190819] OBSOLETE
+
         // "Differential has a constraint on a choice element '{0}', but does so without using a type slice"
         // Differential specifies a constraint on a child element of a choice type element
         // This is not allowed if an element supports multiple element types; must use slicing!
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }
+        //public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        internal static OperationOutcome.IssueComponent CreateIssueInvalidChoiceConstraint(ElementDefinition elementDef)
+        //void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }
+
+        //internal static OperationOutcome.IssueComponent CreateIssueInvalidChoiceConstraint(ElementDefinition elementDef)
+        //{
+        //    var location = elementDef.Path;
+        //    return PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT.ToIssueComponent(
+        //        $"Differential specifies constraint on choice element {location} without using type slice.",
+        //        location
+        //    );
+        //}
+
+        // [WMR 20190819] NEW
+        // "Differential specifies a renamed choice type element '{0}' for an invalid type that is not supported by the base element."
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_RENAME = Issue.Create(10014, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        void addIssueInvalidChoiceRename(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceRename(elementDef)); }
+
+        internal static OperationOutcome.IssueComponent CreateIssueInvalidChoiceRename(ElementDefinition elementDef)
         {
             var location = elementDef.Path;
-            return PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT.ToIssueComponent(
-                $"Differential specifies constraint on choice element {location} without using type slice.",
+            return PROFILE_ELEMENTDEF_INVALID_CHOICE_RENAME.ToIssueComponent(
+                "Differential specifies a invalid renamed choice type element '{location}'. The specified type constraint is not supported by the base element.",
                 location
             );
         }
@@ -175,8 +193,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Differential specification for core resource or datatype definitions does not start with root element definition."
         // public static readonly Issue PROFILE_NO_ROOT = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
+        // [WMR 20190819] OBSOLETE
         // "Element at path '{0}' has a choice of types, cannot expand"
-        public static readonly Issue PROFILE_ELEMENTDEF_CANNOT_EXPAND_CHOICE = Issue.Create(10005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        //public static readonly Issue PROFILE_ELEMENTDEF_CANNOT_EXPAND_CHOICE = Issue.Create(10005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // Dependency errors
 

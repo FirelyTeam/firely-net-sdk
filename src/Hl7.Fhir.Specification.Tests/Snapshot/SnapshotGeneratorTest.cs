@@ -7208,6 +7208,74 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
+        // [WMR 20190819] #1067 SnapshotGenerator - support implicit type constraints on renamed elements
+        // Example: https://www.hl7.org/fhir/bodyheight.html
+        //
+        // <element id="Observation.valueQuantity">
+        //    <path value="Observation.valueQuantity"/> 
+        // </element>
+        //
+        // The element renaming implies a type constraint on Quantity:
+        //
+        // <type> 
+        //    <code value="Quantity"/> 
+        // </type> 
+        [TestMethod]
+        public void TestRenamedElementImpliesTypeConstraint()
+        {
+            StructureDefinition ObservationProfileWithImplicitTypeSlice = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = nameof(ObservationProfileWithImplicitTypeSlice),
+                Url = "http://example.org/fhir/StructureDefinition/ObservationProfileWithImplicitTypeSlice",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Renamed element w/o any constraints implies type constraint
+                        new ElementDefinition("Observation.valueQuantity")
+                        {
+                            // Implied:
+                            //Type = new List<ElementDefinition.TypeRefComponent>()
+                            //{
+                            //    new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Quantity.GetLiteral() }
+                            //}
+                        },
+                    }
+                }
+            };
+
+            //var resolver = new InMemoryProfileResolver(ObservationProfileWithImplicitTypeSlice);
+            //var multiResolver = new MultiResolver(_testResolver, resolver);
+            //_generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var obs = ObservationProfileWithImplicitTypeSlice;
+            Assert.IsNotNull(obs);
+            generateSnapshotAndCompare(obs, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            Assert.IsTrue(nav.MoveTo("value[x]"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(11, elem.Type.Count); // Unconstrained
+
+            // Verify implicit type constraint
+            Assert.IsTrue(nav.MoveTo("valueQuantity"));
+            elem = nav.Current;
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), elem.Type[0].Code);
+        }
 
     }
 }

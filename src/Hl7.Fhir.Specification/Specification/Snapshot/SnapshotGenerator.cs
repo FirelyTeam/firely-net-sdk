@@ -1530,6 +1530,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Snapshot base element has already been renamed by the first match => re-assign
             if (!IsEqualPath(snap.PathName, diff.PathName))
             {
+                // [WMR 20190819] NEW: #1074
+                // Support implicit type constraints on renamed elements
+                applyImplicitChoiceTypeConstraint(snap, diff);
+
                 snap.Current.Path = diff.Current.Path;
             }
 
@@ -1549,6 +1553,41 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Merge differential
             mergeElement(snap, diff);
 
+        }
+
+        // [WMR 20190819] NEW
+        // Renamed choice type element implies type constraint
+        // e.g. "valueQuantity" implies type is constrained to Quantity
+
+        // Parse type from renamed choice type element and constrain snap types.
+        void applyImplicitChoiceTypeConstraint(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        {
+            Debug.Assert(!IsEqualPath(snap.PathName, diff.PathName));
+
+            var diffTypes = diff.Current.Type;
+            if (diffTypes is null || diffTypes.Count == 0)
+            {
+                // [WMR 20190819] NEW: #1074
+                // Parse type constraint from renamed element
+                var primaryDiffType = ElementDefinitionNavigator.ParseTypeFromRenamedElement(diff.PathName, snap.PathName);
+
+                if (!string.IsNullOrEmpty(primaryDiffType))
+                {
+                    // Try to find matching type in base element
+                    var match = snap.Current.Type.FirstOrDefault(t => StringComparer.Ordinal.Equals(primaryDiffType, t.Code));
+                    if (match is null)
+                    {
+                        // No match; error! Invalid choice type constraint
+                        addIssueInvalidChoiceRename(diff.Current);
+                    }
+                    else if (snap.Current.Type.Count > 0)
+                    {
+                        // Found match; constrain to specified type
+                        //snap.Current.Type.RemoveAll(t => !StringComparer.Ordinal.Equals(primaryDiffType, t.Code));
+                        snap.Current.Type = new List<ElementDefinition.TypeRefComponent>() { match };
+                    }
+                }
+            }
         }
 
         void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
