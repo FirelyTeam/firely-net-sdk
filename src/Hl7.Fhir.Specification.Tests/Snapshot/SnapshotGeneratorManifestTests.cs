@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Specification.Tests
         void FixInput()
         {
             Fix_t4a();
+            Fix_t13();
             Fix_t15();
             Fix_t16();
             Fix_t29();
@@ -180,7 +181,22 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        // t15: insert missing slice introduction elements 'Patient.address.extension.extension.value[x]'
+        // T13: insert missing type slice entry elements 'Patient.extension.extension.value[x]'
+        void Fix_t13()
+        {
+            const string id = "t13";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            var expected = Load(expectedFilePath);
+            Assert.IsNotNull(expected);
+
+            // Note: also fix manifest entry for t13, rule 15 (last); fix element index
+            InsertTypeSlicingIntro(expected.Snapshot);
+            Save(expectedFilePath, expected);
+        }
+
+        // t15: insert missing slice entry elements 'Patient.address.extension.extension.value[x]'
         // before actual type slices 'Patient.address.extension.extension.valueDecimal'
         void Fix_t15()
         {
@@ -195,7 +211,7 @@ namespace Hl7.Fhir.Specification.Tests
             Save(expectedFilePath, expected);
         }
 
-        // t15: insert missing slice introduction elements '...value[x]'
+        // t15: insert missing slice entry elements '...value[x]'
         // before actual type slices e.g. '...valueDecimal'
         void InsertTypeSlicingIntro(StructureDefinition.SnapshotComponent snapshot)
         {
@@ -627,13 +643,17 @@ namespace Hl7.Fhir.Specification.Tests
         // Fix known invalid invariants in input manifest
         static void FixManifest(SnapshotGenerationManifest manifest)
         {
+            // [WMR 20190819] Expecting +2 "value[x]" elements
+            UpdateElementIndices("t13", 16);        // Bump element indices starting at "valueCodeableConcept" (16)
+            UpdateElementIndices("t13", 21 + 1);    // Bump element indices starting at "valuePeriod" (21)
+
             // [WMR 20190812] Expecting +2 "value[x]" elements
-            FixTestRule("t15",
+            ReplaceTestRule("t15",
                 @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 27",
                 @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 29");
 
             // [WMR 20190812] Expecting +2 "value[x]" elements
-            FixTestRule("t16",
+            ReplaceTestRule("t16",
                 @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 17",
                 @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 19");
 
@@ -641,12 +661,12 @@ namespace Hl7.Fhir.Specification.Tests
             // Expected output expands 'validDate' extensions
             // 3 x 4 = 12 elements (.id, .extension, .url, .valueDateTime)
             // Note: profile does not constrain extension child elements, so why expand?
-            FixTestRule("t22",
+            ReplaceTestRule("t22",
                 @"fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 76",
                 @"fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 64");
 
             // [WMR 20190812] Expected +1 element "Patient.contact.telecom"
-            FixTestRule("t23",
+            ReplaceTestRule("t23",
                 @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 11",
                 @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 12");
 
@@ -660,17 +680,36 @@ namespace Hl7.Fhir.Specification.Tests
             });
             manifest.Test = testList.ToArray();
 
-            FixTestRule("t24b",
+            ReplaceTestRule("t24b",
                 "fixture('t24b-output').snapshot.element.count().trace('t24bo') = fixture('t24b-include').snapshot.element.count().trace('t24ao')",
                 "fixture('t24b-output').snapshot.element.count().trace('t24bo') = fixture('t24a-output').snapshot.element.count().trace('t24ao')");
 
-            void FixTestRule(string id, string originalExpression, string fixedExpression)
+            void ReplaceTestRule(string id, string originalExpression, string fixedExpression)
             {
                 var test = manifest.Test.FirstOrDefault(t => t.Id == id);
                 Assert.IsNotNull(test);
                 var rule = test.Rule.FirstOrDefault(r => r.FhirPath == originalExpression);
                 Assert.IsNotNull(rule);
                 rule.FhirPath = fixedExpression;
+            }
+
+            void UpdateElementIndices(string id, int startIndex, int delta = 1)
+            {
+                var test = manifest.Test.FirstOrDefault(t => t.Id == id);
+                Assert.IsNotNull(test);
+                foreach (var rule in test.Rule)
+                {
+                    var expression = rule.FhirPath;
+                    const string subexpression = ".snapshot.element[";
+                    var start = expression.IndexOf(subexpression) + subexpression.Length - 1;
+                    var end = expression.IndexOf("]", start + 1);
+                    var param = expression.Substring(start + 1, end - start - 1);
+                    if (int.TryParse(param, out var index) && index >= startIndex)
+                    {
+                        var newIndex = (index + delta).ToString();
+                        rule.FhirPath = expression.Substring(0, start + 1) + newIndex + expression.Substring(end);
+                    }
+                }
             }
 
         }
