@@ -10,6 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Specification.Tests
             Fix_t4a();
             Fix_t15();
             Fix_t16();
+            Fix_t29();
             Fix_au3();
         }
 
@@ -262,6 +264,34 @@ namespace Hl7.Fhir.Specification.Tests
             FixBindingValueSet(expectedFilePath);
         }
 
+        // t29: Fix StructureDefinition.type = "OperationOutcome" ?! => Should be "Parameters"
+        void Fix_t29()
+        {
+            const string id = "t29";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var inputFilePath = Path.Combine(_testPath, string.Format(inputFileNameFormat, id));
+            var input = Load(inputFilePath);
+            Assert.IsNotNull(input);
+            var ParametersTypeName = FHIRAllTypes.Parameters.GetLiteral();
+            Assert.AreEqual(ParametersTypeName, input.Differential.Element[0].Path);
+            if (input.Type != ParametersTypeName)
+            {
+                input.Type = ParametersTypeName;
+                Save(inputFilePath, input);
+            }
+
+            var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
+            var expected = Load(expectedFilePath);
+            Assert.IsNotNull(expected);
+            if (expected.Type != ParametersTypeName)
+            {
+                input.Type = ParametersTypeName;
+                Save(expectedFilePath, expected);
+            }
+        }
+
+
         static void FixBindingValueSet(string filePath)
         {
             var original =
@@ -307,16 +337,16 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Individual test methods per test
 
-        [TestMethod] public void Test_t1() => ExecuteTest("t1");
-        [TestMethod] public void Test_t2() => ExecuteTest("t2");
-        [TestMethod] public void Test_t3() => ExecuteTest("t3");
-        [TestMethod] public void Test_t4() => ExecuteTest("t4");
-        [TestMethod] public void Test_t4a() => ExecuteTest("t4a");
-        [TestMethod] public void Test_t5() => ExecuteTest("t5");
-        [TestMethod] public void Test_t6() => ExecuteTest("t6");
-        [TestMethod] public void Test_t7() => ExecuteTest("t7");
-        [TestMethod] public void Test_t8() => ExecuteTest("t8");
-        [TestMethod] public void Test_t9() => ExecuteTest("t9");
+        [TestMethod] public void Test_t01() => ExecuteTest("t1");
+        [TestMethod] public void Test_t02() => ExecuteTest("t2");
+        [TestMethod] public void Test_t03() => ExecuteTest("t3");
+        [TestMethod] public void Test_t04() => ExecuteTest("t4");
+        [TestMethod] public void Test_t04a() => ExecuteTest("t4a");
+        [TestMethod] public void Test_t05() => ExecuteTest("t5");
+        [TestMethod] public void Test_t06() => ExecuteTest("t6");
+        [TestMethod] public void Test_t07() => ExecuteTest("t7");
+        [TestMethod] public void Test_t08() => ExecuteTest("t8");
+        [TestMethod] public void Test_t09() => ExecuteTest("t9");
         [TestMethod] public void Test_t10() => ExecuteTest("t10");
         [TestMethod] public void Test_t11() => ExecuteTest("t11");
         [TestMethod] public void Test_t12() => ExecuteTest("t12");
@@ -352,9 +382,6 @@ namespace Hl7.Fhir.Specification.Tests
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.value[x]
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
         // -      Patient.address.extension 'ISO-AddressUse'
-
-        // TODO: Merge pull request 1067
-
         [TestMethod] public void Test_t16() => ExecuteTest("t16");
 
         [TestMethod] public void Test_t17() => ExecuteTest("t17");
@@ -370,11 +397,14 @@ namespace Hl7.Fhir.Specification.Tests
         // Note: profile does not constrain extension child elements, so why expand?
         [TestMethod] public void Test_t22() => ExecuteTest("t22");
 
+        // FAILS - FIXED
         [TestMethod] public void Test_t23() => ExecuteTest("t23");
         //[TestMethod] public void Test_t23a() => ExecuteTest("t23a");
+
         //[TestMethod] public void Test_t24() => ExecuteTest("t24");
         [TestMethod] public void Test_t24a() => ExecuteTest("t24a");
         [TestMethod] public void Test_t24b() => ExecuteTest("t24b");
+
         //[TestMethod] public void Test_t25() => ExecuteTest("t25");
 
         // FAILS!
@@ -383,13 +413,14 @@ namespace Hl7.Fhir.Specification.Tests
 
         [TestMethod] public void Test_t27() => ExecuteTest("t27");
 
-        // FAILS! TODO
-        // [WMR 20190814] TODO: Fix invalid snapshot, esp. nested extension 'language'
+        // [WMR 20190814] Fix invalid snapshot, esp. nested extension 'language'
         // Differential: OperationOutcome.issue.details.text.extension.valueString.extension
         // Snapshot:     OperationOutcome.issue.details.text.extension.extension - WRONG!!!
+        // [WMR 20190819] Fixed, SnapGen now auto-generates slice name for implicit type slice "valueString"
         [TestMethod] public void Test_t28() => ExecuteTest("t28");
 
-        // FAILS! TODO
+        // FAILS - FIXED
+        // Fix StructureDefinition.type = "OperationOutcome" ?! => Should be "Parameters"
         [TestMethod] public void Test_t29() => ExecuteTest("t29");
 
         [TestMethod] public void Test_t29a() => ExecuteTest("t29a");
@@ -420,7 +451,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         //[TestMethod] public void Test_t43a() => ExecuteTest("t43a");
 
-        // FAILS! TODO
         // Rename element implies type constraint
         // e.g. "valueQuantity" w/o type constraints implies type = Quantity
         [TestMethod] public void Test_t44() => ExecuteTest("t44");
@@ -454,14 +484,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(test.Fail || expected.HasSnapshot);
 
             var output = (StructureDefinition)input.DeepCopy();
-            _snapGen.Update(output);
+            Exception exception = null;
+            try
+            {
+                _snapGen.Update(output);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                Console.WriteLine($"The {nameof(SnapshotGenerator)} failed with an exception:");
+                Console.WriteLine(ex.Message);
+            }
 
             // Some test profiles specify unresolved references
-            //Assert.IsNull(_snapGen.Outcome, "The SnapshotGenerator reported one or more issues:\r\n" + _snapGen.Outcome?.ToString());
+            //Assert.IsNull(_snapGen.Outcome, $"The {nameof(SnapshotGenerator)} reported one or more issues:\r\n" + _snapGen.Outcome?.ToString());
             //Assert.IsTrue(output.HasSnapshot);
             if (!(_snapGen.Outcome is null))
             {
-                Console.WriteLine("The SnapshotGenerator reported one or more issues:");
+                Console.WriteLine($"The {nameof(SnapshotGenerator)} reported one or more issues:");
                 Console.WriteLine(_snapGen.Outcome?.ToString());
             }
 
@@ -477,16 +517,23 @@ namespace Hl7.Fhir.Specification.Tests
                 Console.WriteLine();
             }
 
-            output.Snapshot.Element.Log($"Generated snapshot has #{output.Snapshot.Element.Count} elements:");
-            Console.WriteLine();
+            if (output.HasSnapshot)
+            {
+                output.Snapshot.Element.Log($"Generated snapshot has #{output.Snapshot.Element.Count} elements:");
+                Console.WriteLine();
+            }
 #endif
 
             if (test.Fail)
             {
-                Assert.IsNotNull(_snapGen.Outcome, "SnapshotGenerator completed succesfully. Expecting OperationOutcome issues...");
+                Assert.IsFalse(exception is null && _snapGen.Outcome is null, "SnapshotGenerator completed succesfully. Expecting Exception or OperationOutcome issues...");
+                //Assert.IsNotNull(_snapGen.Outcome, "SnapshotGenerator completed succesfully. Expecting OperationOutcome issues...");
             }
             else
             {
+                Assert.IsNull(exception);
+                Assert.AreEqual(0, _snapGen.Outcome?.Fatals ?? 0);
+                // Only accept errors (unresolved profile reference...) and warnings
                 Assert.IsTrue(output.HasSnapshot);
 
                 // Verify rules against generated snapshot
