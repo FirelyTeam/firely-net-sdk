@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         void addIssueInvalidNameReference(ElementDefinition elementDef) { addIssue(CreateIssueInvalidNameReference(elementDef)); }
 
-        internal static OperationOutcome.IssueComponent CreateIssueInvalidNameReference(ElementDefinition elementDef)
+        static OperationOutcome.IssueComponent CreateIssueInvalidNameReference(ElementDefinition elementDef)
         {
             var location = elementDef.Path;
             var nameRef = elementDef.ContentReference;
