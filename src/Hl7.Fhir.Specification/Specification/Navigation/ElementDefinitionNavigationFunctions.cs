@@ -110,7 +110,14 @@ namespace Hl7.Fhir.Specification.Navigation
                 && !string.IsNullOrEmpty(rename)
                 && !StringComparer.Ordinal.Equals(rename, choiceName))
             {
-                return rename.Substring(choiceName.Length - 3);
+                //return rename.Substring(choiceName.Length - 3);
+                var typeName = rename.Substring(choiceName.Length - 3);
+
+                // Primitive types start with a lower-case character
+                var altTypeName = Utility.StringExtensions.Uncapitalize(typeName);
+                if (Model.ModelInfo.IsPrimitive(altTypeName)) { return altTypeName; }
+                return typeName;
+
             }
             return null;
         }
