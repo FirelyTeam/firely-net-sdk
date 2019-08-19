@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var location = elementDef.Path;
             return PROFILE_ELEMENTDEF_INVALID_CHOICE_RENAME.ToIssueComponent(
-                "Differential specifies a invalid renamed choice type element '{location}'. The specified type constraint is not supported by the base element.",
+                $"Differential specifies a invalid renamed choice type element '{location}'. The specified type constraint is not supported by the base element.",
                 location
             );
         }
