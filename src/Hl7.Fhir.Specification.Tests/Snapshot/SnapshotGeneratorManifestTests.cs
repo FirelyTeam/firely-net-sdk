@@ -150,6 +150,7 @@ namespace Hl7.Fhir.Specification.Tests
             Fix_t13();
             Fix_t15();
             Fix_t16();
+            Fix_t23();
             Fix_t29();
             Fix_au3();
         }
@@ -172,8 +173,6 @@ namespace Hl7.Fhir.Specification.Tests
             var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
             var expected = Load(expectedFilePath);
             Assert.IsNotNull(expected);
-            FixSliceNames(expected.Differential.Element);
-            FixSliceNames(expected.Snapshot.Element);
             if (expected.Id != id)
             {
                 expected.Id = id;
@@ -211,39 +210,6 @@ namespace Hl7.Fhir.Specification.Tests
             Save(expectedFilePath, expected);
         }
 
-        // t15: insert missing slice entry elements '...value[x]'
-        // before actual type slices e.g. '...valueDecimal'
-        void InsertTypeSlicingIntro(StructureDefinition.SnapshotComponent snapshot)
-        {
-            Assert.IsNotNull(snapshot);
-
-            const string VALUE_X = "value[x]";
-
-            var renamedValues = snapshot.Element.Where(e => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(VALUE_X, e.GetNameFromPath()));
-
-            var nav = new ElementDefinitionNavigator(snapshot.Element);
-            foreach (var elem in renamedValues)
-            {
-                Assert.IsTrue(nav.MoveTo(elem));
-                if (!nav.MoveToPrevious(VALUE_X))
-                {
-                    var valueElem = new ElementDefinition(elem.GetParentNameFromPath() + "." + VALUE_X)
-                    {
-                        Slicing = new ElementDefinition.SlicingComponent()
-                        {
-                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
-                            {
-                                ElementDefinition.DiscriminatorComponent.ForTypeSlice()
-                            }
-                        }
-                    };
-                    nav.InsertBefore(valueElem);
-                }
-            }
-
-            snapshot.Element = nav.ToListOfElements();
-        }
-
         // t16: Fix invalid slice names, replace illegal period "." characters
         void Fix_t16()
         {
@@ -278,6 +244,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expectedFilePath = Path.Combine(_testPath, string.Format(expectedFileNameFormat, id));
             FixBindingValueSet(expectedFilePath);
+        }
+
+        // t23: input diff element order is incorrect, Patient.contact.telecom < Patient.contact.gender
+        void Fix_t23()
+        {
+            const string id = "t23";
+            Console.WriteLine($"Fix input '{id}'");
+
+            var inputFilePath = Path.Combine(_testPath, string.Format(inputFileNameFormat, id));
+            var input = Load(inputFilePath);
+            Assert.IsNotNull(input);
+            var elems = input.Differential.Element;
+            Assert.AreEqual(5, elems.Count);
+            if (elems[3].Path == "Patient.contact.gender" && elems[4].Path == "Patient.contact.telecom")
+            {
+                Swap(elems, 3, 4);
+                Save(inputFilePath, input);
+            }
         }
 
         // t29: Fix StructureDefinition.type = "OperationOutcome" ?! => Should be "Parameters"
@@ -334,6 +318,46 @@ namespace Hl7.Fhir.Specification.Tests
                 Console.WriteLine($"Element '{elem.ElementId}': Fix invalid sliceName '{elem.SliceName}' => '{sliceName}'");
                 elem.SliceName = sliceName;
             }
+        }
+
+        // Insert missing slice entry elements '...value[x]'
+        // before actual type slices e.g. '...valueDecimal'
+        void InsertTypeSlicingIntro(StructureDefinition.SnapshotComponent snapshot)
+        {
+            Assert.IsNotNull(snapshot);
+
+            const string VALUE_X = "value[x]";
+
+            var renamedValues = snapshot.Element.Where(e => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(VALUE_X, e.GetNameFromPath()));
+
+            var nav = new ElementDefinitionNavigator(snapshot.Element);
+            foreach (var elem in renamedValues)
+            {
+                Assert.IsTrue(nav.MoveTo(elem));
+                if (!nav.MoveToPrevious(VALUE_X))
+                {
+                    var valueElem = new ElementDefinition(elem.GetParentNameFromPath() + "." + VALUE_X)
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                            {
+                                ElementDefinition.DiscriminatorComponent.ForTypeSlice()
+                            }
+                        }
+                    };
+                    nav.InsertBefore(valueElem);
+                }
+            }
+
+            snapshot.Element = nav.ToListOfElements();
+        }
+
+        static void Swap<T>(List<T> elems, int x, int y)
+        {
+            var z = elems[x];
+            elems[x] = elems[y];
+            elems[y] = z;
         }
 
         /// <summary>Run all tests</summary>
@@ -664,11 +688,6 @@ namespace Hl7.Fhir.Specification.Tests
             ReplaceTestRule("t22",
                 @"fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 76",
                 @"fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 64");
-
-            // [WMR 20190812] Expected +1 element "Patient.contact.telecom"
-            ReplaceTestRule("t23",
-                @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 11",
-                @"fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 12");
 
             // [WMR 20190814] Insert missing test rule for t24a (inherited by t24b)
             var testList = manifest.Test.ToList();
