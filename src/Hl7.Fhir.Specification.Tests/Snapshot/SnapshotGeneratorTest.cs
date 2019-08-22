@@ -11,6 +11,10 @@
 // Don't throw exception but emit OperationOutcome issue(s) and continue
 #define HACK_STU3_RECURSION
 
+// [WMR 20190822] R4: Custom element Ids are no longer allowed/supported
+// http://hl7.org/fhir/elementdefinition.html#id
+// #define CUSTOM_ELEMENT_IDS
+
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -602,13 +606,17 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
 
-            // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+            // [WMR 20170614] Fixed; element id for type slice is based on original element name ending with "[x]"
             // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
+            // [WMR 20190822] Fixed; element id for type slice should contain type slice name "value[x]:valueBoolean"
+            //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
 
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
@@ -758,9 +766,13 @@ namespace Hl7.Fhir.Specification.Tests
             // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+            // [WMR 20190822] Fixed; element id for type slice should contain type slice name "value[x]:valueBoolean"
+            //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
 
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
@@ -4705,8 +4717,13 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new ElementDefinition("Questionnaire.url")
                     {
+#if CUSTOM_ELEMENT_IDS
                         // Override default element id
+                        // [WMR 20190822] R4: No longer allowed/supported
+                        // http://hl7.org/fhir/elementdefinition.html#id
+                        // SnapGen now always emits standardized element ids
                         ElementId = "CustomId"
+#endif
                     },
                     // Verify that slices receive unique element id
                     new ElementDefinition("Questionnaire.code")
@@ -4779,10 +4796,15 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Default snapshot: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
+#if CUSTOM_ELEMENT_IDS
                 // Verify overriden element id in default snapshot
+                // [WMR 20190822] R4: No longer allowed/supported
+                // http://hl7.org/fhir/elementdefinition.html#id
+                // SnapGen now always emits standardized element ids
                 var elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(urlElement.ElementId, elem.ElementId);
+#endif
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 // IMPORTANT: also hook elementHandler event during fullExpansion, to emit (custom) base element annotations
@@ -4792,11 +4814,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Full expansion: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
+#if CUSTOM_ELEMENT_IDS
                 // ExpandElement should NOT re-generate the id of the specified element; only for newly expanded children!
                 // Verify overriden element id in full expansion
-                elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
+                var elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(urlElement.ElementId, elem.ElementId);
+#endif
             }
             finally
             {
