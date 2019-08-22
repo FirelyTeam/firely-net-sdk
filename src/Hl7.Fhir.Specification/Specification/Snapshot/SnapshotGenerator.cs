@@ -760,8 +760,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (_settings.GenerateElementIds)
                 {
                     // Always generate new id's for child elements
+
                     // Also generate id for current element if not specified by diff
-                    ElementIdGenerator.Update(snap, true, !string.IsNullOrEmpty(diff.Current.ElementId));
+                    //ElementIdGenerator.Update(snap, true, !string.IsNullOrEmpty(diff.Current.ElementId));
+
+                    // [WMR 20190822] R4: Always re-generate Element Ids according to standardized format
+                    // http://hl7.org/fhir/elementdefinition.html#id
+                    // Ignore user-specified element id's in the differential
+                    ElementIdGenerator.Update(snap, true);
                 }
             }
 #else
