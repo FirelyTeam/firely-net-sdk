@@ -1552,7 +1552,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Debug.Assert(diff.Current.Name != null);
             Debug.Assert(snap.Current.SliceName == null
-                
+
                 // [WMR 20190808] Handle new named slice in derived profile
                 // - base profile is sliced, diff profile introduces another named slice
                 // - snap is positioned on (last) named base slice
@@ -1565,6 +1565,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                 || diff.Current.SliceName == null
                 || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.SliceName, snap.Current.SliceName));
 
+
+            bool isRenamed = !IsEqualPath(snap.PathName, diff.PathName);
+
+            // [WMR 20190822] R4 TODO
+            // Emit default Slicing component for type slices, if omitted
+            if (isRenamed && snap.Current.Slicing is null)
+            {
+                snap.Current.Slicing = new ElementDefinition.SlicingComponent()
+                {
+                    Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                    {
+                        ElementDefinition.DiscriminatorComponent.ForTypeSlice()
+                    }
+                };
+            };
+
             // Append the new slice constraint to the existing slice group
             // Slice definitions in StructureDef are always ordered! (only instances may contain unordered slices)
             // diff must specify constraints on existing slices in original order (just like regular elements)
@@ -1573,7 +1589,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // [WMR 20161219] Handle invalid multiple renamed choice type constraints, e.g. { valueString, valueInteger }
             // Snapshot base element has already been renamed by the first match => re-assign
-            if (!IsEqualPath(snap.PathName, diff.PathName))
+            if (isRenamed)
             {
                 // [WMR 20190819] NEW: #1074
                 // Support implicit type constraints on renamed elements
@@ -1589,7 +1605,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Important: explicitly clear the slicing node in the copy!
-            Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.initSliceBase
+            Debug.Assert(snap.Current.Slicing is null); // Taken care of by ElementMatcher.initSliceBase
                                                         // snap.Current.Slicing = null;
 
             // [WMR 20170718] NEW
