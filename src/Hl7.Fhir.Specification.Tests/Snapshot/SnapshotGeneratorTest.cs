@@ -27,7 +27,6 @@ using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Utility;
-using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -3157,7 +3156,7 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
                                 {
-                                    ForTypeSlice()
+                                    ElementDefinition.DiscriminatorComponent.ForTypeSlice()
                                 }
                             },
                         },
@@ -5779,7 +5778,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = ForTypeSlice().ToList()
+                            Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
                     new ElementDefinition("MedicationStatement.dosage.dose[x]")
@@ -7327,6 +7326,55 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem.Binding);
             Assert.AreEqual(BindingStrength.Required, elem.Binding.Strength);
+        }
+
+        // [WMR 20190822] R4
+        // Verify SnapGen always generates type slicing entry, even if omitted from the diff
+        [TestMethod]
+        public void TestTypeSliceGeneratesSliceEntry()
+        {
+            StructureDefinition SimpleTypeSliceObservationProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = nameof(SimpleTypeSliceObservationProfile),
+                Url = "http://example.org/fhir/StructureDefinition/SimpleTypeSliceObservation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.valueInteger") { MinValue = new Integer(1) }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SimpleTypeSliceObservationProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            //dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify that the snapshot contains type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            
+            // Verify that the SnapshotGenerator added a default Slicing component
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
+            //Assert.AreEqual(ElementDefinition.DiscriminatorType.Type, nav.Current.Slicing.Discriminator[0].Type);
+            //Assert.AreEqual(ElementDefinition.DiscriminatorComponent.TypeDiscriminatorPath, nav.Current.Slicing.Discriminator[0].Path);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("valueInteger", nav.PathName);
+            Assert.AreEqual("valueInteger", nav.Current.SliceName);
+            Assert.IsNotNull(nav.Current.MinValue);
+            var minValue = nav.Current.MinValue as Integer;
+            Assert.IsNotNull(minValue);
+            Assert.AreEqual(1, minValue.Value);
         }
 
     }
