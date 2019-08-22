@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Specification.Tests
                 () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
