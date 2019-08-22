@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Tests
     // [WMR 20190807] OBSOLETE - See SnapshotGeneratorManifestTests
 
 
-    [TestClass, TestCategory("Snapshot")]
+    [TestClass, TestCategory("Snapshot"), Ignore]
 #if PORTABLE45
 	public class PortableSnapshotGeneratorTypeSlicingTest
 #else

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Tests
     // TODO: Merge pull request for 1067: Invalid root element base
     //
 
-    [TestClass]
+    [TestClass, TestCategory("Snapshot")]
     public class SnapshotGeneratorManifestTests
     {
         const string ManifestPath = @"TestData\snapshot-test\Type Slicing";
