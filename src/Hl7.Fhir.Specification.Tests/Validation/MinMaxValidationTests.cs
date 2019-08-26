@@ -1,12 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.FhirPath;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Hl7.Fhir.Validation
@@ -18,20 +12,20 @@ namespace Hl7.Fhir.Validation
         public void TestGetComparable()
         {
             var nodeQ = (new Model.FhirDateTime(1972, 11, 30)).ToTypedElement();
-            Assert.Equal(0,nodeQ.GetComparableValue(typeof(Model.FhirDateTime)).CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
+            Assert.Equal(0, nodeQ.GetComparableValue(nameof(Model.FhirDateTime)).CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
 
             nodeQ = (new Model.Quantity(3.14m, "kg")).ToTypedElement();
-            Assert.Equal(-1, nodeQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
+            Assert.Equal(-1, nodeQ.GetComparableValue(nameof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
 
             nodeQ = (new Model.HumanName()).ToTypedElement();
-            Assert.Null(nodeQ.GetComparableValue(typeof(Model.HumanName)));
+            Assert.Null(nodeQ.GetComparableValue(nameof(Model.HumanName)));
 
             var nodeQ2 = (new Model.Quantity(3.14m, "kg")
-                { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
-            Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue(typeof(Model.Quantity)));
+            { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
+            Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue(nameof(Model.Quantity)));
 
             var nodeQ3 = (new Model.Quantity()).ToTypedElement();
-            Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue(typeof(Model.Quantity)));
+            Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue(nameof(Model.Quantity)));
         }
 
         [Fact]
