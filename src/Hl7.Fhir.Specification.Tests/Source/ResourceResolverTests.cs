@@ -138,7 +138,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
-            var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            //var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            // [WMR 20190823] Fixed
+            // Resolved from v2-tables.xml
+            // Bundle.entry.fullUrl = "http://hl7.org/fhir/ValueSet/v2-0292"
+            // ValueSet.Url = "http://terminology.hl7.org/ValueSet/v2-0292"
+            //var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            var vs = resolver.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
+
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
