@@ -105,6 +105,29 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>
+        /// Advance the navigator to the next sibling slice with the specified <paramref name="sliceName"/>, if it exists.
+        /// Skip any existing child elements and/or child reslicing constraints.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to next slice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            while (nav.MoveToNextSlice())
+            {
+                if (StringComparer.Ordinal.Equals(nav.Current.SliceName, sliceName))
+                {
+                    return true;
+                }
+            }
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+        /// <summary>
         /// Advance the navigator to the previous slice in the current slice group and on the current slicing level.
         /// Skip any existing child elements and/or child reslicing constraints.
         /// Otherwise remain positioned at the current element.
@@ -172,8 +195,8 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>
-        /// Returns <c>true</c> if the specified slice names are equal,
-        /// or if <paramref name="sliceName"/> is a direct reslice of <paramref name="baseSliceName"/>.
+        /// Returns <c>true</c> if the specified <paramref name="sliceName"/> matches
+        /// the sliceName of the current element, or represents a direct child reslice.
         /// </summary>
         internal static bool IsSliceBase(this ElementDefinitionNavigator nav, string sliceName)
         {
