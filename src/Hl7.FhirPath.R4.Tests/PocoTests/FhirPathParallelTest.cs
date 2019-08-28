@@ -17,7 +17,6 @@ namespace Vonk.FhirPath.R4.Tests
     public class FhirPathExtensionsTests
     {
         private static Dictionary<string, ValueSet> Resources;
-        private static IConformanceSource specSource;
         private static TestContext Context;
 
         [ClassInitialize]
