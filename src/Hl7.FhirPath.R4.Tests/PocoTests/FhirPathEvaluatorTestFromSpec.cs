@@ -119,8 +119,8 @@ namespace Hl7.FhirPath.R4.Tests
 
             TestContext.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            // TODO 20190828: we know that 114 tests are still failing. In the next release we make sure that these test will succeed again.
-            Assert.AreEqual(114,numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            // TODO 20190828: we know that 108 tests are still failing. In the next release we make sure that these test will succeed again.
+            Assert.AreEqual(108,numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)
