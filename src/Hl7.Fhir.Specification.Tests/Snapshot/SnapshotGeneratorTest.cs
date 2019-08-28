@@ -19,6 +19,10 @@
 // Note: Also defined by ElementMatcher class; must define/undefine both
 #define GENERATE_MISSING_TYPE_SLICE_NAMES
 
+// [WMR 20190828] R4: Normalize renamed type slices in snapshot
+// e.g. diff: "valueString" => snap: "value[x]:valueString"
+#define NORMALIZE_RENAMED_TYPESLICE
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -3296,7 +3300,12 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
             Assert.AreNotEqual(1, nav.Current.Type.Count);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual(100, nav.Current.MaxLength);
         }
 
@@ -3353,10 +3362,20 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
             Assert.AreNotEqual(1, nav.Current.Type.Count);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual(100, nav.Current.MaxLength);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueInteger"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueInteger"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueInteger"));
+#endif
             Assert.IsTrue(nav.Current.MinValue is Integer i && i.Value == 0);
         }
 
@@ -7321,13 +7340,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.MoveToFirstChild());
 
-            Assert.IsTrue(nav.MoveTo("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("value[x]"));
             var elem = nav.Current;
             Assert.IsNotNull(elem.Type);
             Assert.AreEqual(11, elem.Type.Count); // Unconstrained
 
             // Verify implicit type constraint
-            Assert.IsTrue(nav.MoveTo("valueQuantity"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueQuantity"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueQuantity"));
+#endif
             elem = nav.Current;
             Assert.IsNotNull(elem.Type);
             Assert.AreEqual(1, elem.Type.Count);
@@ -7427,12 +7451,14 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual(ElementDefinition.DiscriminatorComponent.TypeDiscriminatorPath, nav.Current.Slicing.Discriminator[0].Path);
 
             Assert.IsTrue(nav.MoveToNext());
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.AreEqual("value[x]", nav.PathName);
+#else
             Assert.AreEqual("valueInteger", nav.PathName);
+#endif
             Assert.AreEqual("valueInteger", nav.Current.SliceName);
-            Assert.IsNotNull(nav.Current.MinValue);
-            var minValue = nav.Current.MinValue as Integer;
-            Assert.IsNotNull(minValue);
-            Assert.AreEqual(1, minValue.Value);
+            Assert.IsTrue(nav.Current.MinValue is Integer i && i.Value == 1);
         }
 
         // [WMR 20190826] Verify correct handling of implicit type slicing through element renaming
@@ -7495,8 +7521,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, elem.Type.Count);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
-            // [WMR 20190826] Note: SnapGen currently does NOT normalize renamed elements...
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
@@ -7590,7 +7620,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
@@ -7692,8 +7727,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
-            //Assert.IsTrue(nav.MoveToNext("value[x]"));
-            Assert.IsTrue(nav.MoveToNext("valueString")); // NOT normalized...
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
