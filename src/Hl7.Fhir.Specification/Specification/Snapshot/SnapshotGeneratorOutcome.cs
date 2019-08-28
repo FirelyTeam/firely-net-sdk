@@ -372,5 +372,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                 location
             );
         }
+
+        // [WMR 20190828] Informational message to indicate generated SliceName
+
+        public static readonly Issue PROFILE_ELEMENTDEF_SLICENAME_GENERATED = Issue.Create(10016, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Incomplete);
+
+        void addIssueSliceNameGenerated(ElementDefinition elementDef) => addIssue(CreateIssueSliceNameGenerated(elementDef));
+
+        internal static OperationOutcome.IssueComponent CreateIssueSliceNameGenerated(ElementDefinition elementDef)
+        {
+            var location = FormatLocation(elementDef);
+            return PROFILE_ELEMENTDEF_SLICENAME_GENERATED.ToIssueComponent(
+                $"Generated missing slice name '{elementDef.SliceName}' for element '{location}'",
+                location
+            );
+        }
     }
 }
