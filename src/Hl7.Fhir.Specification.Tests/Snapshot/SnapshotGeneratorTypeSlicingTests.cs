@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20190828] OBSOLETE, instead use SnapshotGeneratorManifestTests
+#if false
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -414,3 +417,5 @@ namespace Hl7.Fhir.Specification.Tests
     }
 
 }
+
+#endif
