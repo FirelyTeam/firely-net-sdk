@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(filename, expected, output, errors);
-            Console.WriteLine(String.Join("\r\n", errors));
+            Console.WriteLine(string.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
