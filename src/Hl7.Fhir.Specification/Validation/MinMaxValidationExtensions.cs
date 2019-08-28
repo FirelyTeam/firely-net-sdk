@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -67,8 +67,10 @@ namespace Hl7.Fhir.Validation
                     throw Error.NotSupported("Cannot interpret quantities with a comparison");
                 if (q.Value == null)
                     throw Error.NotSupported("Cannot interpret quantities without a value");
+                if (q.System != Model.Primitives.Quantity.UCUM)
+                    throw Error.NotSupported("Cannot compare quantities other than those from UCUM");
 
-                return new Model.Primitives.Quantity(q.Value.Value, q.Unit, q.System ?? Model.Primitives.Quantity.UCUM);
+                return new Model.Primitives.Quantity(q.Value.Value, q.Unit);
             }
             else if (instance.Value is IComparable)
                 return (IComparable)instance.Value;
