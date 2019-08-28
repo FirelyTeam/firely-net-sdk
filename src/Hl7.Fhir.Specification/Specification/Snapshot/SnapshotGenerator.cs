@@ -34,15 +34,18 @@
 // [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
 #define FIX_CONTENTREFERENCE
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// [WMR 20190828] R4: Normalize renamed type slices in snapshot
+// e.g. diff: "valueString" => snap: "value[x]:valueString"
+#define NORMALIZE_RENAMED_TYPESLICE
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using System.Diagnostics;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -1607,7 +1610,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     snap.Current.SliceName = diff.PathName;
                 }
 
-                snap.Current.Path = diff.Current.Path;
+#if !NORMALIZE_RENAMED_TYPESLICE
+                // [WMR 20190828] R4: Snapshot always represents type slice using full slicing notation
+                // Must undo element renaming, e.g. "value[x]:valueString", not "valueString"
+                snap.Current.Path = diff.Path; // Current.Path;
+#endif
             }
 
             // Important: explicitly clear the slicing node in the copy!
@@ -1714,7 +1721,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var bm2 = snap.Bookmark();
                 while (snap.MoveToNext())
                 {
-                    if (!ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, snap.PathName))
+                    // [WMR 20190828] Also handle non-renamed type slices in the snapshot
+                    // R4: Type slices in snapshot must be normalized (not renamed)
+                    // Still try to handle renamed elements, e.g. from externally generated snapshots
+                    if (!IsEqualName(snap.PathName, choiceName)
+                        && !ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, snap.PathName))
                     {
                         // Not a choice type element constraint; rewind to last match
                         snap.ReturnToBookmark(bm2);
