@@ -1337,7 +1337,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_4 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = 'true'"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = true"))},
             Key = "sdf-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A structure must have a base unless abstract = true",
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_10 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = 'true' or constrainedType"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = true or constrainedType"))},
             Key = "sdf-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the structure is not abstract, or there's a constrained type, then there SHALL be a base",
