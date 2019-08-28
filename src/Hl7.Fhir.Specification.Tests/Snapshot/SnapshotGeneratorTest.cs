@@ -15,10 +15,9 @@
 // http://hl7.org/fhir/elementdefinition.html#id
 // #define CUSTOM_ELEMENT_IDS
 
-// [WMR 20190827] Auto-generate slice names for type slices if missing from the diff
-// Note: Also defined by SnapshotGenerator class; must define/undefine both
-// Only works reliably if all type slice entries in diff have a Slicing component (...)
-//#define GENERATE_MISSING_TYPE_SLICE_NAMES
+// [WMR 20190828] Auto-generate slice names for type slices if missing from the diff
+// Note: Also defined by ElementMatcher class; must define/undefine both
+#define GENERATE_MISSING_TYPE_SLICE_NAMES
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -256,7 +255,7 @@ namespace Hl7.Fhir.Specification.Tests
                     issues.AddRange(_generator.Outcome.Issue);
                 }
 
-                Debug.Print($"[{nameof(fullyExpandElement)}] " + nav.Path);
+                Debug.WriteLine($"[{nameof(fullyExpandElement)}] " + nav.Path);
                 var bm = nav.Bookmark();
                 if (nav.MoveToFirstChild())
                 {
@@ -1497,7 +1496,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (issue.Diagnostics != null) { sb.AppendFormat(" Profile: '{0}'", issue.Diagnostics); }
             if (issue.Location != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Location)); }
 
-            Debug.Print(sb.ToString());
+            Debug.WriteLine(sb.ToString());
         }
 
 
@@ -2745,7 +2744,7 @@ namespace Hl7.Fhir.Specification.Tests
                     ,new ElementDefinition("Observation.value[x]")
                     {
 #if !GENERATE_MISSING_TYPE_SLICE_NAMES
-                        // [WMR 20190827] SliceName is mandatory on non-renamed element...!
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
                         SliceName = "valueString",
 #endif
 
@@ -2792,6 +2791,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
+#if GENERATE_MISSING_TYPE_SLICE_NAMES
+            // Expecting informational messages about generated slice names
+            dumpOutcome(_generator.Outcome);
+#endif
+
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value slice:");
 
             var nav = new ElementDefinitionNavigator(expanded);
@@ -2809,7 +2813,7 @@ namespace Hl7.Fhir.Specification.Tests
                 new ElementDefinition("Observation.value[x]")
                 {
 #if !GENERATE_MISSING_TYPE_SLICE_NAMES
-                    // [WMR 20190827] SliceName is mandatory on non-renamed element...!
+                    // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
                     SliceName = "valueCodeableConcept",
 #endif
                     Type = new List<ElementDefinition.TypeRefComponent>()
@@ -2904,7 +2908,7 @@ namespace Hl7.Fhir.Specification.Tests
                     ,new ElementDefinition("Observation.value[x]")
                     {
 #if !GENERATE_MISSING_TYPE_SLICE_NAMES
-                        // [WMR 20190827] SliceName is mandatory on non-renamed element...!
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
                         SliceName = "valueString",
 #endif
 
@@ -2921,7 +2925,7 @@ namespace Hl7.Fhir.Specification.Tests
                     ,new ElementDefinition("Observation.value[x]")
                     {
 #if !GENERATE_MISSING_TYPE_SLICE_NAMES
-                        // [WMR 20190827] SliceName is mandatory on non-renamed element...!
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
                         SliceName = "valueInteger",
 #endif
 
@@ -2949,6 +2953,11 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(profile, out var expanded);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
+
+#if GENERATE_MISSING_TYPE_SLICE_NAMES
+            // Expecting informational messages about generated slice names
+            dumpOutcome(_generator.Outcome);
+#endif
 
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value reslice:");
 
@@ -7447,8 +7456,9 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
                         },
 
-#if GENERATE_MISSING_TYPE_SLICE_NAMES
-                        // [WMR 20190827] MUST specify slicing component, to indicate slice entry element
+#if GENERATE_MISSING_TYPE_SLICE_NAMES && false
+                        // Optional slicing component, to indicate slice entry element
+                        // Not required by the SnapshotGenerator; may be omitted
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = { ElementDefinition.DiscriminatorComponent.ForTypeSlice() }

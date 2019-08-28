@@ -11,7 +11,7 @@
 
 // [WMR 20190827] Auto-generate slice names for type slices if missing from the diff
 // Note: this modifies the Differential component itself!
-//#define GENERATE_MISSING_TYPE_SLICE_NAMES
+#define GENERATE_MISSING_TYPE_SLICE_NAMES
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
@@ -221,9 +221,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
+
+        // [WMR 20190827] Derive missing (implicit) type slice names
+        // Type slices should have a pre-defined sliceName, e.g. "valueString"
+        // However if missing (and not slice entry), we can derive slice name from single type constraint
+        // Note: only applies to concrete type slices, NOT to the slice entry (with Slicing component)
+
+        // Generate a custom slice name for a type slice (type choice element constrained to a single type)
 #if GENERATE_MISSING_TYPE_SLICE_NAMES
-        // Generate a custom element name for a type choice element constrained to a single type
-        static string RenameChoiceType(ElementDefinition elem)
+        static string SliceNameForTypeSlice(ElementDefinition elem)
         {
             var elemName = elem.GetNameFromPath();
             if (elem.IsChoice() && elem.Type.Count == 1)
@@ -232,11 +238,34 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var rename = elemName.Substring(0, elemName.Length - 3) + typeName.Capitalize();
                 return rename;
             }
-            return elemName;
+            // Leave SliceName empty if we cannot generate a value
+            return null;
         }
 #endif
 
-        private static List<MatchInfo> constructChoiceTypeMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<MatchInfo> matches)
+        // Initialize SliceName if:
+        // * SliceName is empty
+        // * Path ends with "[x]"
+        // * Element is constrained to single type
+        static string EnsureSliceNameForTypeSlice(ElementDefinition elem, MatchInfo match)
+        {
+#if GENERATE_MISSING_TYPE_SLICE_NAMES
+            if (!elem.HasSlicingComponent()
+                && elem.IsChoice()
+                && string.IsNullOrEmpty(elem.SliceName))
+            {
+                // Q: Are we allowed to update the diff itself...?
+                // Otherwise, SnapGen class needs to repeat this logic on the snap
+                elem.SliceName = SliceNameForTypeSlice(elem);
+
+                // [WMR 2019028] Emit informational output message
+                match.Issue = SnapshotGenerator.CreateIssueSliceNameGenerated(elem);
+            }
+#endif
+            return elem.SliceName;
+        }
+
+        static List<MatchInfo> constructChoiceTypeMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<MatchInfo> matches)
         {
             var bm = diffNav.Bookmark();
 
@@ -272,10 +301,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // R4: try to find matching renamed base element
                 var bmSnap = snapNav.Bookmark();
-                if (snapNav.MoveToNext(sliceName)
-                    // [WMR 20190827] Match renamed element to named type slice in base
-                    // e.g. match "valueString" to "value[x]:valueString"
-                    || snapNav.MoveToNextSlice(sliceName))
+                if (!string.IsNullOrEmpty(sliceName) &&
+                        (snapNav.MoveToNext(sliceName)
+                        // [WMR 20190827] Match renamed element to named type slice in base
+                        // e.g. match "valueString" to "value[x]:valueString"
+                        || snapNav.MoveToNextSlice(sliceName))
+                    )
                 {
                     match.BaseBookmark = snapNav.Bookmark();
                     match.Action = MatchAction.Merge;
@@ -295,30 +326,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (SnapshotGenerator.IsEqualName(snapNav.PathName, diffNav.PathName))
             {
-                // [WMR 20190827] Match diffNav: "value[x]:valueString"
+                // diff represents type slice entry or explicit type slice, e.g. "value[x]:valueString"
+
+                // [WMR 20190828] Empty sliceName indicates the slice entry; do NOT generate missing sliceName!
                 var sliceName = diffNav.Current.SliceName;
-
-#if GENERATE_MISSING_TYPE_SLICE_NAMES
-                // [WMR 20190827] Derive missing (implicit) type slice names
-                // Type slices should have a pre-defined sliceName, e.g. "valueString"
-                // However if missing (and not slice entry), we can derive slice name from type
-                // To prevent ambiguity, differential can either:
-                // * Omit slicing component on slice entry, specify slice names on type slices
-                // * Specify slicing component on slice entry, omit slice names on type slices
-                // If both are omitted, differential is ambiguous
-                
-                if (!diffNav.Current.HasSlicingComponent()
-                    && diffNav.Current.IsChoice()
-                    && string.IsNullOrEmpty(sliceName))
-                {
-                    sliceName = RenameChoiceType(diffNav.Current);
-                    
-                    // Q: Are we allowed to update the diff itself...?
-                    // Otherwise, SnapGen class needs to repeat this logic on the snap
-                    diffNav.Current.SliceName = sliceName;
-                }
-#endif
-
                 if (!string.IsNullOrEmpty(sliceName))
                 {
                     AddOrMergeCurrentOrNext(sliceName);
@@ -329,16 +340,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             else if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
             {
-                // diff is renamed choice type constraint for specific choice type ("valueString")
-
-                // STU3:
-                // Fix first match in result[0]
-                // Don't merge with original "value[x]" from snap
-                // Instead, append to snap as renamed type constraint
-                //match.Action = MatchAction.Add;
-                //match.SliceBase = sliceBase;
-
-                // [WMR 20190827] Match renamed element to named type slice in base
+                // diff is renamed, represents type slice for single type ("valueString")
+                // Match renamed element to named type slice in base
                 // e.g. match "valueString" to "value[x]:valueString"
                 AddOrMergeCurrentOrNext(diffNav.PathName);
             }
@@ -355,23 +358,35 @@ namespace Hl7.Fhir.Specification.Snapshot
             // e.g. both valueString and valueBoolean element constraints
             while (diffNav.MoveToNext())
             {
-                if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
+
+                // Local helper method to append a match to the result
+                void AddMatch(string sliceName)
                 {
                     match = new MatchInfo()
                     {
                         DiffBookmark = diffNav.Bookmark(),
-                        // [WMR 20190211] STU3
-                        //Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current)
                     };
 
                     // R4: try to find matching renamed base element
-                    AddOrMergeNext(diffNav.PathName);
-
+                    AddOrMergeNext(sliceName);
                     matches.Add(match);
                     bm = diffNav.Bookmark();
                 }
+
+                if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
+                {
+                    AddMatch(diffNav.PathName);
+                }
+
+                else if (SnapshotGenerator.IsEqualName(snapNav.PathName, diffNav.PathName))
+                {
+                    var sliceName = EnsureSliceNameForTypeSlice(diffNav.Current, match);
+                    AddMatch(sliceName);
+                }
+
                 else
                 {
+                    // Finished, return to the last matched element
                     diffNav.ReturnToBookmark(bm);
                     break;
                 }
@@ -466,15 +481,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
-            if (!string.IsNullOrEmpty(diffNav.Current.SliceName))
+            var sliceName = diffNav.Current.SliceName;
+            if (!string.IsNullOrEmpty(sliceName))
             {
 
                 // [WMR 20181212] R4: Fixed
-                if (snapNav.IsSliceBase(diffNav.Current.SliceName))
+                if (snapNav.IsSliceBase(sliceName))
                 {
                     // Match/merge with current snapNav
                 }
-                else if (snapNav.MoveToSliceBase(diffNav.Current.SliceName))
+                else if (snapNav.MoveToSliceBase(sliceName))
                 {
                     // Found matching named slice in base, overrides default base element
                     sliceBase = initSliceBase(snapNav);
@@ -493,7 +509,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var isConstraining = diffNav.Current.SliceIsConstraining;
                 if (isConstraining.HasValue)
                 {
-                    var isMatch = SnapshotGenerator.IsEqualName(snapNav.Current.SliceName, diffNav.Current.SliceName);
+                    var isMatch = SnapshotGenerator.IsEqualName(snapNav.Current.SliceName, sliceName);
                     if (isConstraining.Value && !isMatch)
                     {
                         var issue = SnapshotGenerator.CreateIssueSliceNameIllegalMatch(diffNav.Current);
@@ -595,8 +611,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20190813] FIXED
                 // Initialize SliceBase for re-slices to matching named slice in base (A/B => A)
-
-                if (snapNav.MoveToSliceBase(diffNav.Current.SliceName))
+                sliceName = diffNav.Current.SliceName;
+                if (snapNav.MoveToSliceBase(sliceName))
                 {
                     // Found matching named slice in base, overrides default base element
                     sliceBase = initSliceBase(snapNav);
