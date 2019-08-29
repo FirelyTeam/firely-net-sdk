@@ -293,6 +293,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return null;
                 }
 
+                // [WMR 20190806] Expanding the base profile *may* recurse on current structure
+                // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
+                // Then snapshot root is already generated and annotated to differential.Element[0]
+                //Debug.WriteLineIf(differential.Element[0].HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (1)] diff[0] is annotated with cached snapshot root...");
+
                 // [WMR 20160817] Notify client about the resolved, expanded base profile
                 OnPrepareBaseProfile(structure, baseStructure);
 
@@ -383,13 +388,32 @@ namespace Hl7.Fhir.Specification.Snapshot
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
 #if FIX_SLICENAMES_ON_ROOT_ELEMENTS
-            var diffRoot = differential.GetRootElement();
+            var diffRoot = fullDifferential.GetRootElement();
             fixInvalidSliceNameOnRootElement(diffRoot, structure);
 #endif
+
+            // [WMR 20190806] Expanding the base profile *may* recurse on current structure
+            // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
+            // Then snapshot root is already generated and annotated to differential.Element[0]
+            //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (before merge)] diff root is annotated with cached snapshot root...");
 
             merge(nav, diff);
 
             result = nav.ToListOfElements();
+
+            //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (after merge)] diff root is annotated with cached snapshot root...");
+
+            // Ready! Snapshot has been generated
+
+#if CACHE_ROOT_ELEMDEF
+            // [WMR 20190806] Never expose/leak internal temporary annotations!
+            // Only for handling internal profile recursion, e.g. Extension => Extension.extension
+            // Remove the temporary annotation on differential root element
+            // Cached root element annotation only applies to *this* instance
+            // User could generate new structure by cloning Differential (esp. root element)
+            // Cloning existing annotations would corrupt the new snapshot...
+            diffRoot.RemoveSnapshotElementAnnotations();
+#endif
 
             return result;
         }
@@ -676,6 +700,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var clonedElem = (ElementDefinition)diff.Current.DeepCopy();
 
+#if CACHE_ROOT_ELEMDEF
+                // [WMR 20190806] Never clone temporary internal annotation!
+                clonedElem.RemoveSnapshotElementAnnotations(); // Paranoia...
+#endif
+
                 // [WMR 20190131] R4: For new elements, base component should refer to element itself (.Base.Path = .Path)
                 clonedElem.Base = new ElementDefinition.BaseComponent()
                 {
@@ -719,26 +748,30 @@ namespace Hl7.Fhir.Specification.Snapshot
             var diffElem = diff.Current;
             var isRoot = diffElem.IsRootElement();
 
-            ElementDefinition cachedRootElemDef = null;
-            if (isRoot && (cachedRootElemDef = diffElem.GetSnapshotElementAnnotation()) != null)
+            if (isRoot && diffElem.GetSnapshotElementAnnotation() is ElementDefinition cachedRootElemDef)
             {
 
 #if CACHE_ROOT_ELEMDEF_ASSERT
                 // DEBUG / VERIFY: merge results should be equal to cached ElemDef instance
-                isValid = mergeTypeProfiles(snap, diff);
-                mergeElementDefinition(snap.Current, elem);
+                var isValid = mergeTypeProfiles(snap, diff);
+                mergeElementDefinition(snap.Current, diff.Current, true);
                 var currentRootClone = (ElementDefinition)snap.Current.DeepCopy();
                 var cachedRootClone = (ElementDefinition)cachedRootElemDef.DeepCopy();
                 // Ignore Id, Path, Base and ChangedByDiff extension - they are expected to differ
                 currentRootClone.ElementId = cachedRootClone.ElementId;
                 currentRootClone.Path = cachedRootClone.Path;
                 currentRootClone.Base = cachedRootClone.Base;
-                currentRootClone.RemoveAllChangedByDiff();
-                cachedRootClone.RemoveAllChangedByDiff();
+                currentRootClone.RemoveAllConstrainedByDiffAnnotations();
+                cachedRootClone.RemoveAllConstrainedByDiffAnnotations();
                 Debug.Assert(cachedRootClone.IsExactly(currentRootClone));
 #endif
 
-                // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeElement)}] Re-use cached root element definition: '{cachedRootElemDef.Path}'  #{cachedRootElemDef.GetHashCode()}");
+                // Found temporary annotation to generated snapshot root element on diff root element
+                // (assigned previously by recursive snapshot expansions)
+                // Insert snapshot root element into the specified snapshot element list
+                // and remove the temporary annotation
+
+                //Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeElement)} ANNOTATIONS] Replace original element at position {snap.OrdinalPosition.Value} #{snap.Elements[snap.OrdinalPosition.Value]?.GetHashCode()} with cached root element definition: '{cachedRootElemDef.Path}'  #{cachedRootElemDef.GetHashCode()}");
                 snap.Elements[snap.OrdinalPosition.Value] = cachedRootElemDef;
                 diffElem.RemoveSnapshotElementAnnotations();
             }
@@ -2041,16 +2074,23 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Structure has no base, i.e. core type definition => differential introduces & defines the root element
                 // No need to rebase, nothing to merge
-                var clonedDiffRoot = (ElementDefinition)diffRoot.DeepCopy();
+                var snapRoot = (ElementDefinition)diffRoot.DeepCopy();
+
 #if CACHE_ROOT_ELEMDEF
-                clonedDiffRoot.EnsureBaseComponent(null, true);
-                sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
+                Debug.Assert(!snapRoot.HasSnapshotElementAnnotation());
+
+                snapRoot.EnsureBaseComponent(null, true);
+                sd.SetSnapshotRootElementAnnotation(snapRoot);
+
+                //Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)} ANNOTATIONS] Cache root element definition for structure '{sd.Name}': '{clonedDiffRoot.Path}'  #{clonedDiffRoot.GetHashCode()}");
+                // [WMR 20190805] IMPORTANT! Always explicitly clear the annotation before returning result to caller
+                // Otherwise, cloning & expanding the result will pick up incorrect root element from original... WRONG!
 #endif
                 // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                ElementDefnMerger.InitializeConstraintSource(clonedDiffRoot.Constraint, diffRoot.Path);
+                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, diffRoot.Path);
 
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
-                return clonedDiffRoot;
+                return snapRoot;
             }
 
             // Recursively resolve root element definition from base profile
@@ -2075,6 +2115,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Clone and rebase
             var rebasedRoot = (ElementDefinition)baseRoot.DeepCopy();
 
+#if CACHE_ROOT_ELEMDEF
+            // [WMR 20190806] Paranoia: never clone temporary internal annotation
+            Debug.Assert(!rebasedRoot.HasSnapshotElementAnnotation());
+            //rebasedRoot.RemoveSnapshotElementAnnotations(); // Paranoia...
+#endif
+
             if (diffRoot != null)
             {
                 rebasedRoot.Path = diffRoot.Path;
@@ -2092,6 +2138,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // When generating the full snapshot, re-use the previously generated root element definition
             rebasedRoot.EnsureBaseComponent(baseRoot, true);
             sd.SetSnapshotRootElementAnnotation(rebasedRoot);
+
+            //Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] Annotation snapshot root element for structure '{sd.Name}': '{rebasedRoot.Path}'  #{rebasedRoot.GetHashCode()}");
 #endif
 
             // Notify observers
