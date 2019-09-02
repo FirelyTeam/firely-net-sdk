@@ -305,7 +305,45 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // ElementIdGenerator.Clear(snapshot.Element);
                 // Debug.Fail("TODO");
 
-                if (!structure.IsConstraint)
+                // [WMR 20190902] #1090 SnapshotGenerator should support logical models
+                if (structure.Kind == StructureDefinition.StructureDefinitionKind.Logical)
+                {
+                    var rootPath = structure.Type;
+
+                    // For logical models, StructureDefinition.type may return a fully qualified url
+                    // Last segment should equal the name of the root element
+                    // e.g. http://example.org/fhir/StructureDefinition/MyModel
+
+                    if (string.IsNullOrEmpty(rootPath))
+                    {
+                        // Not a fatal error; parse root path from first element constraint
+                        //throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
+                        addIssueStructureTypeMissing(structure);
+
+                        // Derive from root element name
+                        rootPath = structure.Differential?.Element?[0].GetNameFromPath();
+                    }
+                    else
+                    {
+                        var pos = rootPath.LastIndexOf("/");
+                        if (pos > -1)
+                        {
+                            rootPath = rootPath.Substring(pos + 1);
+                        }
+                    }
+
+                    // Abort if we failed to determine root path
+                    if (string.IsNullOrEmpty(rootPath))
+                    {
+                        // Fatal error...
+                        throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
+
+                    }
+
+                    snapshot.Rebase(rootPath);
+                }
+
+                else if (!structure.IsConstraint)
                 {
                     // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
 
@@ -322,8 +360,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Fatal error...
                         throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
-
-                    // [WMR 20181212] TODO: Handle logical models, where type is an uri => parse the last segment
 
                     snapshot.Rebase(rootPath);
 

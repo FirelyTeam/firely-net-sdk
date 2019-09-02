@@ -7204,6 +7204,87 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
+        // [WMR 20190902] #1090 SnapshotGenerator should support logical models
+        // STU3: Serialize logical model to StructureDefinition.snapshot, .differential is always empty
+        // R4: Serialize logical model to StructureDefinition.differential, generate .snapshot
+
+        [TestMethod]
+        public void TestLogicalModel()
+        {
+            const string rootPath = "MyModel";
+            var SimpleLogicalModel = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/SimpleLogicalModel",
+                Name = "SimpleLogicalModel",
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                // Last segment equals root element name
+                Type = "http://example.org/fhir/StructureDefinition/" + rootPath,
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition(rootPath)
+                        {
+                            //Min = 0,
+                            //Max = "*",
+                            //Type = new List<ElementDefinition.TypeRefComponent>()
+                            //{
+                            //    new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Element.GetLiteral() }
+                            //}
+                        },
+                        new ElementDefinition(rootPath + ".target")
+                        {
+                            //Min = 0,
+                            Max = "1",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    TargetProfile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Person) }
+                                }
+                            }
+                        },
+                        new ElementDefinition(rootPath + ".value[x]")
+                        {
+                            //Min = 0,
+                            //Max = "*",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.String.GetLiteral(),
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Boolean.GetLiteral(),
+                                }
+                            }
+
+                        }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SimpleLogicalModel, out StructureDefinition expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            bool elementHasBase(ElementDefinition elem)
+            {
+                return !(elem is null)
+                    && !(elem.Base is null)
+                    && !(elem.Base.Path is null)
+                    && !(elem.Base.MinElement is null)
+                    && !(elem.Base.MaxElement is null);
+            }
+
+            // Verify sdf-8b: "All snapshot elements must have a base definition"
+            Assert.IsTrue(expanded.Snapshot.Element.All(e => elementHasBase(e)));
+
+        }
 
     }
 }
