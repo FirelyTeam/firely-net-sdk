@@ -892,6 +892,8 @@ namespace Hl7.Fhir.Rest
             try
             {
                 response = entryResponse.ToBundleEntry(Settings.ParserSettings);
+                LastClientRequest = entryResponse.LastRequest;
+                LastClientResponse = entryResponse.LastResponse;
 
                 if (!entryResponse.IsSuccessful())
                 {

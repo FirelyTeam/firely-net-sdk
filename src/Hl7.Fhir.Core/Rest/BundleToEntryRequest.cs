@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryRequest
             {
                 Agent = ModelInfo.Version,
-                Method = (HTTPVerb)entry.Request.Method,
+                Method = (HTTPVerb?)entry.Request.Method,
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
                 Headers = new EntryRequestHeaders
@@ -37,8 +37,7 @@ namespace Hl7.Fhir.Rest
             {
                 bool searchUsingPost =
                     result.Method == HTTPVerb.POST
-                    && (entry.HasAnnotation<InteractionType>()
-                    && entry.Annotation<InteractionType>() == InteractionType.Search)
+                    && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
                 setBodyAndContentType(result, entry.Resource, settings.PreferredFormat, searchUsingPost);
             }
@@ -53,7 +52,10 @@ namespace Hl7.Fhir.Rest
             if (data is Binary)
             {
                 var bin = (Binary)data;
+
+                //Binary.Content is available for STU3. This has changed for R4 as it is Binary.Data
                 request.RequestBodyContent = bin.Content;
+
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);

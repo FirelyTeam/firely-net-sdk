@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
         }
 
         //it's not used in our code.
-        public static SearchParams FromParameters(this SearchParams entry, Parameters parameters)
+        public static SearchParams ToSearchParameters(this Parameters parameters)
         {
             var result = new SearchParams();
 

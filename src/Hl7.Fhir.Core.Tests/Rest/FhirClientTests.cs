@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
 
-            var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+            var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
             Assert.IsTrue(bodyText.Contains("<Patient"));
 
@@ -872,7 +872,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(bodyOut);
 
-            bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+            bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
             Assert.IsTrue(bodyText.Contains("<Patient"));
         }
 
