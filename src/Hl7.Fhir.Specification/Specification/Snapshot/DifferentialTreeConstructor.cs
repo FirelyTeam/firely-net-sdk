@@ -42,7 +42,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <remarks>This method returns a new list of element definitions. The input elements list is not modified.</remarks>
         public static List<ElementDefinition> MakeTree(List<ElementDefinition> elements)
         {
-            var diff = new List<ElementDefinition>(elements.DeepCopy());   // We're going to modify the differential
+            // We're going to modify the differential
+            //var diff = new List<ElementDefinition>(elements.DeepCopy());   
+
+            // [WMR 20190806] No need to clone the individual elements
+            // Create a new result list; don't modify the original list
+            // Especially important to prevent cloning (internal) annotations...!
+            var diff = new List<ElementDefinition>(elements);
 
             if (diff.Count == 0 ) return diff;        // nothing to do
 
