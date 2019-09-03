@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.Model;
+﻿/* 
+ * Copyright (c) 2017, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ */
+ 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
 using System;
@@ -45,23 +53,25 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /*
-                /// <summary>
-                /// If the current element is a slice entry, then advance the navigator to the first associated named slice.
-                /// Otherwise remain positioned at the current element.
-                /// </summary>
-                /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-                public static bool MoveToFirstSlice(this ElementDefinitionNavigator nav)
-                {
-                    if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-                    if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
-                    if (nav.Current.Slicing != null)
-                    {
-                        var bm = nav.Bookmark();
-                        if (nav.MoveToNextSliceAtAnyLevel()) { return true; }
-                        nav.ReturnToBookmark(bm);
-                    }
-                    return false;
-                }
+
+        /// <summary>
+        /// If the current element is a slice entry, then advance the navigator to the first associated named slice.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToFirstSlice(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to previous slice. Current node is not set."); }
+            if (nav.Current.Slicing != null)
+            {
+                var bm = nav.Bookmark();
+                if (nav.MoveToNextSliceAtAnyLevel()) { return true; }
+                nav.ReturnToBookmark(bm);
+            }
+            return false;
+        }
+
         */
 
         /// <summary>
@@ -98,6 +108,29 @@ namespace Hl7.Fhir.Specification.Navigation
             }
 
             // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+        /// <summary>
+        /// Advance the navigator to the next sibling slice with the specified <paramref name="sliceName"/>, if it exists.
+        /// Skip any existing child elements and/or child reslicing constraints.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to next slice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            while (nav.MoveToNextSlice())
+            {
+                if (StringComparer.Ordinal.Equals(nav.Current.SliceName, sliceName))
+                {
+                    return true;
+                }
+            }
             nav.ReturnToBookmark(bm);
             return false;
         }
@@ -168,6 +201,45 @@ namespace Hl7.Fhir.Specification.Navigation
             nav.ReturnToBookmark(bm);
             return false;
         }
+
+        /// <summary>
+        /// Returns <c>true</c> if the specified <paramref name="sliceName"/> matches
+        /// the sliceName of the current element, or represents a direct child reslice.
+        /// </summary>
+        internal static bool IsSliceBase(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            var baseSliceName = nav.Current.SliceName;
+            return StringComparer.Ordinal.Equals(sliceName, baseSliceName)
+                   || ElementDefinitionNavigator.IsDirectResliceOf(sliceName, baseSliceName);
+
+        }
+
+        /// <summary>
+        /// Try to position the navigator on a (sibling) slice that is a base for the specified (derived) sliceName.
+        /// Also handles re-slices. Maintain current position if match.
+        /// </summary>
+        internal static bool MoveToSliceBase(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), "Cannot move navigator to base slice. Current node is not set."); }
+
+            //if (string.IsNullOrEmpty(nav.Current.SliceName) && nav.Current.Slicing is null) { return false; }
+            // throw Error.Argument(nameof(nav), "Cannot move navigator to base slice. Current node is not a named slice.");
+
+            var bm = nav.Bookmark();
+
+            do
+            {
+                if (nav.IsSliceBase(sliceName))
+                {
+                    return true;
+                }
+            } while (nav.MoveToNextSlice());
+
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
 
         /// <summary>
         /// Enumerate any succeeding direct child slices of the specified element.

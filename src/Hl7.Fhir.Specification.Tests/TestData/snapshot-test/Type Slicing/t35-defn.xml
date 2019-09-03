@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="extension-identifier-status2"/>
+  <url value="http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-statu2"/>
+  <name value="IdentifierStatus"/>
+  <title value="VhDir Identifier Status"/>
+  <status value="draft"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <context>
+    <type value="element"/>
+    <expression value="Identifier"/>
+  </context>
+  <type value="Extension"/>
+  <baseDefinition value="http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Extension">
+      <path value="Extension"/>
+      <short value="Status"/>
+      <max value="1"/>
+      <isModifier value="false"/>
+    </element>
+    <element id="Extension.valueCode">
+      <path value="Extension.valueCode"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://www.fhir.org/guides/test3/ValueSet/blah-codes"/>
+      </binding>
+    </element>
+  </differential>
+
+</StructureDefinition>

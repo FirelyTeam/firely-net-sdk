@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t29"/>
+  <url value="urn:uuid:8371f159-76b3-41f7-a66f-bde129e7e603"/>
+  <name value="t29"/>
+  <status value="draft"/>
+  <description value="fixture for #29: Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="OperationOutcome"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Parameters"/>
+    </element>
+    <element>
+      <path value="Parameters.parameter"/>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="name"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part"/>
+      <sliceName value="foo"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part.name"/>
+      <fixedString value="foo"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part.value[x]"/>      
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+      </slicing>
+      <type>
+        <code value="Coding"/>
+      </type>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part.valueCoding"/>
+      <sliceName value="valueCoding"/>
+      <min value="1"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+    </element>
+    <element>
+      <path value="Parameters.parameter.part.valueCoding.code"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>

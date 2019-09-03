@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t6"/>
+  <url value="urn:uuid:977f7fee-448e-4090-8c3a-441b3b3cca7a"/>
+  <name value="t6"/>
+  <status value="draft"/>
+  <description value="fixture for #6: type narrowing #2 - this makes a comment about the use of date, but doesn&#39;t constrain"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.deceasedDateTime"/>
+      <comment value="New Comment"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
