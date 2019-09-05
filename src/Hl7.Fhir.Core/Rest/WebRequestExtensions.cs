@@ -119,7 +119,10 @@ namespace Hl7.Fhir.Rest
                     try
                     {
                         if (!t.Wait(timeout))
+                        {
+                            request.Abort();
                             throw new TimeoutException();
+                        }
                     }
                     catch (AggregateException we)
                     {
