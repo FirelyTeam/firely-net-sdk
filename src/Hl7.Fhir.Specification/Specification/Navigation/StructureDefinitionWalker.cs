@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification
             }
             catch (Exception e)
             {
-                throw new StructureDefinitionWalkerException($"Cannot create a walker for StructureDefinition with canonical '{canonical}' at '{Current.UrlAndPath()}'", e);
+                throw new StructureDefinitionWalkerException($"Cannot create a walker for StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'", e);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification
 
             var canonicals = Current.Current.Type.Select(t => t.GetTypeProfile()).Distinct().ToArray();
             if (canonicals.Length > 1)
-                throw new StructureDefinitionWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.UrlAndPath()}'), use 'ofType()' to disambiguate");
+                throw new StructureDefinitionWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.CanonicalPath()}'), use 'ofType()' to disambiguate");
 
             var expanded = Expand();
             // Take First(), since all canonicals are the same anyway.
@@ -85,9 +85,9 @@ namespace Hl7.Fhir.Specification
             if (definitions.Count == 1)
                 return new StructureDefinitionWalker(definitions.Single(), Resolver);
             else if (definitions.Count > 1)
-                throw new InvalidOperationException($"Internal error: childDefinitions() produced more than one child with name '{childName} at '{Current.UrlAndPath()}' ");
+                throw new InvalidOperationException($"Internal error: childDefinitions() produced more than one child with name '{childName} at '{Current.CanonicalPath()}' ");
             else
-                throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.UrlAndPath()}'.");
+                throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.CanonicalPath()}'.");
         }
 
         private static IEnumerable<ElementDefinitionNavigator> childDefinitions(StructureDefinitionWalker walker, string childName = null)
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Specification
                 var reference = Current.ShallowCopy();
 
                 if (!reference.JumpToNameReference(name))
-                    new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.UrlAndPath()}'.");
+                    new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
                 return new[] { new StructureDefinitionWalker(reference, Resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Specification
                     .Select(c => FromCanonical(c));
             }
 
-            throw new StructureDefinitionWalkerException($"Invalid StructureDefinition: element misses either a type reference or nameReference at '{Current.UrlAndPath()}'");
+            throw new StructureDefinitionWalkerException($"Invalid StructureDefinition: element misses either a type reference or nameReference at '{Current.CanonicalPath()}'");
         }
 
         /// <summary>
