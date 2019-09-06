@@ -36,8 +36,16 @@ namespace Hl7.Fhir.Validation
             {
                 root.ReturnToBookmark(slice);
 
-                var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, root, validator));
-                var subBucket = new SliceBucket(root, validator, discriminators.ToArray());
+                IBucket subBucket;
+
+                if (discriminatorSpecs.Any())
+                {
+                    var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, root, validator));
+                    subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray());
+                }
+                else
+                    // Discriminator-less matching
+                    subBucket = new ConstraintsBucket(root, validator);
 
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);

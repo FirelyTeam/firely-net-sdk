@@ -67,22 +67,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(3, slice.ChildSlices.Count);
             Assert.IsType<ElementBucket>(slice.Entry);
 
-            Assert.IsType<SliceBucket>(slice.ChildSlices[0]);
+            // Slice one - "phone" - no discriminator
+            Assert.IsType<ConstraintsBucket>(slice.ChildSlices[0]);
             Assert.Equal("Patient.telecom:phone", slice.ChildSlices[0].Name);
 
+            // Slice two - "email" - 
             Assert.IsType<SliceGroupBucket>(slice.ChildSlices[1]);
             var email = slice.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("Patient.telecom:email", email.Name);
             Assert.Equal(ElementDefinition.SlicingRules.Closed, email.Rules);
             Assert.False(email.Ordered);
 
-            Assert.IsType<SliceBucket>(email.Entry);
+            Assert.IsType<ConstraintsBucket>(email.Entry);
             Assert.Equal(2, email.ChildSlices.Count);
 
-            Assert.IsType<SliceBucket>(email.ChildSlices[0]);
+            Assert.IsType<DiscriminatorBucket>(email.ChildSlices[0]);
             Assert.Equal("Patient.telecom:email/home", email.ChildSlices[0].Name);
 
-            Assert.IsType<SliceBucket>(email.ChildSlices[1]);
+            Assert.IsType<DiscriminatorBucket>(email.ChildSlices[1]);
             Assert.Equal("Patient.telecom:email/work", email.ChildSlices[1].Name);
 
             Assert.IsType<SliceGroupBucket>(slice.ChildSlices[2]);

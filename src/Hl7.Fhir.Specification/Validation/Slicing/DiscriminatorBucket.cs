@@ -15,15 +15,16 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
-    internal class SliceBucket : BaseBucket
+    internal class DiscriminatorBucket : BaseBucket
     {
         /// <summary>
-        /// Represents a single "bucket" that will both triage and validate instances that belong to that bucket.
+        /// Represents a "bucket" that triages instances based on a discriminator and validates matching instances against a
+        /// slice-specific set of constraints.
         /// </summary>
         /// <param name="sliceConstraints">The set of constraints that will be validated for members of the bucket.</param>
         /// <param name="validator">A validator instance that will be invoked to validate the child constraints.</param>
         /// <param name="discriminators">A set of discriminators that determine whether or not an instance is part of this bucket.</param>
-        public SliceBucket(ElementDefinitionNavigator sliceConstraints, Validator validator, IDiscriminator[] discriminators) : base(sliceConstraints.Current)
+        public DiscriminatorBucket(ElementDefinitionNavigator sliceConstraints, Validator validator, IDiscriminator[] discriminators) : base(sliceConstraints.Current)
         {
             //TODO: discriminator-less validation?
             if (discriminators == null || discriminators.Length == 0)
