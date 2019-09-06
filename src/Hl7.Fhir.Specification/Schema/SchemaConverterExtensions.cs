@@ -27,6 +27,8 @@ namespace Hl7.Fhir.Specification.Schema
                 .MaybeAdd(BuildFixed(def))
                 .MaybeAdd(BuildMinValue(def))
                 .MaybeAdd(BuildMaxValue(def))
+                .MaybeAdd(BuildFp(def))
+                .MaybeAdd(BuildCardinality(def))
                 //.MaybeAdd(BuildElementRegEx(def))
                 //.MaybeAdd(BuildTypeRefRegEx(def))
                 //.MaybeAdd(BuildMinItems(def))
@@ -37,18 +39,34 @@ namespace Hl7.Fhir.Specification.Schema
             return new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), elements);
         }
 
+
+
         private static IAssertion BuildMinValue(ElementDefinition def) =>
-            def.MinValue != null ? new MinMaxValueValidator(def.MinValue.ToTypedElement(), MinMax.MinValue) : null;
+            def.MinValue != null ? new MinMaxValue(def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
 
         private static IAssertion BuildMaxValue(ElementDefinition def) =>
-            def.MaxValue != null ? new MinMaxValueValidator(def.MaxValue.ToTypedElement(), MinMax.MaxValue) : null;
+            def.MaxValue != null ? new MinMaxValue(def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
         private static IAssertion BuildFixed(ElementDefinition def) =>
             def.Fixed != null ? new Fixed(def.Fixed.ToTypedElement()) : null;
 
         private static IAssertion BuildMaxLength(ElementDefinition def) =>
-            def.IsPrimitiveValueConstraint() && def.Type.Count == 1 && def.MaxLength.HasValue
-            ? new MaxLength(def.MaxLength.Value) : null;
+            def.MaxLength.HasValue ? new MaxLength(def.MaxLength.Value) : null;
+
+        private static IAssertion BuildFp(ElementDefinition def)
+        {
+            var list = new List<IAssertion>();
+            foreach (var constraint in def.Constraint)
+            {
+                list.Add(new FhirPathAssertion(constraint.Key, constraint.Expression));
+            }
+
+            return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+        }
+
+        private static IAssertion BuildCardinality(ElementDefinition def) =>
+            def.Min != null ? new CardinalityAssertion(def.Min, def.Max) : null;
+
 
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver)
         {
@@ -64,6 +82,11 @@ namespace Hl7.Fhir.Specification.Schema
             // * genuine choice elements (suffix [x]) - needs to be sliced on FhirTypeLabel 
             // * elem with multiple TypeRefs - without explicit suffix [x], this is a slice 
             // without discriminator
+
+            if (def.IsPrimitiveConstraint())
+            {
+                return builder.BuildProfileRef("http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
+            }
 
             if (typeRefs.Count() == 1)
                 return builder.BuildProfileRef(typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
