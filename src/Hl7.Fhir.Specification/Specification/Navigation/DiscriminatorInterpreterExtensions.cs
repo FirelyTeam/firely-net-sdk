@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Navigation
         internal static IEnumerable<StructureDefinitionWalker> EvaluateDiscriminator(this StructureDefinitionWalker walker, Expression expr)
         {
             var interpeter = new DiscriminatorInterpreter(walker);
-            interpeter.AssertSupportedRootExpression(expr);
+            //interpeter.AssertSupportedRootExpression(expr);
             return expr.Accept(interpeter, new SymbolTable());
         }
 

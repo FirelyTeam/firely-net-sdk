@@ -76,6 +76,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void WalkToThis()
+        {
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+
+            var elem = walker.Walk("performer").Single();
+            var elem2 = elem.Walk("$this").Single();
+            Assert.AreEqual(elem, elem2);
+        }
+
+        [TestMethod]
         public void WalkToExtension()
         {
             var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);

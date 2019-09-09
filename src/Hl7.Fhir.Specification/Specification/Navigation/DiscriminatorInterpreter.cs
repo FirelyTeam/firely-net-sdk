@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         public override IEnumerable<StructureDefinitionWalker> VisitConstant(ConstantExpression expression, SymbolTable _) =>
-            throw Error.InvalidOperation("Internal error: VisitConstant() should never be invoked while walking the AST for a discriminator expression.");
+            throw new DiscriminatorFormatException("Discriminator paths cannot contain constants.");
 
         /// <summary>
         /// Visit a function call appearing in a discriminator expression
@@ -87,7 +87,6 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public StructureDefinitionWalker Root { get; private set; }
 
-
         public override IEnumerable<StructureDefinitionWalker> VisitVariableRef(VariableRefExpression expression, SymbolTable scope)
         {
             if (expression.Name == "builtin.this")
@@ -96,12 +95,6 @@ namespace Hl7.Fhir.Specification.Navigation
                 return new[] { Root };
 
             throw new DiscriminatorFormatException($"Variable reference '{expression.Name}' is not supported in discriminators.");
-        }
-
-        internal void AssertSupportedRootExpression(Expression expr)
-        {
-            if (!(expr is FunctionCallExpression))
-                throw new DiscriminatorFormatException($"Discriminators should be dotted paths with element selections.");
-        }
+        }        
     }
 }
