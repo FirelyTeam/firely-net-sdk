@@ -323,10 +323,12 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance)
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance) =>
+            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path) : new OperationOutcome();
+
+        internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath)
         {
             var outcome = new OperationOutcome();
-            if (definition.Binding == null) return outcome;
 
             // new style validator - has a configure and then execute step.
             // will be separated when all logic has been converted.
@@ -347,12 +349,12 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                    Binding b = definition.Binding.ToValidatable();
+                    Binding b = binding.ToValidatable();
                     outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
-                Trace(outcome, "Incorrect ElementDefinition: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, definition.Path);
+                Trace(outcome, "Incorrect binding spec: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, defPath);
             }
 
             return outcome;

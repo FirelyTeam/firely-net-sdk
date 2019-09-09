@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(ElementDefinition.SlicingRules.OpenAtEnd, slice.Rules);
             Assert.True(slice.Ordered);
             Assert.Equal("Patient.telecom", slice.Name);
-            Assert.Equal(3, slice.ChildSlices.Count);
+            Assert.Equal(3, slice.ChildSlices.Length);
             Assert.IsType<ElementBucket>(slice.Entry);
 
             // Slice one - "phone" - no discriminator
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(email.Ordered);
 
             Assert.IsType<ConstraintsBucket>(email.Entry);
-            Assert.Equal(2, email.ChildSlices.Count);
+            Assert.Equal(2, email.ChildSlices.Length);
 
             Assert.IsType<DiscriminatorBucket>(email.ChildSlices[0]);
             Assert.Equal("Patient.telecom:email/home", email.ChildSlices[0].Name);

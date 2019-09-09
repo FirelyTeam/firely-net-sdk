@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(bundle);
 
-            Assert.True(report.Success);
+            Assert.True(report.Success, report.ToString());
             Assert.Equal(0, report.Warnings);   // 2 warnings about valueset too complex
         }
 
