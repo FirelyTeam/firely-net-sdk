@@ -6,6 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20190910] R4: Normalize renamed type slices in snapshot
+// e.g. diff: "valueString" => snap: "value[x]:valueString"
+#define NORMALIZE_RENAMED_TYPESLICE
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
@@ -58,8 +62,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
 
                 // [WMR 20171004] Determine *distinct* type codes
-                if (snap.Path != diff.Path && snap.IsChoice())
+                // [WMR 20190910] Only inspect last path segment; ignore parent element name mismatches
+                //if (snap.Path != diff.Path)
+                if (!IsEqualName(snap.GetNameFromPath(), diff.GetNameFromPath()))
                 {
+                    // [WMR 20190910] Element renaming is only allowed for choice types
+                    // If paths don't match, then base element should be a choice type - otherwise bug in SnapGen
+                    if (!snap.IsChoice())
+                    {
+                        throw Error.InvalidOperation($"Invalid operation in snapshot generator. Unexpected element match from '{diff.Path}' to '{snap.Path}'.");
+                    }
+
+#if !NORMALIZE_RENAMED_TYPESLICE
+                    // [WMR 20190828] R4: Snapshot always represents type slice using full slicing notation
+                    // => Always use base path (with '[x]' suffix); ignore renamed diff path
+
                     var distinctTypeCodes = diff.DistinctTypeCodes();
                     if (distinctTypeCodes.Count == 1)
                     {
@@ -67,10 +84,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                         if (!ElementDefinitionNavigator.IsCandidateBasePath(snap.Path, diff.Path))
                         {
-                            throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
+                            //throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
+                            throw Error.InvalidOperation($"Invalid operation in snapshot generator. Unexpected element match from '{diff.Path}' to '{snap.Path}'.");
                         }
                         snap.PathElement = mergePrimitiveElement(snap.PathElement, diff.PathElement);
                     }
+#endif
                 }
 
                 // [EK 20170301] Added this after comparison with Java generated snapshot
