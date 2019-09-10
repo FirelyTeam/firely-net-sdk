@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Validation
         public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket, bool atRoot)
         {
             var discriminatorSpecs = root.Current.Slicing.Discriminator.ToArray();  // copy, since root will move after this
+            var location = root.Current.Path;
             var slices = root.FindMemberSlices(atRoot);
             var bm = root.Bookmark();
             var subs = new List<IBucket>();
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Validation
 
                 if (discriminatorSpecs.Any())
                 {
-                    var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, root, validator));
+                    var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, location, root, validator));
                     subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray());
                 }
                 else

@@ -24,19 +24,20 @@ namespace Hl7.Fhir.Specification.Tests
             this.output = output;
         }
 
+        private IBucket createPatientReslices()
+             => createSliceDefs("http://example.com/StructureDefinition/patient-telecom-reslice-ek", "Patient.telecom");
 
-        private IBucket createSliceDefs()
+        private IBucket createSliceDefs(string url, string path)
         {
-            var sd = _resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            var sd = _resolver.FindStructureDefinition(url);
             Assert.NotNull(sd);
             var snapgen = new SnapshotGenerator(_resolver);
             snapgen.Update(sd);
 
-            // sd.Snapshot.Element.Where(e => e.Path.EndsWith(".telecom")).Select(e=>e.Path + " : " + e.Name ?? "").ToArray()
-
             var nav = new ElementDefinitionNavigator(sd);
-            var success = nav.JumpToFirst("Patient.telecom");
+            var success = nav.JumpToFirst(path);
             Assert.True(success);
+
             //var xml = FhirSerializer.SerializeResourceToXml(sd);
             //File.WriteAllText(@"c:\temp\sdout.xml", xml);
 
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestSliceSetup()
         {
-            var s = createSliceDefs();
+            var s = createPatientReslices();
             Assert.IsType<SliceGroupBucket>(s);
             var slice = s as SliceGroupBucket;
 
@@ -125,7 +126,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestBucketAssignment()
         {
-            var s = createSliceDefs() as SliceGroupBucket;
+            var s = createPatientReslices() as SliceGroupBucket;
 
             var p = new Patient();
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
@@ -194,6 +195,61 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("a previous element already matched slice 'Patient.telecom:other' (at Patient.telecom[6])", repr);
             Assert.Contains("group at 'Patient.telecom:email' is closed. (at Patient.telecom[1])", repr);
         }
+
+        [Fact]
+        public void TestDirectTypeSliceCreation()
+        {
+            var s = createSliceDefs("http://example.org/fhir/StructureDefinition/obs-with-sliced-value", "Observation.value[x]") as SliceGroupBucket;
+
+            Assert.Equal(3, s.ChildSlices.Length);
+            assertTypeDiscriminator(s.ChildSlices[0], "string");
+            assertTypeDiscriminator(s.ChildSlices[1], "boolean");
+            assertTypeDiscriminator(s.ChildSlices[2], "Quantity", "CodeableConcept");
+
+            void assertTypeDiscriminator(IBucket bucket, params string[] types)
+            {
+                Assert.True(bucket is DiscriminatorBucket);
+                var db = bucket as DiscriminatorBucket;
+                Assert.Single(db.Discriminators);
+                Assert.True(db.Discriminators[0] is TypeDiscriminator);
+                var td = db.Discriminators[0] as TypeDiscriminator;
+                Assert.Equal(td.Types, types);
+            }
+        }
+
+
+        [Fact]
+        public void TestDirectTypeSliceValidation()
+        {
+            test("b:t", new FhirBoolean(true), true); 
+            test("b:f", new FhirBoolean(false), false, "not exactly equal to fixed value");  // fixed to true
+            test("s:hi", new FhirString("hi!"), true);
+            test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
+            test("c:10kg", new Quantity(10m, "kg"), true);
+            test("c:cc", new CodeableConcept("http://nos.nl", "bla"), true);
+            test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
+            test("fdt:f", FhirDateTime.Now(), false, "not one of the allowed choices");
+
+            void test(string title, Element v, bool success, string fragment=null)
+            {
+                var t = new Observation() { Status = ObservationStatus.Final, Code = new CodeableConcept("http://bla.ml", "blie"),
+                        Value = v };
+                
+                var outcome = _validator.Validate(t, "http://example.org/fhir/StructureDefinition/obs-with-sliced-value");
+
+                //if (!outcome.Success)
+                //    output.WriteLine(outcome.ToString());
+
+                if (success)
+                    Assert.True(outcome.Success, title);
+                else
+                    Assert.False(outcome.Success, title);
+
+                if (fragment != null)
+                    Assert.Contains(fragment, outcome.ToString());
+            }
+        }
+
 
         private void DebugDumpOutputXml(Base fragment)
         {
