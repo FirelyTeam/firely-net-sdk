@@ -667,6 +667,15 @@ namespace Hl7.Fhir.Specification.Tests
         // Fix known invalid invariants in input manifest
         static void FixManifest(SnapshotGenerationManifest manifest)
         {
+            // [WMR 20190910] Fix invalid type slice element renaming in snapshot (should be normalized)
+            ReplaceTestRule("t13",
+                "fixture('t13-output').snapshot.element[16].path = 'Patient.extension.extension.valueCodeableConcept'",
+                "fixture('t13-output').snapshot.element[16].path = 'Patient.extension.extension.value[x]'");
+            ReplaceTestRule("t13",
+                "fixture('t13-output').snapshot.element[21].path = 'Patient.extension.extension.valuePeriod'",
+                "fixture('t13-output').snapshot.element[21].path = 'Patient.extension.extension.value[x]'");
+
+
             // [WMR 20190819] Expecting +2 "value[x]" elements
             UpdateElementIndices("t13", 16);        // Bump element indices starting at "valueCodeableConcept" (16)
             UpdateElementIndices("t13", 21 + 1);    // Bump element indices starting at "valuePeriod" (21)

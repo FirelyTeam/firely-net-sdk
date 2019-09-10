@@ -112,7 +112,13 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
             // R4
             Assert.AreEqual("Extension.value[x]", elems[4].Path);
-            Assert.AreEqual("Extension.valueBoolean", elems[5].Path);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.AreEqual("Extension.value[x]", elems[5].Path);
+            Assert.AreEqual("valueBoolean", elems[5].SliceName);
+#else
+            //Assert.AreEqual("Extension.valueBoolean", elems[5].Path);
+#endif
         }
 
 
@@ -620,10 +626,16 @@ namespace Hl7.Fhir.Specification.Tests
             //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
             //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
             //verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
+#if NORMALIZE_RENAMED_TYPESLICE
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:legalCase.value[x]"); // Slice entry
+            verifier.VerifyElement("Patient.extension.value[x]", "valueBoolean", "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.value[x].extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.value[x].extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#else
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
             verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
             verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
-
+#endif
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
 
@@ -776,9 +788,16 @@ namespace Hl7.Fhir.Specification.Tests
             //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
             //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
             //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+#if NORMALIZE_RENAMED_TYPESLICE
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:legalCase.value[x]"); // Slice entry
+            verifier.VerifyElement("Patient.extension.value[x]", "valueBoolean", "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.value[x].extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.value[x].extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#else
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
             verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
             verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#endif
 
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
@@ -1884,7 +1903,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(uri);
                 Assert.AreEqual(extensionDefinitionUrl, uri.Value);
 
+#if NORMALIZE_RENAMED_TYPESLICE
+                // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+                Assert.IsTrue(nav.MoveToNext("value[x]"));          // Slice entry
+                Assert.IsTrue(nav.MoveToNextSlice("valueString"));  // Type slice
+#else
                 Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
                 elem = nav.Current;
                 Assert.AreEqual(1, elem.Min);            // Inline profile constraint overriding the extension definition
                 Assert.IsTrue(elem.MinElement.IsConstrainedByDiff());
@@ -3116,7 +3141,12 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsTrue(nav.MoveToChild("valueString"));
             // [WMR 20190204] R4: snapshot should include both "value[x]" and "valueString"
             Assert.IsTrue(nav.MoveToChild("value[x]"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
 
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
@@ -3161,12 +3191,22 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsTrue(nav.MoveToChild("valueString"));
             // [WMR 20190204] R4: snapshot should include "value[x]" "valueString", and "valueInteger"
             Assert.IsTrue(nav.MoveToChild("value[x]"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
 
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueInteger"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueInteger"));
+#endif
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
@@ -4755,7 +4795,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
 
             // Snapshot should contain renamed elements
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueQuantity"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
+#endif
+
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.SimpleQuantity.GetLiteral(), nav.Current.Type[0].Code);
@@ -4834,7 +4881,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(nav.Current.Slicing); // BUG!
 
             // Condition.extension:typedStaging.extension:type.valueCodeableConcept
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueCodeableConcept"));
+#else
             Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
+#endif
             Assert.IsNotNull(nav.Current.Binding);
             var valueSetReference = nav.Current.Binding.ValueSet;
             Assert.IsNotNull(valueSetReference);
@@ -6169,7 +6222,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("value[x]"));
 
             // Verify merged constraints on valueString
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual("NameSuffix", nav.Current.Short);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
@@ -6429,7 +6487,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify element renaming is not affected
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
 
             // [WMR 20180723] Changed: SnapshotGenerator.getStructureForTypeRef
             // Snapshot generator now also expands type.profile for resource references,
@@ -6515,7 +6579,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify element renaming is not affected
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
             // Verify expansion of child element valueReference.reference
             // Expect expansion of core type profile for ResourceReference
             Assert.IsTrue(nav.MoveToChild("reference"));
@@ -6583,7 +6653,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
             // Verify expansion of child element valueReference.reference
             // Expect expansion of core type profile for ResourceReference
             Assert.IsTrue(nav.MoveToChild("reference"));
@@ -8250,6 +8326,33 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.MoveToNext());
         }
 #endif
+
+        // [WMR 20190910] Issue #1098 - Normalize element paths of type slices in referenced extensions
+        [TestMethod]
+        public void TestNormalizeTypeSliceInExtension()
+        {
+            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason";
+
+            var sd = _testResolver.FindStructureDefinition(url);
+            Assert.IsNotNull(sd);
+
+            var nav = ElementDefinitionNavigator.ForDifferential(sd);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify that differential specifies renamed type slice
+            Assert.IsTrue(nav.MoveToChild("valueCode"));
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, expanded.Title);
+
+            nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify type slice in snapshot has normalized element path "value[x]:valueCode"
+            Assert.IsFalse(nav.MoveToChild("valueCode"));
+
+        }
 
     }
 }
