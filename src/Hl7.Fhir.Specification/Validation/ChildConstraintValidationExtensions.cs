@@ -60,8 +60,6 @@ namespace Hl7.Fhir.Validation
                 validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
                     Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
 
-            var cardinality = Cardinality.FromElementDefinition(definition);
-
             IBucket bucket;
 
             try
