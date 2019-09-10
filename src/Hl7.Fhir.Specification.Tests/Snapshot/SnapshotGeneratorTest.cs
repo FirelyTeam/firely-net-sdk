@@ -8351,7 +8351,39 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToFirstChild());
             // Verify type slice in snapshot has normalized element path "value[x]:valueCode"
             Assert.IsFalse(nav.MoveToChild("valueCode"));
+        }
 
+        [TestMethod]
+        public void TestElementWithoutPath()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyInvalidPatient",
+                Url = "http://example.org/fhir/StructureDefinition/InvalidPatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            // No path...
+                            Min = 1
+                        },
+                    }
+                }
+            };
+
+            void generate()
+            {
+                generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            }
+
+            // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
+            Assert.ThrowsException<InvalidOperationException>(generate);
         }
 
     }
