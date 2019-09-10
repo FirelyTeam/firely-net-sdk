@@ -80,29 +80,27 @@ namespace Hl7.Fhir.Specification
 
             var expanded = Expand();
             // Take First(), since all canonicals are the same anyway.
-            var definitions = childDefinitions(expanded.First(), childName).Take(2).ToList();
+            var definitions = childDefinitions(expanded.First(), childName).ToList();
 
-            if (definitions.Count == 1)
-                return new StructureDefinitionWalker(definitions.Single(), Resolver);
-            else if (definitions.Count > 1)
-                throw new InvalidOperationException($"Internal error: childDefinitions() produced more than one child with name '{childName} at '{Current.CanonicalPath()}' ");
-            else
+            if(definitions.Count == 0)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.CanonicalPath()}'.");
+            else if (definitions.Count == 1) // Single element, no slice
+                return new StructureDefinitionWalker(definitions.Single(), Resolver);
+            else if (definitions.Count == 2) // element with an entry + single slice
+                return new StructureDefinitionWalker(definitions[1], Resolver);
+            else
+                throw new StructureDefinitionWalkerException($"Child with name '{childName}' is sliced to more than one choice and cannot be used as a discriminator at '{Current.CanonicalPath()}' ");
         }
 
         private static IEnumerable<ElementDefinitionNavigator> childDefinitions(StructureDefinitionWalker walker, string childName = null)
         {
             var nav = walker.Current.ShallowCopy();
-            var lastName = "";
 
             if (!nav.MoveToFirstChild()) yield break;
 
             do
             {
-                if (nav.PathName == lastName) continue;    // ignore slices
                 if (nav.Current.IsPrimitiveValueConstraint()) continue;      // ignore value attribute
-                lastName = nav.PathName;
-
                 if (childName != null && nav.Current.MatchesName(childName)) yield return nav.ShallowCopy();
             }
             while (nav.MoveToNext());
