@@ -94,6 +94,16 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("code", elem.Current.Path);   // 'code' in STU3+
         }
 
+        [TestMethod]
+        public void WalkToExtensionSingleChoice()
+        {
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+
+            // The data-absent-reason limits its value to a type slice of one choice - we should be able to handle that,
+            // although we don't handle slicing along a discriminator path in general
+            var elem = walker.Walk("status.extension('http://hl7.org/fhir/StructureDefinition/data-absent-reason').value").Single();
+            Assert.AreEqual("code", elem.Current.Current.Type.Single().Code);   // 'code' in STU3+
+        }
 
         [TestMethod]
         public void ParseInvalidDiscriminatorExpressions()
