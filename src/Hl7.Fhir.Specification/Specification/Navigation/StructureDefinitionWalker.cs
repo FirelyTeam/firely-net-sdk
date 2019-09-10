@@ -178,8 +178,8 @@ namespace Hl7.Fhir.Specification
                 throw new StructureDefinitionWalkerException("resolve() should only be called on elements of type Reference at '{Current.UrlAndPath()}'.");
 
             return Current.Current.Type
-                    .Where(t => t.IsReference() && t.TargetProfile != null)
-                    .Select(t => t.TargetProfile)
+                    .Where(t => t.IsReference() && t.TargetProfile.Any())
+                    .SelectMany(t => t.TargetProfile)
                     .Select(c => FromCanonical(c));
         }
 
