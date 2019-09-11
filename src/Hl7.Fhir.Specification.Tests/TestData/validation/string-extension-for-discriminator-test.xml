@@ -5,8 +5,10 @@
   <fhirVersion value="3.0.1"/>
   <kind value="complex-type"/>
   <abstract value="false"/>
-  <contextType value="resource"/>
-  <context value="Observation.identifier"/>
+  <context>
+    <type value="element"/>
+    <expression value="Observation.identifier"/>
+  </context>
   <type value="Extension"/>
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
   <derivation value="constraint"/>

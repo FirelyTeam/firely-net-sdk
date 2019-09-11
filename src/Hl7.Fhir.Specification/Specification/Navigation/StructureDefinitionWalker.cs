@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Specification
                 throw new StructureDefinitionWalkerException($"extension('{url}') found multiple extension slices constraining the same extension, with is not allowed for the discriminator at '{Current.CanonicalPath()}'.");
 
             bool isExtensionFor(ElementDefinitionNavigator nav, string u) =>
-                nav.Current.Type.Any(tr => tr.Code == FHIRAllTypes.Extension.GetLiteral() && tr.Profile == u);
+                nav.Current.Type.Any(tr => tr.Code == FHIRAllTypes.Extension.GetLiteral() && tr.Profile.Contains(u));
         }
     };
 
