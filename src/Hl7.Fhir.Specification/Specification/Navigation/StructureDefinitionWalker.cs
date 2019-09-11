@@ -74,15 +74,9 @@ namespace Hl7.Fhir.Specification
         {
             if (childName == null) throw Error.ArgumentNull(nameof(childName));
 
-            var canonicals = Current.Current.Type.Select(t => t.GetTypeProfile()).Distinct().ToArray();
-            if (canonicals.Length > 1)
-                throw new StructureDefinitionWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.CanonicalPath()}'), use 'ofType()' to disambiguate");
+            var definitions = childDefinitions(childName).ToList();
 
-            var expanded = Expand();
-            // Take First(), since all canonicals are the same anyway.
-            var definitions = childDefinitions(expanded.First(), childName).ToList();
-
-            if(definitions.Count == 0)
+            if (definitions.Count == 0)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.CanonicalPath()}'.");
             else if (definitions.Count == 1) // Single element, no slice
                 return new StructureDefinitionWalker(definitions.Single(), Resolver);
@@ -92,9 +86,16 @@ namespace Hl7.Fhir.Specification
                 throw new StructureDefinitionWalkerException($"Child with name '{childName}' is sliced to more than one choice and cannot be used as a discriminator at '{Current.CanonicalPath()}' ");
         }
 
-        private static IEnumerable<ElementDefinitionNavigator> childDefinitions(StructureDefinitionWalker walker, string childName = null)
+        private IEnumerable<ElementDefinitionNavigator> childDefinitions(string childName = null)
         {
-            var nav = walker.Current.ShallowCopy();
+            var canonicals = Current.Current.Type.Select(t => t.GetTypeProfile()).Distinct().ToArray();
+            if (canonicals.Length > 1)
+                throw new StructureDefinitionWalkerException($"Cannot determine which child to select, since there are multiple paths leading from here ('{Current.CanonicalPath()}'), use 'ofType()' to disambiguate");
+
+            // Take First(), since we have determined above that there's just one distinct result to expect.
+            // (this will be the case when Type=R
+            var expanded = Expand().Single();           
+            var nav = expanded.Current.ShallowCopy();
 
             if (!nav.MoveToFirstChild()) yield break;
 
@@ -108,13 +109,17 @@ namespace Hl7.Fhir.Specification
 
 
         /// <summary>
-        /// Returns a set of walkers containing the children of the current node
+        /// Returns a set of walkers containing the children of the current node.
         /// </summary>
         /// <returns></returns>
         /// <remarks>There are three cases:
         /// 1. If the walker contains an ElementDefinition with children, it returns itself. 
         /// 2. If the ElementDefinition has a NameReference, it returns the node referred to by the namereference.
-        /// 3. If not 1 or 2, it returns a set of walkers representing the types the ElementDefinition refers to.</remarks>
+        /// 3. If not 1 or 2, it returns a set of walkers representing the type(s) the ElementDefinition refers to.
+        /// 
+        /// This order ensures that local ("inline") constraints for the children in the snapshot take
+        /// precedence over following the type.profile link.
+        /// </remarks>
         public IEnumerable<StructureDefinitionWalker> Expand()
         {
             if (Current.HasChildren)
@@ -132,6 +137,7 @@ namespace Hl7.Fhir.Specification
             {
                 return Current.Current.Type
                     .Select(t => t.GetTypeProfile())
+                    .Distinct()     // no use returning multiple "reference" profiles when they only differ in targetReference
                     .Select(c => FromCanonical(c));
             }
 
@@ -173,7 +179,7 @@ namespace Hl7.Fhir.Specification
         public IEnumerable<StructureDefinitionWalker> Resolve()
         {
             if (!Current.Current.Type.Any(t => t.IsReference()))
-                throw new StructureDefinitionWalkerException("resolve() should only be called on elements of type Reference at '{Current.UrlAndPath()}'.");
+                throw new StructureDefinitionWalkerException($"resolve() should only be called on elements of type Reference at '{Current.CanonicalPath()}'.");
 
             return Current.Current.Type
                     .Where(t => t.IsReference() && t.TargetProfile != null)
@@ -181,7 +187,61 @@ namespace Hl7.Fhir.Specification
                     .Select(c => FromCanonical(c));
         }
 
-        public StructureDefinitionWalker Extension(string url) => FromCanonical(url);
+        /// <summary>
+        /// Finds the constraints for a specific extension within the (sliced) extension collection
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <remarks>Note that this is yet another place where we need to deal with slices along the discriminator
+        /// path. In this case we assume (but is this always true????) that the extension element is sliced so it
+        /// can either point to a defined extension or contains inline child constraints on (probably the value element of)
+        /// the referenced extension.
+        /// </remarks>
+        /*
+           The elementdefs would look something like this:
+         
+            <element>
+               <path value="Observation.identifier.extension"/>
+               <slicing>
+                <discriminator>
+                    <type value="value"/>
+                    <path value="url"/>
+                </discriminator>
+                <rules value="open"/>
+               </slicing>
+            </element>
+            <element>
+               <path value="Observation.identifier.extension"/>
+               <sliceName value="myExtension"/>
+               <type>
+                  <code value="Extension"/>
+                  <profile value="http://example.org/fhir/StructureDefinition/MyExtension"/>
+               </type>
+            </element>
+            <element>
+               <path value="Observation.identifier.extension.valueString"/>
+               <fixedString value="hi!"/>
+            </element> 
+       */
+
+        public StructureDefinitionWalker Extension(string url)
+        {
+            // find the extension children of the current node
+            var extensionChildren = childDefinitions("extension");
+            var selection = extensionChildren.Where(c => isExtensionFor(c, url)).ToList();
+
+            // No children in the current profile -> we can still continue in the definition
+            // of the extension itself.
+            if (selection.Count == 0)
+                return FromCanonical(url);
+            else if (selection.Count == 1)
+                return new StructureDefinitionWalker(selection.Single(), Resolver);
+            else
+                throw new StructureDefinitionWalkerException($"extension('{url}') found multiple extension slices constraining the same extension, with is not allowed for the discriminator at '{Current.CanonicalPath()}'.");
+
+            bool isExtensionFor(ElementDefinitionNavigator nav, string u) =>
+                nav.Current.Type.Any(tr => tr.Code == FHIRAllTypes.Extension.GetLiteral() && tr.Profile == u);
+        }
     };
 
 
