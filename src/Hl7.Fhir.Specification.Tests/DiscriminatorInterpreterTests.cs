@@ -106,6 +106,18 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void WalkToInlineExtensionConstraints()
+        {
+            var walker = new StructureDefinitionWalker(_source.FindStructureDefinition("http://example.org/fhir/StructureDefinition/observation-profile-for-discriminator-test"), _source);
+
+            var elem = walker.Walk("identifier.extension('http://example.org/fhir/StructureDefinition/string-extension-for-discriminator-test').value").Single();
+            var fixedString = elem.Current.Current.Fixed;
+
+            Assert.IsTrue(fixedString is FhirString);
+            Assert.AreEqual("hi!", ((FhirString)elem.Current.Current.Fixed).Value);
+        }
+
+        [TestMethod]
         public void ParseInvalidDiscriminatorExpressions()
         {
             var patientDef = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
