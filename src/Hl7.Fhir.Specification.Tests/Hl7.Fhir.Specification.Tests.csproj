@@ -44,6 +44,7 @@
     <None Remove="TestData\CustomBasic-StructureDefinition-R4.json" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\ResourcesInSubfolder.zip" />
+    <None Remove="TestData\validation\obs-with-sliced-value.xml" />
   </ItemGroup>
 
   <!--
