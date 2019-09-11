@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class DiscriminatorFactory
     {
-        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, ElementDefinitionNavigator root, Validator validator)
+        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, string location, ElementDefinitionNavigator root, Validator validator)
         {
             if (spec?.Type == null) throw new ArgumentNullException(nameof(spec), "Encountered a discriminator component without a discriminator type.");
             var resolver = validator?.Settings?.ResourceResolver ??
@@ -32,8 +32,10 @@ namespace Hl7.Fhir.Validation
                     return buildValueDiscriminator(condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Pattern:
                     return buildPatternDiscriminator(condition, spec.Path, validator);
+                case ElementDefinition.DiscriminatorType.Type:
+                    return buildTypeDiscriminator(condition, spec.Path, validator);
                 default:
-                    throw Error.NotImplemented($"Slicing with a '{spec.Type.Value.GetLiteral()}' discriminator is not yet supported by this validator.");
+                    throw Error.NotImplemented($"Found a slice discriminator of type '{spec.Type.Value.GetLiteral()}' at '{location}' which is not yet supported by this validator.");
             }
         }
 
@@ -44,9 +46,9 @@ namespace Hl7.Fhir.Validation
             else if (spec.Binding != null)
                 return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
             else if(spec.Fixed != null && spec.Binding != null)
-                throw new IncorrectElementDefinitionException("A discriminator of type 'value' cannot have both a 'fixed[x]' AND 'binding' element set on the discriminating element.");
+                throw new IncorrectElementDefinitionException($"The value discriminator has both a 'fixed[x]' AND 'binding' element set on '{spec.Path}'.");
             else
-                throw new IncorrectElementDefinitionException("A discriminator of type 'value' should have a 'fixed[x]' or 'binding' element set on the discriminating element.");
+                throw new IncorrectElementDefinitionException($"The value discriminator should have either a 'fixed[x]' or 'binding' element set on '{spec.Path}'.");
         }
 
         private static IDiscriminator buildPatternDiscriminator(ElementDefinition spec, string discriminator, Validator validator)
@@ -54,7 +56,17 @@ namespace Hl7.Fhir.Validation
             if (spec.Pattern != null)
                 return new PatternDiscriminator(spec.Pattern, discriminator, validator);
             else
-                throw new IncorrectElementDefinitionException("A discriminator of type 'pattern' should have a 'pattern[x]' element set on the discriminating element.");
+                throw new IncorrectElementDefinitionException($"The pattern discriminator should have a 'pattern[x]' element set on 'spec.Path'.");
+        }
+
+        private static IDiscriminator buildTypeDiscriminator(ElementDefinition spec, string discriminator, Validator validator)
+        {
+            var codes = spec.Type.Select(tr => tr.Code).ToArray();
+
+            if (codes.Any())
+                return new TypeDiscriminator(codes, discriminator, validator);
+            else
+                throw new IncorrectElementDefinitionException($"A type discriminator should have at least one 'type' element with a code set on '{spec.Path}'.");
         }
 
         private static ElementDefinition walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
@@ -64,7 +76,7 @@ namespace Hl7.Fhir.Validation
 
             // Well, we could check whether the conditions are Equal, since that's what really matters - they should not differ.
             if (conditions.Count > 1)
-                throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed");
+                throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.");
 
             return conditions.Single().Current.Current;
         }
