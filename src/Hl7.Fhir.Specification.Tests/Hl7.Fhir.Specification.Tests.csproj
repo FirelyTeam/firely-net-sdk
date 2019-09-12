@@ -47,13 +47,10 @@
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
   </ItemGroup>
 
-  <!--
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />
-    <Compile Include="Source\Summary\ArtifactSummaryProperties.cs" />
+    <None Remove="TestData\validation\observation-profile-for-discriminator-test.xml" />
   </ItemGroup>
-
-  -->
+  
   <ItemGroup>
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\profiles-resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
