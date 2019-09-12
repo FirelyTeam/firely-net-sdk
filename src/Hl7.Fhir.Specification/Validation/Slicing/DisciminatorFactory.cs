@@ -34,42 +34,79 @@ namespace Hl7.Fhir.Validation
                     return buildPatternDiscriminator(condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Type:
                     return buildTypeDiscriminator(condition, spec.Path, validator);
+                case ElementDefinition.DiscriminatorType.Profile:
+                    return buildProfileDiscriminator(condition, spec.Path, validator);
                 default:
                     throw Error.NotImplemented($"Found a slice discriminator of type '{spec.Type.Value.GetLiteral()}' at '{location}' which is not yet supported by this validator.");
             }
         }
 
-        private static IDiscriminator buildValueDiscriminator(ElementDefinition spec, string discriminator, Validator validator)
+        private static IDiscriminator buildValueDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
+            var spec = nav.Current;
+
             if (spec.Fixed != null)
                 return new ValueDiscriminator(spec.Fixed, discriminator, validator);
             else if (spec.Binding != null)
                 return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
             else if(spec.Fixed != null && spec.Binding != null)
-                throw new IncorrectElementDefinitionException($"The value discriminator has both a 'fixed[x]' AND 'binding' element set on '{spec.Path}'.");
+                throw new IncorrectElementDefinitionException($"The value discriminator has both a 'fixed[x]' AND 'binding' element set on '{nav.CanonicalPath()}'.");
             else
-                throw new IncorrectElementDefinitionException($"The value discriminator should have either a 'fixed[x]' or 'binding' element set on '{spec.Path}'.");
+                throw new IncorrectElementDefinitionException($"The value discriminator should have either a 'fixed[x]' or 'binding' element set on '{nav.CanonicalPath()}'.");
         }
 
-        private static IDiscriminator buildPatternDiscriminator(ElementDefinition spec, string discriminator, Validator validator)
+        private static IDiscriminator buildPatternDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
+            var spec = nav.Current;
+
             if (spec.Pattern != null)
                 return new PatternDiscriminator(spec.Pattern, discriminator, validator);
             else
-                throw new IncorrectElementDefinitionException($"The pattern discriminator should have a 'pattern[x]' element set on 'spec.Path'.");
+                throw new IncorrectElementDefinitionException($"The pattern discriminator should have a 'pattern[x]' element set on '{nav.CanonicalPath()}'.");
         }
 
-        private static IDiscriminator buildTypeDiscriminator(ElementDefinition spec, string discriminator, Validator validator)
+        private static IDiscriminator buildTypeDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
+            var spec = nav.Current;
             var codes = spec.Type.Select(tr => tr.Code).ToArray();
 
             if (codes.Any())
                 return new TypeDiscriminator(codes, discriminator, validator);
             else
-                throw new IncorrectElementDefinitionException($"A type discriminator should have at least one 'type' element with a code set on '{spec.Path}'.");
+                throw new IncorrectElementDefinitionException($"A type discriminator should have at least one 'type' element with a code set on '{nav.CanonicalPath()}'.");
         }
 
-        private static ElementDefinition walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
+        private static IDiscriminator buildProfileDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
+        {
+            var spec = nav.Current;
+            
+            if(spec.IsRootElement())
+            {
+                // Firsts case: we are at the root of a StructureDefinition, most commonly because
+                // the discriminator path ended in a resolve(). We need to find the canonical url
+                // of the thing we've landed on, since we're at the root of the profile we actually
+                // want to validate against.
+                var profile = nav.StructureDefinition?.Url ??
+                    throw new InvalidOperationException($"Cannot determine the canonical url for the profile at '{nav.CanonicalPath()}' - parent StructureDefinition was not set on navigator.");
+
+                return new ProfileDiscriminator(new[] { profile }, discriminator, validator);
+            }
+            else
+            {
+                // Second case: we are inside a structure definition (not on the root), in this case
+                // the current element can only be profiled by the <profile> tag(s) on the <type> element.
+                // Note that the element pointed to by the discriminator should have constrained the types
+                // to a single (unique) type, but we will allow multiple <profile>s.
+                if(spec.Type.Select(tr=>tr.Code).Distinct().Count() != 1)   // STU3, in R4 codes are always unique
+                    throw new IncorrectElementDefinitionException($"The profile discriminator '{discriminator}' should navigate to an ElementDefinition with exactly one 'type' element at '{nav.CanonicalPath()}'.");
+
+                var profiles = spec.Type.Select(tr => tr.Profile).Distinct();
+                return new ProfileDiscriminator(profiles, discriminator, validator);
+            }
+        }
+
+
+        private static ElementDefinitionNavigator walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
         {
             var walker = new StructureDefinitionWalker(root, resolver);
             var conditions = walker.Walk(discriminator);
@@ -78,7 +115,7 @@ namespace Hl7.Fhir.Validation
             if (conditions.Count > 1)
                 throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.");
 
-            return conditions.Single().Current.Current;
+            return conditions.Single().Current;
         }
 
     }
