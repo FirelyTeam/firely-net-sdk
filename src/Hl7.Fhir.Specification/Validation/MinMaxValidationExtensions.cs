@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -71,10 +71,21 @@ namespace Hl7.Fhir.Validation
         {
             if (expectedType == "Quantity")
             {
-                return instance.ParseQuantity();
-            }
+                var q = instance.ParseQuantity();
+                // These checks should probably be somewhere else since it has nothing to do with parsing
+                if (q.Comparator != null)
+                    throw Error.NotSupported("Cannot interpret quantities with a comparison");
+                if (q.Value == null)
+                    throw Error.NotSupported("Cannot interpret quantities without a value");
+                if (q.System != Model.Primitives.Quantity.UCUM)
+                    throw Error.NotSupported("Cannot compare quantities other than those from UCUM");
 
-            return instance.Value as IComparable;
+                return new Model.Primitives.Quantity(q.Value.Value, q.Unit);
+            }
+            else if (instance.Value is IComparable)
+                return (IComparable)instance.Value;
+            else
+                return null;
         }
 
         private static Model.Primitives.Quantity ParseQuantity(this ITypedElement instance)

@@ -181,7 +181,7 @@
     <test name="testLiteralInteger" inputfile="patient-example.xml"><expression>1.convertsToInteger()</expression><output type="boolean">true</output></test>
     <test name="testLiteralInteger" inputfile="patient-example.xml"><expression>0.convertsToInteger()</expression><output type="boolean">true</output></test>
     <test name="testLiteralInteger" inputfile="patient-example.xml"><expression>(-1).convertsToInteger()</expression><output type="boolean">true</output></test>
-    <test name="testLiteralInteger" inputfile="patient-example.xml"><expression invalid="true">-1.convertsToInteger()</expression></test>
+    <test name="testLiteralInteger" inputfile="patient-example.xml"><expression invalid="semantic">-1.convertsToInteger()</expression></test>
     <test name="testLiteralInteger" inputfile="patient-example.xml"><expression>2147483647.convertsToInteger()</expression><output type="boolean">true</output></test>
 
     <test name="testLiteralString" inputfile="patient-example.xml"><expression>'test'.convertsToString()</expression><output type="boolean">true</output></test>
@@ -194,7 +194,7 @@
     <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression>0.1.convertsToDecimal()</expression><output type="boolean">true</output></test>
     <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression>0.0.convertsToDecimal()</expression><output type="boolean">true</output></test>
     <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression>(-0.1).convertsToDecimal()</expression><output type="boolean">true</output></test>
-    <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression invalid="true">-0.1.convertsToDecimal()</expression></test>
+    <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression invalid="semantic">-0.1.convertsToDecimal()</expression></test>
     <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression>1234567890987654321.0.convertsToDecimal()</expression><output type="boolean">true</output></test>
     <test name="testLiteralDecimal" inputfile="patient-example.xml"><expression>0.00000001.convertsToDecimal()</expression><output type="boolean">true</output></test>
     
@@ -214,8 +214,8 @@
 
     <test name="testLiteralTime" inputfile="patient-example.xml"><expression>@T14:34:28.is(Time)</expression><output type="boolean">true</output></test>
     <test name="testLiteralTime" inputfile="patient-example.xml"><expression>@T14:34:28.123.is(Time)</expression><output type="boolean">true</output></test>
-    <test name="testLiteralTime" inputfile="patient-example.xml" invalid="true"><expression>@T14:34:28Z.is(Time)</expression></test>
-    <test name="testLiteralTime" inputfile="patient-example.xml" invalid="true"><expression>@T14:34:28+10:00.is(Time)</expression></test>
+    <test name="testLiteralTime" inputfile="patient-example.xml"><expression invalid="true">@T14:34:28Z.is(Time)</expression></test>
+    <test name="testLiteralTime" inputfile="patient-example.xml"><expression invalid="true">@T14:34:28+10:00.is(Time)</expression></test>
 
     <test name="testLiteralQuantity" inputfile="patient-example.xml"><expression>10.1 'mg'.convertsToQuantity()</expression><output type="boolean">true</output></test>
     <test name="testLiteralQuantity" inputfile="patient-example.xml"><expression>10 'mg'.convertsToQuantity()</expression><output type="boolean">true</output></test>

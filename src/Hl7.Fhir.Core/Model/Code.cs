@@ -115,35 +115,5 @@ namespace Hl7.Fhir.Model
         string ISystemAndCode.System => ((Enum)(object)Value).GetSystem();
 
         string ISystemAndCode.Code => ObjectValue as string; // this is the literal
-
-        //public override IDeepCopyable CopyTo(IDeepCopyable other)
-        //{
-        //    var dest = other as Code<T>;
-
-        //    if (dest != null)
-        //    {
-        //        base.CopyTo(dest);
-        //        if (RawValue != null) dest.RawValue = RawValue;
-        //        return dest;
-        //    }
-        //    else
-        //        throw new ArgumentException("Can only copy to an object of the same type", "other");
-        //}
-
-        //public override IDeepCopyable DeepCopy()
-        //{
-        //    return CopyTo(new Code<T>());
-        //}
-
-
-        //public override bool Matches(IDeepComparable other)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public override bool IsExactly(IDeepComparable other)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
