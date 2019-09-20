@@ -20,6 +20,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
     public class SchemaConverterTests
     {
         readonly ISchemaResolver _resolver;
+        readonly FhirPathCompiler _fpCompiler;
 
         public SchemaConverterTests()
         {
@@ -30,6 +31,11 @@ namespace Hl7.Fhir.Specification.Tests.Schema
                         new DirectorySource(@"C:\Users\Marco\Downloads")
                     )
                 ));
+
+            var symbolTable = new SymbolTable();
+            symbolTable.AddStandardFP();
+            symbolTable.AddFhirExtensions();
+            _fpCompiler = new FhirPathCompiler(symbolTable);
         }
 
         private string BigString()
@@ -119,7 +125,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             poco.Use = HumanName.NameUse.Usual;
             var element = poco.ToTypedElement();
 
-            //var eltstring = TypedElementAsString(new ValueTypedElement(element));
+            var eltstring = TypedElementAsString(new ValueTypedElement(element));
 
             var schemaElement = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
 
@@ -147,6 +153,19 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             //json.ToString();
             */
         }
+        [TestMethod]
+        public void TestInstance()
+        {
+            var instantSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/instant", UriKind.Absolute));
+
+            var instantPoco = new Instant(DateTimeOffset.Now);
+
+            var element = instantPoco.ToTypedElement();
+
+            var result = instantSchema.Validate(new[] { element }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+
+            Assert.IsTrue(result[0].Item1.Result.IsSuccessful);
+        }
 
         [TestMethod]
         public void ValidateMaxStringonFhirString()
@@ -167,10 +186,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         [TestMethod]
         public void ValidateOwnProfile()
         {
-            var symbolTable = new SymbolTable();
-            symbolTable.AddStandardFP();
-            symbolTable.AddFhirExtensions();
-            var fpCompiler = new FhirPathCompiler(symbolTable);
+
 
             var stringSchema = _resolver.GetSchema(new Uri("http://example.org/fhir/StructureDefinition/MyHumanName", UriKind.Absolute));
 
@@ -181,7 +197,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             poco.GivenElement.Add(new FhirString(BigString()));
             poco.GivenElement.Add(new FhirString("Maria"));
 
-            var results = stringSchema.Validate(new[] { poco.ToTypedElement() }, new ValidationContext() { fpCompiler = fpCompiler });
+            var results = stringSchema.Validate(new[] { poco.ToTypedElement() }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count > 0);

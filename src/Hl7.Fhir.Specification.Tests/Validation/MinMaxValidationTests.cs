@@ -12,20 +12,20 @@ namespace Hl7.Fhir.Validation
         public void TestGetComparable()
         {
             var nodeQ = (new Model.FhirDateTime(1972, 11, 30)).ToTypedElement();
-            Assert.Equal(0, nodeQ.GetComparableValue(nameof(Model.FhirDateTime)).CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
+            Assert.Equal(0, nodeQ.GetComparableValue().CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
 
             nodeQ = (new Model.Quantity(3.14m, "kg")).ToTypedElement();
-            Assert.Equal(-1, nodeQ.GetComparableValue(nameof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
+            Assert.Equal(-1, nodeQ.GetComparableValue().CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
 
             nodeQ = (new Model.HumanName()).ToTypedElement();
-            Assert.Null(nodeQ.GetComparableValue(nameof(Model.HumanName)));
+            Assert.Null(nodeQ.GetComparableValue());
 
             var nodeQ2 = (new Model.Quantity(3.14m, "kg")
             { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
-            Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue(nameof(Model.Quantity)));
+            Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue());
 
             var nodeQ3 = (new Model.Quantity()).ToTypedElement();
-            Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue(nameof(Model.Quantity)));
+            Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue());
         }
 
         [Fact]

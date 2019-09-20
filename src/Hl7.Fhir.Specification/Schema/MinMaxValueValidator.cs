@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 try
                 {
-                    var instanceValue = instance.GetComparableValue(definition.InstanceType);
+                    var instanceValue = instance.GetComparableValue();
 
                     if (instanceValue != null)
                     {

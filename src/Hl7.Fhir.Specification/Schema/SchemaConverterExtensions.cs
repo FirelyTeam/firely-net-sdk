@@ -29,6 +29,7 @@ namespace Hl7.Fhir.Specification.Schema
                 .MaybeAdd(BuildMaxValue(def))
                 .MaybeAdd(BuildFp(def))
                 .MaybeAdd(BuildCardinality(def))
+                .MaybeAdd(BuildRegex(def))
                 //.MaybeAdd(BuildElementRegEx(def))
                 //.MaybeAdd(BuildTypeRefRegEx(def))
                 //.MaybeAdd(BuildMinItems(def))
@@ -58,15 +59,45 @@ namespace Hl7.Fhir.Specification.Schema
             var list = new List<IAssertion>();
             foreach (var constraint in def.Constraint)
             {
-                list.Add(new FhirPathAssertion(constraint.Key, constraint.Expression));
+                var bestPractice = constraint.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") ?? false;
+                list.Add(new FhirPathAssertion(constraint.Key, constraint.Expression, Convert(constraint.Severity), bestPractice));
             }
 
             return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+
+            IssueSeverity? Convert(ElementDefinition.ConstraintSeverity? constraintSeverity)
+            {
+                switch (constraintSeverity)
+                {
+                    case ElementDefinition.ConstraintSeverity.Error:
+                        return IssueSeverity.Error;
+                    case ElementDefinition.ConstraintSeverity.Warning:
+                        return IssueSeverity.Warning;
+                    case null:
+                    default:
+                        return null;
+                }
+            }
         }
 
         private static IAssertion BuildCardinality(ElementDefinition def) =>
             def.Min != null ? new CardinalityAssertion(def.Min, def.Max) : null;
 
+        private static IAssertion BuildRegex(ElementDefinition def)
+        {
+            var list = new List<IAssertion>();
+
+            foreach (var type in def.Type)
+            {
+                var pattern = type?.GetStringExtension("http://hl7.org/fhir/StructureDefinition/regex");
+                if (pattern != null)
+                {
+                    list.Add(new RegExAssertion(pattern));
+                }
+
+            }
+            return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+        }
 
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver)
         {

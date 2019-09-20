@@ -67,32 +67,15 @@ namespace Hl7.Fhir.Validation
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
         }
 
-        internal static IComparable GetComparableValue(this ITypedElement instance, string expectedType)
+        internal static IComparable GetComparableValue(this ITypedElement instance)
         {
-            if (expectedType == "Quantity")
-            {
-                var q = instance.ParseQuantity();
-                // These checks should probably be somewhere else since it has nothing to do with parsing
-                if (q.Comparator != null)
-                    throw Error.NotSupported("Cannot interpret quantities with a comparison");
-                if (q.Value == null)
-                    throw Error.NotSupported("Cannot interpret quantities without a value");
-                if (q.System != Model.Primitives.Quantity.UCUM)
-                    throw Error.NotSupported("Cannot compare quantities other than those from UCUM");
-
-                return new Model.Primitives.Quantity(q.Value.Value, q.Unit);
-            }
-            else if (instance.Value is IComparable)
-                return (IComparable)instance.Value;
-            else
-                return null;
+            return instance.Value as IComparable;
         }
 
         private static Model.Primitives.Quantity ParseQuantity(this ITypedElement instance)
         {
             var value = instance.Children("value").SingleOrDefault()?.Value as decimal?;
             var unit = instance.Children("unit").GetString();
-            var system = instance.Children("system").GetString();
             var comp = instance.Children("comparator").GetString();
 
             if (comp != null)
@@ -100,7 +83,7 @@ namespace Hl7.Fhir.Validation
             if (value == null)
                 throw Error.NotSupported("Cannot interpret quantities without a value");
 
-            return new Model.Primitives.Quantity(value.Value, unit, system ?? Model.Primitives.Quantity.UCUM);
+            return new Model.Primitives.Quantity(value.Value, unit);
         }
 
         internal static OperationOutcome ValidateMinMaxValue(this Validator validator, ElementDefinition definition, ITypedElement instance)
@@ -128,7 +111,7 @@ namespace Hl7.Fhir.Validation
                 {
                     try
                     {
-                        var instanceValue = instance.GetComparableValue(definition.GetType().Name);
+                        var instanceValue = instance.GetComparableValue();
 
                         if (instanceValue != null)
                         {

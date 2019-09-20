@@ -61,7 +61,9 @@ namespace Hl7.Fhir.Validation
             if (additionalCanonicals != null) _profiles.AddStatedProfile(additionalCanonicals);
         }
 
-        public IEnumerable<ElementDefinitionNavigator> Result { get; private set; }
+        public IEnumerable<ElementDefinitionNavigator> Result => ResultSds?.Select(sd => new ElementDefinitionNavigator(sd)).ToList();
+
+        public IEnumerable<StructureDefinition> ResultSds { get; private set; }
 
 
         public OperationOutcome Process()
@@ -90,7 +92,8 @@ namespace Hl7.Fhir.Validation
                         if (genSnapshotOutcome.Success)
                         {
                             // Finally, return navigators to the definitions
-                            Result = CreateNavigators(_profiles.MinimalProfiles);
+                            ResultSds = _profiles.MinimalProfiles.Where(sd => sd.HasSnapshot).ToList();
+                            //Result = CreateNavigators(_profiles.MinimalProfiles);
                         }
                     }
                     else

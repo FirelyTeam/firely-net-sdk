@@ -17,6 +17,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -188,6 +189,7 @@ namespace Hl7.Fhir.Validation
             public abstract void Add(string elementName, IValidatable rules);
         }
 
+        #region NewValidation stuff
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
@@ -195,15 +197,79 @@ namespace Hl7.Fhir.Validation
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
+            /*
+
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
                 outcome.Add(Validate(instance, processor.Result));
+                */
+
+
+
+            if (outcome.Success)
+            {
+                var _resolver = new ElementSchemaResolver(Settings?.ResourceResolver);
+
+                var symbolTable = new SymbolTable();
+                symbolTable.AddStandardFP();
+                symbolTable.AddFhirExtensions();
+
+
+                var validationContext = new ValidationContext()
+                {
+                    FhirPathCompiler = new FhirPathCompiler(symbolTable)
+                };
+
+                var result = new List<(Assertions, ITypedElement)>();
+                foreach (var profile in processor.ResultSds)
+                {
+                    var schema = _resolver.GetSchema(new Uri(profile.Url));
+                    var json = schema.ToJson().ToString();
+                    result.AddRange(schema.Validate(new[] { instance }, validationContext));
+                }
+                outcome.Add(ConvertToOutcome(result));
+            }
 
             return outcome;
+
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
         }
+
+        private OperationOutcome ConvertToOutcome(IList<(Assertions, ITypedElement)> validationAssertions)
+        {
+            OperationOutcome.IssueSeverity ConvertToIssueSeverity(IssueSeverity? severity)
+            {
+                switch (severity)
+                {
+                    case IssueSeverity.Warning:
+                        return OperationOutcome.IssueSeverity.Warning;
+                    case IssueSeverity.Error:
+                        return OperationOutcome.IssueSeverity.Error;
+                    case null:
+                    default:
+                        return OperationOutcome.IssueSeverity.Error;
+                }
+            }
+
+            var outcome = new OperationOutcome();
+
+            foreach (var (assertions, element) in validationAssertions)
+            {
+                var issues = assertions.OfType<IssueAssertion>();
+
+                foreach (var item in issues)
+                {
+                    var issue = Issue.Create(item.IssueNumber, ConvertToIssueSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
+                    outcome.AddIssue(item.Message, issue, element);
+                }
+            }
+
+            // TODO Refactor VALIDATION
+            return outcome;
+        }
+        #endregion
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
         {
@@ -296,8 +362,8 @@ namespace Hl7.Fhir.Validation
                     // so there's no point in also validating the <type> or <nameReference>
                     // TODO: Check whether this is even true when the <type> has a profile?
                     // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
-                    // in which case there may be additional children (verified in the next step)
                     outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+                    // in which case there may be additional children (verified in the next step)
 
                     // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
                     // we need to validate based on the actual type of the instance
@@ -356,13 +422,13 @@ namespace Hl7.Fhir.Validation
 
             if (elementConstraints.MaxValue != null)
                 validator.Add(elementConstraints.MaxValue.ToValidatable(MinMax.MaxValue));
-            
+
             if (elementConstraints.MaxLength.HasValue)
                 validator.Add(elementConstraints.ToValidatable());
 
             if (elementConstraints.Fixed != null)
                 validator.Add(elementConstraints.ToValidatable());
-            
+
             outcome.Add(validator.Validate(instance));
             */
 
