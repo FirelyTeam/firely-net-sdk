@@ -18,11 +18,12 @@ namespace Hl7.Fhir.Validation
 {
     internal static class DiscriminatorFactory
     {
-        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, string location, ElementDefinitionNavigator root, Validator validator)
+        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, 
+            IResourceResolver resolver,
+            string location, ElementDefinitionNavigator root, Validator validator)
         {
             if (spec?.Type == null) throw new ArgumentNullException(nameof(spec), "Encountered a discriminator component without a discriminator type.");
-            var resolver = validator?.Settings?.ResourceResolver ??
-                throw Error.Argument("Discriminator validation needs a ResourceResolver to be set in the ValidationSettings.");
+            if(resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
             var condition = walkToCondition(root, spec.Path, resolver);
 
