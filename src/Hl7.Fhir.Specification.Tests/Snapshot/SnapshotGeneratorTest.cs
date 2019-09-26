@@ -1270,7 +1270,8 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsTrue(nav.Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
                         if (!nav.MoveToNext())
                         {
-                            Debug.Assert(!typeNav.MoveToNext());
+                            //Debug.Assert(!typeNav.MoveToNext());
+                            Assert.IsFalse(typeNav.MoveToNext());
                             break;
                         }
                         // [WMR 20170412] Backbone elements can introduce additional child elements
@@ -1886,9 +1887,10 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Replace root element and re-expand
                 var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
-                
+
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
-                Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
+                //Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
+                Assert.IsFalse(coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
 
                 Assert.IsNotNull(coreExtension);
                 coreExtension.Snapshot = null;
@@ -1899,7 +1901,8 @@ namespace Hl7.Fhir.Specification.Tests
                 var coreSnapRoot = coreExtension.Snapshot.Element[0];
 
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
-                Debug.Assert(!coreDiffRoot.HasSnapshotElementAnnotation());
+                //Debug.Assert(!coreDiffRoot.HasSnapshotElementAnnotation());
+                Assert.IsFalse(coreDiffRoot.HasSnapshotElementAnnotation());
 
                 var userDiffRoot = (ElementDefinition)coreDiffRoot.DeepCopy();
 
@@ -1916,7 +1919,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual("Extension", anno.BaseElementDefinition.Path);
 
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
-                Debug.Assert(!userDiffRoot.HasSnapshotElementAnnotation());
+                //Debug.Assert(!userDiffRoot.HasSnapshotElementAnnotation());
+                Assert.IsFalse(userDiffRoot.HasSnapshotElementAnnotation());
 
             }
             finally
@@ -2059,7 +2063,8 @@ namespace Hl7.Fhir.Specification.Tests
             if (elem != null)
             {
                 var changed = elem.IsConstrainedByDiff();
-                Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
+                //Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
+                Assert.IsTrue(!_settings.GenerateAnnotationsOnConstraints || changed);
                 Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
@@ -2097,7 +2102,8 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
-                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path)
+                    //Debug.Assert(
+                    Assert.IsTrue(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path)
                         // [WMR 20170713] Added, e.g. Patient.identifier.use <=> code
                         || !baseDef.Path.Contains(".")
                         );
@@ -2146,8 +2152,10 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170713] Added
             if (ignoreTypeProfile)
             {
-                Debug.Assert(elem.Type.Count > 0);
-                Debug.Assert(baseClone.Type.Count > 0);
+                //Debug.Assert(elem.Type.Count > 0);
+                //Debug.Assert(baseClone.Type.Count > 0);
+                Assert.IsTrue(elem.Type.Count > 0);
+                Assert.IsTrue(baseClone.Type.Count > 0);
                 baseClone.Type[0].Profile = elem.Type[0].Profile;
             }
 
@@ -6812,6 +6820,61 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current);
             // Verify profile inherits constraint from external targetProfile on Reference
             Assert.AreEqual(1, nav.Current.Min);
+        }
+
+        // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
+
+        [TestMethod]
+        public void TestElementDefinitionBase_ContentReference()
+        {
+            // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
+            var ProvenanceProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Provenance.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Provenance),
+                Name = "ProvenanceProfile",
+                Url = "http://example.org/fhir/StructureDefinition/ProvenanceProfile",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Provenance.entity.agent.who[x]")
+                        {
+                            Comment = "CustomReference"
+                        },
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(ProvenanceProfile, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Provenance.agent"));
+            var refNav = new ElementDefinitionNavigator(nav);
+            Assert.IsTrue(refNav.JumpToFirst("Provenance.entity.agent"));
+            Assert.IsNotNull(refNav.Current.Base);
+            Assert.AreEqual(refNav.Current.Path, refNav.Current.Base.Path);
+
+            // Verify that content reference children inherit .base.path from content reference target
+            var startPos = nav.OrdinalPosition.Value;
+            var refRootPath = refNav.Path;
+            for (int i = startPos + 1; i < nav.Elements.Count; i++)
+            {
+                var tgtElem = nav.Elements[i];
+                var refElem = refNav.Elements[i];
+                if (i > startPos && !ElementDefinitionNavigator.IsChildPath(refRootPath, refElem.Path))
+                {
+                    break;
+                }
+                Assert.IsNotNull(refElem.Base);
+                Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
+            }
         }
     }
 }
