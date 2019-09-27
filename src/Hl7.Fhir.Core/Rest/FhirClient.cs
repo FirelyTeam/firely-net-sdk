@@ -131,18 +131,6 @@ namespace Hl7.Fhir.Rest
         public Resource LastBodyAsResource => _requester.LastResult?.Resource;
 
         /// <summary>
-        /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
-        /// </summary>
-        public HttpWebRequest LastRequest { get { return _requester.LastRequest; } }
-
-        /// <summary>
-        /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
-        /// </summary>
-        /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
-        /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpWebResponse LastResponse { get { return _requester.LastResponse; } }
-
-        /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints. This will always have a trailing "/"
         /// </summary>
@@ -1017,7 +1005,8 @@ namespace Hl7.Fhir.Rest
 
                 var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Method,
                     request.Url, typeof(TResource).Name, result.GetType().Name);
-                throw new FhirOperationException(message, _requester.LastResponse.StatusCode);
+                Enum.TryParse(response.Status, out HttpStatusCode code);
+                throw new FhirOperationException(message, code);
             }
             else
                 return result as TResource;

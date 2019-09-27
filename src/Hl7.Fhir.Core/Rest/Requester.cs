@@ -71,8 +71,6 @@ namespace Hl7.Fhir.Rest
 
 
         public Response LastResult { get; private set; }
-        public HttpWebResponse LastResponse { get; private set; }
-        public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Rest
                 request.Headers["Accept-Encoding"] = "gzip, deflate";
             }
 
-            LastRequest = request;
             if (BeforeRequest != null) BeforeRequest(request, outBody);
 
             // Write the body to the output
@@ -118,7 +115,6 @@ namespace Hl7.Fhir.Rest
                     //Read body before we call the hook, so the hook cannot read the body before we do
                     var inBody = readBody(webResponse);
 
-                    LastResponse = webResponse;
                     if (AfterResponse != null) AfterResponse(webResponse,inBody);
 
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()

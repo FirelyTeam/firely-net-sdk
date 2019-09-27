@@ -18,8 +18,6 @@ namespace Hl7.Fhir.Rest
         byte[] LastBody { get; }
         Resource LastBodyAsResource { get; }
         string LastBodyAsText { get; }
-        HttpWebRequest LastRequest { get; }
-        HttpWebResponse LastResponse { get; }
         Response LastResult { get; }
         ParserSettings ParserSettings { get; }
         ResourceFormat PreferredFormat { get; set; }
