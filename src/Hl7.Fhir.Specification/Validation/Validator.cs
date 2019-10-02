@@ -221,10 +221,9 @@ namespace Hl7.Fhir.Validation
                 };
 
                 var result = new List<(Assertions, ITypedElement)>();
-                foreach (var profile in processor.ResultSds)
+                foreach (var profile in processor.Result)
                 {
-                    var schema = _resolver.GetSchema(new Uri(profile.Url));
-                    var json = schema.ToJson().ToString();
+                    var schema = _resolver.GetSchema(profile);
                     result.AddRange(schema.Validate(new[] { instance }, validationContext));
                 }
                 outcome.Add(ConvertToOutcome(result));
@@ -239,20 +238,6 @@ namespace Hl7.Fhir.Validation
 
         private OperationOutcome ConvertToOutcome(IList<(Assertions, ITypedElement)> validationAssertions)
         {
-            OperationOutcome.IssueSeverity ConvertToIssueSeverity(IssueSeverity? severity)
-            {
-                switch (severity)
-                {
-                    case IssueSeverity.Warning:
-                        return OperationOutcome.IssueSeverity.Warning;
-                    case IssueSeverity.Error:
-                        return OperationOutcome.IssueSeverity.Error;
-                    case null:
-                    default:
-                        return OperationOutcome.IssueSeverity.Error;
-                }
-            }
-
             var outcome = new OperationOutcome();
 
             foreach (var (assertions, element) in validationAssertions)
@@ -261,7 +246,7 @@ namespace Hl7.Fhir.Validation
 
                 foreach (var item in issues)
                 {
-                    var issue = Issue.Create(item.IssueNumber, ConvertToIssueSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
+                    var issue = Issue.Create(item.IssueNumber, (OperationOutcome.IssueSeverity)item.Severity, OperationOutcome.IssueType.Invalid);
                     outcome.AddIssue(item.Message, issue, element);
                 }
             }

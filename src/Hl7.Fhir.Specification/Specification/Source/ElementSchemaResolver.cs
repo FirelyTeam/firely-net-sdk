@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation.Schema;
@@ -23,6 +24,26 @@ namespace Hl7.Fhir.Specification.Specification.Source
         public ElementSchemaResolver(IResourceResolver wrapped)
         {
             _wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
+        }
+
+        public ElementSchema GetSchema(ElementDefinitionNavigator nav)
+        {
+            var schemaUri = new Uri(nav.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
+
+            if (_cache.TryGetValue(schemaUri, out ElementSchema schema))
+            {
+                return schema;
+            }
+
+            if (schemaUri.OriginalString.EndsWith("System.String"))
+            {
+                schema = new ElementSchema(schemaUri);
+            }
+
+            schema = new SchemaConverter(this).Convert(nav);
+
+            _cache.Add(schemaUri, schema);
+            return schema;
         }
 
         public ElementSchema GetSchema(Uri schemaUri)
@@ -46,11 +67,6 @@ namespace Hl7.Fhir.Specification.Specification.Source
 
             _cache.Add(schemaUri, schema);
             return schema;
-        }
-
-        public IEnumerable<ElementSchema> GetSchemas()
-        {
-            return _cache.Values;
         }
 
         public Resource ResolveByCanonicalUri(string uri) => _wrapped.ResolveByCanonicalUri(uri);

@@ -26,8 +26,14 @@ namespace Hl7.Fhir.Specification.Schema
         public ElementSchema Convert(StructureDefinition definition)
         {
             var nav = ElementDefinitionNavigator.ForSnapshot(definition);
+            return Convert(nav);
+        }
+
+        public ElementSchema Convert(ElementDefinitionNavigator nav)
+        {
             bool hasContent = nav.MoveToFirstChild();
-            var id = new Uri(definition.Url, UriKind.Absolute);
+
+            var id = new Uri(nav.StructureDefinition.Url, UriKind.Absolute);
 
             if (!hasContent)
                 return new ElementSchema(id);
