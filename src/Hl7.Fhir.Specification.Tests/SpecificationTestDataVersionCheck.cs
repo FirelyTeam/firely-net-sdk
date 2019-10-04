@@ -32,6 +32,9 @@ namespace Hl7.Fhir.Specification.Tests
                 return;
             if (path.Contains("source-test"))
                 return;
+            if (path.Contains("Type Slicing"))
+                return;
+
 
             var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
             var jsonParser = new Serialization.FhirJsonParser();

@@ -1,8 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using System.Linq;
@@ -19,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public SliceValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
-            _resolver = fixture.Resolver;
+            _resolver = new CachedResolver(new SnapshotSource(fixture.Resolver));
             _validator = fixture.Validator;
             this.output = output;
         }
@@ -31,8 +29,6 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = _resolver.FindStructureDefinition(url);
             Assert.NotNull(sd);
-            var snapgen = new SnapshotGenerator(_resolver);
-            snapgen.Update(sd);
 
             var nav = new ElementDefinitionNavigator(sd);
             var success = nav.JumpToFirst(path);
@@ -41,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             //var xml = FhirSerializer.SerializeResourceToXml(sd);
             //File.WriteAllText(@"c:\temp\sdout.xml", xml);
 
-            return BucketFactory.CreateRoot(nav, _validator);
+            return BucketFactory.CreateRoot(nav, _resolver, _validator);
         }
 
         /*
@@ -138,20 +134,20 @@ namespace Hl7.Fhir.Specification.Tests
 
             var telecoms = pnode.Children("telecom").Cast<ScopedNode>();
 
-            foreach(var telecom in telecoms)
+            foreach (var telecom in telecoms)
                 Assert.True(s.Add(telecom));
 
             var outcome = s.Validate(_validator, pnode);
             Assert.True(outcome.Success);
-            Assert.Equal(0, outcome.Warnings);   
-            
+            Assert.Equal(0, outcome.Warnings);
+
             Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Children("value").Single().Value);
 
             var emailBucket = s.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("e.kramer@furore.com", emailBucket.Members.Single().Children("value").Single().Value);
             Assert.False(emailBucket.ChildSlices[0].Members.Any());
             Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[1].Members.Single().Children("value").Single().Value);
-           
+
             var otherBucket = s.ChildSlices[2] as SliceGroupBucket;
             Assert.Equal("http://nu.nl", otherBucket.ChildSlices[0].Members.Single().Children("value").Single().Value);
             Assert.False(otherBucket.ChildSlices[1].Members.Any());
@@ -188,7 +184,7 @@ namespace Hl7.Fhir.Specification.Tests
             DebugDumpOutputXml(outcome);
             Assert.False(outcome.Success);
             Assert.Equal(7, outcome.Errors);
-            Assert.Equal(0, outcome.Warnings); 
+            Assert.Equal(0, outcome.Warnings);
             var repr = outcome.ToString();
             Assert.Contains("not within the specified cardinality of 1..5 (at Patient)", repr);
             Assert.Contains("which is not allowed for an open-at-end group (at Patient.telecom[5])", repr);
@@ -221,7 +217,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestDirectTypeSliceValidation()
         {
-            test("b:t", new FhirBoolean(true), true); 
+            test("b:t", new FhirBoolean(true), true);
             test("b:f", new FhirBoolean(false), false, "not exactly equal to fixed value");  // fixed to true
             test("s:hi", new FhirString("hi!"), true);
             test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
@@ -230,11 +226,15 @@ namespace Hl7.Fhir.Specification.Tests
             test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
             test("fdt:f", FhirDateTime.Now(), false, "not one of the allowed choices");
 
-            void test(string title, Element v, bool success, string fragment=null)
+            void test(string title, Element v, bool success, string fragment = null)
             {
-                var t = new Observation() { Status = ObservationStatus.Final, Code = new CodeableConcept("http://bla.ml", "blie"),
-                        Value = v };
-                
+                var t = new Observation()
+                {
+                    Status = ObservationStatus.Final,
+                    Code = new CodeableConcept("http://bla.ml", "blie"),
+                    Value = v
+                };
+
                 var outcome = _validator.Validate(t, "http://example.org/fhir/StructureDefinition/obs-with-sliced-value");
 
                 //if (!outcome.Success)
@@ -248,6 +248,15 @@ namespace Hl7.Fhir.Specification.Tests
                 if (fragment != null)
                     Assert.Contains(fragment, outcome.ToString());
             }
+        }
+
+
+        [Fact]
+        public void TestProfileSliceCreation()
+        {
+            var s = createSliceDefs("http://example.org/fhir/StructureDefinition/list-with-profile-slicing", 
+                    "List.entry") as SliceGroupBucket;
+
         }
 
 

@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\validation\list-with-profile-slicing.xml" />
     <None Remove="TestData\validation\observation-profile-for-discriminator-test.xml" />
   </ItemGroup>
   
