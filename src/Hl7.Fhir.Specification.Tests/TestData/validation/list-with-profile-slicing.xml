@@ -2,7 +2,7 @@
   <url value="http://example.org/fhir/StructureDefinition/list-with-profile-slicing"/>
   <name value="list-with-profile-slicing"/>
   <status value="draft"/>
-  <fhirVersion value="3.0.1"/>
+  <fhirVersion value="4.0.0"/>
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="List"/>
