@@ -62,9 +62,12 @@ namespace Hl7.Fhir.Validation
 
             IBucket bucket;
 
+            var resolver = validator?.Settings?.ResourceResolver ??
+                throw Error.Argument("Discriminator validation needs a ResourceResolver to be set in the ValidationSettings.");
+
             try
             {
-                bucket = BucketFactory.CreateRoot(match.Definition, validator);
+                bucket = BucketFactory.CreateRoot(match.Definition, resolver, validator);
             }
             catch(NotImplementedException ni)
             {
