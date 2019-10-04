@@ -7,18 +7,15 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using Hl7.Fhir.Validation.Schema;
-using System;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
-    public class LocalTerminologyService : ITerminologyService, ITerminologyServiceNEW
+    public class LocalTerminologyService : ITerminologyService //, ITerminologyServiceNEW
     {
         private IResourceResolver _resolver;
         private ValueSetExpander _expander;
@@ -105,7 +102,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
 
-        private OperationOutcome validateCodeVS(ValueSet vs, Coding coding, bool? abstractAllowed)
+        private OperationOutcome validateCodeVS(ValueSet vs, Model.Coding coding, bool? abstractAllowed)
         {
             return validateCodeVS(vs, coding.Code, coding.System, coding.Display, abstractAllowed);
         }
@@ -143,13 +140,14 @@ namespace Hl7.Fhir.Specification.Terminology
 
             return result;
         }
-
+        /*
         public Assertions ValidateCode(string canonical = null, string context = null, string code = null, string system = null, string version = null, string display = null, Model.Primitives.Coding? coding = null, Concept? codeableConcept = null, PartialDateTime? date = null, bool? @abstract = null, string displayLanguage = null)
         {
             var outcome = ValidateCode(canonical, context, valueSet: null, code, system, version, display, null, null, null, @abstract, displayLanguage);
 
             throw new NotImplementedException();
         }
+        */
     }
 }
 

@@ -43,16 +43,16 @@ namespace Hl7.Fhir.Specification.Schema
 
 
         private static IAssertion BuildMinValue(ElementDefinition def) =>
-            def.MinValue != null ? new MinMaxValue(def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
+            def.MinValue != null ? new MinMaxValue("TODO", def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
 
         private static IAssertion BuildMaxValue(ElementDefinition def) =>
-            def.MaxValue != null ? new MinMaxValue(def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
+            def.MaxValue != null ? new MinMaxValue("TODO", def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
         private static IAssertion BuildFixed(ElementDefinition def) =>
-            def.Fixed != null ? new Fixed(def.Fixed.ToTypedElement()) : null;
+            def.Fixed != null ? new Fixed("TODO", def.Fixed.ToTypedElement()) : null;
 
         private static IAssertion BuildMaxLength(ElementDefinition def) =>
-            def.MaxLength.HasValue ? new MaxLength(def.MaxLength.Value) : null;
+            def.MaxLength.HasValue ? new MaxLength(def.ElementId ?? def.Path, def.MaxLength.Value) : null;
 
         private static IAssertion BuildFp(ElementDefinition def)
         {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Schema
             foreach (var constraint in def.Constraint)
             {
                 var bestPractice = constraint.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") ?? false;
-                list.Add(new FhirPathAssertion(constraint.Key, constraint.Expression, Convert(constraint.Severity), bestPractice));
+                list.Add(new FhirPathAssertion("TODO", constraint.Key, constraint.Expression, Convert(constraint.Severity), bestPractice));
             }
 
             return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Schema
                 var pattern = type?.GetStringExtension("http://hl7.org/fhir/StructureDefinition/regex");
                 if (pattern != null)
                 {
-                    list.Add(new RegExAssertion(pattern));
+                    list.Add(new RegExAssertion("TODO", pattern));
                 }
 
             }
@@ -122,6 +122,29 @@ namespace Hl7.Fhir.Specification.Schema
             if (typeRefs.Count() == 1)
                 return builder.BuildProfileRef(typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
 
+
+            /*
+             * Identifier:[][]
+             * HumanName:[HumanNameDE,HumanNameBE]:[]
+             * Reference:[WithReqDefinition,WithIdentifier]:[Practitioner,OrganizationBE]
+             * 
+             * Any
+             * {
+             *     {
+             *          InstanceType: "Identifier"
+             *          ref: "http://hl7.org/SD/Identifier"
+             *     }
+             *     {
+             *          InstanceType: "HumanName"
+             *          Any { ref: "HumanNameDE", ref: "HumanNameBE" }
+             *     },
+             *     {
+             *          InstanceType: "Reference"
+             *           Any { ref: "WithReqDefinition", ref: "WithIdentifier" }
+             *          Any { validate: [http://example4] [http://hl7.oerg/fhir/SD/Practitioner],
+             *              validate: [http://example] [http://..../OrganizationBE] } 
+             *     }
+             * }
             /*
             if (isChoice(def))
             {

@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Schema
             if (maxLength <= 0)
                 throw new IncorrectElementDefinitionException($"MaxLength was given in ElementDefinition, but it has a negative value ({maxLength})");
 
-            return new MaxLength(maxLength);
+            return new MaxLength("TODO", maxLength);
         }
     }
 

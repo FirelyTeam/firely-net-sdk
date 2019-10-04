@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
             if (elementDefinition.Fixed != null)
             {
-                return new Fixed(elementDefinition.Fixed.ToTypedElement());
+                return new Fixed("TODO", elementDefinition.Fixed.ToTypedElement());
             }
             return null;
         }
