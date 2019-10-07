@@ -11,22 +11,22 @@
 // Don't throw exception but emit OperationOutcome issue(s) and continue
 #define HACK_STU3_RECURSION
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Serialization;
-using System.Collections.Generic;
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Snapshot;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Rest;
+using System.Linq;
 using System.Text;
 using System.Xml;
-using Hl7.Fhir.Utility;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                     return be != null ?
                         $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path} <== #{be.GetHashCode(),-8} {formatElementPathName(be)} | {be.Base?.Path}"
-                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}"; 
+                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}";
                 })
             ));
         }
@@ -1886,7 +1886,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Replace root element and re-expand
                 var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
-                
+
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
                 Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
 
@@ -2176,7 +2176,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.DefinitionElement)
                 || hasChanges(elem.Example)
                 || hasChanges(elem.Extension)
-             //   || hasChanges(elem.FhirCommentsElement)
+                //   || hasChanges(elem.FhirCommentsElement)
                 || isChanged(elem.Fixed)
                 || isChanged(elem.IsModifierElement)
                 || isChanged(elem.IsSummaryElement)
@@ -6286,7 +6286,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(nav.JumpToFirst("Patient.generalPractitioner"));
             Assert.IsTrue(hasChanges(nav.Current));
-            Assert.IsFalse(isChanged(nav.Current)); 
+            Assert.IsFalse(isChanged(nav.Current));
             Assert.IsTrue(hasChanges(nav.Current.Type));
             foreach (var type in nav.Current.Type)
             {
@@ -6487,7 +6487,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
-            Assert.AreEqual("level 1" ,nav.Current.Short);
+            Assert.AreEqual("level 1", nav.Current.Short);
 
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
             Assert.AreEqual("level 2", nav.Current.Comment);
@@ -6944,6 +6944,40 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsInstanceOfType(fixedValue, typeof(FhirUri));
             var fixedUrl = (IStringValue)fixedValue;
             Assert.AreEqual(url, fixedUrl.Value);
+        }
+
+
+        [TestMethod]
+        public void TestElementWithoutPath()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyInvalidPatient",
+                Url = "http://example.org/fhir/StructureDefinition/InvalidPatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition()
+                    {
+						// No path...
+						Min = 1
+                    },
+                }
+                }
+            };
+
+            void generate()
+            {
+                generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            }
+
+            // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
+            Assert.ThrowsException<InvalidOperationException>(generate);
         }
     }
 }
