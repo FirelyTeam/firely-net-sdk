@@ -7207,7 +7207,6 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20190902] #1090 SnapshotGenerator should support logical models
         // STU3: Serialize logical model to StructureDefinition.snapshot, .differential is always empty
         // R4: Serialize logical model to StructureDefinition.differential, generate .snapshot
-
         [TestMethod]
         public void TestLogicalModel()
         {
@@ -7235,7 +7234,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition(rootPath + ".target")
                         {
-                            //Min = 0,
+                            Min = 0,
                             Max = "1",
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -7248,8 +7247,8 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition(rootPath + ".value[x]")
                         {
-                            //Min = 0,
-                            //Max = "*",
+                            Min = 0,
+                            Max = "*",
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
                                 new ElementDefinition.TypeRefComponent()
@@ -7272,18 +7271,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            bool elementHasBase(ElementDefinition elem)
+            void assertElementBase(ElementDefinition elem)
             {
-                return !(elem is null)
-                    && !(elem.Base is null)
-                    && !(elem.Base.Path is null)
-                    && !(elem.Base.MinElement is null)
-                    && !(elem.Base.MaxElement is null);
+                Assert.IsNotNull(elem);
+                Assert.IsNotNull(elem.Base);
+                Assert.IsNotNull(elem.Base.Path);
+                Assert.IsNotNull(elem.Base.MinElement);
+                Assert.IsNotNull(elem.Base.MaxElement);
             }
 
             // Verify sdf-8b: "All snapshot elements must have a base definition"
-            Assert.IsTrue(expanded.Snapshot.Element.All(e => elementHasBase(e)));
-
+            expanded.Snapshot.Element.ForEach(e => assertElementBase(e));
         }
 
     }
