@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // +8 in total
                 //Assert.AreEqual(347, fullElems.Count);
                 //Assert.AreEqual(355, fullElems.Count);
-                
+
                 // [WMR 20190211] Fixed
                 // R4: snapshot now includes both "value[x]" and "valueString" constraints
                 // +1 Organization.address.extension.value[x]
@@ -1978,7 +1978,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Replace root element and re-expand
                 var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
-                
+
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
                 Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
 
@@ -3214,7 +3214,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsNotNull(outcome);
             //Assert.AreEqual(1, outcome.Issue.Count);
             //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            
+
             // [WMR 20190211] R4: Allow multiple renamed choice type constraints
             Assert.IsNull(outcome);
         }
@@ -6214,7 +6214,7 @@ namespace Hl7.Fhir.Specification.Tests
             var url = nav.Current.Fixed as FhirUri;
             Assert.IsNotNull(url);
             Assert.AreEqual(SL_HumanNameTitleSuffixUri, url.Value);
-            
+
             // [WMR 20190211] FIXED
             // STU3: Verify there are no constraints on value[x]
             //Assert.IsFalse(nav.MoveToNext("value[x]"));
@@ -7604,7 +7604,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToFirstChild());
             // Verify that the snapshot contains type slice entry
             Assert.IsTrue(nav.MoveToChild("value[x]"));
-            
+
             // Verify that the SnapshotGenerator added a default Slicing component
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
@@ -7951,7 +7951,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
             }
         };
-        
+
         [TestMethod]
         public void TestExtensionWithVerboseTypeSlice()
         {
