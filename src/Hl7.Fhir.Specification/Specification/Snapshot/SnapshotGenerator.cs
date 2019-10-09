@@ -1339,25 +1339,47 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        // Initialize [...].extension.url fixed url value, if missing
         static void fixExtensionUrl(ElementDefinitionNavigator nav)
         {
-            var extElem = nav.Current;
-            if (extElem.IsExtension() && nav.HasChildren)
+            // Case-insensitive comparison to match root "Extension" and child "extension" element
+            if (StringComparer.OrdinalIgnoreCase.Equals("extension", nav.PathName) && nav.HasChildren)
             {
-                // Resolve the canonical url of the extension definition from type[0]/profile[0]
-                var profile = extElem.PrimaryTypeProfile();
-                if (profile != null)
+                // [WMR 20190919] Handle profile extensions & extension definitions
+                var extElem = nav.Current;
+                var bm = nav.Bookmark();
+                if (nav.MoveToChild("url"))
                 {
-                    var snapExtPos = nav.Bookmark();
-                    if (nav.MoveToChild("url"))
+                    var urlElem = nav.Current;
+                    if (!(urlElem is null) && urlElem.Fixed is null)
                     {
-                        var urlElem = nav.Current;
-                        if (urlElem != null && urlElem.Fixed == null)
+                        string profile = null;
+                        if (extElem.IsRootElement())
                         {
+                            // Initialize extension definitions, but exclude core Extension profile
+                            var extDef = nav.StructureDefinition;
+                            if (!(extDef is null) && extDef.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                            {
+                                // Extension definition root element: initialize url from canonical
+                                profile = nav.StructureDefinition?.Url;
+                            }
+                        }
+                        else
+                        {
+                            // Profile extension element: initialize url from extension type profile
+                            // Complex extension child element: initialize url from slice name
+                            profile = extElem.PrimaryTypeProfile() ?? extElem.SliceName;
+                        }
+
+                        if (!string.IsNullOrEmpty(profile))
+                        {
+                            // "magic": Extension.url has system type "xsd:string" but requires a FixedUri (NOT FixedString)
+                            // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Extension.2Eurl.20-.20fixedString.20or.20fixedUri.3F
+
                             urlElem.Fixed = new FhirUri(profile);
                         }
-                        nav.ReturnToBookmark(snapExtPos);
                     }
+                    nav.ReturnToBookmark(bm);
                 }
             }
         }
