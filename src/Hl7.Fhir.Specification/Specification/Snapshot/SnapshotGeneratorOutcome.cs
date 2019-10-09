@@ -387,5 +387,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                 location
             );
         }
+
+        // [WMR 20190902] #1090 SnapshotGenerator should support logical models
+        // StructureDefinition.type (1...1) is empty or missing
+        // However for logical models we only need root element name, can parse from first element constraint
+        public static readonly Issue PROFILE_STRUCTURE_TYPE_MISSING = Issue.Create(10014, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Required);
+
+        internal OperationOutcome.IssueComponent addIssueStructureTypeMissing(StructureDefinition sd)
+        {
+            return addIssue(PROFILE_STRUCTURE_TYPE_MISSING.ToIssueComponent(
+                $"The StructureDefinition.type property is empty or missing.",
+                sd.Name
+            ));
+        }
     }
 }

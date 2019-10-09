@@ -9,12 +9,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Validation
 {
     internal static class BucketFactory
     {
-        public static IBucket CreateRoot(ElementDefinitionNavigator root, Validator validator)
+        public static IBucket CreateRoot(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator)
         {
             // Create a single bucket
             var entryBucket = new ElementBucket(root, validator);
@@ -22,10 +23,10 @@ namespace Hl7.Fhir.Validation
             if (root.Current.Slicing == null)
                 return entryBucket;
             else
-                return CreateGroup(root, validator, entryBucket, atRoot: true);
+                return CreateGroup(root, resolver, validator, entryBucket, atRoot: true);
         }
 
-        public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket, bool atRoot)
+        public static IBucket CreateGroup(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, IBucket entryBucket, bool atRoot)
         {
             var discriminatorSpecs = root.Current.Slicing.Discriminator.ToArray();  // copy, since root will move after this
             var location = root.Current.Path;
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Validation
 
                 if (discriminatorSpecs.Any())
                 {
-                    var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, location, root, validator));
+                    var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, resolver, location, root, validator));
                     subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray());
                 }
                 else
@@ -51,7 +52,7 @@ namespace Hl7.Fhir.Validation
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);
                 else
-                    subs.Add(CreateGroup(root, validator, subBucket, atRoot: false));
+                    subs.Add(CreateGroup(root, resolver, validator, subBucket, atRoot: false));
             }
 
             root.ReturnToBookmark(bm);

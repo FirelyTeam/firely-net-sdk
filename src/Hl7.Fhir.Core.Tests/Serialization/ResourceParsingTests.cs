@@ -14,6 +14,7 @@ using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -366,6 +367,18 @@ namespace Hl7.Fhir.Tests.Serialization
             var parser = new FhirXmlParser();
 
             ExceptionAssert.Throws<FormatException>(() => parser.Parse<Patient>(xml));
+        }
+
+        [TestMethod]
+        public void ValueXmlElementParseTest()
+        {
+            var value = "1.2.276.0.76.3.1.191.0002.01.9999999999999.00000001.999.99.9999999999999999";
+
+            var xml = "<DocumentReference><masterIdentifier><system value=\"urn: ietf: rfc: 3986\" /><value value=\"1.2.276.0.76.3.1.191.0002.01.9999999999999.00000001.999.99.9999999999999999\" /></masterIdentifier></DocumentReference>";
+            var doc = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<DocumentReference>(xml);
+            var identifier = doc.Children.First() as Identifier;
+
+            Assert.IsTrue(value == identifier.Value);
         }
     }
 }
