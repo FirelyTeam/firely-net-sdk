@@ -1723,6 +1723,98 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
+        // [WMR 20190902] #1090 SnapshotGenerator should support logical models
+        [TestMethod]
+        public void TestElementMatcher_LogicalModel()
+        {
+            const string rootPath = "MyModel";
+            var SimpleLogicalModel = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/SimpleLogicalModel",
+                Name = "SimpleLogicalModel",
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                // Last segment equals root element name
+                Type = "http://example.org/fhir/StructureDefinition/" + rootPath,
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition(rootPath)
+                        {
+                            //Min = 0,
+                            //Max = "*",
+                            //Type = new List<ElementDefinition.TypeRefComponent>()
+                            //{
+                            //    new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Element.GetLiteral() }
+                            //}
+                        },
+                        new ElementDefinition(rootPath + ".target")
+                        {
+                            //Min = 0,
+                            Max = "1",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    TargetProfile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Person) }
+                                }
+                            }
+                        },
+                        new ElementDefinition(rootPath + ".value[x]")
+                        {
+                            //Min = 0,
+                            //Max = "*",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.String.GetLiteral(),
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Boolean.GetLiteral(),
+                                }
+                            }
+
+                        }
+                    }
+                }
+            };
+
+            var baseProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Element);
+            Assert.IsNotNull(baseProfile);
+            Assert.IsTrue(baseProfile.HasSnapshot); // Rely on default snapshot
+            baseProfile.Snapshot.Rebase(rootPath);  // Explicitly rebase before matching!
+
+
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(SimpleLogicalModel);
+
+            // Merge: MyModel (root element)
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            Assert.AreEqual(2, matches.Count);
+
+            // New: MyModel.target
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            assertMatch(matches[0], ElementMatcher.MatchAction.New, snapNav, diffNav);
+
+            // New: MyModel.value[x]
+            Assert.IsTrue(diffNav.MoveToNext());
+            assertMatch(matches[1], ElementMatcher.MatchAction.New, snapNav, diffNav);
+
+            Assert.IsFalse(diffNav.MoveToNext());
+        }
+
+
         // ========== Helper functions ==========
 
         // Recursively match diffNav to snapNav and verify that all matches return the specified action (def. Merged)
