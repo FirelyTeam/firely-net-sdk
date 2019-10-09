@@ -310,7 +310,61 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Returns the root element from the specified element list, if available, or <c>null</c>.</summary>
         public static ElementDefinition GetRootElement(this IElementList elements)
         {
-            return elements?.Element?.FirstOrDefault(e => e.IsRootElement());
+            return elements?.Element.GetRootElement();
+        }
+
+        /// <summary>Returns the root element from the specified element list, if available, or <c>null</c>.</summary>
+        internal static ElementDefinition GetRootElement(this List<ElementDefinition> elements)
+        {
+            return elements?.FirstOrDefault(e => e.IsRootElement());
+        }
+
+        /// <summary>
+        /// Builds a fully qualified path for the ElementDefinition.
+        /// </summary>
+        /// <param name="def"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        /// <remarks>A fully qualified path is the path of the ElementDefinition, prefixed by the canonical of 
+        /// the StructureDefinition the ElementDefinition is part of.</remarks>
+        public static string CanonicalPath(this ElementDefinition def, StructureDefinition parent = null) =>
+                $"{(parent.Url ?? "")}#{(def?.Path ?? "(root)")}";
+
+
+        /// <summary>
+        /// Builds a fully qualified path for the ElementDefinition.
+        /// </summary>
+        /// <remarks>A fully qualified path is the path of the ElementDefinition, prefixed by the canonical of 
+        /// the StructureDefinition the ElementDefinition is part of.</remarks>
+        public static string CanonicalPath(this ElementDefinitionNavigator nav) =>
+            CanonicalPath(nav.Current, nav.StructureDefinition);
+
+        /// <summary>
+        /// Given an name, determines whether this ElementDefinition's path matches the name.
+        /// </summary>
+        /// <param name="def"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <remarks>This function will match any definition for which the path is a direct match, or matches the element name without suffix.</remarks>
+        public static bool MatchesName(this ElementDefinition def, string name)
+        {
+            var namePart = GetNameFromPath(def.Path);
+
+            // Direct match
+            if (namePart == name) return true;
+
+            // Match an unconstrained choice type name
+            var suffixedName = name + "[x]";
+            if (namePart == suffixedName) return true;
+
+            // Match a constrained choice type name, by looking at the original name of the element
+            if (def.Base != null)
+            {
+                var baseNamePart = GetNameFromPath(def.Base.Path);
+                if (baseNamePart == suffixedName) return true;
+            }
+
+            return false;
         }
     }
 }

@@ -173,7 +173,6 @@ namespace Hl7.Fhir.Validation
                 .OfType(FHIRAllTypes.Quantity,new[] { "http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "http://validationtest.org/fhir/StructureDefinition/HeightQuantity" })
                 .OrType(FHIRAllTypes.String));
 
-            Debug.WriteLine(new FhirXmlSerializer().SerializeToString(result));
             return result;
         }
 

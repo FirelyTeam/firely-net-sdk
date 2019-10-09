@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t21"/>
+  <url value="urn:uuid:ea08f7c0-97f2-44bb-8ef5-f36d9e53148c"/>
+  <name value="t21"/>
+  <status value="draft"/>
+  <description value="fixture for #21: Slicing a backbone element on it&#39;s nested use"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="PlanDefinition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="PlanDefinition:ordertemplate">
+      <path value="PlanDefinition"/>
+    </element>
+    <element id="PlanDefinition:ordertemplate.action.action">
+      <path value="PlanDefinition.action.action"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="prefix"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PlanDefinition:ordertemplate.action.action:subtask1">
+      <path value="PlanDefinition.action.action"/>
+      <sliceName value="subtask1"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="PlanDefinition:ordertemplate.action.action:subtask1.prefix">
+      <path value="PlanDefinition.action.action.prefix"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <fixedString value="slice1"/>
+    </element>
+    <element id="PlanDefinition:ordertemplate.action.action:subtask2">
+      <path value="PlanDefinition.action.action"/>
+      <sliceName value="subtask2"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="PlanDefinition:ordertemplate.action.action:subtask2.prefix">
+      <path value="PlanDefinition.action.action.prefix"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <fixedString value="slice2"/>
+    </element>
+  </differential>
+</StructureDefinition>
