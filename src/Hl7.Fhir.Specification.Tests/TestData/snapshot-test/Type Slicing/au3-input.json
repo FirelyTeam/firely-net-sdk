@@ -1,0 +1,160 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ncdhc-observation-base",
+  "url": "http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-base",
+  "version": "v1.0.0",
+  "name": "NCDHC Observation Base Profile",
+  "title": "NCDHC Observation Base",
+  "status": "draft",
+  "date": "2019-03-01",
+  "publisher": "National Children's Digital Health Collaborative (NCDHC)",
+  "description": "Define a bsae profile for NCDHC Observation",
+  "purpose": "To define NCDHC base profile",
+  "fhirVersion": "3.0.1",
+  "kind": "resource",
+  "abstract": true,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation",
+        "short": "NCDHC Observation Base Profile",
+        "constraint": [
+          {
+            "key": "ncdhc-obs-1",
+            "severity": "error",
+            "human": "If there is no component or related element then either a value[x] or a data absent reason must be present",
+            "expression": "(component.empty() and related.empty()) implies (dataAbsentReason or value)",
+            "xpath": "exists(f:component) or exists(f:related) or exists(f:*[starts-with(local-name(.), 'value')]) or exists(f:dataAbsentReason)"
+          }
+        ]
+      },
+      {
+        "id": "Observation.status",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint",
+            "valueString": "default: final"
+          }
+        ],
+        "path": "Observation.status",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.category",
+        "path": "Observation.category",
+        "comment": "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.\r\n\r\nCWG: Discussion on the Category to match it with Composition.type",
+        "max": "1",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "description": "Codes for high level observation categories. This is mainly used to associate an Observation instance to a particular Health Interaction (as applicable)",
+          "valueSetReference": {
+            "reference": "http://hl7.org.au/fhir/ch/v1/ValueSet/ncdhc-observation-category"
+          }
+        }
+      },
+      {
+        "id": "Observation.subject",
+        "path": "Observation.subject",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": ["http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-patient-baby"]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.effective[x]:effectiveDateTime",
+        "path": "Observation.effectiveDateTime",
+        "sliceName": "effectiveDateTime",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.performer",
+        "path": "Observation.performer",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "display"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": ["http://hl7.org.au/fhir/StructureDefinition/au-practitioner"]
+          }
+        ]
+      },
+      {
+        "id": "Observation.performer:Examiner",
+        "path": "Observation.performer",
+        "sliceName": "Examiner",
+        "short": "Person who is clinically responsible for the undertaking of the exam",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": ["http://hl7.org.au/fhir/StructureDefinition/au-practitioner"]
+          }
+        ]
+      },
+      {
+        "id": "Observation.performer:Examiner.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Observation.performer.display",
+        "fixedString": "Examiner"
+      },
+      {
+        "id": "Observation.performer:Organisation",
+        "path": "Observation.performer",
+        "sliceName": "Organisation",
+        "short": "An organisation which captures the relevant details",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": ["http://hl7.org.au/fhir/StructureDefinition/au-organisation"]
+          }
+        ]
+      },
+      {
+        "id": "Observation.performer:Organisation.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Observation.performer.display",
+        "fixedString": "Organisation"
+      },
+      {
+        "id": "Observation.dataAbsentReason",
+        "path": "Observation.dataAbsentReason",
+        "mustSupport": true
+      }
+    ]
+  }
+}

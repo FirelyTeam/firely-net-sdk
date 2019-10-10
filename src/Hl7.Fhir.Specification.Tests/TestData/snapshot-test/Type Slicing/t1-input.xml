@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t1"/>
+  <url value="urn:uuid:c7e52962-c322-4417-bd95-fb0dfc40fd62"/>
+  <name value="t1"/>
+  <status value="draft"/>
+  <description value="fixture for #1: no change in the differential"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+</StructureDefinition>

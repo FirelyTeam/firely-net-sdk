@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t33"/>
+  <url value="urn:uuid:75055c57-8e5d-4c0a-ab22-43371571f724"/>
+  <name value="t33"/>
+  <status value="draft"/>
+  <description value="fixture for #33: Test disappearing slice definition"/>
+  <fhirVersion value="3.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="ExplanationOfBenefit"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="ExplanationOfBenefit.addItem">
+      <path value="ExplanationOfBenefit.addItem"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.adjudication">
+      <path value="ExplanationOfBenefit.addItem.adjudication"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.adjudication.extension">
+      <path value="ExplanationOfBenefit.addItem.adjudication.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.adjudication.extension:someExt">
+      <path value="ExplanationOfBenefit.addItem.adjudication.extension"/>
+      <sliceName value="someExt"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/data-absent-reason"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

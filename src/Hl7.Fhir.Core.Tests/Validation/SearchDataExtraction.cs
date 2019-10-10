@@ -22,6 +22,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+#if NET40
+using ICSharpCode.SharpZipLib.Zip;
+#endif
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -39,14 +42,19 @@ namespace Hl7.Fhir.Test.Validation
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
+            string examplesZip = @"TestData\examples.zip";
+
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int parserErrorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-
-            var zip = TestDataHelper.ReadTestZip("examples.zip");
+#if NET40
+            var zip = new ZipArchive(new ZipFile(examplesZip));
+#else
+            var zip = ZipFile.OpenRead(examplesZip);
+#endif
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -141,7 +149,7 @@ namespace Hl7.Fhir.Test.Validation
             IEnumerable<ITypedElement> results;
             try
             {
-                results = resourceModel.Select(index.Expression, new FhirEvaluationContext(resourceModel) { ElementResolver = mockResolver} );
+                results = resourceModel.Select(index.Expression, new FhirEvaluationContext(resourceModel) { ElementResolver = mockResolver });
             }
             catch (Exception ex)
             {

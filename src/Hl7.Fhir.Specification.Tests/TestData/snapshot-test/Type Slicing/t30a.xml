@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t30a"/>
+  <url value="urn:uuid:149505c1-a51b-4378-9d31-d14dd62f18e6"/>
+  <name value="t30a"/>
+  <status value="draft"/>
+  <description value="fixture for #30: Profile and derived profile both slice a backbone element; base profile"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation">
+      <path value="Observation"/>
+    </element>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation.component:gene-studied">
+      <path value="Observation.component"/>
+      <sliceName value="gene-studied"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:gene-studied.code">
+      <path value="Observation.component.code"/>
+      <min value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="48018-6"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>

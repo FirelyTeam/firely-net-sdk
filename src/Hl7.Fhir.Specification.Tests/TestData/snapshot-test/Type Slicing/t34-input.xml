@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t34"/>
+  <url value="urn:uuid:0fefeab4-abd9-4ea6-b9c7-8a07a04f600c"/>
+  <name value="t34"/>
+  <status value="draft"/>
+  <description value="fixture for #34: Referencing a custom extension"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Basic"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Basic"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Basic">
+      <path value="Basic"/>
+    </element>
+    <element id="Basic.identifier">
+      <path value="Basic.identifier"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+    </element>
+    <element id="Basic.identifier.extension:foo">
+      <path value="Basic.identifier.extension"/>
+      <sliceName value="foo"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+    </element>
+  </differential>
+</StructureDefinition>

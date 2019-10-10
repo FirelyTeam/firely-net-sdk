@@ -105,20 +105,7 @@ namespace Hl7.Fhir.Validation
                 desc += " \"" + cc.Human + "\"";
 
             return desc;
-        }
-
-
-        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
-        {
-            string path = "";
-
-            if (nav.StructureDefinition != null && nav.StructureDefinition.Url != null)
-                path = "{" + nav.StructureDefinition.Url + "}";
-
-            path += nav.Path;
-
-            return path;
-        }
+        }     
     }
 
 }

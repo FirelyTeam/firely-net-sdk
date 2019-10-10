@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t13"/>
+  <url value="urn:uuid:4f21d695-b60f-4c4f-8412-15d12d18fa5e"/>
+  <name value="t13"/>
+  <status value="draft"/>
+  <description value="fixture for #13: complex slicing"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <sliceName value="t"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthTime"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <sliceName value="complex"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.extension.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.extension.extension"/>
+      <sliceName value="code"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality#code"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.extension.extension"/>
+      <sliceName value="period"/>
+      <max value="0"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality#period"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

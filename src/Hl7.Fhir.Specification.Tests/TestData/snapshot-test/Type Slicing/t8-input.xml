@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t8"/>
+  <url value="urn:uuid:d2cb3b87-8f73-46fd-821c-cf39f0512757"/>
+  <name value="t8"/>
+  <status value="draft"/>
+  <description value="fixture for #8: walking into a type"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.system"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>
