@@ -56,6 +56,10 @@
           <type value="value" />
           <path value="code" />
         </discriminator>
+        <discriminator>
+          <type value="pattern" />
+          <path value="code" />
+        </discriminator>
         <ordered value="false" />
         <rules value="open" />
       </slicing>

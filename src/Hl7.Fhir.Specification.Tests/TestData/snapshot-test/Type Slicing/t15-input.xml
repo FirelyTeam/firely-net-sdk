@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t15"/>
+  <url value="urn:uuid:78efa570-6e30-410d-ac5a-16ea423d13d4"/>
+  <name value="t15"/>
+  <status value="draft"/>
+  <description value="fixture for #15: complex extensions with children"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.address"/>
+    </element>
+    <element>
+      <path value="Patient.address.extension"/>
+      <sliceName value="Geolocation"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/geolocation"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.address.extension.extension"/>
+      <sliceName value="latitude"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="latitude"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.address.extension.extension.valueDecimal"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

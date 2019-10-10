@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t27"/>
+  <url value="urn:uuid:d2cb3b87-8f73-46fd-821c-cf39f0432757"/>
+  <name value="t27"/>
+  <status value="draft"/>
+  <description value="fixture for #27: walking into a type for Contract"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Contract"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Contract"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Contract"/>
+    </element>
+    <element>
+      <path value="Contract.type"/>
+      <label value="Consent"/>
+      <short value="Consent"/>
+      <definition value="SHALL contain exactly one [1..1] type=&quot;CONS&quot; (CodeSystem: HL7ActClass urn:oid:2.16.840.1.113883.5.6) (CONF:2219-2008)."/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element>
+      <path value="Contract.type.coding.system"/>
+      <patternCode value="urn:oid:2.16.840.1.113883.5.6"/>
+    </element>
+    <element>
+      <path value="Contract.type.coding.code"/>
+      <patternCode value="CONS"/>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t41"/>
+  <url value="urn:uuid:4485cada-4667-4460-937d-f2dbe6e73f1d"/>
+  <name value="t41"/>
+  <status value="draft"/>
+  <description value="fixture for #41: Choice Types: constrain list of choices to 2"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Observation"/>
+    </element>
+    <element>
+      <path value="Observation.value[x]"/>
+      <short value="some text"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

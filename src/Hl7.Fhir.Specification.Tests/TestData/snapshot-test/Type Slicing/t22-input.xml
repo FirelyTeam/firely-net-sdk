@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t22"/>
+  <url value="urn:uuid:a690d8bf-7b93-4785-b5d7-74bc3452a24b"/>
+  <name value="t22"/>
+  <status value="draft"/>
+  <description value="fixture for #22: Constrain base element before slicing"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="type.coding.code"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.extension"/>
+      <sliceName value="validDate"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/identifier-validDate"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.system"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.code"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.system"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.value"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.identifier"/>
+      <sliceName value="MRN"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.extension"/>
+      <sliceName value="validDate"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="system"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding"/>
+      <sliceName value="preferredCoding"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.system"/>
+      <fixedUri value="http://hl7.org/fhir/v2/0203"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.code"/>
+      <fixedCode value="MR"/>
+    </element>
+    <element>
+      <path value="Patient.identifier"/>
+      <sliceName value="JHN"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.extension"/>
+      <sliceName value="validDate"/>
+      <max value="0"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="system"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding"/>
+      <sliceName value="preferredCoding"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.system"/>
+      <fixedUri value="http://hl7.org/fhir/v2/0203"/>
+    </element>
+    <element>
+      <path value="Patient.identifier.type.coding.code"/>
+      <fixedCode value="JHN"/>
+    </element>
+  </differential>
+</StructureDefinition>

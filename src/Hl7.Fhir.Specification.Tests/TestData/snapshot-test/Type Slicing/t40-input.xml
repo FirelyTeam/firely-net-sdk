@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t40"/>
+  <url value="urn:uuid:9"/>
+  <name value="t40"/>
+  <status value="draft"/>
+  <description value="fixture for #40: Choice Types: constrain minimum cardinality"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Observation"/>
+    </element>
+    <element>
+      <path value="Observation.value[x]"/>
+      <short value="some text"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>
