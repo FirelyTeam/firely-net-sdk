@@ -449,7 +449,7 @@ if(true) {
             }
 
             [NotMapped]
-            internal override IEnumerable<ElementValue> NamedChildren
+            public override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
@@ -671,7 +671,7 @@ if(true) {
         }
 
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren
+        public override IEnumerable<ElementValue> NamedChildren
         {
             get
             {

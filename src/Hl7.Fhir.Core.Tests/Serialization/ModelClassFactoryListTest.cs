@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             facs.Add(new SpecificModelClassFactory());
 
-            Assert.ThrowsException<InvalidOperationException>(() => facs.FindFactory(typeof (GenericModelClass)));
+            ExceptionAssert.Throws<InvalidOperationException>(() => facs.FindFactory(typeof (GenericModelClass)));
         }
     }
 
