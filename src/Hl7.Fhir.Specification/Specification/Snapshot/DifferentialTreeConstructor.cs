@@ -57,6 +57,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             while (index < diff.Count)
             {
                 var thisPath = diff[index].Path;
+
+                // [WMR 20190910] Reject elements w/o path
+                if (string.IsNullOrEmpty(thisPath))
+                {
+                    throw Error.InvalidOperation($"Error in snapshot generator. Differential element constraint at position #{index} has no path.");
+                }
+
                 var prevPath = index > 0 ? diff[index - 1].Path : String.Empty;
 
                 if (ElementDefinitionNavigator.IsRootPath(thisPath))

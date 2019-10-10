@@ -490,7 +490,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     addIssueInvalidNameReference(defn);
                     return false;
                 }
-                nav.CopyChildren(sourceNav);
+
+                // [WMR 20190926] #1123 Remove annotations and fix Base components!
+                copyChildren(nav, sourceNav);
 
                 // [WMR 20180410]
                 // - Regenerate element IDs
@@ -562,7 +564,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
 
                 // [WMR 20170220] If profile element has no children, then copy child elements from type structure into profile
-                if (!copyChildren(nav, typeNav, typeStructure))
+                if (!copyChildren(nav, typeNav))
                 {
                     // Otherwise merge type structure onto profile elements (cf. mergeTypeProfiles)
 
@@ -1052,7 +1054,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // 2. Element (base) type IS expanded in the base profile, i.e. base profile has child elements
                             //    => call mergeElement to merge diff (derived) type profile onto snapshot (base) type profile
 
-                            copyChildren(snap, typeNav, typeStructure);
+                            copyChildren(snap, typeNav);
 
                             // But we also need to merge external type profile onto any existing inline snapshot constraints
                             // e.g. TestObservationProfileWithExtensions(_ExpandAll)
@@ -1129,25 +1131,48 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Remove existing annotations, fix Base components
         /// </summary>
         // [WMR 20170501] OBSOLETE: notify listeners - moved to prepareTypeProfileChildren
-        bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav, StructureDefinition typeStructure)
+        bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
         {
             // [WMR 20170426] IMPORTANT!
             // Do NOT modify typeNav/typeStructure
             // Call by mergeTypeProfiles: typeNav/typeStructure refers to modified clone of global type profile
             // Call by expandElement:     typeNav/typeStructure refers to global cached type profile (!)
 
+            Debug.Assert(!nav.AtRoot);
+            Debug.Assert(!typeNav.AtRoot);
+
             // [WMR 20170220] CopyChildren returns false if nav already has children
             if (nav.CopyChildren(typeNav))
             {
                 // Fix the copied elements and notify observers
-                var pos = nav.OrdinalPosition.Value;
-                for (int i = 1; i < typeNav.Elements.Count; i++)
-                {
-                    // [WMR 20170220] Problem: nav and typeNav structure can differ
-                    // e.g. both can have separate extensions, slices etc.
 
-                    var elem = nav.Elements[pos + i];
-                    var typeElem = typeNav.Elements[i];
+                // [WMR 20190926] Also support contentReference
+                // typeNav positioned at target element of base profile (not the root element)
+                // => process only the current subtree, not the full structure
+
+                var typeRootPath = typeNav.Path;
+                var typeRootPos = typeNav.OrdinalPosition.Value; // 0 for element type, >0 for content reference
+                var typeElems = typeNav.Elements;
+                var elems = nav.Elements;
+
+                for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
+                    i < typeElems.Count && pos < elems.Count; 
+                    i++, pos++)
+                {
+                    var typeElem = typeElems[i];
+
+                    // [WMR 20190926] For contentReference, only process partial subtree
+                    // Proceed while current target element is a (grand)child of the start element
+
+                    if (typeRootPos > 0 // If typeNav represents target of a contentReference...
+                        // and if this element is NOT a child of the target contentReference...
+                        && !ElementDefinitionNavigator.IsChildPath(typeRootPath, typeElem.Path))
+                    {
+                        // Then we're done processing the subtree
+                        break;
+                    }
+
+                    var elem = elems[pos];
 
                     // [WMR 20160826] Never inherit Changed extension from base profile!
                     elem.RemoveAllConstrainedByDiffExtensions();
@@ -1314,25 +1339,47 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        // Initialize [...].extension.url fixed url value, if missing
         static void fixExtensionUrl(ElementDefinitionNavigator nav)
         {
-            var extElem = nav.Current;
-            if (extElem.IsExtension() && nav.HasChildren)
+            // Case-insensitive comparison to match root "Extension" and child "extension" element
+            if (StringComparer.OrdinalIgnoreCase.Equals("extension", nav.PathName) && nav.HasChildren)
             {
-                // Resolve the canonical url of the extension definition from type[0]/profile[0]
-                var profile = extElem.PrimaryTypeProfile();
-                if (profile != null)
+                // [WMR 20190919] Handle profile extensions & extension definitions
+                var extElem = nav.Current;
+                var bm = nav.Bookmark();
+                if (nav.MoveToChild("url"))
                 {
-                    var snapExtPos = nav.Bookmark();
-                    if (nav.MoveToChild("url"))
+                    var urlElem = nav.Current;
+                    if (!(urlElem is null) && urlElem.Fixed is null)
                     {
-                        var urlElem = nav.Current;
-                        if (urlElem != null && urlElem.Fixed == null)
+                        string profile = null;
+                        if (extElem.IsRootElement())
                         {
+                            // Initialize extension definitions, but exclude core Extension profile
+                            var extDef = nav.StructureDefinition;
+                            if (!(extDef is null) && extDef.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                            {
+                                // Extension definition root element: initialize url from canonical
+                                profile = nav.StructureDefinition?.Url;
+                            }
+                        }
+                        else
+                        {
+                            // Profile extension element: initialize url from extension type profile
+                            // Complex extension child element: initialize url from slice name
+                            profile = extElem.PrimaryTypeProfile() ?? extElem.SliceName;
+                        }
+
+                        if (!string.IsNullOrEmpty(profile))
+                        {
+                            // "magic": Extension.url has system type "xsd:string" but requires a FixedUri (NOT FixedString)
+                            // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Extension.2Eurl.20-.20fixedString.20or.20fixedUri.3F
+
                             urlElem.Fixed = new FhirUri(profile);
                         }
-                        nav.ReturnToBookmark(snapExtPos);
                     }
+                    nav.ReturnToBookmark(bm);
                 }
             }
         }
