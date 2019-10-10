@@ -6,8 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Language;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Navigation
             {
                 if (call.Arguments.Single() is ConstantExpression ce)
                 {
-                    if (ce.ExpressionType == Hl7.FhirPath.TypeInfo.String)
+                    if (ce.ExpressionType == TypeSpecifier.String)
                     {
                         return (string)ce.Value;
                     }
@@ -95,6 +95,6 @@ namespace Hl7.Fhir.Specification.Navigation
                 return new[] { Root };
 
             throw new DiscriminatorFormatException($"Variable reference '{expression.Name}' is not supported in discriminators.");
-        }        
+        }
     }
 }
