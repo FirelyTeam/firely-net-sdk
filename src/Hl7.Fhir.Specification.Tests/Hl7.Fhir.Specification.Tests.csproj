@@ -43,19 +43,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="TestData\CustomBasic-StructureDefinition-R3.json" />
-    <None Remove="TestData\profiles-types.json" />
-    <None Remove="TestData\ResourcesInSubfolder.zip" />
-  </ItemGroup>
 
-  <!--
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />
-    <Compile Include="Source\Summary\ArtifactSummaryProperties.cs" />
+    <None Remove="TestData\validation\list-with-profile-slicing.xml" />
+    <None Remove="TestData\validation\observation-profile-for-discriminator-test.xml" />
   </ItemGroup>
-
-  -->
+  
   <ItemGroup>
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\profiles-resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
