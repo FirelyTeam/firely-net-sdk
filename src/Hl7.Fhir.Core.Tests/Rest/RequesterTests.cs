@@ -155,26 +155,7 @@ namespace Hl7.Fhir.Test
             }
 
             EntryToHttpExtensions.SetUserAgentUsingReflection = true;
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestSetAgentNotAccepted()
-        {
-            var entry = _Entry;
-            entry.Agent = "testAgent";
-            var settings = _Settings;
-
-            var request = entry.ToHttpRequest(_endpoint, settings);
-            Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
-
-            EntryToHttpExtensions.SetUserAgentUsingReflection = false;
-            request = entry.ToHttpRequest(_endpoint, settings);
-
-            Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, true);
-            Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
-
-            EntryToHttpExtensions.SetUserAgentUsingReflection = true;
+            EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation = true;
         }
 
         #endregion
