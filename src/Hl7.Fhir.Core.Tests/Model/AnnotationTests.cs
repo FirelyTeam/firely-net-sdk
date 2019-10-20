@@ -102,5 +102,34 @@ namespace Hl7.Fhir.Tests.Model
             p.ResourceBase = new Uri("http://nu.nl/");
             Assert.AreEqual("http://nu.nl/", p.ResourceBase.ToString());
         }
+
+        /// <summary>
+        /// Pre-generate testNumber of annotations.
+        /// Set them on a single element in parallel.
+        /// </summary>
+        [TestMethod]
+        public void SetAnnotationIsThreadSafe()
+        {
+            var testNumber = 10;
+            var rnd = new Random();
+            var annotations =
+                    Enumerable.Range(0, testNumber)
+                    .Select(i => new AnnotationData() { Data = rnd.Next(0, testNumber).ToString() })
+                    .ToArray();
+            var element = new FhirBoolean();
+            try
+            {
+                Parallel.For(0, testNumber, new ParallelOptions() { MaxDegreeOfParallelism = testNumber }, (i) =>
+                {
+                    element.SetAnnotation(annotations[i]);
+                }
+                );
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"AddAnnotation should not throw an exception, but it did: {ex.Message}");
+            }
+        }
     }
 }
