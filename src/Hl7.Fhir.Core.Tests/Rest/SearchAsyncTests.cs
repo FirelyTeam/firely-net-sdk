@@ -4,16 +4,43 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
     [TestClass]
     public class SearchAsyncTests
     {
-        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private readonly string _endpoint = "http://localhost:4080/";
 
         //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
-        private readonly string _endpointSupportingSearchUsingPost = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+        private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
+
+        public SearchAsyncTests()
+        {
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            };
+
+            var pat = new Patient()
+            {
+                Name = new List<HumanName>()
+                {
+                    new HumanName()
+                    {
+                        Given = new List<string>() {"test_given"},
+                        Family = "Donald",
+                    }
+                },
+                Id = "pat1"
+            };
+            // Create the patient
+            Console.WriteLine("Creating patient...");
+            Patient p = client.Update<Patient>(pat);
+            Assert.IsNotNull(p);
+        }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -26,11 +53,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srch = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = await client.SearchAsync<Patient>(srch);
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -60,11 +85,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srch = new SearchParams()
-                .Where("name=Peter")
+                .Where("name=Donald")
                 .LimitTo(5)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = await client.SearchUsingPostAsync<Patient>(srch);
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -94,11 +117,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srch = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = client.Search<Patient>(srch);
 
@@ -129,11 +150,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srch = new SearchParams()
-                .Where("name=Peter")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = client.SearchUsingPost<Patient>(srch);
 
@@ -164,11 +183,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srchParams = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
             
             var task1 = client.SearchAsync<Patient>(srchParams);
             var task2 = client.SearchAsync<Patient>(srchParams);
@@ -207,11 +224,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             var srchParams = new SearchParams()
-                .Where("name=Peter")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var task1 = client.SearchUsingPostAsync<Patient>(srchParams);
             var task2 = client.SearchUsingPostAsync<Patient>(srchParams);
@@ -249,7 +264,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
             
-            var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
+            var result1 = await client.SearchAsync<Patient>(new []{ "family=Donald" });
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -277,7 +292,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Chalmers" }, pageSize:5);
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize:5);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -305,7 +320,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" },null,1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -334,7 +349,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Chalmers" }, null, 1);
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 

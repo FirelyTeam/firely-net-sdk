@@ -31,14 +31,14 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         // public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
-        public static Uri testEndpoint = new Uri("https://vonk.fire.ly");
+        public static Uri testEndpoint = new Uri("http://localhost:4080");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
 
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir"); 
-        public static Uri _endpointSupportingSearchUsingPost = new Uri("http://nde-fhir-ehelse.azurewebsites.net/fhir");
+        public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
 
         public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
 
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Tests.Rest
             var minimal = false;
             client.OnBeforeRequest += (object s, BeforeRequestEventArgs e) => e.RawRequest.Headers["Prefer"] = minimal ? "return=minimal" : "return=representation";
 
-            var result = client.Read<Patient>("Patient/glossy");
+            var result = client.Read<Patient>("Patient/pat1");
             Assert.IsNotNull(result);
             result.Id = null;
             result.Meta = null;
