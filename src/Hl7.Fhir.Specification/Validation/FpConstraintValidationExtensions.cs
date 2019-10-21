@@ -102,17 +102,9 @@ namespace Hl7.Fhir.Validation
                 {
                     try
                     {
-                        // To permit this element to be used concurrently in validations, lock so that the
-                        // annotation 
-                        lock (constraintElement)
-                        {
-                            compiledExpression = constraintElement.Annotation<CompiledConstraintAnnotation>()?.Expression;
-                            if (compiledExpression != null)
-                                return compiledExpression;
+                        compiledExpression = v.FpCompiler.Compile(fpExpressionText);
+                        constraintElement.SetAnnotation(new CompiledConstraintAnnotation { Expression = compiledExpression });
 
-                            compiledExpression = v.FpCompiler.Compile(fpExpressionText);
-                            constraintElement.SetAnnotation(new CompiledConstraintAnnotation { Expression = compiledExpression });
-                        }
                     }
                     catch (Exception e)
                     {
