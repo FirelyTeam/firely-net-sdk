@@ -882,24 +882,18 @@ namespace Hl7.Fhir.Rest
 
             var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, new PocoStructureDefinitionSummaryProvider());
 
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(entryResponse.Status))
-            {
-                Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(entryResponse.Status), code);
-            }
-
             Bundle.EntryComponent response = null;
             try
             {
                 response = entryResponse.ToBundleEntry(Settings.ParserSettings);
                 LastClientRequest = entryResponse.LastRequest;
                 LastClientResponse = entryResponse.LastResponse;
+                
+                LastResult = response.Response;
+                LastBodyAsResource = response.Resource;
 
                 if (!entryResponse.IsSuccessful())
                 {
-                    LastResult = response.Response;
-                    LastBodyAsResource = response.Resource;
-
                     Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
                     throw FhirOperationException.BuildFhirOperationException(code, response.Resource);
                 }
@@ -922,7 +916,13 @@ namespace Hl7.Fhir.Rest
             {
                 throw ae.GetBaseException();
             }
-
+            
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(entryResponse.Status))
+            {
+                Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
+                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(entryResponse.Status), code);
+            }
+            
             Resource result;
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource

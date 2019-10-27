@@ -72,6 +72,7 @@ namespace Hl7.Fhir.Model
 
         public const string ATOM_LINKREL_SELF = "self";
         public const string ATOM_LINKREL_PREVIOUS = "previous";
+        public const string ATOM_LINKREL_PREV = "prev";
         public const string ATOM_LINKREL_NEXT = "next";
         public const string ATOM_LINKREL_FIRST = "first";
         public const string ATOM_LINKREL_LAST = "last";
@@ -96,7 +97,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public Uri PreviousLink
         {
-            get { return getLink(ATOM_LINKREL_PREVIOUS); }
+            get { return getLink(ATOM_LINKREL_PREVIOUS) ?? getLink(ATOM_LINKREL_PREV); }
             set { setLink(ATOM_LINKREL_PREVIOUS, value); }
         }
 

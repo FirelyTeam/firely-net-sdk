@@ -52,8 +52,66 @@ namespace Hl7.Fhir.Tests.Rest
                | (SecurityProtocolType)3072
                | (SecurityProtocolType)768
                | SecurityProtocolType.Ssl3;
+
+            
+            CreateItems();
         }
+#else
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            CreateItems();
+        }
+
 #endif
+
+
+        private static void CreateItems()
+        {
+            var client = new FhirClient(testEndpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            };
+
+            var pat = new Patient()
+            {
+                Name = new List<HumanName>()
+                {
+                    new HumanName()
+                    {
+                        Given = new List<string>() {"test_given"},
+                        Family = "Donald",
+                    }
+                },
+                Id = "pat1",
+                Identifier = new List<Identifier>()
+                {
+                    new Identifier()
+                    {
+                        System = "urn:oid:1.2.36.146.595.217.0.1",
+                        Value = "12345"
+                    }
+                }
+            };
+
+            var loc = new Location()
+            {
+                Address = new Address()
+                {
+                    City = "Den Burg"
+                },
+                Id = "1"
+            };
+
+            // Create the patient
+            Console.WriteLine("Creating patient...");
+            Patient p = client.Update(pat);
+            Location l = client.Update(loc);
+            Assert.IsNotNull(p);
+        }
+
 
         [TestInitialize]
         public void TestInitialize()
@@ -139,7 +197,7 @@ namespace Hl7.Fhir.Tests.Rest
             client.UseFormatParam = true;
             client.PreferredFormat = ResourceFormat.Json;
 
-            var loc = client.Read<Patient>("Patient/example");
+            var loc = client.Read<Patient>("Patient/pat1");
             Assert.IsNotNull(loc);
         }
 
@@ -367,7 +425,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var result = client.Search<DiagnosticReport>(pageSize: 10);
+            var result = client.Search<Patient>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
 
@@ -400,7 +458,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             client.PreferredFormat = ResourceFormat.Json;
 
-            var result = client.Search<DiagnosticReport>(pageSize: 10);
+            var result = client.Search<Patient>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
 
@@ -435,7 +493,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             client.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
-            var pat = client.Read<Patient>("Patient/glossy");
+            var pat = client.Read<Patient>("Patient/pat1");
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
             pat.Id = null;
             pat.Identifier.Clear();
@@ -480,7 +538,7 @@ namespace Hl7.Fhir.Tests.Rest
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
             // client.CompressRequestBody = true;
 
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/pat1");
             pat.Id = null;
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
@@ -668,7 +726,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestWithParam()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient("http://test.fhir.org/r4");
             var res = client.Get("ValueSet/v2-0131/$validate-code?system=http://hl7.org/fhir/v2/0131&code=ep");
             Assert.IsNotNull(res);
         }
@@ -676,7 +734,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ManipulateMeta()
         {
-           FhirClient client = new FhirClient(testEndpoint);
+           FhirClient client = new FhirClient("http://test.fhir.org/r4");
 
             var pat = new Patient();
             pat.Meta = new Meta();
@@ -858,7 +916,7 @@ namespace Hl7.Fhir.Tests.Rest
                     status = e.RawResponse.StatusCode;
                 };
 
-            var pat = client.Read<Patient>("Patient/glossy");
+            var pat = client.Read<Patient>("Patient/pat1");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
@@ -930,7 +988,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]   // Currently ignoring, as spark.furore.com returns Status 500.
         public void TestReceiveHtmlIsHandled()
         {
-            var client = new FhirClient("http://spark.furore.com/");        // an address that returns html
+            var client = new FhirClient("http://test.fhir.org/r4");        // an address that returns html
 
             try
             {
@@ -948,7 +1006,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestRefresh()
         {
             var client = new FhirClient(testEndpoint);
-            var result = client.Read<Patient>("Patient/example");
+            var result = client.Read<Patient>("Patient/pat1");
 
             var orig = result.Name[0].FamilyElement.Value;
 
@@ -959,11 +1017,11 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(orig, result.Name[0].FamilyElement.Value);
         }
 
-        [TestMethod]
+        [Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithHtmlIsHandled()
         {
-            var client = new FhirClient("http://spark.furore.com/");        // an address that returns Status 500 with HTML in its body
+            var client = new FhirClient("http://test.fhir.org/r4/");        // an address that returns Status 500 with HTML in its body
 
             try
             {
@@ -1008,7 +1066,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirClient("http://test.fhir.org/r3");  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirClient("http://test.fhir.org/r4/");  // an address that returns Status 404 with an OperationOutcome
 
             try
             {
@@ -1106,7 +1164,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestAuthenticationOnBefore()
         {
-            FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");
+            FhirClient validationFhirClient = new FhirClient(testEndpoint);
             validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
             {
                 e.RawRequest.Headers["Authorization"] = "Bearer bad-bearer";
@@ -1155,7 +1213,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestOperationEverything()
         {
-            FhirClient client = new FhirClient(testEndpoint)
+            FhirClient client = new FhirClient("http://test.fhir.org/r4")
             {
                 UseFormatParam = true,
                 PreferredFormat = ResourceFormat.Json
