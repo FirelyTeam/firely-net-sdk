@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.NoContent });
         }
         public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.NoContent });
         }
         public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
         {
