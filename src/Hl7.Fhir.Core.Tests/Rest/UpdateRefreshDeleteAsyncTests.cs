@@ -8,11 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestClass]
-    public class UpdateRefreshDeleteAsyncTests
+    public partial class FhirClientAsyncTests
     {
-        private readonly string _endpoint = "http://localhost:4080";
-
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()

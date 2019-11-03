@@ -8,40 +8,11 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestClass]
-    public class SearchAsyncTests
+    public partial class FhirClientAsyncTests
     {
-        private readonly string _endpoint = "http://localhost:4080/";
-
         //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
         private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
-
-        public SearchAsyncTests()
-        {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
-
-            var pat = new Patient()
-            {
-                Name = new List<HumanName>()
-                {
-                    new HumanName()
-                    {
-                        Given = new List<string>() {"test_given"},
-                        Family = "Donald",
-                    }
-                },
-                Id = "pat1"
-            };
-            // Create the patient
-            Console.WriteLine("Creating patient...");
-            Patient p = client.Update<Patient>(pat);
-            Assert.IsNotNull(p);
-        }
-
+        
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturned()

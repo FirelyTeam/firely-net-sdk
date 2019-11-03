@@ -9,11 +9,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Hl7.Fhir.Core.AsyncTests
 {
     [TestClass]
-    public class ReadAsyncTests
+    public partial class FhirClientAsyncTests
     {
         private string _endpoint = "http://localhost:4080/";
         
-        public ReadAsyncTests()
+        [ClassInitialize]
+        public void ClassInitialize(TestContext context)
         {
             var client = new FhirClient(_endpoint)
             {
@@ -31,11 +32,30 @@ namespace Hl7.Fhir.Core.AsyncTests
                         Family = "Donald",
                     }
                 },
-                Id = "pat1"
+                Id = "pat1",
+                Identifier = new List<Identifier>()
+                {
+                    new Identifier()
+                    {
+                        System = "urn:oid:1.2.36.146.595.217.0.1",
+                        Value = "12345"
+                    }
+                }
             };
+
+            var loc = new Location()
+            {
+                Address = new Address()
+                {
+                    City = "Den Burg"
+                },
+                Id = "1"
+            };
+
             // Create the patient
             Console.WriteLine("Creating patient...");
-            Patient p = client.Update<Patient>(pat);
+            Patient p = client.Update(pat);
+            Location l = client.Update(loc);
             Assert.IsNotNull(p);
         }
 
