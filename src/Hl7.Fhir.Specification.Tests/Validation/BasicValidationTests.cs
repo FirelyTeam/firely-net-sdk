@@ -438,6 +438,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("does not match regex", report.Issue[0].Details.Text);
         }
 
+
+        [Fact]
+        public void ValidateFhirDateFormat()
+        {
+            Patient p = new Patient
+            {
+                BirthDate = "1974-12-25+03:00"
+            };
+            
+            var report = _validator.Validate(p);
+            Assert.Equal(1, report.Errors);
+            Assert.Contains("Value '1974-12-25+03:00' does not match regex", report.Issue[0].Details.Text);
+            Assert.Equal(0, report.Warnings);
+        }
+
         [Fact]
         public void ValidateChoiceWithConstraints()
         {
