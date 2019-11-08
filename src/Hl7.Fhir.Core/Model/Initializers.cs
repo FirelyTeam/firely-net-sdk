@@ -29,6 +29,7 @@
 */
 
 using Hl7.Fhir.Introspection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,6 +49,64 @@ namespace Hl7.Fhir.Model
                 City, State, PostalCode, Country)
                 + (Use != null ? " Use=\"" + Use + "\"" : "")
                 + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
+        }
+
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("use"); writer.WriteValue(UseElement.ObjectValue);
+            writer.WritePropertyName("line");
+            writer.WriteStartArray();
+            foreach (var line in Line)
+            {
+                writer.WriteValue(line);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("city"); writer.WriteValue(CityElement.ObjectValue);
+            writer.WritePropertyName("state"); writer.WriteValue(StateElement.ObjectValue);
+            writer.WritePropertyName("postalCode"); writer.WriteValue(PostalCodeElement.ObjectValue);
+            writer.WritePropertyName("country"); writer.WriteValue(CountryElement.ObjectValue);
+            writer.WriteEndObject();
+        }
+    }
+
+    public partial class Extension
+    {
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("url"); writer.WriteValue(Url);
+            if (Value is CodeableConcept codeableConcept)
+            {
+                writer.WritePropertyName("valueCodeableConcept"); codeableConcept.Serialize(writer);
+            }
+            writer.WriteEndObject();
+        }
+    }
+
+    public partial class Element
+    {
+        public void SerializeExtra(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("extension");
+            writer.WriteStartArray();
+            foreach (var extension in Extension)
+            {
+                extension.Serialize(writer);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+    }
+
+    public partial class Meta
+    {
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("lastUpdated"); writer.WriteValue(LastUpdatedElement.ObjectValue);
+            writer.WriteEndObject();
         }
     }
 
@@ -92,6 +151,20 @@ namespace Hl7.Fhir.Model
             }
             this.Text = text;
         }
+
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("coding");
+            writer.WriteStartArray();
+            foreach (var coding in Coding)
+            {
+                coding.Serialize(writer);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("text"); writer.WriteValue(TextElement.ObjectValue);
+            writer.WriteEndObject();
+        }
     }
 
     public partial class Coding
@@ -111,6 +184,22 @@ namespace Hl7.Fhir.Model
             this.System = system;
             this.Code = code;
             this.Display = display;
+        }
+
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("system"); writer.WriteValue(SystemElement.ObjectValue);
+            writer.WritePropertyName("code"); writer.WriteValue(CodeElement.ObjectValue);
+            if (DisplayElement != null)
+            {
+                writer.WritePropertyName("display"); writer.WriteValue(DisplayElement.ObjectValue);
+            }
+            if (UserSelected != null)
+            {
+                writer.WritePropertyName("userSelected"); writer.WriteValue(UserSelectedElement.ObjectValue);
+            }
+            writer.WriteEndObject();
         }
     }
 

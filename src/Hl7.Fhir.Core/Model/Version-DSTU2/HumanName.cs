@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -109,6 +110,28 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
             return sb.ToString();
+        }
+
+        public void Serialize(JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("use"); writer.WriteValue(UseElement.ObjectValue);
+            writer.WritePropertyName("_use"); UseElement.SerializeExtra(writer);
+            writer.WritePropertyName("family");
+            writer.WriteStartArray();
+            foreach (var family in Family)
+            {
+                writer.WriteValue(family);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("given");
+            writer.WriteStartArray();
+            foreach (var given in Given)
+            {
+                writer.WriteValue(given);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
     }
 }
