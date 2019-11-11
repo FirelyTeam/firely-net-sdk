@@ -1037,6 +1037,122 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ValidateCircularReference()
+        {
+            var patient = new Patient
+            {
+                Id = "2",
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/2", Value = "2" } }
+            };
+
+            var refPatient = new Patient
+            {
+                Id = "3",
+                Identifier = new List<Identifier>() { new Identifier { System = "Patient/3", Value = "3" } },
+                Link = new List<Patient.LinkComponent>()
+                {
+                    new Patient.LinkComponent
+                    {
+                        Other = new ResourceReference
+                        {
+                            Reference = "Patient/2",
+                        },
+                        Type = Patient.LinkType.Seealso
+                    }
+                },
+                Contained = new List<Resource>()
+                {
+                    new Patient
+                    {
+                        Id = "pat1",
+                        Identifier = new List<Identifier>() { new Identifier { System = "pat1", Value = "pat1" } },
+                        Link = new List<Patient.LinkComponent>()
+                        {
+                            new Patient.LinkComponent
+                            {
+                                Other = new ResourceReference
+                                {
+                                    Reference = "#pat2",
+                                },
+                                Type = Patient.LinkType.Seealso
+                            }
+                        }
+                    },
+                    new Patient
+                    {
+                        Id = "pat2",
+                        Identifier = new List<Identifier>() { new Identifier { System = "pat2", Value = "pat2" } },
+                        Link = new List<Patient.LinkComponent>()
+                        {
+                            new Patient.LinkComponent
+                            {
+                                Other = new ResourceReference
+                                {
+                                    Reference = "#pat1",
+                                },
+                                Type = Patient.LinkType.Seealso
+                            }
+                        }
+                    }
+                }
+            };
+
+            patient.Link = new List<Patient.LinkComponent>()
+            {
+                new Patient.LinkComponent
+                {
+                    Other = new ResourceReference
+                    {
+                        Reference = "Patient/3",
+                    },
+                    Type = Patient.LinkType.Seealso
+                }
+            };
+
+            var bundle = new Bundle
+            {
+                TypeElement = new Code<Bundle.BundleType>(Bundle.BundleType.Collection),
+                Entry = new List<Bundle.EntryComponent>() { new Bundle.EntryComponent { Resource = patient } }
+            };
+
+            var source =
+                    new MultiResolver(
+                        new DirectorySource(@"TestData\validation"),
+                        new ZipSource("specification.zip"));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = false,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += onGetExampleResource;
+            var report = validator.Validate(patient);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            report = validator.Validate(bundle);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+            Assert.Equal(0, report.Errors);
+
+            void onGetExampleResource(object sender, OnResolveResourceReferenceEventArgs e)
+            {
+                if (e.Reference.Contains("3"))
+                    e.Result = refPatient.ToTypedElement();
+                else
+                    e.Result = patient.ToTypedElement();
+            };
+        }
+
         // Verify aggregated element constraints
         private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {

@@ -12,6 +12,8 @@ using Hl7.Fhir.Support;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -54,7 +56,7 @@ namespace Hl7.Fhir.Validation
                 return false;
         }
 
-        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
+        public override OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string, string>> validatedResources = null)
         {
             OperationOutcome outcome = new OperationOutcome();
 

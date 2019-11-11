@@ -13,6 +13,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
@@ -142,14 +143,14 @@ namespace Hl7.Fhir.Validation
         #endregion
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
-        internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
+        internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles, List<Tuple<string, string>> validatedResources = null)
         {
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
-                outcome.Add(Validate(instance, processor.Result));
+                outcome.Add(Validate(instance, processor.Result, validatedResources));
 
             return outcome;
 
@@ -157,29 +158,31 @@ namespace Hl7.Fhir.Validation
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
         }
 
-        internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
+        internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition, List<Tuple<string, string>> validatedResources = null)
         {
-            return Validate(instance, new[] { definition });
+            return Validate(instance, new[] { definition }, validatedResources);
         }
 
 
         // This is the one and only main internal entry point for all validations, which in its term
         // will call step 1 in the validator, the function validateElement
-        internal OperationOutcome Validate(ITypedElement elementNav, IEnumerable<ElementDefinitionNavigator> definitions)
+        internal OperationOutcome Validate(ITypedElement elementNav, IEnumerable<ElementDefinitionNavigator> definitions, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 
-            var instance = elementNav as ScopedNode ?? new ScopedNode(elementNav);
+            BaseScopedNode instance = elementNav as ScopedNodeWrapper ?? new ScopedNodeWrapper(elementNav as ScopedNode ?? new ScopedNode(elementNav));
+
+            validatedResources = validatedResources ?? new List<Tuple<string, string>>();
 
             try
             {
-                var allDefinitions = definitions.ToList();
+                List<ElementDefinitionNavigator> allDefinitions = new List<ElementDefinitionNavigator>(definitions);
 
                 if (allDefinitions.Count() == 1)
-                    outcome.Add(validateElement(allDefinitions.Single(), instance));
+                    outcome.Add(validateElement(allDefinitions.Single(), instance, validatedResources));
                 else
                 {
-                    var validators = allDefinitions.Select(nav => createValidator(nav));
+                    var validators = allDefinitions.Select(nav => createValidator(nav, instance, validatedResources));
                     outcome.Add(this.Combine(BatchValidationMode.All, instance, validators));
                 }
             }
@@ -189,24 +192,24 @@ namespace Hl7.Fhir.Validation
             }
 
             return outcome;
-
-            Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav) =>
-                () => validateElement(nav, instance);
-
         }
 
-        private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance)
+
+        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
+        {
+            return () => validateElement(nav, instance, validatedResources);
+        }
+        
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
-
+            
             // If navigator cannot be moved to content, there's really nothing to validate against.
             if (definition.AtRoot && !definition.MoveToFirstChild())
             {
                 outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                 return outcome;
             }
-
-            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.CanonicalPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // This does not work, since the children might still be empty, we need something better
             //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
@@ -243,13 +246,13 @@ namespace Hl7.Fhir.Validation
                     // TODO: Check whether this is even true when the <type> has a profile?
                     // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
                     // in which case there may be additional children (verified in the next step)
-                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren, validatedResources: validatedResources));
 
                     // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
                     // we need to validate based on the actual type of the instance
                     if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
                     {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
+                        outcome.Add(this.ValidateType(elementConstraints, instance, validatedResources));
                     }
                 }
 
@@ -258,8 +261,8 @@ namespace Hl7.Fhir.Validation
                     // No inline-children, so validation depends on the presence of a <type> or <contentReference>
                     if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                     {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
-                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        outcome.Add(this.ValidateType(elementConstraints, instance, validatedResources));
+                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance, validatedResources));
                     }
                     else
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
@@ -349,8 +352,8 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                    Binding b = binding.ToValidatable();
-                    outcome.Add(b.Validate(instance, vc));
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -360,7 +363,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNode instance)
+        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, BaseScopedNode instance, List<Tuple<string, string>> validatedResources = null)
         {
             var outcome = new OperationOutcome();
 
@@ -371,7 +374,7 @@ namespace Hl7.Fhir.Validation
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
                 if (referencedPositionNav.JumpToNameReference(definition.ContentReference))
-                    outcome.Include(Validate(instance, referencedPositionNav));
+                    outcome.Include(Validate(instance, referencedPositionNav, validatedResources));
                 else
                     Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.ContentReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
 
@@ -453,8 +456,8 @@ namespace Hl7.Fhir.Validation
 
         private string toStringRepresentation(ITypedElement vp)
         {
-            return vp == null || vp.Value == null ? 
-                null : 
+            return vp == null || vp.Value == null ?
+                null :
                 PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 

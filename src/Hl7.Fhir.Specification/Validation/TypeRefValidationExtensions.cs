@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Validation
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
                         {
-                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance));
+                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance, validatedResources));
                         }
                         else
                         {
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Validation
             else if (choices.Count() == 1)
             {
                 // Only one type present in list of typerefs, all of the typerefs are candidates
-                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance));
+                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance, validatedResources));
             }
 
             return outcome;
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
 
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, BaseScopedNode instance, List<Tuple<string, string>> validatedResources)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -88,28 +88,28 @@ namespace Hl7.Fhir.Validation
             //better separate the fetching of the instance from the validation, so we do not run the rest of the validation (multiple times!)
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr));
+            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr, validatedResources));
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, BaseScopedNode instance, ElementDefinition.TypeRefComponent tr, List<Tuple<string, string>> validatedResources)
         {
             return validate;
 
             OperationOutcome validate()
             {
                 // First, call Validate() for the current element (the reference itself) against the profile
-                var result = validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
+                var result = validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null, validatedResources);
 
                 // If this is a reference, also validate the reference against the targetProfile
                 if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
-                    result.Add( validator.ValidateResourceReference(instance, tr) );
+                    result.Add( validator.ValidateResourceReference(instance, tr, validatedResources) );
 
                 return result;
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, BaseScopedNode instance, ElementDefinition.TypeRefComponent typeRef, List<Tuple<string,string>> validatedResources)
         {
             var outcome = new OperationOutcome();
 
@@ -118,7 +118,6 @@ namespace Hl7.Fhir.Validation
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-            
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
@@ -139,6 +138,11 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
+                    if (validatedResources.Any(v => v.Item1 == reference && v.Item2 == typeRef.TargetProfile))
+                        return outcome;
+
+                    validatedResources.Add(new Tuple<string, string>(reference, typeRef.TargetProfile));
+
                     referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance.Location);
                 }
                 catch (Exception e)
@@ -156,16 +160,24 @@ namespace Hl7.Fhir.Validation
                 // References within the instance are dealt with within the same validator,
                 // references to external entities will operate within a new instance of a validator (and hence a new tracking context).
                 // In both cases, the outcome is included in the result.
-                OperationOutcome childResult;
-
+                OperationOutcome childResult = new OperationOutcome();
+                
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
+                    // If the reference it has already been validated, or it's in progress to be validated, then skip it
+                    // If this is the first encounter of the reference for this resource, then validate it and register it.
+                    var validatedProfiles = referencedResource is ScopedNodeWrapper sn ? sn.ValidatedProfiles : new List<ValidatedProfile>();
+                    if (!validatedProfiles.Any(p => p.Profile == typeRef.TargetProfile))
+                    {
+                        validatedProfiles.Add(new ValidatedProfile(typeRef.TargetProfile, ValidatedProfile.Status.Pending));
+                        childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
+                        validatedProfiles.Single(p => p.Profile == typeRef.TargetProfile).Success = childResult.Success ? ValidatedProfile.Status.Success : ValidatedProfile.Status.Fail;
+                    }
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
+                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null, validatedResources: validatedResources);
                 }
 
                 // Prefix each path with the referring resource's path to keep the locations
@@ -181,7 +193,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static ITypedElement resolveReference(this Validator validator, ScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static ITypedElement resolveReference(this Validator validator, BaseScopedNode instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 

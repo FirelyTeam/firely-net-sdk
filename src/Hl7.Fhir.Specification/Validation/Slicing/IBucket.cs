@@ -9,6 +9,7 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -35,6 +36,6 @@ namespace Hl7.Fhir.Validation
 
         IList<ITypedElement> Members { get; }
 
-        OperationOutcome Validate(Validator validator, ITypedElement errorLocation);
+        OperationOutcome Validate(Validator validator, ITypedElement errorLocation, List<Tuple<string, string>> validatedResources = null);
     }
 }
