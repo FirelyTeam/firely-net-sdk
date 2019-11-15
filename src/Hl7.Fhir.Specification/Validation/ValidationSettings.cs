@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public bool ResolveExternalReferences { get; set; } // = false;
 
-        [Obsolete("Typo. Please use the correct ResolveExternalReferences property")]
+        [Obsolete("Typo. Please use the correct ResolveExternalReferences property. Obsolete since 2019-11-13")]
         public bool ResolveExteralReferences { get { return ResolveExternalReferences; } set { ResolveExternalReferences = value; } }
 
         /// <summary>
