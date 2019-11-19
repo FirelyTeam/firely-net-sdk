@@ -93,6 +93,29 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
         }
 
+        [TestMethod]
+        public void GenerateSnapshotForExternalProfiles()
+        {
+            var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
+            Assert.IsNotNull(sd);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+
+            sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNotNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+        }
 
         [TestMethod]
         public void GenerateSingleSnapshot()
