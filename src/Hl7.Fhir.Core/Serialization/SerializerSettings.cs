@@ -44,6 +44,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
+            other.Version = Version;
             other.Pretty = Pretty;
         }
 
