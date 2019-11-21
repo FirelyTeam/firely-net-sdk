@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -69,11 +70,27 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNull(c.System);
         }
 
+        [TestMethod]
+        public void TestCodeAssignementPerformance()
+        {
+            var patient = new Patient();
+            patient.Gender = Hl7.Fhir.Model.AdministrativeGender.Female;
+            var watch = Stopwatch.StartNew();
+            const int count = 10_000;
+            for (var i = 0; i < count; i++)
+            {
+                patient.Gender = Hl7.Fhir.Model.AdministrativeGender.Female;
+                //patient.Active = false;
+            }
+            watch.Stop();
+            Debug.WriteLine("Set code X {0:N0}: {1:N1} msec", count, watch.ElapsedMilliseconds);
+        }
+
+
         [FhirEnumeration("TestEnum")]
         private enum TestEnum
         {
             IHaveNoSystem = 4
         }
-
     }
 }
