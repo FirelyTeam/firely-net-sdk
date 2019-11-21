@@ -212,6 +212,30 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<Hl7.Fhir.Model.Annotation> _Note;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ReactionComponent");
+                base.Serialize(serializer);
+                serializer.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Substance?.Serialize(serializer);
+                serializer.BeginList("manifestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true);
+                foreach(var item in Manifestation)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
+                serializer.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OnsetElement?.Serialize(serializer);
+                serializer.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeverityElement?.Serialize(serializer);
+                serializer.Element("exposureRoute", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExposureRoute?.Serialize(serializer);
+                serializer.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReactionComponent;
@@ -768,6 +792,45 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("AllergyIntolerance");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("clinicalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClinicalStatusElement?.Serialize(serializer);
+            serializer.Element("verificationStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); VerificationStatusElement?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(serializer);
+            serializer.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(CategoryElement);
+            serializer.End();
+            serializer.Element("criticality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CriticalityElement?.Serialize(serializer);
+            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
+            serializer.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Onset?.Serialize(serializer);
+            serializer.Element("assertedDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssertedDateElement?.Serialize(serializer);
+            serializer.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Recorder?.Serialize(serializer);
+            serializer.Element("asserter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Asserter?.Serialize(serializer);
+            serializer.Element("lastOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastOccurrenceElement?.Serialize(serializer);
+            serializer.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reaction)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

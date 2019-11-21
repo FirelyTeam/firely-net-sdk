@@ -187,6 +187,21 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Contributor");
+            base.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); NameElement?.Serialize(serializer);
+            serializer.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

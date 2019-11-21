@@ -110,6 +110,20 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<Hl7.Fhir.Model.DSTU2.ContactPoint> _Telecom;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ContactComponent");
+                base.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+                serializer.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Telecom)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ContactComponent;
@@ -432,6 +446,27 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<ParameterComponent> _Part;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ParameterComponent");
+                base.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); NameElement?.Serialize(serializer);
+                serializer.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); UseElement?.Serialize(serializer);
+                serializer.Element("min", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); MinElement?.Serialize(serializer);
+                serializer.Element("max", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); MaxElement?.Serialize(serializer);
+                serializer.Element("documentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DocumentationElement?.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TypeElement?.Serialize(serializer);
+                serializer.Element("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Profile?.Serialize(serializer);
+                serializer.Element("binding", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Binding?.Serialize(serializer);
+                serializer.BeginList("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Part)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ParameterComponent;
@@ -593,6 +628,15 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.Element _ValueSet;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("BindingComponent");
+                base.Serialize(serializer);
+                serializer.Element("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); StrengthElement?.Serialize(serializer);
+                serializer.Element("valueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, true); ValueSet?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1344,6 +1388,44 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("OperationDefinition");
+            base.Serialize(serializer);
+            serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UrlElement?.Serialize(serializer);
+            serializer.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VersionElement?.Serialize(serializer);
+            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); NameElement?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("kind", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); KindElement?.Serialize(serializer);
+            serializer.Element("experimental", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExperimentalElement?.Serialize(serializer);
+            serializer.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(serializer);
+            serializer.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DateElement?.Serialize(serializer);
+            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.Element("requirements", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RequirementsElement?.Serialize(serializer);
+            serializer.Element("idempotent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IdempotentElement?.Serialize(serializer);
+            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); CodeElement?.Serialize(serializer);
+            serializer.Element("notes", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NotesElement?.Serialize(serializer);
+            serializer.Element("base", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Base?.Serialize(serializer);
+            serializer.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); SystemElement?.Serialize(serializer);
+            serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            serializer.Serialize(TypeElement);
+            serializer.End();
+            serializer.Element("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); InstanceElement?.Serialize(serializer);
+            serializer.BeginList("parameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Parameter)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

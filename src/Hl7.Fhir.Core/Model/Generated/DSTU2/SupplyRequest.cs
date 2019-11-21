@@ -90,6 +90,15 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.DSTU2.Timing _Schedule;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("WhenComponent");
+                base.Serialize(serializer);
+                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
+                serializer.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Schedule?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as WhenComponent;
@@ -412,6 +421,28 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(When, otherT.When)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("SupplyRequest");
+            base.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(serializer);
+            serializer.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Source?.Serialize(serializer);
+            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("kind", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Kind?.Serialize(serializer);
+            serializer.Element("orderedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderedItem?.Serialize(serializer);
+            serializer.BeginList("supplier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Supplier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Reason?.Serialize(serializer);
+            serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); When?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

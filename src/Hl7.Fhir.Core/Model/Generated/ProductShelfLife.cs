@@ -163,6 +163,22 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("ProductShelfLife");
+            base.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Type?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Period?.Serialize(serializer);
+            serializer.BeginList("specialPrecautionsForStorage", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            foreach(var item in SpecialPrecautionsForStorage)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

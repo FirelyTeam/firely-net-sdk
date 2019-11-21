@@ -104,6 +104,17 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            base.Serialize(serializer);
+            serializer.BeginList("modifierExtension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ModifierExtension)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

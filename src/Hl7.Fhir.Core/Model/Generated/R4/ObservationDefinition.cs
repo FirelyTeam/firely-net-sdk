@@ -152,6 +152,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("QuantitativeDetailsComponent");
+                base.Serialize(serializer);
+                serializer.Element("customaryUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CustomaryUnit?.Serialize(serializer);
+                serializer.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Unit?.Serialize(serializer);
+                serializer.Element("conversionFactor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConversionFactorElement?.Serialize(serializer);
+                serializer.Element("decimalPrecision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DecimalPrecisionElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QuantitativeDetailsComponent;
@@ -400,6 +411,26 @@ namespace Hl7.Fhir.Model.R4
                         ConditionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Condition");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("QualifiedIntervalComponent");
+                base.Serialize(serializer);
+                serializer.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CategoryElement?.Serialize(serializer);
+                serializer.Element("range", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Range?.Serialize(serializer);
+                serializer.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Context?.Serialize(serializer);
+                serializer.BeginList("appliesTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in AppliesTo)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GenderElement?.Serialize(serializer);
+                serializer.Element("age", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Age?.Serialize(serializer);
+                serializer.Element("gestationalAge", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GestationalAge?.Serialize(serializer);
+                serializer.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConditionElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -821,6 +852,43 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(CriticalCodedValueSet, otherT.CriticalCodedValueSet)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("ObservationDefinition");
+            base.Serialize(serializer);
+            serializer.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Category)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("permittedDataType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            serializer.Serialize(PermittedDataTypeElement);
+            serializer.End();
+            serializer.Element("multipleResultsAllowed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MultipleResultsAllowedElement?.Serialize(serializer);
+            serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Method?.Serialize(serializer);
+            serializer.Element("preferredReportName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PreferredReportNameElement?.Serialize(serializer);
+            serializer.Element("quantitativeDetails", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); QuantitativeDetails?.Serialize(serializer);
+            serializer.BeginList("qualifiedInterval", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in QualifiedInterval)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("validCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidCodedValueSet?.Serialize(serializer);
+            serializer.Element("normalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NormalCodedValueSet?.Serialize(serializer);
+            serializer.Element("abnormalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AbnormalCodedValueSet?.Serialize(serializer);
+            serializer.Element("criticalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriticalCodedValueSet?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

@@ -164,6 +164,15 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Money");
+            base.Serialize(serializer);
+            serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(serializer);
+            serializer.Element("currency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CurrencyElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

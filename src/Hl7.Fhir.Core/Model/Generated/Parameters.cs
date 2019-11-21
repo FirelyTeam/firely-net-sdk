@@ -143,6 +143,22 @@ namespace Hl7.Fhir.Model
             
             private List<ParameterComponent> _Part;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ParameterComponent");
+                base.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); NameElement?.Serialize(serializer);
+                serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, true); Value?.Serialize(serializer);
+                serializer.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Resource?.Serialize(serializer);
+                serializer.BeginList("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+                foreach(var item in Part)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ParameterComponent;
@@ -313,6 +329,19 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Parameters");
+            base.Serialize(serializer);
+            serializer.BeginList("parameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+            foreach(var item in Parameter)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

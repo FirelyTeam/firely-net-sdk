@@ -328,6 +328,26 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Slot");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(serializer);
+            serializer.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Schedule?.Serialize(serializer);
+            serializer.Element("freeBusyType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); FreeBusyTypeElement?.Serialize(serializer);
+            serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StartElement?.Serialize(serializer);
+            serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); EndElement?.Serialize(serializer);
+            serializer.Element("overbooked", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OverbookedElement?.Serialize(serializer);
+            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

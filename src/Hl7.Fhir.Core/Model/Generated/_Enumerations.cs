@@ -6305,12 +6305,14 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/versions)
     /// </summary>
     [FhirEnumeration("Version")]
+    [Flags]
     public enum Version
     {
-        DSTU2,
-        R4,
-        STU3,
-        All,
+        DSTU2 = 1,
+        R4 = 2,
+        STU3 = 4,
+        All = 7,
+        None = 0,
     }
 
 }

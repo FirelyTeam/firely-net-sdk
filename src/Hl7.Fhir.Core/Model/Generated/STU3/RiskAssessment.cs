@@ -183,6 +183,19 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("PredictionComponent");
+                base.Serialize(serializer);
+                serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Outcome?.Serialize(serializer);
+                serializer.Element("probability", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Probability?.Serialize(serializer);
+                serializer.Element("qualitativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); QualitativeRisk?.Serialize(serializer);
+                serializer.Element("relativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RelativeRiskElement?.Serialize(serializer);
+                serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); When?.Serialize(serializer);
+                serializer.Element("rationale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RationaleElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PredictionComponent;
@@ -671,6 +684,39 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("RiskAssessment");
+            base.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BasedOn?.Serialize(serializer);
+            serializer.Element("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Parent?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(serializer);
+            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
+            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(serializer);
+            serializer.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Context?.Serialize(serializer);
+            serializer.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(serializer);
+            serializer.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Condition?.Serialize(serializer);
+            serializer.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(serializer);
+            serializer.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Reason?.Serialize(serializer);
+            serializer.BeginList("basis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Basis)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("prediction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Prediction)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("mitigation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MitigationElement?.Serialize(serializer);
+            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

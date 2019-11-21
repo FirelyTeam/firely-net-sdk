@@ -199,6 +199,18 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("MarketingStatus");
+            base.Serialize(serializer);
+            serializer.Element("country", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Country?.Serialize(serializer);
+            serializer.Element("jurisdiction", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Jurisdiction?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Status?.Serialize(serializer);
+            serializer.Element("dateRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); DateRange?.Serialize(serializer);
+            serializer.Element("restoreDate", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); RestoreDateElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

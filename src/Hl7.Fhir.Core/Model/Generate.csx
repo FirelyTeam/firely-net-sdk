@@ -246,6 +246,33 @@ using Hl7.Fhir.Utility;
         }
     }
 
+    public static IEnumerable<string> RenderSerialize(string type, bool abstractType, bool dataType, IEnumerable<PropertyDetails> properties)
+    {
+        yield return $"public override void Serialize(Serialization.StreamingSerializer serializer)";
+        yield return $"{{";
+        if (!abstractType)
+        {
+            if (dataType)
+            {
+                yield return $"    serializer.BeginDataType(\"{type}\");";
+            }
+            else
+            {
+                yield return $"    serializer.BeginResource(\"{type}\");";
+            }
+        }
+        yield return $"    base.Serialize(serializer);";
+        foreach(var property in properties)
+        {
+            foreach (var line in property.RenderSerialize()) yield return "    " + line;
+        }
+        if (!abstractType)
+        {
+            yield return $"    serializer.End();";
+        }
+        yield return $"}}";
+    }
+
     /// <summary>
     /// Renders the Children and NamedChildren methods, that return all the properties of a FHIR resource or data type class
     /// as enumeration of Base and ElementValue objects respectively 
@@ -526,6 +553,11 @@ public class ValueSet
     public string EnumName;
 
     /// <summary>
+    /// True if the C# enumeration should be marked as [Flags]
+    /// </summary>
+    public bool IsFlags;
+
+    /// <summary>
     /// URL uniquely identifying the FHIR value set - e.g. http://hl7.org/fhir/ValueSet/allergy-intolerance-status
     /// </summary>
     public string Url;
@@ -575,6 +607,10 @@ public class ValueSet
         }
         yield return $"/// </summary>";
         yield return $"[FhirEnumeration(\"{ EnumName }\")]";
+        if (IsFlags)
+        {
+            yield return $"[Flags]";
+        }
         yield return $"public enum { EnumName }";
         yield return $"{{";
         foreach (var value in Values)
@@ -877,6 +913,11 @@ public class ValueSetValue
     public string Code;
 
     /// <summary>
+    /// Optional numeric value of the generated enumeration
+    /// </summary>
+    public int? Value;
+
+    /// <summary>
     /// Value system URI - e.g. http://hl7.org/fhir/allergy-intolerance-status
     /// </summary>
     public string System;
@@ -908,7 +949,14 @@ public class ValueSetValue
         {
             yield return $"[EnumLiteral(\"{ Code }\", \"{ System }\"), Description({ StringUtils.Quote(Display) })]";
         }
-        yield return $"{ enumValue },";
+        if (Value != null)
+        {
+            yield return $"{ enumValue } = { Value.Value },";
+        }
+        else
+        {
+            yield return $"{ enumValue },";
+        }
     }
 }
 
@@ -1490,6 +1538,8 @@ public class ResourceDetails
 
             if (Properties.Any())
             {
+                yield return string.Empty;
+                foreach (var line in StringUtils.RenderSerialize(FhirName, AbstractType, isElement, Properties)) yield return "    " + line;
                 yield return string.Empty;
                 foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
             }
@@ -2293,6 +2343,9 @@ public class ComponentDetails
         foreach (var line in StringUtils.RenderProperties(30, Properties)) yield return "    " + line;
 
         yield return string.Empty;
+        foreach (var line in StringUtils.RenderSerialize(Name, false, true, Properties)) yield return "    " + line;
+
+        yield return string.Empty;
         foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, false, Properties)) yield return "    " + line;
 
         yield return string.Empty;
@@ -2758,13 +2811,48 @@ public class PropertyDetails
         }
     }
 
-    private static string VersionsString(HashSet<string> versions)
+    public IEnumerable<string> RenderSerialize()
     {
+        var elementVersions = VersionsString(Versions, "All", "|");
+        var summaryVersions = VersionsString(InSummaryVersions, "None", "|");
+        var isRequired = CardMin == "1" ?
+            "true" :
+            "false";
+        var elementDescription = $"\"{FhirName}\", {elementVersions}, {summaryVersions}, {isRequired}";
+        if (!IsMultiCard())
+        {
+            var isChoice = AllowedTypesByVersion.Any(pair => pair.Value.Count > 1) ?
+                "true" :
+                "false";
+            yield return $"serializer.Element({elementDescription}, {isChoice}); {Name}?.Serialize(serializer);";
+        }
+        else
+        {
+            yield return $"serializer.BeginList({elementDescription});";
+            if (!string.IsNullOrEmpty(NativeName))
+            {
+                yield return $"serializer.Serialize({Name});";
+            }
+            else
+            {
+                yield return $"foreach(var item in {Name})";
+                yield return $"{{";
+                yield return $"    item?.Serialize(serializer);";
+                yield return $"}}";
+            }
+            yield return $"serializer.End();";
+        }
+    }
+
+    private static string VersionsString(HashSet<string> versions, string ifEmpty = "", string separator = ",")
+    {
+        const string prefix = "Hl7.Fhir.Model.Version.";
         if (versions == null || versions.Count == 0)
         {
-            return string.Empty;
+            if (string.IsNullOrEmpty(ifEmpty)) return ifEmpty;
+            return prefix + ifEmpty;
         }
-        return string.Join(",", versions.Select(v => string.IsNullOrEmpty(v) ? "Hl7.Fhir.Model.Version.All" : "Hl7.Fhir.Model.Version." + v));
+        return string.Join(separator, versions.Select(v => prefix + (string.IsNullOrEmpty(v) ? "All" : v)));
     }
 
     /// <summary>
@@ -3564,11 +3652,15 @@ valueSetsByUrlByVersion[string.Empty].Add(
     new ValueSet
     {
         EnumName = "Version",
+        IsFlags = true,
         Url = "http://hl7.org/fhir/ValueSet/versions",
         Description = "Supported FHIR versions",
         Values = loadedVersions
-            .Select(loadedVersion => new ValueSetValue { Code = loadedVersion.Version })
-            .Concat(new[] { new ValueSetValue { Code = "All" } })
+            .Select( (loadedVersion, index) => new ValueSetValue { Code = loadedVersion.Version, Value = (1 << index) })
+            .Concat(new[]{
+                new ValueSetValue { Code = "All", Value = (1 << loadedVersions.Count) - 1 }, 
+                new ValueSetValue { Code = "None", Value = 0 }
+            })
             .ToList()
     }
 );

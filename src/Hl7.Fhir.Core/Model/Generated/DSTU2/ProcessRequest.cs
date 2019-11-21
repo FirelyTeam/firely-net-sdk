@@ -96,6 +96,14 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ItemsComponent");
+                base.Serialize(serializer);
+                serializer.Element("sequenceLinkId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SequenceLinkIdElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ItemsComponent;
@@ -596,6 +604,43 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("ProcessRequest");
+            base.Serialize(serializer);
+            serializer.Element("action", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ActionElement?.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("ruleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Ruleset?.Serialize(serializer);
+            serializer.Element("originalRuleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OriginalRuleset?.Serialize(serializer);
+            serializer.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreatedElement?.Serialize(serializer);
+            serializer.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Target?.Serialize(serializer);
+            serializer.Element("provider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Provider?.Serialize(serializer);
+            serializer.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organization?.Serialize(serializer);
+            serializer.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Request?.Serialize(serializer);
+            serializer.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Response?.Serialize(serializer);
+            serializer.Element("nullify", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NullifyElement?.Serialize(serializer);
+            serializer.Element("reference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceElement?.Serialize(serializer);
+            serializer.BeginList("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Item)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("include", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(IncludeElement);
+            serializer.End();
+            serializer.BeginList("exclude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(ExcludeElement);
+            serializer.End();
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

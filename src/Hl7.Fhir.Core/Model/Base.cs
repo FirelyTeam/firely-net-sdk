@@ -35,8 +35,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Hl7.Fhir.Introspection;
-using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Model
 {
@@ -49,6 +49,11 @@ namespace Hl7.Fhir.Model
     {
         public abstract bool IsExactly(IDeepComparable other);
         public abstract bool Matches(IDeepComparable pattern);
+
+        public virtual void Serialize(StreamingSerializer serializer)
+        {
+            // Empty
+        }
 
         /// <summary>
         /// 

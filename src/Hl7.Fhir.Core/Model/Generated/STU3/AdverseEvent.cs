@@ -201,6 +201,20 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.CodeableConcept _CausalityResult;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SuspectEntityComponent");
+                base.Serialize(serializer);
+                serializer.Element("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Instance?.Serialize(serializer);
+                serializer.Element("causality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityElement?.Serialize(serializer);
+                serializer.Element("causalityAssessment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityAssessment?.Serialize(serializer);
+                serializer.Element("causalityProductRelatedness", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityProductRelatednessElement?.Serialize(serializer);
+                serializer.Element("causalityMethod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityMethod?.Serialize(serializer);
+                serializer.Element("causalityAuthor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityAuthor?.Serialize(serializer);
+                serializer.Element("causalityResult", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CausalityResult?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SuspectEntityComponent;
@@ -681,6 +695,54 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("AdverseEvent");
+            base.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CategoryElement?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(serializer);
+            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
+            serializer.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Reaction)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Location?.Serialize(serializer);
+            serializer.Element("seriousness", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Seriousness?.Serialize(serializer);
+            serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Outcome?.Serialize(serializer);
+            serializer.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Recorder?.Serialize(serializer);
+            serializer.Element("eventParticipant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventParticipant?.Serialize(serializer);
+            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.BeginList("suspectEntity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SuspectEntity)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("subjectMedicalHistory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SubjectMedicalHistory)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("referenceDocument", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReferenceDocument)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Study)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

@@ -111,6 +111,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.ResourceReference _Item;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("RelatedEntryComponent");
+                base.Serialize(serializer);
+                serializer.Element("relationtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); RelationtypeElement?.Serialize(serializer);
+                serializer.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RelatedEntryComponent;
@@ -515,6 +524,56 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(RelatedEntry, otherT.RelatedEntry)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("CatalogEntry");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(serializer);
+            serializer.Element("orderable", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); OrderableElement?.Serialize(serializer);
+            serializer.Element("referencedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ReferencedItem?.Serialize(serializer);
+            serializer.BeginList("additionalIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalIdentifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Classification)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidityPeriod?.Serialize(serializer);
+            serializer.Element("validTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidToElement?.Serialize(serializer);
+            serializer.Element("lastUpdated", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastUpdatedElement?.Serialize(serializer);
+            serializer.BeginList("additionalCharacteristic", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalCharacteristic)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("additionalClassification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalClassification)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("relatedEntry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedEntry)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

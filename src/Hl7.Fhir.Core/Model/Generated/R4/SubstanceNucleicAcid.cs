@@ -233,6 +233,31 @@ namespace Hl7.Fhir.Model.R4
             
             private List<SugarComponent> _Sugar;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SubunitComponent");
+                base.Serialize(serializer);
+                serializer.Element("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubunitElement?.Serialize(serializer);
+                serializer.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(serializer);
+                serializer.Element("length", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LengthElement?.Serialize(serializer);
+                serializer.Element("sequenceAttachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceAttachment?.Serialize(serializer);
+                serializer.Element("fivePrime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FivePrime?.Serialize(serializer);
+                serializer.Element("threePrime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ThreePrime?.Serialize(serializer);
+                serializer.BeginList("linkage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Linkage)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("sugar", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Sugar)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SubunitComponent;
@@ -454,6 +479,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("LinkageComponent");
+                base.Serialize(serializer);
+                serializer.Element("connectivity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConnectivityElement?.Serialize(serializer);
+                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+                serializer.Element("residueSite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResidueSiteElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as LinkageComponent;
@@ -620,6 +656,16 @@ namespace Hl7.Fhir.Model.R4
                         ResidueSiteElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ResidueSite");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SugarComponent");
+                base.Serialize(serializer);
+                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+                serializer.Element("residueSite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResidueSiteElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -859,6 +905,23 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Subunit, otherT.Subunit)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("SubstanceNucleicAcid");
+            base.Serialize(serializer);
+            serializer.Element("sequenceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceType?.Serialize(serializer);
+            serializer.Element("numberOfSubunits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfSubunitsElement?.Serialize(serializer);
+            serializer.Element("areaOfHybridisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AreaOfHybridisationElement?.Serialize(serializer);
+            serializer.Element("oligoNucleotideType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OligoNucleotideType?.Serialize(serializer);
+            serializer.BeginList("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subunit)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

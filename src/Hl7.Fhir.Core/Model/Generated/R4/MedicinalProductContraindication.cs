@@ -93,6 +93,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Medication;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("OtherTherapyComponent");
+                base.Serialize(serializer);
+                serializer.Element("therapyRelationshipType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TherapyRelationshipType?.Serialize(serializer);
+                serializer.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OtherTherapyComponent;
@@ -327,6 +336,45 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("MedicinalProductContraindication");
+            base.Serialize(serializer);
+            serializer.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subject)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("disease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Disease?.Serialize(serializer);
+            serializer.Element("diseaseStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiseaseStatus?.Serialize(serializer);
+            serializer.BeginList("comorbidity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Comorbidity)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("therapeuticIndication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in TherapeuticIndication)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("otherTherapy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in OtherTherapy)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Population)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

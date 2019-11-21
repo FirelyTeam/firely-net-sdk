@@ -204,6 +204,15 @@ namespace Hl7.Fhir.Model
                 if (Div != null) yield return new ElementValue("div", Div);                
             }
         }
+
+        public override void Serialize(StreamingSerializer serializer)
+        {
+            serializer.BeginDataType(TypeName);
+            base.Serialize(serializer);
+            serializer.Element("status", isRequired: true); StatusElement?.Serialize(serializer);
+            serializer.XhtmlValue("div", Div, isRequired: true);
+            serializer.End();
+        }
     }
     
 }

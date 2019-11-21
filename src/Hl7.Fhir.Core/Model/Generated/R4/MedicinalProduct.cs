@@ -126,6 +126,26 @@ namespace Hl7.Fhir.Model.R4
             
             private List<CountryLanguageComponent> _CountryLanguage;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("NameComponent");
+                base.Serialize(serializer);
+                serializer.Element("productName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ProductNameElement?.Serialize(serializer);
+                serializer.BeginList("namePart", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in NamePart)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("countryLanguage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in CountryLanguage)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NameComponent;
@@ -258,6 +278,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Coding _Type;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("NamePartComponent");
+                base.Serialize(serializer);
+                serializer.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PartElement?.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NamePartComponent;
@@ -379,6 +408,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _Language;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("CountryLanguageComponent");
+                base.Serialize(serializer);
+                serializer.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Country?.Serialize(serializer);
+                serializer.Element("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Jurisdiction?.Serialize(serializer);
+                serializer.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Language?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -568,6 +607,24 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.ResourceReference _Regulator;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ManufacturingBusinessOperationComponent");
+                base.Serialize(serializer);
+                serializer.Element("operationType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationType?.Serialize(serializer);
+                serializer.Element("authorisationReferenceNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorisationReferenceNumber?.Serialize(serializer);
+                serializer.Element("effectiveDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EffectiveDateElement?.Serialize(serializer);
+                serializer.Element("confidentialityIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConfidentialityIndicator?.Serialize(serializer);
+                serializer.BeginList("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Manufacturer)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -785,6 +842,25 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _Species;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SpecialDesignationComponent");
+                base.Serialize(serializer);
+                serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Identifier)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+                serializer.Element("intendedUse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntendedUse?.Serialize(serializer);
+                serializer.Element("indication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Indication?.Serialize(serializer);
+                serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Status?.Serialize(serializer);
+                serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
+                serializer.Element("species", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Species?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1298,6 +1374,100 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(SpecialDesignation, otherT.SpecialDesignation)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("MedicinalProduct");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.Element("domain", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Domain?.Serialize(serializer);
+            serializer.Element("combinedPharmaceuticalDoseForm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CombinedPharmaceuticalDoseForm?.Serialize(serializer);
+            serializer.Element("legalStatusOfSupply", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalStatusOfSupply?.Serialize(serializer);
+            serializer.Element("additionalMonitoringIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AdditionalMonitoringIndicator?.Serialize(serializer);
+            serializer.BeginList("specialMeasures", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(SpecialMeasuresElement);
+            serializer.End();
+            serializer.Element("paediatricUseIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaediatricUseIndicator?.Serialize(serializer);
+            serializer.BeginList("productClassification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ProductClassification)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("marketingStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MarketingStatus)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("pharmaceuticalProduct", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PharmaceuticalProduct)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("packagedMedicinalProduct", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PackagedMedicinalProduct)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("attachedDocument", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in AttachedDocument)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("masterFile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MasterFile)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("clinicalTrial", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ClinicalTrial)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Name)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("crossReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CrossReference)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("manufacturingBusinessOperation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ManufacturingBusinessOperation)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("specialDesignation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SpecialDesignation)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

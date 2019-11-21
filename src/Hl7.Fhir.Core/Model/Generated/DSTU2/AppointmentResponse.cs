@@ -327,6 +327,31 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("AppointmentResponse");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("appointment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Appointment?.Serialize(serializer);
+            serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StartElement?.Serialize(serializer);
+            serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EndElement?.Serialize(serializer);
+            serializer.BeginList("participantType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ParticipantType)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Actor?.Serialize(serializer);
+            serializer.Element("participantStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ParticipantStatusElement?.Serialize(serializer);
+            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>Creates a new <see cref="SerializerSettings"/> instance with default property values.</summary>
         public SerializerSettings(Model.Version version)
         {
-            if (version == Model.Version.All) throw Error.Argument(nameof(version), "Must be a specific version");
+            if (version == Model.Version.All || version == Model.Version.None) throw Error.Argument(nameof(version), "Must be a specific version");
 
             Version = version;
         }

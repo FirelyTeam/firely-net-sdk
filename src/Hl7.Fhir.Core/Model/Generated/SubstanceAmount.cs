@@ -88,6 +88,15 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Quantity _HighLimit;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ReferenceRangeComponent");
+                base.Serialize(serializer);
+                serializer.Element("lowLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); LowLimit?.Serialize(serializer);
+                serializer.Element("highLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); HighLimit?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReferenceRangeComponent;
@@ -284,6 +293,17 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("SubstanceAmount");
+            base.Serialize(serializer);
+            serializer.Element("amount", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Amount?.Serialize(serializer);
+            serializer.Element("amountType", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountType?.Serialize(serializer);
+            serializer.Element("amountText", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountTextElement?.Serialize(serializer);
+            serializer.Element("referenceRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceRange?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

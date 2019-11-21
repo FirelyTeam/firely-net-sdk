@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification
 
         public PocoStructureDefinitionSummaryProvider(Model.Version version)
         {
-            if (version == Model.Version.All) throw Error.Argument(nameof(version), "Must be a specific version");
+            if (version == Model.Version.All || version == Model.Version.None) throw Error.Argument(nameof(version), "Must be a specific version");
 
             Version = version;
         }

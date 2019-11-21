@@ -200,6 +200,17 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("TriggerDefinition");
+            base.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+            serializer.Element("eventName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventNameElement?.Serialize(serializer);
+            serializer.Element("eventTiming", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); EventTiming?.Serialize(serializer);
+            serializer.Element("eventData", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventData?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

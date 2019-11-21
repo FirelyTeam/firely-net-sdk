@@ -272,6 +272,21 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ReferenceSeqComponent");
+                base.Serialize(serializer);
+                serializer.Element("chromosome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Chromosome?.Serialize(serializer);
+                serializer.Element("genomeBuild", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenomeBuildElement?.Serialize(serializer);
+                serializer.Element("referenceSeqId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqId?.Serialize(serializer);
+                serializer.Element("referenceSeqPointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqPointer?.Serialize(serializer);
+                serializer.Element("referenceSeqString", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqStringElement?.Serialize(serializer);
+                serializer.Element("strand", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StrandElement?.Serialize(serializer);
+                serializer.Element("windowStart", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WindowStartElement?.Serialize(serializer);
+                serializer.Element("windowEnd", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WindowEndElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReferenceSeqComponent;
@@ -559,6 +574,19 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.ResourceReference _VariantPointer;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("VariantComponent");
+                base.Serialize(serializer);
+                serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(serializer);
+                serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(serializer);
+                serializer.Element("observedAllele", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ObservedAlleleElement?.Serialize(serializer);
+                serializer.Element("referenceAllele", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceAlleleElement?.Serialize(serializer);
+                serializer.Element("cigar", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CigarElement?.Serialize(serializer);
+                serializer.Element("variantPointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VariantPointer?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1064,6 +1092,27 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("QualityComponent");
+                base.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+                serializer.Element("standardSequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StandardSequence?.Serialize(serializer);
+                serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(serializer);
+                serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(serializer);
+                serializer.Element("score", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Score?.Serialize(serializer);
+                serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(serializer);
+                serializer.Element("truthTP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TruthTPElement?.Serialize(serializer);
+                serializer.Element("queryTP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); QueryTPElement?.Serialize(serializer);
+                serializer.Element("truthFN", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TruthFNElement?.Serialize(serializer);
+                serializer.Element("queryFP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); QueryFPElement?.Serialize(serializer);
+                serializer.Element("gtFP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GtFPElement?.Serialize(serializer);
+                serializer.Element("precision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PrecisionElement?.Serialize(serializer);
+                serializer.Element("recall", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecallElement?.Serialize(serializer);
+                serializer.Element("fScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FScoreElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QualityComponent;
@@ -1399,6 +1448,19 @@ namespace Hl7.Fhir.Model.STU3
                         ReadsetIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ReadsetId");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("RepositoryComponent");
+                base.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
+                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+                serializer.Element("datasetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DatasetIdElement?.Serialize(serializer);
+                serializer.Element("variantsetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VariantsetIdElement?.Serialize(serializer);
+                serializer.Element("readsetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReadsetIdElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1913,6 +1975,53 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Pointer, otherT.Pointer)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Sequence");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(serializer);
+            serializer.Element("coordinateSystem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CoordinateSystemElement?.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(serializer);
+            serializer.Element("specimen", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Specimen?.Serialize(serializer);
+            serializer.Element("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Device?.Serialize(serializer);
+            serializer.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(serializer);
+            serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Quantity?.Serialize(serializer);
+            serializer.Element("referenceSeq", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeq?.Serialize(serializer);
+            serializer.BeginList("variant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Variant)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("observedSeq", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ObservedSeqElement?.Serialize(serializer);
+            serializer.BeginList("quality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Quality)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("readCoverage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReadCoverageElement?.Serialize(serializer);
+            serializer.BeginList("repository", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Repository)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("pointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Pointer)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

@@ -180,6 +180,35 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.CodeableConcept> _PushTypeAvailable;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("PrimarySourceComponent");
+                base.Serialize(serializer);
+                serializer.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Who?.Serialize(serializer);
+                serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Type)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("communicationMethod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in CommunicationMethod)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("validationStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidationStatus?.Serialize(serializer);
+                serializer.Element("validationDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidationDateElement?.Serialize(serializer);
+                serializer.Element("canPushUpdates", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CanPushUpdates?.Serialize(serializer);
+                serializer.BeginList("pushTypeAvailable", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in PushTypeAvailable)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PrimarySourceComponent;
@@ -450,6 +479,21 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.R4.Signature _SourceSignature;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("AttestationComponent");
+                base.Serialize(serializer);
+                serializer.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Who?.Serialize(serializer);
+                serializer.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnBehalfOf?.Serialize(serializer);
+                serializer.Element("communicationMethod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommunicationMethod?.Serialize(serializer);
+                serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
+                serializer.Element("sourceIdentityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SourceIdentityCertificateElement?.Serialize(serializer);
+                serializer.Element("proxyIdentityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProxyIdentityCertificateElement?.Serialize(serializer);
+                serializer.Element("proxySignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProxySignature?.Serialize(serializer);
+                serializer.Element("sourceSignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SourceSignature?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AttestationComponent;
@@ -618,6 +662,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.R4.Signature _AttestationSignature;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ValidatorComponent");
+                base.Serialize(serializer);
+                serializer.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Organization?.Serialize(serializer);
+                serializer.Element("identityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IdentityCertificateElement?.Serialize(serializer);
+                serializer.Element("attestationSignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AttestationSignature?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1065,6 +1119,49 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Validator, otherT.Validator)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("VerificationResult");
+            base.Serialize(serializer);
+            serializer.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Target)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("targetLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(TargetLocationElement);
+            serializer.End();
+            serializer.Element("need", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Need?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("statusDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusDateElement?.Serialize(serializer);
+            serializer.Element("validationType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidationType?.Serialize(serializer);
+            serializer.BeginList("validationProcess", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ValidationProcess)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("frequency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Frequency?.Serialize(serializer);
+            serializer.Element("lastPerformed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastPerformedElement?.Serialize(serializer);
+            serializer.Element("nextScheduled", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NextScheduledElement?.Serialize(serializer);
+            serializer.Element("failureAction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FailureAction?.Serialize(serializer);
+            serializer.BeginList("primarySource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in PrimarySource)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("attestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Attestation?.Serialize(serializer);
+            serializer.BeginList("validator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Validator)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

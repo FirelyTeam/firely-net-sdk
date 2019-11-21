@@ -123,6 +123,16 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ProductionSpecificationComponent");
+                base.Serialize(serializer);
+                serializer.Element("specType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SpecType?.Serialize(serializer);
+                serializer.Element("componentId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ComponentId?.Serialize(serializer);
+                serializer.Element("productionSpec", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ProductionSpecElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProductionSpecificationComponent;
@@ -454,6 +464,33 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(LanguageCode, otherT.LanguageCode)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("DeviceComponent");
+            base.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Identifier?.Serialize(serializer);
+            serializer.Element("lastSystemChange", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); LastSystemChangeElement?.Serialize(serializer);
+            serializer.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Source?.Serialize(serializer);
+            serializer.Element("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Parent?.Serialize(serializer);
+            serializer.BeginList("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in OperationalStatus)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("parameterGroup", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ParameterGroup?.Serialize(serializer);
+            serializer.Element("measurementPrinciple", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPrincipleElement?.Serialize(serializer);
+            serializer.BeginList("productionSpecification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ProductionSpecification)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("languageCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageCode?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

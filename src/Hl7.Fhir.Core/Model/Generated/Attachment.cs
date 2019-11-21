@@ -410,6 +410,21 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Attachment");
+            base.Serialize(serializer);
+            serializer.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ContentTypeElement?.Serialize(serializer);
+            serializer.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageElement?.Serialize(serializer);
+            serializer.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.DSTU2, false, false); DataElement?.Serialize(serializer);
+            serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
+            serializer.Element("size", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SizeElement?.Serialize(serializer);
+            serializer.Element("hash", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HashElement?.Serialize(serializer);
+            serializer.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(serializer);
+            serializer.Element("creation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreationElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

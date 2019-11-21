@@ -78,6 +78,14 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Item;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("InteractantComponent");
+                base.Serialize(serializer);
+                serializer.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Item?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as InteractantComponent;
@@ -322,6 +330,30 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Management, otherT.Management)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("MedicinalProductInteraction");
+            base.Serialize(serializer);
+            serializer.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subject)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.BeginList("interactant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Interactant)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.Element("effect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Effect?.Serialize(serializer);
+            serializer.Element("incidence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Incidence?.Serialize(serializer);
+            serializer.Element("management", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Management?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

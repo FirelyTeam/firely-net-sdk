@@ -431,6 +431,37 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Coverage");
+            base.Serialize(serializer);
+            serializer.Element("issuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Issuer?.Serialize(serializer);
+            serializer.Element("bin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Bin?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.Element("subscriberId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubscriberId?.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupElement?.Serialize(serializer);
+            serializer.Element("plan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanElement?.Serialize(serializer);
+            serializer.Element("subPlan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanElement?.Serialize(serializer);
+            serializer.Element("dependent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DependentElement?.Serialize(serializer);
+            serializer.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(serializer);
+            serializer.Element("subscriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Subscriber?.Serialize(serializer);
+            serializer.Element("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Network?.Serialize(serializer);
+            serializer.BeginList("contract", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contract)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

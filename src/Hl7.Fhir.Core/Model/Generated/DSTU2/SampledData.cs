@@ -329,6 +329,20 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("SampledData");
+            base.Serialize(serializer);
+            serializer.Element("origin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Origin?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PeriodElement?.Serialize(serializer);
+            serializer.Element("factor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FactorElement?.Serialize(serializer);
+            serializer.Element("lowerLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LowerLimitElement?.Serialize(serializer);
+            serializer.Element("upperLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UpperLimitElement?.Serialize(serializer);
+            serializer.Element("dimensions", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DimensionsElement?.Serialize(serializer);
+            serializer.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DataElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -130,6 +130,15 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("LinkComponent");
+                base.Serialize(serializer);
+                serializer.Element("relation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); RelationElement?.Serialize(serializer);
+                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as LinkComponent;
@@ -325,6 +334,24 @@ namespace Hl7.Fhir.Model.STU3
             
             private ResponseComponent _Response;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("EntryComponent");
+                base.Serialize(serializer);
+                serializer.BeginList("link", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Link)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("fullUrl", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FullUrlElement?.Serialize(serializer);
+                serializer.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Resource?.Serialize(serializer);
+                serializer.Element("search", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Search?.Serialize(serializer);
+                serializer.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Request?.Serialize(serializer);
+                serializer.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Response?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as EntryComponent;
@@ -487,6 +514,15 @@ namespace Hl7.Fhir.Model.STU3
                         ScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Score");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SearchComponent");
+                base.Serialize(serializer);
+                serializer.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(serializer);
+                serializer.Element("score", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ScoreElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -767,6 +803,19 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("RequestComponent");
+                base.Serialize(serializer);
+                serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MethodElement?.Serialize(serializer);
+                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(serializer);
+                serializer.Element("ifNoneMatch", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfNoneMatchElement?.Serialize(serializer);
+                serializer.Element("ifModifiedSince", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfModifiedSinceElement?.Serialize(serializer);
+                serializer.Element("ifMatch", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfMatchElement?.Serialize(serializer);
+                serializer.Element("ifNoneExist", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfNoneExistElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RequestComponent;
@@ -1012,6 +1061,18 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.Resource _Outcome;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ResponseComponent");
+                base.Serialize(serializer);
+                serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
+                serializer.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LocationElement?.Serialize(serializer);
+                serializer.Element("etag", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EtagElement?.Serialize(serializer);
+                serializer.Element("lastModified", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastModifiedElement?.Serialize(serializer);
+                serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Outcome?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1362,6 +1423,29 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Bundle");
+            base.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+            serializer.Element("total", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TotalElement?.Serialize(serializer);
+            serializer.BeginList("link", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Link)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("entry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Entry)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("signature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Signature?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

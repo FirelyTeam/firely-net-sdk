@@ -18,7 +18,7 @@
         <meta>
           <lastUpdated value="2019-09-06T14:15:23.173+00:00" />
         </meta>
-        <identifier>
+        <identifier id="identifier1">
           <use value="usual" />
           <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MRN/PACode" />
           <value value="123456781" />
@@ -36,7 +36,7 @@
           <value value="lastMCID" />
         </identifier>
         <name>
-          <use value="official">
+          <use value="official" id="name-use1">
             <extension url="http://careevolution.com/fhirextensions#term">
               <valueCodeableConcept>
                 <coding>
@@ -49,8 +49,18 @@
               </valueCodeableConcept>
             </extension>
           </use>
-          <family value="Demoski" />
-          <given value="Fran" />
+          <family value="Demoski" id="family1" />
+          <given value="Fran">
+            <extension url="http://careevolution.com/fhirextensions#expanded">
+              <valueString value="Frances"/>
+            </extension>
+          </given>
+          <given value="H"/>
+          <given>
+            <extension url="http://careevolution.com/fhirextensions#expanded">
+              <valueString value="Henrietta"/>
+            </extension>
+          </given>
         </name>
         <gender value="female">
           <extension url="http://careevolution.com/fhirextensions#term">

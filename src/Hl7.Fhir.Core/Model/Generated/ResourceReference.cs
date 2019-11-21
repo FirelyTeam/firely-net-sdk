@@ -239,6 +239,17 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Reference");
+            base.Serialize(serializer);
+            serializer.Element("reference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceElement?.Serialize(serializer);
+            serializer.Element("display", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayElement?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); TypeElement?.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Identifier?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

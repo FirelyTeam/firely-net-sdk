@@ -182,6 +182,28 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("MedicinalProductUndesirableEffect");
+            base.Serialize(serializer);
+            serializer.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subject)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("symptomConditionEffect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SymptomConditionEffect?.Serialize(serializer);
+            serializer.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(serializer);
+            serializer.Element("frequencyOfOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyOfOccurrence?.Serialize(serializer);
+            serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Population)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

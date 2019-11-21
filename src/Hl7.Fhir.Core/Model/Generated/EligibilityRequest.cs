@@ -467,6 +467,36 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("EligibilityRequest");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("ruleset", Hl7.Fhir.Model.Version.DSTU2, Hl7.Fhir.Model.Version.DSTU2, false, false); Ruleset?.Serialize(serializer);
+            serializer.Element("originalRuleset", Hl7.Fhir.Model.Version.DSTU2, Hl7.Fhir.Model.Version.DSTU2, false, false); OriginalRuleset?.Serialize(serializer);
+            serializer.Element("created", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2, false, false); CreatedElement?.Serialize(serializer);
+            serializer.Element("target", Hl7.Fhir.Model.Version.DSTU2, Hl7.Fhir.Model.Version.DSTU2, false, false); Target?.Serialize(serializer);
+            serializer.Element("provider", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2, false, false); Provider?.Serialize(serializer);
+            serializer.Element("organization", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2, false, false); Organization?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.STU3, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("priority", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Priority?.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Patient?.Serialize(serializer);
+            serializer.Element("serviced", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, true); Serviced?.Serialize(serializer);
+            serializer.Element("enterer", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Enterer?.Serialize(serializer);
+            serializer.Element("insurer", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Insurer?.Serialize(serializer);
+            serializer.Element("facility", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Facility?.Serialize(serializer);
+            serializer.Element("coverage", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Coverage?.Serialize(serializer);
+            serializer.Element("businessArrangement", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); BusinessArrangementElement?.Serialize(serializer);
+            serializer.Element("benefitCategory", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); BenefitCategory?.Serialize(serializer);
+            serializer.Element("benefitSubCategory", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); BenefitSubCategory?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

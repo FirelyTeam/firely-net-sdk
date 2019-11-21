@@ -274,6 +274,41 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("BodySite");
+            base.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, true, false); Patient?.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("code", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false, false); Code?.Serialize(serializer);
+            serializer.BeginList("modifier", Hl7.Fhir.Model.Version.DSTU2, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Modifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("description", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.BeginList("image", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Image)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("active", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.STU3, false, false); ActiveElement?.Serialize(serializer);
+            serializer.BeginList("qualifier", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Qualifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -174,6 +174,22 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.Coding> _Code;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("CodeFilterComponent");
+                base.Serialize(serializer);
+                serializer.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PathElement?.Serialize(serializer);
+                serializer.Element("searchParam", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SearchParamElement?.Serialize(serializer);
+                serializer.Element("valueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueSetElement?.Serialize(serializer);
+                serializer.BeginList("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Code)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CodeFilterComponent;
@@ -343,6 +359,16 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Value;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DateFilterComponent");
+                base.Serialize(serializer);
+                serializer.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PathElement?.Serialize(serializer);
+                serializer.Element("searchParam", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SearchParamElement?.Serialize(serializer);
+                serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Value?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DateFilterComponent;
@@ -492,6 +518,15 @@ namespace Hl7.Fhir.Model.R4
                         DirectionElement = new Code<Hl7.Fhir.Model.R4.SortDirection>(value);
                     OnPropertyChanged("Direction");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SortComponent");
+                base.Serialize(serializer);
+                serializer.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PathElement?.Serialize(serializer);
+                serializer.Element("direction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DirectionElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -849,6 +884,40 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Sort, otherT.Sort)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("DataRequirement");
+            base.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
+            serializer.BeginList("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(ProfileElement);
+            serializer.End();
+            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Subject?.Serialize(serializer);
+            serializer.BeginList("mustSupport", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(MustSupportElement);
+            serializer.End();
+            serializer.BeginList("codeFilter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CodeFilter)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("dateFilter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in DateFilter)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("limit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LimitElement?.Serialize(serializer);
+            serializer.BeginList("sort", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Sort)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

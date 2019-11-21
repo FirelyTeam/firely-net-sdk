@@ -109,6 +109,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _MaterialType;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("FractionDescriptionComponent");
+                base.Serialize(serializer);
+                serializer.Element("fraction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FractionElement?.Serialize(serializer);
+                serializer.Element("materialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaterialType?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as FractionDescriptionComponent;
@@ -319,6 +328,26 @@ namespace Hl7.Fhir.Model.R4
             
             private OrganismGeneralComponent _OrganismGeneral;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("OrganismComponent");
+                base.Serialize(serializer);
+                serializer.Element("family", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Family?.Serialize(serializer);
+                serializer.Element("genus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Genus?.Serialize(serializer);
+                serializer.Element("species", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Species?.Serialize(serializer);
+                serializer.Element("intraspecificType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificType?.Serialize(serializer);
+                serializer.Element("intraspecificDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificDescriptionElement?.Serialize(serializer);
+                serializer.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Author)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("hybrid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Hybrid?.Serialize(serializer);
+                serializer.Element("organismGeneral", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismGeneral?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OrganismComponent;
@@ -472,6 +501,15 @@ namespace Hl7.Fhir.Model.R4
                         AuthorDescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AuthorDescription");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("AuthorComponent");
+                base.Serialize(serializer);
+                serializer.Element("authorType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorType?.Serialize(serializer);
+                serializer.Element("authorDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorDescriptionElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -698,6 +736,18 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _HybridType;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("HybridComponent");
+                base.Serialize(serializer);
+                serializer.Element("maternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismIdElement?.Serialize(serializer);
+                serializer.Element("maternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismNameElement?.Serialize(serializer);
+                serializer.Element("paternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismIdElement?.Serialize(serializer);
+                serializer.Element("paternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismNameElement?.Serialize(serializer);
+                serializer.Element("hybridType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HybridType?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as HybridComponent;
@@ -847,6 +897,17 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _Order;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("OrganismGeneralComponent");
+                base.Serialize(serializer);
+                serializer.Element("kingdom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Kingdom?.Serialize(serializer);
+                serializer.Element("phylum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Phylum?.Serialize(serializer);
+                serializer.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(serializer);
+                serializer.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Order?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OrganismGeneralComponent;
@@ -962,6 +1023,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _PartLocation;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("PartDescriptionComponent");
+                base.Serialize(serializer);
+                serializer.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Part?.Serialize(serializer);
+                serializer.Element("partLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PartLocation?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1355,6 +1425,50 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(PartDescription, otherT.PartDescription)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("SubstanceSourceMaterial");
+            base.Serialize(serializer);
+            serializer.Element("sourceMaterialClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialClass?.Serialize(serializer);
+            serializer.Element("sourceMaterialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialType?.Serialize(serializer);
+            serializer.Element("sourceMaterialState", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialState?.Serialize(serializer);
+            serializer.Element("organismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismId?.Serialize(serializer);
+            serializer.Element("organismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismNameElement?.Serialize(serializer);
+            serializer.BeginList("parentSubstanceId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ParentSubstanceId)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("parentSubstanceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(ParentSubstanceNameElement);
+            serializer.End();
+            serializer.BeginList("countryOfOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CountryOfOrigin)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("geographicalLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(GeographicalLocationElement);
+            serializer.End();
+            serializer.Element("developmentStage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DevelopmentStage?.Serialize(serializer);
+            serializer.BeginList("fractionDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in FractionDescription)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(serializer);
+            serializer.BeginList("partDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PartDescription)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

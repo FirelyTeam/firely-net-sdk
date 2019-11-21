@@ -160,6 +160,16 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("PositionComponent");
+                base.Serialize(serializer);
+                serializer.Element("longitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LongitudeElement?.Serialize(serializer);
+                serializer.Element("latitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LatitudeElement?.Serialize(serializer);
+                serializer.Element("altitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AltitudeElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PositionComponent;
@@ -560,6 +570,35 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Location");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Telecom)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("address", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Address?.Serialize(serializer);
+            serializer.Element("physicalType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PhysicalType?.Serialize(serializer);
+            serializer.Element("position", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Position?.Serialize(serializer);
+            serializer.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(serializer);
+            serializer.Element("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PartOf?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

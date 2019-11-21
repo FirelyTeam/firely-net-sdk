@@ -91,6 +91,20 @@ namespace Hl7.Fhir.Model.R4
             
             private List<StartingMaterialComponent> _StartingMaterial;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("MonomerSetComponent");
+                base.Serialize(serializer);
+                serializer.Element("ratioType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RatioType?.Serialize(serializer);
+                serializer.BeginList("startingMaterial", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in StartingMaterial)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MonomerSetComponent;
@@ -243,6 +257,17 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.SubstanceAmount _Amount;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("StartingMaterialComponent");
+                base.Serialize(serializer);
+                serializer.Element("material", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Material?.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+                serializer.Element("isDefining", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IsDefiningElement?.Serialize(serializer);
+                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -427,6 +452,22 @@ namespace Hl7.Fhir.Model.R4
             
             private List<RepeatUnitComponent> _RepeatUnit;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("RepeatComponent");
+                base.Serialize(serializer);
+                serializer.Element("numberOfUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfUnitsElement?.Serialize(serializer);
+                serializer.Element("averageMolecularFormula", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AverageMolecularFormulaElement?.Serialize(serializer);
+                serializer.Element("repeatUnitAmountType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepeatUnitAmountType?.Serialize(serializer);
+                serializer.BeginList("repeatUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in RepeatUnit)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RepeatComponent;
@@ -606,6 +647,28 @@ namespace Hl7.Fhir.Model.R4
             
             private List<StructuralRepresentationComponent> _StructuralRepresentation;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("RepeatUnitComponent");
+                base.Serialize(serializer);
+                serializer.Element("orientationOfPolymerisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrientationOfPolymerisation?.Serialize(serializer);
+                serializer.Element("repeatUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepeatUnitElement?.Serialize(serializer);
+                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(serializer);
+                serializer.BeginList("degreeOfPolymerisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in DegreeOfPolymerisation)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("structuralRepresentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in StructuralRepresentation)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RepeatUnitComponent;
@@ -726,6 +789,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.SubstanceAmount _Amount;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DegreeOfPolymerisationComponent");
+                base.Serialize(serializer);
+                serializer.Element("degree", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Degree?.Serialize(serializer);
+                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -865,6 +937,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Attachment _Attachment;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("StructuralRepresentationComponent");
+                base.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+                serializer.Element("representation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepresentationElement?.Serialize(serializer);
+                serializer.Element("attachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Attachment?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1104,6 +1186,36 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("SubstancePolymer");
+            base.Serialize(serializer);
+            serializer.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(serializer);
+            serializer.Element("geometry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Geometry?.Serialize(serializer);
+            serializer.BeginList("copolymerConnectivity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CopolymerConnectivity)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("modification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(ModificationElement);
+            serializer.End();
+            serializer.BeginList("monomerSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MonomerSet)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Repeat)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

@@ -339,6 +339,33 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("ProdCharacteristic");
+            base.Serialize(serializer);
+            serializer.Element("height", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Height?.Serialize(serializer);
+            serializer.Element("width", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Width?.Serialize(serializer);
+            serializer.Element("depth", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Depth?.Serialize(serializer);
+            serializer.Element("weight", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Weight?.Serialize(serializer);
+            serializer.Element("nominalVolume", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NominalVolume?.Serialize(serializer);
+            serializer.Element("externalDiameter", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ExternalDiameter?.Serialize(serializer);
+            serializer.Element("shape", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ShapeElement?.Serialize(serializer);
+            serializer.BeginList("color", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            serializer.Serialize(ColorElement);
+            serializer.End();
+            serializer.BeginList("imprint", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            serializer.Serialize(ImprintElement);
+            serializer.End();
+            serializer.BeginList("image", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            foreach(var item in Image)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("scoring", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Scoring?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

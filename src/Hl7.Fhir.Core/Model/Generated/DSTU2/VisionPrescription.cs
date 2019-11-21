@@ -520,6 +520,28 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DispenseComponent");
+                base.Serialize(serializer);
+                serializer.Element("product", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Product?.Serialize(serializer);
+                serializer.Element("eye", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EyeElement?.Serialize(serializer);
+                serializer.Element("sphere", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SphereElement?.Serialize(serializer);
+                serializer.Element("cylinder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CylinderElement?.Serialize(serializer);
+                serializer.Element("axis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AxisElement?.Serialize(serializer);
+                serializer.Element("prism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PrismElement?.Serialize(serializer);
+                serializer.Element("base", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BaseElement?.Serialize(serializer);
+                serializer.Element("add", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AddElement?.Serialize(serializer);
+                serializer.Element("power", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PowerElement?.Serialize(serializer);
+                serializer.Element("backCurve", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BackCurveElement?.Serialize(serializer);
+                serializer.Element("diameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiameterElement?.Serialize(serializer);
+                serializer.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Duration?.Serialize(serializer);
+                serializer.Element("color", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ColorElement?.Serialize(serializer);
+                serializer.Element("brand", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BrandElement?.Serialize(serializer);
+                serializer.Element("notes", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NotesElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DispenseComponent;
@@ -837,6 +859,30 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Dispense, otherT.Dispense)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("VisionPrescription");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("dateWritten", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateWrittenElement?.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(serializer);
+            serializer.Element("prescriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Prescriber?.Serialize(serializer);
+            serializer.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(serializer);
+            serializer.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Reason?.Serialize(serializer);
+            serializer.BeginList("dispense", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Dispense)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

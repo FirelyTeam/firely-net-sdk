@@ -148,6 +148,15 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Ratio");
+            base.Serialize(serializer);
+            serializer.Element("numerator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Numerator?.Serialize(serializer);
+            serializer.Element("denominator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Denominator?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

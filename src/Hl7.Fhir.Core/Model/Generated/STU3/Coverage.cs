@@ -458,6 +458,25 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("GroupComponent");
+                base.Serialize(serializer);
+                serializer.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupElement?.Serialize(serializer);
+                serializer.Element("groupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupDisplayElement?.Serialize(serializer);
+                serializer.Element("subGroup", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupElement?.Serialize(serializer);
+                serializer.Element("subGroupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupDisplayElement?.Serialize(serializer);
+                serializer.Element("plan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanElement?.Serialize(serializer);
+                serializer.Element("planDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanDisplayElement?.Serialize(serializer);
+                serializer.Element("subPlan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanElement?.Serialize(serializer);
+                serializer.Element("subPlanDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanDisplayElement?.Serialize(serializer);
+                serializer.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassElement?.Serialize(serializer);
+                serializer.Element("classDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassDisplayElement?.Serialize(serializer);
+                serializer.Element("subClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassElement?.Serialize(serializer);
+                serializer.Element("subClassDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassDisplayElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as GroupComponent;
@@ -1008,6 +1027,44 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Contract, otherT.Contract)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("Coverage");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+            serializer.Element("policyHolder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PolicyHolder?.Serialize(serializer);
+            serializer.Element("subscriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subscriber?.Serialize(serializer);
+            serializer.Element("subscriberId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubscriberIdElement?.Serialize(serializer);
+            serializer.Element("beneficiary", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Beneficiary?.Serialize(serializer);
+            serializer.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Relationship?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
+            serializer.BeginList("payor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Payor)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("grouping", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Grouping?.Serialize(serializer);
+            serializer.Element("dependent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DependentElement?.Serialize(serializer);
+            serializer.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(serializer);
+            serializer.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderElement?.Serialize(serializer);
+            serializer.Element("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NetworkElement?.Serialize(serializer);
+            serializer.BeginList("contract", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contract)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

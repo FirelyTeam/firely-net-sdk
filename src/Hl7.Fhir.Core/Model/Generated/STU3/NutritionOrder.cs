@@ -175,6 +175,44 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("OralDietComponent");
+                base.Serialize(serializer);
+                serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Type)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Schedule)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("nutrient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Nutrient)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("texture", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Texture)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.BeginList("fluidConsistencyType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in FluidConsistencyType)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("instruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InstructionElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OralDietComponent;
@@ -299,6 +337,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.SimpleQuantity _Amount;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("NutrientComponent");
+                base.Serialize(serializer);
+                serializer.Element("modifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Modifier?.Serialize(serializer);
+                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NutrientComponent;
@@ -402,6 +449,15 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.CodeableConcept _FoodType;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("TextureComponent");
+                base.Serialize(serializer);
+                serializer.Element("modifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Modifier?.Serialize(serializer);
+                serializer.Element("foodType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FoodType?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -588,6 +644,23 @@ namespace Hl7.Fhir.Model.STU3
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
+            }
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("SupplementComponent");
+                base.Serialize(serializer);
+                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
+                serializer.Element("productName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProductNameElement?.Serialize(serializer);
+                serializer.BeginList("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Schedule)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(serializer);
+                serializer.Element("instruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InstructionElement?.Serialize(serializer);
+                serializer.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -863,6 +936,27 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("EnteralFormulaComponent");
+                base.Serialize(serializer);
+                serializer.Element("baseFormulaType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BaseFormulaType?.Serialize(serializer);
+                serializer.Element("baseFormulaProductName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BaseFormulaProductNameElement?.Serialize(serializer);
+                serializer.Element("additiveType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AdditiveType?.Serialize(serializer);
+                serializer.Element("additiveProductName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AdditiveProductNameElement?.Serialize(serializer);
+                serializer.Element("caloricDensity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CaloricDensity?.Serialize(serializer);
+                serializer.Element("routeofAdministration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RouteofAdministration?.Serialize(serializer);
+                serializer.BeginList("administration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Administration)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.Element("maxVolumeToDeliver", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MaxVolumeToDeliver?.Serialize(serializer);
+                serializer.Element("administrationInstruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AdministrationInstructionElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as EnteralFormulaComponent;
@@ -1019,6 +1113,16 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.Element _Rate;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("AdministrationComponent");
+                base.Serialize(serializer);
+                serializer.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Schedule?.Serialize(serializer);
+                serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(serializer);
+                serializer.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Rate?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1407,6 +1511,50 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("NutritionOrder");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
+            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
+            serializer.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Encounter?.Serialize(serializer);
+            serializer.Element("dateTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateTimeElement?.Serialize(serializer);
+            serializer.Element("orderer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Orderer?.Serialize(serializer);
+            serializer.BeginList("allergyIntolerance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AllergyIntolerance)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("foodPreferenceModifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in FoodPreferenceModifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("excludeFoodModifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ExcludeFoodModifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("oralDiet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OralDiet?.Serialize(serializer);
+            serializer.BeginList("supplement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Supplement)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("enteralFormula", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EnteralFormula?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

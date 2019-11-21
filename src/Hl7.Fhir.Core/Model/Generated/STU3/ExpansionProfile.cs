@@ -164,6 +164,16 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("FixedVersionComponent");
+                base.Serialize(serializer);
+                serializer.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SystemElement?.Serialize(serializer);
+                serializer.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); VersionElement?.Serialize(serializer);
+                serializer.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ModeElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as FixedVersionComponent;
@@ -314,6 +324,15 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("ExcludedSystemComponent");
+                base.Serialize(serializer);
+                serializer.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SystemElement?.Serialize(serializer);
+                serializer.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ExcludedSystemComponent;
@@ -420,6 +439,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private DesignationExcludeComponent _Exclude;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DesignationComponent");
+                base.Serialize(serializer);
+                serializer.Element("include", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Include?.Serialize(serializer);
+                serializer.Element("exclude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Exclude?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DesignationComponent;
@@ -512,6 +540,19 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private List<DesignationIncludeDesignationComponent> _Designation;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DesignationIncludeComponent");
+                base.Serialize(serializer);
+                serializer.BeginList("designation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Designation)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -633,6 +674,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.Coding _Use;
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DesignationIncludeDesignationComponent");
+                base.Serialize(serializer);
+                serializer.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageElement?.Serialize(serializer);
+                serializer.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Use?.Serialize(serializer);
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DesignationIncludeDesignationComponent;
@@ -725,6 +775,19 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private List<DesignationExcludeDesignationComponent> _Designation;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DesignationExcludeComponent");
+                base.Serialize(serializer);
+                serializer.BeginList("designation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Designation)
+                {
+                    item?.Serialize(serializer);
+                }
+                serializer.End();
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -845,6 +908,15 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.Coding _Use;
+        
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("DesignationExcludeDesignationComponent");
+                base.Serialize(serializer);
+                serializer.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageElement?.Serialize(serializer);
+                serializer.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Use?.Serialize(serializer);
+                serializer.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1679,6 +1751,56 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(LimitedExpansionElement, otherT.LimitedExpansionElement)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("ExpansionProfile");
+            base.Serialize(serializer);
+            serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(serializer);
+            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("experimental", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExperimentalElement?.Serialize(serializer);
+            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
+            serializer.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(serializer);
+            serializer.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
+            serializer.BeginList("useContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in UseContext)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Jurisdiction)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("fixedVersion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in FixedVersion)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("excludedSystem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExcludedSystem?.Serialize(serializer);
+            serializer.Element("includeDesignations", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IncludeDesignationsElement?.Serialize(serializer);
+            serializer.Element("designation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Designation?.Serialize(serializer);
+            serializer.Element("includeDefinition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IncludeDefinitionElement?.Serialize(serializer);
+            serializer.Element("activeOnly", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveOnlyElement?.Serialize(serializer);
+            serializer.Element("excludeNested", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExcludeNestedElement?.Serialize(serializer);
+            serializer.Element("excludeNotForUI", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExcludeNotForUIElement?.Serialize(serializer);
+            serializer.Element("excludePostCoordinated", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExcludePostCoordinatedElement?.Serialize(serializer);
+            serializer.Element("displayLanguage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayLanguageElement?.Serialize(serializer);
+            serializer.Element("limitedExpansion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LimitedExpansionElement?.Serialize(serializer);
+            serializer.End();
         }
     
         [NotMapped]

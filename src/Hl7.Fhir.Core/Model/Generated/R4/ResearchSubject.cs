@@ -292,6 +292,26 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("ResearchSubject");
+            base.Serialize(serializer);
+            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
+            serializer.Element("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Study?.Serialize(serializer);
+            serializer.Element("individual", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Individual?.Serialize(serializer);
+            serializer.Element("assignedArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssignedArmElement?.Serialize(serializer);
+            serializer.Element("actualArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ActualArmElement?.Serialize(serializer);
+            serializer.Element("consent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Consent?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -51,23 +51,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider(Version.DSTU2));
         }
 
-        //[TestMethod]
-        //[TestCategory("LongRunner")]
-        //public void FullRoundtripOfAllExamplesXmlNavSdProvider()
-        //{
-        //    var source = new CachedResolver(ZipSource.CreateValidationSource());
-        //    FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
-        //        "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        //}
-
-        //[TestMethod]
-        //[TestCategory("LongRunner")]
-        //public void FullRoundtripOfAllExamplesJsonNavSdProvider()
-        //{
-        //    var source = new CachedResolver(ZipSource.CreateValidationSource());
-        //    FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
-        //        "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        //}
         [TestMethod]
         public void RoundTripOneExampleDstu2()
         {
@@ -103,6 +86,44 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(t.IsExactly(t2));
 
             var outputXml2 = new FhirXmlSerializer(version).SerializeToString(t2);
+            XmlAssert.AreSame(filename, original, outputXml2);
+        }
+
+        [TestMethod]
+        public void StreamingRoundTripOneExampleDstu2()
+        {
+            streamingRoundTripOneExample(Version.DSTU2, "testscript-example(example).xml");
+            streamingRoundTripOneExample(Version.DSTU2, "TestPatient.xml");
+        }
+
+        [TestMethod]
+        public void StreamingRoundTripOneExampleStu3()
+        {
+            streamingRoundTripOneExample(Version.STU3, "testscript-example(example)-STU3-R4.xml");
+            streamingRoundTripOneExample(Version.STU3, "TestPatient.xml");
+        }
+
+        [TestMethod]
+        public void StreamingRoundTripOneExampleR4()
+        {
+            streamingRoundTripOneExample(Version.R4, "testscript-example(example)-STU3-R4.xml");
+            streamingRoundTripOneExample(Version.R4, "TestPatient.xml");
+        }
+
+        private void streamingRoundTripOneExample(Fhir.Model.Version version, string filename)
+        {
+            var original = File.ReadAllText(GetFullPathForExample(filename));
+
+            var t = new FhirXmlParser(version).Parse<Resource>(original);
+
+            var outputXml = new FhirXmlStreamingSerializer(version).SerializeToString(t);
+            XmlAssert.AreSame(filename, original, outputXml);
+
+            var outputJson = new FhirJsonStreamingSerializer(version).SerializeToString(t);
+            var t2 = new FhirJsonParser(version).Parse<Resource>(outputJson);
+            Assert.IsTrue(t.IsExactly(t2));
+
+            var outputXml2 = new FhirXmlStreamingSerializer(version).SerializeToString(t2);
             XmlAssert.AreSame(filename, original, outputXml2);
         }
 
@@ -276,14 +297,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
-                var json = new FhirJsonSerializer(Version.DSTU2).SerializeToString(resource);
+                var json = new FhirJsonStreamingSerializer(Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = new FhirJsonParser(Version.DSTU2).Parse<Resource>(json);
-                var xml = new FhirXmlSerializer(Version.DSTU2).SerializeToString(resource);
+                var xml = new FhirXmlStreamingSerializer(Version.DSTU2).SerializeToString(resource);
                 File.WriteAllText(outputFile, xml);
             }
         }

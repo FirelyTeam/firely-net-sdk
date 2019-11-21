@@ -245,6 +245,23 @@ namespace Hl7.Fhir.Model
                 }
             }
         
+            public override void Serialize(Serialization.StreamingSerializer serializer)
+            {
+                serializer.BeginDataType("IssueComponent");
+                base.Serialize(serializer);
+                serializer.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SeverityElement?.Serialize(serializer);
+                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CodeElement?.Serialize(serializer);
+                serializer.Element("details", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Details?.Serialize(serializer);
+                serializer.Element("diagnostics", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiagnosticsElement?.Serialize(serializer);
+                serializer.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                serializer.Serialize(LocationElement);
+                serializer.End();
+                serializer.BeginList("expression", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+                serializer.Serialize(ExpressionElement);
+                serializer.End();
+                serializer.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as IssueComponent;
@@ -391,6 +408,19 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Issue, otherT.Issue)) return false;
         
             return true;
+        }
+    
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("OperationOutcome");
+            base.Serialize(serializer);
+            serializer.BeginList("issue", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Issue)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.End();
         }
     
         [NotMapped]

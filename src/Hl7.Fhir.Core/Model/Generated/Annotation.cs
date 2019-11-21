@@ -183,6 +183,16 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Annotation");
+            base.Serialize(serializer);
+            serializer.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Author?.Serialize(serializer);
+            serializer.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(serializer);
+            serializer.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.R4, true, false); TextElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

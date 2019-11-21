@@ -291,6 +291,21 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginResource("ResearchSubject");
+            base.Serialize(serializer);
+            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
+            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
+            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
+            serializer.Element("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Study?.Serialize(serializer);
+            serializer.Element("individual", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Individual?.Serialize(serializer);
+            serializer.Element("assignedArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssignedArmElement?.Serialize(serializer);
+            serializer.Element("actualArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ActualArmElement?.Serialize(serializer);
+            serializer.Element("consent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Consent?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

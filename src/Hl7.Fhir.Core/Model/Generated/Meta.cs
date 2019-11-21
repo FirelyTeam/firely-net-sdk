@@ -273,6 +273,31 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        public override void Serialize(Serialization.StreamingSerializer serializer)
+        {
+            serializer.BeginDataType("Meta");
+            base.Serialize(serializer);
+            serializer.Element("versionId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionIdElement?.Serialize(serializer);
+            serializer.Element("lastUpdated", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastUpdatedElement?.Serialize(serializer);
+            serializer.BeginList("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            serializer.Serialize(ProfileElement);
+            serializer.End();
+            serializer.BeginList("security", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Security)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.BeginList("tag", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Tag)
+            {
+                item?.Serialize(serializer);
+            }
+            serializer.End();
+            serializer.Element("source", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); SourceElement?.Serialize(serializer);
+            serializer.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
