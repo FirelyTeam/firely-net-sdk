@@ -209,8 +209,8 @@ namespace Hl7.Fhir.Model
         {
             serializer.BeginDataType(TypeName);
             base.Serialize(serializer);
-            serializer.Element("status", isRequired: true); StatusElement?.Serialize(serializer);
-            serializer.XhtmlValue("div", Div, isRequired: true);
+            serializer.Element("status", summaryVersions: Version.None, isRequired: true); StatusElement?.Serialize(serializer);
+            serializer.XhtmlValue("div", Div, summaryVersions: Version.None, isRequired: true);
             serializer.End();
         }
     }

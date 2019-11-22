@@ -296,6 +296,15 @@ namespace Hl7.Fhir.Model
                 if(Url != null) yield return new ElementValue("url",Url);
                 if (Value != null) yield return new ElementValue ("value",Value);
             }
-        } 
+        }
+
+        public override void Serialize(StreamingSerializer serializer)
+        {
+            serializer.BeginDataType(TypeName);
+            serializer.StringValue("url", Url, summaryVersions: Version.None, isRequired: true);
+            base.Serialize(serializer);
+            serializer.Element("value", isChoice: true); Value?.Serialize(serializer);
+            serializer.End();
+        }
     }
 }

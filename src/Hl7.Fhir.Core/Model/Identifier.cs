@@ -28,7 +28,6 @@
 
 */
 
-using Newtonsoft.Json;
 using System;
 
 namespace Hl7.Fhir.Model
@@ -46,18 +45,6 @@ namespace Hl7.Fhir.Model
         {
             this.System = system;
             this.Value = value;
-        }
-
-        public void Serialize(JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (UseElement != null)
-            {
-                writer.WritePropertyName("use"); writer.WriteValue(UseElement.ObjectValue);
-            }
-            writer.WritePropertyName("system"); writer.WriteValue(SystemElement.ObjectValue);
-            writer.WritePropertyName("value"); writer.WriteValue(ValueElement.ObjectValue);
-            writer.WriteEndObject();
         }
     }
 }

@@ -39,7 +39,6 @@ using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
-using Newtonsoft.Json;
 
 namespace Hl7.Fhir.Model.DSTU2
 {    
@@ -164,5 +163,5 @@ namespace Hl7.Fhir.Model.DSTU2
         {
             return base.Validate(validationContext);
         }
-    }
+    }  
 }

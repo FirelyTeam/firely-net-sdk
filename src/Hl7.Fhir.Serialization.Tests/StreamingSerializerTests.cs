@@ -52,20 +52,6 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void SummaryBundleXml()
-        {
-            var xml = File.ReadAllText(Path.Combine("TestData", "bundle.xml"), Encoding.UTF8);
-
-            var xmlParser = new FhirXmlParser(Model.Version.DSTU2);
-            var bundle = xmlParser.Parse<Model.DSTU2.Bundle>(xml);
-
-            var serializedXml = StreamingSerializeToXmlString(bundle, Rest.SummaryType.True);
-            xml = SerializeToXmlString(bundle, Rest.SummaryType.True);
-            WriteFilesIfDifferent(xml, serializedXml, "bundlesummary");
-            Assert.AreEqual(xml, serializedXml);
-        }
-
-        [TestMethod]
         public void CompleteBundleJson()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "bundle.xml"), Encoding.UTF8);
@@ -88,7 +74,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = xmlParser.Parse<Model.DSTU2.Bundle>(xml);
 
             var json = SerializeToJsonString(bundle, Rest.SummaryType.True);
-            var serializedJson = StreamingSerializeToJsonString(bundle, Rest.SummaryType.True);
+            var serializedJson = StreamingSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
             WriteFilesIfDifferent(json, serializedJson, "bundlesummary");
             Assert.AreEqual(json, serializedJson);
         }
@@ -267,7 +253,7 @@ namespace Hl7.Fhir.Serialization.Tests
     <tr valign=""top"">
       <td bgcolor=""red"" align=""center"">postal (Postal)</td>
       <td>equal</td>
-      <td>PHYS (physical visit address)</td>
+      <td><![CDATA[text with tags:<>]]></td>
     </tr>
   </table>
 </div>"
@@ -296,7 +282,7 @@ namespace Hl7.Fhir.Serialization.Tests
         <tr valign=""top"">
           <td bgcolor=""red"" align=""center"">postal (Postal)</td>
           <td>equal</td>
-          <td>PHYS (physical visit address)</td>
+          <td><![CDATA[text with tags:<>]]></td>
         </tr>
       </table>
     </div>
@@ -343,7 +329,6 @@ namespace Hl7.Fhir.Serialization.Tests
 </Patient>";
 
             var serializedXml = StreamingSerializeToXmlString(patient);
-            WriteFilesIfDifferent(xml, serializedXml, "element");
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -366,8 +351,651 @@ namespace Hl7.Fhir.Serialization.Tests
 </Patient>";
 
             var serializedXml = StreamingSerializeToXmlString(patient);
-            WriteFilesIfDifferent(xml, serializedXml, "element");
             Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void SummaryXml()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Id = "obs-1001",
+                ImplicitRules = "https://who-knows.org",
+                Language = "en-US",
+                Text = new Model.Narrative
+                {
+                    Status = Model.Narrative.NarrativeStatus.Additional,
+                    Div = "<div>Some text</div>"
+                },
+                Status = Model.R4.ObservationStatus.Final,
+                Category = new List<Model.CodeableConcept>
+                {
+                    new Model.CodeableConcept("http://terminology.hl7.org/CodeSystem/observation-category","laboratory")
+                },
+                Code = new Model.CodeableConcept("http://loinc.org", "11502-9", "lab value"),
+                Subject = new Model.ResourceReference("Patient/001")
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <id value=""obs-1001"" />
+  <meta>
+    <tag>
+      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <code value=""SUBSETTED"" />
+    </tag>
+  </meta>
+  <implicitRules value=""https://who-knows.org"" />
+  <status value=""final"" />
+  <code>
+    <coding>
+      <system value=""http://loinc.org"" />
+      <code value=""11502-9"" />
+    </coding>
+    <text value=""lab value"" />
+  </code>
+  <subject>
+    <reference value=""Patient/001"" />
+  </subject>
+</Observation>";
+
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.True);
+            WriteFilesIfDifferent(xml, serializedXml, "summaryxml");
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void OnlyDataXml()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Id = "obs-1001",
+                ImplicitRules = "https://who-knows.org",
+                Language = "en-US",
+                Text = new Model.Narrative
+                {
+                    Status = Model.Narrative.NarrativeStatus.Additional,
+                    Div = "<div>Some text</div>"
+                },
+                Status = Model.R4.ObservationStatus.Final,
+                Category = new List<Model.CodeableConcept>
+                {
+                    new Model.CodeableConcept("http://terminology.hl7.org/CodeSystem/observation-category","laboratory")
+                },
+                Code = new Model.CodeableConcept("http://loinc.org", "11502-9", "lab value"),
+                Subject = new Model.ResourceReference("Patient/001")
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <id value=""obs-1001"" />
+  <meta>
+    <tag>
+      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <code value=""SUBSETTED"" />
+    </tag>
+  </meta>
+  <implicitRules value=""https://who-knows.org"" />
+  <language value=""en-US"" />
+  <status value=""final"" />
+  <category>
+    <coding>
+      <system value=""http://terminology.hl7.org/CodeSystem/observation-category"" />
+      <code value=""laboratory"" />
+    </coding>
+  </category>
+  <code>
+    <coding>
+      <system value=""http://loinc.org"" />
+      <code value=""11502-9"" />
+    </coding>
+    <text value=""lab value"" />
+  </code>
+  <subject>
+    <reference value=""Patient/001"" />
+  </subject>
+</Observation>";
+
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Data);
+            WriteFilesIfDifferent(xml, serializedXml, "onlydataxml");
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void OnlyTextXml()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Id = "obs-1001",
+                Text = new Model.Narrative
+                {
+                    Status = Model.Narrative.NarrativeStatus.Additional,
+                    Div = "<div>Some text</div>"
+                },
+                Status = Model.R4.ObservationStatus.Final,
+                Category = new List<Model.CodeableConcept>
+                {
+                    new Model.CodeableConcept("http://terminology.hl7.org/CodeSystem/observation-category","laboratory")
+                },
+                Code = new Model.CodeableConcept("http://loinc.org", "11502-9", "lab value"),
+                Subject = new Model.ResourceReference("Patient/001")
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <id value=""obs-1001"" />
+  <meta>
+    <tag>
+      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <code value=""SUBSETTED"" />
+    </tag>
+  </meta>
+  <text>
+    <status value=""additional"" />
+    <div xmlns=""http://www.w3.org/1999/xhtml"">Some text</div>
+  </text>
+  <status value=""final"" />
+  <code>
+    <coding>
+      <system value=""http://loinc.org"" />
+      <code value=""11502-9"" />
+    </coding>
+    <text value=""lab value"" />
+  </code>
+</Observation>";
+
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Text);
+            WriteFilesIfDifferent(xml, serializedXml, "onlytextxml");
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void OnlyElementsXml()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Id = "obs-1001",
+                Text = new Model.Narrative
+                {
+                    Status = Model.Narrative.NarrativeStatus.Additional,
+                    Div = "<div>Some text</div>"
+                },
+                Status = Model.R4.ObservationStatus.Final,
+                Category = new List<Model.CodeableConcept>
+                {
+                    new Model.CodeableConcept("http://terminology.hl7.org/CodeSystem/observation-category","laboratory")
+                },
+                Code = new Model.CodeableConcept("http://loinc.org", "11502-9", "lab value"),
+                Subject = new Model.ResourceReference("Patient/001")
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <subject>
+    <reference value=""Patient/001"" />
+  </subject>
+</Observation>";
+
+            var serializedXml = SerializeToXmlString(observation, version: Model.Version.R4, elements: new[] { "subject" });
+            WriteFilesIfDifferent(xml, serializedXml, "onlyelementsxml");
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void SummaryAddSubsettedExistingMeta()
+        {
+            var patient = new Model.DSTU2.Patient
+            {
+                Meta = new Model.Meta
+                {
+                    Tag = new List<Model.Coding>
+                    {
+                        new Model.Coding("http://mysite.com/tags", "MyTag")
+                    }
+
+                }
+            };
+
+            var json = @"{
+  ""resourceType"": ""Patient"",
+  ""meta"": {
+    ""tag"": [
+      {
+        ""system"": ""http://mysite.com/tags"",
+        ""code"": ""MyTag""
+      },
+      {
+        ""system"": ""http://hl7.org/fhir/v3/ObservationValue"",
+        ""code"": ""SUBSETTED""
+      }
+    ]
+  }
+}";
+
+            var serializedJson = StreamingSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void SummaryDoNotAddSubsettedTwice()
+        {
+            var patient = new Model.DSTU2.Patient
+            {
+                Meta = new Model.Meta
+                {
+                    Tag = new List<Model.Coding>
+                    {
+                        new Model.Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED")
+                    }
+
+                }
+            };
+
+            var json = @"{
+  ""resourceType"": ""Patient"",
+  ""meta"": {
+    ""tag"": [
+      {
+        ""system"": ""http://hl7.org/fhir/v3/ObservationValue"",
+        ""code"": ""SUBSETTED""
+      }
+    ]
+  }
+}";
+
+            var serializedJson = StreamingSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void SummaryDoNotAddSubsettedRootBundle()
+        {
+            var bundle = new Model.DSTU2.Bundle
+            {
+                Entry = new List<Model.DSTU2.Bundle.EntryComponent>
+                {
+                    new Model.DSTU2.Bundle.EntryComponent
+                    {
+                        Resource = new Model.DSTU2.Patient()
+                    },
+                    new Model.DSTU2.Bundle.EntryComponent
+                    {
+                        Resource = new Model.DSTU2.Bundle()
+                    }
+                }
+            };
+
+            var json = @"{
+  ""resourceType"": ""Bundle"",
+  ""entry"": [
+    {
+      ""resource"": {
+        ""resourceType"": ""Patient"",
+        ""meta"": {
+          ""tag"": [
+            {
+              ""system"": ""http://hl7.org/fhir/v3/ObservationValue"",
+              ""code"": ""SUBSETTED""
+            }
+          ]
+        }
+      }
+    },
+    {
+      ""resource"": {
+        ""resourceType"": ""Bundle"",
+        ""meta"": {
+          ""tag"": [
+            {
+              ""system"": ""http://hl7.org/fhir/v3/ObservationValue"",
+              ""code"": ""SUBSETTED""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}";
+
+            var serializedJson = StreamingSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
+            WriteFilesIfDifferent(json, serializedJson, "summarybundles");
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void XmlDataType()
+        {
+            var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
+
+            var xml = @"<CodeableConcept xmlns=""http://hl7.org/fhir"">
+  <coding>
+    <system value=""http://loinc.org"" />
+    <code value=""11050-2"" />
+  </coding>
+  <text value=""Lab result"" />
+</CodeableConcept>";
+
+            var serializedXml = StreamingSerializeToXmlString(codeableConcept);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void JsonDataType()
+        {
+            var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
+
+            var xml = @"{
+  ""coding"": [
+    {
+      ""system"": ""http://loinc.org"",
+      ""code"": ""11050-2""
+    }
+  ],
+  ""text"": ""Lab result""
+}";
+
+            var serializedXml = StreamingSerializeToJsonString(codeableConcept);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void XmlEmptyResource()
+        {
+            var patient = new Model.DSTU2.Patient();
+
+            var xml = @"<Patient xmlns=""http://hl7.org/fhir"" />";
+
+            var serializedXml = StreamingSerializeToXmlString(patient);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void JsonEmptyResource()
+        {
+            var patient = new Model.DSTU2.Patient();
+
+            var json = @"{
+  ""resourceType"": ""Patient""
+}";
+
+            var serializedJson = StreamingSerializeToJsonString(patient);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void XmlDifferentRoot()
+        {
+            var patient = new Model.DSTU2.Patient();
+
+            var xml = @"<Resource xmlns=""http://hl7.org/fhir"" />";
+
+            var serializedXml = StreamingSerializeToXmlString(patient, Model.Version.DSTU2, Rest.SummaryType.False, "Resource");
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void XmlBytes()
+        {
+            var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
+            var expectedBytes = new FhirXmlSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            var actualBytes = new FhirXmlStreamingSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            Assert.AreEqual(Encoding.UTF8.GetString(expectedBytes), Encoding.UTF8.GetString(actualBytes));
+        }
+
+        [TestMethod]
+        public void JsonBytes()
+        {
+            var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
+            var expectedBytes = new FhirJsonSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            var actualBytes = new FhirJsonStreamingSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            Assert.AreEqual(Encoding.UTF8.GetString(expectedBytes), Encoding.UTF8.GetString(actualBytes));
+        }
+
+        [TestMethod]
+        public void VersionSpecific()
+        {
+            var reference = new Model.ResourceReference
+            {
+                Reference = "Patient/1",
+                Display = "John Smith",
+                Type = "Patient",
+                Identifier = new Model.Identifier("http://myserver.com/identifier/MRN", "P-1001")
+            };
+
+            var dstu2Json = @"{
+  ""reference"": ""Patient/1"",
+  ""display"": ""John Smith""
+}";
+            var stu3Json = @"{
+  ""reference"": ""Patient/1"",
+  ""display"": ""John Smith"",
+  ""identifier"": {
+    ""system"": ""http://myserver.com/identifier/MRN"",
+    ""value"": ""P-1001""
+  }
+}";
+            var r4Json = @"{
+  ""reference"": ""Patient/1"",
+  ""display"": ""John Smith"",
+  ""type"": ""Patient"",
+  ""identifier"": {
+    ""system"": ""http://myserver.com/identifier/MRN"",
+    ""value"": ""P-1001""
+  }
+}";
+            var json = StreamingSerializeToJsonString(reference, Model.Version.DSTU2);
+            Assert.AreEqual(dstu2Json, json);
+            json = StreamingSerializeToJsonString(reference, Model.Version.STU3);
+            Assert.AreEqual(stu3Json, json);
+            json = StreamingSerializeToJsonString(reference, Model.Version.R4);
+            Assert.AreEqual(r4Json, json);
+        }
+
+        [TestMethod]
+        public void JsonInstant()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.Instant(new DateTimeOffset(2019, 11, 21, 13, 45, 6, 567, TimeSpan.Zero))
+            };
+
+            var json = @"{
+  ""resourceType"": ""Observation"",
+  ""valueInstant"": ""2019-11-21T13:45:06.567+00:00""
+}";
+            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            Assert.AreEqual(json, serializedJson);
+
+            observation = new Model.R4.Observation
+            {
+                Value = new Model.Instant(new DateTimeOffset(2019, 11, 21, 13, 45, 6, new TimeSpan(-4, 0, 0)))
+            };
+
+            json = @"{
+  ""resourceType"": ""Observation"",
+  ""valueInstant"": ""2019-11-21T13:45:06-04:00""
+}";
+            serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void JsonDecimal()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.Quantity { Value = 3.1315926M }
+            };
+
+            var json = @"{
+  ""resourceType"": ""Observation"",
+  ""valueQuantity"": {
+    ""value"": 3.1315926
+  }
+}";
+            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void JsonBoolean()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.FhirBoolean(true)
+            };
+
+            var json = @"{
+  ""resourceType"": ""Observation"",
+  ""valueBoolean"": true
+}";
+            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            Assert.AreEqual(json, serializedJson);
+        }
+
+        [TestMethod]
+        public void XmlInstant()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.Instant(new DateTimeOffset(2019, 11, 21, 13, 45, 6, 567, TimeSpan.Zero))
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <valueInstant value=""2019-11-21T13:45:06.567Z"" />
+</Observation>";
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            Assert.AreEqual(xml, serializedXml);
+
+            observation = new Model.R4.Observation
+            {
+                Value = new Model.Instant(new DateTimeOffset(2019, 11, 21, 13, 45, 6, new TimeSpan(-4, 0, 0)))
+            };
+
+            xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <valueInstant value=""2019-11-21T13:45:06-04:00"" />
+</Observation>";
+            serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void XmlDecimal()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.Quantity { Value = 3.1315926M }
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <valueQuantity>
+    <value value=""3.1315926"" />
+  </valueQuantity>
+</Observation>";
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void XmlBoolean()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.FhirBoolean(true)
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <valueBoolean value=""true"" />
+</Observation>";
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void XmlIdAndExtension()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.FhirBoolean(true)
+                {
+                    ElementId = "value1",
+                    Extension = new List<Model.Extension>
+                    {
+                        new Model.Extension("http://myserver.com/myext", new Model.FhirString("theValue")),
+                        new Model.Extension
+                        {
+                            Url = "http://myserver.com/otherext",
+                            Extension = new List<Model.Extension>
+                            {
+                                new Model.Extension("child", new Model.FhirString("otherValue"))
+                            }
+                        }
+
+                    }
+                }
+            };
+
+            var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
+  <valueBoolean value=""true"" id=""value1"">
+    <extension url=""http://myserver.com/myext"">
+      <valueString value=""theValue"" />
+    </extension>
+    <extension url=""http://myserver.com/otherext"">
+      <extension url=""child"">
+        <valueString value=""otherValue"" />
+      </extension>
+    </extension>
+  </valueBoolean>
+</Observation>";
+            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            Assert.AreEqual(xml, serializedXml);
+        }
+
+        [TestMethod]
+        public void JsonIdAndExtension()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Model.FhirBoolean(true)
+                {
+                    ElementId = "value1",
+                    Extension = new List<Model.Extension>
+                    {
+                        new Model.Extension("http://myserver.com/myext", new Model.FhirString("theValue")),
+                        new Model.Extension
+                        {
+                            Url = "http://myserver.com/otherext",
+                            Extension = new List<Model.Extension>
+                            {
+                                new Model.Extension("child", new Model.FhirString("otherValue"))
+                            }
+                        }
+
+                    }
+                }
+            };
+
+            var json = @"{
+  ""resourceType"": ""Observation"",
+  ""valueBoolean"": true,
+  ""_valueBoolean"": {
+    ""id"": ""value1"",
+    ""extension"": [
+      {
+        ""url"": ""http://myserver.com/myext"",
+        ""valueString"": ""theValue""
+      },
+      {
+        ""url"": ""http://myserver.com/otherext"",
+        ""extension"": [
+          {
+            ""url"": ""child"",
+            ""valueString"": ""otherValue""
+          }
+        ]
+      }
+    ]
+  }
+}";
+            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            WriteFilesIfDifferent(json, serializedJson, "idandextension");
+            Assert.AreEqual(json, serializedJson);
         }
 
         private static void WriteFilesIfDifferent(string expected, string actual, string fileName)
@@ -387,55 +1015,28 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
-        private static string StreamingSerializeToJsonString(Model.Base @base, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
+        private static string StreamingSerializeToJsonString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
         {
-            var writer = new StringWriter();
-            using (var jsonWriter = new JsonTextWriter(writer) { Formatting = Newtonsoft.Json.Formatting.Indented })
-            {
-                var serializer = new JsonStreamingSerializer(jsonWriter, Model.Version.DSTU2, summary, elements);
-                @base.Serialize(serializer);
-            }
-            writer.Flush();
-            return writer.ToString();
+            var serializer = new FhirJsonStreamingSerializer(new SerializerSettings(version) { Pretty = true });
+            return serializer.SerializeToString(@base, summary, elements);
         }
 
-        private static string StreamingSerializeToXmlString(Model.Base @base, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
+        private static string StreamingSerializeToXmlString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string root = null, string[] elements = null)
         {
-            var sb = new StringBuilder();
-            var settings = new XmlWriterSettings
-            {
-                OmitXmlDeclaration = true,
-                NewLineHandling = NewLineHandling.Entitize,
-                Indent = true,
-                Encoding = Encoding.UTF8
-            };
-            using (var xmlWriter = XmlWriter.Create(sb, settings))
-            {
-                var serializer = new XmlStreamingSerializer(xmlWriter, Model.Version.DSTU2, summary, null, elements);
-                
-                @base.Serialize(serializer);
-            }
-            return sb.ToString();
+            var serializer = new FhirXmlStreamingSerializer(new SerializerSettings(version) { Pretty = true });
+            return serializer.SerializeToString(@base, summary, root, elements);
         }
 
         private static string SerializeToJsonString(Model.Base @base, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
         {
-            var settings = new SerializerSettings(Model.Version.DSTU2)
-            {
-                Pretty = true
-            };
-            var serializer = new FhirJsonSerializer(settings);
+            var serializer = new FhirJsonSerializer(new SerializerSettings(Model.Version.DSTU2) { Pretty = true });
             return serializer.SerializeToString(@base, summary, elements);
         }
 
-        private static string SerializeToXmlString(Model.Base @base, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
+        private static string SerializeToXmlString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string root = null, string[] elements = null)
         {
-            var settings = new SerializerSettings(Model.Version.DSTU2)
-            {
-                Pretty = true
-            };
-            var serializer = new FhirXmlSerializer(settings);
-            return serializer.SerializeToString(@base, summary, null, elements);
+            var serializer = new FhirXmlSerializer(new SerializerSettings(version) { Pretty = true });
+            return serializer.SerializeToString(@base, summary, root, elements);
         }
     }
 }

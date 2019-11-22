@@ -29,7 +29,6 @@
 */
 
 using Hl7.Fhir.Introspection;
-using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 
@@ -101,13 +100,6 @@ namespace Hl7.Fhir.Model
             {
                 return Reference != null && Reference.StartsWith("#");
             }
-        }
-
-        public void Serialize(JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("reference"); writer.WriteValue(ReferenceElement.ObjectValue);
-            writer.WriteEndObject();
         }
     }
 }

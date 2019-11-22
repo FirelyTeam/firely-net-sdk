@@ -16,11 +16,6 @@ namespace Hl7.Fhir.Serialization
 
         public bool IsDirty { get; set; }
 
-        public override void End()
-        {
-            PopState();
-        }
-
         public override void Serialize(Primitive primitive)
         {
             if (primitive != null)
@@ -56,6 +51,16 @@ namespace Hl7.Fhir.Serialization
         public override void XhtmlValue(string name, string value, Model.Version elementVersions = Model.Version.All, Model.Version summaryVersions = Model.Version.All, bool isRequired = false)
         {
             StringValue(name, value, elementVersions, summaryVersions, isRequired);
+        }
+
+        protected override void RenderBeginState(IState state, IState previousState)
+        {
+            // Nothing to do
+        }
+
+        protected override void RenderEndState(IState renderedState)
+        {
+            // Nothing to do
         }
     }
 
@@ -111,7 +116,7 @@ namespace Hl7.Fhir.Serialization
                     }
                     else
                     {
-                        Y();
+                        RenderStates();
                         if (objectValue == null)
                         {
                             _writer.WriteNull();
@@ -136,7 +141,7 @@ namespace Hl7.Fhir.Serialization
                     _writer.WriteEndArray();
                     _writer.WritePropertyName("_" + ((ListState)GetCurrentState()).Name);
                     _writer.WriteStartArray();
-                    Y();
+                    RenderStates();
 
                     var index = 0;
                     foreach (var primitive in primitives)
@@ -182,63 +187,56 @@ namespace Hl7.Fhir.Serialization
             StringValue(name, value, elementVersions, summaryVersions, isRequired);
         }
 
-        public override void End()
-        {
-            var renderedState = PopState();
-            if (renderedState != null)
-            {
-                if (renderedState.IsArray)
-                {
-                    _writer.WriteEndArray();
-                }
-                else
-                {
-                    _writer.WriteEndObject();
-                }
-            }
-        }
-
         private void ValuePrimitive(string elementName, object value)
         {
             var valueToWrite = ValueToWrite(value);
             if (valueToWrite != null)
             {
-                Y();
+                RenderStates();
 
                 _writer.WritePropertyName(elementName);
                 _writer.WriteValue(valueToWrite);
             }
         }
 
-        private void Y()
+        protected override void RenderBeginState(IState state, IState previousState)
         {
-            while (TryGetNotRenderedState(out var state, out var previousState))
+            if (state is DataTypeState dataTypeState)
             {
-                if (state is DataTypeState dataTypeState)
+                if ((previousState != null && !previousState.IsArray) && dataTypeState.ElementName != null)
                 {
-                    if ((previousState == null || !previousState.IsArray) && dataTypeState.ElementName != null)
-                    {
-                        var propertyName = dataTypeState.HasValue ?
-                            "_" + dataTypeState.ElementName :
-                            dataTypeState.ElementName;
-                        _writer.WritePropertyName(propertyName);
-                    }
-                    _writer.WriteStartObject();
-                    if (dataTypeState.Type != null)
-                    {
-                        _writer.WritePropertyName("resourceType");
-                        _writer.WriteValue(dataTypeState.Type);
-                    }
+                    var propertyName = dataTypeState.HasValue ?
+                        "_" + dataTypeState.ElementName :
+                        dataTypeState.ElementName;
+                    _writer.WritePropertyName(propertyName);
                 }
-                else if (state is ListState listState)
+                _writer.WriteStartObject();
+                if (dataTypeState.Type != null)
                 {
-                    _writer.WritePropertyName(listState.Name);
-                    _writer.WriteStartArray();
+                    _writer.WritePropertyName("resourceType");
+                    _writer.WriteValue(dataTypeState.Type);
                 }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
+            }
+            else if (state is ListState listState)
+            {
+                _writer.WritePropertyName(listState.Name);
+                _writer.WriteStartArray();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        protected override void RenderEndState(IState renderedState)
+        {
+            if (renderedState.IsArray)
+            {
+                _writer.WriteEndArray();
+            }
+            else
+            {
+                _writer.WriteEndObject();
             }
         }
 
@@ -283,7 +281,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (!IsSkipping() && !ShouldSkip(name, elementVersions, summaryVersions, isRequired) && !string.IsNullOrWhiteSpace(value))
             {
-                Y();
+                RenderStates();
                 _writer.WriteAttributeString(name, value);
             }
         }
@@ -292,7 +290,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (!IsSkipping() && !ShouldSkip(name, elementVersions, summaryVersions, isRequired) && !string.IsNullOrWhiteSpace(value))
             {
-                Y();
+                RenderStates();
                 value = value.Trim();
                 if (!value.StartsWith("<"))
                 {
@@ -352,59 +350,62 @@ namespace Hl7.Fhir.Serialization
             var valueToWrite = ValueToWrite(value);
             if (valueToWrite != null)
             {
-                Y();
+                RenderStates();
                 _writer.WriteStartAttribute("value");
                 _writer.WriteValue(valueToWrite);
                 _writer.WriteEndAttribute();
             }
         }
 
-        public override void End()
+        protected override void RenderBeginState(IState state, IState previousState)
         {
-            var renderedState = PopState();
-            if (renderedState != null)
+            if (state is DataTypeState dataTypeState)
             {
-                if (renderedState is DataTypeState dataTypeState)
+                var outerElementName = previousState != null && previousState is ListState listState ?
+                    listState.Name :
+                    dataTypeState.ElementName;
+                if (outerElementName != null)
                 {
-                    if (dataTypeState.ElementName != null)
-                    {
-                        _writer.WriteEndElement();
-                    }
-                    if (dataTypeState.Type != null)
-                    {
-                        _writer.WriteEndElement();
-                    }
+                    WriteStartElement(outerElementName);
+                }
+                if (dataTypeState.Type != null)
+                {
+                    WriteStartElement(dataTypeState.Type);
+                }
+            }
+            else if (!(state is ListState))
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        protected override void RenderEndState(IState renderedState)
+        {
+            if (renderedState is DataTypeState dataTypeState)
+            {
+                if (dataTypeState.ElementName != null)
+                {
+                    _writer.WriteEndElement();
+                }
+                if (dataTypeState.Type != null)
+                {
+                    _writer.WriteEndElement();
                 }
             }
         }
 
-        private void Y()
+        private void WriteStartElement(string localName)
         {
-            while (TryGetNotRenderedState(out var state, out var previousState))
+            if (_root != null)
             {
-                if (state is DataTypeState dataTypeState)
-                {
-                    var outerElementName = previousState != null && previousState is ListState listState ?
-                        listState.Name :
-                        dataTypeState.ElementName;
-                    if (outerElementName != null)
-                    {
-                        _writer.WriteStartElement(outerElementName, "http://hl7.org/fhir");
-                    }
-                    if (dataTypeState.Type != null)
-                    {
-                        _writer.WriteStartElement(dataTypeState.Type, "http://hl7.org/fhir");
-                    }
-                }
-                else if (!(state is ListState))
-                {
-                    throw new InvalidOperationException();
-                }
+                localName = _root;
+                _root = null;
             }
+            _writer.WriteStartElement(localName, "http://hl7.org/fhir");
         }
 
         private readonly XmlWriter _writer;
-        private readonly string _root;
+        private string _root;
     }
 
     public abstract class StreamingSerializer
@@ -510,7 +511,12 @@ namespace Hl7.Fhir.Serialization
             var currentState = GetCurrentState();
             if (currentState == null)
             {
-                throw new InvalidOperationException();
+                if (hasValue)
+                {
+                    throw new InvalidOperationException();
+                }
+                PushState(new DataTypeState { ElementName = type });
+                return true;
             }
 
             var elementName = currentState.GetElementName(type, isResource: false);
@@ -524,7 +530,45 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        public abstract void End();
+        public void End()
+        {
+            if (_states.Count == 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (_states.Count == 1 && _notRenderedNode != null)
+            {
+                // No empty output
+                RenderStates();
+            }
+
+            var renderedState = _notRenderedNode == null ?
+                _states.Last.Value :
+                null;
+            if (_notRenderedNode == _states.Last)
+            {
+                _notRenderedNode = null;
+            }
+            _states.RemoveLast();
+
+            if (renderedState != null)
+            {
+                RenderEndState(renderedState);
+            }
+        }
+
+        protected void RenderStates()
+        {
+            while (TryGetNotRenderedState(out var state, out var previousState))
+            {
+                RenderBeginState(state, previousState);
+            }
+        }
+
+        protected abstract void RenderBeginState(IState state, IState previousState);
+
+        protected abstract void RenderEndState(IState renderedState);
 
         protected bool IsSkipping()
         {
@@ -541,24 +585,30 @@ namespace Hl7.Fhir.Serialization
             switch (_summary)
             {
                 case Rest.SummaryType.False:
-                    return !isRequired
-                        && _elements != null
-                        && _states.Count <= 1
-                        && _elements.Contains(name);
+                    return _elements != null
+                        && !_elements.Contains(name)
+                        && IsResourceElement();
                 case Rest.SummaryType.Data:
                     return !isRequired
-                        && name == "text";
+                        && name == "text"
+                        && IsResourceElement();
                 case Rest.SummaryType.True:
                     return (summaryVersions & _version) == 0
                         && !isRequired;
                 case Rest.SummaryType.Text:
                     return !isRequired
-                        && name != "text";
+                        && !(name == "id" || name == "meta" || name == "text")
+                        && IsResourceElement();
                 case Rest.SummaryType.Count:
                     return true;
                 default:
                     throw new InvalidOperationException($"Unknown or not supported summary type '{_summary}'");
             }
+
+            bool IsResourceElement() =>
+                _states.Count > 0
+                && _states.Last.Value is DataTypeState dataTypeState
+                && dataTypeState.Type != null;
         }
 
         protected static object ValueToWrite(object value)
@@ -591,23 +641,6 @@ namespace Hl7.Fhir.Serialization
             {
                 _notRenderedNode = _states.Last;
             }
-        }
-
-        protected IState PopState()
-        {
-            if (_states.Count == 0)
-            {
-                throw new InvalidOperationException();
-            }
-            var result = _notRenderedNode == null ?
-                _states.Last.Value :
-                null;
-            if (_notRenderedNode == _states.Last)
-            {
-                _notRenderedNode = null;
-            }
-            _states.RemoveLast();
-            return result;
         }
 
         protected bool TryGetNotRenderedState(out IState state, out IState previousState)
@@ -714,7 +747,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private readonly Model.Version _version;
-        private readonly Hl7.Fhir.Rest.SummaryType _summary;
+        private readonly Rest.SummaryType _summary;
         private readonly HashSet<string> _elements;
         private readonly LinkedList<IState> _states = new LinkedList<IState>();
         private LinkedListNode<IState> _notRenderedNode = null;

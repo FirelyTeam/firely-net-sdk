@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Diagnostics;
-using Newtonsoft.Json;
 
 /*
   Copyright (c) 2011+, HL7, Inc.

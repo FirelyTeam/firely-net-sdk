@@ -30,7 +30,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,18 +49,6 @@ namespace Hl7.Fhir.Model
                 City, State, PostalCode, Country)
                 + (Use != null ? " Use=\"" + Use + "\"" : "")
                 + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
-        }
-    }
-
-    public partial class Extension
-    {
-        public override void Serialize(StreamingSerializer serializer)
-        {
-            serializer.BeginDataType(TypeName);
-            serializer.StringValue("url", Url, summaryVersions: Version.None, isRequired: true);
-            base.Serialize(serializer);
-            serializer.Element("value", isChoice: true); Value?.Serialize(serializer);
-            serializer.End();
         }
     }
 

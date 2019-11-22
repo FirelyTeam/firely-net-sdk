@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             serializer.Element("id"); IdElement?.Serialize(serializer);
             serializer.Element("meta"); serializer.Serialize( Meta );
             serializer.Element("implicitRules"); ImplicitRulesElement?.Serialize(serializer);
-            serializer.Element("language"); LanguageElement?.Serialize(serializer);
+            serializer.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(serializer);
         }
     }
 }
