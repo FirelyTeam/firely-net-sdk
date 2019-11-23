@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// in-progress | on-hold | completed | entered-in-error | stopped
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Vaccination notes
         /// </summary>
-        [FhirElement("note", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("note", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

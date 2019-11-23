@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Coverage to be used for adjudication
             /// </summary>
-            [FhirElement("focal", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("focal", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Insurance information
             /// </summary>
-            [FhirElement("coverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("coverage", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Coverage")]
             [Cardinality(Min=1,Max=1)]
@@ -4378,7 +4378,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of adjudication information
             /// </summary>
-            [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -4393,7 +4393,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Financial total for the category
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -5346,7 +5346,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -5380,7 +5380,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Category or discipline
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -5408,7 +5408,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// claim | preauthorization | predetermination
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -5442,7 +5442,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The recipient of the products and services
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -5458,7 +5458,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Relevant time frame for the claim
         /// </summary>
-        [FhirElement("billablePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("billablePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period BillablePeriod
@@ -5472,7 +5472,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Response creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -5521,7 +5521,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Party responsible for reimbursement
         /// </summary>
-        [FhirElement("insurer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("insurer", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -5537,7 +5537,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Party responsible for the claim
         /// </summary>
-        [FhirElement("provider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("provider", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -5709,7 +5709,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// queued | complete | error | partial
         /// </summary>
-        [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=310)]
+        [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=310)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -5910,7 +5910,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Patient insurance information
         /// </summary>
-        [FhirElement("insurance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=400)]
+        [FhirElement("insurance", InSummary=Hl7.Fhir.Model.Version.All, Order=400)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -5980,7 +5980,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Adjudication totals
         /// </summary>
-        [FhirElement("total", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=450)]
+        [FhirElement("total", InSummary=Hl7.Fhir.Model.Version.All, Order=450)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

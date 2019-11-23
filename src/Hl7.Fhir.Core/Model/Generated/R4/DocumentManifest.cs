@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique Identifier for the set of documents
         /// </summary>
-        [FhirElement("masterIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("masterIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Other identifiers for the manifest
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// current | superseded | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Kind of document set
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The subject of the set of documents
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device")]
         [DataMember]
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who and/or what authored the DocumentManifest
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Items in manifest
         /// </summary>
-        [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("content", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

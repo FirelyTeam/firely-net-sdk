@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("ratioType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("ratioType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RatioType
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("startingMaterial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("startingMaterial", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("material", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("material", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Material
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("isDefining", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("isDefining", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("numberOfUnits", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("numberOfUnits", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer NumberOfUnitsElement
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("averageMolecularFormula", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("averageMolecularFormula", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AverageMolecularFormulaElement
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnitAmountType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("repeatUnitAmountType", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RepeatUnitAmountType
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("repeatUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("orientationOfPolymerisation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("orientationOfPolymerisation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrientationOfPolymerisation
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("repeatUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RepeatUnitElement
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("degreeOfPolymerisation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("degreeOfPolymerisation", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("structuralRepresentation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("structuralRepresentation", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("degree", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("degree", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Degree
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("representation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("representation", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RepresentationElement
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("attachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("attachment", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment Attachment
@@ -1027,7 +1027,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("geometry", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("geometry", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Geometry
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("copolymerConnectivity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("copolymerConnectivity", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("modification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("modification", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1104,7 +1104,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("monomerSet", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("monomerSet", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1119,7 +1119,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("repeat", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("repeat", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

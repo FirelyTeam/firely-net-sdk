@@ -27,8 +27,8 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsPrimitive { get; private set; }
         public bool RepresentsValueElement { get; private set; }
-        public HashSet<Model.Version> Versions { get; private set; }
-        public HashSet<Model.Version> InSummary { get; private set; }
+        public Model.Version Versions { get; private set; }
+        public Model.Version InSummary { get; private set; }
         public bool IsMandatoryElement { get; private set; }
 
         public Type ImplementingType { get; private set; }
@@ -43,8 +43,7 @@ namespace Hl7.Fhir.Introspection
 
         public bool IsIn(Model.Version version)
         {
-            return Versions.Contains(Model.Version.All)
-                || Versions.Contains(version);
+            return (Versions & version) != 0;
         }
 
         public static PropertyMapping Create(PropertyInfo prop) => Create(prop, out IEnumerable<Type> dummy);
@@ -64,9 +63,8 @@ namespace Hl7.Fhir.Introspection
             result.Name = determinePropertyName(prop);
             result.ImplementingType = prop.PropertyType;
 
-            var hasVersions = elementAttr?.Versions != null && elementAttr.Versions.Any();
-            result.Versions = new HashSet<Model.Version>( hasVersions ? elementAttr.Versions : new[] { Model.Version.All });
-            result.InSummary = new HashSet<Model.Version>( elementAttr?.InSummary ?? new Model.Version[0] );
+            result.Versions = elementAttr?.Versions ?? Model.Version.All;
+            result.InSummary = elementAttr?.InSummary ?? Model.Version.None;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr?.Choice ?? ChoiceType.None;
 

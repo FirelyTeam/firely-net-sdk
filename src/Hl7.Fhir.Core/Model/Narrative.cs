@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// generated | extensions | additional | empty
         /// </summary>
-        [FhirElement("status", InSummary = new[] { Version.All }, Order = 30)]
+        [FhirElement("status", InSummary = Version.All, Order = 30)]
         [CLSCompliant(false)]
         [Cardinality(Min = 1, Max = 1)]
         [DataMember]
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Limited xhtml content
         /// </summary>
-        [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, InSummary = new[] { Version.All }, Order = 40, TypeRedirect = typeof(XHtml))]
+        [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, InSummary = Version.All, Order = 40, TypeRedirect = typeof(XHtml))]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]

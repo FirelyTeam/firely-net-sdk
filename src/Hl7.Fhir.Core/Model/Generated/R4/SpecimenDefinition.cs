@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier of a kind of specimen
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Kind of material to collect
         /// </summary>
-        [FhirElement("typeCollected", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("typeCollected", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept TypeCollected
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Patient preparation for collection
         /// </summary>
-        [FhirElement("patientPreparation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("patientPreparation", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Time aspect for collection
         /// </summary>
-        [FhirElement("timeAspect", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("timeAspect", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TimeAspectElement
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Specimen collection procedure
         /// </summary>
-        [FhirElement("collection", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("collection", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

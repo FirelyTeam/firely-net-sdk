@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// in-progress | completed | abandoned
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.SupplyDeliveryStatus> StatusElement
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Category of dispense event
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Amount dispensed
         /// </summary>
-        [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Quantity
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Medication, Substance, or Device supplied
         /// </summary>
-        [FhirElement("suppliedItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("suppliedItem", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Medication","Substance","Device")]
         [DataMember]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Dispenser
         /// </summary>
-        [FhirElement("supplier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("supplier", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Dispensing time
         /// </summary>
-        [FhirElement("whenPrepared", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("whenPrepared", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenPrepared
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Handover time
         /// </summary>
-        [FhirElement("time", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("time", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime TimeElement
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Where the Supply was sent
         /// </summary>
-        [FhirElement("destination", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("destination", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who collected the Supply
         /// </summary>
-        [FhirElement("receiver", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("receiver", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [Cardinality(Min=0,Max=-1)]

@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Direct reference to resource
             /// </summary>
-            [FhirElement("reference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("reference", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
             [DataMember]
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Unique identifier for the user
             /// </summary>
-            [FhirElement("userId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("userId", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier UserId
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The identity of source detecting the event
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Specific instance of object
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Specific instance of resource
             /// </summary>
-            [FhirElement("reference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("reference", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Descriptor for entity
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Query parameters
             /// </summary>
-            [FhirElement("query", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("query", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Base64Binary QueryElement
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type/identifier of event
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// More specific type/id for the event
         /// </summary>
-        [FhirElement("subtype", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("subtype", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1273,7 +1273,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of action performed during the event
         /// </summary>
-        [FhirElement("action", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("action", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AuditEventAction> ActionElement
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Time when the event occurred on source
         /// </summary>
-        [FhirElement("recorded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("recorded", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Whether the event succeeded or failed
         /// </summary>
-        [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AuditEventOutcome> OutcomeElement
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Description of the event outcome
         /// </summary>
-        [FhirElement("outcomeDesc", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("outcomeDesc", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString OutcomeDescElement
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The purposeOfUse of the event
         /// </summary>
-        [FhirElement("purposeOfEvent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("purposeOfEvent", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

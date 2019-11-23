@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// fatal | error | warning | information
             /// </summary>
-            [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("severity", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Error or warning code
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional details about the error
             /// </summary>
-            [FhirElement("details", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("details", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Details
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional diagnostic information about the issue
             /// </summary>
-            [FhirElement("diagnostics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("diagnostics", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DiagnosticsElement
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// XPath of element(s) related to issue
             /// </summary>
-            [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// FHIRPath of element(s) related to issue
             /// </summary>
-            [FhirElement("expression", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=90)]
+            [FhirElement("expression", Versions=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A single issue associated with the action
         /// </summary>
-        [FhirElement("issue", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("issue", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

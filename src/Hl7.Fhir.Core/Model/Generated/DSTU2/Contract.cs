@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contract Term identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contract Term Issue Date Time
             /// </summary>
-            [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("issued", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime IssuedElement
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contract Term Effective Time
             /// </summary>
-            [FhirElement("applies", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("applies", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Applies
@@ -1719,7 +1719,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contract identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When this Contract was issued
         /// </summary>
-        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("issued", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
@@ -1766,7 +1766,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Effective time
         /// </summary>
-        [FhirElement("applies", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("applies", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Applies
@@ -1780,7 +1780,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Subject of this Contract
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1827,7 +1827,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contract Tyoe
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -1841,7 +1841,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contract Subtype
         /// </summary>
-        [FhirElement("subType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("subType", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

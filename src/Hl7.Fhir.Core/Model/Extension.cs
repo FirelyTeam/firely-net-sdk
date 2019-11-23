@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// identifies the meaning of the extension
         /// </summary>
-        [FhirElement("url", XmlSerialization =XmlRepresentation.XmlAttr, InSummary = new[] { Version.All }, Order = 30, TypeRedirect = typeof(FhirUri))]
+        [FhirElement("url", XmlSerialization =XmlRepresentation.XmlAttr, InSummary = Version.All, Order = 30, TypeRedirect = typeof(FhirUri))]
         [CLSCompliant(false)]
         [Cardinality(Min = 1, Max = 1)]
         [UriPattern]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value of extension
         /// </summary>
-        [FhirElement("value", InSummary =  new[] { Version.All }, Order = 40, Choice = ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary = Version.All, Order = 40, Choice = ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(
             Version = Version.DSTU2, 

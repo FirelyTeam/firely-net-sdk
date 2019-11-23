@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Account number
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// E.g. patient, expense, depreciation
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | inactive
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code StatusElement
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Valid from..to
         /// </summary>
-        [FhirElement("activePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("activePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period ActivePeriod
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Base currency in which balance is tracked
         /// </summary>
-        [FhirElement("currency", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("currency", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Currency
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// How much is in account?
         /// </summary>
-        [FhirElement("balance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("balance", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.Money Balance
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Transaction window
         /// </summary>
-        [FhirElement("coveragePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("coveragePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period CoveragePeriod
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// What is account tied to?
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
         [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who is responsible?
         /// </summary>
-        [FhirElement("owner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("owner", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Explanation of purpose/use
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement

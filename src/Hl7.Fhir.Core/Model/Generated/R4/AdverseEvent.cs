@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Refers to the specific entity that caused the adverse event
             /// </summary>
-            [FhirElement("instance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("instance", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Immunization","Procedure","Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
             [Cardinality(Min=1,Max=1)]
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Information on the possible cause of the event
             /// </summary>
-            [FhirElement("causality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("causality", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Assessment of if the entity caused the event
             /// </summary>
-            [FhirElement("assessment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("assessment", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Assessment
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// AdverseEvent.suspectEntity.causalityProductRelatedness
             /// </summary>
-            [FhirElement("productRelatedness", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("productRelatedness", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ProductRelatednessElement
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// AdverseEvent.suspectEntity.causalityAuthor
             /// </summary>
-            [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole")]
             [DataMember]
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// ProbabilityScale | Bayesian | Checklist
             /// </summary>
-            [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier for the event
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// actual | potential
         /// </summary>
-        [FhirElement("actuality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("actuality", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Type of the event itself in relation to the subject
         /// </summary>
-        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Event
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Subject impacted by event
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Practitioner","RelatedPerson")]
         [Cardinality(Min=1,Max=1)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Encounter created as part of
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the event occurred
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the event was detected
         /// </summary>
-        [FhirElement("detected", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("detected", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DetectedElement
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the event was recorded
         /// </summary>
-        [FhirElement("recordedDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("recordedDate", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Effect on the subject due to this event
         /// </summary>
-        [FhirElement("resultingCondition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("resultingCondition", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Condition")]
         [Cardinality(Min=0,Max=-1)]
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Location where adverse event occurred
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Seriousness of the event
         /// </summary>
-        [FhirElement("seriousness", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("seriousness", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Seriousness
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// mild | moderate | severe
         /// </summary>
-        [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("severity", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
         /// </summary>
-        [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Outcome
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who recorded the adverse event
         /// </summary>
-        [FhirElement("recorder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("recorder", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who  was involved in the adverse event or the potential adverse event
         /// </summary>
-        [FhirElement("contributor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("contributor", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Device")]
         [Cardinality(Min=0,Max=-1)]
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The suspected agent causing the adverse event
         /// </summary>
-        [FhirElement("suspectEntity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("suspectEntity", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// AdverseEvent.subjectMedicalHistory
         /// </summary>
-        [FhirElement("subjectMedicalHistory", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("subjectMedicalHistory", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Media","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// AdverseEvent.referenceDocument
         /// </summary>
-        [FhirElement("referenceDocument", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("referenceDocument", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// AdverseEvent.study
         /// </summary>
-        [FhirElement("study", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("study", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]

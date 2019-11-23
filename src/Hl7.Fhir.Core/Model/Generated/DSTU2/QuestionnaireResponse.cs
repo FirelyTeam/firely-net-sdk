@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique id for this set of answers
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Form being answered
         /// </summary>
-        [FhirElement("questionnaire", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("questionnaire", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Questionnaire")]
         [DataMember]
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// in-progress | completed | amended
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The subject of the questions
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Person who received and recorded the answers
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("authored", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("authored", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredElement
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The person who answered the questions
         /// </summary>
-        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Primary encounter during which the answers were collected
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]

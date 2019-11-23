@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reference to the image source
             /// </summary>
-            [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Media")]
             [Cardinality(Min=1,Max=1)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Service category
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Health care event when test ordered
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Clinically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=Hl7.Fhir.Model.Version.All, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// DateTime this version was released
         /// </summary>
-        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("issued", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("image", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

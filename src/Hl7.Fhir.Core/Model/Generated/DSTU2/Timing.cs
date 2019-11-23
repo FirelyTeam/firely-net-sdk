@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Length/Range of lengths, or (Start and/or end) limits
             /// </summary>
-            [FhirElement("bounds", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("bounds", InSummary=Hl7.Fhir.Model.Version.All, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.DSTU2.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Number of times to repeat
             /// </summary>
-            [FhirElement("count", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("count", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// How long when it happens
             /// </summary>
-            [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationElement
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// How long when it happens (Max)
             /// </summary>
-            [FhirElement("durationMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("durationMax", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationMaxElement
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("durationUnits", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("durationUnits", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.UnitsOfTime> DurationUnitsElement
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("frequency", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("frequency", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer FrequencyElement
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Event occurs up to frequencyMax times per period
             /// </summary>
-            [FhirElement("frequencyMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("frequencyMax", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer FrequencyMaxElement
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodElement
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Upper limit of period (3-4 hours)
             /// </summary>
-            [FhirElement("periodMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("periodMax", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodMaxElement
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("periodUnits", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("periodUnits", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.UnitsOfTime> PeriodUnitsElement
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Regular life events the event is tied to
             /// </summary>
-            [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("when", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DSTU2.EventTiming> WhenElement
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the event occurs
         /// </summary>
-        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the event is to occur
         /// </summary>
-        [FhirElement("repeat", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("repeat", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public RepeatComponent Repeat
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// QD | QOD | Q4H | Q6H | BID | TID | QID | AM | PM +
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code

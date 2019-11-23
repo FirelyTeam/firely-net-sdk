@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Method for exchanging information with the primary source
             /// </summary>
-            [FhirElement("communicationMethod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("communicationMethod", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// yes | no | undetermined
             /// </summary>
-            [FhirElement("canPushUpdates", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("canPushUpdates", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CanPushUpdates
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The individual or organization attesting to information
             /// </summary>
-            [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("who", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// When the who is asserting on behalf of another (organization or individual)
             /// </summary>
-            [FhirElement("onBehalfOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("onBehalfOf", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The method by which attested information was submitted/retrieved
             /// </summary>
-            [FhirElement("communicationMethod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("communicationMethod", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CommunicationMethod
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The date the information was attested to
             /// </summary>
-            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Date DateElement
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A resource that was validated
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The fhirpath location(s) within the resource that was validated
         /// </summary>
-        [FhirElement("targetLocation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("targetLocation", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// none | initial | periodic
         /// </summary>
-        [FhirElement("need", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("need", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Need
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the validation status was updated
         /// </summary>
-        [FhirElement("statusDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("statusDate", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StatusDateElement
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// nothing | primary | multiple
         /// </summary>
-        [FhirElement("validationType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("validationType", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ValidationType
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
         /// </summary>
-        [FhirElement("validationProcess", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("validationProcess", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// fatal | warn | rec-only | none
         /// </summary>
-        [FhirElement("failureAction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("failureAction", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept FailureAction

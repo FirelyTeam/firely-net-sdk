@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// completed | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who this evaluation is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Evaluation target disease
         /// </summary>
-        [FhirElement("targetDisease", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("targetDisease", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Immunization being evaluated
         /// </summary>
-        [FhirElement("immunizationEvent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("immunizationEvent", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Immunization")]
         [Cardinality(Min=1,Max=1)]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Status of the dose relative to published recommendations
         /// </summary>
-        [FhirElement("doseStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("doseStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]

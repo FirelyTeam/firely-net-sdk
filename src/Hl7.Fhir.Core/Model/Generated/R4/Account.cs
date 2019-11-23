@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The party(s), such as insurances, that may contribute to the payment of this account
             /// </summary>
-            [FhirElement("coverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("coverage", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Coverage")]
             [Cardinality(Min=1,Max=1)]
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The priority of the coverage in the context of this account
             /// </summary>
-            [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("priority", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt PriorityElement
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Account number
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | inactive | entered-in-error | on-hold | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// E.g. patient, expense, depreciation
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The entity that caused the expenses
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Transaction window
         /// </summary>
-        [FhirElement("servicePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("servicePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period ServicePeriod
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
         /// </summary>
-        [FhirElement("coverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("coverage", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Entity managing the Account
         /// </summary>
-        [FhirElement("owner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("owner", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Explanation of purpose/use
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement

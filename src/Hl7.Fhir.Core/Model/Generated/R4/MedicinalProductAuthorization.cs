@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The assigned number for the marketing authorization
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Country of authorization
             /// </summary>
-            [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Country
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Jurisdiction within a country
             /// </summary>
-            [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The legal status of supply in a jurisdiction or region
             /// </summary>
-            [FhirElement("legalStatusOfSupply", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("legalStatusOfSupply", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The start and expected end date of the authorization
             /// </summary>
-            [FhirElement("validityPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("validityPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period ValidityPeriod
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Identifier for this procedure
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of procedure
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Date of procedure
             /// </summary>
-            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
             [DataMember]
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Applcations submitted to obtain a marketing authorization
             /// </summary>
-            [FhirElement("application", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("application", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier for the marketing authorization, as assigned by a regulator
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The medicinal product that is being authorized
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("MedicinalProduct","MedicinalProductPackaged")]
         [DataMember]
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The country in which the marketing authorization has been granted
         /// </summary>
-        [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Jurisdiction within a country
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The status of the marketing authorization
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Status
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The date at which the given status has become applicable
         /// </summary>
-        [FhirElement("statusDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("statusDate", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StatusDateElement
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The date when a suspended the marketing or the marketing authorization of the product is anticipated to be restored
         /// </summary>
-        [FhirElement("restoreDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("restoreDate", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RestoreDateElement
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The beginning of the time period in which the marketing authorization is in the specific status shall be specified A complete date consisting of day, month and year shall be specified using the ISO 8601 date format
         /// </summary>
-        [FhirElement("validityPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("validityPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period ValidityPeriod
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A period of time after authorization before generic product applicatiosn can be submitted
         /// </summary>
-        [FhirElement("dataExclusivityPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("dataExclusivityPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period DataExclusivityPeriod
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The date when the first authorization was granted by a Medicines Regulatory Agency
         /// </summary>
-        [FhirElement("dateOfFirstAuthorization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("dateOfFirstAuthorization", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateOfFirstAuthorizationElement
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Date of first marketing authorization for a company's new medicinal product in any country in the World
         /// </summary>
-        [FhirElement("internationalBirthDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("internationalBirthDate", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime InternationalBirthDateElement
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The legal framework against which this authorization is granted
         /// </summary>
-        [FhirElement("legalBasis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("legalBasis", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept LegalBasis
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Authorization in areas within a country
         /// </summary>
-        [FhirElement("jurisdictionalAuthorization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("jurisdictionalAuthorization", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Marketing Authorization Holder
         /// </summary>
-        [FhirElement("holder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("holder", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Medicines Regulatory Agency
         /// </summary>
-        [FhirElement("regulator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("regulator", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The regulatory procedure for granting or amending a marketing authorization
         /// </summary>
-        [FhirElement("procedure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("procedure", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [DataMember]
         public ProcedureComponent Procedure

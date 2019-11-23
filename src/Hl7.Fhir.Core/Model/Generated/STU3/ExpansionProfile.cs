@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// System to have its version fixed
             /// </summary>
-            [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("system", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Specific version of the code system referred to
             /// </summary>
-            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// default | check | override
             /// </summary>
-            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("mode", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The specific code system to be excluded
             /// </summary>
-            [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("system", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Specific version of the code system referred to
             /// </summary>
-            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Designations to be included
             /// </summary>
-            [FhirElement("include", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("include", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public DesignationIncludeComponent Include
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Designations to be excluded
             /// </summary>
-            [FhirElement("exclude", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("exclude", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public DesignationExcludeComponent Exclude
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The designation to be included
             /// </summary>
-            [FhirElement("designation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("designation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Human language of the designation to be included
             /// </summary>
-            [FhirElement("language", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("language", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Code LanguageElement
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What kind of Designation to include
             /// </summary>
-            [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Use
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The designation to be excluded
             /// </summary>
-            [FhirElement("designation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("designation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Human language of the designation to be excluded
             /// </summary>
-            [FhirElement("language", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("language", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Code LanguageElement
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What kind of Designation to exclude
             /// </summary>
-            [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Use
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical URI to reference this expansion profile (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional identifier for the expansion profile
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business version of the expansion profile
         /// </summary>
-        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this expansion profile (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -1105,7 +1105,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("experimental", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("publisher", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("useContext", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1300,7 +1300,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for expansion profile (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1315,7 +1315,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Fix use of a code system to a particular version
         /// </summary>
-        [FhirElement("fixedVersion", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("fixedVersion", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1330,7 +1330,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Systems/Versions to be exclude
         /// </summary>
-        [FhirElement("excludedSystem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("excludedSystem", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public ExcludedSystemComponent ExcludedSystem
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Whether the expansion should include concept designations
         /// </summary>
-        [FhirElement("includeDesignations", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("includeDesignations", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IncludeDesignationsElement
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the expansion profile imposes designation contraints
         /// </summary>
-        [FhirElement("designation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("designation", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [DataMember]
         public DesignationComponent Designation
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Include or exclude the value set definition in the expansion
         /// </summary>
-        [FhirElement("includeDefinition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("includeDefinition", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IncludeDefinitionElement
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Include or exclude inactive concepts in the expansion
         /// </summary>
-        [FhirElement("activeOnly", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("activeOnly", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveOnlyElement
@@ -1457,7 +1457,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Nested codes in the expansion or not
         /// </summary>
-        [FhirElement("excludeNested", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("excludeNested", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExcludeNestedElement
@@ -1490,7 +1490,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Include or exclude codes which cannot be rendered in user interfaces in the value set expansion
         /// </summary>
-        [FhirElement("excludeNotForUI", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("excludeNotForUI", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExcludeNotForUIElement
@@ -1523,7 +1523,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Include or exclude codes which are post coordinated expressions in the value set expansion
         /// </summary>
-        [FhirElement("excludePostCoordinated", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("excludePostCoordinated", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExcludePostCoordinatedElement
@@ -1556,7 +1556,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Specify the language for the display element of codes in the value set expansion
         /// </summary>
-        [FhirElement("displayLanguage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=300)]
+        [FhirElement("displayLanguage", InSummary=Hl7.Fhir.Model.Version.All, Order=300)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code DisplayLanguageElement
@@ -1589,7 +1589,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded
         /// </summary>
-        [FhirElement("limitedExpansion", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=310)]
+        [FhirElement("limitedExpansion", InSummary=Hl7.Fhir.Model.Version.All, Order=310)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean LimitedExpansionElement

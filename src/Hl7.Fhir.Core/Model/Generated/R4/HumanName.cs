@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// usual | official | temp | nickname | anonymous | old | maiden
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NameUse> UseElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Text representation of the full name
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Family name (often called 'Surname')
         /// </summary>
-        [FhirElement("family", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("family", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString FamilyElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Given names (not always 'first'). Includes middle names
         /// </summary>
-        [FhirElement("given", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("given", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Parts that come before the name
         /// </summary>
-        [FhirElement("prefix", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("prefix", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Parts that come after the name
         /// </summary>
-        [FhirElement("suffix", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("suffix", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Time period when name was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period

@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// available | not-available | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DeviceStatus> StatusElement

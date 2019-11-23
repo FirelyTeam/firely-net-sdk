@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Party to be paid any benefits payable
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Provider who is the payee
             /// </summary>
-            [FhirElement("provider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("provider", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Practitioner")]
             [DataMember]
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Organization who is the payee
             /// </summary>
-            [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Other person who is the payee
             /// </summary>
-            [FhirElement("person", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("person", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [References("Patient")]
             [DataMember]
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Sequence of diagnosis
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Patient's list of diagnosis
             /// </summary>
-            [FhirElement("diagnosis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("diagnosis", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service instance identifier
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The focal Coverage
             /// </summary>
-            [FhirElement("focal", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("focal", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Insurance information
             /// </summary>
-            [FhirElement("coverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("coverage", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Coverage")]
             [Cardinality(Min=1,Max=1)]
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Business agreement
             /// </summary>
-            [FhirElement("businessArrangement", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("businessArrangement", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BusinessArrangementElement
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Patient relationship to subscriber
             /// </summary>
-            [FhirElement("relationship", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("relationship", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Pre-Authorization/Determination Reference
             /// </summary>
-            [FhirElement("preAuthRef", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("preAuthRef", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Adjudication results
             /// </summary>
-            [FhirElement("claimResponse", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("claimResponse", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [References("ClaimResponse")]
             [DataMember]
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Original version
             /// </summary>
-            [FhirElement("originalRuleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("originalRuleset", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding OriginalRuleset
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service instance
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Group or type of product or service
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Responsible practitioner
             /// </summary>
-            [FhirElement("provider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("provider", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Practitioner")]
             [DataMember]
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Diagnosis Link
             /// </summary>
-            [FhirElement("diagnosisLinkId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("diagnosisLinkId", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Item Code
             /// </summary>
-            [FhirElement("service", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("service", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Date of Service
             /// </summary>
-            [FhirElement("serviceDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("serviceDate", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Date ServiceDateElement
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Count of Products or Services
             /// </summary>
-            [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("unitPrice", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money UnitPrice
@@ -853,7 +853,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Price scaling factor
             /// </summary>
-            [FhirElement("factor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("factor", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Difficulty scaling factor
             /// </summary>
-            [FhirElement("points", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("points", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Total item cost
             /// </summary>
-            [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("net", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money Net
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Unique Device Identifier
             /// </summary>
-            [FhirElement("udi", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("udi", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Udi
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service Location
             /// </summary>
-            [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+            [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding BodySite
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service Sub-location
             /// </summary>
-            [FhirElement("subSite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+            [FhirElement("subSite", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service/Product billing modifiers
             /// </summary>
-            [FhirElement("modifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+            [FhirElement("modifier", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional items
             /// </summary>
-            [FhirElement("detail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+            [FhirElement("detail", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Prosthetic details
             /// </summary>
-            [FhirElement("prosthesis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+            [FhirElement("prosthesis", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
             [CLSCompliant(false)]
             [DataMember]
             public ProsthesisComponent Prosthesis
@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service instance
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1257,7 +1257,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Group or type of product or service
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional item codes
             /// </summary>
-            [FhirElement("service", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("service", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1287,7 +1287,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Count of Products or Services
             /// </summary>
-            [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("unitPrice", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money UnitPrice
@@ -1315,7 +1315,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Price scaling factor
             /// </summary>
-            [FhirElement("factor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("factor", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
@@ -1348,7 +1348,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Difficulty scaling factor
             /// </summary>
-            [FhirElement("points", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("points", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Total additional item cost
             /// </summary>
-            [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("net", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money Net
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Unique Device Identifier
             /// </summary>
-            [FhirElement("udi", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("udi", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Udi
@@ -1409,7 +1409,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional items
             /// </summary>
-            [FhirElement("subDetail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("subDetail", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1570,7 +1570,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Service instance
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of product or service
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1619,7 +1619,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional item codes
             /// </summary>
-            [FhirElement("service", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("service", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1634,7 +1634,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Count of Products or Services
             /// </summary>
-            [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
@@ -1648,7 +1648,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Fee, charge or cost per point
             /// </summary>
-            [FhirElement("unitPrice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("unitPrice", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money UnitPrice
@@ -1662,7 +1662,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Price scaling factor
             /// </summary>
-            [FhirElement("factor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("factor", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
@@ -1695,7 +1695,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Difficulty scaling factor
             /// </summary>
-            [FhirElement("points", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("points", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Net additional item cost
             /// </summary>
-            [FhirElement("net", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("net", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Money Net
@@ -1742,7 +1742,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Unique Device Identifier
             /// </summary>
-            [FhirElement("udi", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("udi", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Udi
@@ -1885,7 +1885,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Is this the initial service
             /// </summary>
-            [FhirElement("initial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("initial", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean InitialElement
@@ -1918,7 +1918,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Initial service Date
             /// </summary>
-            [FhirElement("priorDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("priorDate", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Date PriorDateElement
@@ -1951,7 +1951,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Prosthetic Material
             /// </summary>
-            [FhirElement("priorMaterial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("priorMaterial", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding PriorMaterial
@@ -2058,7 +2058,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Tooth Code
             /// </summary>
-            [FhirElement("tooth", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("tooth", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -2073,7 +2073,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reason for missing
             /// </summary>
-            [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("reason", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Reason
@@ -2087,7 +2087,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Date of Extraction
             /// </summary>
-            [FhirElement("extractionDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("extractionDate", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Date ExtractionDateElement
@@ -2212,7 +2212,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// institutional | oral | pharmacy | professional | vision
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -2246,7 +2246,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Claim number
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2261,7 +2261,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Current specification followed
         /// </summary>
-        [FhirElement("ruleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("ruleset", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
@@ -2275,7 +2275,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Original specification followed
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("originalRuleset", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
@@ -2289,7 +2289,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -2322,7 +2322,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -2337,7 +2337,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible provider
         /// </summary>
-        [FhirElement("provider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("provider", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -2352,7 +2352,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -2367,7 +2367,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// complete | proposed | exploratory | other
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.Use> UseElement
@@ -2400,7 +2400,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Desired processing priority
         /// </summary>
-        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("priority", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Priority
@@ -2414,7 +2414,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Funds requested to be reserved
         /// </summary>
-        [FhirElement("fundsReserve", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("fundsReserve", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding FundsReserve
@@ -2428,7 +2428,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Author
         /// </summary>
-        [FhirElement("enterer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("enterer", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -2443,7 +2443,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Servicing Facility
         /// </summary>
-        [FhirElement("facility", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("facility", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
@@ -2458,7 +2458,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Prescription
         /// </summary>
-        [FhirElement("prescription", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("prescription", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [References("MedicationOrder","VisionPrescription")]
         [DataMember]
@@ -2473,7 +2473,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Original Prescription
         /// </summary>
-        [FhirElement("originalPrescription", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("originalPrescription", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("MedicationOrder")]
         [DataMember]
@@ -2488,7 +2488,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Payee
         /// </summary>
-        [FhirElement("payee", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("payee", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [DataMember]
         public PayeeComponent Payee
@@ -2502,7 +2502,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Treatment Referral
         /// </summary>
-        [FhirElement("referral", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("referral", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [References("ReferralRequest")]
         [DataMember]
@@ -2517,7 +2517,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Diagnosis
         /// </summary>
-        [FhirElement("diagnosis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("diagnosis", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2532,7 +2532,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// List of presenting Conditions
         /// </summary>
-        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2547,7 +2547,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The subject of the Products and Services
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -2563,7 +2563,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Insurance or medical plan
         /// </summary>
-        [FhirElement("coverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("coverage", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2578,7 +2578,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Eligibility exceptions
         /// </summary>
-        [FhirElement("exception", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=300)]
+        [FhirElement("exception", InSummary=Hl7.Fhir.Model.Version.All, Order=300)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2593,7 +2593,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name of School
         /// </summary>
-        [FhirElement("school", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=310)]
+        [FhirElement("school", InSummary=Hl7.Fhir.Model.Version.All, Order=310)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SchoolElement
@@ -2626,7 +2626,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Accident Date
         /// </summary>
-        [FhirElement("accident", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=320)]
+        [FhirElement("accident", InSummary=Hl7.Fhir.Model.Version.All, Order=320)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date AccidentElement
@@ -2659,7 +2659,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Accident Type
         /// </summary>
-        [FhirElement("accidentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=330)]
+        [FhirElement("accidentType", InSummary=Hl7.Fhir.Model.Version.All, Order=330)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding AccidentType
@@ -2673,7 +2673,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Intervention and exception code (Pharma)
         /// </summary>
-        [FhirElement("interventionException", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=340)]
+        [FhirElement("interventionException", InSummary=Hl7.Fhir.Model.Version.All, Order=340)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2688,7 +2688,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Goods and Services
         /// </summary>
-        [FhirElement("item", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=350)]
+        [FhirElement("item", InSummary=Hl7.Fhir.Model.Version.All, Order=350)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2703,7 +2703,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional materials, documents, etc.
         /// </summary>
-        [FhirElement("additionalMaterials", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=360)]
+        [FhirElement("additionalMaterials", InSummary=Hl7.Fhir.Model.Version.All, Order=360)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2718,7 +2718,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Only if type = oral
         /// </summary>
-        [FhirElement("missingTeeth", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=370)]
+        [FhirElement("missingTeeth", InSummary=Hl7.Fhir.Model.Version.All, Order=370)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

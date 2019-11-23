@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of service delivered or performed
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specialties handled by the Service Site
             /// </summary>
-            [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("specialty", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External identifiers for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization that provides this service
         /// </summary>
-        [FhirElement("providedBy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("providedBy", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Broad category of service being performed or delivered
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("serviceCategory", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Specific service delivered or performed
         /// </summary>
-        [FhirElement("serviceType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("serviceType", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Location where service may be provided
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=1,Max=1)]
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Description of service as presented to a consumer while searching
         /// </summary>
-        [FhirElement("serviceName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("serviceName", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ServiceNameElement
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional description and/or any specific issues not covered elsewhere
         /// </summary>
-        [FhirElement("comment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("comment", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Facilitates quick identification of the service
         /// </summary>
-        [FhirElement("photo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("photo", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Photo

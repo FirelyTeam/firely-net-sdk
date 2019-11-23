@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
-            [FhirElement("relation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("relation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Reference details for the link
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Links related to this entry
             /// </summary>
-            [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Absolute URL for resource (server address, or UUID/OID)
             /// </summary>
-            [FhirElement("fullUrl", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("fullUrl", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri FullUrlElement
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A resource in the bundle
             /// </summary>
-            [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.ResourceChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Search related information
             /// </summary>
-            [FhirElement("search", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("search", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public SearchComponent Search
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("request", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public RequestComponent Request
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("response", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public ResponseComponent Response
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// match | include | outcome - why this is in the result set
             /// </summary>
-            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("mode", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SearchEntryMode> ModeElement
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Search ranking (between 0 and 1)
             /// </summary>
-            [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("score", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal ScoreElement
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// GET | POST | PUT | DELETE
             /// </summary>
-            [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// URL for HTTP equivalent of this entry
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing cache currency
             /// </summary>
-            [FhirElement("ifNoneMatch", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("ifNoneMatch", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfNoneMatchElement
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing update contention
             /// </summary>
-            [FhirElement("ifModifiedSince", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("ifModifiedSince", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Instant IfModifiedSinceElement
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing update contention
             /// </summary>
-            [FhirElement("ifMatch", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("ifMatch", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfMatchElement
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For conditional creates
             /// </summary>
-            [FhirElement("ifNoneExist", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("ifNoneExist", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfNoneExistElement
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Status response code (text optional)
             /// </summary>
-            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -951,7 +951,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The location, if the operation returns a location
             /// </summary>
-            [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri LocationElement
@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The etag for the resource (if relevant)
             /// </summary>
-            [FhirElement("etag", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("etag", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString EtagElement
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Server's date time modified
             /// </summary>
-            [FhirElement("lastModified", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("lastModified", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Instant LastModifiedElement
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// OperationOutcome with hints and warnings (for batch/transaction)
             /// </summary>
-            [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=80, Choice=ChoiceType.ResourceChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Persistent identifier for the bundle
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("total", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1268,7 +1268,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("entry", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Digital Signature
         /// </summary>
-        [FhirElement("signature", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("signature", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Signature Signature

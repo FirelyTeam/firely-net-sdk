@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business Identifier for item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | issued | balanced | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Type of Invoice
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Recipient(s) of goods and services
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Recipient of this invoice
         /// </summary>
-        [FhirElement("recipient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("recipient", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Organization","Patient","RelatedPerson")]
         [DataMember]
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Invoice date / posting date
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Net total of this Invoice
         /// </summary>
-        [FhirElement("totalNet", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("totalNet", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.R4.Money TotalNet
@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Gross total of this Invoice
         /// </summary>
-        [FhirElement("totalGross", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("totalGross", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.R4.Money TotalGross

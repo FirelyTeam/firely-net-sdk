@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Vaccine  or vaccine group recommendation applies to
             /// </summary>
-            [FhirElement("vaccineCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("vaccineCode", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Disease to be immunized against
             /// </summary>
-            [FhirElement("targetDisease", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("targetDisease", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept TargetDisease
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Vaccine which is contraindicated to fulfill the recommendation
             /// </summary>
-            [FhirElement("contraindicatedVaccineCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("contraindicatedVaccineCode", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Vaccine recommendation status
             /// </summary>
-            [FhirElement("forecastStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("forecastStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Vaccine administration status reason
             /// </summary>
-            [FhirElement("forecastReason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("forecastReason", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Recommended dose number within series
             /// </summary>
-            [FhirElement("doseNumber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("doseNumber", InSummary=Hl7.Fhir.Model.Version.All, Order=120, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Date recommendation(s) created
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("recommendation", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

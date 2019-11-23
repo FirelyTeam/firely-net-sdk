@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Particular delivery destination within the destination
             /// </summary>
-            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Device")]
             [DataMember]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Actual destination address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Intended "real-world" recipient for the data
             /// </summary>
-            [FhirElement("receiver", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("receiver", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Name of system
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Name of software running the system
             /// </summary>
-            [FhirElement("software", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("software", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SoftwareElement
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Version of software running
             /// </summary>
-            [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VersionElement
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Human contact for problems
             /// </summary>
-            [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.R4.ContactPoint Contact
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Actual message source address or id
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Id of original message
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// ok | transient-error | fatal-error
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Specific list of hints/warnings/errors
             /// </summary>
-            [FhirElement("details", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("details", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("OperationOutcome")]
             [DataMember]
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Code for the event this message represents or link to event definition
         /// </summary>
-        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
         [Cardinality(Min=1,Max=1)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Message destination application(s)
         /// </summary>
-        [FhirElement("destination", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("destination", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Real world sender of the message
         /// </summary>
-        [FhirElement("sender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("sender", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The source of the data entry
         /// </summary>
-        [FhirElement("enterer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("enterer", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The source of the decision
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Message source application
         /// </summary>
-        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Final responsibility for event
         /// </summary>
-        [FhirElement("responsible", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("responsible", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization")]
         [DataMember]
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Cause of event
         /// </summary>
-        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("reason", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Reason
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// If this is a reply to prior message
         /// </summary>
-        [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("response", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public ResponseComponent Response
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The actual content of the message
         /// </summary>
-        [FhirElement("focus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("focus", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Link to the definition for this message
         /// </summary>
-        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("definition", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Canonical DefinitionElement

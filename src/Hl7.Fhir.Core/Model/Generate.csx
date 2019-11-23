@@ -1462,7 +1462,7 @@ public class ResourceDetails
             yield return $"    /// <summary>";
             yield return $"    /// Primitive value of the element";
             yield return $"    /// </summary>";
-            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=Specification.XmlRepresentation.XmlAttr, InSummary=new[]{{Hl7.Fhir.Model.Version.All}}, Order=30)]";
+            yield return $"    [FhirElement(\"value\", IsPrimitiveValue=true, XmlSerialization=Specification.XmlRepresentation.XmlAttr, InSummary=Hl7.Fhir.Model.Version.All, Order=30)]";
             yield return $"    [CLSCompliant(false)]";
             if (primitiveTypesWithPatternAttribute.Contains(Name))
             {
@@ -2719,12 +2719,12 @@ public class PropertyDetails
         var versionsString = VersionsString(Versions);
         var versionsAttribute = string.IsNullOrEmpty(versionsString) ? 
             string.Empty :
-            ", Versions=new[]{" + versionsString + "}";
+            ", Versions=" + versionsString;
 
         var inSummaryVersionsString = VersionsString(InSummaryVersions);
         var inSummaryAttribute = string.IsNullOrEmpty(inSummaryVersionsString) ?
             string.Empty :
-            ", InSummary=new[]{" + inSummaryVersionsString + "}";
+            ", InSummary=" + inSummaryVersionsString;
 
         var choice = PropType == "Hl7.Fhir.Model.Element" ?
             ", Choice=ChoiceType.DatatypeChoice" :
@@ -2813,8 +2813,8 @@ public class PropertyDetails
 
     public IEnumerable<string> RenderSerialize()
     {
-        var elementVersions = VersionsString(Versions, "All", "|");
-        var summaryVersions = VersionsString(InSummaryVersions, "None", "|");
+        var elementVersions = VersionsString(Versions, "All");
+        var summaryVersions = VersionsString(InSummaryVersions, "None");
         var isRequired = CardMin == "1" ?
             "true" :
             "false";
@@ -2844,7 +2844,7 @@ public class PropertyDetails
         }
     }
 
-    private static string VersionsString(HashSet<string> versions, string ifEmpty = "", string separator = ",")
+    private static string VersionsString(HashSet<string> versions, string ifEmpty = "")
     {
         const string prefix = "Hl7.Fhir.Model.Version.";
         if (versions == null || versions.Count == 0)
@@ -2852,7 +2852,7 @@ public class PropertyDetails
             if (string.IsNullOrEmpty(ifEmpty)) return ifEmpty;
             return prefix + ifEmpty;
         }
-        return string.Join(separator, versions.Select(v => prefix + (string.IsNullOrEmpty(v) ? "All" : v)));
+        return string.Join("|", versions.Select(v => prefix + (string.IsNullOrEmpty(v) ? "All" : v)));
     }
 
     /// <summary>

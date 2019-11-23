@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The parameter whose value is being tracked
             /// </summary>
-            [FhirElement("measure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("measure", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Measure
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The target value to be achieved
             /// </summary>
-            [FhirElement("detail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("detail", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Reach goal on or before
             /// </summary>
-            [FhirElement("due", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("due", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.R4.Duration))]
             [DataMember]
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
         /// </summary>
-        [FhirElement("lifecycleStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("lifecycleStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
         /// </summary>
-        [FhirElement("achievementStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("achievementStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AchievementStatus
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// E.g. Treatment, dietary, behavioral, etc.
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// high-priority | medium-priority | low-priority
         /// </summary>
-        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("priority", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Code or text describing goal
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who this goal is intended for
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Group","Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When goal pursuit begins
         /// </summary>
-        [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When goal status took effect
         /// </summary>
-        [FhirElement("statusDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("statusDate", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date StatusDateElement
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who's responsible for creating Goal?
         /// </summary>
-        [FhirElement("expressedBy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("expressedBy", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]

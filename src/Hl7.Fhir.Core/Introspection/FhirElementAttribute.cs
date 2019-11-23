@@ -50,9 +50,11 @@ namespace Hl7.Fhir.Introspection
             this.name = name;
             this.XmlSerialization = XmlRepresentation.None;
             this.Choice = ChoiceType.None;
+            this.Versions = Model.Version.All;
+            this.InSummary = Model.Version.None;
         }
 
-        public Model.Version[] Versions { get; set; }
+        public Model.Version Versions { get; set; }
 
         public ChoiceType Choice { get; set; }
 
@@ -67,7 +69,7 @@ namespace Hl7.Fhir.Introspection
 
         public int Order { get; set; }
 
-        public Model.Version[] InSummary { get; set; }
+        public Model.Version InSummary { get; set; }
 
         public Type TypeRedirect { get; set; }
 

@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business Identifier for study
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this study
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Steps followed in executing study
         /// </summary>
-        [FhirElement("protocol", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("protocol", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Part of larger study
         /// </summary>
-        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("partOf", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
         /// </summary>
-        [FhirElement("primaryPurposeType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("primaryPurposeType", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
         /// </summary>
-        [FhirElement("phase", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("phase", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Phase
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Classifications for the study
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Drugs, devices, etc. under study
         /// </summary>
-        [FhirElement("focus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("focus", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Condition being studied
         /// </summary>
-        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details for the study
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Used to search for the study
         /// </summary>
-        [FhirElement("keyword", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("keyword", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Geographic region(s) for study
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Inclusion &amp; exclusion criteria
         /// </summary>
-        [FhirElement("enrollment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("enrollment", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Group")]
         [Cardinality(Min=0,Max=-1)]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the study began and ended
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Organization that initiates and is legally responsible for the study
         /// </summary>
-        [FhirElement("sponsor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("sponsor", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Researcher who oversees multiple aspects of the study
         /// </summary>
-        [FhirElement("principalInvestigator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("principalInvestigator", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Facility where study activities are conducted
         /// </summary>
-        [FhirElement("site", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("site", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
         /// </summary>
-        [FhirElement("reasonStopped", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("reasonStopped", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ReasonStopped

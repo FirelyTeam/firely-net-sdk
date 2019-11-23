@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification
 
         public bool IsCollection => _pm.IsCollection;
 
-        public bool InSummary => _pm.InSummary.Contains(Model.Version.All) || _pm.InSummary.Contains(_version);
+        public bool InSummary => (_pm.InSummary & _version) != 0;
 
         public XmlRepresentation Representation => _pm.SerializationHint != XmlRepresentation.None ?
             _pm.SerializationHint : XmlRepresentation.XmlElement;

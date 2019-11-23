@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Short label
         /// </summary>
-        [FhirElement("label", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("label", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LabelElement
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Brief description of the related artifact
         /// </summary>
-        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("display", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Bibliographic citation for the artifact
         /// </summary>
-        [FhirElement("citation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("citation", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown CitationElement
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Where the artifact can be accessed
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Url UrlElement
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What document is being referenced
         /// </summary>
-        [FhirElement("document", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("document", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Document
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What resource is being referenced
         /// </summary>
-        [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("resource", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Canonical ResourceElement

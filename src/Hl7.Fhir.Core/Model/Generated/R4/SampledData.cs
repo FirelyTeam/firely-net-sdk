@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Zero value and units
         /// </summary>
-        [FhirElement("origin", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("origin", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of milliseconds between samples
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Multiply data by this before adding to origin
         /// </summary>
-        [FhirElement("factor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("factor", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal FactorElement
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Lower limit of detection
         /// </summary>
-        [FhirElement("lowerLimit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("lowerLimit", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal LowerLimitElement
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Upper limit of detection
         /// </summary>
-        [FhirElement("upperLimit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("upperLimit", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal UpperLimitElement
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of sample points at each time point
         /// </summary>
-        [FhirElement("dimensions", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("dimensions", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]

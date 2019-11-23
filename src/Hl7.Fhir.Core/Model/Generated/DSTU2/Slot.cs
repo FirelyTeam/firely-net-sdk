@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The schedule resource that this slot defines an interval of status information
         /// </summary>
-        [FhirElement("schedule", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("schedule", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Schedule")]
         [Cardinality(Min=1,Max=1)]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// busy | free | busy-unavailable | busy-tentative
         /// </summary>
-        [FhirElement("freeBusyType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("freeBusyType", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date/Time that the slot is to begin
         /// </summary>
-        [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date/Time that the slot is to conclude
         /// </summary>
-        [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]

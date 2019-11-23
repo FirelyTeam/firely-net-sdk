@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Formal definition of task
         /// </summary>
-        [FhirElement("instantiatesCanonical", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("instantiatesCanonical", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Canonical InstantiatesCanonicalElement
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Formal definition of task
         /// </summary>
-        [FhirElement("instantiatesUri", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("instantiatesUri", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri InstantiatesUriElement
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Request fulfilled by this task
         /// </summary>
-        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("basedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Requisition or grouper id
         /// </summary>
-        [FhirElement("groupIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("groupIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier GroupIdentifier
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Composite task
         /// </summary>
-        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("partOf", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Task")]
         [Cardinality(Min=0,Max=-1)]
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | requested | received | accepted | +
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Reason for current status
         /// </summary>
-        [FhirElement("statusReason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("statusReason", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept StatusReason
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// E.g. "Specimen collected", "IV prepped"
         /// </summary>
-        [FhirElement("businessStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("businessStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BusinessStatus
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
-        [FhirElement("intent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("intent", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Task Type
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Human-readable explanation of task
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What task is acting on
         /// </summary>
-        [FhirElement("focus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("focus", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Focus
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Beneficiary of the Task
         /// </summary>
-        [FhirElement("for", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("for", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference For
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Healthcare event during which this task originated
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Start and end time of execution
         /// </summary>
-        [FhirElement("executionPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("executionPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period ExecutionPeriod
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Task Last Modified Date
         /// </summary>
-        [FhirElement("lastModified", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("lastModified", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastModifiedElement
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who is asking for task to be done
         /// </summary>
-        [FhirElement("requester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("requester", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Responsible individual
         /// </summary>
-        [FhirElement("owner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=300)]
+        [FhirElement("owner", InSummary=Hl7.Fhir.Model.Version.All, Order=300)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
         [DataMember]
@@ -926,7 +926,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Where task occurs
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=310)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=310)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]

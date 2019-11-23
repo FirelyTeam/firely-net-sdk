@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Indication of the reason the entity signed the object(s)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the signature was created
         /// </summary>
-        [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("when", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who signed
         /// </summary>
-        [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("who", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The party represented
         /// </summary>
-        [FhirElement("onBehalfOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onBehalfOf", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The technical format of the signature
         /// </summary>
-        [FhirElement("contentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("contentType", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement

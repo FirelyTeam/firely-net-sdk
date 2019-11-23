@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// rest-hook | websocket | email | sms | message
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Where the channel points to
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri EndpointElement
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Mimetype to send, or blank for no payload
             /// </summary>
-            [FhirElement("payload", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("payload", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Usage depends on the channel type
             /// </summary>
-            [FhirElement("header", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("header", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString HeaderElement
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Rule for server push criteria
         /// </summary>
-        [FhirElement("criteria", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("criteria", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Contact details for source (e.g. troubleshooting)
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Description of why this subscription was created
         /// </summary>
-        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("reason", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// requested | active | error | off
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Latest error note
         /// </summary>
-        [FhirElement("error", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("error", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ErrorElement
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The channel on which to report matches to the criteria
         /// </summary>
-        [FhirElement("channel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("channel", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When to automatically delete the subscription
         /// </summary>
-        [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A tag to add to matching resources
         /// </summary>
-        [FhirElement("tag", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("tag", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Product to be supplied
             /// </summary>
-            [FhirElement("product", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("product", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// right | left
             /// </summary>
-            [FhirElement("eye", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("eye", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.VisionEyes> EyeElement
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens sphere
             /// </summary>
-            [FhirElement("sphere", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("sphere", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal SphereElement
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens cylinder
             /// </summary>
-            [FhirElement("cylinder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("cylinder", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal CylinderElement
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens axis
             /// </summary>
-            [FhirElement("axis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("axis", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer AxisElement
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens prism
             /// </summary>
-            [FhirElement("prism", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("prism", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PrismElement
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// up | down | in | out
             /// </summary>
-            [FhirElement("base", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("base", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.VisionBase> BaseElement
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("add", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("add", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AddElement
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contact lens power
             /// </summary>
-            [FhirElement("power", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("power", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PowerElement
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contact lens back curvature
             /// </summary>
-            [FhirElement("backCurve", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("backCurve", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal BackCurveElement
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Contact lens diameter
             /// </summary>
-            [FhirElement("diameter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("diameter", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DiameterElement
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens wear duration
             /// </summary>
-            [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Duration
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("color", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+            [FhirElement("color", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ColorElement
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Lens add
             /// </summary>
-            [FhirElement("brand", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+            [FhirElement("brand", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString BrandElement
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Notes for coatings
             /// </summary>
-            [FhirElement("notes", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+            [FhirElement("notes", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NotesElement
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When prescription was authorized
         /// </summary>
-        [FhirElement("dateWritten", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("dateWritten", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who prescription is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who authorizes the vision product
         /// </summary>
-        [FhirElement("prescriber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("prescriber", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Created during encounter / admission / stay
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Reason or indication for writing the prescription
         /// </summary>
-        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=Hl7.Fhir.Model.Version.All, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Vision supply authorization
         /// </summary>
-        [FhirElement("dispense", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("dispense", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=90)]
+        [FhirElement("identifier", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=100)]
+        [FhirElement("ruleset", Versions=Hl7.Fhir.Model.Version.DSTU2, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=110)]
+        [FhirElement("originalRuleset", Versions=Hl7.Fhir.Model.Version.DSTU2, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=120)]
+        [FhirElement("created", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("target", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=130)]
+        [FhirElement("target", Versions=Hl7.Fhir.Model.Version.DSTU2, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=130)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=140)]
+        [FhirElement("provider", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=140)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=150)]
+        [FhirElement("organization", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=160)]
+        [FhirElement("status", Versions=Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.STU3, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Desired processing priority
         /// </summary>
-        [FhirElement("priority", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=170)]
+        [FhirElement("priority", Versions=Hl7.Fhir.Model.Version.STU3, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the Products and Services
         /// </summary>
-        [FhirElement("patient", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=180)]
+        [FhirElement("patient", Versions=Hl7.Fhir.Model.Version.STU3, Order=180)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimated date or dates of Service
         /// </summary>
-        [FhirElement("serviced", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("serviced", Versions=Hl7.Fhir.Model.Version.STU3, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period)})]
         [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Author
         /// </summary>
-        [FhirElement("enterer", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=200)]
+        [FhirElement("enterer", Versions=Hl7.Fhir.Model.Version.STU3, Order=200)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target
         /// </summary>
-        [FhirElement("insurer", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=210)]
+        [FhirElement("insurer", Versions=Hl7.Fhir.Model.Version.STU3, Order=210)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Servicing Facility
         /// </summary>
-        [FhirElement("facility", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=220)]
+        [FhirElement("facility", Versions=Hl7.Fhir.Model.Version.STU3, Order=220)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurance or medical plan
         /// </summary>
-        [FhirElement("coverage", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=230)]
+        [FhirElement("coverage", Versions=Hl7.Fhir.Model.Version.STU3, Order=230)]
         [CLSCompliant(false)]
         [References("Coverage")]
         [DataMember]
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business agreement
         /// </summary>
-        [FhirElement("businessArrangement", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=240)]
+        [FhirElement("businessArrangement", Versions=Hl7.Fhir.Model.Version.STU3, Order=240)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString BusinessArrangementElement
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of services covered
         /// </summary>
-        [FhirElement("benefitCategory", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=250)]
+        [FhirElement("benefitCategory", Versions=Hl7.Fhir.Model.Version.STU3, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitCategory
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detailed services covered within the type
         /// </summary>
-        [FhirElement("benefitSubCategory", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=260)]
+        [FhirElement("benefitSubCategory", Versions=Hl7.Fhir.Model.Version.STU3, Order=260)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory

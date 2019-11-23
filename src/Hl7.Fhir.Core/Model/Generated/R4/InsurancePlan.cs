@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Business Identifier for Product
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Where product applies
             /// </summary>
-            [FhirElement("coverageArea", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("coverageArea", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Location")]
             [Cardinality(Min=0,Max=-1)]
@@ -1444,7 +1444,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business Identifier for Product
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1492,7 +1492,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Kind of product
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1507,7 +1507,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Official name
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Plan issuer
         /// </summary>
-        [FhirElement("ownedBy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("ownedBy", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -1601,7 +1601,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Product administrator
         /// </summary>
-        [FhirElement("administeredBy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("administeredBy", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -1616,7 +1616,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Where product applies
         /// </summary>
-        [FhirElement("coverageArea", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("coverageArea", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]

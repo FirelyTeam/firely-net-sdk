@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique code or number identifying the location to its users
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | suspended | inactive
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.LocationStatus> StatusElement
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name of the location as used by humans
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Description of the location
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// instance | kind
         /// </summary>
-        [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("mode", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.LocationMode> ModeElement
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Type of function performed
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Physical form of the location
         /// </summary>
-        [FhirElement("physicalType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("physicalType", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysicalType
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization responsible for provisioning and upkeep
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("managingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]

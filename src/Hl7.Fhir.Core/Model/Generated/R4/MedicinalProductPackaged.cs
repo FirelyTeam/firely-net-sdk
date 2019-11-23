@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A number appearing on the outer packaging of a specific batch
             /// </summary>
-            [FhirElement("outerPackaging", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("outerPackaging", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A number appearing on the immediate packaging (and not the outer packaging)
             /// </summary>
-            [FhirElement("immediatePackaging", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("immediatePackaging", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier ImmediatePackaging
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Including possibly Data Carrier Identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The physical type of the container of the medicine
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The quantity of this package in the medicinal product, at the current level of packaging. The outermost is always 1
             /// </summary>
-            [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Material type of the package item
             /// </summary>
-            [FhirElement("material", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("material", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A possible alternate material for the packaging
             /// </summary>
-            [FhirElement("alternateMaterial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("alternateMaterial", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A device accompanying a medicinal product
             /// </summary>
-            [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("DeviceDefinition")]
             [Cardinality(Min=0,Max=-1)]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The manufactured item as contained in the packaged medicinal product
             /// </summary>
-            [FhirElement("manufacturedItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("manufacturedItem", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [References("MedicinalProductManufactured")]
             [Cardinality(Min=0,Max=-1)]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Allows containers within containers
             /// </summary>
-            [FhirElement("packageItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("packageItem", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Dimensions, color etc.
             /// </summary>
-            [FhirElement("physicalCharacteristics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("physicalCharacteristics", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.ProdCharacteristic PhysicalCharacteristics
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Other codeable characteristics
             /// </summary>
-            [FhirElement("otherCharacteristics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("otherCharacteristics", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Shelf Life and storage information
             /// </summary>
-            [FhirElement("shelfLifeStorage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("shelfLifeStorage", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Manufacturer of this Package Item
             /// </summary>
-            [FhirElement("manufacturer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("manufacturer", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The product with this is a pack for
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("MedicinalProduct")]
         [Cardinality(Min=0,Max=-1)]
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Textual description
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The legal status of supply of the medicinal product as classified by the regulator
         /// </summary>
-        [FhirElement("legalStatusOfSupply", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("legalStatusOfSupply", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Marketing information
         /// </summary>
-        [FhirElement("marketingStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("marketingStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Manufacturer of this Package Item
         /// </summary>
-        [FhirElement("marketingAuthorization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("marketingAuthorization", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("MedicinalProductAuthorization")]
         [DataMember]
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Manufacturer of this Package Item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("manufacturer", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Batch numbering
         /// </summary>
-        [FhirElement("batchIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("batchIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A packaging item, as a contained for medicine, possibly with other packaging items within
         /// </summary>
-        [FhirElement("packageItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("packageItem", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

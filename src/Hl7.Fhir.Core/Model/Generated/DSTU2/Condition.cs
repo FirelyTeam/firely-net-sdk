@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Simple summary (disease specific)
             /// </summary>
-            [FhirElement("summary", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("summary", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Summary
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Formal record of assessment
             /// </summary>
-            [FhirElement("assessment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("assessment", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("ClinicalImpression","DiagnosticReport","Observation")]
             [Cardinality(Min=0,Max=-1)]
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Manifestation/symptom
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Supporting information found elsewhere
             /// </summary>
-            [FhirElement("detail", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("detail", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External Ids for this condition
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who has the condition?
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Person who asserts this condition
         /// </summary>
-        [FhirElement("asserter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("asserter", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Patient")]
         [DataMember]
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When first entered
         /// </summary>
-        [FhirElement("dateRecorded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("dateRecorded", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date DateRecordedElement
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Identification of the condition, problem or diagnosis
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// complaint | symptom | finding | diagnosis
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | relapse | remission | resolved
         /// </summary>
-        [FhirElement("clinicalStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("clinicalStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code ClinicalStatusElement
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// provisional | differential | confirmed | refuted | entered-in-error | unknown
         /// </summary>
-        [FhirElement("verificationStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("verificationStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Subjective severity of condition
         /// </summary>
-        [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("severity", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Severity
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Estimated or actual date,  date-time, or age
         /// </summary>
-        [FhirElement("onset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", InSummary=Hl7.Fhir.Model.Version.All, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.DSTU2.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// If/when in resolution/remission
         /// </summary>
-        [FhirElement("abatement", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("abatement", InSummary=Hl7.Fhir.Model.Version.All, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.DSTU2.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Stage/grade, usually assessed formally
         /// </summary>
-        [FhirElement("stage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("stage", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public StageComponent Stage
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Supporting evidence
         /// </summary>
-        [FhirElement("evidence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("evidence", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional information about the Condition
         /// </summary>
-        [FhirElement("notes", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("notes", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NotesElement

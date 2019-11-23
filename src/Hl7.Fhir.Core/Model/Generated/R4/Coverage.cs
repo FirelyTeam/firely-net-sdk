@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of class such as 'group' or 'plan'
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Value associated with the type
             /// </summary>
-            [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Human readable description of the type and value
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Cost category
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The amount or percentage due from the beneficiary
             /// </summary>
-            [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.R4.Money))]
             [Cardinality(Min=1,Max=1)]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Exception category
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The effective period of the exception
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business Identifier for the coverage
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Coverage category such as medical or accident
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Owner of the policy
         /// </summary>
-        [FhirElement("policyHolder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("policyHolder", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Organization")]
         [DataMember]
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Subscriber to the policy
         /// </summary>
-        [FhirElement("subscriber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subscriber", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson")]
         [DataMember]
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// ID assigned to the subscriber
         /// </summary>
-        [FhirElement("subscriberId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("subscriberId", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SubscriberIdElement
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Plan beneficiary
         /// </summary>
-        [FhirElement("beneficiary", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("beneficiary", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("dependent", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DependentElement
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Issuer of the policy
         /// </summary>
-        [FhirElement("payor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("payor", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Organization","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Relative order of the coverage
         /// </summary>
-        [FhirElement("order", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("order", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt OrderElement
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("network", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NetworkElement

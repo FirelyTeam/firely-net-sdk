@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// replaces | transforms | signs | appends
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Where to access the document
             /// </summary>
-            [FhirElement("attachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("attachment", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Format/content rules for the document
             /// </summary>
-            [FhirElement("format", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("format", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Format
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Context of the document  content
             /// </summary>
-            [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Encounter")]
             [DataMember]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Main clinical acts documented
             /// </summary>
-            [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Time of service that is being documented
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Kind of facility where patient was seen
             /// </summary>
-            [FhirElement("facilityType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("facilityType", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FacilityType
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Additional details about where the content was created (e.g. clinical specialty)
             /// </summary>
-            [FhirElement("practiceSetting", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("practiceSetting", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept PracticeSetting
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Patient demographics from source
             /// </summary>
-            [FhirElement("sourcePatientInfo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("sourcePatientInfo", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("Patient")]
             [DataMember]
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Related identifiers or resources
             /// </summary>
-            [FhirElement("related", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("related", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Identifier of related objects or events
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Related Resource
             /// </summary>
-            [FhirElement("ref", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("ref", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Ref
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Master Version Specific Identifier
         /// </summary>
-        [FhirElement("masterIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("masterIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Other identifiers for the document
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// current | superseded | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
-        [FhirElement("docStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("docStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Kind of document (LOINC if possible)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Categorization of document
         /// </summary>
-        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who/what is the subject of the document
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device")]
         [DataMember]
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When this document reference was created
         /// </summary>
-        [FhirElement("indexed", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("indexed", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who/what authenticated the document
         /// </summary>
-        [FhirElement("authenticator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("authenticator", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization which maintains the document
         /// </summary>
-        [FhirElement("custodian", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("custodian", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("relatesTo", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Document security-tags
         /// </summary>
-        [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("securityLabel", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Document referenced
         /// </summary>
-        [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("content", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("context", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public ContextComponent Context

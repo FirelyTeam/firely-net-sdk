@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// MimeType of the binary content
         /// </summary>
-        [FhirElement("contentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("contentType", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Access Control Management
         /// </summary>
-        [FhirElement("securityContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("securityContext", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference SecurityContext

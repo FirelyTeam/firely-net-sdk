@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Study instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Reference to ImagingStudy
             /// </summary>
-            [FhirElement("imagingStudy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("imagingStudy", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("ImagingStudy")]
             [DataMember]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Study access service endpoint
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Series identity of the selected instances
             /// </summary>
-            [FhirElement("series", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("series", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Series instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Series access endpoint
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The selected instance
             /// </summary>
-            [FhirElement("instance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("instance", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// SOP class UID of instance
             /// </summary>
-            [FhirElement("sopClass", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sopClass", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Selected instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// SOP Instance UID
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Patient of the selected objects
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Time when the selection of instances was made
         /// </summary>
-        [FhirElement("authoringTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("authoringTime", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Author (human or machine)
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Study identity of the selected instances
         /// </summary>
-        [FhirElement("study", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("study", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]

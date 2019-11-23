@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Mandatory fixed portion of UDI
             /// </summary>
-            [FhirElement("deviceIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("deviceIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DeviceIdentifierElement
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// UDI Machine Readable Barcode String
             /// </summary>
-            [FhirElement("carrierAIDC", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("carrierAIDC", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Base64Binary CarrierAIDCElement
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// UDI Human Readable Barcode String
             /// </summary>
-            [FhirElement("carrierHRF", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("carrierHRF", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CarrierHRFElement
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
         /// </summary>
-        [FhirElement("udiCarrier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("udiCarrier", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | inactive | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FHIRDeviceStatus> StatusElement
@@ -1471,7 +1471,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Safety Characteristics of Device
         /// </summary>
-        [FhirElement("safety", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=330)]
+        [FhirElement("safety", InSummary=Hl7.Fhir.Model.Version.All, Order=330)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

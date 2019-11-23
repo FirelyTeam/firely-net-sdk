@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Safety characteristics of the device
         /// </summary>
-        [FhirElement("safety", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("safety", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The parent device it can be part of
         /// </summary>
-        [FhirElement("parentDevice", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("parentDevice", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [References("DeviceDefinition")]
         [DataMember]

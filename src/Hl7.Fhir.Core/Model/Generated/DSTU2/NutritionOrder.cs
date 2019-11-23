@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of oral diet or diet restrictions that describe what can be consumed orally
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Instructions or additional information about the oral diet
             /// </summary>
-            [FhirElement("instruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("instruction", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of supplement product requested
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Instructions or additional information about the oral supplement
             /// </summary>
-            [FhirElement("instruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("instruction", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("baseFormulaType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Formula feeding instructions expressed as text
             /// </summary>
-            [FhirElement("administrationInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("administrationInstruction", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AdministrationInstructionElement
@@ -1212,7 +1212,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("orderer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("orderer", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date and time the nutrition order was requested
         /// </summary>
-        [FhirElement("dateTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("dateTime", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.NutritionOrderStatus> StatusElement

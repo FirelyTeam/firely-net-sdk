@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | inactive | resolved
         /// </summary>
-        [FhirElement("clinicalStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("clinicalStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// unconfirmed | confirmed | refuted | entered-in-error
         /// </summary>
-        [FhirElement("verificationStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("verificationStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept VerificationStatus
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntoleranceType> TypeElement
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// food | medication | environment | biologic
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// low | high | unable-to-assess
         /// </summary>
-        [FhirElement("criticality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("criticality", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.R4.AllergyIntoleranceCriticality> CriticalityElement
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Code that identifies the allergy or intolerance
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who the sensitivity is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Source of the information about the allergy
         /// </summary>
-        [FhirElement("asserter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("asserter", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
         [DataMember]

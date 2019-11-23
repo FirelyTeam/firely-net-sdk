@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique identifier of the catalog item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether the entry represents an orderable item
         /// </summary>
-        [FhirElement("orderable", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("orderable", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The item that is being defined
         /// </summary>
-        [FhirElement("referencedItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("referencedItem", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Medication","Device","Organization","Practitioner","PractitionerRole","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
         [Cardinality(Min=1,Max=1)]

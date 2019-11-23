@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Conditions/problems/diagnoses this episode of care is for
             /// </summary>
-            [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Condition")]
             [Cardinality(Min=1,Max=1)]
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
             /// </summary>
-            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Ranking of the diagnosis (for each role type)
             /// </summary>
-            [FhirElement("rank", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("rank", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt RankElement
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Type/class  - e.g. specialist referral, disease management
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The list of diagnosis relevant to this episode of care
         /// </summary>
-        [FhirElement("diagnosis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("diagnosis", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The patient who is the focus of this episode of care
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Organization that assumes care
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("managingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Interval during responsibility is assumed
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period

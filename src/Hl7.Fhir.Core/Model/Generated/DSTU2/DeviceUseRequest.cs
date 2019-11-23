@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DeviceUseRequestStatus> StatusElement
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Encounter motivating request
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Request identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Reason for request
         /// </summary>
-        [FhirElement("indication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("indication", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Notes or comments
         /// </summary>
-        [FhirElement("notes", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("notes", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("prnReason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("prnReason", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When ordered
         /// </summary>
-        [FhirElement("orderedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("orderedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("recordedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Focus of request
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Schedule for use
         /// </summary>
-        [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", InSummary=Hl7.Fhir.Model.Version.All, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.DSTU2.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("priority", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.DeviceUseRequestPriority> PriorityElement

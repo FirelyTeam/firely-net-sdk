@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// photo | video | audio
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The type of acquisition equipment/process
         /// </summary>
-        [FhirElement("subtype", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("subtype", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Subtype
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Identifier(s) for the image
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("operator", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Imaging view, e.g. Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("view", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name of the device/manufacturer
         /// </summary>
-        [FhirElement("deviceName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("deviceName", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DeviceNameElement
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Height of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("height", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt HeightElement
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("width", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt WidthElement
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("frames", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt FramesElement
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt DurationElement

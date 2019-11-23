@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Associated patient
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// high | moderate | low
         /// </summary>
-        [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("severity", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DetectedIssueSeverity> SeverityElement
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Problem resource
         /// </summary>
-        [FhirElement("implicated", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("implicated", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The provider or device that identified the issue
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner","Device")]
         [DataMember]
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Unique id for the detected issue
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
