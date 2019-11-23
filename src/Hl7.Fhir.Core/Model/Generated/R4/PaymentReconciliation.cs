@@ -221,21 +221,21 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.R4.Money _Amount;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("DetailsComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(serializer);
-                serializer.Element("predecessor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Predecessor?.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Type?.Serialize(serializer);
-                serializer.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Request?.Serialize(serializer);
-                serializer.Element("submitter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Submitter?.Serialize(serializer);
-                serializer.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Response?.Serialize(serializer);
-                serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DateElement?.Serialize(serializer);
-                serializer.Element("responsible", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Responsible?.Serialize(serializer);
-                serializer.Element("payee", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Payee?.Serialize(serializer);
-                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("DetailsComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.Element("predecessor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Predecessor?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Type?.Serialize(sink);
+                sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Request?.Serialize(sink);
+                sink.Element("submitter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Submitter?.Serialize(sink);
+                sink.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Response?.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DateElement?.Serialize(sink);
+                sink.Element("responsible", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Responsible?.Serialize(sink);
+                sink.Element("payee", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Payee?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -420,13 +420,13 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("NotesComponent");
-                base.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TypeElement?.Serialize(serializer);
-                serializer.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TextElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("NotesComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TypeElement?.Serialize(sink);
+                sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TextElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -895,41 +895,41 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("PaymentReconciliation");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("PaymentReconciliation");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
-            serializer.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CreatedElement?.Serialize(serializer);
-            serializer.Element("paymentIssuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaymentIssuer?.Serialize(serializer);
-            serializer.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Request?.Serialize(serializer);
-            serializer.Element("requestor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Requestor?.Serialize(serializer);
-            serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OutcomeElement?.Serialize(serializer);
-            serializer.Element("disposition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DispositionElement?.Serialize(serializer);
-            serializer.Element("paymentDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PaymentDateElement?.Serialize(serializer);
-            serializer.Element("paymentAmount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PaymentAmount?.Serialize(serializer);
-            serializer.Element("paymentIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PaymentIdentifier?.Serialize(serializer);
-            serializer.BeginList("detail", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CreatedElement?.Serialize(sink);
+            sink.Element("paymentIssuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaymentIssuer?.Serialize(sink);
+            sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Request?.Serialize(sink);
+            sink.Element("requestor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Requestor?.Serialize(sink);
+            sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OutcomeElement?.Serialize(sink);
+            sink.Element("disposition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DispositionElement?.Serialize(sink);
+            sink.Element("paymentDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PaymentDateElement?.Serialize(sink);
+            sink.Element("paymentAmount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PaymentAmount?.Serialize(sink);
+            sink.Element("paymentIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PaymentIdentifier?.Serialize(sink);
+            sink.BeginList("detail", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Detail)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("formCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FormCode?.Serialize(serializer);
-            serializer.BeginList("processNote", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("formCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FormCode?.Serialize(sink);
+            sink.BeginList("processNote", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in ProcessNote)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

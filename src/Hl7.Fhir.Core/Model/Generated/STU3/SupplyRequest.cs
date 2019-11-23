@@ -92,13 +92,13 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.Element _Item;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("OrderedItemComponent");
-                base.Serialize(serializer);
-                serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Quantity?.Serialize(serializer);
-                serializer.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Item?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("OrderedItemComponent");
+                base.Serialize(sink);
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Quantity?.Serialize(sink);
+                sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Item?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -210,13 +210,13 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("RequesterComponent");
-                base.Serialize(serializer);
-                serializer.Element("agent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Agent?.Serialize(serializer);
-                serializer.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OnBehalfOf?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("RequesterComponent");
+                base.Serialize(sink);
+                sink.Element("agent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Agent?.Serialize(sink);
+                sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OnBehalfOf?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -596,28 +596,28 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("SupplyRequest");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Category?.Serialize(serializer);
-            serializer.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PriorityElement?.Serialize(serializer);
-            serializer.Element("orderedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderedItem?.Serialize(serializer);
-            serializer.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(serializer);
-            serializer.Element("authoredOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoredOnElement?.Serialize(serializer);
-            serializer.Element("requester", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Requester?.Serialize(serializer);
-            serializer.BeginList("supplier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("SupplyRequest");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Category?.Serialize(sink);
+            sink.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PriorityElement?.Serialize(sink);
+            sink.Element("orderedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderedItem?.Serialize(sink);
+            sink.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(sink);
+            sink.Element("authoredOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoredOnElement?.Serialize(sink);
+            sink.Element("requester", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Requester?.Serialize(sink);
+            sink.BeginList("supplier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Supplier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Reason?.Serialize(serializer);
-            serializer.Element("deliverFrom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DeliverFrom?.Serialize(serializer);
-            serializer.Element("deliverTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DeliverTo?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Reason?.Serialize(sink);
+            sink.Element("deliverFrom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DeliverFrom?.Serialize(sink);
+            sink.Element("deliverTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DeliverTo?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

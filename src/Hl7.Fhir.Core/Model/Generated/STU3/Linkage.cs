@@ -111,13 +111,13 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.ResourceReference _Resource;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ItemComponent");
-                base.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
-                serializer.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Resource?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("ItemComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+                sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Resource?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -323,19 +323,19 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Linkage");
-            base.Serialize(serializer);
-            serializer.Element("active", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveElement?.Serialize(serializer);
-            serializer.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(serializer);
-            serializer.BeginList("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.BeginResource("Linkage");
+            base.Serialize(sink);
+            sink.Element("active", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveElement?.Serialize(sink);
+            sink.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(sink);
+            sink.BeginList("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Item)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

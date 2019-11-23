@@ -254,23 +254,23 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("EnrollmentRequest");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("EnrollmentRequest");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CreatedElement?.Serialize(serializer);
-            serializer.Element("insurer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Insurer?.Serialize(serializer);
-            serializer.Element("provider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Provider?.Serialize(serializer);
-            serializer.Element("candidate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Candidate?.Serialize(serializer);
-            serializer.Element("coverage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Coverage?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CreatedElement?.Serialize(sink);
+            sink.Element("insurer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Insurer?.Serialize(sink);
+            sink.Element("provider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Provider?.Serialize(sink);
+            sink.Element("candidate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Candidate?.Serialize(sink);
+            sink.Element("coverage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Coverage?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

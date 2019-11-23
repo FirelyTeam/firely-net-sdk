@@ -535,42 +535,42 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Device");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("Device");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Type?.Serialize(serializer);
-            serializer.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Type?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Note)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufacturerElement?.Serialize(serializer);
-            serializer.Element("model", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ModelElement?.Serialize(serializer);
-            serializer.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VersionElement?.Serialize(serializer);
-            serializer.Element("manufactureDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufactureDateElement?.Serialize(serializer);
-            serializer.Element("expiry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExpiryElement?.Serialize(serializer);
-            serializer.Element("udi", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UdiElement?.Serialize(serializer);
-            serializer.Element("lotNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LotNumberElement?.Serialize(serializer);
-            serializer.Element("owner", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Owner?.Serialize(serializer);
-            serializer.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Location?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patient?.Serialize(serializer);
-            serializer.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufacturerElement?.Serialize(sink);
+            sink.Element("model", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ModelElement?.Serialize(sink);
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VersionElement?.Serialize(sink);
+            sink.Element("manufactureDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufactureDateElement?.Serialize(sink);
+            sink.Element("expiry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExpiryElement?.Serialize(sink);
+            sink.Element("udi", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UdiElement?.Serialize(sink);
+            sink.Element("lotNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LotNumberElement?.Serialize(sink);
+            sink.Element("owner", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Owner?.Serialize(sink);
+            sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Location?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patient?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Contact)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UrlElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UrlElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -10,7 +8,7 @@ using System.Xml;
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
-    public class StreamingSerializerTests
+    public class FastSerializerTests
     {
         [TestMethod]
         public void CompletePatientJson()
@@ -20,7 +18,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var jsonParser = new FhirJsonParser(Model.Version.DSTU2);
             var patient = jsonParser.Parse<Model.DSTU2.Patient>(json);
 
-            var serializedJson = StreamingSerializeToJsonString(patient);
+            var serializedJson = FastSerializeToJsonString(patient);
             WriteFilesIfDifferent(json, serializedJson, "patient");
             Assert.AreEqual(json, serializedJson);
         }
@@ -33,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xmlParser = new FhirXmlParser(Model.Version.DSTU2);
             var patient = xmlParser.Parse<Model.DSTU2.Patient>(xml);
 
-            var serializedXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" + StreamingSerializeToXmlString(patient);
+            var serializedXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" + FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "patient");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -46,7 +44,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xmlParser = new FhirXmlParser(Model.Version.DSTU2);
             var bundle = xmlParser.Parse<Model.DSTU2.Bundle>(xml);
 
-            var serializedXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" + StreamingSerializeToXmlString(bundle);
+            var serializedXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" + FastSerializeToXmlString(bundle);
             WriteFilesIfDifferent(xml, serializedXml, "bundle");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -60,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = xmlParser.Parse<Model.DSTU2.Bundle>(xml);
 
             var json = SerializeToJsonString(bundle);
-            var serializedJson = StreamingSerializeToJsonString(bundle);
+            var serializedJson = FastSerializeToJsonString(bundle);
             WriteFilesIfDifferent(json, serializedJson, "bundle");
             Assert.AreEqual(json, serializedJson);
         }
@@ -74,7 +72,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = xmlParser.Parse<Model.DSTU2.Bundle>(xml);
 
             var json = SerializeToJsonString(bundle, Rest.SummaryType.True);
-            var serializedJson = StreamingSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
+            var serializedJson = FastSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
             WriteFilesIfDifferent(json, serializedJson, "bundlesummary");
             Assert.AreEqual(json, serializedJson);
         }
@@ -100,7 +98,7 @@ namespace Hl7.Fhir.Serialization.Tests
     }
   ]
 }";
-            var serializedJson = StreamingSerializeToJsonString(patient);
+            var serializedJson = FastSerializeToJsonString(patient);
             Assert.AreEqual(SerializeToJsonString(patient), serializedJson);
             WriteFilesIfDifferent(json, serializedJson, "trim");
             Assert.AreEqual(json, serializedJson);
@@ -123,7 +121,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </name>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "trim");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -147,7 +145,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "entities");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -171,7 +169,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "namespace");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -195,7 +193,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "noelement");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -221,7 +219,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "element");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -289,7 +287,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             WriteFilesIfDifferent(xml, serializedXml, "entities");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -305,7 +303,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Div = "<div>The <b>text</div>"
                 }
             };
-            var exception = Assert.ThrowsException<XmlException>(() => StreamingSerializeToXmlString(patient));
+            var exception = Assert.ThrowsException<XmlException>(() => FastSerializeToXmlString(patient));
             const string messageStart = "The 'b' start tag";
             Assert.IsTrue(exception.Message.StartsWith(messageStart), $"<{exception.Message}> does not start with <{messageStart}>");
         }
@@ -328,7 +326,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -350,7 +348,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </text>
 </Patient>";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -398,7 +396,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </subject>
 </Observation>";
 
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.True);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.True);
             WriteFilesIfDifferent(xml, serializedXml, "summaryxml");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -454,7 +452,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </subject>
 </Observation>";
 
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Data);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Data);
             WriteFilesIfDifferent(xml, serializedXml, "onlydataxml");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -501,7 +499,7 @@ namespace Hl7.Fhir.Serialization.Tests
   </code>
 </Observation>";
 
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Text);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4, Rest.SummaryType.Text);
             WriteFilesIfDifferent(xml, serializedXml, "onlytextxml");
             Assert.AreEqual(xml, serializedXml);
         }
@@ -568,7 +566,7 @@ namespace Hl7.Fhir.Serialization.Tests
   }
 }";
 
-            var serializedJson = StreamingSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
+            var serializedJson = FastSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -599,7 +597,7 @@ namespace Hl7.Fhir.Serialization.Tests
   }
 }";
 
-            var serializedJson = StreamingSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
+            var serializedJson = FastSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -653,7 +651,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ]
 }";
 
-            var serializedJson = StreamingSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
+            var serializedJson = FastSerializeToJsonString(bundle, summary: Rest.SummaryType.True);
             WriteFilesIfDifferent(json, serializedJson, "summarybundles");
             Assert.AreEqual(json, serializedJson);
         }
@@ -671,7 +669,7 @@ namespace Hl7.Fhir.Serialization.Tests
   <text value=""Lab result"" />
 </CodeableConcept>";
 
-            var serializedXml = StreamingSerializeToXmlString(codeableConcept);
+            var serializedXml = FastSerializeToXmlString(codeableConcept);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -690,7 +688,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ""text"": ""Lab result""
 }";
 
-            var serializedXml = StreamingSerializeToJsonString(codeableConcept);
+            var serializedXml = FastSerializeToJsonString(codeableConcept);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -701,7 +699,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var xml = @"<Patient xmlns=""http://hl7.org/fhir"" />";
 
-            var serializedXml = StreamingSerializeToXmlString(patient);
+            var serializedXml = FastSerializeToXmlString(patient);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -714,7 +712,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ""resourceType"": ""Patient""
 }";
 
-            var serializedJson = StreamingSerializeToJsonString(patient);
+            var serializedJson = FastSerializeToJsonString(patient);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -725,7 +723,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var xml = @"<Resource xmlns=""http://hl7.org/fhir"" />";
 
-            var serializedXml = StreamingSerializeToXmlString(patient, Model.Version.DSTU2, Rest.SummaryType.False, "Resource");
+            var serializedXml = FastSerializeToXmlString(patient, Model.Version.DSTU2, Rest.SummaryType.False, "Resource");
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -734,7 +732,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
             var expectedBytes = new FhirXmlSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
-            var actualBytes = new FhirXmlStreamingSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            var actualBytes = new FhirXmlFastSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
             Assert.AreEqual(Encoding.UTF8.GetString(expectedBytes), Encoding.UTF8.GetString(actualBytes));
         }
 
@@ -743,7 +741,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var codeableConcept = new Model.CodeableConcept("http://loinc.org", "11050-2", "Lab result");
             var expectedBytes = new FhirJsonSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
-            var actualBytes = new FhirJsonStreamingSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
+            var actualBytes = new FhirJsonFastSerializer(Model.Version.STU3).SerializeToBytes(codeableConcept);
             Assert.AreEqual(Encoding.UTF8.GetString(expectedBytes), Encoding.UTF8.GetString(actualBytes));
         }
 
@@ -779,11 +777,11 @@ namespace Hl7.Fhir.Serialization.Tests
     ""value"": ""P-1001""
   }
 }";
-            var json = StreamingSerializeToJsonString(reference, Model.Version.DSTU2);
+            var json = FastSerializeToJsonString(reference, Model.Version.DSTU2);
             Assert.AreEqual(dstu2Json, json);
-            json = StreamingSerializeToJsonString(reference, Model.Version.STU3);
+            json = FastSerializeToJsonString(reference, Model.Version.STU3);
             Assert.AreEqual(stu3Json, json);
-            json = StreamingSerializeToJsonString(reference, Model.Version.R4);
+            json = FastSerializeToJsonString(reference, Model.Version.R4);
             Assert.AreEqual(r4Json, json);
         }
 
@@ -799,7 +797,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ""resourceType"": ""Observation"",
   ""valueInstant"": ""2019-11-21T13:45:06.567+00:00""
 }";
-            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            var serializedJson = FastSerializeToJsonString(observation, Model.Version.R4);
             Assert.AreEqual(json, serializedJson);
 
             observation = new Model.R4.Observation
@@ -811,7 +809,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ""resourceType"": ""Observation"",
   ""valueInstant"": ""2019-11-21T13:45:06-04:00""
 }";
-            serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            serializedJson = FastSerializeToJsonString(observation, Model.Version.R4);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -829,7 +827,7 @@ namespace Hl7.Fhir.Serialization.Tests
     ""value"": 3.1315926
   }
 }";
-            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            var serializedJson = FastSerializeToJsonString(observation, Model.Version.R4);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -845,7 +843,7 @@ namespace Hl7.Fhir.Serialization.Tests
   ""resourceType"": ""Observation"",
   ""valueBoolean"": true
 }";
-            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            var serializedJson = FastSerializeToJsonString(observation, Model.Version.R4);
             Assert.AreEqual(json, serializedJson);
         }
 
@@ -860,7 +858,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
   <valueInstant value=""2019-11-21T13:45:06.567Z"" />
 </Observation>";
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4);
             Assert.AreEqual(xml, serializedXml);
 
             observation = new Model.R4.Observation
@@ -871,7 +869,7 @@ namespace Hl7.Fhir.Serialization.Tests
             xml = @"<Observation xmlns=""http://hl7.org/fhir"">
   <valueInstant value=""2019-11-21T13:45:06-04:00"" />
 </Observation>";
-            serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            serializedXml = FastSerializeToXmlString(observation, Model.Version.R4);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -888,7 +886,7 @@ namespace Hl7.Fhir.Serialization.Tests
     <value value=""3.1315926"" />
   </valueQuantity>
 </Observation>";
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -903,7 +901,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xml = @"<Observation xmlns=""http://hl7.org/fhir"">
   <valueBoolean value=""true"" />
 </Observation>";
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -943,7 +941,7 @@ namespace Hl7.Fhir.Serialization.Tests
     </extension>
   </valueBoolean>
 </Observation>";
-            var serializedXml = StreamingSerializeToXmlString(observation, Model.Version.R4);
+            var serializedXml = FastSerializeToXmlString(observation, Model.Version.R4);
             Assert.AreEqual(xml, serializedXml);
         }
 
@@ -993,7 +991,7 @@ namespace Hl7.Fhir.Serialization.Tests
     ]
   }
 }";
-            var serializedJson = StreamingSerializeToJsonString(observation, Model.Version.R4);
+            var serializedJson = FastSerializeToJsonString(observation, Model.Version.R4);
             WriteFilesIfDifferent(json, serializedJson, "idandextension");
             Assert.AreEqual(json, serializedJson);
         }
@@ -1015,15 +1013,15 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
-        private static string StreamingSerializeToJsonString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
+        private static string FastSerializeToJsonString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string[] elements = null)
         {
-            var serializer = new FhirJsonStreamingSerializer(new SerializerSettings(version) { Pretty = true });
+            var serializer = new FhirJsonFastSerializer(new SerializerSettings(version) { Pretty = true });
             return serializer.SerializeToString(@base, summary, elements);
         }
 
-        private static string StreamingSerializeToXmlString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string root = null, string[] elements = null)
+        private static string FastSerializeToXmlString(Model.Base @base, Model.Version version = Model.Version.DSTU2, Rest.SummaryType summary = Rest.SummaryType.False, string root = null, string[] elements = null)
         {
-            var serializer = new FhirXmlStreamingSerializer(new SerializerSettings(version) { Pretty = true });
+            var serializer = new FhirXmlFastSerializer(new SerializerSettings(version) { Pretty = true });
             return serializer.SerializeToString(@base, summary, root, elements);
         }
 

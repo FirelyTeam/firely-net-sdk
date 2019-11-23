@@ -117,15 +117,15 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.Annotation _Note;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ConditionComponent");
-                base.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(serializer);
-                serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Outcome?.Serialize(serializer);
-                serializer.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Onset?.Serialize(serializer);
-                serializer.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("ConditionComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
+                sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Outcome?.Serialize(sink);
+                sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Onset?.Serialize(sink);
+                sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -555,33 +555,33 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("FamilyMemberHistory");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("FamilyMemberHistory");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
-            serializer.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Relationship?.Serialize(serializer);
-            serializer.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenderElement?.Serialize(serializer);
-            serializer.Element("born", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Born?.Serialize(serializer);
-            serializer.Element("age", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Age?.Serialize(serializer);
-            serializer.Element("deceased", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Deceased?.Serialize(serializer);
-            serializer.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(serializer);
-            serializer.BeginList("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Relationship?.Serialize(sink);
+            sink.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenderElement?.Serialize(sink);
+            sink.Element("born", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Born?.Serialize(sink);
+            sink.Element("age", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Age?.Serialize(sink);
+            sink.Element("deceased", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Deceased?.Serialize(sink);
+            sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+            sink.BeginList("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Condition)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -294,16 +294,16 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Quantity");
-            base.Serialize(serializer);
-            serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(serializer);
-            serializer.Element("comparator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ComparatorElement?.Serialize(serializer);
-            serializer.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UnitElement?.Serialize(serializer);
-            serializer.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SystemElement?.Serialize(serializer);
-            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CodeElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Quantity");
+            base.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
+            sink.Element("comparator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ComparatorElement?.Serialize(sink);
+            sink.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UnitElement?.Serialize(sink);
+            sink.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SystemElement?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CodeElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

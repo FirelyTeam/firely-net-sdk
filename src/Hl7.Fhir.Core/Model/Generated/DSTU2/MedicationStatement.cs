@@ -211,20 +211,20 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("DosageComponent");
-                base.Serialize(serializer);
-                serializer.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(serializer);
-                serializer.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Timing?.Serialize(serializer);
-                serializer.Element("asNeeded", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); AsNeeded?.Serialize(serializer);
-                serializer.Element("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Site?.Serialize(serializer);
-                serializer.Element("route", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Route?.Serialize(serializer);
-                serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(serializer);
-                serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Quantity?.Serialize(serializer);
-                serializer.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Rate?.Serialize(serializer);
-                serializer.Element("maxDosePerPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerPeriod?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("DosageComponent");
+                base.Serialize(sink);
+                sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+                sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Timing?.Serialize(sink);
+                sink.Element("asNeeded", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); AsNeeded?.Serialize(sink);
+                sink.Element("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Site?.Serialize(sink);
+                sink.Element("route", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Route?.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Quantity?.Serialize(sink);
+                sink.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Rate?.Serialize(sink);
+                sink.Element("maxDosePerPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerPeriod?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -701,44 +701,44 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MedicationStatement");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("MedicationStatement");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.Element("informationSource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InformationSource?.Serialize(serializer);
-            serializer.Element("dateAsserted", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateAssertedElement?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("wasNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WasNotTakenElement?.Serialize(serializer);
-            serializer.BeginList("reasonNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("informationSource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InformationSource?.Serialize(sink);
+            sink.Element("dateAsserted", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateAssertedElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("wasNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WasNotTakenElement?.Serialize(sink);
+            sink.BeginList("reasonNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in ReasonNotTaken)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("reasonForUse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); ReasonForUse?.Serialize(serializer);
-            serializer.Element("effective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Effective?.Serialize(serializer);
-            serializer.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NoteElement?.Serialize(serializer);
-            serializer.BeginList("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("reasonForUse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); ReasonForUse?.Serialize(sink);
+            sink.Element("effective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Effective?.Serialize(sink);
+            sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NoteElement?.Serialize(sink);
+            sink.BeginList("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in SupportingInformation)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(serializer);
-            serializer.BeginList("dosage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(sink);
+            sink.BeginList("dosage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Dosage)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

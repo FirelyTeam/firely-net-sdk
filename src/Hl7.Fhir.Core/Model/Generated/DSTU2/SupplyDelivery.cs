@@ -325,27 +325,27 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("SupplyDelivery");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
-            serializer.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Quantity?.Serialize(serializer);
-            serializer.Element("suppliedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SuppliedItem?.Serialize(serializer);
-            serializer.Element("supplier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Supplier?.Serialize(serializer);
-            serializer.Element("whenPrepared", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WhenPrepared?.Serialize(serializer);
-            serializer.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(serializer);
-            serializer.Element("destination", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Destination?.Serialize(serializer);
-            serializer.BeginList("receiver", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("SupplyDelivery");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Quantity?.Serialize(sink);
+            sink.Element("suppliedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SuppliedItem?.Serialize(sink);
+            sink.Element("supplier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Supplier?.Serialize(sink);
+            sink.Element("whenPrepared", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WhenPrepared?.Serialize(sink);
+            sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(sink);
+            sink.Element("destination", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Destination?.Serialize(sink);
+            sink.BeginList("receiver", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Receiver)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

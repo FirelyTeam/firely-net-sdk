@@ -289,23 +289,23 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Signature");
-            base.Serialize(serializer);
-            serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.BeginDataType("Signature");
+            base.Serialize(sink);
+            sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Type)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WhenElement?.Serialize(serializer);
-            serializer.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Who?.Serialize(serializer);
-            serializer.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnBehalfOf?.Serialize(serializer);
-            serializer.Element("targetFormat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TargetFormatElement?.Serialize(serializer);
-            serializer.Element("sigFormat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SigFormatElement?.Serialize(serializer);
-            serializer.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DataElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WhenElement?.Serialize(sink);
+            sink.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Who?.Serialize(sink);
+            sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnBehalfOf?.Serialize(sink);
+            sink.Element("targetFormat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TargetFormatElement?.Serialize(sink);
+            sink.Element("sigFormat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SigFormatElement?.Serialize(sink);
+            sink.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DataElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -163,14 +163,14 @@ namespace Hl7.Fhir.Model
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ParticipantComponent");
-                base.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); TypeElement?.Serialize(serializer);
-                serializer.Element("uri", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); UriElement?.Serialize(serializer);
-                serializer.Element("display", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DisplayElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("ParticipantComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); TypeElement?.Serialize(sink);
+                sink.Element("uri", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); UriElement?.Serialize(sink);
+                sink.Element("display", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DisplayElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -271,17 +271,17 @@ namespace Hl7.Fhir.Model
             
             private List<SetupActionComponent> _Action;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SetupComponent");
-                base.Serialize(serializer);
-                serializer.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
+                sink.BeginDataType("SetupComponent");
+                base.Serialize(sink);
+                sink.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
                 foreach(var item in Action)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -385,13 +385,13 @@ namespace Hl7.Fhir.Model
             
             private AssertComponent _Assert;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SetupActionComponent");
-                base.Serialize(serializer);
-                serializer.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Operation?.Serialize(serializer);
-                serializer.Element("assert", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Assert?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("SetupActionComponent");
+                base.Serialize(sink);
+                sink.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Operation?.Serialize(sink);
+                sink.Element("assert", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Assert?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -572,14 +572,14 @@ namespace Hl7.Fhir.Model
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("OperationComponent");
-                base.Serialize(serializer);
-                serializer.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); ResultElement?.Serialize(serializer);
-                serializer.Element("message", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); MessageElement?.Serialize(serializer);
-                serializer.Element("detail", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DetailElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("OperationComponent");
+                base.Serialize(sink);
+                sink.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); ResultElement?.Serialize(sink);
+                sink.Element("message", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); MessageElement?.Serialize(sink);
+                sink.Element("detail", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DetailElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -765,14 +765,14 @@ namespace Hl7.Fhir.Model
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("AssertComponent");
-                base.Serialize(serializer);
-                serializer.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); ResultElement?.Serialize(serializer);
-                serializer.Element("message", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); MessageElement?.Serialize(serializer);
-                serializer.Element("detail", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DetailElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("AssertComponent");
+                base.Serialize(sink);
+                sink.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); ResultElement?.Serialize(sink);
+                sink.Element("message", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); MessageElement?.Serialize(sink);
+                sink.Element("detail", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DetailElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -939,19 +939,19 @@ namespace Hl7.Fhir.Model
             
             private List<TestActionComponent> _Action;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("TestComponent");
-                base.Serialize(serializer);
-                serializer.Element("name", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); NameElement?.Serialize(serializer);
-                serializer.Element("description", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
-                serializer.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
+                sink.BeginDataType("TestComponent");
+                base.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); NameElement?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
                 foreach(var item in Action)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1065,13 +1065,13 @@ namespace Hl7.Fhir.Model
             
             private AssertComponent _Assert;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("TestActionComponent");
-                base.Serialize(serializer);
-                serializer.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Operation?.Serialize(serializer);
-                serializer.Element("assert", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Assert?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("TestActionComponent");
+                base.Serialize(sink);
+                sink.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Operation?.Serialize(sink);
+                sink.Element("assert", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Assert?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1167,17 +1167,17 @@ namespace Hl7.Fhir.Model
             
             private List<TeardownActionComponent> _Action;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("TeardownComponent");
-                base.Serialize(serializer);
-                serializer.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
+                sink.BeginDataType("TeardownComponent");
+                base.Serialize(sink);
+                sink.BeginList("action", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true);
                 foreach(var item in Action)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1268,12 +1268,12 @@ namespace Hl7.Fhir.Model
             
             private OperationComponent _Operation;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("TeardownActionComponent");
-                base.Serialize(serializer);
-                serializer.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); Operation?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("TeardownActionComponent");
+                base.Serialize(sink);
+                sink.Element("operation", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, true, false); Operation?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1731,33 +1731,33 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("TestReport");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("name", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); NameElement?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("testScript", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); TestScript?.Serialize(serializer);
-            serializer.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); ResultElement?.Serialize(serializer);
-            serializer.Element("score", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); ScoreElement?.Serialize(serializer);
-            serializer.Element("tester", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); TesterElement?.Serialize(serializer);
-            serializer.Element("issued", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); IssuedElement?.Serialize(serializer);
-            serializer.BeginList("participant", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("TestReport");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Identifier?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); NameElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); StatusElement?.Serialize(sink);
+            sink.Element("testScript", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); TestScript?.Serialize(sink);
+            sink.Element("result", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); ResultElement?.Serialize(sink);
+            sink.Element("score", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); ScoreElement?.Serialize(sink);
+            sink.Element("tester", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); TesterElement?.Serialize(sink);
+            sink.Element("issued", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); IssuedElement?.Serialize(sink);
+            sink.BeginList("participant", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Participant)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("setup", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Setup?.Serialize(serializer);
-            serializer.BeginList("test", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("setup", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Setup?.Serialize(sink);
+            sink.BeginList("test", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Test)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("teardown", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Teardown?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("teardown", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false, false); Teardown?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

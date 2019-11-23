@@ -104,15 +104,15 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            base.Serialize(serializer);
-            serializer.BeginList("modifierExtension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            base.Serialize(sink);
+            sink.BeginList("modifierExtension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in ModifierExtension)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
+            sink.End();
         }
     
         [NotMapped]

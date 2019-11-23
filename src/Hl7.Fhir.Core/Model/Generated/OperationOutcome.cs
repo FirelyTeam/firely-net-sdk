@@ -245,21 +245,21 @@ namespace Hl7.Fhir.Model
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("IssueComponent");
-                base.Serialize(serializer);
-                serializer.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SeverityElement?.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CodeElement?.Serialize(serializer);
-                serializer.Element("details", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Details?.Serialize(serializer);
-                serializer.Element("diagnostics", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiagnosticsElement?.Serialize(serializer);
-                serializer.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-                serializer.Serialize(LocationElement);
-                serializer.End();
-                serializer.BeginList("expression", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
-                serializer.Serialize(ExpressionElement);
-                serializer.End();
-                serializer.End();
+                sink.BeginDataType("IssueComponent");
+                base.Serialize(sink);
+                sink.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SeverityElement?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CodeElement?.Serialize(sink);
+                sink.Element("details", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Details?.Serialize(sink);
+                sink.Element("diagnostics", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiagnosticsElement?.Serialize(sink);
+                sink.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(LocationElement);
+                sink.End();
+                sink.BeginList("expression", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+                sink.Serialize(ExpressionElement);
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -410,17 +410,17 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("OperationOutcome");
-            base.Serialize(serializer);
-            serializer.BeginList("issue", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.BeginResource("OperationOutcome");
+            base.Serialize(sink);
+            sink.BeginList("issue", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Issue)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

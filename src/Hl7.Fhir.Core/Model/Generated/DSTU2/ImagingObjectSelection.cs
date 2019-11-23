@@ -159,20 +159,20 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<SeriesComponent> _Series;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("StudyComponent");
-                base.Serialize(serializer);
-                serializer.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(serializer);
-                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
-                serializer.Element("imagingStudy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ImagingStudy?.Serialize(serializer);
-                serializer.BeginList("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                sink.BeginDataType("StudyComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+                sink.Element("imagingStudy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ImagingStudy?.Serialize(sink);
+                sink.BeginList("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
                 foreach(var item in Series)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -344,19 +344,19 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<InstanceComponent> _Instance;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SeriesComponent");
-                base.Serialize(serializer);
-                serializer.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UidElement?.Serialize(serializer);
-                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
-                serializer.BeginList("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                sink.BeginDataType("SeriesComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+                sink.BeginList("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
                 foreach(var item in Instance)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -559,20 +559,20 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<FramesComponent> _Frames;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("InstanceComponent");
-                base.Serialize(serializer);
-                serializer.Element("sopClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SopClassElement?.Serialize(serializer);
-                serializer.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(serializer);
-                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(serializer);
-                serializer.BeginList("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("InstanceComponent");
+                base.Serialize(sink);
+                sink.Element("sopClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SopClassElement?.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.BeginList("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Frames)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -731,15 +731,15 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("FramesComponent");
-                base.Serialize(serializer);
-                serializer.BeginList("frameNumbers", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
-                serializer.Serialize(FrameNumbersElement);
-                serializer.End();
-                serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("FramesComponent");
+                base.Serialize(sink);
+                sink.BeginList("frameNumbers", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                sink.Serialize(FrameNumbersElement);
+                sink.End();
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1034,23 +1034,23 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("ImagingObjectSelection");
-            base.Serialize(serializer);
-            serializer.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Title?.Serialize(serializer);
-            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(serializer);
-            serializer.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(serializer);
-            serializer.Element("authoringTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoringTimeElement?.Serialize(serializer);
-            serializer.BeginList("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.BeginResource("ImagingObjectSelection");
+            base.Serialize(sink);
+            sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Title?.Serialize(sink);
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(sink);
+            sink.Element("authoringTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoringTimeElement?.Serialize(sink);
+            sink.BeginList("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Study)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

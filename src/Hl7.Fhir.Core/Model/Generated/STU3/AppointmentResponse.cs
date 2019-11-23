@@ -327,29 +327,29 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("AppointmentResponse");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("AppointmentResponse");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("appointment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Appointment?.Serialize(serializer);
-            serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StartElement?.Serialize(serializer);
-            serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EndElement?.Serialize(serializer);
-            serializer.BeginList("participantType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("appointment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Appointment?.Serialize(sink);
+            sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StartElement?.Serialize(sink);
+            sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EndElement?.Serialize(sink);
+            sink.BeginList("participantType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in ParticipantType)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Actor?.Serialize(serializer);
-            serializer.Element("participantStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ParticipantStatusElement?.Serialize(serializer);
-            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Actor?.Serialize(sink);
+            sink.Element("participantStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ParticipantStatusElement?.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

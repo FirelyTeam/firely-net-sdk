@@ -109,13 +109,13 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _MaterialType;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("FractionDescriptionComponent");
-                base.Serialize(serializer);
-                serializer.Element("fraction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FractionElement?.Serialize(serializer);
-                serializer.Element("materialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaterialType?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("FractionDescriptionComponent");
+                base.Serialize(sink);
+                sink.Element("fraction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FractionElement?.Serialize(sink);
+                sink.Element("materialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaterialType?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -328,24 +328,24 @@ namespace Hl7.Fhir.Model.R4
             
             private OrganismGeneralComponent _OrganismGeneral;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("OrganismComponent");
-                base.Serialize(serializer);
-                serializer.Element("family", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Family?.Serialize(serializer);
-                serializer.Element("genus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Genus?.Serialize(serializer);
-                serializer.Element("species", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Species?.Serialize(serializer);
-                serializer.Element("intraspecificType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificType?.Serialize(serializer);
-                serializer.Element("intraspecificDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificDescriptionElement?.Serialize(serializer);
-                serializer.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("OrganismComponent");
+                base.Serialize(sink);
+                sink.Element("family", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Family?.Serialize(sink);
+                sink.Element("genus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Genus?.Serialize(sink);
+                sink.Element("species", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Species?.Serialize(sink);
+                sink.Element("intraspecificType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificType?.Serialize(sink);
+                sink.Element("intraspecificDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntraspecificDescriptionElement?.Serialize(sink);
+                sink.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Author)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("hybrid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Hybrid?.Serialize(serializer);
-                serializer.Element("organismGeneral", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismGeneral?.Serialize(serializer);
-                serializer.End();
+                sink.End();
+                sink.Element("hybrid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Hybrid?.Serialize(sink);
+                sink.Element("organismGeneral", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismGeneral?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -503,13 +503,13 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("AuthorComponent");
-                base.Serialize(serializer);
-                serializer.Element("authorType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorType?.Serialize(serializer);
-                serializer.Element("authorDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorDescriptionElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("AuthorComponent");
+                base.Serialize(sink);
+                sink.Element("authorType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorType?.Serialize(sink);
+                sink.Element("authorDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorDescriptionElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -736,16 +736,16 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _HybridType;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("HybridComponent");
-                base.Serialize(serializer);
-                serializer.Element("maternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismIdElement?.Serialize(serializer);
-                serializer.Element("maternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismNameElement?.Serialize(serializer);
-                serializer.Element("paternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismIdElement?.Serialize(serializer);
-                serializer.Element("paternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismNameElement?.Serialize(serializer);
-                serializer.Element("hybridType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HybridType?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("HybridComponent");
+                base.Serialize(sink);
+                sink.Element("maternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismIdElement?.Serialize(sink);
+                sink.Element("maternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaternalOrganismNameElement?.Serialize(sink);
+                sink.Element("paternalOrganismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismIdElement?.Serialize(sink);
+                sink.Element("paternalOrganismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaternalOrganismNameElement?.Serialize(sink);
+                sink.Element("hybridType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HybridType?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -897,15 +897,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _Order;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("OrganismGeneralComponent");
-                base.Serialize(serializer);
-                serializer.Element("kingdom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Kingdom?.Serialize(serializer);
-                serializer.Element("phylum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Phylum?.Serialize(serializer);
-                serializer.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(serializer);
-                serializer.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Order?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("OrganismGeneralComponent");
+                base.Serialize(sink);
+                sink.Element("kingdom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Kingdom?.Serialize(sink);
+                sink.Element("phylum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Phylum?.Serialize(sink);
+                sink.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(sink);
+                sink.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Order?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1024,13 +1024,13 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _PartLocation;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("PartDescriptionComponent");
-                base.Serialize(serializer);
-                serializer.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Part?.Serialize(serializer);
-                serializer.Element("partLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PartLocation?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("PartDescriptionComponent");
+                base.Serialize(sink);
+                sink.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Part?.Serialize(sink);
+                sink.Element("partLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PartLocation?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1427,48 +1427,48 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("SubstanceSourceMaterial");
-            base.Serialize(serializer);
-            serializer.Element("sourceMaterialClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialClass?.Serialize(serializer);
-            serializer.Element("sourceMaterialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialType?.Serialize(serializer);
-            serializer.Element("sourceMaterialState", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialState?.Serialize(serializer);
-            serializer.Element("organismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismId?.Serialize(serializer);
-            serializer.Element("organismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismNameElement?.Serialize(serializer);
-            serializer.BeginList("parentSubstanceId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("SubstanceSourceMaterial");
+            base.Serialize(sink);
+            sink.Element("sourceMaterialClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialClass?.Serialize(sink);
+            sink.Element("sourceMaterialType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialType?.Serialize(sink);
+            sink.Element("sourceMaterialState", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourceMaterialState?.Serialize(sink);
+            sink.Element("organismId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismId?.Serialize(sink);
+            sink.Element("organismName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismNameElement?.Serialize(sink);
+            sink.BeginList("parentSubstanceId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in ParentSubstanceId)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("parentSubstanceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-            serializer.Serialize(ParentSubstanceNameElement);
-            serializer.End();
-            serializer.BeginList("countryOfOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("parentSubstanceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(ParentSubstanceNameElement);
+            sink.End();
+            sink.BeginList("countryOfOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in CountryOfOrigin)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("geographicalLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-            serializer.Serialize(GeographicalLocationElement);
-            serializer.End();
-            serializer.Element("developmentStage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DevelopmentStage?.Serialize(serializer);
-            serializer.BeginList("fractionDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("geographicalLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(GeographicalLocationElement);
+            sink.End();
+            sink.Element("developmentStage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DevelopmentStage?.Serialize(sink);
+            sink.BeginList("fractionDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in FractionDescription)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(serializer);
-            serializer.BeginList("partDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(sink);
+            sink.BeginList("partDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in PartDescription)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

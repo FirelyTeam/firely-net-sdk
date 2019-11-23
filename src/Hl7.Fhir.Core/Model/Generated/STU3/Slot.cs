@@ -382,37 +382,37 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Slot");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("Slot");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("serviceCategory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ServiceCategory?.Serialize(serializer);
-            serializer.BeginList("serviceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("serviceCategory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ServiceCategory?.Serialize(sink);
+            sink.BeginList("serviceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in ServiceType)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("specialty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("specialty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Specialty)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("appointmentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AppointmentType?.Serialize(serializer);
-            serializer.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Schedule?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StartElement?.Serialize(serializer);
-            serializer.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); EndElement?.Serialize(serializer);
-            serializer.Element("overbooked", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OverbookedElement?.Serialize(serializer);
-            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("appointmentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AppointmentType?.Serialize(sink);
+            sink.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Schedule?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StartElement?.Serialize(sink);
+            sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); EndElement?.Serialize(sink);
+            sink.Element("overbooked", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OverbookedElement?.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

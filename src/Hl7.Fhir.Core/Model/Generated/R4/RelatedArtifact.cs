@@ -326,18 +326,18 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("RelatedArtifact");
-            base.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
-            serializer.Element("label", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LabelElement?.Serialize(serializer);
-            serializer.Element("display", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayElement?.Serialize(serializer);
-            serializer.Element("citation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CitationElement?.Serialize(serializer);
-            serializer.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(serializer);
-            serializer.Element("document", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Document?.Serialize(serializer);
-            serializer.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResourceElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("RelatedArtifact");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("label", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LabelElement?.Serialize(sink);
+            sink.Element("display", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayElement?.Serialize(sink);
+            sink.Element("citation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CitationElement?.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.Element("document", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Document?.Serialize(sink);
+            sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResourceElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

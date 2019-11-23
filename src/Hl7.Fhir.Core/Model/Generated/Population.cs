@@ -161,15 +161,15 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Population");
-            base.Serialize(serializer);
-            serializer.Element("age", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Age?.Serialize(serializer);
-            serializer.Element("gender", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Gender?.Serialize(serializer);
-            serializer.Element("race", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Race?.Serialize(serializer);
-            serializer.Element("physiologicalCondition", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); PhysiologicalCondition?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Population");
+            base.Serialize(sink);
+            sink.Element("age", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Age?.Serialize(sink);
+            sink.Element("gender", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Gender?.Serialize(sink);
+            sink.Element("race", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Race?.Serialize(sink);
+            sink.Element("physiologicalCondition", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); PhysiologicalCondition?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

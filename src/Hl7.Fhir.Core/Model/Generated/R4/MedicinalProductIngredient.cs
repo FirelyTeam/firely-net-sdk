@@ -121,20 +121,20 @@ namespace Hl7.Fhir.Model.R4
             
             private List<StrengthComponent> _Strength;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SpecifiedSubstanceComponent");
-                base.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(serializer);
-                serializer.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Group?.Serialize(serializer);
-                serializer.Element("confidentiality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Confidentiality?.Serialize(serializer);
-                serializer.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("SpecifiedSubstanceComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Group?.Serialize(sink);
+                sink.Element("confidentiality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Confidentiality?.Serialize(sink);
+                sink.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Strength)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -345,28 +345,28 @@ namespace Hl7.Fhir.Model.R4
             
             private List<ReferenceStrengthComponent> _ReferenceStrength;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("StrengthComponent");
-                base.Serialize(serializer);
-                serializer.Element("presentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Presentation?.Serialize(serializer);
-                serializer.Element("presentationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PresentationLowLimit?.Serialize(serializer);
-                serializer.Element("concentration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Concentration?.Serialize(serializer);
-                serializer.Element("concentrationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConcentrationLowLimit?.Serialize(serializer);
-                serializer.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(serializer);
-                serializer.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("StrengthComponent");
+                base.Serialize(sink);
+                sink.Element("presentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Presentation?.Serialize(sink);
+                sink.Element("presentationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PresentationLowLimit?.Serialize(sink);
+                sink.Element("concentration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Concentration?.Serialize(sink);
+                sink.Element("concentrationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConcentrationLowLimit?.Serialize(sink);
+                sink.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(sink);
+                sink.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Country)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.BeginList("referenceStrength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.End();
+                sink.BeginList("referenceStrength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in ReferenceStrength)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -563,21 +563,21 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.CodeableConcept> _Country;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ReferenceStrengthComponent");
-                base.Serialize(serializer);
-                serializer.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(serializer);
-                serializer.Element("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Strength?.Serialize(serializer);
-                serializer.Element("strengthLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StrengthLowLimit?.Serialize(serializer);
-                serializer.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(serializer);
-                serializer.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("ReferenceStrengthComponent");
+                base.Serialize(sink);
+                sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+                sink.Element("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Strength?.Serialize(sink);
+                sink.Element("strengthLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StrengthLowLimit?.Serialize(sink);
+                sink.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(sink);
+                sink.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Country)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -703,18 +703,18 @@ namespace Hl7.Fhir.Model.R4
             
             private List<StrengthComponent> _Strength;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SubstanceComponent");
-                base.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(serializer);
-                serializer.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("SubstanceComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Strength)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -952,27 +952,27 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MedicinalProductIngredient");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Role?.Serialize(serializer);
-            serializer.Element("allergenicIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AllergenicIndicatorElement?.Serialize(serializer);
-            serializer.BeginList("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("MedicinalProductIngredient");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Role?.Serialize(sink);
+            sink.Element("allergenicIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AllergenicIndicatorElement?.Serialize(sink);
+            sink.BeginList("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Manufacturer)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("specifiedSubstance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("specifiedSubstance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in SpecifiedSubstance)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

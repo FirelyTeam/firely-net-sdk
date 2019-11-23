@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Medication;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("OtherTherapyComponent");
-                base.Serialize(serializer);
-                serializer.Element("therapyRelationshipType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TherapyRelationshipType?.Serialize(serializer);
-                serializer.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("OtherTherapyComponent");
+                base.Serialize(sink);
+                sink.Element("therapyRelationshipType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TherapyRelationshipType?.Serialize(sink);
+                sink.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -338,43 +338,43 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MedicinalProductContraindication");
-            base.Serialize(serializer);
-            serializer.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("MedicinalProductContraindication");
+            base.Serialize(sink);
+            sink.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Subject)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("disease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Disease?.Serialize(serializer);
-            serializer.Element("diseaseStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiseaseStatus?.Serialize(serializer);
-            serializer.BeginList("comorbidity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("disease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Disease?.Serialize(sink);
+            sink.Element("diseaseStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DiseaseStatus?.Serialize(sink);
+            sink.BeginList("comorbidity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Comorbidity)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("therapeuticIndication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("therapeuticIndication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in TherapeuticIndication)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("otherTherapy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("otherTherapy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in OtherTherapy)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Population)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -106,19 +106,19 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("GeneComponent");
-                base.Serialize(serializer);
-                serializer.Element("geneSequenceOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GeneSequenceOrigin?.Serialize(serializer);
-                serializer.Element("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Gene?.Serialize(serializer);
-                serializer.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("GeneComponent");
+                base.Serialize(sink);
+                sink.Element("geneSequenceOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GeneSequenceOrigin?.Serialize(sink);
+                sink.Element("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Gene?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Source)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -248,19 +248,19 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("GeneElementComponent");
-                base.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
-                serializer.Element("element", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Element?.Serialize(serializer);
-                serializer.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("GeneElementComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("element", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Element?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Source)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -405,25 +405,25 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ClassificationComponent");
-                base.Serialize(serializer);
-                serializer.Element("domain", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Domain?.Serialize(serializer);
-                serializer.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(serializer);
-                serializer.BeginList("subtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("ClassificationComponent");
+                base.Serialize(sink);
+                sink.Element("domain", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Domain?.Serialize(sink);
+                sink.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(sink);
+                sink.BeginList("subtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Subtype)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.End();
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Source)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -629,24 +629,24 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("TargetComponent");
-                base.Serialize(serializer);
-                serializer.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Target?.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
-                serializer.Element("interaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Interaction?.Serialize(serializer);
-                serializer.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(serializer);
-                serializer.Element("organismType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismType?.Serialize(serializer);
-                serializer.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Amount?.Serialize(serializer);
-                serializer.Element("amountType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AmountType?.Serialize(serializer);
-                serializer.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("TargetComponent");
+                base.Serialize(sink);
+                sink.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Target?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("interaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Interaction?.Serialize(sink);
+                sink.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(sink);
+                sink.Element("organismType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismType?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Amount?.Serialize(sink);
+                sink.Element("amountType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AmountType?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Source)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -897,36 +897,36 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("SubstanceReferenceInformation");
-            base.Serialize(serializer);
-            serializer.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommentElement?.Serialize(serializer);
-            serializer.BeginList("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("SubstanceReferenceInformation");
+            base.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommentElement?.Serialize(sink);
+            sink.BeginList("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Gene)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("geneElement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("geneElement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in GeneElement)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Classification)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Target)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

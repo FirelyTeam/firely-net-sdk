@@ -143,25 +143,25 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<StratifierComponent> _Stratifier;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("GroupComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Identifier?.Serialize(serializer);
-                serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.BeginDataType("GroupComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Identifier?.Serialize(sink);
+                sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in Population)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(serializer);
-                serializer.BeginList("stratifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.End();
+                sink.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(sink);
+                sink.BeginList("stratifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in Stratifier)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -327,15 +327,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.ResourceReference _Patients;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("PopulationComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
-                serializer.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(serializer);
-                serializer.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("PopulationComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(sink);
+                sink.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -456,18 +456,18 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<StratifierGroupComponent> _Stratum;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("StratifierComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(serializer);
-                serializer.BeginList("stratum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.BeginDataType("StratifierComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.BeginList("stratum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in Stratum)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -631,19 +631,19 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("StratifierGroupComponent");
-                base.Serialize(serializer);
-                serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(serializer);
-                serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.BeginDataType("StratifierGroupComponent");
+                base.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
+                sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in Population)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(serializer);
-                serializer.End();
+                sink.End();
+                sink.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -804,15 +804,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.ResourceReference _Patients;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("StratifierGroupPopulationComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
-                serializer.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(serializer);
-                serializer.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("StratifierGroupPopulationComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(sink);
+                sink.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1173,26 +1173,26 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MeasureReport");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
-            serializer.Element("measure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Measure?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(serializer);
-            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
-            serializer.Element("reportingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReportingOrganization?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Period?.Serialize(serializer);
-            serializer.BeginList("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("MeasureReport");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("measure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Measure?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("reportingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReportingOrganization?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Period?.Serialize(sink);
+            sink.BeginList("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Group)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("evaluatedResources", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EvaluatedResources?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("evaluatedResources", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EvaluatedResources?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

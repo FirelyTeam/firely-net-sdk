@@ -130,13 +130,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("UsageContext");
-            base.Serialize(serializer);
-            serializer.Element("code", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); Code?.Serialize(serializer);
-            serializer.Element("value", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, true); Value?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("UsageContext");
+            base.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); Code?.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, true); Value?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

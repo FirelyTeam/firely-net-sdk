@@ -164,13 +164,13 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Money");
-            base.Serialize(serializer);
-            serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(serializer);
-            serializer.Element("currency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CurrencyElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Money");
+            base.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
+            sink.Element("currency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CurrencyElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

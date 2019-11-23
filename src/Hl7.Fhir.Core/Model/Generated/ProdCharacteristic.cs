@@ -339,31 +339,31 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("ProdCharacteristic");
-            base.Serialize(serializer);
-            serializer.Element("height", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Height?.Serialize(serializer);
-            serializer.Element("width", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Width?.Serialize(serializer);
-            serializer.Element("depth", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Depth?.Serialize(serializer);
-            serializer.Element("weight", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Weight?.Serialize(serializer);
-            serializer.Element("nominalVolume", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NominalVolume?.Serialize(serializer);
-            serializer.Element("externalDiameter", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ExternalDiameter?.Serialize(serializer);
-            serializer.Element("shape", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ShapeElement?.Serialize(serializer);
-            serializer.BeginList("color", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
-            serializer.Serialize(ColorElement);
-            serializer.End();
-            serializer.BeginList("imprint", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
-            serializer.Serialize(ImprintElement);
-            serializer.End();
-            serializer.BeginList("image", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            sink.BeginDataType("ProdCharacteristic");
+            base.Serialize(sink);
+            sink.Element("height", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Height?.Serialize(sink);
+            sink.Element("width", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Width?.Serialize(sink);
+            sink.Element("depth", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Depth?.Serialize(sink);
+            sink.Element("weight", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Weight?.Serialize(sink);
+            sink.Element("nominalVolume", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NominalVolume?.Serialize(sink);
+            sink.Element("externalDiameter", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ExternalDiameter?.Serialize(sink);
+            sink.Element("shape", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ShapeElement?.Serialize(sink);
+            sink.BeginList("color", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            sink.Serialize(ColorElement);
+            sink.End();
+            sink.BeginList("imprint", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            sink.Serialize(ImprintElement);
+            sink.End();
+            sink.BeginList("image", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
             foreach(var item in Image)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("scoring", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Scoring?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("scoring", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Scoring?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

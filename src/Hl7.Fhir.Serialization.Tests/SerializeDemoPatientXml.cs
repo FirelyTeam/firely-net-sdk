@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirXmlParser(new ParserSettings(Model.Version.DSTU2) { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Model.DSTU2.Patient>(tpXml);
 
-            var output = new FhirXmlStreamingSerializer(Model.Version.DSTU2).SerializeToString(pat);
+            var output = new FhirXmlFastSerializer(Model.Version.DSTU2).SerializeToString(pat);
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
@@ -142,9 +142,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
             var p = (new FhirXmlParser(Model.Version.DSTU2)).Parse<Model.DSTU2.Patient>(xml);
-            output = (new FhirXmlStreamingSerializer(new SerializerSettings(Model.Version.DSTU2) { Pretty = false })).SerializeToString(p);
+            output = (new FhirXmlFastSerializer(new SerializerSettings(Model.Version.DSTU2) { Pretty = false })).SerializeToString(p);
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            pretty = (new FhirXmlStreamingSerializer(new SerializerSettings(Model.Version.DSTU2) { Pretty = true })).SerializeToString(p);
+            pretty = (new FhirXmlFastSerializer(new SerializerSettings(Model.Version.DSTU2) { Pretty = true })).SerializeToString(p);
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
         }
 

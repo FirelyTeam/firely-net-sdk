@@ -458,28 +458,28 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Media");
-            base.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
-            serializer.Element("subtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subtype?.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("Media");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("subtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subtype?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(serializer);
-            serializer.Element("operator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Operator?.Serialize(serializer);
-            serializer.Element("view", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); View?.Serialize(serializer);
-            serializer.Element("deviceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DeviceNameElement?.Serialize(serializer);
-            serializer.Element("height", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HeightElement?.Serialize(serializer);
-            serializer.Element("width", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WidthElement?.Serialize(serializer);
-            serializer.Element("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FramesElement?.Serialize(serializer);
-            serializer.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(serializer);
-            serializer.Element("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Content?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("operator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Operator?.Serialize(sink);
+            sink.Element("view", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); View?.Serialize(sink);
+            sink.Element("deviceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DeviceNameElement?.Serialize(sink);
+            sink.Element("height", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HeightElement?.Serialize(sink);
+            sink.Element("width", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WidthElement?.Serialize(sink);
+            sink.Element("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FramesElement?.Serialize(sink);
+            sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(sink);
+            sink.Element("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Content?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

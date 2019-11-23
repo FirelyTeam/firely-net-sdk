@@ -262,13 +262,13 @@ namespace Hl7.Fhir.Model
         }
         #endregion
 
-        public override void Serialize(StreamingSerializer serializer)
+        internal override void Serialize(SerializerSink sink)
         {
-            base.Serialize(serializer);
-            serializer.Element("id"); IdElement?.Serialize(serializer);
-            serializer.Element("meta"); serializer.Serialize( Meta );
-            serializer.Element("implicitRules"); ImplicitRulesElement?.Serialize(serializer);
-            serializer.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(serializer);
+            base.Serialize(sink);
+            sink.Element("id"); IdElement?.Serialize(sink);
+            sink.Element("meta"); sink.Serialize( Meta );
+            sink.Element("implicitRules"); ImplicitRulesElement?.Serialize(sink);
+            sink.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(sink);
         }
     }
 }

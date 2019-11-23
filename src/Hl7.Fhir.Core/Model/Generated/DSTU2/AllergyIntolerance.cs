@@ -249,24 +249,24 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.Annotation _Note;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ReactionComponent");
-                base.Serialize(serializer);
-                serializer.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(serializer);
-                serializer.Element("certainty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CertaintyElement?.Serialize(serializer);
-                serializer.BeginList("manifestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                sink.BeginDataType("ReactionComponent");
+                base.Serialize(sink);
+                sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+                sink.Element("certainty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CertaintyElement?.Serialize(sink);
+                sink.BeginList("manifestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
                 foreach(var item in Manifestation)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
-                serializer.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(serializer);
-                serializer.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SeverityElement?.Serialize(serializer);
-                serializer.Element("exposureRoute", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExposureRoute?.Serialize(serializer);
-                serializer.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(serializer);
-                serializer.End();
+                sink.End();
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(sink);
+                sink.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SeverityElement?.Serialize(sink);
+                sink.Element("exposureRoute", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExposureRoute?.Serialize(sink);
+                sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -788,35 +788,35 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("AllergyIntolerance");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("AllergyIntolerance");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(serializer);
-            serializer.Element("recordedDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecordedDateElement?.Serialize(serializer);
-            serializer.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Recorder?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.Element("reporter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Reporter?.Serialize(serializer);
-            serializer.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Substance?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("criticality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CriticalityElement?.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(serializer);
-            serializer.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CategoryElement?.Serialize(serializer);
-            serializer.Element("lastOccurence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastOccurenceElement?.Serialize(serializer);
-            serializer.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(serializer);
-            serializer.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(sink);
+            sink.Element("recordedDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecordedDateElement?.Serialize(sink);
+            sink.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Recorder?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("reporter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Reporter?.Serialize(sink);
+            sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Substance?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("criticality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CriticalityElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CategoryElement?.Serialize(sink);
+            sink.Element("lastOccurence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastOccurenceElement?.Serialize(sink);
+            sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+            sink.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Reaction)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

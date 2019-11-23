@@ -199,16 +199,16 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("MarketingStatus");
-            base.Serialize(serializer);
-            serializer.Element("country", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Country?.Serialize(serializer);
-            serializer.Element("jurisdiction", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Jurisdiction?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Status?.Serialize(serializer);
-            serializer.Element("dateRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); DateRange?.Serialize(serializer);
-            serializer.Element("restoreDate", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); RestoreDateElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("MarketingStatus");
+            base.Serialize(sink);
+            sink.Element("country", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Country?.Serialize(sink);
+            sink.Element("jurisdiction", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Jurisdiction?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Status?.Serialize(sink);
+            sink.Element("dateRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); DateRange?.Serialize(sink);
+            sink.Element("restoreDate", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); RestoreDateElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

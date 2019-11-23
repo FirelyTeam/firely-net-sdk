@@ -255,22 +255,22 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Signature");
-            base.Serialize(serializer);
-            serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.BeginDataType("Signature");
+            base.Serialize(sink);
+            sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Type)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WhenElement?.Serialize(serializer);
-            serializer.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Who?.Serialize(serializer);
-            serializer.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); OnBehalfOf?.Serialize(serializer);
-            serializer.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ContentTypeElement?.Serialize(serializer);
-            serializer.Element("blob", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BlobElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); WhenElement?.Serialize(sink);
+            sink.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Who?.Serialize(sink);
+            sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); OnBehalfOf?.Serialize(sink);
+            sink.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ContentTypeElement?.Serialize(sink);
+            sink.Element("blob", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BlobElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

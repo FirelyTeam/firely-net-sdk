@@ -143,20 +143,20 @@ namespace Hl7.Fhir.Model
             
             private List<ParameterComponent> _Part;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ParameterComponent");
-                base.Serialize(serializer);
-                serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); NameElement?.Serialize(serializer);
-                serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, true); Value?.Serialize(serializer);
-                serializer.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Resource?.Serialize(serializer);
-                serializer.BeginList("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+                sink.BeginDataType("ParameterComponent");
+                base.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); NameElement?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, true); Value?.Serialize(sink);
+                sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false, false); Resource?.Serialize(sink);
+                sink.BeginList("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
                 foreach(var item in Part)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -331,17 +331,17 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Parameters");
-            base.Serialize(serializer);
-            serializer.BeginList("parameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
+            sink.BeginResource("Parameters");
+            base.Serialize(sink);
+            sink.BeginList("parameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, false);
             foreach(var item in Parameter)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

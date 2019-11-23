@@ -458,23 +458,23 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("GroupComponent");
-                base.Serialize(serializer);
-                serializer.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupElement?.Serialize(serializer);
-                serializer.Element("groupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupDisplayElement?.Serialize(serializer);
-                serializer.Element("subGroup", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupElement?.Serialize(serializer);
-                serializer.Element("subGroupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupDisplayElement?.Serialize(serializer);
-                serializer.Element("plan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanElement?.Serialize(serializer);
-                serializer.Element("planDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanDisplayElement?.Serialize(serializer);
-                serializer.Element("subPlan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanElement?.Serialize(serializer);
-                serializer.Element("subPlanDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanDisplayElement?.Serialize(serializer);
-                serializer.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassElement?.Serialize(serializer);
-                serializer.Element("classDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassDisplayElement?.Serialize(serializer);
-                serializer.Element("subClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassElement?.Serialize(serializer);
-                serializer.Element("subClassDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassDisplayElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("GroupComponent");
+                base.Serialize(sink);
+                sink.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupElement?.Serialize(sink);
+                sink.Element("groupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupDisplayElement?.Serialize(sink);
+                sink.Element("subGroup", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupElement?.Serialize(sink);
+                sink.Element("subGroupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupDisplayElement?.Serialize(sink);
+                sink.Element("plan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanElement?.Serialize(sink);
+                sink.Element("planDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanDisplayElement?.Serialize(sink);
+                sink.Element("subPlan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanElement?.Serialize(sink);
+                sink.Element("subPlanDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanDisplayElement?.Serialize(sink);
+                sink.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassElement?.Serialize(sink);
+                sink.Element("classDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassDisplayElement?.Serialize(sink);
+                sink.Element("subClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassElement?.Serialize(sink);
+                sink.Element("subClassDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassDisplayElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1029,42 +1029,42 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Coverage");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("Coverage");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(serializer);
-            serializer.Element("policyHolder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PolicyHolder?.Serialize(serializer);
-            serializer.Element("subscriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subscriber?.Serialize(serializer);
-            serializer.Element("subscriberId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubscriberIdElement?.Serialize(serializer);
-            serializer.Element("beneficiary", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Beneficiary?.Serialize(serializer);
-            serializer.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Relationship?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
-            serializer.BeginList("payor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("policyHolder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PolicyHolder?.Serialize(sink);
+            sink.Element("subscriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subscriber?.Serialize(sink);
+            sink.Element("subscriberId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubscriberIdElement?.Serialize(sink);
+            sink.Element("beneficiary", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Beneficiary?.Serialize(sink);
+            sink.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Relationship?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.BeginList("payor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Payor)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("grouping", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Grouping?.Serialize(serializer);
-            serializer.Element("dependent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DependentElement?.Serialize(serializer);
-            serializer.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(serializer);
-            serializer.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderElement?.Serialize(serializer);
-            serializer.Element("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NetworkElement?.Serialize(serializer);
-            serializer.BeginList("contract", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("grouping", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Grouping?.Serialize(sink);
+            sink.Element("dependent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DependentElement?.Serialize(sink);
+            sink.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(sink);
+            sink.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderElement?.Serialize(sink);
+            sink.Element("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NetworkElement?.Serialize(sink);
+            sink.BeginList("contract", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Contract)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

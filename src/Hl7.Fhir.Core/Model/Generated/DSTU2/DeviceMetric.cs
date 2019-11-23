@@ -161,14 +161,14 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("CalibrationComponent");
-                base.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(serializer);
-                serializer.Element("state", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StateElement?.Serialize(serializer);
-                serializer.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("CalibrationComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+                sink.Element("state", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StateElement?.Serialize(sink);
+                sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -525,26 +525,26 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("DeviceMetric");
-            base.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Identifier?.Serialize(serializer);
-            serializer.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Unit?.Serialize(serializer);
-            serializer.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Source?.Serialize(serializer);
-            serializer.Element("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Parent?.Serialize(serializer);
-            serializer.Element("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationalStatusElement?.Serialize(serializer);
-            serializer.Element("color", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ColorElement?.Serialize(serializer);
-            serializer.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CategoryElement?.Serialize(serializer);
-            serializer.Element("measurementPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPeriod?.Serialize(serializer);
-            serializer.BeginList("calibration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("DeviceMetric");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Identifier?.Serialize(sink);
+            sink.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Unit?.Serialize(sink);
+            sink.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Source?.Serialize(sink);
+            sink.Element("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Parent?.Serialize(sink);
+            sink.Element("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationalStatusElement?.Serialize(sink);
+            sink.Element("color", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ColorElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CategoryElement?.Serialize(sink);
+            sink.Element("measurementPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPeriod?.Serialize(sink);
+            sink.BeginList("calibration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Calibration)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

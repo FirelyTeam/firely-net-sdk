@@ -35,9 +35,9 @@ namespace Hl7.Fhir.Model
             return PrimitiveTypeConverter.ConvertTo<string>(this.ObjectValue);
         }
 
-        public override void Serialize(StreamingSerializer serializer)
+        internal override void Serialize(SerializerSink sink)
         {
-            serializer.Serialize(this);
+            sink.Serialize(this);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

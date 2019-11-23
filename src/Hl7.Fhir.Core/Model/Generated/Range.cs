@@ -140,13 +140,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Range");
-            base.Serialize(serializer);
-            serializer.Element("low", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Low?.Serialize(serializer);
-            serializer.Element("high", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); High?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Range");
+            base.Serialize(sink);
+            sink.Element("low", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Low?.Serialize(sink);
+            sink.Element("high", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); High?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

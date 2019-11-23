@@ -291,19 +291,19 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("ResearchSubject");
-            base.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
-            serializer.Element("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Study?.Serialize(serializer);
-            serializer.Element("individual", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Individual?.Serialize(serializer);
-            serializer.Element("assignedArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssignedArmElement?.Serialize(serializer);
-            serializer.Element("actualArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ActualArmElement?.Serialize(serializer);
-            serializer.Element("consent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Consent?.Serialize(serializer);
-            serializer.End();
+            sink.BeginResource("ResearchSubject");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.Element("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Study?.Serialize(sink);
+            sink.Element("individual", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Individual?.Serialize(sink);
+            sink.Element("assignedArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssignedArmElement?.Serialize(sink);
+            sink.Element("actualArm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ActualArmElement?.Serialize(sink);
+            sink.Element("consent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Consent?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

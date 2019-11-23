@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Xml;
 using FhirModel = Hl7.Fhir.Model;
 using FhirModel2 = Hl7.Fhir.Model.DSTU2;
 using FhirSerialization = Hl7.Fhir.Serialization;
@@ -12,9 +9,8 @@ namespace PerfTest
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-
             var xml = File.ReadAllText(@"bundle.xml");
 
             var xmlParser = new FhirSerialization.FhirXmlParser(FhirModel.Version.DSTU2);
@@ -34,15 +30,15 @@ namespace PerfTest
             watch.Stop();
             Console.WriteLine("JSON serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
 
-            var jsonStreamingSerializer = new FhirSerialization.FhirJsonStreamingSerializer(FhirModel.Version.DSTU2);
-            jsonStreamingSerializer.SerializeToString(bundle);
+            var jsonFastSerializer = new FhirSerialization.FhirJsonFastSerializer(FhirModel.Version.DSTU2);
+            jsonFastSerializer.SerializeToString(bundle);
             watch.Restart();
             for (var i = 0; i < count; i++)
             {
-                jsonStreamingSerializer.SerializeToString(bundle);
+                jsonFastSerializer.SerializeToString(bundle);
             }
             watch.Stop();
-            Console.WriteLine("JSON new serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
+            Console.WriteLine("JSON fast serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
 
             var xmlSerializer = new FhirSerialization.FhirXmlSerializer(FhirModel.Version.DSTU2);
             xmlSerializer.SerializeToString(bundle);
@@ -54,15 +50,15 @@ namespace PerfTest
             watch.Stop();
             Console.WriteLine("XML serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
 
-            var xmlStreamingSerializer = new FhirSerialization.FhirXmlStreamingSerializer(FhirModel.Version.DSTU2);
-            xmlStreamingSerializer.SerializeToString(bundle);
+            var xmlFastSerializer = new FhirSerialization.FhirXmlFastSerializer(FhirModel.Version.DSTU2);
+            xmlFastSerializer.SerializeToString(bundle);
             watch.Restart();
             for (var i = 0; i < count; i++)
             {
-                xmlStreamingSerializer.SerializeToString(bundle);
+                xmlFastSerializer.SerializeToString(bundle);
             }
             watch.Stop();
-            Console.WriteLine("XML serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
+            Console.WriteLine("XML fast serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
         }
     }
 

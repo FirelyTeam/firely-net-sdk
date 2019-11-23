@@ -205,13 +205,13 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public override void Serialize(StreamingSerializer serializer)
+        internal override void Serialize(SerializerSink sink)
         {
-            serializer.BeginDataType(TypeName);
-            base.Serialize(serializer);
-            serializer.Element("status", summaryVersions: Version.None, isRequired: true); StatusElement?.Serialize(serializer);
-            serializer.XhtmlValue("div", Div, summaryVersions: Version.None, isRequired: true);
-            serializer.End();
+            sink.BeginDataType(TypeName);
+            base.Serialize(sink);
+            sink.Element("status", summaryVersions: Version.None, isRequired: true); StatusElement?.Serialize(sink);
+            sink.XhtmlValue("div", Div, summaryVersions: Version.None, isRequired: true);
+            sink.End();
         }
     }
     

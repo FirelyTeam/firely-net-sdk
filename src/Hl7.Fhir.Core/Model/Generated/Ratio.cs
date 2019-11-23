@@ -148,13 +148,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Ratio");
-            base.Serialize(serializer);
-            serializer.Element("numerator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Numerator?.Serialize(serializer);
-            serializer.Element("denominator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Denominator?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Ratio");
+            base.Serialize(sink);
+            sink.Element("numerator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Numerator?.Serialize(sink);
+            sink.Element("denominator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Denominator?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -328,18 +328,18 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("SampledData");
-            base.Serialize(serializer);
-            serializer.Element("origin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Origin?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PeriodElement?.Serialize(serializer);
-            serializer.Element("factor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FactorElement?.Serialize(serializer);
-            serializer.Element("lowerLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LowerLimitElement?.Serialize(serializer);
-            serializer.Element("upperLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UpperLimitElement?.Serialize(serializer);
-            serializer.Element("dimensions", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DimensionsElement?.Serialize(serializer);
-            serializer.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); DataElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("SampledData");
+            base.Serialize(sink);
+            sink.Element("origin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Origin?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PeriodElement?.Serialize(sink);
+            sink.Element("factor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FactorElement?.Serialize(sink);
+            sink.Element("lowerLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LowerLimitElement?.Serialize(sink);
+            sink.Element("upperLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UpperLimitElement?.Serialize(sink);
+            sink.Element("dimensions", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DimensionsElement?.Serialize(sink);
+            sink.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); DataElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

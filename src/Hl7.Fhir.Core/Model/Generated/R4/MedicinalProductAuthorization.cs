@@ -134,26 +134,26 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Period _ValidityPeriod;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("JurisdictionalAuthorizationComponent");
-                base.Serialize(serializer);
-                serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("JurisdictionalAuthorizationComponent");
+                base.Serialize(sink);
+                sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Identifier)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Country?.Serialize(serializer);
-                serializer.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.End();
+                sink.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Country?.Serialize(sink);
+                sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Jurisdiction)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("legalStatusOfSupply", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalStatusOfSupply?.Serialize(serializer);
-                serializer.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidityPeriod?.Serialize(serializer);
-                serializer.End();
+                sink.End();
+                sink.Element("legalStatusOfSupply", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalStatusOfSupply?.Serialize(sink);
+                sink.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidityPeriod?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -308,20 +308,20 @@ namespace Hl7.Fhir.Model.R4
             
             private List<ProcedureComponent> _Application;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ProcedureComponent");
-                base.Serialize(serializer);
-                serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-                serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(serializer);
-                serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Date?.Serialize(serializer);
-                serializer.BeginList("application", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.BeginDataType("ProcedureComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Date?.Serialize(sink);
+                sink.BeginList("application", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
                 foreach(var item in Application)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -799,47 +799,47 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MedicinalProductAuthorization");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("MedicinalProductAuthorization");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(serializer);
-            serializer.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Country)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Jurisdiction)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Status?.Serialize(serializer);
-            serializer.Element("statusDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusDateElement?.Serialize(serializer);
-            serializer.Element("restoreDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RestoreDateElement?.Serialize(serializer);
-            serializer.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidityPeriod?.Serialize(serializer);
-            serializer.Element("dataExclusivityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DataExclusivityPeriod?.Serialize(serializer);
-            serializer.Element("dateOfFirstAuthorization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateOfFirstAuthorizationElement?.Serialize(serializer);
-            serializer.Element("internationalBirthDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InternationalBirthDateElement?.Serialize(serializer);
-            serializer.Element("legalBasis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalBasis?.Serialize(serializer);
-            serializer.BeginList("jurisdictionalAuthorization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Status?.Serialize(sink);
+            sink.Element("statusDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusDateElement?.Serialize(sink);
+            sink.Element("restoreDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RestoreDateElement?.Serialize(sink);
+            sink.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidityPeriod?.Serialize(sink);
+            sink.Element("dataExclusivityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DataExclusivityPeriod?.Serialize(sink);
+            sink.Element("dateOfFirstAuthorization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateOfFirstAuthorizationElement?.Serialize(sink);
+            sink.Element("internationalBirthDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InternationalBirthDateElement?.Serialize(sink);
+            sink.Element("legalBasis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalBasis?.Serialize(sink);
+            sink.BeginList("jurisdictionalAuthorization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in JurisdictionalAuthorization)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("holder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Holder?.Serialize(serializer);
-            serializer.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(serializer);
-            serializer.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Procedure?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("holder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Holder?.Serialize(sink);
+            sink.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(sink);
+            sink.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Procedure?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -434,23 +434,23 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Address");
-            base.Serialize(serializer);
-            serializer.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UseElement?.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(serializer);
-            serializer.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(serializer);
-            serializer.BeginList("line", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-            serializer.Serialize(LineElement);
-            serializer.End();
-            serializer.Element("city", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CityElement?.Serialize(serializer);
-            serializer.Element("district", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DistrictElement?.Serialize(serializer);
-            serializer.Element("state", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StateElement?.Serialize(serializer);
-            serializer.Element("postalCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PostalCodeElement?.Serialize(serializer);
-            serializer.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountryElement?.Serialize(serializer);
-            serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Address");
+            base.Serialize(sink);
+            sink.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UseElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+            sink.BeginList("line", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(LineElement);
+            sink.End();
+            sink.Element("city", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CityElement?.Serialize(sink);
+            sink.Element("district", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DistrictElement?.Serialize(sink);
+            sink.Element("state", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StateElement?.Serialize(sink);
+            sink.Element("postalCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PostalCodeElement?.Serialize(sink);
+            sink.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountryElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

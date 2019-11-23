@@ -170,16 +170,16 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("PredictionComponent");
-                base.Serialize(serializer);
-                serializer.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Outcome?.Serialize(serializer);
-                serializer.Element("probability", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Probability?.Serialize(serializer);
-                serializer.Element("relativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RelativeRiskElement?.Serialize(serializer);
-                serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); When?.Serialize(serializer);
-                serializer.Element("rationale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RationaleElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("PredictionComponent");
+                base.Serialize(sink);
+                sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Outcome?.Serialize(sink);
+                sink.Element("probability", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Probability?.Serialize(sink);
+                sink.Element("relativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RelativeRiskElement?.Serialize(sink);
+                sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); When?.Serialize(sink);
+                sink.Element("rationale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RationaleElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -547,31 +547,31 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("RiskAssessment");
-            base.Serialize(serializer);
-            serializer.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(serializer);
-            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(serializer);
-            serializer.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Condition?.Serialize(serializer);
-            serializer.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(serializer);
-            serializer.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(serializer);
-            serializer.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(serializer);
-            serializer.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(serializer);
-            serializer.BeginList("basis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("RiskAssessment");
+            base.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Condition?.Serialize(sink);
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(sink);
+            sink.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+            sink.BeginList("basis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Basis)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("prediction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.BeginList("prediction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Prediction)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("mitigation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MitigationElement?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("mitigation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MitigationElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

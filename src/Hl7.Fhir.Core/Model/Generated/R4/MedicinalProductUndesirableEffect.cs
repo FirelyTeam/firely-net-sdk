@@ -182,26 +182,26 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("MedicinalProductUndesirableEffect");
-            base.Serialize(serializer);
-            serializer.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("MedicinalProductUndesirableEffect");
+            base.Serialize(sink);
+            sink.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Subject)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("symptomConditionEffect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SymptomConditionEffect?.Serialize(serializer);
-            serializer.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(serializer);
-            serializer.Element("frequencyOfOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyOfOccurrence?.Serialize(serializer);
-            serializer.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("symptomConditionEffect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SymptomConditionEffect?.Serialize(sink);
+            sink.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(sink);
+            sink.Element("frequencyOfOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyOfOccurrence?.Serialize(sink);
+            sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Population)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

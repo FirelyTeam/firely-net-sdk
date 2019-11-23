@@ -200,15 +200,15 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("TriggerDefinition");
-            base.Serialize(serializer);
-            serializer.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(serializer);
-            serializer.Element("eventName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventNameElement?.Serialize(serializer);
-            serializer.Element("eventTiming", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); EventTiming?.Serialize(serializer);
-            serializer.Element("eventData", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventData?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("TriggerDefinition");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("eventName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventNameElement?.Serialize(sink);
+            sink.Element("eventTiming", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); EventTiming?.Serialize(sink);
+            sink.Element("eventData", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EventData?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

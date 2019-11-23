@@ -141,21 +141,21 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public override void Serialize(StreamingSerializer serializer)
+        internal override void Serialize(SerializerSink sink)
         {
-            SerializeElement(serializer);
+            SerializeElement(sink);
         }
 
-        public void SerializeElement(StreamingSerializer serializer)
+        internal void SerializeElement(SerializerSink sink)
         {
-            serializer.StringValue("id", ElementId, summaryVersions: Version.None);
-            base.Serialize(serializer);
-            serializer.BeginList("extension", summaryVersions: Version.None);
+            sink.StringValue("id", ElementId, summaryVersions: Version.None);
+            base.Serialize(sink);
+            sink.BeginList("extension", summaryVersions: Version.None);
             foreach (var extension in Extension)
             {
-                extension.Serialize(serializer);
+                extension.Serialize(sink);
             }
-            serializer.End();
+            sink.End();
         }
     }
 

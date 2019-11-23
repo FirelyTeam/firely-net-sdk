@@ -234,35 +234,35 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("RecommendationComponent");
-                base.Serialize(serializer);
-                serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateElement?.Serialize(serializer);
-                serializer.Element("vaccineCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VaccineCode?.Serialize(serializer);
-                serializer.Element("targetDisease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TargetDisease?.Serialize(serializer);
-                serializer.Element("doseNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DoseNumberElement?.Serialize(serializer);
-                serializer.Element("forecastStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ForecastStatus?.Serialize(serializer);
-                serializer.BeginList("dateCriterion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.BeginDataType("RecommendationComponent");
+                base.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateElement?.Serialize(sink);
+                sink.Element("vaccineCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VaccineCode?.Serialize(sink);
+                sink.Element("targetDisease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TargetDisease?.Serialize(sink);
+                sink.Element("doseNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DoseNumberElement?.Serialize(sink);
+                sink.Element("forecastStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ForecastStatus?.Serialize(sink);
+                sink.BeginList("dateCriterion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in DateCriterion)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.Element("protocol", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Protocol?.Serialize(serializer);
-                serializer.BeginList("supportingImmunization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.End();
+                sink.Element("protocol", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Protocol?.Serialize(sink);
+                sink.BeginList("supportingImmunization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in SupportingImmunization)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.BeginList("supportingPatientInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.End();
+                sink.BeginList("supportingPatientInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
                 foreach(var item in SupportingPatientInformation)
                 {
-                    item?.Serialize(serializer);
+                    item?.Serialize(sink);
                 }
-                serializer.End();
-                serializer.End();
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -425,13 +425,13 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("DateCriterionComponent");
-                base.Serialize(serializer);
-                serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(serializer);
-                serializer.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("DateCriterionComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -623,15 +623,15 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ProtocolComponent");
-                base.Serialize(serializer);
-                serializer.Element("doseSequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DoseSequenceElement?.Serialize(serializer);
-                serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
-                serializer.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Authority?.Serialize(serializer);
-                serializer.Element("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeriesElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("ProtocolComponent");
+                base.Serialize(sink);
+                sink.Element("doseSequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DoseSequenceElement?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Authority?.Serialize(sink);
+                sink.Element("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeriesElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -830,24 +830,24 @@ namespace Hl7.Fhir.Model.STU3
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("ImmunizationRecommendation");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("ImmunizationRecommendation");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.BeginList("recommendation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.BeginList("recommendation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
             foreach(var item in Recommendation)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -398,34 +398,34 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("ImmunizationEvaluation");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.BeginResource("ImmunizationEvaluation");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(serializer);
-            serializer.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(serializer);
-            serializer.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DateElement?.Serialize(serializer);
-            serializer.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Authority?.Serialize(serializer);
-            serializer.Element("targetDisease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TargetDisease?.Serialize(serializer);
-            serializer.Element("immunizationEvent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ImmunizationEvent?.Serialize(serializer);
-            serializer.Element("doseStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DoseStatus?.Serialize(serializer);
-            serializer.BeginList("doseStatusReason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DateElement?.Serialize(sink);
+            sink.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Authority?.Serialize(sink);
+            sink.Element("targetDisease", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TargetDisease?.Serialize(sink);
+            sink.Element("immunizationEvent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ImmunizationEvent?.Serialize(sink);
+            sink.Element("doseStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DoseStatus?.Serialize(sink);
+            sink.BeginList("doseStatusReason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in DoseStatusReason)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(serializer);
-            serializer.Element("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeriesElement?.Serialize(serializer);
-            serializer.Element("doseNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); DoseNumber?.Serialize(serializer);
-            serializer.Element("seriesDoses", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); SeriesDoses?.Serialize(serializer);
-            serializer.End();
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeriesElement?.Serialize(sink);
+            sink.Element("doseNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); DoseNumber?.Serialize(sink);
+            sink.Element("seriesDoses", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); SeriesDoses?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

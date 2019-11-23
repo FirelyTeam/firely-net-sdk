@@ -160,14 +160,14 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("PositionComponent");
-                base.Serialize(serializer);
-                serializer.Element("longitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LongitudeElement?.Serialize(serializer);
-                serializer.Element("latitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LatitudeElement?.Serialize(serializer);
-                serializer.Element("altitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AltitudeElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("PositionComponent");
+                base.Serialize(sink);
+                sink.Element("longitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LongitudeElement?.Serialize(sink);
+                sink.Element("latitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LatitudeElement?.Serialize(sink);
+                sink.Element("altitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AltitudeElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -382,17 +382,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("HoursOfOperationComponent");
-                base.Serialize(serializer);
-                serializer.BeginList("daysOfWeek", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
-                serializer.Serialize(DaysOfWeekElement);
-                serializer.End();
-                serializer.Element("allDay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AllDayElement?.Serialize(serializer);
-                serializer.Element("openingTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OpeningTimeElement?.Serialize(serializer);
-                serializer.Element("closingTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ClosingTimeElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("HoursOfOperationComponent");
+                base.Serialize(sink);
+                sink.BeginList("daysOfWeek", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                sink.Serialize(DaysOfWeekElement);
+                sink.End();
+                sink.Element("allDay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AllDayElement?.Serialize(sink);
+                sink.Element("openingTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OpeningTimeElement?.Serialize(sink);
+                sink.Element("closingTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ClosingTimeElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -927,55 +927,55 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Location");
-            base.Serialize(serializer);
-            serializer.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("Location");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Identifier)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(serializer);
-            serializer.Element("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationalStatus?.Serialize(serializer);
-            serializer.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(serializer);
-            serializer.BeginList("alias", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
-            serializer.Serialize(AliasElement);
-            serializer.End();
-            serializer.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(serializer);
-            serializer.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(serializer);
-            serializer.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationalStatus?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.BeginList("alias", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(AliasElement);
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(sink);
+            sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Type)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Telecom)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("address", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Address?.Serialize(serializer);
-            serializer.Element("physicalType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PhysicalType?.Serialize(serializer);
-            serializer.Element("position", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Position?.Serialize(serializer);
-            serializer.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(serializer);
-            serializer.Element("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PartOf?.Serialize(serializer);
-            serializer.BeginList("hoursOfOperation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("address", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Address?.Serialize(sink);
+            sink.Element("physicalType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PhysicalType?.Serialize(sink);
+            sink.Element("position", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Position?.Serialize(sink);
+            sink.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(sink);
+            sink.Element("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PartOf?.Serialize(sink);
+            sink.BeginList("hoursOfOperation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in HoursOfOperation)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.Element("availabilityExceptions", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AvailabilityExceptionsElement?.Serialize(serializer);
-            serializer.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.End();
+            sink.Element("availabilityExceptions", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AvailabilityExceptionsElement?.Serialize(sink);
+            sink.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
             foreach(var item in Endpoint)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

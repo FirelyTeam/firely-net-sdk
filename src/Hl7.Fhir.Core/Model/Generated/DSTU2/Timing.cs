@@ -405,22 +405,22 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("RepeatComponent");
-                base.Serialize(serializer);
-                serializer.Element("bounds", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Bounds?.Serialize(serializer);
-                serializer.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountElement?.Serialize(serializer);
-                serializer.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(serializer);
-                serializer.Element("durationMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationMaxElement?.Serialize(serializer);
-                serializer.Element("durationUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationUnitsElement?.Serialize(serializer);
-                serializer.Element("frequency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyElement?.Serialize(serializer);
-                serializer.Element("frequencyMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyMaxElement?.Serialize(serializer);
-                serializer.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodElement?.Serialize(serializer);
-                serializer.Element("periodMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodMaxElement?.Serialize(serializer);
-                serializer.Element("periodUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodUnitsElement?.Serialize(serializer);
-                serializer.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WhenElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("RepeatComponent");
+                base.Serialize(sink);
+                sink.Element("bounds", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Bounds?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountElement?.Serialize(sink);
+                sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(sink);
+                sink.Element("durationMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationMaxElement?.Serialize(sink);
+                sink.Element("durationUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationUnitsElement?.Serialize(sink);
+                sink.Element("frequency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyElement?.Serialize(sink);
+                sink.Element("frequencyMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyMaxElement?.Serialize(sink);
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodElement?.Serialize(sink);
+                sink.Element("periodMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodMaxElement?.Serialize(sink);
+                sink.Element("periodUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodUnitsElement?.Serialize(sink);
+                sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WhenElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -714,16 +714,16 @@ namespace Hl7.Fhir.Model.DSTU2
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Timing");
-            base.Serialize(serializer);
-            serializer.BeginList("event", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-            serializer.Serialize(EventElement);
-            serializer.End();
-            serializer.Element("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Repeat?.Serialize(serializer);
-            serializer.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Timing");
+            base.Serialize(sink);
+            sink.BeginList("event", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(EventElement);
+            sink.End();
+            sink.Element("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Repeat?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

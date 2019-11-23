@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
         public abstract bool IsExactly(IDeepComparable other);
         public abstract bool Matches(IDeepComparable pattern);
 
-        public virtual void Serialize(StreamingSerializer serializer)
+        internal virtual void Serialize(SerializerSink sink)
         {
             // Empty
         }

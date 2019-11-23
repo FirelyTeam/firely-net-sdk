@@ -248,27 +248,27 @@ using Hl7.Fhir.Utility;
 
     public static IEnumerable<string> RenderSerialize(string type, bool abstractType, bool dataType, IEnumerable<PropertyDetails> properties)
     {
-        yield return $"public override void Serialize(Serialization.StreamingSerializer serializer)";
+        yield return $"internal override void Serialize(Serialization.SerializerSink sink)";
         yield return $"{{";
         if (!abstractType)
         {
             if (dataType)
             {
-                yield return $"    serializer.BeginDataType(\"{type}\");";
+                yield return $"    sink.BeginDataType(\"{type}\");";
             }
             else
             {
-                yield return $"    serializer.BeginResource(\"{type}\");";
+                yield return $"    sink.BeginResource(\"{type}\");";
             }
         }
-        yield return $"    base.Serialize(serializer);";
+        yield return $"    base.Serialize(sink);";
         foreach(var property in properties)
         {
             foreach (var line in property.RenderSerialize()) yield return "    " + line;
         }
         if (!abstractType)
         {
-            yield return $"    serializer.End();";
+            yield return $"    sink.End();";
         }
         yield return $"}}";
     }
@@ -2824,23 +2824,23 @@ public class PropertyDetails
             var isChoice = AllowedTypesByVersion.Any(pair => pair.Value.Count > 1) ?
                 "true" :
                 "false";
-            yield return $"serializer.Element({elementDescription}, {isChoice}); {Name}?.Serialize(serializer);";
+            yield return $"sink.Element({elementDescription}, {isChoice}); {Name}?.Serialize(sink);";
         }
         else
         {
-            yield return $"serializer.BeginList({elementDescription});";
+            yield return $"sink.BeginList({elementDescription});";
             if (!string.IsNullOrEmpty(NativeName))
             {
-                yield return $"serializer.Serialize({Name});";
+                yield return $"sink.Serialize({Name});";
             }
             else
             {
                 yield return $"foreach(var item in {Name})";
                 yield return $"{{";
-                yield return $"    item?.Serialize(serializer);";
+                yield return $"    item?.Serialize(sink);";
                 yield return $"}}";
             }
-            yield return $"serializer.End();";
+            yield return $"sink.End();";
         }
     }
 

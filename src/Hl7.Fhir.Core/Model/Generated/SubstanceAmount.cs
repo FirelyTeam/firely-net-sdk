@@ -88,13 +88,13 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Quantity _HighLimit;
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("ReferenceRangeComponent");
-                base.Serialize(serializer);
-                serializer.Element("lowLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); LowLimit?.Serialize(serializer);
-                serializer.Element("highLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); HighLimit?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("ReferenceRangeComponent");
+                base.Serialize(sink);
+                sink.Element("lowLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); LowLimit?.Serialize(sink);
+                sink.Element("highLimit", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); HighLimit?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -295,15 +295,15 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("SubstanceAmount");
-            base.Serialize(serializer);
-            serializer.Element("amount", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Amount?.Serialize(serializer);
-            serializer.Element("amountType", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountType?.Serialize(serializer);
-            serializer.Element("amountText", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountTextElement?.Serialize(serializer);
-            serializer.Element("referenceRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceRange?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("SubstanceAmount");
+            base.Serialize(sink);
+            sink.Element("amount", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Amount?.Serialize(sink);
+            sink.Element("amountType", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountType?.Serialize(sink);
+            sink.Element("amountText", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountTextElement?.Serialize(sink);
+            sink.Element("referenceRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceRange?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

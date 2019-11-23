@@ -269,19 +269,19 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
-            public override void Serialize(Serialization.StreamingSerializer serializer)
+            internal override void Serialize(Serialization.SerializerSink sink)
             {
-                serializer.BeginDataType("SubunitComponent");
-                base.Serialize(serializer);
-                serializer.Element("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubunitElement?.Serialize(serializer);
-                serializer.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(serializer);
-                serializer.Element("length", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LengthElement?.Serialize(serializer);
-                serializer.Element("sequenceAttachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceAttachment?.Serialize(serializer);
-                serializer.Element("nTerminalModificationId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NTerminalModificationId?.Serialize(serializer);
-                serializer.Element("nTerminalModification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NTerminalModificationElement?.Serialize(serializer);
-                serializer.Element("cTerminalModificationId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CTerminalModificationId?.Serialize(serializer);
-                serializer.Element("cTerminalModification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CTerminalModificationElement?.Serialize(serializer);
-                serializer.End();
+                sink.BeginDataType("SubunitComponent");
+                base.Serialize(sink);
+                sink.Element("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubunitElement?.Serialize(sink);
+                sink.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(sink);
+                sink.Element("length", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LengthElement?.Serialize(sink);
+                sink.Element("sequenceAttachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceAttachment?.Serialize(sink);
+                sink.Element("nTerminalModificationId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NTerminalModificationId?.Serialize(sink);
+                sink.Element("nTerminalModification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NTerminalModificationElement?.Serialize(sink);
+                sink.Element("cTerminalModificationId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CTerminalModificationId?.Serialize(sink);
+                sink.Element("cTerminalModification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CTerminalModificationElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -532,22 +532,22 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("SubstanceProtein");
-            base.Serialize(serializer);
-            serializer.Element("sequenceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceType?.Serialize(serializer);
-            serializer.Element("numberOfSubunits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfSubunitsElement?.Serialize(serializer);
-            serializer.BeginList("disulfideLinkage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
-            serializer.Serialize(DisulfideLinkageElement);
-            serializer.End();
-            serializer.BeginList("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.BeginResource("SubstanceProtein");
+            base.Serialize(sink);
+            sink.Element("sequenceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceType?.Serialize(sink);
+            sink.Element("numberOfSubunits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfSubunitsElement?.Serialize(sink);
+            sink.BeginList("disulfideLinkage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(DisulfideLinkageElement);
+            sink.End();
+            sink.BeginList("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
             foreach(var item in Subunit)
             {
-                item?.Serialize(serializer);
+                item?.Serialize(sink);
             }
-            serializer.End();
-            serializer.End();
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

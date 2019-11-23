@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pser = new FhirJsonParser(new ParserSettings(Version.DSTU2) { DisallowXsiAttributesOnRoot = false });
             var pat = pser.Parse<Model.DSTU2.Patient>(tp);
 
-            var output = new FhirJsonStreamingSerializer(Version.DSTU2).SerializeToString(pat);
+            var output = new FhirJsonFastSerializer(Version.DSTU2).SerializeToString(pat);
             JsonAssert.AreSame(tp, output);
         }
 
@@ -98,9 +98,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
 
             var p = (new FhirJsonParser(Version.DSTU2)).Parse<Model.DSTU2.Patient>(json);
-            output = (new FhirJsonStreamingSerializer(new SerializerSettings(Version.DSTU2) { Pretty = false })).SerializeToString(p);
+            output = (new FhirJsonFastSerializer(new SerializerSettings(Version.DSTU2) { Pretty = false })).SerializeToString(p);
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            pretty = (new FhirJsonStreamingSerializer(new SerializerSettings(Version.DSTU2) { Pretty = true })).SerializeToString(p);
+            pretty = (new FhirJsonFastSerializer(new SerializerSettings(Version.DSTU2) { Pretty = true })).SerializeToString(p);
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
         }
     }

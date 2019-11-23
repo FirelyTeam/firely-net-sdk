@@ -287,16 +287,16 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginDataType("Expression");
-            base.Serialize(serializer);
-            serializer.Element("description", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); DescriptionElement?.Serialize(serializer);
-            serializer.Element("name", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NameElement?.Serialize(serializer);
-            serializer.Element("language", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); LanguageElement?.Serialize(serializer);
-            serializer.Element("expression", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Expression_Element?.Serialize(serializer);
-            serializer.Element("reference", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginDataType("Expression");
+            base.Serialize(sink);
+            sink.Element("description", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NameElement?.Serialize(sink);
+            sink.Element("language", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); LanguageElement?.Serialize(sink);
+            sink.Element("expression", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Expression_Element?.Serialize(sink);
+            sink.Element("reference", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

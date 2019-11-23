@@ -183,14 +183,14 @@ namespace Hl7.Fhir.Model.R4
             return true;
         }
     
-        public override void Serialize(Serialization.StreamingSerializer serializer)
+        internal override void Serialize(Serialization.SerializerSink sink)
         {
-            serializer.BeginResource("Binary");
-            base.Serialize(serializer);
-            serializer.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ContentTypeElement?.Serialize(serializer);
-            serializer.Element("securityContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SecurityContext?.Serialize(serializer);
-            serializer.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DataElement?.Serialize(serializer);
-            serializer.End();
+            sink.BeginResource("Binary");
+            base.Serialize(sink);
+            sink.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ContentTypeElement?.Serialize(sink);
+            sink.Element("securityContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SecurityContext?.Serialize(sink);
+            sink.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DataElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]
