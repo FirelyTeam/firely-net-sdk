@@ -183,6 +183,19 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PredictionComponent");
+                base.Serialize(sink);
+                sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Outcome?.Serialize(sink);
+                sink.Element("probability", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Probability?.Serialize(sink);
+                sink.Element("qualitativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); QualitativeRisk?.Serialize(sink);
+                sink.Element("relativeRisk", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RelativeRiskElement?.Serialize(sink);
+                sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); When?.Serialize(sink);
+                sink.Element("rationale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RationaleElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PredictionComponent;
@@ -280,7 +293,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Unique identifier for the assessment
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -353,7 +366,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Evaluation mechanism
         /// </summary>
-        [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
@@ -367,7 +380,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of assessment
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -381,7 +394,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who/what does assessment apply to?
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [DataMember]
@@ -396,7 +409,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Where was assessment performed?
         /// </summary>
-        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("context", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -411,7 +424,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When was assessment made?
         /// </summary>
-        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=Hl7.Fhir.Model.Version.All, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -426,7 +439,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Condition assessed
         /// </summary>
-        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Condition")]
         [DataMember]
@@ -441,7 +454,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who did assessment?
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Practitioner","Device")]
         [DataMember]
@@ -671,6 +684,39 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("RiskAssessment");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BasedOn?.Serialize(sink);
+            sink.Element("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Parent?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); StatusElement?.Serialize(sink);
+            sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Context?.Serialize(sink);
+            sink.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(sink);
+            sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Condition?.Serialize(sink);
+            sink.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(sink);
+            sink.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Reason?.Serialize(sink);
+            sink.BeginList("basis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Basis)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("prediction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Prediction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("mitigation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MitigationElement?.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

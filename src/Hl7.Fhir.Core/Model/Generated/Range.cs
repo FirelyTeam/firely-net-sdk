@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Low limit
         /// </summary>
-        [FhirElement("low", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("low", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Low
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// High limit
         /// </summary>
-        [FhirElement("high", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("high", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity High
@@ -138,6 +138,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(High, otherT.High)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Range");
+            base.Serialize(sink);
+            sink.Element("low", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Low?.Serialize(sink);
+            sink.Element("high", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); High?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

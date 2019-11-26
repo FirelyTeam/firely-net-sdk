@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Date recommendation created
             /// </summary>
-            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Vaccine recommendation applies to
             /// </summary>
-            [FhirElement("vaccineCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("vaccineCode", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Recommended dose number
             /// </summary>
-            [FhirElement("doseNumber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("doseNumber", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt DoseNumberElement
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Vaccine administration status
             /// </summary>
-            [FhirElement("forecastStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("forecastStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -220,6 +220,36 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RecommendationComponent");
+                base.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateElement?.Serialize(sink);
+                sink.Element("vaccineCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); VaccineCode?.Serialize(sink);
+                sink.Element("doseNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DoseNumberElement?.Serialize(sink);
+                sink.Element("forecastStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ForecastStatus?.Serialize(sink);
+                sink.BeginList("dateCriterion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in DateCriterion)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("protocol", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Protocol?.Serialize(sink);
+                sink.BeginList("supportingImmunization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in SupportingImmunization)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("supportingPatientInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in SupportingPatientInformation)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -374,6 +404,15 @@ namespace Hl7.Fhir.Model.DSTU2
                         ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Value");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DateCriterionComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -565,6 +604,17 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ProtocolComponent");
+                base.Serialize(sink);
+                sink.Element("doseSequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DoseSequenceElement?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Authority?.Serialize(sink);
+                sink.Element("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeriesElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProtocolComponent;
@@ -652,7 +702,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -667,7 +717,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who this profile is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -683,7 +733,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Vaccine administration recommendations
         /// </summary>
-        [FhirElement("recommendation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("recommendation", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -741,6 +791,26 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Recommendation, otherT.Recommendation)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ImmunizationRecommendation");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.BeginList("recommendation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Recommendation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

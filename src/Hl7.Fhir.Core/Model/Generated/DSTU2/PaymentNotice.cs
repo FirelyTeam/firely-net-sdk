@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("ruleset", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("originalRuleset", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Insurer or Regulatory body
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("provider", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("request", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("response", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Status of the payment
         /// </summary>
-        [FhirElement("paymentStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("paymentStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -286,6 +286,28 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(PaymentStatus, otherT.PaymentStatus)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("PaymentNotice");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("ruleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Ruleset?.Serialize(sink);
+            sink.Element("originalRuleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OriginalRuleset?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreatedElement?.Serialize(sink);
+            sink.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Target?.Serialize(sink);
+            sink.Element("provider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Provider?.Serialize(sink);
+            sink.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organization?.Serialize(sink);
+            sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Request?.Serialize(sink);
+            sink.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Response?.Serialize(sink);
+            sink.Element("paymentStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PaymentStatus?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

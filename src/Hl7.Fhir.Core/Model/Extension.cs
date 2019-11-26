@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// identifies the meaning of the extension
         /// </summary>
-        [FhirElement("url", XmlSerialization =XmlRepresentation.XmlAttr, InSummary = new[] { Version.All }, Order = 30, TypeRedirect = typeof(FhirUri))]
+        [FhirElement("url", XmlSerialization =XmlRepresentation.XmlAttr, InSummary = Version.All, Order = 30, TypeRedirect = typeof(FhirUri))]
         [CLSCompliant(false)]
         [Cardinality(Min = 1, Max = 1)]
         [UriPattern]
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value of extension
         /// </summary>
-        [FhirElement("value", InSummary =  new[] { Version.All }, Order = 40, Choice = ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary = Version.All, Order = 40, Choice = ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(
             Version = Version.DSTU2, 
@@ -296,6 +296,15 @@ namespace Hl7.Fhir.Model
                 if(Url != null) yield return new ElementValue("url",Url);
                 if (Value != null) yield return new ElementValue ("value",Value);
             }
-        } 
+        }
+
+        internal override void Serialize(SerializerSink sink)
+        {
+            sink.BeginDataType(TypeName);
+            sink.StringValue("url", Url, summaryVersions: Version.None, isRequired: true);
+            base.Serialize(sink);
+            sink.Element("value", isChoice: true); Value?.Serialize(sink);
+            sink.End();
+        }
     }
 }

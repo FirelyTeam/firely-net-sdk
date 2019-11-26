@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// display | print | printoper
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Notes text
             /// </summary>
-            [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
@@ -107,6 +107,15 @@ namespace Hl7.Fhir.Model.DSTU2
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("NotesComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -183,7 +192,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -198,7 +207,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("request", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -212,7 +221,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Processing outcome
         /// </summary>
-        [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Outcome
@@ -226,7 +235,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("disposition", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
@@ -259,7 +268,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("ruleset", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
@@ -273,7 +282,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("originalRuleset", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
@@ -287,7 +296,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -320,7 +329,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Authoring Organization
         /// </summary>
-        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -335,7 +344,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible Practitioner
         /// </summary>
-        [FhirElement("requestProvider", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("requestProvider", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -350,7 +359,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("requestOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -365,7 +374,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("form", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Form
@@ -379,7 +388,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Notes
         /// </summary>
-        [FhirElement("notes", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("notes", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -394,7 +403,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Error code
         /// </summary>
-        [FhirElement("error", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("error", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -482,6 +491,41 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ProcessResponse");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Request?.Serialize(sink);
+            sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Outcome?.Serialize(sink);
+            sink.Element("disposition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DispositionElement?.Serialize(sink);
+            sink.Element("ruleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Ruleset?.Serialize(sink);
+            sink.Element("originalRuleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OriginalRuleset?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreatedElement?.Serialize(sink);
+            sink.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organization?.Serialize(sink);
+            sink.Element("requestProvider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RequestProvider?.Serialize(sink);
+            sink.Element("requestOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RequestOrganization?.Serialize(sink);
+            sink.Element("form", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Form?.Serialize(sink);
+            sink.BeginList("notes", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Notes)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("error", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Error)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

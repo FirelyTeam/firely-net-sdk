@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// MimeType of the binary content
         /// </summary>
-        [FhirElement("contentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("contentType", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Access Control Management
         /// </summary>
-        [FhirElement("securityContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("securityContext", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference SecurityContext
@@ -182,6 +182,16 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Binary");
+            base.Serialize(sink);
+            sink.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ContentTypeElement?.Serialize(sink);
+            sink.Element("securityContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SecurityContext?.Serialize(sink);
+            sink.Element("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ContentElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

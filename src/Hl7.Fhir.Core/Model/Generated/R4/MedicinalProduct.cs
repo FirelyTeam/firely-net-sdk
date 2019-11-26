@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The full product name
             /// </summary>
-            [FhirElement("productName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("productName", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Coding words or phrases of the name
             /// </summary>
-            [FhirElement("namePart", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("namePart", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Country where the name applies
             /// </summary>
-            [FhirElement("countryLanguage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("countryLanguage", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -125,6 +125,26 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<CountryLanguageComponent> _CountryLanguage;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("NameComponent");
+                base.Serialize(sink);
+                sink.Element("productName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ProductNameElement?.Serialize(sink);
+                sink.BeginList("namePart", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in NamePart)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("countryLanguage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in CountryLanguage)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -212,7 +232,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A fragment of a product name
             /// </summary>
-            [FhirElement("part", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("part", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -246,7 +266,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Idenifying type for this part of the name (e.g. strength part)
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -257,6 +277,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Coding _Type;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("NamePartComponent");
+                base.Serialize(sink);
+                sink.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PartElement?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -339,7 +368,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Country code for where this name applies
             /// </summary>
-            [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -354,7 +383,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Jurisdiction code for where this name applies
             /// </summary>
-            [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Jurisdiction
@@ -368,7 +397,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Language code for this name
             /// </summary>
-            [FhirElement("language", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("language", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -379,6 +408,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _Language;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CountryLanguageComponent");
+                base.Serialize(sink);
+                sink.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Country?.Serialize(sink);
+                sink.Element("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Jurisdiction?.Serialize(sink);
+                sink.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Language?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -466,7 +505,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The type of manufacturing operation
             /// </summary>
-            [FhirElement("operationType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("operationType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OperationType
@@ -480,7 +519,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Regulatory authorization reference number
             /// </summary>
-            [FhirElement("authorisationReferenceNumber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("authorisationReferenceNumber", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier AuthorisationReferenceNumber
@@ -494,7 +533,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Regulatory authorization date
             /// </summary>
-            [FhirElement("effectiveDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("effectiveDate", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime EffectiveDateElement
@@ -527,7 +566,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// To indicate if this proces is commercially confidential
             /// </summary>
-            [FhirElement("confidentialityIndicator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("confidentialityIndicator", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ConfidentialityIndicator
@@ -541,7 +580,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The manufacturer or establishment associated with the process
             /// </summary>
-            [FhirElement("manufacturer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("manufacturer", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [References("Organization")]
             [Cardinality(Min=0,Max=-1)]
@@ -557,7 +596,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A regulator which oversees the operation
             /// </summary>
-            [FhirElement("regulator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("regulator", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
@@ -568,6 +607,24 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.ResourceReference _Regulator;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ManufacturingBusinessOperationComponent");
+                base.Serialize(sink);
+                sink.Element("operationType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationType?.Serialize(sink);
+                sink.Element("authorisationReferenceNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorisationReferenceNumber?.Serialize(sink);
+                sink.Element("effectiveDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EffectiveDateElement?.Serialize(sink);
+                sink.Element("confidentialityIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConfidentialityIndicator?.Serialize(sink);
+                sink.BeginList("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Manufacturer)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -670,7 +727,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Identifier for the designation, or procedure number
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -685,7 +742,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The type of special designation, e.g. orphan drug, minor use
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -699,7 +756,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The intended use of the product, e.g. prevention, treatment
             /// </summary>
-            [FhirElement("intendedUse", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("intendedUse", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept IntendedUse
@@ -713,7 +770,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Condition for which the medicinal use applies
             /// </summary>
-            [FhirElement("indication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("indication", InSummary=Hl7.Fhir.Model.Version.All, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -728,7 +785,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// For example granted, pending, expired or withdrawn
             /// </summary>
-            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Status
@@ -742,7 +799,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Date when the designation was granted
             /// </summary>
-            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -775,7 +832,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Animal species for which this applies
             /// </summary>
-            [FhirElement("species", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("species", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Species
@@ -785,6 +842,25 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _Species;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SpecialDesignationComponent");
+                base.Serialize(sink);
+                sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Identifier)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("intendedUse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IntendedUse?.Serialize(sink);
+                sink.Element("indication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Indication?.Serialize(sink);
+                sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Status?.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+                sink.Element("species", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Species?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -885,7 +961,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier for this product. Could be an MPID
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -900,7 +976,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Regulatory type, e.g. Investigational or Authorized
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -914,7 +990,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// If this medicine applies to human or veterinary uses
         /// </summary>
-        [FhirElement("domain", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("domain", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Domain
@@ -928,7 +1004,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The dose form for a single part product, or combined form of a multiple part product
         /// </summary>
-        [FhirElement("combinedPharmaceuticalDoseForm", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("combinedPharmaceuticalDoseForm", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept CombinedPharmaceuticalDoseForm
@@ -942,7 +1018,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The legal status of supply of the medicinal product as classified by the regulator
         /// </summary>
-        [FhirElement("legalStatusOfSupply", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("legalStatusOfSupply", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
@@ -956,7 +1032,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
         /// </summary>
-        [FhirElement("additionalMonitoringIndicator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("additionalMonitoringIndicator", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AdditionalMonitoringIndicator
@@ -970,7 +1046,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether the Medicinal Product is subject to special measures for regulatory reasons
         /// </summary>
-        [FhirElement("specialMeasures", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("specialMeasures", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1004,7 +1080,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// If authorised for use in children
         /// </summary>
-        [FhirElement("paediatricUseIndicator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("paediatricUseIndicator", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PaediatricUseIndicator
@@ -1018,7 +1094,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Allows the product to be classified by various systems
         /// </summary>
-        [FhirElement("productClassification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("productClassification", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1033,7 +1109,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Marketing status of the medicinal product, in contrast to marketing authorizaton
         /// </summary>
-        [FhirElement("marketingStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("marketingStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1048,7 +1124,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Pharmaceutical aspects of product
         /// </summary>
-        [FhirElement("pharmaceuticalProduct", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("pharmaceuticalProduct", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("MedicinalProductPharmaceutical")]
         [Cardinality(Min=0,Max=-1)]
@@ -1064,7 +1140,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Package representation for the product
         /// </summary>
-        [FhirElement("packagedMedicinalProduct", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("packagedMedicinalProduct", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("MedicinalProductPackaged")]
         [Cardinality(Min=0,Max=-1)]
@@ -1080,7 +1156,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Supporting documentation, typically for regulatory submission
         /// </summary>
-        [FhirElement("attachedDocument", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("attachedDocument", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -1096,7 +1172,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A master file for to the medicinal product (e.g. Pharmacovigilance System Master File)
         /// </summary>
-        [FhirElement("masterFile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("masterFile", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -1112,7 +1188,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A product specific contact, person (in a role), or an organization
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("Organization","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
@@ -1128,7 +1204,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Clinical trials or studies that this product is involved in
         /// </summary>
-        [FhirElement("clinicalTrial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("clinicalTrial", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
@@ -1144,7 +1220,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The product's name, including full name and possibly coded parts
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -1159,7 +1235,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Reference to another product, e.g. for linking authorised to investigational product
         /// </summary>
-        [FhirElement("crossReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("crossReference", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1174,7 +1250,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// An operation applied to the product, for manufacturing or adminsitrative purpose
         /// </summary>
-        [FhirElement("manufacturingBusinessOperation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("manufacturingBusinessOperation", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1189,7 +1265,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Indicates if the medicinal product has an orphan designation for the treatment of a rare disease
         /// </summary>
-        [FhirElement("specialDesignation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("specialDesignation", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1298,6 +1374,100 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(SpecialDesignation, otherT.SpecialDesignation)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicinalProduct");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("domain", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Domain?.Serialize(sink);
+            sink.Element("combinedPharmaceuticalDoseForm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CombinedPharmaceuticalDoseForm?.Serialize(sink);
+            sink.Element("legalStatusOfSupply", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LegalStatusOfSupply?.Serialize(sink);
+            sink.Element("additionalMonitoringIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AdditionalMonitoringIndicator?.Serialize(sink);
+            sink.BeginList("specialMeasures", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(SpecialMeasuresElement);
+            sink.End();
+            sink.Element("paediatricUseIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PaediatricUseIndicator?.Serialize(sink);
+            sink.BeginList("productClassification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ProductClassification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("marketingStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MarketingStatus)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("pharmaceuticalProduct", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PharmaceuticalProduct)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("packagedMedicinalProduct", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PackagedMedicinalProduct)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("attachedDocument", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in AttachedDocument)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("masterFile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MasterFile)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("clinicalTrial", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ClinicalTrial)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Name)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("crossReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CrossReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("manufacturingBusinessOperation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ManufacturingBusinessOperation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specialDesignation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SpecialDesignation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

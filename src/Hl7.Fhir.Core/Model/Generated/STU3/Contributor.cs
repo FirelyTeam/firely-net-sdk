@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// author | editor | reviewer | endorser
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who contributed the content
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details of the contributor
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -185,6 +185,21 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Contributor");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); NameElement?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

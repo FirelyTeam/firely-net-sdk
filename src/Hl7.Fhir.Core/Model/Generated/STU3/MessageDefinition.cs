@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Type of resource
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -173,6 +173,17 @@ namespace Hl7.Fhir.Model.STU3
                         MaxElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Max");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("FocusComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CodeElement?.Serialize(sink);
+                sink.Element("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Profile?.Serialize(sink);
+                sink.Element("min", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MinElement?.Serialize(sink);
+                sink.Element("max", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MaxElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -311,6 +322,15 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("AllowedResponseComponent");
+                base.Serialize(sink);
+                sink.Element("message", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Message?.Serialize(sink);
+                sink.Element("situation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SituationElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AllowedResponseComponent;
@@ -394,7 +414,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical URI to reference this message definition (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -427,7 +447,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional identifier for the message definition
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -441,7 +461,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business version of the message definition
         /// </summary>
-        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
@@ -474,7 +494,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this message definition (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -507,7 +527,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this message definition (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -540,7 +560,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -574,7 +594,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("experimental", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
@@ -607,7 +627,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -641,7 +661,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("publisher", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
@@ -674,7 +694,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -689,7 +709,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Natural language description of the message definition
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown DescriptionElement
@@ -722,7 +742,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("useContext", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -737,7 +757,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for message definition (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -752,7 +772,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why this message definition is defined
         /// </summary>
-        [FhirElement("purpose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("purpose", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown PurposeElement
@@ -817,7 +837,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Definition this one is based on
         /// </summary>
-        [FhirElement("base", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("base", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("MessageDefinition")]
         [DataMember]
@@ -832,7 +852,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Protocol/workflow this is part of
         /// </summary>
-        [FhirElement("parent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("parent", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -848,7 +868,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Takes the place of
         /// </summary>
-        [FhirElement("replaces", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("replaces", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [References("MessageDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -864,7 +884,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Event type
         /// </summary>
-        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -879,7 +899,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Consequence | Currency | Notification
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.MessageSignificanceCategory> CategoryElement
@@ -912,7 +932,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Resource(s) that are the subject of the event
         /// </summary>
-        [FhirElement("focus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("focus", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1094,6 +1114,71 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(AllowedResponse, otherT.AllowedResponse)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MessageDefinition");
+            base.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("experimental", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExperimentalElement?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateElement?.Serialize(sink);
+            sink.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("useContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in UseContext)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Jurisdiction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("purpose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PurposeElement?.Serialize(sink);
+            sink.Element("copyright", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CopyrightElement?.Serialize(sink);
+            sink.Element("base", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Base?.Serialize(sink);
+            sink.BeginList("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Parent)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("replaces", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Replaces)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("event", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Event?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CategoryElement?.Serialize(sink);
+            sink.BeginList("focus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Focus)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("responseRequired", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ResponseRequiredElement?.Serialize(sink);
+            sink.BeginList("allowedResponse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AllowedResponse)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

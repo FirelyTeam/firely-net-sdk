@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Payment reference
         /// </summary>
-        [FhirElement("payment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("payment", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("PaymentReconciliation")]
         [Cardinality(Min=1,Max=1)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Party being notified
         /// </summary>
-        [FhirElement("recipient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("recipient", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Monetary amount of the payment
         /// </summary>
-        [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -358,6 +358,30 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(PaymentStatus, otherT.PaymentStatus)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("PaymentNotice");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Request?.Serialize(sink);
+            sink.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Response?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CreatedElement?.Serialize(sink);
+            sink.Element("provider", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Provider?.Serialize(sink);
+            sink.Element("payment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Payment?.Serialize(sink);
+            sink.Element("paymentDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PaymentDateElement?.Serialize(sink);
+            sink.Element("payee", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Payee?.Serialize(sink);
+            sink.Element("recipient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Recipient?.Serialize(sink);
+            sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Amount?.Serialize(sink);
+            sink.Element("paymentStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PaymentStatus?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

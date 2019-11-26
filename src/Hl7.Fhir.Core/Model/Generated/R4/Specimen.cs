@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Who collected the specimen
             /// </summary>
-            [FhirElement("collector", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("collector", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole")]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Collection time
             /// </summary>
-            [FhirElement("collected", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("collected", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// How long it took to collect specimen
             /// </summary>
-            [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.R4.Duration Duration
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Whether or how long patient abstained from food and/or drink
             /// </summary>
-            [FhirElement("fastingStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("fastingStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=100, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.R4.Duration))]
             [DataMember]
@@ -159,6 +159,20 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Element _FastingStatus;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CollectionComponent");
+                base.Serialize(sink);
+                sink.Element("collector", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Collector?.Serialize(sink);
+                sink.Element("collected", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Collected?.Serialize(sink);
+                sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Duration?.Serialize(sink);
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Method?.Serialize(sink);
+                sink.Element("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BodySite?.Serialize(sink);
+                sink.Element("fastingStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); FastingStatus?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -339,6 +353,22 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Time;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ProcessingComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Procedure?.Serialize(sink);
+                sink.BeginList("additive", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Additive)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Time?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProcessingComponent;
@@ -430,7 +460,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Id for the container
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -527,6 +557,24 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Element _Additive;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ContainerComponent");
+                base.Serialize(sink);
+                sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Identifier)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.Element("capacity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Capacity?.Serialize(sink);
+                sink.Element("specimenQuantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SpecimenQuantity?.Serialize(sink);
+                sink.Element("additive", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Additive?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -628,7 +676,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -643,7 +691,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Identifier assigned by the lab
         /// </summary>
-        [FhirElement("accessionIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("accessionIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier AccessionIdentifier
@@ -657,7 +705,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// available | unavailable | unsatisfactory | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SpecimenStatus> StatusElement
@@ -690,7 +738,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Kind of material that forms the specimen
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -704,7 +752,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Substance","Location")]
         [DataMember]
@@ -719,7 +767,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The time when specimen was received for processing
         /// </summary>
-        [FhirElement("receivedTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("receivedTime", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement
@@ -825,7 +873,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// State of the specimen
         /// </summary>
-        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -927,6 +975,61 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Specimen");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("accessionIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AccessionIdentifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("receivedTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReceivedTimeElement?.Serialize(sink);
+            sink.BeginList("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Parent)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Request)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("collection", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Collection?.Serialize(sink);
+            sink.BeginList("processing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Processing)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("container", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Container)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Condition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

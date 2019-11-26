@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Individual who was performing
             /// </summary>
-            [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("actor", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner","Patient","RelatedPerson","Device")]
             [Cardinality(Min=1,Max=1)]
@@ -92,6 +92,15 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PerformerComponent");
+                base.Serialize(sink);
+                sink.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Actor?.Serialize(sink);
+                sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OnBehalfOf?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -270,6 +279,19 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.Element _Rate;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DosageComponent");
+                base.Serialize(sink);
+                sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TextElement?.Serialize(sink);
+                sink.Element("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Site?.Serialize(sink);
+                sink.Element("route", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Route?.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Method?.Serialize(sink);
+                sink.Element("dose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Dose?.Serialize(sink);
+                sink.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Rate?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DosageComponent;
@@ -381,7 +403,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Instantiates protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("definition", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("PlanDefinition","ActivityDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -397,7 +419,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Part of referenced event
         /// </summary>
-        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("partOf", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("MedicationAdministration","Procedure")]
         [Cardinality(Min=0,Max=-1)]
@@ -413,7 +435,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// in-progress | on-hold | completed | entered-in-error | stopped | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -460,7 +482,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What was administered
         /// </summary>
-        [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=Hl7.Fhir.Model.Version.All, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -476,7 +498,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who received medication
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -521,7 +543,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Start and end time of administration
         /// </summary>
-        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=Hl7.Fhir.Model.Version.All, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
@@ -537,7 +559,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who administered substance
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -552,7 +574,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// True if medication not administered
         /// </summary>
-        [FhirElement("notGiven", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("notGiven", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NotGivenElement
@@ -831,6 +853,88 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(EventHistory, otherT.EventHistory)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicationAdministration");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Definition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PartOf)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Category?.Serialize(sink);
+            sink.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Context?.Serialize(sink);
+            sink.BeginList("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in SupportingInformation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("effective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Effective?.Serialize(sink);
+            sink.BeginList("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Performer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("notGiven", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NotGivenElement?.Serialize(sink);
+            sink.BeginList("reasonNotGiven", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ReasonNotGiven)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ReasonReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("prescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Prescription?.Serialize(sink);
+            sink.BeginList("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Device)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("dosage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Dosage?.Serialize(sink);
+            sink.BeginList("eventHistory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in EventHistory)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

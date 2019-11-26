@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Individual making the request
             /// </summary>
-            [FhirElement("agent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("agent", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Device","Practitioner","Organization")]
             [Cardinality(Min=1,Max=1)]
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Organization agent is acting for
             /// </summary>
-            [FhirElement("onBehalfOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("onBehalfOf", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Organization")]
             [DataMember]
@@ -92,6 +92,15 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RequesterComponent");
+                base.Serialize(sink);
+                sink.Element("agent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Agent?.Serialize(sink);
+                sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnBehalfOf?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -167,7 +176,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Request identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -182,7 +191,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("definition", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -198,7 +207,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What request fulfills
         /// </summary>
-        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("basedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -213,7 +222,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What request replaces
         /// </summary>
-        [FhirElement("priorRequest", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("priorRequest", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -228,7 +237,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifier of composite request
         /// </summary>
-        [FhirElement("groupIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("groupIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier GroupIdentifier
@@ -242,7 +251,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | suspended | completed | entered-in-error | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.RequestStatus> StatusElement
@@ -275,7 +284,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// proposal | plan | original-order | encoded | reflex-order
         /// </summary>
-        [FhirElement("intent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("intent", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -290,7 +299,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Indicates how quickly the {{title}} should be addressed with respect to other requests
         /// </summary>
-        [FhirElement("priority", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("priority", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -323,7 +332,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [Cardinality(Min=1,Max=1)]
@@ -339,7 +348,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Focus of request
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
@@ -355,7 +364,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter or Episode motivating request
         /// </summary>
-        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("context", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -370,7 +379,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Desired time or schedule for use
         /// </summary>
-        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=Hl7.Fhir.Model.Version.All, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Timing))]
         [DataMember]
@@ -385,7 +394,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("authoredOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("authoredOn", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
@@ -418,7 +427,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who/what is requesting diagnostics
         /// </summary>
-        [FhirElement("requester", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("requester", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public RequesterComponent Requester
@@ -432,7 +441,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Fille role
         /// </summary>
-        [FhirElement("performerType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("performerType", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PerformerType
@@ -446,7 +455,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Requested Filler
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Patient","Device","RelatedPerson","HealthcareService")]
         [DataMember]
@@ -461,7 +470,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Coded Reason for request
         /// </summary>
-        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("reasonCode", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -476,7 +485,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Linked Reason for request
         /// </summary>
-        [FhirElement("reasonReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("reasonReference", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -632,6 +641,79 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(RelevantHistory, otherT.RelevantHistory)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("DeviceRequest");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Definition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in BasedOn)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("priorRequest", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PriorRequest)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("groupIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupIdentifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("intent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Intent?.Serialize(sink);
+            sink.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PriorityElement?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Code?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Context?.Serialize(sink);
+            sink.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(sink);
+            sink.Element("authoredOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoredOnElement?.Serialize(sink);
+            sink.Element("requester", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Requester?.Serialize(sink);
+            sink.Element("performerType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PerformerType?.Serialize(sink);
+            sink.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(sink);
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("supportingInfo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in SupportingInfo)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("relevantHistory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelevantHistory)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

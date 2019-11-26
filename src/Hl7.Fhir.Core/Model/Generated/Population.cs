@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The age of the specific population
         /// </summary>
-        [FhirElement("age", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(Version=Version.R4, Types=new[]{typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept)})]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The gender of the specific population
         /// </summary>
-        [FhirElement("gender", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=100)]
+        [FhirElement("gender", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Gender
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Race of the specific population
         /// </summary>
-        [FhirElement("race", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=110)]
+        [FhirElement("race", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Race
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The existing physiological conditions of the specific population to which this applies
         /// </summary>
-        [FhirElement("physiologicalCondition", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=120)]
+        [FhirElement("physiologicalCondition", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
@@ -159,6 +159,17 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Population");
+            base.Serialize(sink);
+            sink.Element("age", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, true); Age?.Serialize(sink);
+            sink.Element("gender", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Gender?.Serialize(sink);
+            sink.Element("race", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Race?.Serialize(sink);
+            sink.Element("physiologicalCondition", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); PhysiologicalCondition?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

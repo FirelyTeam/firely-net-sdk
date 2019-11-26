@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Mime type of the content, with charset etc.
         /// </summary>
-        [FhirElement("contentType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("contentType", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human language of the content (BCP-47)
         /// </summary>
-        [FhirElement("language", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("language", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code LanguageElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=50)]
+        [FhirElement("data", InSummary=Hl7.Fhir.Model.Version.DSTU2, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary DataElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Uri where the data can be found
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Url UrlElement
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of bytes of content (if url provided)
         /// </summary>
-        [FhirElement("size", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("size", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt SizeElement
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Hash of the data (sha-1, base64ed)
         /// </summary>
-        [FhirElement("hash", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("hash", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary HashElement
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Label to display in place of the data
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date attachment was first created
         /// </summary>
-        [FhirElement("creation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("creation", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreationElement
@@ -408,6 +408,21 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreationElement, otherT.CreationElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Attachment");
+            base.Serialize(sink);
+            sink.Element("contentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ContentTypeElement?.Serialize(sink);
+            sink.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageElement?.Serialize(sink);
+            sink.Element("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.DSTU2, false, false); DataElement?.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.Element("size", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SizeElement?.Serialize(sink);
+            sink.Element("hash", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HashElement?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.Element("creation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreationElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

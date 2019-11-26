@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification
 
         public PocoStructureDefinitionSummaryProvider(Model.Version version)
         {
-            if (version == Model.Version.All) throw Error.Argument(nameof(version), "Must be a specific version");
+            if (version == Model.Version.All || version == Model.Version.None) throw Error.Argument(nameof(version), "Must be a specific version");
 
             Version = version;
         }
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification
 
         public bool IsCollection => _pm.IsCollection;
 
-        public bool InSummary => _pm.InSummary.Contains(Model.Version.All) || _pm.InSummary.Contains(_version);
+        public bool InSummary => (_pm.InSummary & _version) != 0;
 
         public XmlRepresentation Representation => _pm.SerializationHint != XmlRepresentation.None ?
             _pm.SerializationHint : XmlRepresentation.XmlElement;

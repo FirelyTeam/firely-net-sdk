@@ -108,6 +108,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _Role;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ParticipantComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); TypeElement?.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Role?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ParticipantComponent;
@@ -233,6 +242,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Expression _Expression;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DynamicValueComponent");
+                base.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); PathElement?.Serialize(sink);
+                sink.Element("expression", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Expression?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DynamicValueComponent;
@@ -322,7 +340,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Canonical identifier for this activity definition, represented as a URI (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -355,7 +373,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Additional identifier for the activity definition
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -370,7 +388,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business version of the activity definition
         /// </summary>
-        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
@@ -403,7 +421,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this activity definition (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -436,7 +454,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this activity definition (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -501,7 +519,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -535,7 +553,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("experimental", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
@@ -583,7 +601,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -616,7 +634,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("publisher", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
@@ -649,7 +667,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -664,7 +682,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Natural language description of the activity definition
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown DescriptionElement
@@ -697,7 +715,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("useContext", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -712,7 +730,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Intended jurisdiction for activity definition (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -887,7 +905,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the activity definition is expected to be used
         /// </summary>
-        [FhirElement("effectivePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("effectivePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period EffectivePeriod
@@ -1018,7 +1036,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Kind of resource
         /// </summary>
-        [FhirElement("kind", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=370)]
+        [FhirElement("kind", InSummary=Hl7.Fhir.Model.Version.All, Order=370)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.R4.RequestResourceType> KindElement
@@ -1083,7 +1101,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Detail type of activity
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=390)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=390)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -1161,7 +1179,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// True if the activity should not be performed
         /// </summary>
-        [FhirElement("doNotPerform", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=420)]
+        [FhirElement("doNotPerform", InSummary=Hl7.Fhir.Model.Version.All, Order=420)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
@@ -1578,6 +1596,146 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ActivityDefinition");
+            base.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.Element("subtitle", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SubtitleElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("experimental", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExperimentalElement?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Subject?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("useContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in UseContext)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Jurisdiction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("purpose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PurposeElement?.Serialize(sink);
+            sink.Element("usage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UsageElement?.Serialize(sink);
+            sink.Element("copyright", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CopyrightElement?.Serialize(sink);
+            sink.Element("approvalDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ApprovalDateElement?.Serialize(sink);
+            sink.Element("lastReviewDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastReviewDateElement?.Serialize(sink);
+            sink.Element("effectivePeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EffectivePeriod?.Serialize(sink);
+            sink.BeginList("topic", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Topic)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Author)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("editor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Editor)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reviewer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reviewer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("endorser", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Endorser)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("relatedArtifact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedArtifact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("library", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(LibraryElement);
+            sink.End();
+            sink.Element("kind", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); KindElement?.Serialize(sink);
+            sink.Element("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProfileElement?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.Element("intent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IntentElement?.Serialize(sink);
+            sink.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PriorityElement?.Serialize(sink);
+            sink.Element("doNotPerform", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DoNotPerformElement?.Serialize(sink);
+            sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Timing?.Serialize(sink);
+            sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Location?.Serialize(sink);
+            sink.BeginList("participant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Participant)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("product", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Product?.Serialize(sink);
+            sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(sink);
+            sink.BeginList("dosage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Dosage)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in BodySite)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specimenRequirement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in SpecimenRequirement)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("observationRequirement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ObservationRequirement)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("observationResultRequirement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ObservationResultRequirement)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("transform", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TransformElement?.Serialize(sink);
+            sink.BeginList("dynamicValue", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in DynamicValue)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

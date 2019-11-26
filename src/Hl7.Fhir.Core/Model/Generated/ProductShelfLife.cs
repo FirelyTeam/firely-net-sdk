@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier for the packaged Medicinal Product
         /// </summary>
-        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=90)]
+        [FhirElement("identifier", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
         /// </summary>
-        [FhirElement("type", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=100)]
+        [FhirElement("type", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("period", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=110)]
+        [FhirElement("period", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
         /// </summary>
-        [FhirElement("specialPrecautionsForStorage", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=120)]
+        [FhirElement("specialPrecautionsForStorage", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -161,6 +161,22 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SpecialPrecautionsForStorage, otherT.SpecialPrecautionsForStorage)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("ProductShelfLife");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Identifier?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Type?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Period?.Serialize(sink);
+            sink.BeginList("specialPrecautionsForStorage", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            foreach(var item in SpecialPrecautionsForStorage)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

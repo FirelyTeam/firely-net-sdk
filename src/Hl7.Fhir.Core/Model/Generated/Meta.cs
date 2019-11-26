@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version specific identifier
         /// </summary>
-        [FhirElement("versionId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("versionId", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Id VersionIdElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the resource version last changed
         /// </summary>
-        [FhirElement("lastUpdated", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("lastUpdated", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastUpdatedElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles this resource claims to conform to
         /// </summary>
-        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("profile", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Security Labels applied to this resource
         /// </summary>
-        [FhirElement("security", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("security", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Tags applied to this resource
         /// </summary>
-        [FhirElement("tag", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("tag", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies where the resource comes from
         /// </summary>
-        [FhirElement("source", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=80)]
+        [FhirElement("source", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SourceElement
@@ -271,6 +271,31 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Meta");
+            base.Serialize(sink);
+            sink.Element("versionId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionIdElement?.Serialize(sink);
+            sink.Element("lastUpdated", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastUpdatedElement?.Serialize(sink);
+            sink.BeginList("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(ProfileElement);
+            sink.End();
+            sink.BeginList("security", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Security)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("tag", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Tag)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("source", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); SourceElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -29,6 +29,7 @@
 */
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -143,7 +144,6 @@ namespace Hl7.Fhir.Model
             }
         }
     }
-
 
     public partial class Quantity
     {

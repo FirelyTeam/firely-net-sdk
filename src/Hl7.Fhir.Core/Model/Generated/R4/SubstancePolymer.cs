@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("ratioType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("ratioType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RatioType
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("startingMaterial", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("startingMaterial", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -90,6 +90,20 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<StartingMaterialComponent> _StartingMaterial;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("MonomerSetComponent");
+                base.Serialize(sink);
+                sink.Element("ratioType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RatioType?.Serialize(sink);
+                sink.BeginList("startingMaterial", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in StartingMaterial)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -172,7 +186,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("material", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("material", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Material
@@ -186,7 +200,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -200,7 +214,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("isDefining", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("isDefining", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
@@ -233,7 +247,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -243,6 +257,17 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.SubstanceAmount _Amount;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StartingMaterialComponent");
+                base.Serialize(sink);
+                sink.Element("material", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Material?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("isDefining", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IsDefiningElement?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -335,7 +360,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("numberOfUnits", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("numberOfUnits", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer NumberOfUnitsElement
@@ -368,7 +393,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("averageMolecularFormula", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("averageMolecularFormula", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AverageMolecularFormulaElement
@@ -401,7 +426,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnitAmountType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("repeatUnitAmountType", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept RepeatUnitAmountType
@@ -415,7 +440,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("repeatUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -426,6 +451,22 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<RepeatUnitComponent> _RepeatUnit;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RepeatComponent");
+                base.Serialize(sink);
+                sink.Element("numberOfUnits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfUnitsElement?.Serialize(sink);
+                sink.Element("averageMolecularFormula", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AverageMolecularFormulaElement?.Serialize(sink);
+                sink.Element("repeatUnitAmountType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepeatUnitAmountType?.Serialize(sink);
+                sink.BeginList("repeatUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in RepeatUnit)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -518,7 +559,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("orientationOfPolymerisation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("orientationOfPolymerisation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrientationOfPolymerisation
@@ -532,7 +573,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("repeatUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("repeatUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RepeatUnitElement
@@ -565,7 +606,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -579,7 +620,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("degreeOfPolymerisation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("degreeOfPolymerisation", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -594,7 +635,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("structuralRepresentation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("structuralRepresentation", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -605,6 +646,28 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<StructuralRepresentationComponent> _StructuralRepresentation;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RepeatUnitComponent");
+                base.Serialize(sink);
+                sink.Element("orientationOfPolymerisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrientationOfPolymerisation?.Serialize(sink);
+                sink.Element("repeatUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepeatUnitElement?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(sink);
+                sink.BeginList("degreeOfPolymerisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in DegreeOfPolymerisation)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("structuralRepresentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in StructuralRepresentation)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -702,7 +765,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("degree", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("degree", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Degree
@@ -716,7 +779,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.SubstanceAmount Amount
@@ -726,6 +789,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.SubstanceAmount _Amount;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DegreeOfPolymerisationComponent");
+                base.Serialize(sink);
+                sink.Element("degree", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Degree?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -808,7 +880,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -822,7 +894,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("representation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("representation", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RepresentationElement
@@ -855,7 +927,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("attachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("attachment", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment Attachment
@@ -865,6 +937,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Attachment _Attachment;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StructuralRepresentationComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("representation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RepresentationElement?.Serialize(sink);
+                sink.Element("attachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Attachment?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -945,7 +1027,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
@@ -959,7 +1041,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("geometry", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("geometry", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Geometry
@@ -973,7 +1055,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("copolymerConnectivity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("copolymerConnectivity", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -988,7 +1070,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("modification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("modification", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1022,7 +1104,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("monomerSet", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("monomerSet", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1037,7 +1119,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("repeat", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("repeat", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1104,6 +1186,36 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Repeat, otherT.Repeat)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("SubstancePolymer");
+            base.Serialize(sink);
+            sink.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(sink);
+            sink.Element("geometry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Geometry?.Serialize(sink);
+            sink.BeginList("copolymerConnectivity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CopolymerConnectivity)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("modification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(ModificationElement);
+            sink.End();
+            sink.BeginList("monomerSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in MonomerSet)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Repeat)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

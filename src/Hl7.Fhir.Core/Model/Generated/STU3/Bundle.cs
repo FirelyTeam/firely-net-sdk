@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
-            [FhirElement("relation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("relation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Reference details for the link
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -128,6 +128,15 @@ namespace Hl7.Fhir.Model.STU3
                         UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Url");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("LinkComponent");
+                base.Serialize(sink);
+                sink.Element("relation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); RelationElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -223,7 +232,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Links related to this entry
             /// </summary>
-            [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -238,7 +247,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Absolute URL for resource (server address, or UUID/OID)
             /// </summary>
-            [FhirElement("fullUrl", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("fullUrl", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri FullUrlElement
@@ -271,7 +280,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// A resource in the bundle
             /// </summary>
-            [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.ResourceChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
@@ -286,7 +295,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Search related information
             /// </summary>
-            [FhirElement("search", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("search", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public SearchComponent Search
@@ -300,7 +309,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("request", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("request", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public RequestComponent Request
@@ -314,7 +323,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Transaction Related Information
             /// </summary>
-            [FhirElement("response", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("response", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public ResponseComponent Response
@@ -324,6 +333,24 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private ResponseComponent _Response;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("EntryComponent");
+                base.Serialize(sink);
+                sink.BeginList("link", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Link)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("fullUrl", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FullUrlElement?.Serialize(sink);
+                sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Resource?.Serialize(sink);
+                sink.Element("search", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Search?.Serialize(sink);
+                sink.Element("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Request?.Serialize(sink);
+                sink.Element("response", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Response?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -426,7 +453,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// match | include | outcome - why this is in the result set
             /// </summary>
-            [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("mode", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.SearchEntryMode> ModeElement
@@ -459,7 +486,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Search ranking (between 0 and 1)
             /// </summary>
-            [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("score", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal ScoreElement
@@ -487,6 +514,15 @@ namespace Hl7.Fhir.Model.STU3
                         ScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Score");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SearchComponent");
+                base.Serialize(sink);
+                sink.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(sink);
+                sink.Element("score", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ScoreElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -570,7 +606,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// GET | POST | PUT | DELETE
             /// </summary>
-            [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -604,7 +640,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// URL for HTTP equivalent of this entry
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -638,7 +674,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing cache currency
             /// </summary>
-            [FhirElement("ifNoneMatch", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("ifNoneMatch", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfNoneMatchElement
@@ -671,7 +707,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing update contention
             /// </summary>
-            [FhirElement("ifModifiedSince", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("ifModifiedSince", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Instant IfModifiedSinceElement
@@ -704,7 +740,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For managing update contention
             /// </summary>
-            [FhirElement("ifMatch", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("ifMatch", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfMatchElement
@@ -737,7 +773,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// For conditional creates
             /// </summary>
-            [FhirElement("ifNoneExist", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("ifNoneExist", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString IfNoneExistElement
@@ -765,6 +801,19 @@ namespace Hl7.Fhir.Model.STU3
                         IfNoneExistElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("IfNoneExist");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RequestComponent");
+                base.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MethodElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.Element("ifNoneMatch", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfNoneMatchElement?.Serialize(sink);
+                sink.Element("ifModifiedSince", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfModifiedSinceElement?.Serialize(sink);
+                sink.Element("ifMatch", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfMatchElement?.Serialize(sink);
+                sink.Element("ifNoneExist", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IfNoneExistElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -868,7 +917,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Status response code (text optional)
             /// </summary>
-            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -902,7 +951,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The location, if the operation returns a location
             /// </summary>
-            [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri LocationElement
@@ -935,7 +984,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// The etag for the resource (if relevant)
             /// </summary>
-            [FhirElement("etag", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("etag", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString EtagElement
@@ -968,7 +1017,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Server's date time modified
             /// </summary>
-            [FhirElement("lastModified", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("lastModified", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Instant LastModifiedElement
@@ -1001,7 +1050,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// OperationOutcome with hints and warnings (for batch/transaction)
             /// </summary>
-            [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=80, Choice=ChoiceType.ResourceChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
@@ -1012,6 +1061,18 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.Resource _Outcome;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ResponseComponent");
+                base.Serialize(sink);
+                sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+                sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LocationElement?.Serialize(sink);
+                sink.Element("etag", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EtagElement?.Serialize(sink);
+                sink.Element("lastModified", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastModifiedElement?.Serialize(sink);
+                sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Outcome?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1111,7 +1172,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Persistent identifier for the bundle
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -1125,7 +1186,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1159,7 +1220,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("total", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
@@ -1192,7 +1253,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1207,7 +1268,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("entry", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1222,7 +1283,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Digital Signature
         /// </summary>
-        [FhirElement("signature", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("signature", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Signature Signature
@@ -1362,6 +1423,29 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Bundle");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("total", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TotalElement?.Serialize(sink);
+            sink.BeginList("link", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Link)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("entry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Entry)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("signature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Signature?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

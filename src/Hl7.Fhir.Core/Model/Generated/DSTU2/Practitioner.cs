@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Roles which this practitioner may perform
             /// </summary>
-            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific specialty of the practitioner
             /// </summary>
-            [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("specialty", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The period during which the practitioner is authorized to perform in these role(s)
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -151,6 +151,34 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PractitionerRoleComponent");
+                base.Serialize(sink);
+                sink.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManagingOrganization?.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Role?.Serialize(sink);
+                sink.BeginList("specialty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Specialty)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+                sink.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Location)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("healthcareService", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in HealthcareService)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -306,6 +334,22 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.ResourceReference _Issuer;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("QualificationComponent");
+                base.Serialize(sink);
+                sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Identifier)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Period?.Serialize(sink);
+                sink.Element("issuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Issuer?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QualificationComponent;
@@ -396,7 +440,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A identifier for the person as this agent
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -411,7 +455,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Whether this practitioner's record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("active", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
@@ -444,7 +488,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A name associated with the person
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.DSTU2.HumanName Name
@@ -458,7 +502,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// A contact detail for the practitioner
         /// </summary>
-        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("telecom", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -473,7 +517,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Where practitioner can be found/visited
         /// </summary>
-        [FhirElement("address", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("address", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -488,7 +532,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("gender", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -521,7 +565,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The date  on which the practitioner was born
         /// </summary>
-        [FhirElement("birthDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("birthDate", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Date BirthDateElement
@@ -677,6 +721,59 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Practitioner");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("active", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Name?.Serialize(sink);
+            sink.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Telecom)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("address", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Address)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenderElement?.Serialize(sink);
+            sink.Element("birthDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BirthDateElement?.Serialize(sink);
+            sink.BeginList("photo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Photo)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("practitionerRole", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in PractitionerRole)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("qualification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Qualification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("communication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Communication)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

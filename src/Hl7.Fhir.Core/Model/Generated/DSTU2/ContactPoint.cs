@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// phone | fax | email | pager | other
         /// </summary>
-        [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("system", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.ContactPointSystem> SystemElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The actual contact point details
         /// </summary>
-        [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ValueElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// home | work | temp | old | mobile - purpose of this contact point
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ContactPointUse> UseElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Specify preferred order of use (1 = highest)
         /// </summary>
-        [FhirElement("rank", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("rank", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt RankElement
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Time period when the contact point was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -265,6 +265,18 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("ContactPoint");
+            base.Serialize(sink);
+            sink.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SystemElement?.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
+            sink.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UseElement?.Serialize(sink);
+            sink.Element("rank", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RankElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What score this group achieved
             /// </summary>
-            [FhirElement("measureScore", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("measureScore", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
@@ -142,6 +142,27 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private List<StratifierComponent> _Stratifier;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("GroupComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Identifier?.Serialize(sink);
+                sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Population)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(sink);
+                sink.BeginList("stratifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Stratifier)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -234,7 +255,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Population identifier as defined in the measure
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -248,7 +269,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -305,6 +326,17 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.ResourceReference _Patients;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PopulationComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(sink);
+                sink.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -423,6 +455,20 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private List<StratifierGroupComponent> _Stratum;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StratifierComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.BeginList("stratum", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Stratum)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -555,7 +601,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What score this stratum achieved
             /// </summary>
-            [FhirElement("measureScore", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("measureScore", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
@@ -583,6 +629,21 @@ namespace Hl7.Fhir.Model.STU3
                         MeasureScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("MeasureScore");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StratifierGroupComponent");
+                base.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
+                sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Population)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("measureScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasureScoreElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -671,7 +732,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Population identifier as defined in the measure
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -685,7 +746,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -742,6 +803,17 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.ResourceReference _Patients;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StratifierGroupPopulationComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CountElement?.Serialize(sink);
+                sink.Element("patients", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patients?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -830,7 +902,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional identifier for the Report
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -844,7 +916,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// complete | pending | error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -878,7 +950,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// individual | patient-list | summary
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -912,7 +984,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What measure was evaluated
         /// </summary>
-        [FhirElement("measure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("measure", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Measure")]
         [Cardinality(Min=1,Max=1)]
@@ -928,7 +1000,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What patient the report is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -943,7 +1015,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the report was generated
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -976,7 +1048,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who is reporting the data
         /// </summary>
-        [FhirElement("reportingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("reportingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -991,7 +1063,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What period the report covers
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1099,6 +1171,28 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(EvaluatedResources, otherT.EvaluatedResources)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MeasureReport");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("measure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Measure?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("reportingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReportingOrganization?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Period?.Serialize(sink);
+            sink.BeginList("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Group)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("evaluatedResources", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EvaluatedResources?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

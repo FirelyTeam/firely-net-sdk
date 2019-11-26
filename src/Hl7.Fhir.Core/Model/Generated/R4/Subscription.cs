@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// rest-hook | websocket | email | sms | message
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Where the channel points to
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Url EndpointElement
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// MIME type to send, or omit for no payload
             /// </summary>
-            [FhirElement("payload", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("payload", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Code PayloadElement
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Usage depends on the channel type
             /// </summary>
-            [FhirElement("header", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("header", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -194,6 +194,19 @@ namespace Hl7.Fhir.Model.R4
                         HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Header");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ChannelComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+                sink.Element("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndpointElement?.Serialize(sink);
+                sink.Element("payload", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PayloadElement?.Serialize(sink);
+                sink.BeginList("header", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(HeaderElement);
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -286,7 +299,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// requested | active | error | off
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -320,7 +333,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details for source (e.g. troubleshooting)
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -335,7 +348,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When to automatically delete the subscription
         /// </summary>
-        [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
@@ -368,7 +381,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Description of why this subscription was created
         /// </summary>
-        [FhirElement("reason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("reason", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -402,7 +415,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Rule for server push
         /// </summary>
-        [FhirElement("criteria", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("criteria", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -436,7 +449,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Latest error note
         /// </summary>
-        [FhirElement("error", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("error", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ErrorElement
@@ -469,7 +482,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The channel on which to report matches to the criteria
         /// </summary>
-        [FhirElement("channel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("channel", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -539,6 +552,25 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Channel, otherT.Channel)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Subscription");
+            base.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(sink);
+            sink.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ReasonElement?.Serialize(sink);
+            sink.Element("criteria", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CriteriaElement?.Serialize(sink);
+            sink.Element("error", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ErrorElement?.Serialize(sink);
+            sink.Element("channel", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Channel?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

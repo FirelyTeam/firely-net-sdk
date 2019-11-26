@@ -118,6 +118,22 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<Hl7.Fhir.Model.Annotation> _Note;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ConditionComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
+                sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Outcome?.Serialize(sink);
+                sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Onset?.Serialize(sink);
+                sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ConditionComponent;
@@ -205,7 +221,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External Id(s) for this record
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -220,7 +236,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Instantiates protocol or definition
         /// </summary>
-        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("definition", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("PlanDefinition","Questionnaire")]
         [Cardinality(Min=0,Max=-1)]
@@ -236,7 +252,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// partial | completed | entered-in-error | health-unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -270,7 +286,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The taking of a family member's history did not occur
         /// </summary>
-        [FhirElement("notDone", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("notDone", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NotDoneElement
@@ -303,7 +319,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// subject-unknown | withheld | unable-to-obtain | deferred
         /// </summary>
-        [FhirElement("notDoneReason", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("notDoneReason", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept NotDoneReason
@@ -317,7 +333,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Patient history is about
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -333,7 +349,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When history was captured/updated
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -366,7 +382,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The family member described
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -399,7 +415,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Relationship to the subject
         /// </summary>
-        [FhirElement("relationship", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("relationship", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -414,7 +430,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// male | female | other | unknown
         /// </summary>
-        [FhirElement("gender", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("gender", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -462,7 +478,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// (approximate) age
         /// </summary>
-        [FhirElement("age", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=Hl7.Fhir.Model.Version.All, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.STU3.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -477,7 +493,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Age is estimated?
         /// </summary>
-        [FhirElement("estimatedAge", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("estimatedAge", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean EstimatedAgeElement
@@ -510,7 +526,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Dead? How old/when?
         /// </summary>
-        [FhirElement("deceased", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=Hl7.Fhir.Model.Version.All, Order=220, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.STU3.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -525,7 +541,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why was family member history performed?
         /// </summary>
-        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("reasonCode", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -540,7 +556,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why was family member history performed?
         /// </summary>
-        [FhirElement("reasonReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("reasonReference", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse")]
         [Cardinality(Min=0,Max=-1)]
@@ -706,6 +722,61 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("FamilyMemberHistory");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Definition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("notDone", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NotDoneElement?.Serialize(sink);
+            sink.Element("notDoneReason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NotDoneReason?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Relationship?.Serialize(sink);
+            sink.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenderElement?.Serialize(sink);
+            sink.Element("born", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Born?.Serialize(sink);
+            sink.Element("age", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Age?.Serialize(sink);
+            sink.Element("estimatedAge", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EstimatedAgeElement?.Serialize(sink);
+            sink.Element("deceased", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Deceased?.Serialize(sink);
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Condition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -100,6 +100,26 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private List<BatchComponent> _Batch;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ProductComponent");
+                base.Serialize(sink);
+                sink.Element("form", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Form?.Serialize(sink);
+                sink.BeginList("ingredient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Ingredient)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("batch", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Batch)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProductComponent;
@@ -211,6 +231,15 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.Ratio _Amount;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("IngredientComponent");
+                base.Serialize(sink);
+                sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -342,6 +371,15 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("BatchComponent");
+                base.Serialize(sink);
+                sink.Element("lotNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LotNumberElement?.Serialize(sink);
+                sink.Element("expirationDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExpirationDateElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BatchComponent;
@@ -446,6 +484,20 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<ContentComponent> _Content;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PackageComponent");
+                base.Serialize(sink);
+                sink.Element("container", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Container?.Serialize(sink);
+                sink.BeginList("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Content)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -554,6 +606,15 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.SimpleQuantity _Amount;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ContentComponent");
+                base.Serialize(sink);
+                sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ContentComponent;
@@ -628,7 +689,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Codes that identify this medication
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -642,7 +703,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// True if a brand
         /// </summary>
-        [FhirElement("isBrand", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("isBrand", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsBrandElement
@@ -675,7 +736,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("manufacturer", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -765,6 +826,18 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Package, otherT.Package)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Medication");
+            base.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.Element("isBrand", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IsBrandElement?.Serialize(sink);
+            sink.Element("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Manufacturer?.Serialize(sink);
+            sink.Element("product", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Product?.Serialize(sink);
+            sink.Element("package", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Package?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -140,6 +140,16 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ArmComponent");
+                base.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); NameElement?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ArmComponent;
@@ -268,6 +278,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.CodeableConcept _Type;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ObjectiveComponent");
+                base.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NameElement?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ObjectiveComponent;
@@ -351,7 +370,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business Identifier for study
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -366,7 +385,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this study
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -399,7 +418,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Steps followed in executing study
         /// </summary>
-        [FhirElement("protocol", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("protocol", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -415,7 +434,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Part of larger study
         /// </summary>
-        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("partOf", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
@@ -431,7 +450,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -465,7 +484,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
         /// </summary>
-        [FhirElement("primaryPurposeType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("primaryPurposeType", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
@@ -479,7 +498,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
         /// </summary>
-        [FhirElement("phase", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("phase", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Phase
@@ -493,7 +512,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Classifications for the study
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -508,7 +527,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Drugs, devices, etc. under study
         /// </summary>
-        [FhirElement("focus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("focus", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -523,7 +542,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Condition being studied
         /// </summary>
-        [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -538,7 +557,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details for the study
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -567,7 +586,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Used to search for the study
         /// </summary>
-        [FhirElement("keyword", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("keyword", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -582,7 +601,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Geographic region(s) for study
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -629,7 +648,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Inclusion &amp; exclusion criteria
         /// </summary>
-        [FhirElement("enrollment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("enrollment", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Group")]
         [Cardinality(Min=0,Max=-1)]
@@ -645,7 +664,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the study began and ended
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -659,7 +678,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Organization that initiates and is legally responsible for the study
         /// </summary>
-        [FhirElement("sponsor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("sponsor", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -674,7 +693,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Researcher who oversees multiple aspects of the study
         /// </summary>
-        [FhirElement("principalInvestigator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("principalInvestigator", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -689,7 +708,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Facility where study activities are conducted
         /// </summary>
-        [FhirElement("site", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("site", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -705,7 +724,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
         /// </summary>
-        [FhirElement("reasonStopped", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("reasonStopped", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ReasonStopped
@@ -867,6 +886,112 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Objective, otherT.Objective)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ResearchStudy");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.BeginList("protocol", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Protocol)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PartOf)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("primaryPurposeType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PrimaryPurposeType?.Serialize(sink);
+            sink.Element("phase", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Phase?.Serialize(sink);
+            sink.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Category)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("focus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Focus)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Condition)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("relatedArtifact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedArtifact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("keyword", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Keyword)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Location)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("enrollment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Enrollment)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.Element("sponsor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Sponsor?.Serialize(sink);
+            sink.Element("principalInvestigator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PrincipalInvestigator?.Serialize(sink);
+            sink.BeginList("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Site)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("reasonStopped", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReasonStopped?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("arm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Arm)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("objective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Objective)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

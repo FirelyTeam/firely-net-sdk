@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of context being specified
         /// </summary>
-        [FhirElement("code", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=30)]
+        [FhirElement("code", Versions=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value that defines the context
         /// </summary>
-        [FhirElement("value", Versions=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.R4,Hl7.Fhir.Model.Version.STU3}, Order=40, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", Versions=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Order=40, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(Version=Version.R4, Types=new[]{typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference)})]
         [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range)})]
@@ -128,6 +128,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("UsageContext");
+            base.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, false); Code?.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3, true, true); Value?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

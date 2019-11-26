@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External Ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether this schedule is in active use
         /// </summary>
-        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("active", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// High-level category
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("serviceCategory", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Specific service
         /// </summary>
-        [FhirElement("serviceType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("serviceType", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Type of specialty needed
         /// </summary>
-        [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("specialty", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Resource(s) that availability information is being provided for
         /// </summary>
-        [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("actor", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=-1)]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Period of time covered by schedule
         /// </summary>
-        [FhirElement("planningHorizon", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("planningHorizon", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period PlanningHorizon
@@ -271,6 +271,46 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Schedule");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("active", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveElement?.Serialize(sink);
+            sink.BeginList("serviceCategory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ServiceCategory)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("serviceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ServiceType)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specialty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Specialty)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Actor)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("planningHorizon", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanningHorizon?.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

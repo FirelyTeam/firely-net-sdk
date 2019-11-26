@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The specific medication, food or laboratory test that interacts
             /// </summary>
-            [FhirElement("item", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", InSummary=Hl7.Fhir.Model.Version.All, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
@@ -77,6 +77,14 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Element _Item;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("InteractantComponent");
+                base.Serialize(sink);
+                sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Item?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -147,7 +155,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The medication for which this is a described interaction
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [References("MedicinalProduct","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
@@ -163,7 +171,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The interaction described
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -196,7 +204,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The specific medication, food or laboratory test that interacts
         /// </summary>
-        [FhirElement("interactant", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("interactant", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -211,7 +219,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The type of the interaction e.g. drug-drug interaction, drug-food interaction, drug-lab test interaction
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -225,7 +233,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The effect of the interaction, for example "reduced gastric absorption of primary medication"
         /// </summary>
-        [FhirElement("effect", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("effect", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Effect
@@ -239,7 +247,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The incidence of the interaction, e.g. theoretical, observed
         /// </summary>
-        [FhirElement("incidence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("incidence", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Incidence
@@ -253,7 +261,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Actions for managing the interaction
         /// </summary>
-        [FhirElement("management", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("management", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Management
@@ -322,6 +330,30 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Management, otherT.Management)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicinalProductInteraction");
+            base.Serialize(sink);
+            sink.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subject)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("interactant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Interactant)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("effect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Effect?.Serialize(sink);
+            sink.Element("incidence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Incidence?.Serialize(sink);
+            sink.Element("management", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Management?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

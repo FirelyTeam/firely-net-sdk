@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Mandatory fixed portion of UDI
             /// </summary>
-            [FhirElement("deviceIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("deviceIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DeviceIdentifierElement
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Device Name as appears on UDI label
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// UDI Human Readable Barcode String
             /// </summary>
-            [FhirElement("carrierHRF", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("carrierHRF", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CarrierHRFElement
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// UDI Machine Readable Barcode String
             /// </summary>
-            [FhirElement("carrierAIDC", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("carrierAIDC", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Base64Binary CarrierAIDCElement
@@ -288,6 +288,20 @@ namespace Hl7.Fhir.Model.STU3
                         EntryTypeElement = new Code<Hl7.Fhir.Model.UDIEntryType>(value);
                     OnPropertyChanged("EntryType");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("UdiComponent");
+                base.Serialize(sink);
+                sink.Element("deviceIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DeviceIdentifierElement?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+                sink.Element("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); JurisdictionElement?.Serialize(sink);
+                sink.Element("carrierHRF", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CarrierHRFElement?.Serialize(sink);
+                sink.Element("carrierAIDC", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CarrierAIDCElement?.Serialize(sink);
+                sink.Element("issuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IssuerElement?.Serialize(sink);
+                sink.Element("entryType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EntryTypeElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -406,7 +420,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
         /// </summary>
-        [FhirElement("udi", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("udi", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public UdiComponent Udi
@@ -420,7 +434,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | inactive | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FHIRDeviceStatus> StatusElement
@@ -763,7 +777,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Safety Characteristics of Device
         /// </summary>
-        [FhirElement("safety", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("safety", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -863,6 +877,50 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Safety, otherT.Safety)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Device");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("udi", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Udi?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+            sink.Element("lotNumber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LotNumberElement?.Serialize(sink);
+            sink.Element("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufacturerElement?.Serialize(sink);
+            sink.Element("manufactureDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ManufactureDateElement?.Serialize(sink);
+            sink.Element("expirationDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExpirationDateElement?.Serialize(sink);
+            sink.Element("model", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ModelElement?.Serialize(sink);
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VersionElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Patient?.Serialize(sink);
+            sink.Element("owner", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Owner?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Location?.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UrlElement?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("safety", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Safety)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

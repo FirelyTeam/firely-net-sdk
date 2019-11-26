@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient
         /// </summary>
-        [FhirElement("patient", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, Order=90)]
+        [FhirElement("patient", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Order=90)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Bodysite identifier
         /// </summary>
-        [FhirElement("identifier", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, Order=100)]
+        [FhirElement("identifier", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Named anatomical location
         /// </summary>
-        [FhirElement("code", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, Order=110)]
+        [FhirElement("code", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Modification to location code
         /// </summary>
-        [FhirElement("modifier", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2}, Order=120)]
+        [FhirElement("modifier", Versions=Hl7.Fhir.Model.Version.DSTU2, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The Description of anatomical location
         /// </summary>
-        [FhirElement("description", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, Order=130)]
+        [FhirElement("description", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Attached images
         /// </summary>
-        [FhirElement("image", Versions=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.STU3}, Order=140)]
+        [FhirElement("image", Versions=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether this body site record is in active use
         /// </summary>
-        [FhirElement("active", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, InSummary=new[]{Hl7.Fhir.Model.Version.STU3}, Order=150)]
+        [FhirElement("active", Versions=Hl7.Fhir.Model.Version.STU3, InSummary=Hl7.Fhir.Model.Version.STU3, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Modification to location code
         /// </summary>
-        [FhirElement("qualifier", Versions=new[]{Hl7.Fhir.Model.Version.STU3}, Order=160)]
+        [FhirElement("qualifier", Versions=Hl7.Fhir.Model.Version.STU3, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -272,6 +272,41 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Qualifier, otherT.Qualifier)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("BodySite");
+            base.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, true, false); Patient?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("code", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false, false); Code?.Serialize(sink);
+            sink.BeginList("modifier", Hl7.Fhir.Model.Version.DSTU2, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Modifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("image", Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Image)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("active", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.STU3, false, false); ActiveElement?.Serialize(sink);
+            sink.BeginList("qualifier", Hl7.Fhir.Model.Version.STU3, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Qualifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

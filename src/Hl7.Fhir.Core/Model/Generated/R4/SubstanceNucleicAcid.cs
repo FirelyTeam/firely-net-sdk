@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
             /// </summary>
-            [FhirElement("subunit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("subunit", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer SubunitElement
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured
             /// </summary>
-            [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SequenceElement
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The length of the sequence shall be captured
             /// </summary>
-            [FhirElement("length", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("length", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer LengthElement
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// (TBC)
             /// </summary>
-            [FhirElement("sequenceAttachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("sequenceAttachment", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment SequenceAttachment
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The nucleotide present at the 5’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the first position in the sequence. A separate representation would be redundant
             /// </summary>
-            [FhirElement("fivePrime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("fivePrime", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FivePrime
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The nucleotide present at the 3’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the last position in the sequence. A separate representation would be redundant
             /// </summary>
-            [FhirElement("threePrime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("threePrime", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ThreePrime
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The linkages between sugar residues will also be captured
             /// </summary>
-            [FhirElement("linkage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("linkage", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// 5.3.6.8.1 Sugar ID (Mandatory)
             /// </summary>
-            [FhirElement("sugar", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("sugar", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -232,6 +232,31 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<SugarComponent> _Sugar;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SubunitComponent");
+                base.Serialize(sink);
+                sink.Element("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubunitElement?.Serialize(sink);
+                sink.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(sink);
+                sink.Element("length", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LengthElement?.Serialize(sink);
+                sink.Element("sequenceAttachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceAttachment?.Serialize(sink);
+                sink.Element("fivePrime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FivePrime?.Serialize(sink);
+                sink.Element("threePrime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ThreePrime?.Serialize(sink);
+                sink.BeginList("linkage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Linkage)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("sugar", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Sugar)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -344,7 +369,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified
             /// </summary>
-            [FhirElement("connectivity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("connectivity", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ConnectivityElement
@@ -377,7 +402,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Each linkage will be registered as a fragment and have an ID
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -391,7 +416,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -424,7 +449,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Residues shall be captured as described in 5.3.6.8.3
             /// </summary>
-            [FhirElement("residueSite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("residueSite", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ResidueSiteElement
@@ -452,6 +477,17 @@ namespace Hl7.Fhir.Model.R4
                         ResidueSiteElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ResidueSite");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("LinkageComponent");
+                base.Serialize(sink);
+                sink.Element("connectivity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConnectivityElement?.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+                sink.Element("residueSite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResidueSiteElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -545,7 +581,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The Substance ID of the sugar or sugar-like component that make up the nucleotide
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -559,7 +595,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The name of the sugar or sugar-like component that make up the nucleotide
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -592,7 +628,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above
             /// </summary>
-            [FhirElement("residueSite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("residueSite", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ResidueSiteElement
@@ -620,6 +656,16 @@ namespace Hl7.Fhir.Model.R4
                         ResidueSiteElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ResidueSite");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SugarComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+                sink.Element("residueSite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ResidueSiteElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -701,7 +747,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The type of the sequence shall be specified based on a controlled vocabulary
         /// </summary>
-        [FhirElement("sequenceType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("sequenceType", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept SequenceType
@@ -715,7 +761,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit
         /// </summary>
-        [FhirElement("numberOfSubunits", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("numberOfSubunits", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Integer NumberOfSubunitsElement
@@ -748,7 +794,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”
         /// </summary>
-        [FhirElement("areaOfHybridisation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("areaOfHybridisation", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString AreaOfHybridisationElement
@@ -781,7 +827,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// (TBC)
         /// </summary>
-        [FhirElement("oligoNucleotideType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("oligoNucleotideType", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept OligoNucleotideType
@@ -795,7 +841,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times
         /// </summary>
-        [FhirElement("subunit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subunit", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -859,6 +905,23 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Subunit, otherT.Subunit)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("SubstanceNucleicAcid");
+            base.Serialize(sink);
+            sink.Element("sequenceType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceType?.Serialize(sink);
+            sink.Element("numberOfSubunits", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfSubunitsElement?.Serialize(sink);
+            sink.Element("areaOfHybridisation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AreaOfHybridisationElement?.Serialize(sink);
+            sink.Element("oligoNucleotideType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OligoNucleotideType?.Serialize(sink);
+            sink.BeginList("subunit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subunit)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

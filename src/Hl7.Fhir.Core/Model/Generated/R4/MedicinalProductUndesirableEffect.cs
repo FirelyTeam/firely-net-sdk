@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The medication for which this is an indication
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [References("MedicinalProduct","Medication")]
         [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The symptom, condition or undesirable effect
         /// </summary>
-        [FhirElement("symptomConditionEffect", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("symptomConditionEffect", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept SymptomConditionEffect
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Classification of the effect
         /// </summary>
-        [FhirElement("classification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("classification", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Classification
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The frequency of occurrence of the effect
         /// </summary>
-        [FhirElement("frequencyOfOccurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("frequencyOfOccurrence", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The population group to which this applies
         /// </summary>
-        [FhirElement("population", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("population", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -180,6 +180,28 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicinalProductUndesirableEffect");
+            base.Serialize(sink);
+            sink.BeginList("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Subject)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("symptomConditionEffect", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SymptomConditionEffect?.Serialize(sink);
+            sink.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(sink);
+            sink.Element("frequencyOfOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyOfOccurrence?.Serialize(sink);
+            sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Population)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

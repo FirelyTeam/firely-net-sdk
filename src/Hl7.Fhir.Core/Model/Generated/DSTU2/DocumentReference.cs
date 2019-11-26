@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// replaces | transforms | signs | appends
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
@@ -111,6 +111,15 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.ResourceReference _Target;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RelatesToComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CodeElement?.Serialize(sink);
+                sink.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Target?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -193,7 +202,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Where to access the document
             /// </summary>
-            [FhirElement("attachment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("attachment", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -208,7 +217,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Format/content rules for the document
             /// </summary>
-            [FhirElement("format", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("format", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -219,6 +228,20 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<Hl7.Fhir.Model.Coding> _Format;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ContentComponent");
+                base.Serialize(sink);
+                sink.Element("attachment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Attachment?.Serialize(sink);
+                sink.BeginList("format", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Format)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -301,7 +324,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Context of the document  content
             /// </summary>
-            [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Encounter")]
             [DataMember]
@@ -316,7 +339,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Main Clinical Acts Documented
             /// </summary>
-            [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -331,7 +354,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Time of service that is being documented
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -345,7 +368,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Kind of facility where patient was seen
             /// </summary>
-            [FhirElement("facilityType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("facilityType", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept FacilityType
@@ -359,7 +382,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Additional details about where the content was created (e.g. clinical specialty)
             /// </summary>
-            [FhirElement("practiceSetting", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("practiceSetting", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept PracticeSetting
@@ -373,7 +396,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Patient demographics from source
             /// </summary>
-            [FhirElement("sourcePatientInfo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("sourcePatientInfo", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("Patient")]
             [DataMember]
@@ -388,7 +411,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Related identifiers or resources
             /// </summary>
-            [FhirElement("related", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("related", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -399,6 +422,30 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<RelatedComponent> _Related;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ContextComponent");
+                base.Serialize(sink);
+                sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(sink);
+                sink.BeginList("event", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Event)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+                sink.Element("facilityType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FacilityType?.Serialize(sink);
+                sink.Element("practiceSetting", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PracticeSetting?.Serialize(sink);
+                sink.Element("sourcePatientInfo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SourcePatientInfo?.Serialize(sink);
+                sink.BeginList("related", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Related)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -506,7 +553,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Identifier of related objects or events
             /// </summary>
-            [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -520,7 +567,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Related Resource
             /// </summary>
-            [FhirElement("ref", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("ref", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Ref
@@ -530,6 +577,15 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.ResourceReference _Ref;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RelatedComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+                sink.Element("ref", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Ref?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -614,7 +670,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Master Version Specific Identifier
         /// </summary>
-        [FhirElement("masterIdentifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("masterIdentifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier MasterIdentifier
@@ -628,7 +684,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Other identifiers for the document
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -643,7 +699,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/what is the subject of the document
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","Group","Device")]
         [DataMember]
@@ -658,7 +714,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Kind of document (LOINC if possible)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -673,7 +729,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Categorization of document
         /// </summary>
-        [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
@@ -687,7 +743,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who and/or what authored the document
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -703,7 +759,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Organization which maintains the document
         /// </summary>
-        [FhirElement("custodian", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("custodian", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -718,7 +774,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who/what authenticated the document
         /// </summary>
-        [FhirElement("authenticator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("authenticator", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [DataMember]
@@ -733,7 +789,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document creation time
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -766,7 +822,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When this document reference created
         /// </summary>
-        [FhirElement("indexed", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("indexed", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -800,7 +856,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// current | superseded | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -834,7 +890,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// preliminary | final | appended | amended | entered-in-error
         /// </summary>
-        [FhirElement("docStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("docStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DocStatus
@@ -848,7 +904,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Relationships to other documents
         /// </summary>
-        [FhirElement("relatesTo", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("relatesTo", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -863,7 +919,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Human-readable description (title)
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -896,7 +952,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document security-tags
         /// </summary>
-        [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("securityLabel", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -911,7 +967,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Document referenced
         /// </summary>
-        [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("content", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -926,7 +982,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Clinical context of document
         /// </summary>
-        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("context", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public ContextComponent Context
@@ -1025,6 +1081,55 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("DocumentReference");
+            base.Serialize(sink);
+            sink.Element("masterIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MasterIdentifier?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Type?.Serialize(sink);
+            sink.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Class?.Serialize(sink);
+            sink.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Author)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("custodian", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Custodian?.Serialize(sink);
+            sink.Element("authenticator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Authenticator?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CreatedElement?.Serialize(sink);
+            sink.Element("indexed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); IndexedElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("docStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DocStatus?.Serialize(sink);
+            sink.BeginList("relatesTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in RelatesTo)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("securityLabel", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SecurityLabel)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Content)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Context?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

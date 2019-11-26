@@ -107,6 +107,16 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Collected;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CollectionComponent");
+                base.Serialize(sink);
+                sink.Element("collector", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Collector?.Serialize(sink);
+                sink.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Source?.Serialize(sink);
+                sink.Element("collected", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Collected?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CollectionComponent;
@@ -265,6 +275,17 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Element _Time;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ProcessingComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Procedure?.Serialize(sink);
+                sink.Element("additive", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Additive?.Serialize(sink);
+                sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Time?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProcessingComponent;
@@ -399,6 +420,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Element _Time;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ManipulationComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Time?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -587,6 +617,17 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.Period _Duration;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StorageComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("temperature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TemperatureElement?.Serialize(sink);
+                sink.Element("scale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ScaleElement?.Serialize(sink);
+                sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Duration?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as StorageComponent;
@@ -671,7 +712,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -948,6 +989,49 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Storage, otherT.Storage)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("BiologicallyDerivedProduct");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("productCategory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProductCategoryElement?.Serialize(sink);
+            sink.Element("productCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProductCode?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StatusElement?.Serialize(sink);
+            sink.BeginList("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Request)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); QuantityElement?.Serialize(sink);
+            sink.BeginList("parent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Parent)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("collection", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Collection?.Serialize(sink);
+            sink.BeginList("processing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Processing)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("manipulation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Manipulation?.Serialize(sink);
+            sink.BeginList("storage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Storage)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

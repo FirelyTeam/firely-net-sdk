@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External identifier for this record
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Fulfills plan, proposal or order
         /// </summary>
-        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("basedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | completed | entered-in-error +
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Patient using device
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Supporting information
         /// </summary>
-        [FhirElement("derivedFrom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("derivedFrom", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("ServiceRequest","Procedure","Claim","Observation","QuestionnaireResponse","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// How often  the device was used
         /// </summary>
-        [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", InSummary=Hl7.Fhir.Model.Version.All, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.R4.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When statement was recorded
         /// </summary>
-        [FhirElement("recordedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("recordedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who made the statement
         /// </summary>
-        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
         [DataMember]
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Reference to device used
         /// </summary>
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Why device was used
         /// </summary>
-        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("reasonCode", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Why was DeviceUseStatement performed?
         /// </summary>
-        [FhirElement("reasonReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("reasonReference", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [References("Condition","Observation","DiagnosticReport","DocumentReference","Media")]
         [Cardinality(Min=0,Max=-1)]
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
@@ -366,6 +366,56 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("DeviceUseStatement");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in BasedOn)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.BeginList("derivedFrom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in DerivedFrom)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Timing?.Serialize(sink);
+            sink.Element("recordedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecordedOnElement?.Serialize(sink);
+            sink.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Source?.Serialize(sink);
+            sink.Element("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Device?.Serialize(sink);
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BodySite?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

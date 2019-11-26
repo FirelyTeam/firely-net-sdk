@@ -158,6 +158,16 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SampleSizeComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("numberOfStudies", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NumberOfStudiesElement?.Serialize(sink);
+                sink.Element("numberOfParticipants", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NumberOfParticipantsElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SampleSizeComponent;
@@ -409,6 +419,25 @@ namespace Hl7.Fhir.Model.R4
             
             private List<PrecisionEstimateComponent> _PrecisionEstimate;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RiskEstimateComponent");
+                base.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValueElement?.Serialize(sink);
+                sink.Element("unitOfMeasure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UnitOfMeasure?.Serialize(sink);
+                sink.Element("denominatorCount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DenominatorCountElement?.Serialize(sink);
+                sink.Element("numeratorCount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NumeratorCountElement?.Serialize(sink);
+                sink.BeginList("precisionEstimate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in PrecisionEstimate)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RiskEstimateComponent;
@@ -621,6 +650,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PrecisionEstimateComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.Element("level", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LevelElement?.Serialize(sink);
+                sink.Element("from", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FromElement?.Serialize(sink);
+                sink.Element("to", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ToElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PrecisionEstimateComponent;
@@ -751,6 +791,31 @@ namespace Hl7.Fhir.Model.R4
             
             private List<CertaintySubcomponentComponent> _CertaintySubcomponent;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CertaintyComponent");
+                base.Serialize(sink);
+                sink.BeginList("rating", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Rating)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("certaintySubcomponent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in CertaintySubcomponent)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CertaintyComponent;
@@ -875,6 +940,26 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.Annotation> _Note;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CertaintySubcomponentComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+                sink.BeginList("rating", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Rating)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CertaintySubcomponentComponent;
@@ -954,7 +1039,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Canonical identifier for this risk evidence synthesis, represented as a URI (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -987,7 +1072,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Additional identifier for the risk evidence synthesis
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1002,7 +1087,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business version of the risk evidence synthesis
         /// </summary>
-        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
@@ -1035,7 +1120,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this risk evidence synthesis (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -1068,7 +1153,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name for this risk evidence synthesis (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -1101,7 +1186,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1135,7 +1220,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1168,7 +1253,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("publisher", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
@@ -1201,7 +1286,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1216,7 +1301,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Natural language description of the risk evidence synthesis
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown DescriptionElement
@@ -1263,7 +1348,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("useContext", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1278,7 +1363,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Intended jurisdiction for risk evidence synthesis (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1389,7 +1474,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the risk evidence synthesis is expected to be used
         /// </summary>
-        [FhirElement("effectivePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("effectivePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period EffectivePeriod
@@ -1513,7 +1598,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What population?
         /// </summary>
-        [FhirElement("population", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=340)]
+        [FhirElement("population", InSummary=Hl7.Fhir.Model.Version.All, Order=340)]
         [CLSCompliant(false)]
         [References("EvidenceVariable")]
         [Cardinality(Min=1,Max=1)]
@@ -1529,7 +1614,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What exposure?
         /// </summary>
-        [FhirElement("exposure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=350)]
+        [FhirElement("exposure", InSummary=Hl7.Fhir.Model.Version.All, Order=350)]
         [CLSCompliant(false)]
         [References("EvidenceVariable")]
         [DataMember]
@@ -1544,7 +1629,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What outcome?
         /// </summary>
-        [FhirElement("outcome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=360)]
+        [FhirElement("outcome", InSummary=Hl7.Fhir.Model.Version.All, Order=360)]
         [CLSCompliant(false)]
         [References("EvidenceVariable")]
         [Cardinality(Min=1,Max=1)]
@@ -1573,7 +1658,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What was the estimated risk
         /// </summary>
-        [FhirElement("riskEstimate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=380)]
+        [FhirElement("riskEstimate", InSummary=Hl7.Fhir.Model.Version.All, Order=380)]
         [CLSCompliant(false)]
         [DataMember]
         public RiskEstimateComponent RiskEstimate
@@ -1746,6 +1831,104 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Certainty, otherT.Certainty)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("RiskEvidenceSynthesis");
+            base.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(sink);
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("useContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in UseContext)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Jurisdiction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("copyright", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CopyrightElement?.Serialize(sink);
+            sink.Element("approvalDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ApprovalDateElement?.Serialize(sink);
+            sink.Element("lastReviewDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastReviewDateElement?.Serialize(sink);
+            sink.Element("effectivePeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EffectivePeriod?.Serialize(sink);
+            sink.BeginList("topic", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Topic)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Author)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("editor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Editor)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reviewer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reviewer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("endorser", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Endorser)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("relatedArtifact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedArtifact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("synthesisType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SynthesisType?.Serialize(sink);
+            sink.Element("studyType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StudyType?.Serialize(sink);
+            sink.Element("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Population?.Serialize(sink);
+            sink.Element("exposure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Exposure?.Serialize(sink);
+            sink.Element("outcome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Outcome?.Serialize(sink);
+            sink.Element("sampleSize", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SampleSize?.Serialize(sink);
+            sink.Element("riskEstimate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RiskEstimate?.Serialize(sink);
+            sink.BeginList("certainty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Certainty)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

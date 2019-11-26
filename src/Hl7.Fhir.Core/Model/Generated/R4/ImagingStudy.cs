@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// DICOM Series Instance UID for the series
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Numeric identifier of this series
             /// </summary>
-            [FhirElement("number", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("number", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt NumberElement
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The modality of the instances in the series
             /// </summary>
-            [FhirElement("modality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("modality", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A short human readable summary of the series
             /// </summary>
-            [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Number of Series Related Instances
             /// </summary>
-            [FhirElement("numberOfInstances", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("numberOfInstances", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Series access endpoint
             /// </summary>
-            [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Body part examined
             /// </summary>
-            [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding BodySite
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Body part laterality
             /// </summary>
-            [FhirElement("laterality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("laterality", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Laterality
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Specimen imaged
             /// </summary>
-            [FhirElement("specimen", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("specimen", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [References("Specimen")]
             [Cardinality(Min=0,Max=-1)]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// When the series started
             /// </summary>
-            [FhirElement("started", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("started", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime StartedElement
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Who performed the series
             /// </summary>
-            [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -334,6 +334,45 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<InstanceComponent> _Instance;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SeriesComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+                sink.Element("number", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberElement?.Serialize(sink);
+                sink.Element("modality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Modality?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("numberOfInstances", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfInstancesElement?.Serialize(sink);
+                sink.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Endpoint)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BodySite?.Serialize(sink);
+                sink.Element("laterality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Laterality?.Serialize(sink);
+                sink.BeginList("specimen", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Specimen)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("started", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartedElement?.Serialize(sink);
+                sink.BeginList("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Performer)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Instance)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -466,7 +505,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of performance
             /// </summary>
-            [FhirElement("function", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("function", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Function
@@ -480,7 +519,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Who performed the series
             /// </summary>
-            [FhirElement("actor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("actor", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
@@ -492,6 +531,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.ResourceReference _Actor;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PerformerComponent");
+                base.Serialize(sink);
+                sink.Element("function", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Function?.Serialize(sink);
+                sink.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Actor?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -682,6 +730,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("InstanceComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); UidElement?.Serialize(sink);
+                sink.Element("sopClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); SopClass?.Serialize(sink);
+                sink.Element("number", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NumberElement?.Serialize(sink);
+                sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); TitleElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as InstanceComponent;
@@ -769,7 +828,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Identifiers for the whole study
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -784,7 +843,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// registered | available | cancelled | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -818,7 +877,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// All series modality if actual acquisition modalities
         /// </summary>
-        [FhirElement("modality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("modality", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -833,7 +892,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who or what is the subject of the study
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","Device","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -849,7 +908,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Encounter with which this imaging study is associated
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -864,7 +923,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the study was started
         /// </summary>
-        [FhirElement("started", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("started", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StartedElement
@@ -897,7 +956,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Request fulfilled
         /// </summary>
-        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("basedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
         [Cardinality(Min=0,Max=-1)]
@@ -913,7 +972,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Referring physician
         /// </summary>
-        [FhirElement("referrer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("referrer", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [DataMember]
@@ -928,7 +987,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who interpreted images
         /// </summary>
-        [FhirElement("interpreter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("interpreter", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
@@ -944,7 +1003,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Study access endpoint
         /// </summary>
-        [FhirElement("endpoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("endpoint", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
@@ -960,7 +1019,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of Study Related Series
         /// </summary>
-        [FhirElement("numberOfSeries", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("numberOfSeries", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt NumberOfSeriesElement
@@ -993,7 +1052,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of Study Related Instances
         /// </summary>
-        [FhirElement("numberOfInstances", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("numberOfInstances", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt NumberOfInstancesElement
@@ -1026,7 +1085,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The performed Procedure reference
         /// </summary>
-        [FhirElement("procedureReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("procedureReference", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [References("Procedure")]
         [DataMember]
@@ -1041,7 +1100,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The performed procedure code
         /// </summary>
-        [FhirElement("procedureCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("procedureCode", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1056,7 +1115,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Where ImagingStudy occurred
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("Location")]
         [DataMember]
@@ -1071,7 +1130,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Why the study was requested
         /// </summary>
-        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("reasonCode", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1086,7 +1145,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Why was study performed
         /// </summary>
-        [FhirElement("reasonReference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("reasonReference", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [References("Condition","Observation","Media","DiagnosticReport","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -1102,7 +1161,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// User-defined comments
         /// </summary>
-        [FhirElement("note", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("note", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1117,7 +1176,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Institution-generated description
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -1150,7 +1209,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Each study has one or more series of instances
         /// </summary>
-        [FhirElement("series", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("series", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1259,6 +1318,83 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ImagingStudy");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.BeginList("modality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Modality)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(sink);
+            sink.Element("started", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartedElement?.Serialize(sink);
+            sink.BeginList("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in BasedOn)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("referrer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Referrer?.Serialize(sink);
+            sink.BeginList("interpreter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Interpreter)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Endpoint)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("numberOfSeries", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfSeriesElement?.Serialize(sink);
+            sink.Element("numberOfInstances", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NumberOfInstancesElement?.Serialize(sink);
+            sink.Element("procedureReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ProcedureReference?.Serialize(sink);
+            sink.BeginList("procedureCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ProcedureCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Location?.Serialize(sink);
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reasonReference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonReference)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.BeginList("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Series)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

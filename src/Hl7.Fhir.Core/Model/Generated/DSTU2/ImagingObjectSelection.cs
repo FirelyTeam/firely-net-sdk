@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Study instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Retrieve study URL
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reference to ImagingStudy
             /// </summary>
-            [FhirElement("imagingStudy", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("imagingStudy", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("ImagingStudy")]
             [DataMember]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Series identity of the selected instances
             /// </summary>
-            [FhirElement("series", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("series", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -158,6 +158,22 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<SeriesComponent> _Series;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StudyComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+                sink.Element("imagingStudy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ImagingStudy?.Serialize(sink);
+                sink.BeginList("series", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                foreach(var item in Series)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -250,7 +266,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Series instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
@@ -283,7 +299,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Retrieve series URL
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
@@ -316,7 +332,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The selected instance
             /// </summary>
-            [FhirElement("instance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("instance", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -327,6 +343,21 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<InstanceComponent> _Instance;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SeriesComponent");
+                base.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+                sink.BeginList("instance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                foreach(var item in Instance)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -414,7 +445,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// SOP class UID of instance
             /// </summary>
-            [FhirElement("sopClass", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("sopClass", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -448,7 +479,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Selected instance UID
             /// </summary>
-            [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -482,7 +513,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Retrieve instance URL
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -516,7 +547,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// The frame set
             /// </summary>
-            [FhirElement("frames", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("frames", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -527,6 +558,22 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private List<FramesComponent> _Frames;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("InstanceComponent");
+                base.Serialize(sink);
+                sink.Element("sopClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); SopClassElement?.Serialize(sink);
+                sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.BeginList("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Frames)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -619,7 +666,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Frame numbers
             /// </summary>
-            [FhirElement("frameNumbers", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("frameNumbers", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -653,7 +700,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Retrieve frame URL
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -682,6 +729,17 @@ namespace Hl7.Fhir.Model.DSTU2
                         UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Url");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("FramesComponent");
+                base.Serialize(sink);
+                sink.BeginList("frameNumbers", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                sink.Serialize(FrameNumbersElement);
+                sink.End();
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UrlElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -758,7 +816,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Instance UID
         /// </summary>
-        [FhirElement("uid", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("uid", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -792,7 +850,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Patient of the selected objects
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -808,7 +866,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Reason for selection
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -823,7 +881,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -856,7 +914,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Author (human or machine)
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
@@ -871,7 +929,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Authoring time of the selection
         /// </summary>
-        [FhirElement("authoringTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("authoringTime", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
@@ -904,7 +962,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Study identity of the selected instances
         /// </summary>
-        [FhirElement("study", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("study", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -974,6 +1032,25 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ImagingObjectSelection");
+            base.Serialize(sink);
+            sink.Element("uid", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); UidElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Title?.Serialize(sink);
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(sink);
+            sink.Element("authoringTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthoringTimeElement?.Serialize(sink);
+            sink.BeginList("study", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Study)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

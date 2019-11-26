@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("geneSequenceOrigin", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("geneSequenceOrigin", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept GeneSequenceOrigin
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("gene", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("gene", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Gene
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
@@ -105,6 +105,21 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("GeneComponent");
+                base.Serialize(sink);
+                sink.Element("geneSequenceOrigin", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GeneSequenceOrigin?.Serialize(sink);
+                sink.Element("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Gene?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Source)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -192,7 +207,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -206,7 +221,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("element", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("element", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Element
@@ -220,7 +235,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
@@ -232,6 +247,21 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("GeneElementComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("element", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Element?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Source)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -319,7 +349,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("domain", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("domain", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Domain
@@ -333,7 +363,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("classification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("classification", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Classification
@@ -347,7 +377,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("subtype", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("subtype", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -362,7 +392,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
@@ -374,6 +404,27 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ClassificationComponent");
+                base.Serialize(sink);
+                sink.Element("domain", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Domain?.Serialize(sink);
+                sink.Element("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Classification?.Serialize(sink);
+                sink.BeginList("subtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Subtype)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Source)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -466,7 +517,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Target
@@ -480,7 +531,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -494,7 +545,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("interaction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("interaction", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Interaction
@@ -508,7 +559,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("organism", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("organism", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Organism
@@ -522,7 +573,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("organismType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("organismType", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept OrganismType
@@ -536,7 +587,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amount", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=Hl7.Fhir.Model.Version.All, Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -551,7 +602,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("amountType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("amountType", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept AmountType
@@ -565,7 +616,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
@@ -577,6 +628,26 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.ResourceReference> _Source;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("TargetComponent");
+                base.Serialize(sink);
+                sink.Element("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Target?.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("interaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Interaction?.Serialize(sink);
+                sink.Element("organism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organism?.Serialize(sink);
+                sink.Element("organismType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrganismType?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Amount?.Serialize(sink);
+                sink.Element("amountType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AmountType?.Serialize(sink);
+                sink.BeginList("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Source)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -682,7 +753,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("comment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("comment", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
@@ -715,7 +786,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("gene", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("gene", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -730,7 +801,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("geneElement", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("geneElement", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -745,7 +816,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("classification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("classification", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -760,7 +831,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -824,6 +895,38 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("SubstanceReferenceInformation");
+            base.Serialize(sink);
+            sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommentElement?.Serialize(sink);
+            sink.BeginList("gene", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Gene)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("geneElement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in GeneElement)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Classification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Target)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

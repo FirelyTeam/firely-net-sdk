@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Length/Range of lengths, or (Start and/or end) limits
             /// </summary>
-            [FhirElement("bounds", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("bounds", InSummary=Hl7.Fhir.Model.Version.All, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.R4.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Number of times to repeat
             /// </summary>
-            [FhirElement("count", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("count", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt CountElement
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Maximum number of times to repeat
             /// </summary>
-            [FhirElement("countMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("countMax", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt CountMaxElement
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// How long when it happens
             /// </summary>
-            [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationElement
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// How long when it happens (Max)
             /// </summary>
-            [FhirElement("durationMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("durationMax", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal DurationMaxElement
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("durationUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("durationUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.UnitsOfTime> DurationUnitElement
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("frequency", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("frequency", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt FrequencyElement
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Event occurs up to frequencyMax times per period
             /// </summary>
-            [FhirElement("frequencyMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("frequencyMax", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt FrequencyMaxElement
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Event occurs frequency times per period
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodElement
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Upper limit of period (3-4 hours)
             /// </summary>
-            [FhirElement("periodMax", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("periodMax", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PeriodMaxElement
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
-            [FhirElement("periodUnit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("periodUnit", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.UnitsOfTime> PeriodUnitElement
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
-            [FhirElement("dayOfWeek", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("dayOfWeek", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Time of day for action
             /// </summary>
-            [FhirElement("timeOfDay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+            [FhirElement("timeOfDay", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Code for time period of occurrence
             /// </summary>
-            [FhirElement("when", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+            [FhirElement("when", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Minutes from event (before or after)
             /// </summary>
-            [FhirElement("offset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+            [FhirElement("offset", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt OffsetElement
@@ -538,6 +538,34 @@ namespace Hl7.Fhir.Model.R4
                         OffsetElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Offset");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RepeatComponent");
+                base.Serialize(sink);
+                sink.Element("bounds", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Bounds?.Serialize(sink);
+                sink.Element("count", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountElement?.Serialize(sink);
+                sink.Element("countMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountMaxElement?.Serialize(sink);
+                sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(sink);
+                sink.Element("durationMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationMaxElement?.Serialize(sink);
+                sink.Element("durationUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationUnitElement?.Serialize(sink);
+                sink.Element("frequency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyElement?.Serialize(sink);
+                sink.Element("frequencyMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FrequencyMaxElement?.Serialize(sink);
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodElement?.Serialize(sink);
+                sink.Element("periodMax", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodMaxElement?.Serialize(sink);
+                sink.Element("periodUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PeriodUnitElement?.Serialize(sink);
+                sink.BeginList("dayOfWeek", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(DayOfWeekElement);
+                sink.End();
+                sink.BeginList("timeOfDay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(TimeOfDayElement);
+                sink.End();
+                sink.BeginList("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(WhenElement);
+                sink.End();
+                sink.Element("offset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OffsetElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -682,7 +710,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the event occurs
         /// </summary>
-        [FhirElement("event", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("event", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -716,7 +744,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the event is to occur
         /// </summary>
-        [FhirElement("repeat", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("repeat", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public RepeatComponent Repeat
@@ -730,7 +758,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// BID | TID | QID | AM | PM | QD | QOD | +
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -865,6 +893,18 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Timing");
+            base.Serialize(sink);
+            sink.BeginList("event", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(EventElement);
+            sink.End();
+            sink.Element("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Repeat?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

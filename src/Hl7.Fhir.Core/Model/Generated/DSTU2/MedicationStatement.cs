@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reported dosage information
             /// </summary>
-            [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// When/how often was medication taken
             /// </summary>
-            [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("timing", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.DSTU2.Timing Timing
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Take "as needed" (for x)
             /// </summary>
-            [FhirElement("asNeeded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("asNeeded", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Where (on body) medication is/was administered
             /// </summary>
-            [FhirElement("site", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("site", InSummary=Hl7.Fhir.Model.Version.All, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// How the medication entered the body
             /// </summary>
-            [FhirElement("route", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("route", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Route
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Technique used to administer medication
             /// </summary>
-            [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Amount administered in one dose
             /// </summary>
-            [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=100, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Dose quantity per unit of time
             /// </summary>
-            [FhirElement("rate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("rate", InSummary=Hl7.Fhir.Model.Version.All, Order=110, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Maximum dose that was consumed per unit of time
             /// </summary>
-            [FhirElement("maxDosePerPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("maxDosePerPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
@@ -210,6 +210,22 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DosageComponent");
+                base.Serialize(sink);
+                sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+                sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Timing?.Serialize(sink);
+                sink.Element("asNeeded", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); AsNeeded?.Serialize(sink);
+                sink.Element("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Site?.Serialize(sink);
+                sink.Element("route", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Route?.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Quantity?.Serialize(sink);
+                sink.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Rate?.Serialize(sink);
+                sink.Element("maxDosePerPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerPeriod?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -320,7 +336,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -335,7 +351,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who is/was taking  the medication
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -348,7 +364,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
-        [FhirElement("informationSource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("informationSource", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
@@ -363,7 +379,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When the statement was asserted?
         /// </summary>
-        [FhirElement("dateAsserted", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("dateAsserted", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
@@ -396,7 +412,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | completed | entered-in-error | intended
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -430,7 +446,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// True if medication is/was not being taken
         /// </summary>
-        [FhirElement("wasNotTaken", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("wasNotTaken", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean WasNotTakenElement
@@ -463,7 +479,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// True if asserting medication was not given
         /// </summary>
-        [FhirElement("reasonNotTaken", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("reasonNotTaken", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -475,7 +491,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotTaken;
         
-        [FhirElement("reasonForUse", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reasonForUse", InSummary=Hl7.Fhir.Model.Version.All, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -490,7 +506,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Over what period was medication consumed?
         /// </summary>
-        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=Hl7.Fhir.Model.Version.All, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -505,7 +521,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Further information about the statement
         /// </summary>
-        [FhirElement("note", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("note", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
@@ -538,7 +554,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Additional supporting information
         /// </summary>
-        [FhirElement("supportingInformation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("supportingInformation", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -553,7 +569,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// What medication was taken
         /// </summary>
-        [FhirElement("medication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=Hl7.Fhir.Model.Version.All, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -569,7 +585,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Details of how medication was taken
         /// </summary>
-        [FhirElement("dosage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("dosage", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -683,6 +699,46 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicationStatement");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("informationSource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InformationSource?.Serialize(sink);
+            sink.Element("dateAsserted", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateAssertedElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("wasNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WasNotTakenElement?.Serialize(sink);
+            sink.BeginList("reasonNotTaken", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonNotTaken)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("reasonForUse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); ReasonForUse?.Serialize(sink);
+            sink.Element("effective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Effective?.Serialize(sink);
+            sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NoteElement?.Serialize(sink);
+            sink.BeginList("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SupportingInformation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("medication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Medication?.Serialize(sink);
+            sink.BeginList("dosage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Dosage)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -16,8 +16,13 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null) =>
-            XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(Model.Version.DSTU2), settings, tnSettings);
+        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            settings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            settings.PermissiveParsing = false;
+
+            return XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(Model.Version.DSTU2), settings, tnSettings);
+        }
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]

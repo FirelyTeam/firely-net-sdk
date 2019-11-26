@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Code defined by a terminology system
         /// </summary>
-        [FhirElement("coding", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("coding", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plain text representation of the concept
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -144,6 +144,20 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("CodeableConcept");
+            base.Serialize(sink);
+            sink.BeginList("coding", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Coding)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// What the agents role was
             /// </summary>
-            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Who participated
             /// </summary>
-            [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("who", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -120,6 +120,22 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private Hl7.Fhir.Model.CodeableConcept _RelatedAgentType;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("AgentComponent");
+                base.Serialize(sink);
+                sink.BeginList("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Role)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Who?.Serialize(sink);
+                sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); OnBehalfOf?.Serialize(sink);
+                sink.Element("relatedAgentType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RelatedAgentType?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -212,7 +228,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// derivation | revision | quotation | source | removal
             /// </summary>
-            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -246,7 +262,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Identity of entity
             /// </summary>
-            [FhirElement("what", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("what", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
             [Cardinality(Min=1,Max=1)]
@@ -272,6 +288,21 @@ namespace Hl7.Fhir.Model.STU3
             }
             
             private List<AgentComponent> _Agent;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("EntityComponent");
+                base.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); RoleElement?.Serialize(sink);
+                sink.Element("what", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); What?.Serialize(sink);
+                sink.BeginList("agent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Agent)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -361,7 +392,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Target Reference(s) (usually version specific)
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -389,7 +420,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the activity was recorded / updated
         /// </summary>
-        [FhirElement("recorded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("recorded", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -604,6 +635,50 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Provenance");
+            base.Serialize(sink);
+            sink.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Target)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Period?.Serialize(sink);
+            sink.Element("recorded", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); RecordedElement?.Serialize(sink);
+            sink.BeginList("policy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(PolicyElement);
+            sink.End();
+            sink.Element("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Location?.Serialize(sink);
+            sink.BeginList("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reason)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("activity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Activity?.Serialize(sink);
+            sink.BeginList("agent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true);
+            foreach(var item in Agent)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("entity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Entity)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("signature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Signature)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = new Version[] { Version.All }, Order = 30)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = Version.All, Order = 30)]
         [CLSCompliant(false)]
         public string Value
         {

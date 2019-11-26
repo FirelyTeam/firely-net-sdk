@@ -160,6 +160,16 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PositionComponent");
+                base.Serialize(sink);
+                sink.Element("longitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LongitudeElement?.Serialize(sink);
+                sink.Element("latitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); LatitudeElement?.Serialize(sink);
+                sink.Element("altitude", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AltitudeElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PositionComponent;
@@ -245,7 +255,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Unique code or number identifying the location to its users
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -260,7 +270,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | suspended | inactive
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.LocationStatus> StatusElement
@@ -293,7 +303,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The Operational status of the location (typically only for a bed/room)
         /// </summary>
-        [FhirElement("operationalStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("operationalStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OperationalStatus
@@ -307,7 +317,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the location as used by humans
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -373,7 +383,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional details about the location that could be displayed as further information to identify the location beyond its name
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -406,7 +416,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// instance | kind
         /// </summary>
-        [FhirElement("mode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("mode", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.LocationMode> ModeElement
@@ -439,7 +449,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of function performed
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -480,7 +490,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Physical form of the location
         /// </summary>
-        [FhirElement("physicalType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("physicalType", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysicalType
@@ -507,7 +517,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization responsible for provisioning and upkeep
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("managingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -632,6 +642,45 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Location");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("operationalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OperationalStatus?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.BeginList("alias", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(AliasElement);
+            sink.End();
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ModeElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Telecom)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("address", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Address?.Serialize(sink);
+            sink.Element("physicalType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PhysicalType?.Serialize(sink);
+            sink.Element("position", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Position?.Serialize(sink);
+            sink.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(sink);
+            sink.Element("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PartOf?.Serialize(sink);
+            sink.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Endpoint)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Specific substance considered to be responsible for event
             /// </summary>
-            [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("substance", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Substance
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// unlikely | likely | confirmed - clinical certainty about the specific substance
             /// </summary>
-            [FhirElement("certainty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("certainty", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCertainty> CertaintyElement
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Clinical symptoms/signs associated with the Event
             /// </summary>
-            [FhirElement("manifestation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("manifestation", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Date(/time) when manifestations showed
             /// </summary>
-            [FhirElement("onset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("onset", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime OnsetElement
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// mild | moderate | severe (of event as a whole)
             /// </summary>
-            [FhirElement("severity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("severity", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.AllergyIntoleranceSeverity> SeverityElement
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// How the subject was exposed to the substance
             /// </summary>
-            [FhirElement("exposureRoute", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("exposureRoute", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ExposureRoute
@@ -248,6 +248,26 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.Annotation _Note;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ReactionComponent");
+                base.Serialize(sink);
+                sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+                sink.Element("certainty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CertaintyElement?.Serialize(sink);
+                sink.BeginList("manifestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+                foreach(var item in Manifestation)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(sink);
+                sink.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SeverityElement?.Serialize(sink);
+                sink.Element("exposureRoute", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExposureRoute?.Serialize(sink);
+                sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -356,7 +376,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// External ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -371,7 +391,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date(/time) when manifestations showed
         /// </summary>
-        [FhirElement("onset", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("onset", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OnsetElement
@@ -404,7 +424,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("recordedDate", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
@@ -437,7 +457,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who recorded the sensitivity
         /// </summary>
-        [FhirElement("recorder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("recorder", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Practitioner","Patient")]
         [DataMember]
@@ -452,7 +472,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who the sensitivity is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -468,7 +488,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Source of the information about the allergy
         /// </summary>
-        [FhirElement("reporter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("reporter", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
@@ -483,7 +503,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Substance, (or class) considered to be responsible for risk
         /// </summary>
-        [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("substance", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -498,7 +518,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceStatus> StatusElement
@@ -531,7 +551,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// CRITL | CRITH | CRITU
         /// </summary>
-        [FhirElement("criticality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("criticality", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCriticality> CriticalityElement
@@ -564,7 +584,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntoleranceType> TypeElement
@@ -597,7 +617,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// food | medication | environment | other - Category of Substance
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCategory> CategoryElement
@@ -630,7 +650,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date(/time) of last known occurrence of a reaction
         /// </summary>
-        [FhirElement("lastOccurence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("lastOccurence", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime LastOccurenceElement
@@ -766,6 +786,37 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("AllergyIntolerance");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnsetElement?.Serialize(sink);
+            sink.Element("recordedDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecordedDateElement?.Serialize(sink);
+            sink.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Recorder?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("reporter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Reporter?.Serialize(sink);
+            sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Substance?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("criticality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CriticalityElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CategoryElement?.Serialize(sink);
+            sink.Element("lastOccurence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LastOccurenceElement?.Serialize(sink);
+            sink.Element("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Note?.Serialize(sink);
+            sink.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reaction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

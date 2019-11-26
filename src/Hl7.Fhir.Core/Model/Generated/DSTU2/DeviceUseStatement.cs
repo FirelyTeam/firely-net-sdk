@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private Hl7.Fhir.Model.Element _BodySite;
         
-        [FhirElement("whenUsed", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("whenUsed", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenUsed
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private Hl7.Fhir.Model.Period _WhenUsed;
         
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private Hl7.Fhir.Model.ResourceReference _Device;
         
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
-        [FhirElement("indication", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("indication", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
-        [FhirElement("notes", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("notes", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model.DSTU2
             }
         }
         
-        [FhirElement("recordedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("recordedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model.DSTU2
             }
         }
         
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model.DSTU2
         
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
-        [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", InSummary=Hl7.Fhir.Model.Version.All, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.DSTU2.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -259,6 +259,34 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("DeviceUseStatement");
+            base.Serialize(sink);
+            sink.Element("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); BodySite?.Serialize(sink);
+            sink.Element("whenUsed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WhenUsed?.Serialize(sink);
+            sink.Element("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Device?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("indication", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Indication)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("notes", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(NotesElement);
+            sink.End();
+            sink.Element("recordedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecordedOnElement?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Timing?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Individual responsible for the annotation
         /// </summary>
-        [FhirElement("author", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("author", InSummary=Hl7.Fhir.Model.Version.All, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the annotation was made
         /// </summary>
-        [FhirElement("time", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("time", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime TimeElement
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The annotation  - text content
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.DSTU2,Hl7.Fhir.Model.Version.R4}, Order=50)]
+        [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.R4, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -181,6 +181,16 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Annotation");
+            base.Serialize(sink);
+            sink.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Author?.Serialize(sink);
+            sink.Element("time", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TimeElement?.Serialize(sink);
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.R4, true, false); TextElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

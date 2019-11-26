@@ -29,6 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="TestData\patient.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\bundle.xml" />
     <None Remove="TestData\BundleWithOneEntry.json" />
     <None Remove="TestData\mask-text.xml" />
     <None Remove="TestData\patient-out-of-order.xml" />
@@ -64,5 +69,11 @@
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\patient.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -58,6 +58,17 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void CanStreamingSerializeFromPoco()
+        {
+            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var pser = new FhirJsonParser(new ParserSettings(Version.DSTU2) { DisallowXsiAttributesOnRoot = false });
+            var pat = pser.Parse<Model.DSTU2.Patient>(tp);
+
+            var output = new FhirJsonFastSerializer(Version.DSTU2).SerializeToString(pat);
+            JsonAssert.AreSame(tp, output);
+        }
+
+        [TestMethod]
         public void DoesPretty()
         {
             var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
@@ -72,6 +83,24 @@ namespace Hl7.Fhir.Serialization.Tests
             output = (new FhirJsonSerializer(new SerializerSettings(Version.DSTU2) { Pretty = false })).SerializeToString(p);
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
             pretty = (new FhirJsonSerializer(new SerializerSettings(Version.DSTU2) { Pretty = true })).SerializeToString(p);
+            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
+        }
+
+        [TestMethod]
+        public void DoesPrettyStreaming()
+        {
+            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+
+            var nav = getJsonElement(json);
+            var output = nav.ToJson();
+            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
+            var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
+            Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
+
+            var p = (new FhirJsonParser(Version.DSTU2)).Parse<Model.DSTU2.Patient>(json);
+            output = (new FhirJsonFastSerializer(new SerializerSettings(Version.DSTU2) { Pretty = false })).SerializeToString(p);
+            Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
+            pretty = (new FhirJsonFastSerializer(new SerializerSettings(Version.DSTU2) { Pretty = true })).SerializeToString(p);
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
         }
     }

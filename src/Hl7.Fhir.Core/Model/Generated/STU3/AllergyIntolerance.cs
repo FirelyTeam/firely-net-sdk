@@ -212,6 +212,30 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<Hl7.Fhir.Model.Annotation> _Note;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ReactionComponent");
+                base.Serialize(sink);
+                sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Substance?.Serialize(sink);
+                sink.BeginList("manifestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true);
+                foreach(var item in Manifestation)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OnsetElement?.Serialize(sink);
+                sink.Element("severity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SeverityElement?.Serialize(sink);
+                sink.Element("exposureRoute", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ExposureRoute?.Serialize(sink);
+                sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReactionComponent;
@@ -314,7 +338,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// External ids for this item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -329,7 +353,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | inactive | resolved
         /// </summary>
-        [FhirElement("clinicalStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("clinicalStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.AllergyIntoleranceClinicalStatus> ClinicalStatusElement
@@ -362,7 +386,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// unconfirmed | confirmed | refuted | entered-in-error
         /// </summary>
-        [FhirElement("verificationStatus", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("verificationStatus", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -396,7 +420,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntoleranceType> TypeElement
@@ -429,7 +453,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// food | medication | environment | biologic
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -463,7 +487,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// low | high | unable-to-assess
         /// </summary>
-        [FhirElement("criticality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("criticality", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.STU3.AllergyIntoleranceCriticality> CriticalityElement
@@ -496,7 +520,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Code that identifies the allergy or intolerance
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -510,7 +534,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Who the sensitivity is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -588,7 +612,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Source of the information about the allergy
         /// </summary>
-        [FhirElement("asserter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("asserter", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
@@ -768,6 +792,45 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("AllergyIntolerance");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("clinicalStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClinicalStatusElement?.Serialize(sink);
+            sink.Element("verificationStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); VerificationStatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(CategoryElement);
+            sink.End();
+            sink.Element("criticality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CriticalityElement?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("onset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Onset?.Serialize(sink);
+            sink.Element("assertedDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AssertedDateElement?.Serialize(sink);
+            sink.Element("recorder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Recorder?.Serialize(sink);
+            sink.Element("asserter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Asserter?.Serialize(sink);
+            sink.Element("lastOccurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastOccurrenceElement?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("reaction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reaction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

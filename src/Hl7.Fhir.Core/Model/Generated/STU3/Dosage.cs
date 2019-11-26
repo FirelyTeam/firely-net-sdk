@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The order of the dosage instructions
         /// </summary>
-        [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Free text dosage instructions e.g. SIG
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Supplemental instruction - e.g. "with meals"
         /// </summary>
-        [FhirElement("additionalInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("additionalInstruction", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Patient or consumer oriented instructions
         /// </summary>
-        [FhirElement("patientInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("patientInstruction", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When medication should be administered
         /// </summary>
-        [FhirElement("timing", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("timing", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.STU3.Timing Timing
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Take "as needed" (for x)
         /// </summary>
-        [FhirElement("asNeeded", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=Hl7.Fhir.Model.Version.All, Order=80, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Body site to administer to
         /// </summary>
-        [FhirElement("site", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("site", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// How drug should enter body
         /// </summary>
-        [FhirElement("route", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("route", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Technique for administering medication
         /// </summary>
-        [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Amount of medication per dose
         /// </summary>
-        [FhirElement("dose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("dose", InSummary=Hl7.Fhir.Model.Version.All, Order=120, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
         [DataMember]
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per unit of time
         /// </summary>
-        [FhirElement("maxDosePerPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("maxDosePerPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per administration
         /// </summary>
-        [FhirElement("maxDosePerAdministration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("maxDosePerAdministration", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity MaxDosePerAdministration
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
-        [FhirElement("maxDosePerLifetime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("maxDosePerLifetime", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity MaxDosePerLifetime
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Amount of medication per unit of time
         /// </summary>
-        [FhirElement("rate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("rate", InSummary=Hl7.Fhir.Model.Version.All, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
         [DataMember]
@@ -392,6 +392,32 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Dosage");
+            base.Serialize(sink);
+            sink.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(sink);
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+            sink.BeginList("additionalInstruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in AdditionalInstruction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("patientInstruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PatientInstructionElement?.Serialize(sink);
+            sink.Element("timing", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Timing?.Serialize(sink);
+            sink.Element("asNeeded", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); AsNeeded?.Serialize(sink);
+            sink.Element("site", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Site?.Serialize(sink);
+            sink.Element("route", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Route?.Serialize(sink);
+            sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+            sink.Element("dose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Dose?.Serialize(sink);
+            sink.Element("maxDosePerPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerPeriod?.Serialize(sink);
+            sink.Element("maxDosePerAdministration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerAdministration?.Serialize(sink);
+            sink.Element("maxDosePerLifetime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerLifetime?.Serialize(sink);
+            sink.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Rate?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

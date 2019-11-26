@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The specified substance
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The group of specified substance, e.g. group 1 to 4
             /// </summary>
-            [FhirElement("group", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("group", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Confidentiality level of the specified substance as the ingredient
             /// </summary>
-            [FhirElement("confidentiality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("confidentiality", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Confidentiality
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
             /// </summary>
-            [FhirElement("strength", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("strength", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -120,6 +120,22 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<StrengthComponent> _Strength;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SpecifiedSubstanceComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Group?.Serialize(sink);
+                sink.Element("confidentiality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Confidentiality?.Serialize(sink);
+                sink.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Strength)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -212,7 +228,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item
             /// </summary>
-            [FhirElement("presentation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("presentation", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -227,7 +243,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A lower limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the lower limit, with the presentation attribute becoming the upper limit
             /// </summary>
-            [FhirElement("presentationLowLimit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("presentationLowLimit", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio PresentationLowLimit
@@ -241,7 +257,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The strength per unitary volume (or mass)
             /// </summary>
-            [FhirElement("concentration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("concentration", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Concentration
@@ -255,7 +271,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A lower limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the upper limit
             /// </summary>
-            [FhirElement("concentrationLowLimit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("concentrationLowLimit", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio ConcentrationLowLimit
@@ -269,7 +285,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// For when strength is measured at a particular point or distance
             /// </summary>
-            [FhirElement("measurementPoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("measurementPoint", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MeasurementPointElement
@@ -302,7 +318,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The country or countries for which the strength range applies
             /// </summary>
-            [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -317,7 +333,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Strength expressed in terms of a reference substance
             /// </summary>
-            [FhirElement("referenceStrength", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("referenceStrength", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -328,6 +344,30 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<ReferenceStrengthComponent> _ReferenceStrength;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StrengthComponent");
+                base.Serialize(sink);
+                sink.Element("presentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Presentation?.Serialize(sink);
+                sink.Element("presentationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PresentationLowLimit?.Serialize(sink);
+                sink.Element("concentration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Concentration?.Serialize(sink);
+                sink.Element("concentrationLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ConcentrationLowLimit?.Serialize(sink);
+                sink.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(sink);
+                sink.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Country)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("referenceStrength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in ReferenceStrength)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -435,7 +475,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Relevant reference substance
             /// </summary>
-            [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("substance", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Substance
@@ -449,7 +489,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Strength expressed in terms of a reference substance
             /// </summary>
-            [FhirElement("strength", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("strength", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -464,7 +504,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Strength expressed in terms of a reference substance
             /// </summary>
-            [FhirElement("strengthLowLimit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("strengthLowLimit", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio StrengthLowLimit
@@ -478,7 +518,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// For when strength is measured at a particular point or distance
             /// </summary>
-            [FhirElement("measurementPoint", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("measurementPoint", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MeasurementPointElement
@@ -511,7 +551,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The country or countries for which the strength range applies
             /// </summary>
-            [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -522,6 +562,23 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.CodeableConcept> _Country;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ReferenceStrengthComponent");
+                base.Serialize(sink);
+                sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+                sink.Element("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Strength?.Serialize(sink);
+                sink.Element("strengthLowLimit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StrengthLowLimit?.Serialize(sink);
+                sink.Element("measurementPoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MeasurementPointElement?.Serialize(sink);
+                sink.BeginList("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Country)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -619,7 +676,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The ingredient substance
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -634,7 +691,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
             /// </summary>
-            [FhirElement("strength", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("strength", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -645,6 +702,20 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<StrengthComponent> _Strength;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SubstanceComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.BeginList("strength", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Strength)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -720,7 +791,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Identifier for the ingredient
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -734,7 +805,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Ingredient role e.g. Active ingredient, excipient
         /// </summary>
-        [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -749,7 +820,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// If the ingredient is a known or suspected allergen
         /// </summary>
-        [FhirElement("allergenicIndicator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("allergenicIndicator", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AllergenicIndicatorElement
@@ -782,7 +853,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Manufacturer of this Ingredient
         /// </summary>
-        [FhirElement("manufacturer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("manufacturer", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -798,7 +869,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A specified substance that comprises this ingredient
         /// </summary>
-        [FhirElement("specifiedSubstance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("specifiedSubstance", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -813,7 +884,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The ingredient substance
         /// </summary>
-        [FhirElement("substance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("substance", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public SubstanceComponent Substance
@@ -879,6 +950,29 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicinalProductIngredient");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Role?.Serialize(sink);
+            sink.Element("allergenicIndicator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AllergenicIndicatorElement?.Serialize(sink);
+            sink.BeginList("manufacturer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Manufacturer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specifiedSubstance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in SpecifiedSubstance)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

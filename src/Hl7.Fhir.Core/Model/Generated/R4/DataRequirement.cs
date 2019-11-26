@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A code-valued attribute to filter on
             /// </summary>
-            [FhirElement("path", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("path", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A coded (token) parameter to search on
             /// </summary>
-            [FhirElement("searchParam", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("searchParam", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SearchParamElement
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Valueset for the filter
             /// </summary>
-            [FhirElement("valueSet", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("valueSet", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Canonical ValueSetElement
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// What code is expected
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -173,6 +173,22 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.Coding> _Code;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CodeFilterComponent");
+                base.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PathElement?.Serialize(sink);
+                sink.Element("searchParam", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SearchParamElement?.Serialize(sink);
+                sink.Element("valueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueSetElement?.Serialize(sink);
+                sink.BeginList("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Code)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -265,7 +281,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A date-valued attribute to filter on
             /// </summary>
-            [FhirElement("path", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("path", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
@@ -298,7 +314,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A date valued parameter to search on
             /// </summary>
-            [FhirElement("searchParam", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("searchParam", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SearchParamElement
@@ -331,7 +347,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
-            [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.R4.Duration))]
             [DataMember]
@@ -342,6 +358,16 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.Element _Value;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DateFilterComponent");
+                base.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PathElement?.Serialize(sink);
+                sink.Element("searchParam", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SearchParamElement?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Value?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -429,7 +455,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The name of the attribute to perform the sort
             /// </summary>
-            [FhirElement("path", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("path", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -463,7 +489,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// ascending | descending
             /// </summary>
-            [FhirElement("direction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("direction", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -492,6 +518,15 @@ namespace Hl7.Fhir.Model.R4
                         DirectionElement = new Code<Hl7.Fhir.Model.R4.SortDirection>(value);
                     OnPropertyChanged("Direction");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SortComponent");
+                base.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PathElement?.Serialize(sink);
+                sink.Element("direction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DirectionElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -574,7 +609,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The type of the required data
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -608,7 +643,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The profile of the required data
         /// </summary>
-        [FhirElement("profile", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("profile", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -642,7 +677,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -657,7 +692,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Indicates specific structure elements that are referenced by the knowledge module
         /// </summary>
-        [FhirElement("mustSupport", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("mustSupport", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -691,7 +726,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What codes are expected
         /// </summary>
-        [FhirElement("codeFilter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("codeFilter", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -706,7 +741,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// What dates/date ranges are expected
         /// </summary>
-        [FhirElement("dateFilter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("dateFilter", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -721,7 +756,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of results
         /// </summary>
-        [FhirElement("limit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("limit", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt LimitElement
@@ -754,7 +789,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Order of the results
         /// </summary>
-        [FhirElement("sort", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("sort", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -849,6 +884,40 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Sort, otherT.Sort)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("DataRequirement");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.BeginList("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(ProfileElement);
+            sink.End();
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Subject?.Serialize(sink);
+            sink.BeginList("mustSupport", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(MustSupportElement);
+            sink.End();
+            sink.BeginList("codeFilter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in CodeFilter)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("dateFilter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in DateFilter)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("limit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LimitElement?.Serialize(sink);
+            sink.BeginList("sort", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Sort)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

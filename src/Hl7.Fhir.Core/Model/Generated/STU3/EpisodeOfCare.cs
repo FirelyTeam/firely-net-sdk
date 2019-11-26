@@ -109,6 +109,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.Period _Period;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StatusHistoryComponent");
+                base.Serialize(sink);
+                sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); StatusElement?.Serialize(sink);
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Period?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as StatusHistoryComponent;
@@ -190,7 +199,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Conditions/problems/diagnoses this episode of care is for
             /// </summary>
-            [FhirElement("condition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("condition", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Condition")]
             [Cardinality(Min=1,Max=1)]
@@ -206,7 +215,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
             /// </summary>
-            [FhirElement("role", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("role", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Role
@@ -220,7 +229,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Ranking of the diagnosis (for each role type)
             /// </summary>
-            [FhirElement("rank", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("rank", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt RankElement
@@ -248,6 +257,16 @@ namespace Hl7.Fhir.Model.STU3
                         RankElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Rank");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("DiagnosisComponent");
+                base.Serialize(sink);
+                sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Condition?.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Role?.Serialize(sink);
+                sink.Element("rank", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RankElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -346,7 +365,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -394,7 +413,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type/class  - e.g. specialist referral, disease management
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -409,7 +428,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The list of diagnosis relevant to this episode of care
         /// </summary>
-        [FhirElement("diagnosis", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("diagnosis", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -424,7 +443,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The patient who is the focus of this episode of care
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -440,7 +459,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Organization that assumes care
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("managingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -455,7 +474,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Interval during responsibility is assumed
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -602,6 +621,60 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("EpisodeOfCare");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.BeginList("statusHistory", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in StatusHistory)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Type)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("diagnosis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Diagnosis)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.BeginList("referralRequest", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ReferralRequest)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("careManager", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CareManager?.Serialize(sink);
+            sink.BeginList("team", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Team)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("account", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Account)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

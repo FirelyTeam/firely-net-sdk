@@ -152,6 +152,17 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("QuantitativeDetailsComponent");
+                base.Serialize(sink);
+                sink.Element("customaryUnit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CustomaryUnit?.Serialize(sink);
+                sink.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Unit?.Serialize(sink);
+                sink.Element("conversionFactor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConversionFactorElement?.Serialize(sink);
+                sink.Element("decimalPrecision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DecimalPrecisionElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QuantitativeDetailsComponent;
@@ -402,6 +413,26 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("QualifiedIntervalComponent");
+                base.Serialize(sink);
+                sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CategoryElement?.Serialize(sink);
+                sink.Element("range", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Range?.Serialize(sink);
+                sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Context?.Serialize(sink);
+                sink.BeginList("appliesTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in AppliesTo)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("gender", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GenderElement?.Serialize(sink);
+                sink.Element("age", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Age?.Serialize(sink);
+                sink.Element("gestationalAge", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GestationalAge?.Serialize(sink);
+                sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConditionElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QualifiedIntervalComponent;
@@ -506,7 +537,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Category of observation
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -521,7 +552,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Type of observation (code / type)
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -536,7 +567,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifier for this ObservationDefinition instance
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -821,6 +852,43 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(CriticalCodedValueSet, otherT.CriticalCodedValueSet)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ObservationDefinition");
+            base.Serialize(sink);
+            sink.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Category)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("permittedDataType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(PermittedDataTypeElement);
+            sink.End();
+            sink.Element("multipleResultsAllowed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MultipleResultsAllowedElement?.Serialize(sink);
+            sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Method?.Serialize(sink);
+            sink.Element("preferredReportName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PreferredReportNameElement?.Serialize(sink);
+            sink.Element("quantitativeDetails", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); QuantitativeDetails?.Serialize(sink);
+            sink.BeginList("qualifiedInterval", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in QualifiedInterval)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("validCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidCodedValueSet?.Serialize(sink);
+            sink.Element("normalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NormalCodedValueSet?.Serialize(sink);
+            sink.Element("abnormalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AbnormalCodedValueSet?.Serialize(sink);
+            sink.Element("criticalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriticalCodedValueSet?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

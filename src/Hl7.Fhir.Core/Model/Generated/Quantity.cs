@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Numerical value (with implicit precision)
         /// </summary>
-        [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal ValueElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
         /// </summary>
-        [FhirElement("comparator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("comparator", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.QuantityComparator> ComparatorElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unit representation
         /// </summary>
-        [FhirElement("unit", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("unit", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UnitElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// System that defines coded unit form
         /// </summary>
-        [FhirElement("system", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("system", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri SystemElement
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Coded form of the unit
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code CodeElement
@@ -292,6 +292,18 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Quantity");
+            base.Serialize(sink);
+            sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
+            sink.Element("comparator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ComparatorElement?.Serialize(sink);
+            sink.Element("unit", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UnitElement?.Serialize(sink);
+            sink.Element("system", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SystemElement?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CodeElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

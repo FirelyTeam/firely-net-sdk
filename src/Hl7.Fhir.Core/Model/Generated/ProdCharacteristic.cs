@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("height", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=90)]
+        [FhirElement("height", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Height
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("width", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=100)]
+        [FhirElement("width", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Width
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("depth", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=110)]
+        [FhirElement("depth", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Depth
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("weight", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=120)]
+        [FhirElement("weight", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Weight
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("nominalVolume", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=130)]
+        [FhirElement("nominalVolume", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity NominalVolume
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
-        [FhirElement("externalDiameter", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=140)]
+        [FhirElement("externalDiameter", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity ExternalDiameter
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("shape", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=150)]
+        [FhirElement("shape", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ShapeElement
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("color", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=160)]
+        [FhirElement("color", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the imprint can be specified as text
         /// </summary>
-        [FhirElement("imprint", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=170)]
+        [FhirElement("imprint", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=170)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
         /// </summary>
-        [FhirElement("image", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=180)]
+        [FhirElement("image", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
-        [FhirElement("scoring", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=190)]
+        [FhirElement("scoring", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Scoring
@@ -337,6 +337,33 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Scoring, otherT.Scoring)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("ProdCharacteristic");
+            base.Serialize(sink);
+            sink.Element("height", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Height?.Serialize(sink);
+            sink.Element("width", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Width?.Serialize(sink);
+            sink.Element("depth", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Depth?.Serialize(sink);
+            sink.Element("weight", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Weight?.Serialize(sink);
+            sink.Element("nominalVolume", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); NominalVolume?.Serialize(sink);
+            sink.Element("externalDiameter", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ExternalDiameter?.Serialize(sink);
+            sink.Element("shape", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ShapeElement?.Serialize(sink);
+            sink.BeginList("color", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            sink.Serialize(ColorElement);
+            sink.End();
+            sink.BeginList("imprint", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            sink.Serialize(ImprintElement);
+            sink.End();
+            sink.BeginList("image", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false);
+            foreach(var item in Image)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("scoring", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Scoring?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

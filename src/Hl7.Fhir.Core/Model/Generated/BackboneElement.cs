@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Extensions that cannot be ignored
         /// </summary>
-        [FhirElement("modifierExtension", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("modifierExtension", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -102,6 +102,17 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            base.Serialize(sink);
+            sink.BeginList("modifierExtension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ModifierExtension)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
         }
     
         [NotMapped]

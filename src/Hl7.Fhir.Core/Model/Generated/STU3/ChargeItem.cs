@@ -91,6 +91,15 @@ namespace Hl7.Fhir.Model.STU3
             
             private Hl7.Fhir.Model.ResourceReference _Actor;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ParticipantComponent");
+                base.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Role?.Serialize(sink);
+                sink.Element("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Actor?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ParticipantComponent;
@@ -168,7 +177,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business Identifier for item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -215,7 +224,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -265,7 +274,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// A code that identifies the charge, like a billing code
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -280,7 +289,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Individual service was done for/to
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
@@ -296,7 +305,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Encounter / Episode associated with event
         /// </summary>
-        [FhirElement("context", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("context", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -311,7 +320,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the charged service was applied
         /// </summary>
-        [FhirElement("occurrence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=Hl7.Fhir.Model.Version.All, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.STU3.Timing))]
         [DataMember]
@@ -370,7 +379,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Quantity of which the charge item has been serviced
         /// </summary>
-        [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Quantity
@@ -384,7 +393,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Anatomical location, if relevant
         /// </summary>
-        [FhirElement("bodysite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("bodysite", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -476,7 +485,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Individual who was entering
         /// </summary>
-        [FhirElement("enterer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("enterer", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization","Patient","Device","RelatedPerson")]
         [DataMember]
@@ -491,7 +500,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date the charge item was entered
         /// </summary>
-        [FhirElement("enteredDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("enteredDate", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime EnteredDateElement
@@ -554,7 +563,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Account to place this charge
         /// </summary>
-        [FhirElement("account", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("account", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [References("Account")]
         [Cardinality(Min=0,Max=-1)]
@@ -701,6 +710,78 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("ChargeItem");
+            base.Serialize(sink);
+            sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Identifier?.Serialize(sink);
+            sink.BeginList("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            sink.Serialize(DefinitionElement);
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.BeginList("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in PartOf)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("context", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Context?.Serialize(sink);
+            sink.Element("occurrence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Occurrence?.Serialize(sink);
+            sink.BeginList("participant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Participant)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("performingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PerformingOrganization?.Serialize(sink);
+            sink.Element("requestingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RequestingOrganization?.Serialize(sink);
+            sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Quantity?.Serialize(sink);
+            sink.BeginList("bodysite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Bodysite)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("factorOverride", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FactorOverrideElement?.Serialize(sink);
+            sink.Element("priceOverride", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PriceOverride?.Serialize(sink);
+            sink.Element("overrideReason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OverrideReasonElement?.Serialize(sink);
+            sink.Element("enterer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Enterer?.Serialize(sink);
+            sink.Element("enteredDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EnteredDateElement?.Serialize(sink);
+            sink.BeginList("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Reason)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("service", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Service)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("account", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Account)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in SupportingInformation)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

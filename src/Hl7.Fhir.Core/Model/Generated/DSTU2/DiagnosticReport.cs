@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Reference to the image source
             /// </summary>
-            [FhirElement("link", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("link", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Media")]
             [Cardinality(Min=1,Max=1)]
@@ -109,6 +109,15 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             
             private Hl7.Fhir.Model.ResourceReference _Link;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ImageComponent");
+                base.Serialize(sink);
+                sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
+                sink.Element("link", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Link?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -184,7 +193,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Id for external references to this report
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -199,7 +208,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// registered | partial | final | corrected | appended | cancelled | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -233,7 +242,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Service category
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Category
@@ -247,7 +256,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Name/Code for this diagnostic report
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -262,7 +271,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
@@ -278,7 +287,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Health care event when test ordered
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -293,7 +302,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Clinically Relevant time/time-period for report
         /// </summary>
-        [FhirElement("effective", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=Hl7.Fhir.Model.Version.All, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
@@ -309,7 +318,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// DateTime this version was released
         /// </summary>
-        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("issued", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -343,7 +352,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Responsible Diagnostic Service
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
@@ -423,7 +432,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Key images associated with this report
         /// </summary>
-        [FhirElement("image", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("image", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -583,6 +592,70 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(PresentedForm, otherT.PresentedForm)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("DiagnosticReport");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Category?.Serialize(sink);
+            sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Subject?.Serialize(sink);
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(sink);
+            sink.Element("effective", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Effective?.Serialize(sink);
+            sink.Element("issued", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); IssuedElement?.Serialize(sink);
+            sink.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Performer?.Serialize(sink);
+            sink.BeginList("request", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Request)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specimen", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Specimen)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("result", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Result)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("imagingStudy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ImagingStudy)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("image", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Image)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("conclusion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConclusionElement?.Serialize(sink);
+            sink.BeginList("codedDiagnosis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in CodedDiagnosis)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("presentedForm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in PresentedForm)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

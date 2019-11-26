@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of oral diet or diet restrictions that describe what can be consumed orally
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Instructions or additional information about the oral diet
             /// </summary>
-            [FhirElement("instruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("instruction", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
@@ -173,6 +173,44 @@ namespace Hl7.Fhir.Model.DSTU2
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("OralDietComponent");
+                base.Serialize(sink);
+                sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Type)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Schedule)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("nutrient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Nutrient)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("texture", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Texture)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("fluidConsistencyType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in FluidConsistencyType)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("instruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InstructionElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -299,6 +337,15 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.SimpleQuantity _Amount;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("NutrientComponent");
+                base.Serialize(sink);
+                sink.Element("modifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Modifier?.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NutrientComponent;
@@ -403,6 +450,15 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.CodeableConcept _FoodType;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("TextureComponent");
+                base.Serialize(sink);
+                sink.Element("modifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Modifier?.Serialize(sink);
+                sink.Element("foodType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); FoodType?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TextureComponent;
@@ -487,7 +543,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of supplement product requested
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
@@ -560,7 +616,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Instructions or additional information about the oral supplement
             /// </summary>
-            [FhirElement("instruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("instruction", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString InstructionElement
@@ -588,6 +644,23 @@ namespace Hl7.Fhir.Model.DSTU2
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SupplementComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+                sink.Element("productName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProductNameElement?.Serialize(sink);
+                sink.BeginList("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Schedule)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(sink);
+                sink.Element("instruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); InstructionElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -689,7 +762,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Type of enteral or infant formula
             /// </summary>
-            [FhirElement("baseFormulaType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("baseFormulaType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
@@ -833,7 +906,7 @@ namespace Hl7.Fhir.Model.DSTU2
             /// <summary>
             /// Formula feeding instructions expressed as text
             /// </summary>
-            [FhirElement("administrationInstruction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("administrationInstruction", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AdministrationInstructionElement
@@ -861,6 +934,27 @@ namespace Hl7.Fhir.Model.DSTU2
                         AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdministrationInstruction");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("EnteralFormulaComponent");
+                base.Serialize(sink);
+                sink.Element("baseFormulaType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BaseFormulaType?.Serialize(sink);
+                sink.Element("baseFormulaProductName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BaseFormulaProductNameElement?.Serialize(sink);
+                sink.Element("additiveType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AdditiveType?.Serialize(sink);
+                sink.Element("additiveProductName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AdditiveProductNameElement?.Serialize(sink);
+                sink.Element("caloricDensity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CaloricDensity?.Serialize(sink);
+                sink.Element("routeofAdministration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); RouteofAdministration?.Serialize(sink);
+                sink.BeginList("administration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Administration)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("maxVolumeToDeliver", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MaxVolumeToDeliver?.Serialize(sink);
+                sink.Element("administrationInstruction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AdministrationInstructionElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1020,6 +1114,16 @@ namespace Hl7.Fhir.Model.DSTU2
             
             private Hl7.Fhir.Model.Element _Rate;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("AdministrationComponent");
+                base.Serialize(sink);
+                sink.Element("schedule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Schedule?.Serialize(sink);
+                sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Quantity?.Serialize(sink);
+                sink.Element("rate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, true); Rate?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AdministrationComponent;
@@ -1108,7 +1212,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -1124,7 +1228,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
-        [FhirElement("orderer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("orderer", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("Practitioner")]
         [DataMember]
@@ -1168,7 +1272,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// Date and time the nutrition order was requested
         /// </summary>
-        [FhirElement("dateTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("dateTime", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1202,7 +1306,7 @@ namespace Hl7.Fhir.Model.DSTU2
         /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DSTU2.NutritionOrderStatus> StatusElement
@@ -1407,6 +1511,50 @@ namespace Hl7.Fhir.Model.DSTU2
             if( !DeepComparable.IsExactly(EnteralFormula, otherT.EnteralFormula)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("NutritionOrder");
+            base.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("orderer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Orderer?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Encounter?.Serialize(sink);
+            sink.Element("dateTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateTimeElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.BeginList("allergyIntolerance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AllergyIntolerance)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("foodPreferenceModifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in FoodPreferenceModifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("excludeFoodModifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ExcludeFoodModifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("oralDiet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); OralDiet?.Serialize(sink);
+            sink.BeginList("supplement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Supplement)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("enteralFormula", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); EnteralFormula?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

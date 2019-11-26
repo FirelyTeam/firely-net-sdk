@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// home | work | temp | old - purpose of this address
         /// </summary>
-        [FhirElement("use", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("use", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Code UseElement
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// postal | physical | both
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AddressType> TypeElement
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Text representation of the address
         /// </summary>
-        [FhirElement("text", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("text", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Street name, number, direction &amp; P.O. Box etc.
         /// </summary>
-        [FhirElement("line", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("line", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of city, town etc.
         /// </summary>
-        [FhirElement("city", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("city", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CityElement
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// District name (aka county)
         /// </summary>
-        [FhirElement("district", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("district", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DistrictElement
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Sub-unit of country (abbreviations ok)
         /// </summary>
-        [FhirElement("state", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("state", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString StateElement
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Postal code for area
         /// </summary>
-        [FhirElement("postalCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("postalCode", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PostalCodeElement
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Country (can be ISO 3166 3 letter code)
         /// </summary>
-        [FhirElement("country", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("country", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CountryElement
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Time period when address was/is in use
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -432,6 +432,25 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Address");
+            base.Serialize(sink);
+            sink.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UseElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
+            sink.BeginList("line", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(LineElement);
+            sink.End();
+            sink.Element("city", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CityElement?.Serialize(sink);
+            sink.Element("district", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DistrictElement?.Serialize(sink);
+            sink.Element("state", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StateElement?.Serialize(sink);
+            sink.Element("postalCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PostalCodeElement?.Serialize(sink);
+            sink.Element("country", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CountryElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

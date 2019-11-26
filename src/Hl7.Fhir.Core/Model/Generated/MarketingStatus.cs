@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
         /// </summary>
-        [FhirElement("country", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=90)]
+        [FhirElement("country", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
         /// </summary>
-        [FhirElement("jurisdiction", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=100)]
+        [FhirElement("jurisdiction", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Jurisdiction
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
         /// </summary>
-        [FhirElement("status", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=110)]
+        [FhirElement("status", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
         /// </summary>
-        [FhirElement("dateRange", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=120)]
+        [FhirElement("dateRange", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
         /// </summary>
-        [FhirElement("restoreDate", Versions=new[]{Hl7.Fhir.Model.Version.R4}, InSummary=new[]{Hl7.Fhir.Model.Version.R4}, Order=130)]
+        [FhirElement("restoreDate", Versions=Hl7.Fhir.Model.Version.R4, InSummary=Hl7.Fhir.Model.Version.R4, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RestoreDateElement
@@ -197,6 +197,18 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RestoreDateElement, otherT.RestoreDateElement)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("MarketingStatus");
+            base.Serialize(sink);
+            sink.Element("country", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Country?.Serialize(sink);
+            sink.Element("jurisdiction", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); Jurisdiction?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); Status?.Serialize(sink);
+            sink.Element("dateRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, true, false); DateRange?.Serialize(sink);
+            sink.Element("restoreDate", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); RestoreDateElement?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

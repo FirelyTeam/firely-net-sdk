@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Product to be supplied
             /// </summary>
-            [FhirElement("product", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("product", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// right | left
             /// </summary>
-            [FhirElement("eye", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("eye", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -440,6 +440,37 @@ namespace Hl7.Fhir.Model.R4
             
             private List<Hl7.Fhir.Model.Annotation> _Note;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("LensSpecificationComponent");
+                base.Serialize(sink);
+                sink.Element("product", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Product?.Serialize(sink);
+                sink.Element("eye", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); EyeElement?.Serialize(sink);
+                sink.Element("sphere", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SphereElement?.Serialize(sink);
+                sink.Element("cylinder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CylinderElement?.Serialize(sink);
+                sink.Element("axis", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AxisElement?.Serialize(sink);
+                sink.BeginList("prism", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Prism)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("add", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AddElement?.Serialize(sink);
+                sink.Element("power", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PowerElement?.Serialize(sink);
+                sink.Element("backCurve", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BackCurveElement?.Serialize(sink);
+                sink.Element("diameter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DiameterElement?.Serialize(sink);
+                sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Duration?.Serialize(sink);
+                sink.Element("color", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ColorElement?.Serialize(sink);
+                sink.Element("brand", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); BrandElement?.Serialize(sink);
+                sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Note)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as LensSpecificationComponent;
@@ -644,6 +675,15 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PrismComponent");
+                base.Serialize(sink);
+                sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); AmountElement?.Serialize(sink);
+                sink.Element("base", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); BaseElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PrismComponent;
@@ -732,7 +772,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -766,7 +806,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Response creation date
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -800,7 +840,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who prescription is for
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -831,7 +871,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When prescription was authorized
         /// </summary>
-        [FhirElement("dateWritten", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("dateWritten", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -865,7 +905,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who authorized the vision prescription
         /// </summary>
-        [FhirElement("prescriber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("prescriber", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole")]
         [Cardinality(Min=1,Max=1)]
@@ -881,7 +921,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Vision lens authorization
         /// </summary>
-        [FhirElement("lensSpecification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("lensSpecification", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -954,6 +994,31 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(LensSpecification, otherT.LensSpecification)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("VisionPrescription");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CreatedElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Patient?.Serialize(sink);
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Encounter?.Serialize(sink);
+            sink.Element("dateWritten", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DateWrittenElement?.Serialize(sink);
+            sink.Element("prescriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Prescriber?.Serialize(sink);
+            sink.BeginList("lensSpecification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in LensSpecification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

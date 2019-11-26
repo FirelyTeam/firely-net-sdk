@@ -38,6 +38,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.FhirPath;
 using System.Linq;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Model
 {
@@ -260,6 +261,15 @@ namespace Hl7.Fhir.Model
             return ValidateInvariantRule(context, invariantRule, model.ToTypedElement(), result);
         }
         #endregion
+
+        internal override void Serialize(SerializerSink sink)
+        {
+            base.Serialize(sink);
+            sink.Element("id"); IdElement?.Serialize(sink);
+            sink.Element("meta"); sink.Serialize( Meta );
+            sink.Element("implicitRules"); ImplicitRulesElement?.Serialize(sink);
+            sink.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(sink);
+        }
     }
 }
 

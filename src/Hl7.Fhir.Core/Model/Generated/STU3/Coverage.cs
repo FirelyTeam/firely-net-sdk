@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the group
             /// </summary>
-            [FhirElement("group", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("group", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString GroupElement
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for an identifier for the group
             /// </summary>
-            [FhirElement("groupDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("groupDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString GroupDisplayElement
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the subsection of the group
             /// </summary>
-            [FhirElement("subGroup", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("subGroup", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubGroupElement
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for the subsection of the group
             /// </summary>
-            [FhirElement("subGroupDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("subGroupDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubGroupDisplayElement
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the plan
             /// </summary>
-            [FhirElement("plan", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("plan", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PlanElement
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for the plan
             /// </summary>
-            [FhirElement("planDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("planDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PlanDisplayElement
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the subsection of the plan
             /// </summary>
-            [FhirElement("subPlan", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("subPlan", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubPlanElement
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for the subsection of the plan
             /// </summary>
-            [FhirElement("subPlanDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("subPlanDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubPlanDisplayElement
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the class
             /// </summary>
-            [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ClassElement
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for the class
             /// </summary>
-            [FhirElement("classDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("classDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ClassDisplayElement
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// An identifier for the subsection of the class
             /// </summary>
-            [FhirElement("subClass", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("subClass", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubClassElement
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model.STU3
             /// <summary>
             /// Display text for the subsection of the subclass
             /// </summary>
-            [FhirElement("subClassDisplay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("subClassDisplay", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SubClassDisplayElement
@@ -456,6 +456,25 @@ namespace Hl7.Fhir.Model.STU3
                         SubClassDisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("SubClassDisplay");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("GroupComponent");
+                base.Serialize(sink);
+                sink.Element("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupElement?.Serialize(sink);
+                sink.Element("groupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GroupDisplayElement?.Serialize(sink);
+                sink.Element("subGroup", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupElement?.Serialize(sink);
+                sink.Element("subGroupDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubGroupDisplayElement?.Serialize(sink);
+                sink.Element("plan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanElement?.Serialize(sink);
+                sink.Element("planDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PlanDisplayElement?.Serialize(sink);
+                sink.Element("subPlan", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanElement?.Serialize(sink);
+                sink.Element("subPlanDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubPlanDisplayElement?.Serialize(sink);
+                sink.Element("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassElement?.Serialize(sink);
+                sink.Element("classDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClassDisplayElement?.Serialize(sink);
+                sink.Element("subClass", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassElement?.Serialize(sink);
+                sink.Element("subClassDisplay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubClassDisplayElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -582,7 +601,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The primary coverage ID
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -597,7 +616,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// active | cancelled | draft | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -630,7 +649,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Type of coverage such as medical or accident
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -644,7 +663,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Owner of the policy
         /// </summary>
-        [FhirElement("policyHolder", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("policyHolder", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson","Organization")]
         [DataMember]
@@ -659,7 +678,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Subscriber to the policy
         /// </summary>
-        [FhirElement("subscriber", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("subscriber", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient","RelatedPerson")]
         [DataMember]
@@ -674,7 +693,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// ID assigned to the Subscriber
         /// </summary>
-        [FhirElement("subscriberId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("subscriberId", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SubscriberIdElement
@@ -707,7 +726,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Plan Beneficiary
         /// </summary>
-        [FhirElement("beneficiary", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("beneficiary", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -735,7 +754,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -749,7 +768,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Identifier for the plan or agreement issuer
         /// </summary>
-        [FhirElement("payor", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("payor", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [References("Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
@@ -778,7 +797,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("dependent", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DependentElement
@@ -811,7 +830,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The plan instance or sequence counter
         /// </summary>
-        [FhirElement("sequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("sequence", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SequenceElement
@@ -844,7 +863,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Relative order of the coverage
         /// </summary>
-        [FhirElement("order", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("order", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt OrderElement
@@ -877,7 +896,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("network", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NetworkElement
@@ -1008,6 +1027,44 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Contract, otherT.Contract)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Coverage");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("policyHolder", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PolicyHolder?.Serialize(sink);
+            sink.Element("subscriber", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subscriber?.Serialize(sink);
+            sink.Element("subscriberId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SubscriberIdElement?.Serialize(sink);
+            sink.Element("beneficiary", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Beneficiary?.Serialize(sink);
+            sink.Element("relationship", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Relationship?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.BeginList("payor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Payor)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("grouping", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Grouping?.Serialize(sink);
+            sink.Element("dependent", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DependentElement?.Serialize(sink);
+            sink.Element("sequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SequenceElement?.Serialize(sink);
+            sink.Element("order", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrderElement?.Serialize(sink);
+            sink.Element("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NetworkElement?.Serialize(sink);
+            sink.BeginList("contract", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contract)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

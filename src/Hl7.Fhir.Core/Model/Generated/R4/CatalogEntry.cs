@@ -111,6 +111,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.ResourceReference _Item;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RelatedEntryComponent");
+                base.Serialize(sink);
+                sink.Element("relationtype", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); RelationtypeElement?.Serialize(sink);
+                sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RelatedEntryComponent;
@@ -185,7 +194,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique identifier of the catalog item
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -213,7 +222,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether the entry represents an orderable item
         /// </summary>
-        [FhirElement("orderable", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("orderable", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -247,7 +256,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The item that is being defined
         /// </summary>
-        [FhirElement("referencedItem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("referencedItem", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Medication","Device","Organization","Practitioner","PractitionerRole","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
         [Cardinality(Min=1,Max=1)]
@@ -515,6 +524,56 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(RelatedEntry, otherT.RelatedEntry)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("CatalogEntry");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Type?.Serialize(sink);
+            sink.Element("orderable", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); OrderableElement?.Serialize(sink);
+            sink.Element("referencedItem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ReferencedItem?.Serialize(sink);
+            sink.BeginList("additionalIdentifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalIdentifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("classification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Classification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); StatusElement?.Serialize(sink);
+            sink.Element("validityPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidityPeriod?.Serialize(sink);
+            sink.Element("validTo", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidToElement?.Serialize(sink);
+            sink.Element("lastUpdated", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastUpdatedElement?.Serialize(sink);
+            sink.BeginList("additionalCharacteristic", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalCharacteristic)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("additionalClassification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in AdditionalClassification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("relatedEntry", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedEntry)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

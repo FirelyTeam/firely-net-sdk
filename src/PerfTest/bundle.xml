@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="searchset" />
+  <total value="3" />
+  <link>
+    <relation value="self" />
+    <url value="http://localhost:8080/fhir/Patient?family=Demoski&amp;given=Fran&amp;_count=20" />
+  </link>
+  <link>
+    <relation value="first" />
+    <url value="http://localhost:8080/fhir/Patient?_query=d16b8291-9b62-4e94-9384-1b5aca59009f&amp;_count=20&amp;_start=1" />
+  </link>
+  <entry>
+    <fullUrl value="http://localhost:8080/fhir/Patient/9359abb1-afd0-e911-b7f1-2816a856e19d" />
+    <resource>
+      <Patient>
+        <id value="9359abb1-afd0-e911-b7f1-2816a856e19d" />
+        <meta>
+          <lastUpdated value="2019-09-06T14:15:23.173+00:00" />
+        </meta>
+        <identifier id="identifier1">
+          <use value="usual" />
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MRN/PACode" />
+          <value value="123456781" />
+        </identifier>
+        <identifier>
+          <system value="http://hl7.org/fhir/sid/us-ssn" />
+          <value value="987229876" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MemberID" />
+          <value value="demoski001" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MCID" />
+          <value value="lastMCID" />
+        </identifier>
+        <name>
+          <use value="official" id="name-use1">
+            <extension url="http://careevolution.com/fhirextensions#term">
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://fhir.carevolution.com/codes/CareEvolution/NameType" />
+                  <code value="LegalName" />
+                  <display value="Legal Name" />
+                  <userSelected value="true" />
+                </coding>
+                <text value="Legal Name" />
+              </valueCodeableConcept>
+            </extension>
+          </use>
+          <family value="Demoski" id="family1" />
+          <given value="Fran">
+            <extension url="http://careevolution.com/fhirextensions#expanded">
+              <valueString value="Frances"/>
+            </extension>
+          </given>
+          <given value="H"/>
+          <given>
+            <extension url="http://careevolution.com/fhirextensions#expanded">
+              <valueString value="Henrietta"/>
+            </extension>
+          </given>
+        </name>
+        <gender value="female">
+          <extension url="http://careevolution.com/fhirextensions#term">
+            <valueCodeableConcept>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/DemoNamespace/Gender" />
+                <code value="F" />
+                <userSelected value="true" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/HL7Gender/Gender" />
+                <code value="F" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodesAlternate1/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodes/Gender" />
+                <code value="female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/CareEvolution/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <text value="Female" />
+            </valueCodeableConcept>
+          </extension>
+        </gender>
+        <birthDate value="1999-01-10" />
+        <deceasedBoolean value="false" />
+        <address>
+          <use value="home" />
+          <line value="101 Drury Lane" />
+          <city value="Churchill" />
+          <state value="MI" />
+          <postalCode value="48887" />
+          <country value="USA" />
+        </address>
+        <link>
+          <other>
+            <reference value="Patient/aaa16d09-b1d0-e911-b7f1-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+        <link>
+          <other>
+            <reference value="Patient/0a9d15a1-05f1-e911-b801-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+      </Patient>
+    </resource>
+    <search>
+      <mode value="match" />
+    </search>
+  </entry>
+  <entry>
+    <fullUrl value="http://localhost:8080/fhir/Patient/aaa16d09-b1d0-e911-b7f1-2816a856e19d" />
+    <resource>
+      <Patient>
+        <id value="aaa16d09-b1d0-e911-b7f1-2816a856e19d" />
+        <meta>
+          <lastUpdated value="2019-09-06T14:17:29.22+00:00" />
+        </meta>
+        <identifier>
+          <use value="usual" />
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MRN/RK.CareEvolution.Demo" />
+          <value value="9359abb1-afd0-e911-b7f1-2816a856e19d" />
+        </identifier>
+        <identifier>
+          <system value="http://hl7.org/fhir/sid/us-ssn" />
+          <value value="987229876" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MemberID" />
+          <value value="demoski001" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MCID" />
+          <value value="lastMCID" />
+        </identifier>
+        <name>
+          <use value="official">
+            <extension url="http://careevolution.com/fhirextensions#term">
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://fhir.carevolution.com/codes/CareEvolution/NameType" />
+                  <code value="LegalName" />
+                  <display value="Legal Name" />
+                  <userSelected value="true" />
+                </coding>
+                <text value="Legal Name" />
+              </valueCodeableConcept>
+            </extension>
+          </use>
+          <family value="Demoski" />
+          <given value="Fran" />
+        </name>
+        <gender value="female">
+          <extension url="http://careevolution.com/fhirextensions#term">
+            <valueCodeableConcept>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/DemoNamespace/Gender" />
+                <code value="F" />
+                <userSelected value="true" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/HL7Gender/Gender" />
+                <code value="F" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodesAlternate1/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodes/Gender" />
+                <code value="female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/CareEvolution/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <text value="Female" />
+            </valueCodeableConcept>
+          </extension>
+        </gender>
+        <birthDate value="1999-01-10" />
+        <deceasedBoolean value="false" />
+        <address>
+          <use value="home" />
+          <line value="101 Drury Lane" />
+          <city value="Churchill" />
+          <state value="MI" />
+          <postalCode value="48887" />
+          <country value="USA" />
+        </address>
+        <link>
+          <other>
+            <reference value="Patient/9359abb1-afd0-e911-b7f1-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+        <link>
+          <other>
+            <reference value="Patient/0a9d15a1-05f1-e911-b801-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+      </Patient>
+    </resource>
+    <search>
+      <mode value="match" />
+    </search>
+  </entry>
+  <entry>
+    <fullUrl value="http://localhost:8080/fhir/Patient/0a9d15a1-05f1-e911-b801-2816a856e19d" />
+    <resource>
+      <Patient>
+        <id value="0a9d15a1-05f1-e911-b801-2816a856e19d" />
+        <meta>
+          <lastUpdated value="2019-10-17T17:43:33.46+00:00" />
+        </meta>
+        <identifier>
+          <use value="usual" />
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR" />
+          <value value="9359abb1-afd0-e911-b7f1-2816a856e19d" />
+        </identifier>
+        <identifier>
+          <system value="http://hl7.org/fhir/sid/us-ssn" />
+          <value value="987229876" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MemberID" />
+          <value value="demoski001" />
+        </identifier>
+        <identifier>
+          <system value="http://fhir.carevolution.com/identifiers/CareEvolution/MCID" />
+          <value value="lastMCID" />
+        </identifier>
+        <name>
+          <use value="official">
+            <extension url="http://careevolution.com/fhirextensions#term">
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://fhir.carevolution.com/codes/CareEvolution/NameType" />
+                  <code value="LegalName" />
+                  <display value="Legal Name" />
+                  <userSelected value="true" />
+                </coding>
+                <text value="Legal Name" />
+              </valueCodeableConcept>
+            </extension>
+          </use>
+          <family value="Demoski" />
+          <given value="Fran" />
+        </name>
+        <gender value="female">
+          <extension url="http://careevolution.com/fhirextensions#term">
+            <valueCodeableConcept>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/DemoNamespace/Gender" />
+                <code value="F" />
+                <userSelected value="true" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/HL7Gender/Gender" />
+                <code value="F" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodesAlternate1/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/FhirCodes/Gender" />
+                <code value="female" />
+                <userSelected value="false" />
+              </coding>
+              <coding>
+                <system value="http://fhir.carevolution.com/codes/CareEvolution/Gender" />
+                <code value="F" />
+                <display value="Female" />
+                <userSelected value="false" />
+              </coding>
+              <text value="Female" />
+            </valueCodeableConcept>
+          </extension>
+        </gender>
+        <birthDate value="1999-01-10" />
+        <deceasedBoolean value="false" />
+        <address>
+          <use value="home" />
+          <line value="101 Drury Lane" />
+          <city value="Churchill" />
+          <state value="MI" />
+          <postalCode value="48887" />
+          <country value="USA" />
+        </address>
+        <link>
+          <other>
+            <reference value="Patient/9359abb1-afd0-e911-b7f1-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+        <link>
+          <other>
+            <reference value="Patient/aaa16d09-b1d0-e911-b7f1-2816a856e19d" />
+          </other>
+          <type value="seealso" />
+        </link>
+      </Patient>
+    </resource>
+    <search>
+      <mode value="match" />
+    </search>
+  </entry>
+</Bundle>

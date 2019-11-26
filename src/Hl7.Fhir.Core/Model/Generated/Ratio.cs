@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Numerator value
         /// </summary>
-        [FhirElement("numerator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("numerator", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Numerator
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Denominator value
         /// </summary>
-        [FhirElement("denominator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("denominator", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Denominator
@@ -146,6 +146,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Denominator, otherT.Denominator)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("Ratio");
+            base.Serialize(sink);
+            sink.Element("numerator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Numerator?.Serialize(sink);
+            sink.Element("denominator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Denominator?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

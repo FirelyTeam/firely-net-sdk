@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=30)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=30)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Brief description of the related artifact
         /// </summary>
-        [FhirElement("display", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+        [FhirElement("display", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Bibliographic citation for the artifact
         /// </summary>
-        [FhirElement("citation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+        [FhirElement("citation", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CitationElement
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Where the artifact can be accessed
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What document is being referenced
         /// </summary>
-        [FhirElement("document", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+        [FhirElement("document", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Document
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// What resource is being referenced
         /// </summary>
-        [FhirElement("resource", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+        [FhirElement("resource", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Resource
@@ -269,6 +269,19 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginDataType("RelatedArtifact");
+            base.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+            sink.Element("display", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayElement?.Serialize(sink);
+            sink.Element("citation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CitationElement?.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.Element("document", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Document?.Serialize(sink);
+            sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Resource?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

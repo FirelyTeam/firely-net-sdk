@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Business identifiers that are specific to this role
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Whether this organization affiliation record is in active use
         /// </summary>
-        [FhirElement("active", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("active", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActiveElement
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The period during which the participatingOrganization is affiliated with the primary organization
         /// </summary>
-        [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Organization where the role is available
         /// </summary>
-        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Organization that provides/performs the role (e.g. providing services or is a member of)
         /// </summary>
-        [FhirElement("participatingOrganization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("participatingOrganization", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
         /// </summary>
-        [FhirElement("network", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("network", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Definition of the role the participatingOrganization plays
         /// </summary>
-        [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Specific specialty of the participatingOrganization in the context of the role
         /// </summary>
-        [FhirElement("specialty", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("specialty", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The location(s) at which the role occurs
         /// </summary>
-        [FhirElement("location", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("location", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Contact details at the participatingOrganization relevant to this Affiliation
         /// </summary>
-        [FhirElement("telecom", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("telecom", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -329,6 +329,65 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("OrganizationAffiliation");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("active", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ActiveElement?.Serialize(sink);
+            sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+            sink.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Organization?.Serialize(sink);
+            sink.Element("participatingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ParticipatingOrganization?.Serialize(sink);
+            sink.BeginList("network", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Network)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Code)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("specialty", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Specialty)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("location", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Location)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("healthcareService", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in HealthcareService)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("telecom", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Telecom)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("endpoint", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Endpoint)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

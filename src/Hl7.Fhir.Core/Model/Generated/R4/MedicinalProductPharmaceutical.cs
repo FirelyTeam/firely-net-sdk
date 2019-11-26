@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A coded characteristic
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The status of characteristic e.g. assigned or pending
             /// </summary>
-            [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Status
@@ -90,6 +90,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.CodeableConcept _Status;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("CharacteristicsComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Status?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -172,7 +181,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Coded expression for the route
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -187,7 +196,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The first dose (dose quantity) administered in humans can be specified, for a product under investigation, using a numerical value and its unit of measurement
             /// </summary>
-            [FhirElement("firstDose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("firstDose", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity FirstDose
@@ -201,7 +210,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The maximum single dose that can be administered as per the protocol of a clinical trial can be specified using a numerical value and its unit of measurement
             /// </summary>
-            [FhirElement("maxSingleDose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("maxSingleDose", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity MaxSingleDose
@@ -215,7 +224,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The maximum dose per day (maximum dose quantity to be administered in any one 24-h period) that can be administered as per the protocol referenced in the clinical trial authorisation
             /// </summary>
-            [FhirElement("maxDosePerDay", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("maxDosePerDay", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity MaxDosePerDay
@@ -229,7 +238,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The maximum dose per treatment period that can be administered as per the protocol referenced in the clinical trial authorisation
             /// </summary>
-            [FhirElement("maxDosePerTreatmentPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("maxDosePerTreatmentPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio MaxDosePerTreatmentPeriod
@@ -243,7 +252,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The maximum treatment period during which an Investigational Medicinal Product can be administered as per the protocol referenced in the clinical trial authorisation
             /// </summary>
-            [FhirElement("maxTreatmentPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("maxTreatmentPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.R4.Duration MaxTreatmentPeriod
@@ -257,7 +266,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A species for which this route applies
             /// </summary>
-            [FhirElement("targetSpecies", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("targetSpecies", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -268,6 +277,25 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<TargetSpeciesComponent> _TargetSpecies;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RouteOfAdministrationComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.Element("firstDose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FirstDose?.Serialize(sink);
+                sink.Element("maxSingleDose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxSingleDose?.Serialize(sink);
+                sink.Element("maxDosePerDay", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerDay?.Serialize(sink);
+                sink.Element("maxDosePerTreatmentPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerTreatmentPeriod?.Serialize(sink);
+                sink.Element("maxTreatmentPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxTreatmentPeriod?.Serialize(sink);
+                sink.BeginList("targetSpecies", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in TargetSpecies)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -375,7 +403,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Coded expression for the species
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -390,7 +418,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A species specific time during which consumption of animal product is not appropriate
             /// </summary>
-            [FhirElement("withdrawalPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("withdrawalPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -401,6 +429,20 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<WithdrawalPeriodComponent> _WithdrawalPeriod;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("TargetSpeciesComponent");
+                base.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Code?.Serialize(sink);
+                sink.BeginList("withdrawalPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in WithdrawalPeriod)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -483,7 +525,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk
             /// </summary>
-            [FhirElement("tissue", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("tissue", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -498,7 +540,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A value for the time
             /// </summary>
-            [FhirElement("value", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("value", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -513,7 +555,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Extra information about the withdrawal period
             /// </summary>
-            [FhirElement("supportingInformation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("supportingInformation", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SupportingInformationElement
@@ -541,6 +583,16 @@ namespace Hl7.Fhir.Model.R4
                         SupportingInformationElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("SupportingInformation");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("WithdrawalPeriodComponent");
+                base.Serialize(sink);
+                sink.Element("tissue", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Tissue?.Serialize(sink);
+                sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Value?.Serialize(sink);
+                sink.Element("supportingInformation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SupportingInformationElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -622,7 +674,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// An identifier for the pharmaceutical medicinal product
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -637,7 +689,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The administrable dose form, after necessary reconstitution
         /// </summary>
-        [FhirElement("administrableDoseForm", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("administrableDoseForm", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -652,7 +704,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("unitOfPresentation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("unitOfPresentation", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
@@ -666,7 +718,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Ingredient
         /// </summary>
-        [FhirElement("ingredient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("ingredient", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("MedicinalProductIngredient")]
         [Cardinality(Min=0,Max=-1)]
@@ -682,7 +734,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Accompanying device
         /// </summary>
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("DeviceDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -698,7 +750,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Characteristics e.g. a products onset of action
         /// </summary>
-        [FhirElement("characteristics", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("characteristics", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -713,7 +765,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The path by which the pharmaceutical product is taken into or makes contact with the body
         /// </summary>
-        [FhirElement("routeOfAdministration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("routeOfAdministration", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -783,6 +835,45 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(RouteOfAdministration, otherT.RouteOfAdministration)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MedicinalProductPharmaceutical");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("administrableDoseForm", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); AdministrableDoseForm?.Serialize(sink);
+            sink.Element("unitOfPresentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UnitOfPresentation?.Serialize(sink);
+            sink.BeginList("ingredient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Ingredient)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Device)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("characteristics", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Characteristics)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("routeOfAdministration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in RouteOfAdministration)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

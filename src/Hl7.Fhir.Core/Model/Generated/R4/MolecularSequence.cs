@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Chromosome containing genetic finding
             /// </summary>
-            [FhirElement("chromosome", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("chromosome", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Chromosome
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'
             /// </summary>
-            [FhirElement("genomeBuild", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("genomeBuild", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString GenomeBuildElement
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// sense | antisense
             /// </summary>
-            [FhirElement("orientation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("orientation", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.R4.orientationType> OrientationElement
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Reference identifier
             /// </summary>
-            [FhirElement("referenceSeqId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("referenceSeqId", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ReferenceSeqId
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A pointer to another MolecularSequence entity as reference sequence
             /// </summary>
-            [FhirElement("referenceSeqPointer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("referenceSeqPointer", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [References("MolecularSequence")]
             [DataMember]
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// A string to represent reference sequence
             /// </summary>
-            [FhirElement("referenceSeqString", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("referenceSeqString", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ReferenceSeqStringElement
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// watson | crick
             /// </summary>
-            [FhirElement("strand", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("strand", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.R4.strandType> StrandElement
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Start position of the window on the  reference sequence
             /// </summary>
-            [FhirElement("windowStart", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("windowStart", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer WindowStartElement
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// End position of the window on the reference sequence
             /// </summary>
-            [FhirElement("windowEnd", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("windowEnd", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer WindowEndElement
@@ -301,6 +301,22 @@ namespace Hl7.Fhir.Model.R4
                         WindowEndElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("WindowEnd");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ReferenceSeqComponent");
+                base.Serialize(sink);
+                sink.Element("chromosome", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Chromosome?.Serialize(sink);
+                sink.Element("genomeBuild", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GenomeBuildElement?.Serialize(sink);
+                sink.Element("orientation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OrientationElement?.Serialize(sink);
+                sink.Element("referenceSeqId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqId?.Serialize(sink);
+                sink.Element("referenceSeqPointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqPointer?.Serialize(sink);
+                sink.Element("referenceSeqString", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeqStringElement?.Serialize(sink);
+                sink.Element("strand", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StrandElement?.Serialize(sink);
+                sink.Element("windowStart", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WindowStartElement?.Serialize(sink);
+                sink.Element("windowEnd", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WindowEndElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -419,7 +435,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Start position of the variant on the  reference sequence
             /// </summary>
-            [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer StartElement
@@ -452,7 +468,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// End position of the variant on the reference sequence
             /// </summary>
-            [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer EndElement
@@ -485,7 +501,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Allele that was observed
             /// </summary>
-            [FhirElement("observedAllele", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("observedAllele", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ObservedAlleleElement
@@ -518,7 +534,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Allele in the reference sequence
             /// </summary>
-            [FhirElement("referenceAllele", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("referenceAllele", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ReferenceAlleleElement
@@ -551,7 +567,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Extended CIGAR string for aligning the sequence with reference bases
             /// </summary>
-            [FhirElement("cigar", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("cigar", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CigarElement
@@ -584,7 +600,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Pointer to observed variant information
             /// </summary>
-            [FhirElement("variantPointer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("variantPointer", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [References("Observation")]
             [DataMember]
@@ -595,6 +611,19 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.ResourceReference _VariantPointer;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("VariantComponent");
+                base.Serialize(sink);
+                sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(sink);
+                sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(sink);
+                sink.Element("observedAllele", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ObservedAlleleElement?.Serialize(sink);
+                sink.Element("referenceAllele", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceAlleleElement?.Serialize(sink);
+                sink.Element("cigar", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CigarElement?.Serialize(sink);
+                sink.Element("variantPointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VariantPointer?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -697,7 +726,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// indel | snp | unknown
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -731,7 +760,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Standard sequence for comparison
             /// </summary>
-            [FhirElement("standardSequence", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("standardSequence", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept StandardSequence
@@ -745,7 +774,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Start position of the sequence
             /// </summary>
-            [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer StartElement
@@ -778,7 +807,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// End position of the sequence
             /// </summary>
-            [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer EndElement
@@ -811,7 +840,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Quality score for the comparison
             /// </summary>
-            [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("score", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Quantity Score
@@ -825,7 +854,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Method to get quality
             /// </summary>
-            [FhirElement("method", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("method", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
@@ -839,7 +868,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// True positives from the perspective of the truth data
             /// </summary>
-            [FhirElement("truthTP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("truthTP", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal TruthTPElement
@@ -872,7 +901,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// True positives from the perspective of the query data
             /// </summary>
-            [FhirElement("queryTP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("queryTP", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal QueryTPElement
@@ -905,7 +934,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// False negatives
             /// </summary>
-            [FhirElement("truthFN", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("truthFN", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal TruthFNElement
@@ -938,7 +967,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// False positives
             /// </summary>
-            [FhirElement("queryFP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("queryFP", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal QueryFPElement
@@ -971,7 +1000,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// False positives where the non-REF alleles in the Truth and Query Call Sets match
             /// </summary>
-            [FhirElement("gtFP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+            [FhirElement("gtFP", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal GtFPElement
@@ -1004,7 +1033,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Precision of comparison
             /// </summary>
-            [FhirElement("precision", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+            [FhirElement("precision", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PrecisionElement
@@ -1037,7 +1066,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Recall of comparison
             /// </summary>
-            [FhirElement("recall", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+            [FhirElement("recall", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RecallElement
@@ -1070,7 +1099,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// F-score
             /// </summary>
-            [FhirElement("fScore", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+            [FhirElement("fScore", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FScoreElement
@@ -1103,7 +1132,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Receiver Operator Characteristic (ROC) Curve
             /// </summary>
-            [FhirElement("roc", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+            [FhirElement("roc", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
             [CLSCompliant(false)]
             [DataMember]
             public RocComponent Roc
@@ -1113,6 +1142,28 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private RocComponent _Roc;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("QualityComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+                sink.Element("standardSequence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StandardSequence?.Serialize(sink);
+                sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(sink);
+                sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(sink);
+                sink.Element("score", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Score?.Serialize(sink);
+                sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
+                sink.Element("truthTP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TruthTPElement?.Serialize(sink);
+                sink.Element("queryTP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); QueryTPElement?.Serialize(sink);
+                sink.Element("truthFN", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TruthFNElement?.Serialize(sink);
+                sink.Element("queryFP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); QueryFPElement?.Serialize(sink);
+                sink.Element("gtFP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GtFPElement?.Serialize(sink);
+                sink.Element("precision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PrecisionElement?.Serialize(sink);
+                sink.Element("recall", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RecallElement?.Serialize(sink);
+                sink.Element("fScore", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FScoreElement?.Serialize(sink);
+                sink.Element("roc", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Roc?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1260,7 +1311,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Genotype quality score
             /// </summary>
-            [FhirElement("score", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("score", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1294,7 +1345,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Roc score true positive numbers
             /// </summary>
-            [FhirElement("numTP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("numTP", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1328,7 +1379,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Roc score false positive numbers
             /// </summary>
-            [FhirElement("numFP", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("numFP", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1362,7 +1413,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Roc score false negative numbers
             /// </summary>
-            [FhirElement("numFN", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("numFN", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1396,7 +1447,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Precision of the GQ score
             /// </summary>
-            [FhirElement("precision", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("precision", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1430,7 +1481,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Sensitivity of the GQ score
             /// </summary>
-            [FhirElement("sensitivity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("sensitivity", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1464,7 +1515,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// FScore of the GQ score
             /// </summary>
-            [FhirElement("fMeasure", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("fMeasure", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -1493,6 +1544,34 @@ namespace Hl7.Fhir.Model.R4
                         FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
                     OnPropertyChanged("FMeasure");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RocComponent");
+                base.Serialize(sink);
+                sink.BeginList("score", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(ScoreElement);
+                sink.End();
+                sink.BeginList("numTP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(NumTPElement);
+                sink.End();
+                sink.BeginList("numFP", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(NumFPElement);
+                sink.End();
+                sink.BeginList("numFN", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(NumFNElement);
+                sink.End();
+                sink.BeginList("precision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(PrecisionElement);
+                sink.End();
+                sink.BeginList("sensitivity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(SensitivityElement);
+                sink.End();
+                sink.BeginList("fMeasure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                sink.Serialize(FMeasureElement);
+                sink.End();
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1601,7 +1680,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// directlink | openapi | login | oauth | other
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1635,7 +1714,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// URI of the repository
             /// </summary>
-            [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1668,7 +1747,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Repository's name
             /// </summary>
-            [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -1701,7 +1780,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Id of the dataset that used to call for dataset in repository
             /// </summary>
-            [FhirElement("datasetId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("datasetId", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DatasetIdElement
@@ -1734,7 +1813,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Id of the variantset that used to call for variantset in repository
             /// </summary>
-            [FhirElement("variantsetId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("variantsetId", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString VariantsetIdElement
@@ -1767,7 +1846,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Id of the read
             /// </summary>
-            [FhirElement("readsetId", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("readsetId", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ReadsetIdElement
@@ -1795,6 +1874,19 @@ namespace Hl7.Fhir.Model.R4
                         ReadsetIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ReadsetId");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("RepositoryComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
+                sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+                sink.Element("datasetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DatasetIdElement?.Serialize(sink);
+                sink.Element("variantsetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VariantsetIdElement?.Serialize(sink);
+                sink.Element("readsetId", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReadsetIdElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1898,7 +1990,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant change type
             /// </summary>
-            [FhirElement("variantType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("variantType", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept VariantType
@@ -1912,7 +2004,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Does the structural variant have base pair resolution breakpoints?
             /// </summary>
-            [FhirElement("exact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("exact", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExactElement
@@ -1945,7 +2037,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant length
             /// </summary>
-            [FhirElement("length", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("length", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer LengthElement
@@ -1978,7 +2070,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant outer
             /// </summary>
-            [FhirElement("outer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("outer", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public OuterComponent Outer
@@ -1992,7 +2084,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant inner
             /// </summary>
-            [FhirElement("inner", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("inner", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [DataMember]
             public InnerComponent Inner
@@ -2002,6 +2094,18 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private InnerComponent _Inner;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StructureVariantComponent");
+                base.Serialize(sink);
+                sink.Element("variantType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VariantType?.Serialize(sink);
+                sink.Element("exact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExactElement?.Serialize(sink);
+                sink.Element("length", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LengthElement?.Serialize(sink);
+                sink.Element("outer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Outer?.Serialize(sink);
+                sink.Element("inner", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Inner?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -2099,7 +2203,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant outer start
             /// </summary>
-            [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer StartElement
@@ -2132,7 +2236,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant outer end
             /// </summary>
-            [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer EndElement
@@ -2160,6 +2264,15 @@ namespace Hl7.Fhir.Model.R4
                         EndElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("End");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("OuterComponent");
+                base.Serialize(sink);
+                sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(sink);
+                sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2243,7 +2356,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant inner start
             /// </summary>
-            [FhirElement("start", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("start", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer StartElement
@@ -2276,7 +2389,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Structural variant inner end
             /// </summary>
-            [FhirElement("end", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("end", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Integer EndElement
@@ -2304,6 +2417,15 @@ namespace Hl7.Fhir.Model.R4
                         EndElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("End");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("InnerComponent");
+                base.Serialize(sink);
+                sink.Element("start", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StartElement?.Serialize(sink);
+                sink.Element("end", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EndElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2380,7 +2502,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Unique ID for this particular sequence. This is a FHIR-defined id
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2395,7 +2517,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// aa | dna | rna
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [DataMember]
         public Code<Hl7.Fhir.Model.R4.sequenceType> TypeElement
@@ -2428,7 +2550,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
         /// </summary>
-        [FhirElement("coordinateSystem", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("coordinateSystem", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -2462,7 +2584,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who and/or what this is about
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -2477,7 +2599,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Specimen used for sequencing
         /// </summary>
-        [FhirElement("specimen", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("specimen", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Specimen")]
         [DataMember]
@@ -2492,7 +2614,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The method for sequencing
         /// </summary>
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [References("Device")]
         [DataMember]
@@ -2507,7 +2629,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who should be responsible for test result
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization")]
         [DataMember]
@@ -2522,7 +2644,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The number of copies of the sequence of interest.  (RNASeq)
         /// </summary>
-        [FhirElement("quantity", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("quantity", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity Quantity
@@ -2536,7 +2658,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A sequence used as reference
         /// </summary>
-        [FhirElement("referenceSeq", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("referenceSeq", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public ReferenceSeqComponent ReferenceSeq
@@ -2550,7 +2672,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Variant in sequence
         /// </summary>
-        [FhirElement("variant", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("variant", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2565,7 +2687,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Sequence that was observed
         /// </summary>
-        [FhirElement("observedSeq", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("observedSeq", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ObservedSeqElement
@@ -2598,7 +2720,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// An set of value as quality of sequence
         /// </summary>
-        [FhirElement("quality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("quality", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2613,7 +2735,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Average number of reads representing a given nucleotide in the reconstructed sequence
         /// </summary>
-        [FhirElement("readCoverage", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("readCoverage", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Integer ReadCoverageElement
@@ -2646,7 +2768,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// External repository which contains detailed report related with observedSeq in this resource
         /// </summary>
-        [FhirElement("repository", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("repository", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2661,7 +2783,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Pointer to next atomic sequence
         /// </summary>
-        [FhirElement("pointer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("pointer", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [References("MolecularSequence")]
         [Cardinality(Min=0,Max=-1)]
@@ -2677,7 +2799,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Structural variant
         /// </summary>
-        [FhirElement("structureVariant", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("structureVariant", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -2808,6 +2930,59 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(StructureVariant, otherT.StructureVariant)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("MolecularSequence");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+            sink.Element("coordinateSystem", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); CoordinateSystemElement?.Serialize(sink);
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(sink);
+            sink.Element("specimen", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Specimen?.Serialize(sink);
+            sink.Element("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Device?.Serialize(sink);
+            sink.Element("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Performer?.Serialize(sink);
+            sink.Element("quantity", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Quantity?.Serialize(sink);
+            sink.Element("referenceSeq", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReferenceSeq?.Serialize(sink);
+            sink.BeginList("variant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Variant)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("observedSeq", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ObservedSeqElement?.Serialize(sink);
+            sink.BeginList("quality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Quality)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("readCoverage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ReadCoverageElement?.Serialize(sink);
+            sink.BeginList("repository", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Repository)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("pointer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Pointer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("structureVariant", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in StructureVariant)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

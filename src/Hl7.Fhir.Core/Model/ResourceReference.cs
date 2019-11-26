@@ -29,7 +29,6 @@
 */
 
 using Hl7.Fhir.Introspection;
-
 using System;
 using System.Diagnostics;
 

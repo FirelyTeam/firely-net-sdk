@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Identifier(s) for the image
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Procedure that caused this media to be created
         /// </summary>
-        [FhirElement("basedOn", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("basedOn", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [References("ServiceRequest","CarePlan")]
         [Cardinality(Min=0,Max=-1)]
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Part of referenced event
         /// </summary>
-        [FhirElement("partOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("partOf", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Classification of media as image, video, or audio
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The type of acquisition equipment/process
         /// </summary>
-        [FhirElement("modality", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("modality", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Modality
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Imaging view, e.g. Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("view", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("subject", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Patient","Practitioner","PractitionerRole","Group","Device","Specimen","Location")]
         [DataMember]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Encounter associated with media
         /// </summary>
-        [FhirElement("encounter", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("encounter", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [References("Encounter")]
         [DataMember]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When Media was collected
         /// </summary>
-        [FhirElement("created", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("created", InSummary=Hl7.Fhir.Model.Version.All, Order=180, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Date/Time this version was made available
         /// </summary>
-        [FhirElement("issued", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("issued", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("operator", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
         [DataMember]
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Why was event performed?
         /// </summary>
-        [FhirElement("reasonCode", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("reasonCode", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Observed body part
         /// </summary>
-        [FhirElement("bodySite", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=220)]
+        [FhirElement("bodySite", InSummary=Hl7.Fhir.Model.Version.All, Order=220)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Name of the device/manufacturer
         /// </summary>
-        [FhirElement("deviceName", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("deviceName", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DeviceNameElement
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Observing Device
         /// </summary>
-        [FhirElement("device", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("device", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [References("Device","DeviceMetric","Device")]
         [DataMember]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Height of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("height", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt HeightElement
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=260)]
+        [FhirElement("width", InSummary=Hl7.Fhir.Model.Version.All, Order=260)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt WidthElement
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Number of frames if &gt; 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=270)]
+        [FhirElement("frames", InSummary=Hl7.Fhir.Model.Version.All, Order=270)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt FramesElement
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("duration", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal DurationElement
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Actual Media - reference or data
         /// </summary>
-        [FhirElement("content", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=290)]
+        [FhirElement("content", InSummary=Hl7.Fhir.Model.Version.All, Order=290)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -611,6 +611,60 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Media");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("basedOn", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in BasedOn)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in PartOf)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
+            sink.Element("modality", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Modality?.Serialize(sink);
+            sink.Element("view", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); View?.Serialize(sink);
+            sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
+            sink.Element("encounter", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Encounter?.Serialize(sink);
+            sink.Element("created", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Created?.Serialize(sink);
+            sink.Element("issued", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); IssuedElement?.Serialize(sink);
+            sink.Element("operator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Operator?.Serialize(sink);
+            sink.BeginList("reasonCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ReasonCode)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("bodySite", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); BodySite?.Serialize(sink);
+            sink.Element("deviceName", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DeviceNameElement?.Serialize(sink);
+            sink.Element("device", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Device?.Serialize(sink);
+            sink.Element("height", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); HeightElement?.Serialize(sink);
+            sink.Element("width", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); WidthElement?.Serialize(sink);
+            sink.Element("frames", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FramesElement?.Serialize(sink);
+            sink.Element("duration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DurationElement?.Serialize(sink);
+            sink.Element("content", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Content?.Serialize(sink);
+            sink.BeginList("note", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Note)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

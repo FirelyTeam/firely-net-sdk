@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Method for exchanging information with the primary source
             /// </summary>
-            [FhirElement("communicationMethod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("communicationMethod", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// yes | no | undetermined
             /// </summary>
-            [FhirElement("canPushUpdates", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("canPushUpdates", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CanPushUpdates
@@ -179,6 +179,35 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<Hl7.Fhir.Model.CodeableConcept> _PushTypeAvailable;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PrimarySourceComponent");
+                base.Serialize(sink);
+                sink.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Who?.Serialize(sink);
+                sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Type)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("communicationMethod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in CommunicationMethod)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("validationStatus", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidationStatus?.Serialize(sink);
+                sink.Element("validationDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ValidationDateElement?.Serialize(sink);
+                sink.Element("canPushUpdates", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CanPushUpdates?.Serialize(sink);
+                sink.BeginList("pushTypeAvailable", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in PushTypeAvailable)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -286,7 +315,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The individual or organization attesting to information
             /// </summary>
-            [FhirElement("who", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("who", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [References("Practitioner","PractitionerRole","Organization")]
             [DataMember]
@@ -301,7 +330,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// When the who is asserting on behalf of another (organization or individual)
             /// </summary>
-            [FhirElement("onBehalfOf", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("onBehalfOf", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [References("Organization","Practitioner","PractitionerRole")]
             [DataMember]
@@ -316,7 +345,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The method by which attested information was submitted/retrieved
             /// </summary>
-            [FhirElement("communicationMethod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=60)]
+            [FhirElement("communicationMethod", InSummary=Hl7.Fhir.Model.Version.All, Order=60)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept CommunicationMethod
@@ -330,7 +359,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The date the information was attested to
             /// </summary>
-            [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Date DateElement
@@ -449,6 +478,21 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.R4.Signature _SourceSignature;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("AttestationComponent");
+                base.Serialize(sink);
+                sink.Element("who", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Who?.Serialize(sink);
+                sink.Element("onBehalfOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OnBehalfOf?.Serialize(sink);
+                sink.Element("communicationMethod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommunicationMethod?.Serialize(sink);
+                sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+                sink.Element("sourceIdentityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SourceIdentityCertificateElement?.Serialize(sink);
+                sink.Element("proxyIdentityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProxyIdentityCertificateElement?.Serialize(sink);
+                sink.Element("proxySignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ProxySignature?.Serialize(sink);
+                sink.Element("sourceSignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); SourceSignature?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -619,6 +663,16 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.R4.Signature _AttestationSignature;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("ValidatorComponent");
+                base.Serialize(sink);
+                sink.Element("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Organization?.Serialize(sink);
+                sink.Element("identityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IdentityCertificateElement?.Serialize(sink);
+                sink.Element("attestationSignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AttestationSignature?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ValidatorComponent;
@@ -698,7 +752,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// A resource that was validated
         /// </summary>
-        [FhirElement("target", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("target", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -713,7 +767,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The fhirpath location(s) within the resource that was validated
         /// </summary>
-        [FhirElement("targetLocation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("targetLocation", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -747,7 +801,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// none | initial | periodic
         /// </summary>
-        [FhirElement("need", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("need", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Need
@@ -761,7 +815,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -795,7 +849,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When the validation status was updated
         /// </summary>
-        [FhirElement("statusDate", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("statusDate", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime StatusDateElement
@@ -828,7 +882,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// nothing | primary | multiple
         /// </summary>
-        [FhirElement("validationType", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("validationType", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ValidationType
@@ -842,7 +896,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
         /// </summary>
-        [FhirElement("validationProcess", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("validationProcess", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -934,7 +988,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// fatal | warn | rec-only | none
         /// </summary>
-        [FhirElement("failureAction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("failureAction", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept FailureAction
@@ -1065,6 +1119,49 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Validator, otherT.Validator)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("VerificationResult");
+            base.Serialize(sink);
+            sink.BeginList("target", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Target)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("targetLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(TargetLocationElement);
+            sink.End();
+            sink.Element("need", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Need?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("statusDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); StatusDateElement?.Serialize(sink);
+            sink.Element("validationType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValidationType?.Serialize(sink);
+            sink.BeginList("validationProcess", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in ValidationProcess)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("frequency", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Frequency?.Serialize(sink);
+            sink.Element("lastPerformed", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastPerformedElement?.Serialize(sink);
+            sink.Element("nextScheduled", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NextScheduledElement?.Serialize(sink);
+            sink.Element("failureAction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); FailureAction?.Serialize(sink);
+            sink.BeginList("primarySource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in PrimarySource)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("attestation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Attestation?.Serialize(sink);
+            sink.BeginList("validator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Validator)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]

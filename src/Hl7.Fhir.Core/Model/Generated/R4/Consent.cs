@@ -126,6 +126,15 @@ namespace Hl7.Fhir.Model.R4
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PolicyComponent");
+                base.Serialize(sink);
+                sink.Element("authority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AuthorityElement?.Serialize(sink);
+                sink.Element("uri", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UriElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PolicyComponent;
@@ -207,7 +216,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Has been verified
             /// </summary>
-            [FhirElement("verified", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("verified", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -283,6 +292,16 @@ namespace Hl7.Fhir.Model.R4
                         VerificationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("VerificationDate");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("VerificationComponent");
+                base.Serialize(sink);
+                sink.Element("verified", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); VerifiedElement?.Serialize(sink);
+                sink.Element("verifiedWith", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VerifiedWith?.Serialize(sink);
+                sink.Element("verificationDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); VerificationDateElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -371,7 +390,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// deny | permit
             /// </summary>
-            [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [DataMember]
             public Code<Hl7.Fhir.Model.R4.ConsentProvisionType> TypeElement
@@ -404,7 +423,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Timeframe for this rule
             /// </summary>
-            [FhirElement("period", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("period", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -432,7 +451,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Actions controlled by this rule
             /// </summary>
-            [FhirElement("action", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=70)]
+            [FhirElement("action", InSummary=Hl7.Fhir.Model.Version.All, Order=70)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -447,7 +466,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Security Labels that define affected resources
             /// </summary>
-            [FhirElement("securityLabel", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=80)]
+            [FhirElement("securityLabel", InSummary=Hl7.Fhir.Model.Version.All, Order=80)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -462,7 +481,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Context of activities covered by this rule
             /// </summary>
-            [FhirElement("purpose", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+            [FhirElement("purpose", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -477,7 +496,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// e.g. Resource Type, Profile, CDA, etc.
             /// </summary>
-            [FhirElement("class", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+            [FhirElement("class", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -492,7 +511,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// e.g. LOINC or SNOMED CT code, etc. in the content
             /// </summary>
-            [FhirElement("code", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+            [FhirElement("code", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -507,7 +526,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Timeframe for data controlled by this rule
             /// </summary>
-            [FhirElement("dataPeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+            [FhirElement("dataPeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
             [CLSCompliant(false)]
             [DataMember]
             public Hl7.Fhir.Model.Period DataPeriod
@@ -521,7 +540,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// Data controlled by this rule
             /// </summary>
-            [FhirElement("data", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+            [FhirElement("data", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
             [CLSCompliant(false)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -546,6 +565,64 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private List<provisionComponent> _Provision;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("provisionComponent");
+                base.Serialize(sink);
+                sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TypeElement?.Serialize(sink);
+                sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Period?.Serialize(sink);
+                sink.BeginList("actor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Actor)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("action", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Action)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("securityLabel", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in SecurityLabel)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("purpose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Purpose)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("class", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Class)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Code)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("dataPeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DataPeriod?.Serialize(sink);
+                sink.BeginList("data", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+                foreach(var item in Data)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("provision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Provision)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -700,6 +777,15 @@ namespace Hl7.Fhir.Model.R4
             
             private Hl7.Fhir.Model.ResourceReference _Reference;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("provisionActorComponent");
+                base.Serialize(sink);
+                sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Role?.Serialize(sink);
+                sink.Element("reference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Reference?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as provisionActorComponent;
@@ -781,7 +867,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// instance | related | dependents | authoredby
             /// </summary>
-            [FhirElement("meaning", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=40)]
+            [FhirElement("meaning", InSummary=Hl7.Fhir.Model.Version.All, Order=40)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -815,7 +901,7 @@ namespace Hl7.Fhir.Model.R4
             /// <summary>
             /// The actual data reference
             /// </summary>
-            [FhirElement("reference", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=50)]
+            [FhirElement("reference", InSummary=Hl7.Fhir.Model.Version.All, Order=50)]
             [CLSCompliant(false)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -826,6 +912,15 @@ namespace Hl7.Fhir.Model.R4
             }
             
             private Hl7.Fhir.Model.ResourceReference _Reference;
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("provisionDataComponent");
+                base.Serialize(sink);
+                sink.Element("meaning", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MeaningElement?.Serialize(sink);
+                sink.Element("reference", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Reference?.Serialize(sink);
+                sink.End();
+            }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -904,7 +999,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Identifier for this record (external references)
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -919,7 +1014,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// draft | proposed | active | rejected | inactive | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -953,7 +1048,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Which of the four areas this resource covers (extensible)
         /// </summary>
-        [FhirElement("scope", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("scope", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -968,7 +1063,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Classification of the consent statement - for indexing/retrieval
         /// </summary>
-        [FhirElement("category", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("category", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
@@ -983,7 +1078,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who the consent applies to
         /// </summary>
-        [FhirElement("patient", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("patient", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [References("Patient")]
         [DataMember]
@@ -998,7 +1093,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// When this Consent was created or indexed
         /// </summary>
-        [FhirElement("dateTime", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("dateTime", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1031,7 +1126,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Who is agreeing to the policy and rules
         /// </summary>
-        [FhirElement("performer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("performer", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [References("Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
@@ -1047,7 +1142,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Custodian of the consent
         /// </summary>
-        [FhirElement("organization", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("organization", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -1063,7 +1158,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Source from which this consent is taken
         /// </summary>
-        [FhirElement("source", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("source", InSummary=Hl7.Fhir.Model.Version.All, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -1092,7 +1187,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Regulation that this consents to
         /// </summary>
-        [FhirElement("policyRule", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=190)]
+        [FhirElement("policyRule", InSummary=Hl7.Fhir.Model.Version.All, Order=190)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PolicyRule
@@ -1106,7 +1201,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Consent Verified by patient or family
         /// </summary>
-        [FhirElement("verification", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=200)]
+        [FhirElement("verification", InSummary=Hl7.Fhir.Model.Version.All, Order=200)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1121,7 +1216,7 @@ namespace Hl7.Fhir.Model.R4
         /// <summary>
         /// Constraints to the base Consent.policyRule
         /// </summary>
-        [FhirElement("provision", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=210)]
+        [FhirElement("provision", InSummary=Hl7.Fhir.Model.Version.All, Order=210)]
         [CLSCompliant(false)]
         [DataMember]
         public provisionComponent Provision
@@ -1258,6 +1353,56 @@ namespace Hl7.Fhir.Model.R4
             if( !DeepComparable.IsExactly(Provision, otherT.Provision)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Consent");
+            base.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("scope", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); Scope?.Serialize(sink);
+            sink.BeginList("category", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true);
+            foreach(var item in Category)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("patient", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Patient?.Serialize(sink);
+            sink.Element("dateTime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateTimeElement?.Serialize(sink);
+            sink.BeginList("performer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Performer)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("organization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Organization)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("source", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Source?.Serialize(sink);
+            sink.BeginList("policy", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Policy)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("policyRule", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PolicyRule?.Serialize(sink);
+            sink.BeginList("verification", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Verification)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("provision", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Provision?.Serialize(sink);
+            sink.End();
         }
     
         [NotMapped]

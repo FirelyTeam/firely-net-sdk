@@ -223,6 +223,30 @@ namespace Hl7.Fhir.Model
             return true;
         }
     
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            base.Serialize(sink);
+            sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Text?.Serialize(sink);
+            sink.BeginList("contained", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contained)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("extension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Extension)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("modifierExtension", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in ModifierExtension)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

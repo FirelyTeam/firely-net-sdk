@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patient xmlns="http://hl7.org/fhir">
+  <text>
+    <status value="generated" />
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <table>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>Peter James <b>Chalmers</b> ("Jim")</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>534 Erewhon, Pleasantville, Vic, 3999</td>
+          </tr>
+          <tr>
+            <td>Contacts</td>
+            <td>Home: unknown. Work: (03) 5555 6473</td>
+          </tr>
+          <tr>
+            <td>Id</td>
+            <td>MRN: 12345 (Acme Healthcare)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </text>
+  <contained>
+    <Binary>
+      <id value="pic1" />
+      <contentType value="image/gif" />
+      <content value="R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7" />
+    </Binary>
+  </contained>
+  <contained>
+    <Organization>
+      <id value="org3141" />
+      <text>
+        <status value="generated" />
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <p>Good Health Clinic</p>
+        </div>
+      </text>
+      <identifier>
+        <system value="urn:ietf:rfc:3986" />
+        <value value="2.16.840.1.113883.19.5" />
+      </identifier>
+      <name value="Good Health Clinic" />
+    </Organization>
+  </contained>
+  <extension url="http://example.org/fhir/StructureDefinition/patientAvatar">
+    <valueReference>
+      <reference value="#pic1" />
+      <display value="Duck image" />
+    </valueReference>
+  </extension>
+  <extension url="http://example.org/fhir/StructureDefinition/complexExtensionExample">
+    <extension url="nestedA">
+      <valueCoding>
+        <extension url="http://example.org/fhir/StructureDefinition/extraforcodingWithExt">
+          <extension url="extra1">
+            <valueString value="extra info" />
+          </extension>
+        </extension>
+        <extension url="http://example.org/fhir/StructureDefinition/extraforcodingWithValue">
+          <valueInteger value="45" />
+        </extension>
+        <system value="http://demo.org/id/4" />
+        <code value="AB45" />
+      </valueCoding>
+    </extension>
+    <extension url="nestedB" id="q4">
+      <extension url="nestedB1">
+        <valueString value="hello" />
+      </extension>
+    </extension>
+  </extension>
+  <modifierExtension url="http://example.org/fhir/StructureDefinition/pi">
+    <valueDecimal value="3.141592653589793" />
+  </modifierExtension>
+  <modifierExtension url="http://example.org/fhir/StructureDefinition/max-decimal-precision">
+    <valueDecimal value="1.00065022141624642" />
+  </modifierExtension>
+  <identifier>
+    <use value="usual" />
+    <system value="urn:oid:1.2.36.146.595.217.0.1" />
+    <value value="12345" />
+    <period>
+      <start value="2001-05-06" />
+    </period>
+    <assigner>
+      <display value="Acme Healthcare" />
+    </assigner>
+  </identifier>
+  <active>
+    <extension url="http://example.org/fhir/StructureDefinition/recordStatus">
+      <valueCode value="archived" />
+    </extension>
+  </active>
+  <name>
+    <use value="official" />
+    <family value="Chalmers" />
+    <given value="Peter" />
+    <given value="James" />
+  </name>
+  <name>
+    <use value="usual" />
+    <given value="Jim" />
+  </name>
+  <telecom>
+    <use value="home" />
+  </telecom>
+  <telecom>
+    <system value="phone" />
+    <value value="(03) 5555 6473" />
+    <use value="work" />
+  </telecom>
+  <gender value="male" />
+  <birthDate value="1974-12" />
+  <deceasedBoolean value="true" />
+  <address>
+    <use value="home" />
+    <line value="534 Erewhon St" />
+    <city value="PleasantVille" />
+    <state value="Vic" />
+    <postalCode value="3999" />
+  </address>
+  <maritalStatus>
+    <extension url="http://example.org/fhir/StructureDefinition/nullFlavor">
+      <valueCode value="ASKU" />
+    </extension>
+  </maritalStatus>
+  <multipleBirthInteger value="3" />
+  <contact>
+    <relationship>
+      <coding>
+        <system value="http://example.org/fhir/CodeSystem/patient-contact-relationship" />
+        <code value="partner" />
+      </coding>
+    </relationship>
+    <name>
+      <family value="du Marché">
+        <extension url="http://example.org/fhir/StructureDefinition/qualifier">
+          <valueString value="VV" />
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor">
+          <valueCode value="ASKU" />
+        </extension>
+      </family>
+      <given value="Bénédicte" />
+      <given value="Denise" id="a3">
+        <extension url="http://hl7.org/fhir/StructureDefinition/qualifier">
+          <valueCode value="MID" />
+        </extension>
+      </given>
+      <given value="Marie" />
+    </name>
+    <telecom>
+      <system value="phone" />
+      <value value="+33 (237) 998327" />
+    </telecom>
+  </contact>
+  <careProvider>
+    <reference value="#org3141" />
+  </careProvider>
+  <managingOrganization>
+    <reference value="Organization/1" />
+  </managingOrganization>
+</Patient>

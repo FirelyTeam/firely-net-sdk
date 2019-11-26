@@ -174,6 +174,28 @@ namespace Hl7.Fhir.Model.STU3
             
             private List<StratifierComponent> _Stratifier;
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("GroupComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Identifier?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NameElement?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.BeginList("population", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Population)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.BeginList("stratifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Stratifier)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as GroupComponent;
@@ -390,6 +412,18 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("PopulationComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Code?.Serialize(sink);
+                sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); NameElement?.Serialize(sink);
+                sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
+                sink.Element("criteria", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); CriteriaElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PopulationComponent;
@@ -558,6 +592,16 @@ namespace Hl7.Fhir.Model.STU3
                         PathElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Path");
                 }
+            }
+        
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("StratifierComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.Element("criteria", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriteriaElement?.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PathElement?.Serialize(sink);
+                sink.End();
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -734,6 +778,22 @@ namespace Hl7.Fhir.Model.STU3
                 }
             }
         
+            internal override void Serialize(Serialization.SerializerSink sink)
+            {
+                sink.BeginDataType("SupplementalDataComponent");
+                base.Serialize(sink);
+                sink.Element("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Identifier?.Serialize(sink);
+                sink.BeginList("usage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+                foreach(var item in Usage)
+                {
+                    item?.Serialize(sink);
+                }
+                sink.End();
+                sink.Element("criteria", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriteriaElement?.Serialize(sink);
+                sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PathElement?.Serialize(sink);
+                sink.End();
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SupplementalDataComponent;
@@ -830,7 +890,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Logical URI to reference this measure (globally unique)
         /// </summary>
-        [FhirElement("url", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=90)]
+        [FhirElement("url", InSummary=Hl7.Fhir.Model.Version.All, Order=90)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
@@ -863,7 +923,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional identifier for the measure
         /// </summary>
-        [FhirElement("identifier", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=100)]
+        [FhirElement("identifier", InSummary=Hl7.Fhir.Model.Version.All, Order=100)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -878,7 +938,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Business version of the measure
         /// </summary>
-        [FhirElement("version", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=110)]
+        [FhirElement("version", InSummary=Hl7.Fhir.Model.Version.All, Order=110)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
@@ -911,7 +971,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this measure (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=120)]
+        [FhirElement("name", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -944,7 +1004,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name for this measure (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=130)]
+        [FhirElement("title", InSummary=Hl7.Fhir.Model.Version.All, Order=130)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
@@ -977,7 +1037,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=140)]
+        [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=140)]
         [CLSCompliant(false)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -1011,7 +1071,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=150)]
+        [FhirElement("experimental", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
@@ -1044,7 +1104,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=160)]
+        [FhirElement("date", InSummary=Hl7.Fhir.Model.Version.All, Order=160)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1077,7 +1137,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=170)]
+        [FhirElement("publisher", InSummary=Hl7.Fhir.Model.Version.All, Order=170)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
@@ -1110,7 +1170,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Natural language description of the measure
         /// </summary>
-        [FhirElement("description", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=180)]
+        [FhirElement("description", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown DescriptionElement
@@ -1271,7 +1331,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// When the measure is expected to be used
         /// </summary>
-        [FhirElement("effectivePeriod", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=230)]
+        [FhirElement("effectivePeriod", InSummary=Hl7.Fhir.Model.Version.All, Order=230)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Period EffectivePeriod
@@ -1285,7 +1345,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Context the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=240)]
+        [FhirElement("useContext", InSummary=Hl7.Fhir.Model.Version.All, Order=240)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1300,7 +1360,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Intended jurisdiction for measure (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=250)]
+        [FhirElement("jurisdiction", InSummary=Hl7.Fhir.Model.Version.All, Order=250)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1343,7 +1403,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=280)]
+        [FhirElement("contact", InSummary=Hl7.Fhir.Model.Version.All, Order=280)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1420,7 +1480,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Disclaimer for use of the measure or its referenced content
         /// </summary>
-        [FhirElement("disclaimer", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=320)]
+        [FhirElement("disclaimer", InSummary=Hl7.Fhir.Model.Version.All, Order=320)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown DisclaimerElement
@@ -1453,7 +1513,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// proportion | ratio | continuous-variable | cohort
         /// </summary>
-        [FhirElement("scoring", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=330)]
+        [FhirElement("scoring", InSummary=Hl7.Fhir.Model.Version.All, Order=330)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Scoring
@@ -1467,7 +1527,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// opportunity | all-or-nothing | linear | weighted
         /// </summary>
-        [FhirElement("compositeScoring", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=340)]
+        [FhirElement("compositeScoring", InSummary=Hl7.Fhir.Model.Version.All, Order=340)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept CompositeScoring
@@ -1481,7 +1541,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// process | outcome | structure | patient-reported-outcome | composite
         /// </summary>
-        [FhirElement("type", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=350)]
+        [FhirElement("type", InSummary=Hl7.Fhir.Model.Version.All, Order=350)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1496,7 +1556,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// How is risk adjustment applied for this measure
         /// </summary>
-        [FhirElement("riskAdjustment", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=360)]
+        [FhirElement("riskAdjustment", InSummary=Hl7.Fhir.Model.Version.All, Order=360)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RiskAdjustmentElement
@@ -1529,7 +1589,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// How is rate aggregation performed for this measure
         /// </summary>
-        [FhirElement("rateAggregation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=370)]
+        [FhirElement("rateAggregation", InSummary=Hl7.Fhir.Model.Version.All, Order=370)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RateAggregationElement
@@ -1562,7 +1622,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Why does this measure exist
         /// </summary>
-        [FhirElement("rationale", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=380)]
+        [FhirElement("rationale", InSummary=Hl7.Fhir.Model.Version.All, Order=380)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown RationaleElement
@@ -1595,7 +1655,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Summary of clinical guidelines
         /// </summary>
-        [FhirElement("clinicalRecommendationStatement", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=390)]
+        [FhirElement("clinicalRecommendationStatement", InSummary=Hl7.Fhir.Model.Version.All, Order=390)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatementElement
@@ -1628,7 +1688,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Improvement notation for the measure, e.g. higher score indicates better quality
         /// </summary>
-        [FhirElement("improvementNotation", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=400)]
+        [FhirElement("improvementNotation", InSummary=Hl7.Fhir.Model.Version.All, Order=400)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ImprovementNotationElement
@@ -1661,7 +1721,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Defined terms used in the measure documentation
         /// </summary>
-        [FhirElement("definition", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=410)]
+        [FhirElement("definition", InSummary=Hl7.Fhir.Model.Version.All, Order=410)]
         [CLSCompliant(false)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1695,7 +1755,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// Additional guidance for implementers
         /// </summary>
-        [FhirElement("guidance", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=420)]
+        [FhirElement("guidance", InSummary=Hl7.Fhir.Model.Version.All, Order=420)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown GuidanceElement
@@ -1728,7 +1788,7 @@ namespace Hl7.Fhir.Model.STU3
         /// <summary>
         /// The measure set, e.g. Preventive Care and Screening
         /// </summary>
-        [FhirElement("set", InSummary=new[]{Hl7.Fhir.Model.Version.All}, Order=430)]
+        [FhirElement("set", InSummary=Hl7.Fhir.Model.Version.All, Order=430)]
         [CLSCompliant(false)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SetElement
@@ -1934,6 +1994,107 @@ namespace Hl7.Fhir.Model.STU3
             if( !DeepComparable.IsExactly(SupplementalData, otherT.SupplementalData)) return false;
         
             return true;
+        }
+    
+        internal override void Serialize(Serialization.SerializerSink sink)
+        {
+            sink.BeginResource("Measure");
+            base.Serialize(sink);
+            sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
+            sink.BeginList("identifier", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Identifier)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("version", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); VersionElement?.Serialize(sink);
+            sink.Element("name", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); NameElement?.Serialize(sink);
+            sink.Element("title", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TitleElement?.Serialize(sink);
+            sink.Element("status", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); StatusElement?.Serialize(sink);
+            sink.Element("experimental", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ExperimentalElement?.Serialize(sink);
+            sink.Element("date", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DateElement?.Serialize(sink);
+            sink.Element("publisher", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PublisherElement?.Serialize(sink);
+            sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
+            sink.Element("purpose", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PurposeElement?.Serialize(sink);
+            sink.Element("usage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); UsageElement?.Serialize(sink);
+            sink.Element("approvalDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ApprovalDateElement?.Serialize(sink);
+            sink.Element("lastReviewDate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); LastReviewDateElement?.Serialize(sink);
+            sink.Element("effectivePeriod", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); EffectivePeriod?.Serialize(sink);
+            sink.BeginList("useContext", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in UseContext)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("jurisdiction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Jurisdiction)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("topic", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Topic)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("contributor", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Contributor)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("contact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Contact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("copyright", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CopyrightElement?.Serialize(sink);
+            sink.BeginList("relatedArtifact", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in RelatedArtifact)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("library", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Library)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("disclaimer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisclaimerElement?.Serialize(sink);
+            sink.Element("scoring", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Scoring?.Serialize(sink);
+            sink.Element("compositeScoring", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CompositeScoring?.Serialize(sink);
+            sink.BeginList("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            foreach(var item in Type)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.Element("riskAdjustment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RiskAdjustmentElement?.Serialize(sink);
+            sink.Element("rateAggregation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RateAggregationElement?.Serialize(sink);
+            sink.Element("rationale", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RationaleElement?.Serialize(sink);
+            sink.Element("clinicalRecommendationStatement", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClinicalRecommendationStatementElement?.Serialize(sink);
+            sink.Element("improvementNotation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ImprovementNotationElement?.Serialize(sink);
+            sink.BeginList("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false);
+            sink.Serialize(DefinitionElement);
+            sink.End();
+            sink.Element("guidance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); GuidanceElement?.Serialize(sink);
+            sink.Element("set", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); SetElement?.Serialize(sink);
+            sink.BeginList("group", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in Group)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.BeginList("supplementalData", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false);
+            foreach(var item in SupplementalData)
+            {
+                item?.Serialize(sink);
+            }
+            sink.End();
+            sink.End();
         }
     
         [NotMapped]
