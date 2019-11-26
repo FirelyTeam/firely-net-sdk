@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Serialization.Tests
   <id value=""obs-1001"" />
   <meta>
     <tag>
-      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <system value=""http://terminology.hl7.org/CodeSystem/v3-ObservationValue"" />
       <code value=""SUBSETTED"" />
     </tag>
   </meta>
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Serialization.Tests
   <id value=""obs-1001"" />
   <meta>
     <tag>
-      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <system value=""http://terminology.hl7.org/CodeSystem/v3-ObservationValue"" />
       <code value=""SUBSETTED"" />
     </tag>
   </meta>
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Serialization.Tests
   <id value=""obs-1001"" />
   <meta>
     <tag>
-      <system value=""http://hl7.org/fhir/v3/ObservationValue"" />
+      <system value=""http://terminology.hl7.org/CodeSystem/v3-ObservationValue"" />
       <code value=""SUBSETTED"" />
     </tag>
   </meta>
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void SummaryAddSubsettedExistingMeta()
         {
-            var patient = new Model.DSTU2.Patient
+            var patient = new Model.STU3.Patient
             {
                 Meta = new Model.Meta
                 {
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Serialization.Tests
   }
 }";
 
-            var serializedJson = FastSerializeToJsonString(patient, summary: Rest.SummaryType.Text);
+            var serializedJson = FastSerializeToJsonString(patient, version: Model.Version.STU3, summary: Rest.SummaryType.Text);
             Assert.AreEqual(json, serializedJson);
         }
 

@@ -41,10 +41,13 @@ namespace Hl7.Fhir.Serialization
             }
             else
             {
+                var observationValueSystem = _version == Model.Version.DSTU2 || _version == Model.Version.STU3 ?
+                    OldObservationValueSystem :
+                    ObservationValueSystem;
                 var subsettedMeta = meta ?? new Meta();
-                if (!subsettedMeta.Tag.Any(t => t.System == ObservationValueSystem && t.Code == ObservationValueCodeSubsetted))
+                if (!subsettedMeta.Tag.Any(t => t.System == observationValueSystem && t.Code == ObservationValueCodeSubsetted))
                 {
-                    var subsettedTag = new Coding(ObservationValueSystem, ObservationValueCodeSubsetted);
+                    var subsettedTag = new Coding(observationValueSystem, ObservationValueCodeSubsetted);
                     subsettedMeta.Tag.Add(subsettedTag);
                 }
                 subsettedMeta.Serialize(this);
@@ -438,7 +441,8 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private const string ObservationValueSystem = "http://hl7.org/fhir/v3/ObservationValue";
+        private const string OldObservationValueSystem = "http://hl7.org/fhir/v3/ObservationValue";
+        private const string ObservationValueSystem = "http://terminology.hl7.org/CodeSystem/v3-ObservationValue";
         private const string ObservationValueCodeSubsetted = "SUBSETTED";
 
         private readonly Model.Version _version;
