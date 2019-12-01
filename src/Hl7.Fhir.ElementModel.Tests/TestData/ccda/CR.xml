@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CR"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A concept qualifier code with optionally named role. Both qualifier role and value codes must be defined by the coding system. For example, if SNOMED RT defines a concept "leg", a role relation "has-laterality", and another concept "left", the concept role relation allows to add the qualifier "has-laterality: left" to a primary code "leg" to construct the meaning "left leg".</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CR"/>
+  <name value="CR"/>
+  <title value="CR: ConceptRole (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A concept qualifier code with optionally named role. Both qualifier role and value codes must be defined by the coding system of the CD containing the concept qualifier. For example, if SNOMED RT defines a concept &quot;leg&quot;, a role relation &quot;has-laterality&quot;, and another concept &quot;left&quot;, the concept role relation allows to add the qualifier &quot;has-laterality: left&quot; to a primary code &quot;leg&quot; to construct the meaning &quot;left leg&quot;."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CR"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CR">
+      <path value="CR"/>
+      <definition value="A concept qualifier code with optionally named role. Both qualifier role and value codes must be defined by the coding system. For example, if SNOMED RT defines a concept &#34;leg&#34;, a role relation &#34;has-laterality&#34;, and another concept &#34;left&#34;, the concept role relation allows to add the qualifier &#34;has-laterality: left&#34; to a primary code &#34;leg&#34; to construct the meaning &#34;left leg&#34;."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="CR.inverted">
+      <path value="CR.inverted"/>
+      <representation value="xmlAttr"/>
+      <label value="Inversion Indicator"/>
+      <definition value="Indicates if the sense of the role name is inverted. This can be used in cases where the underlying code system defines inversion but does not provide reciprocal pairs of role names. By default, inverted is false."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+    </element>
+    <element id="CR.name">
+      <path value="CR.name"/>
+      <label value="Name"/>
+      <definition value="Specifies the manner in which the concept role value contributes to the meaning of a code phrase. For example, if SNOMED RT defines a concept &quot;leg&quot;, a role relation &quot;has-laterality&quot;, and another concept &quot;left&quot;, the concept role relation allows to add the qualifier &quot;has-laterality: left&quot; to a primary code &quot;leg&quot; to construct the meaning &quot;left leg&quot;. In this example &quot;has-laterality&quot; is the CR.name."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CV"/>
+      </type>
+    </element>
+    <element id="CR.value">
+      <path value="CR.value"/>
+      <label value="Value"/>
+      <definition value="The concept that modifies the primary code of a code phrase through the role relation. For example, if SNOMED RT defines a concept &quot;leg&quot;, a role relation &quot;has-laterality&quot;, and another concept &quot;left&quot;, the concept role relation allows adding the qualifier &quot;has-laterality: left&quot; to a primary code &quot;leg&quot; to construct the meaning &quot;left leg&quot;. In this example &quot;left&quot; is the CR.value."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

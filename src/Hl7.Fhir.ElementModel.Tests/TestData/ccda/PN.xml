@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="PN"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A name for a person. A sequence of name parts, such as given name or family name, prefix, suffix, etc. Examples for person name values are "Jim Bob Walton, Jr.", "Adam Everyman", etc. A person name may be as simple as a character string or may consist of several person name parts, such as, "Jim", "Bob", "Walton", and "Jr.". PN differs from EN because the qualifier type cannot include LS (Legal Status).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-no-order">
+    <valueBoolean value="true"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/PN"/>
+  <name value="PN"/>
+  <title value="PN: PersonName (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A name for a person. A sequence of name parts, such as given name or family name, prefix, suffix, etc. Examples for person name values are &quot;Jim Bob Walton, Jr.&quot;, &quot;Adam Everyman&quot;, etc. A person name may be as simple as a character string or may consist of several person name parts, such as, &quot;Jim&quot;, &quot;Bob&quot;, &quot;Walton&quot;, and &quot;Jr.&quot;. PN differs from EN because the qualifier type cannot include LS (Legal Status)."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="PN"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/EN"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="PN">
+      <path value="PN"/>
+      <definition value="A name for a person. A sequence of name parts, such as given name or family name, prefix, suffix, etc. Examples for person name values are &quot;Jim Bob Walton, Jr.&quot;, &quot;Adam Everyman&quot;, etc. A person name may be as simple as a character string or may consist of several person name parts, such as, &quot;Jim&quot;, &quot;Bob&quot;, &quot;Walton&quot;, and &quot;Jr.&quot;. PN differs from EN because the qualifier type cannot include LS (Legal Status)."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PN.use">
+      <path value="PN.use"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-PersonNameUse"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

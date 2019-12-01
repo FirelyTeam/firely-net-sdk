@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="EncompassingEncounter"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>This optional class represents the setting of the clinical encounter during which the documented act(s) or ServiceEvent occurred. Documents are not necessarily generated during an encounter, such as when a clinician, in response to an abnormal lab result, attempts to contact the patient but can't, and writes a Progress Note.</p>
+      <p>In some cases, the setting of the encounter is inherent in the ClinicalDocument.code, such as where ClinicalDocument.code is "Diabetes Clinic Progress Note". The setting of an encounter can also be transmitted in the HealthCareFacility.code attribute. If HealthCareFacility.code is sent, it should be equivalent to or further specialize the value inherent in the ClinicalDocument.code (such as where the ClinicalDocument.code is simply "Clinic Progress Note" and the value of HealthCareFacility.code is "cardiology clinic"), and shall not conflict with the value inherent in the ClinicalDocument.code, as such a conflict would constitute an ambiguous situation.</p>
+      <p>EncompassingEncounter.dischargeDispositionCode can be used to depict the disposition of the patient at the time of hospital discharge (e.g., discharged to home, expired, against medical advice, etc.).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/EncompassingEncounter"/>
+  <name value="CDAR2.EncompassingEncounter"/>
+  <title value="EncompassingEncounter (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="This optional class represents the setting of the clinical encounter during which the documented act(s) or ServiceEvent occurred. Documents are not necessarily generated during an encounter, such as when a clinician, in response to an abnormal lab result, attempts to contact the patient but can't, and writes a Progress Note.&#10;In some cases, the setting of the encounter is inherent in the ClinicalDocument.code, such as where ClinicalDocument.code is &quot;Diabetes Clinic Progress Note&quot;. The setting of an encounter can also be transmitted in the HealthCareFacility.code attribute. If HealthCareFacility.code is sent, it should be equivalent to or further specialize the value inherent in the ClinicalDocument.code (such as where the ClinicalDocument.code is simply &quot;Clinic Progress Note&quot; and the value of HealthCareFacility.code is &quot;cardiology clinic&quot;), and shall not conflict with the value inherent in the ClinicalDocument.code, as such a conflict would constitute an ambiguous situation.&#10;EncompassingEncounter.dischargeDispositionCode can be used to depict the disposition of the patient at the time of hospital discharge (e.g., discharged to home, expired, against medical advice, etc.)."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="EncompassingEncounter"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="EncompassingEncounter">
+      <path value="EncompassingEncounter"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="EncompassingEncounter.classCode">
+      <path value="EncompassingEncounter.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ENC"/>
+      <fixedCode value="ENC"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClass"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.moodCode">
+      <path value="EncompassingEncounter.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.templateId">
+      <path value="EncompassingEncounter.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.id">
+      <path value="EncompassingEncounter.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.code">
+      <path value="EncompassingEncounter.code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActEncounterCode"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.effectiveTime">
+      <path value="EncompassingEncounter.effectiveTime"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_TS"/>
+      </type>
+      
+    </element>
+    <element id="EncompassingEncounter.admissionReferralSourceCode">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+        <valueUri value="urn:hl7-org:sdtc"/>
+      </extension>
+      <path value="EncompassingEncounter.admissionReferralSourceCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.dischargeDispositionCode">
+      <path value="EncompassingEncounter.dischargeDispositionCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-EncounterDischargeDisposition"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.responsibleParty">
+      <path value="EncompassingEncounter.responsibleParty"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Element"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.responsibleParty.typeCode">
+      <path value="EncompassingEncounter.responsibleParty.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="RESP"/>
+      <fixedCode value="RESP"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ParticipationType"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.responsibleParty.assignedEntity">
+      <path value="EncompassingEncounter.responsibleParty.assignedEntity"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.encounterParticipant">
+      <path value="EncompassingEncounter.encounterParticipant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Element"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.encounterParticipant.typeCode">
+      <path value="EncompassingEncounter.encounterParticipant.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      
+    </element>
+    <element id="EncompassingEncounter.encounterParticipant.time">
+      <path value="EncompassingEncounter.encounterParticipant.time"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_TS"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.encounterParticipant.assignedEntity">
+      <path value="EncompassingEncounter.encounterParticipant.assignedEntity"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.location">
+      <path value="EncompassingEncounter.location"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Element"/>
+      </type>
+    </element>
+    <element id="EncompassingEncounter.location.typeCode">
+      <path value="EncompassingEncounter.location.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="LOC"/>
+      <fixedCode value="LOC"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ParticipationTargetLocation"/>
+      </binding>
+    </element>
+    <element id="EncompassingEncounter.location.healthCareFacility">
+      <path value="EncompassingEncounter.location.healthCareFacility"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/HealthCareFacility"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

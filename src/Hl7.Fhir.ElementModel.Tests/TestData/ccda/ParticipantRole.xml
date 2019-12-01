@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ParticipantRole"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ParticipantRole"/>
+  <name value="CDAR2.ParticipantRole"/>
+  <title value="ParticipantRole (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ParticipantRole"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ParticipantRole">
+      <path value="ParticipantRole"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ParticipantRole.classCode">
+      <path value="ParticipantRole.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ROL"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleClassRoot"/>
+      </binding>
+    </element>
+    <element id="ParticipantRole.templateId">
+      <path value="ParticipantRole.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.id">
+      <path value="ParticipantRole.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.code">
+      <path value="ParticipantRole.code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleCode"/>
+      </binding>
+    </element>
+    <element id="ParticipantRole.addr">
+      <path value="ParticipantRole.addr"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AD"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.telecom">
+      <path value="ParticipantRole.telecom"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.playingDevice">
+      <path value="ParticipantRole.playingDevice"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Device"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.playingEntity">
+      <path value="ParticipantRole.playingEntity"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PlayingEntity"/>
+      </type>
+    </element>
+    <element id="ParticipantRole.scopingEntity">
+      <path value="ParticipantRole.scopingEntity"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Entity"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

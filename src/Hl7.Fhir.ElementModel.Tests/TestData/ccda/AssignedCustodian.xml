@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="AssignedCustodian"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A custodian is a scoping organization in the role of an assigned custodian (AssignedCustodian class).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/AssignedCustodian"/>
+  <name value="CDAR2.AssignedCustodian"/>
+  <title value="AssignedCustodian (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A custodian is a scoping organization in the role of an assigned custodian (AssignedCustodian class)."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="AssignedCustodian"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="AssignedCustodian">
+      <path value="AssignedCustodian"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="AssignedCustodian.classCode">
+      <path value="AssignedCustodian.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ASSIGNED"/>
+      <fixedCode value="ASSIGNED"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleClassAssignedEntity"/>
+      </binding>
+    </element>
+    <element id="AssignedCustodian.templateId">
+      <path value="AssignedCustodian.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="AssignedCustodian.representedCustodianOrganization">
+      <path value="AssignedCustodian.representedCustodianOrganization"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CustodianOrganization"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

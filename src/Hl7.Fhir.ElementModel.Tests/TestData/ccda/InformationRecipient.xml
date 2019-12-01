@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="InformationRecipient"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Represents a recipient who should receive a copy of the document.</p>
+      <p>NOTE: The information recipient is an entity to whom a copy of a document is directed, at the time of document authorship. It is not the same as the cumulative set of persons to whom the document has subsequently been disclosed, over the life-time of the patient. Such a disclosure list would not be contained within the document, and it outside the scope of CDA.</p>
+      <p>Where a person is the intended recipient (IntendedRecipient class), the playing entity is a person (Person class), optionally scoped by an organization (Organization class). Where the intended recipient is an organization, the IntendedRecipient.classCode is valued with "ASSIGNED", and the recipient is reflected by the presence of a scoping Organization, without a playing entity. Where a health chart is the intended recipient, the IntendedRecipient.classCode is valued with "HLTHCHRT" (health chart). In this case there is no playing entity, and an optional scoping organization (Organization class).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/InformationRecipient"/>
+  <name value="CDAR2.InformationRecipient"/>
+  <title value="InformationRecipient (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="Represents the participant who has transformed a dictated note into text."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="InformationRecipient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="InformationRecipient">
+      <path value="InformationRecipient"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="InformationRecipient.nullFlavor">
+      <path value="InformationRecipient.nullFlavor"/>
+      <representation value="xmlAttr"/>
+      <label value="Exceptional Value Detail"/>
+      <definition value="If a value is an exceptional value (NULL-value), this specifies in what way and why proper information is missing."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-NullFlavor"/>
+      </binding>
+    </element>
+    <element id="InformationRecipient.typeCode">
+      <path value="InformationRecipient.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="PRCP"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ParticipationType"/>
+      </binding>
+    </element>
+    <element id="InformationRecipient.realmCode">
+      <path value="InformationRecipient.realmCode"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of realm-specific constraints. The value of this attribute identifies the realm in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+    </element>
+    <element id="InformationRecipient.typeId">
+      <path value="InformationRecipient.typeId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of constraints defined in an HL7-specified message type. This might be a common type (also known as CMET in the messaging communication environment), or content included within a wrapper. The value of this attribute provides a unique identifier for the type in question."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="InformationRecipient.templateId">
+      <path value="InformationRecipient.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="InformationRecipient.intendedRecipient">
+      <path value="InformationRecipient.intendedRecipient"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IntendedRecipient"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

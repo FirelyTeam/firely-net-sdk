@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ParentDocument"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>The ParentDocument represents the source of a document revision, addenda, or transformation. ParentDocument.text is modeled as an ED data type - allowing for the expression of the MIME type of the parent document. It is not to be used to embed the related document, and thus ParentDocument.text.BIN is precluded from use.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ParentDocument"/>
+  <name value="CDAR2.ParentDocument"/>
+  <title value="ParentDocument (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="The ParentDocument represents the source of a document revision, addenda, or transformation. ParentDocument.text is modeled as an ED data type - allowing for the expression of the MIME type of the parent document. It is not to be used to embed the related document, and thus ParentDocument.text.BIN is precluded from use."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ParentDocument"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ParentDocument">
+      <path value="ParentDocument"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ParentDocument.classCode">
+      <path value="ParentDocument.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="DOCCLIN"/>
+      <fixedCode value="DOCCLIN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClassClinicalDocument"/>
+      </binding>
+    </element>
+    <element id="ParentDocument.moodCode">
+      <path value="ParentDocument.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="ParentDocument.templateId">
+      <path value="ParentDocument.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ParentDocument.id">
+      <path value="ParentDocument.id"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+      
+    </element>
+    <element id="ParentDocument.code">
+      <path value="ParentDocument.code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-DocumentType"/>
+      </binding>
+    </element>
+    <element id="ParentDocument.text">
+      <path value="ParentDocument.text"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+      </type>
+    </element>
+    <element id="ParentDocument.setId">
+      <path value="ParentDocument.setId"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ParentDocument.versionNumber">
+      <path value="ParentDocument.versionNumber"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/INT"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

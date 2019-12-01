@@ -1,0 +1,6 @@
+<ImplementationGuide xmlns="http://hl7.org/fhir">
+  <id value="cda-ig"/>
+  <url value="http://hl7.org/fhir/cda/ImplementationGuide/cda-ig"/>
+  <name value="CDA RMIM Definition"/>
+  <status value="draft"/>
+</ImplementationGuide>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ClinicalDocument"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>The ClinicalDocument class is the entry point into the CDA R-MIM, and corresponds to the &lt;ClinicalDocument&gt; XML element that is the root element of a CDA document.</p>
+      <p>A CDA document is logically broken up into a CDA Header and a CDA Body. The CDA Header is comprised of ClinicalDocument attributes, participants, and act relationships. The CDA Body is the target of the ClinicalDocument component act relationship.</p>
+      <p>The ClinicalDocument class inherits various attributes from the InfrastructureRoot class of the RIM, including ClinicalDocument.templateId and ClinicalDocument.typeId. When ClinicalDocument.templateId is valued in an instance, it signals the imposition of a set of template-defined constraints. In addition, the templateId attribute is available in all other CDA classes, thus enabling the imposition of a set of template-defined constraints at any level of granularity. The value of this attribute provides a unique identifier for the template(s) in question.</p>
+      <p>ClinicalDocument.typeId is a technology-neutral explicit reference to this CDA, Release Two specification, and must be valued as follows: ClinicalDocument.typeId.root = "2.16.840.1.113883.1.3" (which is the OID for HL7 Registered models); ClinicalDocument.typeId.extension = "POCD_HD000040" (which is the unique identifier for the CDA, Release Two Hierarchical Description).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument"/>
+  <name value="CDAR2.ClinicalDocument"/>
+  <title value="ClinicalDocument (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="This is a generated StructureDefinition that describes CDA - that is, CDA as it actually is for R2. The intent of this StructureDefinition is to enable CDA to be a FHIR resource. That enables the FHIR infrastructure - API, conformance, query - to be used directly against CDA"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ClinicalDocument">
+      <path value="ClinicalDocument"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ClinicalDocument.classCode">
+      <path value="ClinicalDocument.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="DOCCLIN"/>
+      <fixedCode value="DOCCLIN"/>
+      
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClass"/>
+      </binding>
+    </element>
+    <element id="ClinicalDocument.moodCode">
+      <path value="ClinicalDocument.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="ClinicalDocument.realmCode">
+      <path value="ClinicalDocument.realmCode"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of realm-specific constraints. The value of this attribute identifies the realm in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.typeId">
+      <path value="ClinicalDocument.typeId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of constraints defined in an HL7-specified message type. This might be a common type (also known as CMET in the messaging communication environment), or content included within a wrapper. The value of this attribute provides a unique identifier for the type in question."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.templateId">
+      <path value="ClinicalDocument.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.id">
+      <path value="ClinicalDocument.id"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+      
+    </element>
+    <element id="ClinicalDocument.code">
+      <path value="ClinicalDocument.code"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-DocumentType"/>
+      </binding>
+    </element>
+    <element id="ClinicalDocument.title">
+      <path value="ClinicalDocument.title"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ST"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.effectiveTime">
+      <path value="ClinicalDocument.effectiveTime"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TS"/>
+      </type>
+      
+    </element>
+    <element id="ClinicalDocument.confidentialityCode">
+      <path value="ClinicalDocument.confidentialityCode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      
+    </element>
+    <element id="ClinicalDocument.languageCode">
+      <path value="ClinicalDocument.languageCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-HumanLanguage"/>
+      </binding>
+    </element>
+    <element id="ClinicalDocument.setId">
+      <path value="ClinicalDocument.setId"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.versionNumber">
+      <path value="ClinicalDocument.versionNumber"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/INT"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.copyTime">
+      <path value="ClinicalDocument.copyTime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TS"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.recordTarget">
+      <path value="ClinicalDocument.recordTarget"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/RecordTarget"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.author">
+      <path value="ClinicalDocument.author"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Author"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.dataEnterer">
+      <path value="ClinicalDocument.dataEnterer"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/DataEnterer"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.informant">
+      <path value="ClinicalDocument.informant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Informant"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.custodian">
+      <path value="ClinicalDocument.custodian"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Custodian"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.informationRecipient">
+      <path value="ClinicalDocument.informationRecipient"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/InformationRecipient"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.legalAuthenticator">
+      <path value="ClinicalDocument.legalAuthenticator"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/LegalAuthenticator"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.authenticator">
+      <path value="ClinicalDocument.authenticator"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Authenticator"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.participant">
+      <path value="ClinicalDocument.participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Participant"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.inFulfillmentOf">
+      <path value="ClinicalDocument.inFulfillmentOf"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/InFulfillmentOf"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.documentationOf">
+      <path value="ClinicalDocument.documentationOf"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/DocumentationOf"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.relatedDocument">
+      <path value="ClinicalDocument.relatedDocument"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/RelatedDocument"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.authorization">
+      <path value="ClinicalDocument.authorization"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Authorization"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.componentOf">
+      <path value="ClinicalDocument.componentOf"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ComponentOf"/>
+      </type>
+    </element>
+    <element id="ClinicalDocument.component">
+      <path value="ClinicalDocument.component"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Component2"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

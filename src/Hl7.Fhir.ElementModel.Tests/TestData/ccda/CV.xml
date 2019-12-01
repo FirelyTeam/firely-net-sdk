@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CV"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Coded data, consists of a code, display name, code system, and original text. Used when a single code value must be sent.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CV"/>
+  <name value="CV"/>
+  <title value="CV: CodedValue (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="Coded data, specifying only a code, code system, and optionally display name and original text. Used only as the data type for other data types' properties."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CV"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CV">
+      <path value="CV"/>
+      <definition value="Coded data, consists of a code, display name, code system, and original text. Used when a single code value must be sent."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="CV.translation">
+      <path value="CV.translation"/>
+      <label value="Translation"/>
+      <definition value="A set of other concept descriptors that translate this concept descriptor into other code systems."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>

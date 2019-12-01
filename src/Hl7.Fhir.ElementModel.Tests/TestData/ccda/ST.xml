@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ST"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>The character string data type stands for text data, primarily intended for machine processing (e.g., sorting, querying, indexing, etc.) Used for names, symbols, and formal expressions.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ST"/>
+  <name value="ST"/>
+  <title value="ST: CharacterString (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="The character string data type stands for text data, primarily intended for machine processing (e.g., sorting, querying, indexing, etc.) Used for names, symbols, and formal expressions."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ED"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="ED">
+      <path value="ED"/>
+      <definition value="The character string data type stands for text data, primarily intended for machine processing (e.g., sorting, querying, indexing, etc.) Used for names, symbols, and formal expressions."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="ED.compression">
+      <path value="ED.compression"/>
+      <representation value="xmlAttr"/>
+      <label value="Compression"/>
+      <definition value="Indicates whether the raw byte data is compressed, and what compression algorithm was used."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="ED.integrityCheck">
+      <path value="ED.integrityCheck"/>
+      <representation value="xmlAttr"/>
+      <label value="Integrity Check"/>
+      <definition value="The integrity check is a short binary value representing a cryptographically strong checksum that is calculated over the binary data. The purpose of this property, when communicated with a reference is for anyone to validate later whether the reference still resolved to the same data that the reference resolved to when the encapsulated data value with reference was created."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="ED.integrityCheckAlgorithm">
+      <path value="ED.integrityCheckAlgorithm"/>
+      <representation value="xmlAttr"/>
+      <label value="Integrity Check Algorithm"/>
+      <definition value="Specifies the algorithm used to compute the integrityCheck value. The cryptographically strong checksum algorithm Secure Hash Algorithm-1 (SHA-1) is currently the industry standard. It has superseded the MD5 algorithm only a couple of years ago, when certain flaws in the security of MD5 were discovered. Currently the SHA-1 hash algorithm is the default choice for the integrity check algorithm. Note that SHA-256 is also entering widespread usage."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="ED.mediaType">
+      <path value="ED.mediaType"/>
+      <representation value="xmlAttr"/>
+      <label value="Media Type"/>
+      <definition value="Identifies the type of the encapsulated data and identifies a method to interpret or render the data."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="text/plain"/>
+    </element>
+    <element id="ED.representation">
+      <path value="ED.representation"/>
+      <representation value="xmlAttr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="TXT"/>
+    </element>
+    <element id="ED.data[x]">
+      <path value="ED.data[x]"/>
+      <representation value="xmlText"/>
+      <definition value="The string value"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="ED.reference">
+      <path value="ED.reference"/>
+      <label value="Reference"/>
+      <definition value="A telecommunication address (TEL), such as a URL for HTTP or FTP, which will resolve to precisely the same binary data that could as well have been provided as inline data."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="ED.thumbnail">
+      <path value="ED.thumbnail"/>
+      <label value="Thumbnail"/>
+      <definition value="An abbreviated rendition of the full data. A thumbnail requires significantly fewer resources than the full data, while still maintaining some distinctive similarity with the full data. A thumbnail is typically used with by-reference encapsulated data. It allows a user to select data more efficiently before actually downloading through the reference."/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>

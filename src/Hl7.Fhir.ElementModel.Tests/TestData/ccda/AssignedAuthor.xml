@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="AssignedAuthor"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>An author is a person in the role of an assigned author (AssignedAuthor class).</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/AssignedAuthor"/>
+  <name value="CDAR2.AssignedAuthor"/>
+  <title value="AssignedAuthor (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="An author is a person in the role of an assigned author (AssignedAuthor class)."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="AssignedAuthor"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="AssignedAuthor">
+      <path value="AssignedAuthor"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="AssignedAuthor.classCode">
+      <path value="AssignedAuthor.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ASSIGNED"/>
+      <fixedCode value="ASSIGNED"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleClassAssignedEntity"/>
+      </binding>
+    </element>
+    <element id="AssignedAuthor.templateId">
+      <path value="AssignedAuthor.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.id">
+      <path value="AssignedAuthor.id"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.code">
+      <path value="AssignedAuthor.code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleCode"/>
+      </binding>
+    </element>
+    <element id="AssignedAuthor.addr">
+      <path value="AssignedAuthor.addr"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AD"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.telecom">
+      <path value="AssignedAuthor.telecom"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.assignedPerson">
+      <path value="AssignedAuthor.assignedPerson"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Person"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.assignedAuthoringDevice">
+      <path value="AssignedAuthor.assignedAuthoringDevice"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AuthoringDevice"/>
+      </type>
+    </element>
+    <element id="AssignedAuthor.representedOrganization">
+      <path value="AssignedAuthor.representedOrganization"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Organization"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

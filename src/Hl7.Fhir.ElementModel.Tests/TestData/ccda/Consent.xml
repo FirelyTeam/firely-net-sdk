@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Consent"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>This class references the consents associated with this document. The type of consent (e.g. a consent to perform the related ServiceEvent, a consent for the information contained in the document to be released to a third party) is conveyed in Consent.code. Consents referenced in the CDA Header have been finalized (Consent.statusCode must equal "completed") and should be on file.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/Consent"/>
+  <name value="CDAR2.Consent"/>
+  <title value="Consent (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="This class references the consents associated with this document. The type of consent (e.g. a consent to perform the related ServiceEvent, a consent for the information contained in the document to be released to a third party) is conveyed in Consent.code. Consents referenced in the CDA Header have been finalized (Consent.statusCode must equal &quot;completed&quot;) and should be on file."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="Consent"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="Consent">
+      <path value="Consent"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Consent.classCode">
+      <path value="Consent.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="CONS"/>
+      <fixedCode value="CONS"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClass"/>
+      </binding>
+    </element>
+    <element id="Consent.moodCode">
+      <path value="Consent.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="Consent.templateId">
+      <path value="Consent.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="Consent.id">
+      <path value="Consent.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="Consent.code">
+      <path value="Consent.code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActCode"/>
+      </binding>
+    </element>
+    <element id="Consent.statusCode">
+      <path value="Consent.statusCode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActStatus"/>
+      </binding>
+    </element>
+    <element id="Consent.statusCode.code">
+      <path value="Consent.statusCode.code"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <defaultValueCode value="completed"/>
+      <fixedString value="completed"/>
+    </element>
+  </differential>
+</StructureDefinition>

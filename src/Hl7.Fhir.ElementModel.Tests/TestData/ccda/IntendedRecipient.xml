@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="IntendedRecipient"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/IntendedRecipient"/>
+  <name value="CDAR2.IntendedRecipient"/>
+  <title value="IntendedRecipient (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="IntendedRecipient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="IntendedRecipient">
+      <path value="IntendedRecipient"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="IntendedRecipient.classCode">
+      <path value="IntendedRecipient.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ASSIGNED"/>
+      
+    </element>
+    <element id="IntendedRecipient.templateId">
+      <path value="IntendedRecipient.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="IntendedRecipient.id">
+      <path value="IntendedRecipient.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+      
+    </element>
+    <element id="IntendedRecipient.addr">
+      <path value="IntendedRecipient.addr"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AD"/>
+      </type>
+    </element>
+    <element id="IntendedRecipient.telecom">
+      <path value="IntendedRecipient.telecom"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+      </type>
+    </element>
+    <element id="IntendedRecipient.informationRecipient">
+      <path value="IntendedRecipient.informationRecipient"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Person"/>
+      </type>
+    </element>
+    <element id="IntendedRecipient.receivedOrganization">
+      <path value="IntendedRecipient.receivedOrganization"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Organization"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

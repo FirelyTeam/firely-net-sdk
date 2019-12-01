@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CS"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Coded data, consists of a code, display name, code system, and original text. Used when a single code value must be sent.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+  <name value="CS"/>
+  <title value="CS: CodedSimpleValue (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="XCoded data in its simplest form, where only the code is not predetermined. The code system and code system version are fixed by the context in which the CS value occurs. CS is used for coded attributes that have a single HL7-defined value set."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/CV"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CS">
+      <path value="CS"/>
+      <definition value="Coded data, consists of a code, display name, code system, and original text. Used when a single code value must be sent."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="CS.codeSystem">
+      <path value="CS.codeSystem"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.codeSystemName">
+      <path value="CS.codeSystemName"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System Name"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.codeSystemVersion">
+      <path value="CS.codeSystemVersion"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System Version"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.displayName">
+      <path value="CS.displayName"/>
+      <representation value="xmlAttr"/>
+      <label value="Display Name"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.valueSet">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+        <valueUri value="urn:hl7-org:sdtc"/>
+      </extension>
+      <path value="CS.valueSet"/>
+      <representation value="xmlAttr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.valueSetVersion">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+        <valueUri value="urn:hl7-org:sdtc"/>
+      </extension>
+      <path value="CS.valueSetVersion"/>
+      <representation value="xmlAttr"/>
+      <definition value="The valueSetVersion extension adds an attribute for elements with a CD dataType which indicates the version of the particular value set constraining the coded concept."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CS.originalText">
+      <path value="CS.originalText"/>
+      <label value="Original Text"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

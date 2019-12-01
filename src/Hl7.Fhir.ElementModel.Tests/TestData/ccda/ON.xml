@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ON"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A name for an organization. A sequence of name parts, such as given name or family name, prefix, suffix, etc. Examples for organization name values are "Health Level Seven, Inc.", "Hospital", etc. An organization name may be as simple as a character string or may consist of several person name parts, such as, "Health Level 7", "Inc.". ON differs from EN because certain person related name parts are not possible.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-no-order">
+    <valueBoolean value="true"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ON"/>
+  <name value="ON"/>
+  <title value="ON: OrganizationName (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A name for an organization. A sequence of name parts. Examples for organization name values are &quot;Health Level Seven, Inc.&quot;, &quot;Hospital&quot;, etc. An organization name may be as simple as a character string or may consist of several person name parts, such as, &quot;Health Level 7&quot;, &quot;Inc.&quot;. ON differs from EN because certain person related name parts are not possible."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ON"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/EN"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ON">
+      <path value="ON"/>
+      <definition value="A name for an organization. A sequence of name parts. Examples for organization name values are &quot;Health Level Seven, Inc.&quot;, &quot;Hospital&quot;, etc. An organization name may be as simple as a character string or may consist of several person name parts, such as, &quot;Health Level 7&quot;, &quot;Inc.&quot;. ON differs from EN because certain person related name parts are not possible."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="ON.family">
+      <path value="ON.family"/>
+      <max value="0"/>
+    </element>
+    <element id="ON.given">
+      <path value="ON.given"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>

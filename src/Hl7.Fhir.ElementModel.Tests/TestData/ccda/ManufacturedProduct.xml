@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ManufacturedProduct"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ManufacturedProduct"/>
+  <name value="CDAR2.ManufacturedProduct"/>
+  <title value="ManufacturedProduct (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ManufacturedProduct"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ManufacturedProduct">
+      <path value="ManufacturedProduct"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ManufacturedProduct.classCode">
+      <path value="ManufacturedProduct.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="MANU"/>
+      <fixedCode value="MANU"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-RoleClassManufacturedProduct"/>
+      </binding>
+    </element>
+    <element id="ManufacturedProduct.templateId">
+      <path value="ManufacturedProduct.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ManufacturedProduct.id">
+      <path value="ManufacturedProduct.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ManufacturedProduct.manufacturedLabeledDrug">
+      <path value="ManufacturedProduct.manufacturedLabeledDrug"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/LabeledDrug"/>
+      </type>
+    </element>
+    <element id="ManufacturedProduct.manufacturedMaterial">
+      <path value="ManufacturedProduct.manufacturedMaterial"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Material"/>
+      </type>
+    </element>
+    <element id="ManufacturedProduct.manufacturerOrganization">
+      <path value="ManufacturedProduct.manufacturerOrganization"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Organization"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

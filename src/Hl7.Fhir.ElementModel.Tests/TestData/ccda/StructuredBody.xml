@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="StructuredBody"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>The StructuredBody class represents a CDA document body that is comprised of one or more document sections.</p>
+      <p>The StructuredBody class is associated with one or more Section classes through a component relationship.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/StructuredBody"/>
+  <name value="CDAR2.StructuredBody"/>
+  <title value="StructuredBody (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="The StructuredBody class represents a CDA document body that is comprised of one or more document sections.&#10;The StructuredBody class is associated with one or more Section classes through a component relationship."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="StructuredBody"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="StructuredBody">
+      <path value="StructuredBody"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="StructuredBody.classCode">
+      <path value="StructuredBody.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="DOCBODY"/>
+      <fixedCode value="DOCBODY"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClassOrganizer"/>
+      </binding>
+    </element>
+    <element id="StructuredBody.moodCode">
+      <path value="StructuredBody.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="StructuredBody.confidentialityCode">
+      <path value="StructuredBody.confidentialityCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+    </element>
+    <element id="StructuredBody.languageCode">
+      <path value="StructuredBody.languageCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-HumanLanguage"/>
+      </binding>
+    </element>
+    <element id="StructuredBody.component">
+      <path value="StructuredBody.component"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Element"/>
+      </type>
+    </element>
+    <element id="StructuredBody.component.typeCode">
+      <path value="StructuredBody.component.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="COMP"/>
+      <fixedCode value="COMP"/>
+      
+    </element>
+    <element id="StructuredBody.component.contextConductionInd">
+      <path value="StructuredBody.component.contextConductionInd"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <defaultValueBoolean value="true"/>
+      
+    </element>
+    <element id="StructuredBody.component.section">
+      <path value="StructuredBody.component.section"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/Section"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

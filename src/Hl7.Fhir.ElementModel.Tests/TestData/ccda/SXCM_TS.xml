@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="SXCM_TS"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/SXCM_TS"/>
+  <name value="SXCM_TS"/>
+  <title value="SXCM_TS: GeneralTimingSpecification (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A set of points in time, specifying the timing of events and actions and the cyclical validity-patterns that may exist for certain kinds of information, such as phone numbers (evening, daytime), addresses (so called &quot;snowbirds,&quot; residing closer to the equator during winter and farther from the equator during summer) and office hours."/>
+  <kind value="logical"/>
+  <abstract value="true"/>
+  <type value="SXCM_TS"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/TS"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="SXCM_TS">
+      <path value="SXCM_TS"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="SXCM_TS.operator">
+      <path value="SXCM_TS.operator"/>
+      <representation value="xmlAttr"/>
+      <definition value="A code specifying whether the set component is included (union) or excluded (set-difference) from the set, or other set operations with the current set component and the set as constructed from the representation stream up to the current point."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

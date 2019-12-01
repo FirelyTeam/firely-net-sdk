@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="PIVL_TS"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Note: because this type is defined as an extension of SXCM_T, all of the attributes and elements accepted for T are also accepted by this definition. However, they are NOT allowed by the normative description of this type. Unfortunately, we cannot write a general purpose schematron contraints to provide that extra validation, thus applications must be aware that instance (fragments) that pass validation with this might might still not be legal.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/PIVL_TS"/>
+  <name value="PIVL_TS"/>
+  <title value="PIVL_TS: PeriodicIntervalOfTime (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="An interval of time that recurs periodically. Periodic intervals have two properties, phase and period. The phase specifies the &quot;interval prototype&quot; that is repeated every period."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="PIVL_TS"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/SXCM_TS"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="PIVL_TS">
+      <path value="PIVL_TS"/>
+      <definition value="Note: because this type is defined as an extension of SXCM_T, all of the attributes and elements accepted for T are also accepted by this definition. However, they are NOT allowed by the normative description of this type. Unfortunately, we cannot write a general purpose schematron contraints to provide that extra validation, thus applications must be aware that instance (fragments) that pass validation with this might might still not be legal."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PIVL_TS.phase">
+      <path value="PIVL_TS.phase"/>
+      <label value="Phase"/>
+      <definition value="A prototype of the repeating interval, specifying the duration of each occurrence and anchors the periodic interval sequence at a certain point in time."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_TS"/>
+      </type>
+    </element>
+    <element id="PIVL_TS.period">
+      <path value="PIVL_TS.period"/>
+      <label value="Period"/>
+      <definition value="A time duration specifying as a reciprocal measure of the frequency at which the periodic interval repeats."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PQ"/>
+      </type>
+    </element>
+    <element id="PIVL_TS.alignment">
+      <path value="PIVL_TS.alignment"/>
+      <representation value="xmlAttr"/>
+      <label value="Alignment to the Calendar"/>
+      <definition value="Specifies if and how the repetitions are aligned to the cycles of the underlying calendar (e.g., to distinguish every 30 days from &quot;the 5th of every month&quot;.) A non-aligned periodic interval recurs independently from the calendar. An aligned periodic interval is synchronized with the calendar."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+    </element>
+    <element id="PIVL_TS.institutionSpecified">
+      <path value="PIVL_TS.institutionSpecified"/>
+      <representation value="xmlAttr"/>
+      <label value="Institution Specified Timing"/>
+      <definition value="Indicates whether the exact timing is up to the party executing the schedule (e.g., to distinguish &quot;every 8 hours&quot; from &quot;3 times a day&quot;.)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CustodianOrganization"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>The steward organization (CustodianOrganization class) is an entity scoping the role of AssignedCustodian, and has a required CustodianOrganization.id.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CustodianOrganization"/>
+  <name value="CDAR2.CustodianOrganization"/>
+  <title value="CustodianOrganization (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="The steward organization (CustodianOrganization class) is an entity scoping the role of AssignedCustodian, and has a required CustodianOrganization.id."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CustodianOrganization"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CustodianOrganization">
+      <path value="CustodianOrganization"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="CustodianOrganization.classCode">
+      <path value="CustodianOrganization.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ORG"/>
+      <fixedCode value="ORG"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-EntityClassOrganization"/>
+      </binding>
+    </element>
+    <element id="CustodianOrganization.determinerCode">
+      <path value="CustodianOrganization.determinerCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="INSTANCE"/>
+      <fixedCode value="INSTANCE"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-EntityDeterminer"/>
+      </binding>
+    </element>
+    <element id="CustodianOrganization.templateId">
+      <path value="CustodianOrganization.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="CustodianOrganization.id">
+      <path value="CustodianOrganization.id"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+      
+    </element>
+    <element id="CustodianOrganization.name">
+      <path value="CustodianOrganization.name"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ON"/>
+      </type>
+    </element>
+    <element id="CustodianOrganization.telecom">
+      <path value="CustodianOrganization.telecom"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+      </type>
+    </element>
+    <element id="CustodianOrganization.addr">
+      <path value="CustodianOrganization.addr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AD"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

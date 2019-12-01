@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="EIVL_TS"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Note: because this type is defined as an extension of SXCM_T, all of the attributes and elements accepted for T are also accepted by this definition. However, they are NOT allowed by the normative description of this type. Unfortunately, we cannot write a general purpose schematron contraints to provide that extra validation, thus applications must be aware that instance (fragments) that pass validation with this might might still not be legal.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/EIVL_TS"/>
+  <name value="EIVL_TS"/>
+  <title value="EIVL_TS: EventRelatedPeriodicInterval (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="Specifies a periodic interval of time where the recurrence is based on activities of daily living or other important events that are time-related but not fully determined by time."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="EIVL_TS"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/SXCM_TS"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="EIVL_TS">
+      <path value="EIVL_TS"/>
+      <definition value="Note: because this type is defined as an extension of SXCM_T, all of the attributes and elements accepted for T are also accepted by this definition. However, they are NOT allowed by the normative description of this type. Unfortunately, we cannot write a general purpose schematron contraints to provide that extra validation, thus applications must be aware that instance (fragments) that pass validation with this might might still not be legal."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="EIVL_TS.event">
+      <path value="EIVL_TS.event"/>
+      <label value="Event"/>
+      <definition value="A code for a common (periodical) activity of daily living based on which the event related periodic interval is specified."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+    </element>
+    <element id="EIVL_TS.offset">
+      <path value="EIVL_TS.offset"/>
+      <label value="Offset"/>
+      <definition value="An interval of elapsed time (duration, not absolute point in time) that marks the offsets for the beginning, width and end of the event-related periodic interval measured from the time each such event actually occurred."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_PQ"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

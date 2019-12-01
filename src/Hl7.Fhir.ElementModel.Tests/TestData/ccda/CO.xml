@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CO"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Coded data, where the domain from which the codeset comes is ordered. The Coded Ordinal data type adds semantics related to ordering so that models that make use of such domains may introduce model elements that involve statements about the order of the terms in a domain.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CO"/>
+  <name value="CO"/>
+  <title value="CO: CodedOrdinal (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="Coded data, where the coding system from which the code comes is ordered"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CO"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/CV"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CO">
+      <path value="CO"/>
+      <definition value="Coded data, where the domain from which the codeset comes is ordered. The Coded Ordinal data type adds semantics related to ordering so that models that make use of such domains may introduce model elements that involve statements about the order of the terms in a domain."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+  </differential>
+</StructureDefinition>

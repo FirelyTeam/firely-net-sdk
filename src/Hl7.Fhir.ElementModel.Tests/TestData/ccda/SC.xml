@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="SC"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A ST that optionally may have a code attached. The text must always be present if a code is present. The code is often a local code.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/SC"/>
+  <name value="SC"/>
+  <title value="SC: CharacterStringWithCode (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A character string that optionally may have a code attached. The text must always be present if a code is present. The code is often a local code."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="SC"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ST"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="SC">
+      <path value="SC"/>
+      <definition value="An ST that optionally may have a code attached. The text must always be present if a code is present. The code is often a local code."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="SC.code">
+      <path value="SC.code"/>
+      <representation value="xmlAttr"/>
+      <label value="Code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="SC.codeSystem">
+      <path value="SC.codeSystem"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="SC.codeSystemName">
+      <path value="SC.codeSystemName"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System Name"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="SC.codeSystemVersion">
+      <path value="SC.codeSystemVersion"/>
+      <representation value="xmlAttr"/>
+      <label value="Code System Version"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="SC.displayName">
+      <path value="SC.displayName"/>
+      <representation value="xmlAttr"/>
+      <label value="Display Name"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

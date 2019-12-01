@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ServiceEvent"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>This class represents the main Act, such as a colonoscopy or an appendectomy, being documented.</p>
+      <p>In some cases, the ServiceEvent is inherent in the ClinicalDocument.code, such as where ClinicalDocument.code is "History and Physical Report" and the procedure being documented is a "History and Physical" act. A ServiceEvent can further specialize the act inherent in the ClinicalDocument.code, such as where the ClinicalDocument.code is simply "Procedure Report" and the procedure was a "colonoscopy". If ServiceEvent is included, it must be equivalent to or further specialize the value inherent in the ClinicalDocument.code, and shall not conflict with the value inherent in the ClinicalDocument.code, as such a conflict would constitute an ambiguous situation.</p>
+      <p>ServiceEvent.effectiveTime can be used to indicate the time the actual event (as opposed to the encounter surrounding the event) took place.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ServiceEvent"/>
+  <name value="CDAR2.ServiceEvent"/>
+  <title value="ServiceEvent (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="This class represents the main Act, such as a colonoscopy or an appendectomy, being documented.&#10;In some cases, the ServiceEvent is inherent in the ClinicalDocument.code, such as where ClinicalDocument.code is &quot;History and Physical Report&quot; and the procedure being documented is a &quot;History and Physical&quot; act. A ServiceEvent can further specialize the act inherent in the ClinicalDocument.code, such as where the ClinicalDocument.code is simply &quot;Procedure Report&quot; and the procedure was a &quot;colonoscopy&quot;. If ServiceEvent is included, it must be equivalent to or further specialize the value inherent in the ClinicalDocument.code, and shall not conflict with the value inherent in the ClinicalDocument.code, as such a conflict would constitute an ambiguous situation.&#10;ServiceEvent.effectiveTime can be used to indicate the time the actual event (as opposed to the encounter surrounding the event) took place."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="ServiceEvent"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ServiceEvent">
+      <path value="ServiceEvent"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ServiceEvent.classCode">
+      <path value="ServiceEvent.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ACT"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActClass"/>
+      </binding>
+    </element>
+    <element id="ServiceEvent.moodCode">
+      <path value="ServiceEvent.moodCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="EVN"/>
+      <fixedCode value="EVN"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActMood"/>
+      </binding>
+    </element>
+    <element id="ServiceEvent.templateId">
+      <path value="ServiceEvent.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.id">
+      <path value="ServiceEvent.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.code">
+      <path value="ServiceEvent.code"/>
+      <definition value="Drawn from concept domain ActCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.effectiveTime">
+      <path value="ServiceEvent.effectiveTime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_TS"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.performer">
+      <path value="ServiceEvent.performer"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Element"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.performer.typeCode">
+      <path value="ServiceEvent.performer.typeCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      
+    </element>
+    <element id="ServiceEvent.performer.functionCode">
+      <path value="ServiceEvent.performer.functionCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ParticipationFunction"/>
+      </binding>
+    </element>
+    <element id="ServiceEvent.performer.time">
+      <path value="ServiceEvent.performer.time"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/IVL_TS"/>
+      </type>
+    </element>
+    <element id="ServiceEvent.performer.assignedEntity">
+      <path value="ServiceEvent.performer.assignedEntity"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

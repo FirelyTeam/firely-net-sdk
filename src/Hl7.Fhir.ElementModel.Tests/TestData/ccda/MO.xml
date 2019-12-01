@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="MO"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A monetary amount is a quantity expressing the amount of money in some currency. Currencies are the units in which monetary amounts are denominated in different economic regions. While the monetary amount is a single kind of quantity (money) the exchange rates between the different units are variable. This is the principle difference between physical quantity and monetary amounts, and the reason why currency units are not physical units.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/MO"/>
+  <name value="MO"/>
+  <title value="MO: MonetaryAmount (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A monetary amount is a quantity expressing the amount of money in some currency. Currencies are the units in which monetary amounts are denominated in different economic regions. While the monetary amount is a single kind of quantity (money) the exchange rates between the different units are variable. This is the principle difference between physical quantity and monetary amounts, and the reason why currency units are not physical units."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="MO"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/QTY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="MO">
+      <path value="MO"/>
+      <definition value="A monetary amount is a quantity expressing the amount of money in some currency. Currencies are the units in which monetary amounts are denominated in different economic regions. While the monetary amount is a single kind of quantity (money) the exchange rates between the different units are variable. This is the principle difference between physical quantity and monetary amounts, and the reason why currency units are not physical units."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="MO.currency">
+      <path value="MO.currency"/>
+      <label value="Currency"/>
+      <definition value="The currency unit as defined in ISO 4217."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CS"/>
+      </type>
+    </element>
+    <element id="MO.value">
+      <path value="MO.value"/>
+      <label value="Value"/>
+      <definition value="The magnitude of the monetary amount in terms of the currency unit."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/REAL"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

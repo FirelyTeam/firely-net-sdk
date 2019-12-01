@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="RTO_PQ_PQ"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/RTO_PQ_PQ"/>
+  <name value="RTO_PQ_PQ"/>
+  <title value="RTO_PQ_PQ: Ratio (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A quantity constructed as the quotient of a numerator quantity divided by a denominator quantity. Common factors in the numerator and denominator are not automatically cancelled out. The data type supports titers (e.g., &quot;1:128&quot;) and other quantities produced by laboratories that truly represent ratios. Ratios are not simply &quot;structured numerics&quot;, particularly blood pressure measurements (e.g. &quot;120/60&quot;) are not ratios. In many cases the should be used instead of the ."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="RTO_PQ_PQ"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/QTY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="RTO_PQ_PQ">
+      <path value="RTO_PQ_PQ"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="RTO_PQ_PQ.numerator">
+      <path value="RTO_PQ_PQ.numerator"/>
+      <label value="Numerator"/>
+      <definition value="The quantity that is being divided in the ratio. The default is the integer number 1 (one.)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PQ"/>
+      </type>
+    </element>
+    <element id="RTO_PQ_PQ.denominator">
+      <path value="RTO_PQ_PQ.denominator"/>
+      <label value="Denominator"/>
+      <definition value="The quantity that devides the numerator in the ratio. The default is the integer number 1 (one.) The denominator must not be zero."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PQ"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

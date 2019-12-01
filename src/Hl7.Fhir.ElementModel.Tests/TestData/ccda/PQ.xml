@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="PQ"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A dimensioned quantity expressing the result of a measurement act.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/PQ"/>
+  <name value="PQ"/>
+  <title value="PQ: PhysicalQuantity (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A dimensioned quantity expressing the result of measuring."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="PQ"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/QTY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="PQ">
+      <path value="PQ"/>
+      <definition value="A dimensioned quantity expressing the result of a measurement act."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PQ.inclusive">
+      <path value="PQ.inclusive"/>
+      <representation value="xmlAttr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+    </element>
+    <element id="PQ.unit">
+      <path value="PQ.unit"/>
+      <representation value="xmlAttr"/>
+      <label value="Unit of Measure"/>
+      <definition value="The unit of measure specified in the Unified Code for Units of Measure (UCUM) []."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="1"/>
+    </element>
+    <element id="PQ.value">
+      <path value="PQ.value"/>
+      <representation value="xmlAttr"/>
+      <label value="Maginitude Value"/>
+      <definition value="The magnitude of the quantity measured in terms of the unit."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="decimal"/>
+      </type>
+    </element>
+    <element id="PQ.translation">
+      <path value="PQ.translation"/>
+      <label value="Translation"/>
+      <definition value="An alternative representation of the same physical quantity expressed in a different unit, of a different unit code system and possibly with a different value."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PQR"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

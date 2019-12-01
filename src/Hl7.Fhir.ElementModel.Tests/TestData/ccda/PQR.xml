@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="PQR"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>A representation of a physical quantity in a unit from any code system. Used to show alternative representation for a physical quantity.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/PQR"/>
+  <name value="PQR"/>
+  <title value="PQR: PhysicalQuantityRepresentation (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="An extension of the coded value data type representating a physical quantity using a unit from any code system. Used to show alternative representation for a physical quantity."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="PQR"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/CV"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="PQR">
+      <path value="PQR"/>
+      <definition value="A representation of a physical quantity in a unit from any code system. Used to show alternative representation for a physical quantity."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PQR.value">
+      <path value="PQR.value"/>
+      <representation value="xmlAttr"/>
+      <label value="Value"/>
+      <definition value="The magnitude of the measurement value in terms of the unit specified by this code."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="decimal"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

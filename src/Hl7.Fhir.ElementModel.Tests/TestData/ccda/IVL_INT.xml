@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="IVL_INT"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/IVL_INT"/>
+  <name value="IVL_INT"/>
+  <title value="IVL_INT: Interval (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="A set of consecutive values of an ordered base data type."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="IVL_INT"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="IVL_INT">
+      <path value="IVL_INT"/>
+      <definition value="Interval of integers"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="IVL_INT.value">
+      <path value="IVL_INT.value"/>
+      <representation value="xmlAttr"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="IVL_INT.value"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <element id="IVL_INT.low">
+      <path value="IVL_INT.low"/>
+      <label value="Low Boundary"/>
+      <definition value="This is the low limit of the interval."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/INT"/>
+      </type>
+    </element>
+    <element id="IVL_INT.high">
+      <path value="IVL_INT.high"/>
+      <label value="High Boundary"/>
+      <definition value="This is the high limit of the interval."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/INT"/>
+      </type>
+    </element>
+    <element id="IVL_INT.width">
+      <path value="IVL_INT.width"/>
+      <label value="Width"/>
+      <definition value="The difference between high and low boundary. The purpose of distinguishing a width property is to handle all cases of incomplete information symmetrically. In any interval representation only two of the three properties high, low, and width need to be stated and the third can be derived."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/PQ"/>
+      </type>
+    </element>
+    <element id="IVL_INT.center">
+      <path value="IVL_INT.center"/>
+      <label value="Central Value"/>
+      <definition value="The arithmetic mean of the interval (low plus high divided by 2). The purpose of distinguishing the center as a semantic property is for conversions of intervals from and to point values."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/INT"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

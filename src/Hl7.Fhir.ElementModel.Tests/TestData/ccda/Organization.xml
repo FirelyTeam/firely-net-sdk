@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Organization"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>An Entity representing a formalized group of persons or other organizations with a common purpose and the infrastructure to carry out that purpose.</p>
+      <p>Companies and institutions, a government department, an incorporated body that is responsible for administering a facility, an insurance company.</p>
+    </div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/Organization"/>
+  <name value="CDAR2.Organization"/>
+  <title value="Organization (CDA Class)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="An Entity representing a formalized group of persons or other organizations with a common purpose and the infrastructure to carry out that purpose.&#10;Companies and institutions, a government department, an incorporated body that is responsible for administering a facility, an insurance company."/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="Organization"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="Organization">
+      <path value="Organization"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Organization.classCode">
+      <path value="Organization.classCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="ORG"/>
+      <fixedCode value="ORG"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-EntityClassOrganization"/>
+      </binding>
+    </element>
+    <element id="Organization.determinerCode">
+      <path value="Organization.determinerCode"/>
+      <representation value="xmlAttr"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <defaultValueCode value="INSTANCE"/>
+      <fixedCode value="INSTANCE"/>
+      
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-EntityDeterminer"/>
+      </binding>
+    </element>
+    <element id="Organization.templateId">
+      <path value="Organization.templateId"/>
+      <definition value="When valued in an instance, this attribute signals the imposition of a set of template-defined constraints. The value of this attribute provides a unique identifier for the templates in question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="Organization.id">
+      <path value="Organization.id"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+      </type>
+    </element>
+    <element id="Organization.name">
+      <path value="Organization.name"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/ON"/>
+      </type>
+    </element>
+    <element id="Organization.telecom">
+      <path value="Organization.telecom"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+      </type>
+    </element>
+    <element id="Organization.addr">
+      <path value="Organization.addr"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/AD"/>
+      </type>
+    </element>
+    <element id="Organization.standardIndustryClassCode">
+      <path value="Organization.standardIndustryClassCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-OrganizationIndustryClass"/>
+      </binding>
+    </element>
+    <element id="Organization.asOrganizationPartOf">
+      <path value="Organization.asOrganizationPartOf"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/cda/StructureDefinition/OrganizationPartOf"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
