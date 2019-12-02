@@ -244,6 +244,24 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestSerializeWhitespacesInXml()
+        {
+            var patient = new Patient
+            {
+                Name = new List<HumanName>
+                {
+                    new HumanName { Family = " Smith\r\n\t" }
+                }
+            };
+
+            var xml = FhirXmlSerializer.SerializeToString(patient);
+
+            Assert.IsFalse(xml.Contains(" Smith"));
+            Assert.IsFalse(xml.Contains("Smith&#xD;&#xA;&#x9;"));
+            Assert.IsTrue(xml.Contains("\"Smith\""));
+        }
+
+        [TestMethod]
         public void TryScriptInject()
         {
             var x = new Patient();
@@ -252,7 +270,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = FhirXmlSerializer.SerializeToString(x);
             Assert.IsFalse(xml.Contains("<script"));
-        }
+        }       
 
 
         [TestMethod]
