@@ -254,11 +254,16 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var xml = FhirXmlSerializer.SerializeToString(patient);
+            var trimmed = FhirXmlSerializer.SerializeToString(patient);
+            Assert.IsFalse(trimmed.Contains(" Smith"));
+            Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
+            Assert.IsTrue(trimmed.Contains("\"Smith\""));
 
-            Assert.IsFalse(xml.Contains(" Smith"));
-            Assert.IsFalse(xml.Contains("Smith&#xD;&#xA;&#x9;"));
-            Assert.IsTrue(xml.Contains("\"Smith\""));
+            var notTrimmed = new FhirXmlSerializer(new SerializerSettings { TrimWhiteSpacesInXml = false }).SerializeToString(patient);
+            Assert.IsTrue(notTrimmed.Contains(" Smith"));
+            Assert.IsTrue(notTrimmed.Contains("Smith&#xD;&#xA;&#x9;"));
+            Assert.IsFalse(notTrimmed.Contains("\"Smith\""));
+
         }
 
         [TestMethod]
