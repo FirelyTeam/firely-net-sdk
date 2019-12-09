@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -136,13 +136,13 @@ namespace Hl7.Fhir.Model
             Key = "dom-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
-            Xpath = "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
+            Xpath = "not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
         };
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_6 = new ElementDefinition.ConstraintComponent()
         { 
 			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(true), Url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice"} },  
-            Expression = "text.div.exists()",
+            Expression = "text.`div`.exists()",
             Key = "dom-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A resource should have narrative for robust management",
