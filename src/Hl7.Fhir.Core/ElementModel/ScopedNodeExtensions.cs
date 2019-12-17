@@ -113,5 +113,18 @@ namespace Hl7.Fhir.ElementModel
 
             return Resolve(element, url, externalResolver);
         }
+
+        /// <summary>
+        /// When the ParentResource contains another resource, and that contained resource is the focus (node) then 
+        /// ParentResource is the RootResource. Otherwise null
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        internal static ITypedElement GetRootResource(this ScopedNode node)
+        {
+            if (node?.ParentResource?.ContainedResources().Any(cr => node.IsEqualTo(cr).Success) == true) return node.ParentResource;
+
+            return null;
+        }
     }
 }

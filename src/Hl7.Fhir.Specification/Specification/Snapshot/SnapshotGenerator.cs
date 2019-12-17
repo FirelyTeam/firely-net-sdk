@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var elems = nav.Elements;
 
                 for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
-                    i < typeElems.Count && pos < elems.Count; 
+                    i < typeElems.Count && pos < elems.Count;
                     i++, pos++)
                 {
                     var typeElem = typeElems[i];
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Proceed while current target element is a (grand)child of the start element
 
                     if (typeRootPos > 0 // If typeNav represents target of a contentReference...
-                        // and if this element is NOT a child of the target contentReference...
+                                        // and if this element is NOT a child of the target contentReference...
                         && !ElementDefinitionNavigator.IsChildPath(typeRootPath, typeElem.Path))
                     {
                         // Then we're done processing the subtree
@@ -1942,7 +1942,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20161004] Remove configuration setting; always merge type profiles
             // [WMR 20180723] Also expand custom profile on Reference
             if (!string.IsNullOrEmpty(typeProfile)) // && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
-                {
+            {
                 // Try to resolve the custom element type profile reference
                 baseStructure = _resolver.FindStructureDefinition(typeProfile);
                 isValidProfile = ensureSnapshot
@@ -1951,9 +1951,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
+            // [MV 20191217] stop when it is a special type (System.*). Introduced in the technical correction 4.0.1
             var typeCodeElem = typeRef.CodeElement;
-            string typeName;
-            if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion

@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public void Test_t40() => ExecuteTest("t40");
         [TestMethod] public void Test_t41() => ExecuteTest("t41");
         [TestMethod] public void Test_t42() => ExecuteTest("t42");
-        
+
         // FAILS! TODO
         [TestMethod] public void Test_t43() => ExecuteTest("t43");
 
@@ -677,18 +677,22 @@ namespace Hl7.Fhir.Specification.Tests
 
 
             // [WMR 20190819] Expecting +2 "value[x]" elements
-            UpdateElementIndices("t13", 16);        // Bump element indices starting at "valueCodeableConcept" (16)
-            UpdateElementIndices("t13", 21 + 1);    // Bump element indices starting at "valuePeriod" (21)
+            // [MV 20191216] Changed the rule because of technical correction 4.0.1
+            // [MV 20191216] Remove the +2 elements:
+            //UpdateElementIndices("t13", 16);        // Bump element indices starting at "valueCodeableConcept" (16)
+            //UpdateElementIndices("t13", 21 + 1);    // Bump element indices starting at "valuePeriod" (21)
 
             // [WMR 20190812] Expecting +2 "value[x]" elements
+            // [MV 20191216] Changed the rule because of technical correction 4.0.1
             ReplaceTestRule("t15",
                 @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 27",
-                @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 29");
+                @"fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 28");
 
             // [WMR 20190812] Expecting +2 "value[x]" elements
+            // [MV 20191216] Changed the rule because of technical correction 4.0.1
             ReplaceTestRule("t16",
                 @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 17",
-                @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 19");
+                @"fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 20");
 
             // [WMR 20190812] Expecting -12 extension child elements
             // Expected output expands 'validDate' extensions

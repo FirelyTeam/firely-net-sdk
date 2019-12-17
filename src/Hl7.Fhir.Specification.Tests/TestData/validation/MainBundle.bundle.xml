@@ -10,6 +10,7 @@
     <value value="urn:uuid:a76d9bbf-f293-4fb7-ad4c-2851cac77162" />
   </identifier>
   <type value="document"/>
+  <timestamp value="2012-05-29T23:45:32Z" />
   <entry>
     <fullUrl value="http://example.org/fhir/Composition/MainBundle"/>
     <resource>
