@@ -2015,7 +2015,7 @@
           <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
-                <valueString value="urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*" />
+                <valueString value="urn:oid:[0-2](\.(0|[1-9]\d*))+" />
               </extension>
               <code>
                 <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
@@ -2050,7 +2050,7 @@
           <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
-                <valueString value="urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*" />
+                <valueString value="urn:oid:[0-2](\.(0|[1-9]\d*))+" />
               </extension>
               <code>
                 <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,21 +47,21 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "oid"; } }
-        
-        // Must conform to the pattern "urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*"
-        public const string PATTERN = @"urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*";
 
-		public Oid(string value)
-		{
-			Value = value;
-		}
+        // Must conform to the pattern "urn:oid:[0-2](\.(0|[1-9]\d*))+"
+        public const string PATTERN = @"urn:oid:[0-2](\.(0|[1-9]\d*))+";
 
-		public Oid(): this((string)null) {}
+        public Oid(string value)
+        {
+            Value = value;
+        }
+
+        public Oid() : this((string)null) { }
 
         /// <summary>
         /// Primitive value of the element
         /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
         [OidPattern]
         [DataMember]
         public string Value
@@ -74,9 +69,9 @@ namespace Hl7.Fhir.Model
             get { return (string)ObjectValue; }
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
-        
 
-    
+
+
     }
-    
+
 }
