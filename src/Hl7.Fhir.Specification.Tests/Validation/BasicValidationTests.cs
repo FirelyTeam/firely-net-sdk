@@ -834,6 +834,8 @@ namespace Hl7.Fhir.Specification.Tests
             // in the /data directory for this invariant, so this unit-test will normally pass.
             // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
             // still contains this mistake.
+            // [MV 20191217] Still with the FHIR spec 3.0.2 this problem arises. I have manually corrected profiles-types.xml
+            // again.
             var sd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
             sd.Snapshot.Element[0].SliceName = "dummy";
 
