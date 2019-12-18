@@ -16,8 +16,6 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSummaryTests
     {
-        // [MV 20191217] After TC 3.0.2 ModelInfo.Version returns 3.0.2 
-        private static readonly string ApiFhirVersion = "3.0.1"; // ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
@@ -146,7 +144,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // StructureDefinition properties
 
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
-                Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
+                Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
                 // For profiles-types, we expect Kind = ComplexType | PrimitiveType
                 Assert.IsNotNull(summary.GetStructureDefinitionKind());
@@ -206,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                     // StructureDefinition properties
                     Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
-                    Assert.AreEqual(ApiFhirVersion, summary.GetStructureDefinitionFhirVersion());
+                    Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
                     // For profiles-resources, we expect Kind = Resource | Logical
                     var kind = summary.GetStructureDefinitionKind();
