@@ -172,6 +172,22 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
+        public void ValidateCardinalityFromXml()
+        {
+            var xml = "<active xmlns=\"http://hl7.org/fhir\" value=\"true\"><id value=\"myId1\"/><id value=\"myId2\"/><extension><valueInteger value=\"1\"/></extension></active>";
+            var node = FhirXmlNode.Parse(xml);
+            var data = node.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
+
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+
+            var report = _validator.Validate(data, boolSd);
+            output.WriteLine(report.ToString());
+            Assert.Equal(0, report.Fatals);
+            Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
+            Assert.Equal(0, report.Warnings);
+        }
+
+        [Fact]
         public void ValidateChoiceElement()
         {
             var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension).DeepCopy();
