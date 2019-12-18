@@ -122,8 +122,8 @@ namespace Hl7.Fhir.Rest
                 throw Error.Argument(nameof(baseUrl), "Url is not an absolute uri");
             }
 
-            var endp = location.ToString();
-            var bUrl = baseUrl.ToString();
+            var endp = location.AbsoluteUri;
+            var bUrl = baseUrl.AbsoluteUri;
             if (endp.StartsWith(bUrl))
             {
                 return new Uri(endp.Substring(bUrl.Length).TrimStart('/'), UriKind.Relative);
