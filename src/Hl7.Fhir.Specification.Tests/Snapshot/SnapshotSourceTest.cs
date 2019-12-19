@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
-using System.Diagnostics;
-using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // STU3: Element.id has type code "string"
                 // R4: Element.id has no type code, only special "compiler magic" extensions
                 // => Element.id no longer inherits constraints from "Element", e.g. "ele-1"
-                if (elem.Type?.FirstOrDefault()?.Code != null)
+                if (elem.Type?.FirstOrDefault()?.Code is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
                 {
                     assert_ele1(elem);
                 }

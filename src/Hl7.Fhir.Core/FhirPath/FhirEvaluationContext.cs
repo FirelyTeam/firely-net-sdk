@@ -27,7 +27,7 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
-        public FhirEvaluationContext(ITypedElement context) : base(context)
+        public FhirEvaluationContext(ITypedElement context) : base(context, context?.GetRootResource())
         {
         }
 

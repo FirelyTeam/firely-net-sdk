@@ -427,7 +427,15 @@ namespace Hl7.Fhir.Specification.Tests
                 // +1 Organization.address.line.extension:buildingNumberSuffix.value[x]
                 // +1 Organization.address.line.extension:unitID.value[x]
                 // +1 Organization.address.line.extension:additionalLocator.value[x]
-                Assert.AreEqual(361, fullElems.Count);
+
+                // [MV 20191216] Fixed
+                // R4.0.1: snapshot only includes "value[x]" constraints not "valueString" constraints anymore
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                Assert.AreEqual(356, fullElems.Count);
 
                 Assert.AreEqual(0, issues.Count);
 
@@ -1464,8 +1472,8 @@ namespace Hl7.Fhir.Specification.Tests
                     //    );
 
                     return be != null ?
-                        $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path} <== #{be.GetHashCode(),-8} {formatElementPathName(be)} | {be.Base?.Path}"
-                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}";
+                        $"  {formatElementPathName(e)} | {e.Base?.Path} <== {formatElementPathName(be)} | {be.Base?.Path}"
+                      : $"  {formatElementPathName(e)} | {e.Base?.Path}";
                 })
             ));
         }
@@ -7395,18 +7403,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify default regular expression
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(2, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
 
-            // Verify json/xml/rdf type extensions
-            Assert.IsNull(elem.Type[0].Code); // Primitive value types are compiler magic...
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expection extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+            // Verify fhir-type extension
+            var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
+            Assert.IsNotNull(fhirTypeExpr);
+            var typeValue = fhirTypeExpr.Value as FhirUrl;
+            Assert.IsNotNull(typeValue);
+            Assert.AreEqual("string", typeValue.Value);
+
+
+            // Verify the 'special' System.String type
+            Assert.IsNotNull(elem.Type[0].Code);
+            Assert.AreEqual("http://hl7.org/fhirpath/System.String", elem.Type[0].Code);
         }
 
         [TestMethod]
@@ -7441,17 +7455,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify constraint on regular expression extension value
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(1, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[A-Z].*", extValue.Value); // Constrained
-
-            // Verify that primitive type extensions are included
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expecting extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
         // [WMR 20190819] #1067 SnapshotGenerator - support implicit type constraints on renamed elements
@@ -8339,7 +8348,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestNormalizeTypeSliceInExtension()
         {
-            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason";
+            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason-fortest";
 
             var sd = _testResolver.FindStructureDefinition(url);
             Assert.IsNotNull(sd);

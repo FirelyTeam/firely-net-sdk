@@ -306,9 +306,10 @@ namespace Hl7.Fhir.Specification.Tests
             var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
             // [WMR 20181213] R4 NEW
-            Assert.AreEqual(5105, summaries.Count); // STU3: 7941
-            Assert.AreEqual(924, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
-            //Assert.IsTrue(!summaries.Errors().Any());
+            // [MV 20191212] R4.0.1 NEW
+            Assert.AreEqual(11611, summaries.Count); // STU3: 7941
+            Assert.AreEqual(7430, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            Assert.IsTrue(!summaries.Errors().Any());
         }
 
         [TestMethod]

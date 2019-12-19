@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Serialization
                         // Verified examples that fail validations
                         if (entry.Name.Contains("v2-tables"))
                             continue; // this file is known to have a single dud valueset - have reported on Zulip
-                                         // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+                                      // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
                         var resource = parser.Parse<Resource>(reader);
@@ -262,7 +262,9 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             // There are 7 example observation resources that don't pass the vital signs profile (and rightly shouldn't)
             // Appears that these 7 obs have been fixed!
-            Assert.AreEqual(0, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
+            // MV 2019-12-12:  vs-2 fails on the examples: but that is actually correct. These examples are Observation and not vitals signs (there is no profile vital signs),
+            //   so vs-* rules should not be applied to these examples.
+            Assert.AreEqual(failedInvariantCodes["vs-2"], errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
         }
     }
 }

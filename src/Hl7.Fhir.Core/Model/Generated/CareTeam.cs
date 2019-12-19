@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent CareTeam_CTM_1 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
+            Expression = "participant.all(onBehalfOf.exists() implies (member.resolve().iif(empty(), true, ofType(Practitioner).exists())))",
             Key = "ctm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
