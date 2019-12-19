@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestValueSetXmlSummary()
         {
-            string path =  Path.Combine("TestData", "validation", "SectionTitles.valueset.xml");
+            string path = Path.Combine("TestData", "validation", "SectionTitles.valueset.xml");
             const string url = "http://example.org/ValueSet/SectionTitles";
             var summary = assertSummary(path);
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Specification.Tests
             var errors = dirSource.ListSummaryErrors().ToList();
             Assert.AreEqual(0, errors.Count);
         }
-        
+
         // [WMR 20190305] Belongs to pull request #890
         [TestMethod, Ignore]
         public void TestSummarizeAnonymousResources()
