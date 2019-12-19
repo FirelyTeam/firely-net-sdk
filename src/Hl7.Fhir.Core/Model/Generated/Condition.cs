@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v3.0.1
+// Generated for FHIR v3.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
             Key = "con-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            Xpath = "not(exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive')"
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()

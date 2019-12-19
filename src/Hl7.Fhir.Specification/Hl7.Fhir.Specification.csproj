@@ -59,6 +59,7 @@
   <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
     <Message Text="(Re)creating specification.zip" />
     <Delete Files="specification.zip" />
+    <!-- <CleanSpecFiles DirectoryName="data" /> -->
     <ZipDirectory SourceDirectory="data" DestinationFile="specification.zip" />
   </Target>
 
@@ -66,17 +67,4 @@
     <Delete Files="specification.zip" />
   </Target>
 
-<!--
-
-   <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
-    <Message Text="(Re)creating specification.zip" />
-    <CleanSpecFiles DirectoryName="data" /> 
-    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
-  </Target>
-
-
- <Target Name="CleanSpecZip" AfterTargets="Clean">
-    <Delete Files="specification.zip" />
-  </Target>
-   -->
 </Project>
