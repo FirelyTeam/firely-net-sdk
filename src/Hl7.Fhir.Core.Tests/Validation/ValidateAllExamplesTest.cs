@@ -6,16 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
-           string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
+            string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
