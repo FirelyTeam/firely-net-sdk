@@ -8,19 +8,33 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
-using static Hl7.Fhir.Model.Observation;
 
 namespace Hl7.Fhir.Test
 {
     [TestClass]
     public class TransactionBuilderTests
     {
+        [TestMethod]
+        public void TestBundleEntryComponentUrlIsEncoded()
+        {
+            var relativeEscapedUrl = "Medication/DILUANT%20-%20MMR%20II";
+            var m = new Medication
+            {
+                Id = "DILUANT - MMR II"
+            };
+            var b = new TransactionBuilder("http://myserver.org/fhir")
+                .Update("DILUANT - MMR II", m)
+                .ToBundle();
+            var e = b.Entry[0];
+
+            Assert.AreEqual(relativeEscapedUrl, e.Request.Url);
+        }
+
         [TestMethod]
         public void TestBuild()
         {

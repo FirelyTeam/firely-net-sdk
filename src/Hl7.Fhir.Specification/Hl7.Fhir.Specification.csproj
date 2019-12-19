@@ -60,6 +60,7 @@
     <Message Text="(Re)creating specification.zip" />
     <Delete Files="specification.zip" />
    <!--    <CleanSpecFiles DirectoryName="data" /> -->
+    <!-- <CleanSpecFiles DirectoryName="data" /> -->
     <ZipDirectory SourceDirectory="data" DestinationFile="specification.zip" />
   </Target>
 
