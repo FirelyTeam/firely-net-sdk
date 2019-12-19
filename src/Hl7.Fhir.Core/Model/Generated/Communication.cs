@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _InResponseTo;
         
         /// <summary>
-        /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error
+        /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.EventStatus> _StatusElement;
         
         /// <summary>
-        /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error
+        /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// Message urgency
+        /// routine | urgent | asap | stat
         /// </summary>
         [FhirElement("priority", InSummary=true, Order=180)]
         [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
         
         /// <summary>
-        /// Message urgency
+        /// routine | urgent | asap | stat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

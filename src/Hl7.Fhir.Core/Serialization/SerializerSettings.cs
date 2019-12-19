@@ -24,6 +24,11 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool AppendNewLine { get; set; } // = false;
 
+        /// <summary>
+        /// Trim whitespaces at the beginning and end of xml attribute value
+        /// </summary>
+        public bool TrimWhiteSpacesInXml { get; set; } = true;
+
         /// <summary>Default constructor. Creates a new <see cref="SerializerSettings"/> instance with default property values.</summary>
         public SerializerSettings() { }
 
@@ -44,6 +49,7 @@ namespace Hl7.Fhir.Serialization
 
             other.Pretty = Pretty;
             other.AppendNewLine = AppendNewLine;
+            other.TrimWhiteSpacesInXml = TrimWhiteSpacesInXml;
         }
 
         /// <summary>Creates a new <see cref="SerializerSettings"/> object that is a copy of the current instance.</summary>

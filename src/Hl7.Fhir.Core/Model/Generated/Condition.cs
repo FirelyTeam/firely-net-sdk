@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -569,11 +569,11 @@ namespace Hl7.Fhir.Model
         public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
         { 
 			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(true), Url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice"} },  
-            Expression = "clinicalStatus.exists() or verificationStatus='entered-in-error' or category.select($this='problem-list-item').empty()",
+            Expression = "clinicalStatus.exists() or verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.select($this='problem-list-item').empty()",
             Key = "con-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item",
-            Xpath = "exists(f:clinicalStatus) or f:verificationStatus/@value='entered-in-error' or not(exists(category[@value='problem-list-item']))"
+            Xpath = "exists(f:clinicalStatus) or exists(f:verificationStatus/f:coding/f:code/@value='entered-in-error') or not(exists(category[@value='problem-list-item']))"
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()

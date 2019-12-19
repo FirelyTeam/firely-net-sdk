@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _GroupIdentifier;
         
         /// <summary>
-        /// draft | active | suspended | completed | entered-in-error | cancelled
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=150)]
         [DataMember]
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
         
         /// <summary>
-        /// draft | active | suspended | completed | entered-in-error | cancelled
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposal | plan | original-order | encoded | reflex-order
+        /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         [FhirElement("intent", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
         
         /// <summary>
-        /// proposal | plan | original-order | encoded | reflex-order
+        /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates how quickly the {{title}} should be addressed with respect to other requests
+        /// routine | urgent | asap | stat
         /// </summary>
         [FhirElement("priority", InSummary=true, Order=170)]
         [DataMember]
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
         
         /// <summary>
-        /// Indicates how quickly the {{title}} should be addressed with respect to other requests
+        /// routine | urgent | asap | stat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
