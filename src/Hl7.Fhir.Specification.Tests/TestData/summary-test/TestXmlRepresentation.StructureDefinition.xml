@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <url value="http://example.org/fhir/StructureDefinition/TestXmlRepresentation" />
+  <url value="http://hl7.org/fhir/StructureDefinition/TestXmlRepresentation" />
   <name value="TestXmlRepresentation" />
   <status value="draft" />
   <fhirVersion value="4.0.0" />
   <kind value="logical" />
   <abstract value="false" />
-  <type value="http://example.org/fhir/StructureDefinition/TestXmlRepresentation" />
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element" />
+  <type value="TestXmlRepresentation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
   <derivation value="specialization" />
-  <differential>
+  <snapshot>
     <element id="TestXmlRepresentation">
       <path value="TestXmlRepresentation" />
       <min value="0" />
       <max value="*" />
-      <type>
-        <code value="Element" />
-      </type>
     </element>
-    <element id="TestXmlRepresentation.xmlAttr">
-      <path value="TestXmlRepresentation.xmlAttr" />
+    <element id="TestXmlRepresentation.XmlAttr">
+      <path value="TestXmlRepresentation.XmlAttr" />
       <representation value="xmlAttr" />
       <min value="0" />
       <max value="*" />
@@ -28,8 +25,8 @@
         <profile value="http://hl7.org/fhir/StructureDefinition/string" />
       </type>
     </element>
-    <element id="TestXmlRepresentation.typeAttr">
-      <path value="TestXmlRepresentation.typeAttr" />
+    <element id="TestXmlRepresentation.TypeAttr">
+      <path value="TestXmlRepresentation.TypeAttr" />
       <representation value="typeAttr" />
       <min value="0" />
       <max value="*" />
@@ -38,8 +35,8 @@
         <profile value="http://hl7.org/fhir/StructureDefinition/string" />
       </type>
     </element>
-    <element id="TestXmlRepresentation.xhtml">
-      <path value="TestXmlRepresentation.xhtml" />
+    <element id="TestXmlRepresentation.XHtml">
+      <path value="TestXmlRepresentation.XHtml" />
       <representation value="xhtml" />
       <min value="0" />
       <max value="*" />
@@ -48,5 +45,5 @@
         <profile value="http://hl7.org/fhir/StructureDefinition/xhtml" />
       </type>
     </element>
-  </differential>
+  </snapshot>
 </StructureDefinition>
