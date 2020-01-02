@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/TestXmlRepresentation" />
+  <name value="TestXmlRepresentation" />
+  <status value="draft" />
+  <fhirVersion value="4.0.0" />
+  <kind value="logical" />
+  <abstract value="false" />
+  <type value="http://example.org/fhir/StructureDefinition/TestXmlRepresentation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element" />
+  <derivation value="specialization" />
+  <differential>
+    <element id="TestXmlRepresentation">
+      <path value="TestXmlRepresentation" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Element" />
+      </type>
+    </element>
+    <element id="TestXmlRepresentation.xmlAttr">
+      <path value="TestXmlRepresentation.xmlAttr" />
+      <representation value="xmlAttr" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="string" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/string" />
+      </type>
+    </element>
+    <element id="TestXmlRepresentation.typeAttr">
+      <path value="TestXmlRepresentation.typeAttr" />
+      <representation value="typeAttr" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="string" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/string" />
+      </type>
+    </element>
+    <element id="TestXmlRepresentation.xhtml">
+      <path value="TestXmlRepresentation.xhtml" />
+      <representation value="xhtml" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="xhtml" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/xhtml" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
