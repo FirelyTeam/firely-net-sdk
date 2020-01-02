@@ -45,6 +45,7 @@
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\ResourcesInSubfolder.zip" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
+    <None Remove="TestData\CCDA_ANY.xml" />
   </ItemGroup>
 
   <ItemGroup>
