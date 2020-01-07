@@ -47,10 +47,10 @@ namespace Hl7.Fhir.Specification.Source
 
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
-            Canonical url;
+            string url;
             if (Uri.IsWellFormedUriString(typename, UriKind.Absolute))
             {
-                url = new Canonical(typename);
+                url = typename;
             }
             else
             {
