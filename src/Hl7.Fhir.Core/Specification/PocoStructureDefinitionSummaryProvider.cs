@@ -167,6 +167,8 @@ namespace Hl7.Fhir.Specification
 
         public int Order => _pm.Order;
 
+        public string DefaultTypeName => null;
+
         // [WMR 20180822] OPTIMIZE
         public ITypeSerializationInfo[] Type //=> _types.Value;
         {
