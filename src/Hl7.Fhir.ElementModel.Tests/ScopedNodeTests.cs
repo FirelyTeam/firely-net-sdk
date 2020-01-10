@@ -184,5 +184,115 @@ namespace Hl7.Fhir.ElementModel.Tests
                 return null;
             }
         }
+
+        [TestMethod]
+        public void ITypedElementFromLogicalModelHasChildrenDefinition()
+        {
+
+            bool CCDATypeNameMapper(string typeName, out string canonical)
+            {
+                if (ModelInfo.IsPrimitive(typeName))
+                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typeName;
+                else
+                    canonical = "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
+
+                return true;
+            }
+
+            var ccdaInstanceXml = File.ReadAllText(Path.Combine("TestData", "CCDA_Instance_Example.xml"));
+            var ccdaNode = FhirXmlNode.Parse(ccdaInstanceXml);
+
+            var summaryProvider = new StructureDefinitionSummaryProvider(new CCDAResourceResolver(), CCDATypeNameMapper);
+
+            var typedElement = ccdaNode.ToTypedElement(summaryProvider);
+            Assert.IsNotNull(typedElement);
+
+            var error = typedElement.VisitAndCatch();
+
+            Console.WriteLine("Test");
+
+            // realmCode
+            // id
+            // title
+            // languageCode
+        }
+
+        [TestMethod]
+        public void CcdaWithXhtmlTag()
+        {
+            bool CCDATypeNameMapper(string typeName, out string canonical)
+            {
+                if (ModelInfo.IsPrimitive(typeName))
+                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typeName;
+                else
+                    canonical = "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
+
+                return true;
+            }
+
+            var ccdaInstanceXml = File.ReadAllText(Path.Combine("TestData", "CCDA_With_Xhtml_Tag.xml"));
+            var ccdaNode = FhirXmlNode.Parse(ccdaInstanceXml);
+
+            var summaryProvider = new StructureDefinitionSummaryProvider(new CCDAResourceResolver(), CCDATypeNameMapper);
+
+            var typedElement = ccdaNode.ToTypedElement(summaryProvider);
+            Assert.IsNotNull(typedElement);
+
+            var errors = typedElement.VisitAndCatch();
+
+            Assert.IsTrue(!errors.Any());
+
+            var assertXHtml = typedElement.Children("component").First().
+                Children("structuredBody").First().
+                Children("component").First().
+                Children("section").First().
+                Children("text");
+
+            Assert.IsNotNull(assertXHtml);
+            Assert.AreEqual(1, assertXHtml.Count());
+            Assert.AreEqual("text", assertXHtml.First().Name);
+            Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
+            Assert.AreEqual("text", assertXHtml.First().Location);
+            Assert.IsNotNull(assertXHtml.First().Value);
+
+
+        }
+
+        private class CCDAResourceResolver : IResourceResolver
+        {
+            private readonly Dictionary<string, StructureDefinition> _cache;
+            private readonly ZipSource _zipSource;
+            private readonly CachedResolver _coreResolver;
+
+            public CCDAResourceResolver()
+            {
+                _cache = new Dictionary<string, StructureDefinition>();
+                _zipSource = new ZipSource("specification.zip");
+                _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/ccda")));
+            }
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                StructureDefinition sd = null;
+                if (_cache.TryGetValue(uri, out sd))
+                    return sd;
+
+                sd = (StructureDefinition)_coreResolver.ResolveByCanonicalUri(uri);
+                if (!sd.HasSnapshot)
+                {
+                    var snapShotGenerator = new SnapshotGenerator(_coreResolver);
+                    snapShotGenerator.Update(sd);
+                    _cache.Add(sd.Url, sd);
+                }
+
+                return sd;
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     }
 }
