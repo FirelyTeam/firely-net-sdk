@@ -11,6 +11,7 @@ namespace Hl7.Fhir.ElementModel.Tests
     {
         private readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
+        [ExpectedException(typeof(StructuralTypeException))]
         [TestMethod]
         public void TestExceptionComplexTypeValue()
         {
@@ -18,14 +19,8 @@ namespace Hl7.Fhir.ElementModel.Tests
             var bundle = FhirJsonNode.Parse(bundleJson);
             var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
-            try
-            {
-                var value = typedBundle.Children("entry").First().Value;
-                Assert.Fail("Should have thrown on .Value as complex types can't have a value");
-            }
-            catch (StructuralTypeException)
-            {
-            }
+            var value = typedBundle.Children("entry").First().Value;
+            Assert.Fail("Should have thrown on .Value as complex types can't have a value");
         }
     }
 }
