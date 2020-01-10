@@ -241,10 +241,11 @@ namespace Hl7.Fhir.Specification
         private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
             (defn.Type[0].Code == "Resource" || defn.Type[0].Code == "DomainResource");
 
+        public string DefaultTypeName => _definition.GetExtensionValue<FhirString>("http://hl7.org/fhir/StructureDefinition/elementdefinition-defaulttype")?.Value;
+
         public ITypeSerializationInfo[] Type => _types.Value;
 
         public string NonDefaultNamespace =>
             _definition.GetExtensionValue<FhirUri>("http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace")?.Value;
-
     }
 }
