@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
-            var url = ModelInfo.CanonicalUriForFhirCoreType(typename);
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : (string)ModelInfo.CanonicalUriForFhirCoreType(typename);
             return resolver.FindStructureDefinition(url);
         }
 
