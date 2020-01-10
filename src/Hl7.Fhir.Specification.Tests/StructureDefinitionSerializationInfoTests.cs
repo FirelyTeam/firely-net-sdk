@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
-            source = new MultiResolver(ZipSource.CreateValidationSource(), new DirectorySource("TestData", includeSubdirectories: true));
+            source = new MultiResolver(ZipSource.CreateValidationSource(), new DirectorySource("TestData", new DirectorySourceSettings(includeSubdirectories: true)));
         }
 
         static IResourceResolver source = null;
