@@ -214,6 +214,14 @@ namespace Hl7.Fhir.Specification
                 {
                     case ElementDefinition.PropertyRepresentation.XmlAttr:
                         return XmlRepresentation.XmlAttr;
+                    case ElementDefinition.PropertyRepresentation.XmlText:
+                        return XmlRepresentation.XmlText;
+                    case ElementDefinition.PropertyRepresentation.TypeAttr:
+                        return XmlRepresentation.TypeAttr;
+                    case ElementDefinition.PropertyRepresentation.CdaText:
+                        return XmlRepresentation.CdaText;
+                    case ElementDefinition.PropertyRepresentation.Xhtml:
+                        return XmlRepresentation.XHtml;
                     default:
                         return XmlRepresentation.XmlElement;
                 }
