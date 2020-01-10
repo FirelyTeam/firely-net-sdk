@@ -221,6 +221,47 @@ namespace Hl7.Fhir.ElementModel.Tests
             // languageCode
         }
 
+        [TestMethod]
+        public void CcdaWithXhtmlTag()
+        {
+            bool CCDATypeNameMapper(string typeName, out string canonical)
+            {
+                if (ModelInfo.IsPrimitive(typeName))
+                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typeName;
+                else
+                    canonical = "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
+
+                return true;
+            }
+
+            var ccdaInstanceXml = File.ReadAllText(Path.Combine("TestData", "CCDA_With_Xhtml_Tag.xml"));
+            var ccdaNode = FhirXmlNode.Parse(ccdaInstanceXml);
+
+            var summaryProvider = new StructureDefinitionSummaryProvider(new CCDAResourceResolver(), CCDATypeNameMapper);
+
+            var typedElement = ccdaNode.ToTypedElement(summaryProvider);
+            Assert.IsNotNull(typedElement);
+
+            var errors = typedElement.VisitAndCatch();
+
+            Assert.IsTrue(!errors.Any());
+
+            var assertXHtml = typedElement.Children("component").First().
+                Children("structuredBody").First().
+                Children("component").First().
+                Children("section").First().
+                Children("text");
+
+            Assert.IsNotNull(assertXHtml);
+            Assert.AreEqual(1, assertXHtml.Count());
+            Assert.AreEqual("text", assertXHtml.First().Name);
+            Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
+            Assert.AreEqual("text", assertXHtml.First().Location);
+            Assert.IsNotNull(assertXHtml.First().Value);
+
+
+        }
+
         private class CCDAResourceResolver : IResourceResolver
         {
             private readonly Dictionary<string, StructureDefinition> _cache;
