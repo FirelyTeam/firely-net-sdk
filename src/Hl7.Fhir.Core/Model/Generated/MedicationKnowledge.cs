@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("source", Order=50)]
             [CLSCompliant(false)]
-			[References("DocumentReference","Media")]
+			[References("DocumentReference")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Source
             {
@@ -304,9 +304,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "IngredientComponent"; } }
             
             /// <summary>
-            /// Medication(s) or substance(s) contained in the medication
+            /// Medication(s) or MedicinalProductIngredient(s) contained in the medication
             /// </summary>
-            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -354,15 +354,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of ingredient present
             /// </summary>
-            [FhirElement("strength", Order=60)]
+            [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Strength
+            public Hl7.Fhir.Model.Element Strength
             {
                 get { return _Strength; }
                 set { _Strength = value; OnPropertyChanged("Strength"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _Strength;
+            private Hl7.Fhir.Model.Element _Strength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -373,7 +375,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
-                    if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
+                    if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Element)Strength.DeepCopy();
                     return dest;
                 }
                 else
@@ -706,12 +708,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationGuidelinesComponent", NamedBackboneElement=true)]
+        [FhirType("AdministrationGuidelineComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AdministrationGuidelineComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AdministrationGuidelinesComponent"; } }
+            public override string TypeName { get { return "AdministrationGuidelineComponent"; } }
             
             /// <summary>
             /// Dosage for the medication for the specific guidelines
@@ -745,27 +747,27 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Characteristics of the patient that are relevant to the administration guidelines
             /// </summary>
-            [FhirElement("patientCharacteristics", Order=60)]
+            [FhirElement("patientCharacteristic", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent> PatientCharacteristics
+            public List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent> PatientCharacteristic
             {
-                get { if(_PatientCharacteristics==null) _PatientCharacteristics = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent>(); return _PatientCharacteristics; }
-                set { _PatientCharacteristics = value; OnPropertyChanged("PatientCharacteristics"); }
+                get { if(_PatientCharacteristic==null) _PatientCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent>(); return _PatientCharacteristic; }
+                set { _PatientCharacteristic = value; OnPropertyChanged("PatientCharacteristic"); }
             }
             
-            private List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent> _PatientCharacteristics;
+            private List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent> _PatientCharacteristic;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AdministrationGuidelinesComponent;
+                var dest = other as AdministrationGuidelineComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent>(Dosage.DeepCopy());
                     if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
-                    if(PatientCharacteristics != null) dest.PatientCharacteristics = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent>(PatientCharacteristics.DeepCopy());
+                    if(PatientCharacteristic != null) dest.PatientCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent>(PatientCharacteristic.DeepCopy());
                     return dest;
                 }
                 else
@@ -774,31 +776,31 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AdministrationGuidelinesComponent());
+                return CopyTo(new AdministrationGuidelineComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AdministrationGuidelinesComponent;
+                var otherT = other as AdministrationGuidelineComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
                 if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
-                if( !DeepComparable.Matches(PatientCharacteristics, otherT.PatientCharacteristics)) return false;
+                if( !DeepComparable.Matches(PatientCharacteristic, otherT.PatientCharacteristic)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AdministrationGuidelinesComponent;
+                var otherT = other as AdministrationGuidelineComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
                 if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
-                if( !DeepComparable.IsExactly(PatientCharacteristics, otherT.PatientCharacteristics)) return false;
+                if( !DeepComparable.IsExactly(PatientCharacteristic, otherT.PatientCharacteristic)) return false;
                 
                 return true;
             }
@@ -812,7 +814,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     foreach (var elem in Dosage) { if (elem != null) yield return elem; }
                     if (Indication != null) yield return Indication;
-                    foreach (var elem in PatientCharacteristics) { if (elem != null) yield return elem; }
+                    foreach (var elem in PatientCharacteristic) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -824,7 +826,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", elem); }
                     if (Indication != null) yield return new ElementValue("indication", Indication);
-                    foreach (var elem in PatientCharacteristics) { if (elem != null) yield return new ElementValue("patientCharacteristics", elem); }
+                    foreach (var elem in PatientCharacteristic) { if (elem != null) yield return new ElementValue("patientCharacteristic", elem); }
                 }
             }
 
@@ -840,7 +842,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DosageComponent"; } }
             
             /// <summary>
-            /// Type of dosage
+            /// Category of dosage for a medication
             /// </summary>
             [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -938,12 +940,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientCharacteristicsComponent", NamedBackboneElement=true)]
+        [FhirType("PatientCharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PatientCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PatientCharacteristicsComponent"; } }
+            public override string TypeName { get { return "PatientCharacteristicComponent"; } }
             
             /// <summary>
             /// Specific characteristic that is relevant to the administration guideline
@@ -996,7 +998,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PatientCharacteristicsComponent;
+                var dest = other as PatientCharacteristicComponent;
                 
                 if (dest != null)
                 {
@@ -1011,12 +1013,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PatientCharacteristicsComponent());
+                return CopyTo(new PatientCharacteristicComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PatientCharacteristicsComponent;
+                var otherT = other as PatientCharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1028,7 +1030,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PatientCharacteristicsComponent;
+                var otherT = other as PatientCharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1204,6 +1206,48 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
+            /// <summary>
+            /// The device used to administer the medication (e.g. scoop, applicator, syringe)
+            /// </summary>
+            [FhirElement("device", Order=60)]
+            [CLSCompliant(false)]
+			[References("Device")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Device
+            {
+                get { return _Device; }
+                set { _Device = value; OnPropertyChanged("Device"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Device;
+            
+            /// <summary>
+            /// Material type of the package item
+            /// </summary>
+            [FhirElement("material", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Material
+            {
+                get { return _Material; }
+                set { _Material = value; OnPropertyChanged("Material"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Material;
+            
+            /// <summary>
+            /// Allows packages within packages
+            /// </summary>
+            [FhirElement("packaging", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent> Packaging
+            {
+                get { if(_Packaging==null) _Packaging = new List<Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent>(); return _Packaging; }
+                set { _Packaging = value; OnPropertyChanged("Packaging"); }
+            }
+            
+            private List<Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent> _Packaging;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PackagingComponent;
@@ -1213,6 +1257,9 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
+                    if(Material != null) dest.Material = (Hl7.Fhir.Model.CodeableConcept)Material.DeepCopy();
+                    if(Packaging != null) dest.Packaging = new List<Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent>(Packaging.DeepCopy());
                     return dest;
                 }
                 else
@@ -1232,6 +1279,9 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Device, otherT.Device)) return false;
+                if( !DeepComparable.Matches(Material, otherT.Material)) return false;
+                if( !DeepComparable.Matches(Packaging, otherT.Packaging)) return false;
                 
                 return true;
             }
@@ -1244,6 +1294,9 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
+                if( !DeepComparable.IsExactly(Material, otherT.Material)) return false;
+                if( !DeepComparable.IsExactly(Packaging, otherT.Packaging)) return false;
                 
                 return true;
             }
@@ -1257,6 +1310,9 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (Quantity != null) yield return Quantity;
+                    if (Device != null) yield return Device;
+                    if (Material != null) yield return Material;
+                    foreach (var elem in Packaging) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -1268,6 +1324,9 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Type != null) yield return new ElementValue("type", Type);
                     if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Device != null) yield return new ElementValue("device", Device);
+                    if (Material != null) yield return new ElementValue("material", Material);
+                    foreach (var elem in Packaging) { if (elem != null) yield return new ElementValue("packaging", elem); }
                 }
             }
 
@@ -1300,7 +1359,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Base64Binary))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Attachment))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -1424,13 +1483,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("schedule", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent> Schedule
+            public List<Hl7.Fhir.Model.CodeableConcept> Schedule
             {
-                get { if(_Schedule==null) _Schedule = new List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent>(); return _Schedule; }
+                get { if(_Schedule==null) _Schedule = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Schedule; }
                 set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
             
-            private List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent> _Schedule;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Schedule;
             
             /// <summary>
             /// The maximum number of units of the medication that can be dispensed in a period
@@ -1454,7 +1513,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(RegulatoryAuthority != null) dest.RegulatoryAuthority = (Hl7.Fhir.Model.ResourceReference)RegulatoryAuthority.DeepCopy();
                     if(Substitution != null) dest.Substitution = new List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent>(Substitution.DeepCopy());
-                    if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent>(Schedule.DeepCopy());
+                    if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.CodeableConcept>(Schedule.DeepCopy());
                     if(MaxDispense != null) dest.MaxDispense = (Hl7.Fhir.Model.MedicationKnowledge.MaxDispenseComponent)MaxDispense.DeepCopy();
                     return dest;
                 }
@@ -1651,93 +1710,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ScheduleComponent", NamedBackboneElement=true)]
-        [DataContract]
-        public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ScheduleComponent"; } }
-            
-            /// <summary>
-            /// Specifies the specific drug schedule
-            /// </summary>
-            [FhirElement("schedule", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Schedule
-            {
-                get { return _Schedule; }
-                set { _Schedule = value; OnPropertyChanged("Schedule"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Schedule;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ScheduleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.CodeableConcept)Schedule.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ScheduleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ScheduleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Schedule, otherT.Schedule)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ScheduleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Schedule, otherT.Schedule)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Schedule != null) yield return Schedule;
-                }
-            }
-
-            [NotMapped]
-            public override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Schedule != null) yield return new ElementValue("schedule", Schedule);
-                }
-            }
-
-            
-        }
-        
-        
         [FhirType("MaxDispenseComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1843,64 +1815,50 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("KineticsComponent", NamedBackboneElement=true)]
+        [FhirType("KineticCharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class KineticCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "KineticsComponent"; } }
+            public override string TypeName { get { return "KineticCharacteristicComponent"; } }
             
             /// <summary>
-            /// The drug concentration measured at certain discrete points in time
+            /// Code specifying the type of kinetics
             /// </summary>
-            [FhirElement("areaUnderCurve", Order=40)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("type", Order=40)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SimpleQuantity> AreaUnderCurve
+            public Hl7.Fhir.Model.CodeableConcept Type
             {
-                get { if(_AreaUnderCurve==null) _AreaUnderCurve = new List<Hl7.Fhir.Model.SimpleQuantity>(); return _AreaUnderCurve; }
-                set { _AreaUnderCurve = value; OnPropertyChanged("AreaUnderCurve"); }
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
             }
             
-            private List<Hl7.Fhir.Model.SimpleQuantity> _AreaUnderCurve;
+            private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// The median lethal dose of a drug
+            /// Description of the characteristic
             /// </summary>
-            [FhirElement("lethalDose50", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Duration))]
             [DataMember]
-            public List<Hl7.Fhir.Model.SimpleQuantity> LethalDose50
+            public Hl7.Fhir.Model.Element Value
             {
-                get { if(_LethalDose50==null) _LethalDose50 = new List<Hl7.Fhir.Model.SimpleQuantity>(); return _LethalDose50; }
-                set { _LethalDose50 = value; OnPropertyChanged("LethalDose50"); }
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private List<Hl7.Fhir.Model.SimpleQuantity> _LethalDose50;
-            
-            /// <summary>
-            /// Time required for concentration in the body to decrease by half
-            /// </summary>
-            [FhirElement("halfLifePeriod", Order=60)]
-            [DataMember]
-            public Duration HalfLifePeriod
-            {
-                get { return _HalfLifePeriod; }
-                set { _HalfLifePeriod = value; OnPropertyChanged("HalfLifePeriod"); }
-            }
-            
-            private Duration _HalfLifePeriod;
+            private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as KineticsComponent;
+                var dest = other as KineticCharacteristicComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(AreaUnderCurve != null) dest.AreaUnderCurve = new List<Hl7.Fhir.Model.SimpleQuantity>(AreaUnderCurve.DeepCopy());
-                    if(LethalDose50 != null) dest.LethalDose50 = new List<Hl7.Fhir.Model.SimpleQuantity>(LethalDose50.DeepCopy());
-                    if(HalfLifePeriod != null) dest.HalfLifePeriod = (Duration)HalfLifePeriod.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1909,31 +1867,29 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new KineticsComponent());
+                return CopyTo(new KineticCharacteristicComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as KineticsComponent;
+                var otherT = other as KineticCharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(AreaUnderCurve, otherT.AreaUnderCurve)) return false;
-                if( !DeepComparable.Matches(LethalDose50, otherT.LethalDose50)) return false;
-                if( !DeepComparable.Matches(HalfLifePeriod, otherT.HalfLifePeriod)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as KineticsComponent;
+                var otherT = other as KineticCharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(AreaUnderCurve, otherT.AreaUnderCurve)) return false;
-                if( !DeepComparable.IsExactly(LethalDose50, otherT.LethalDose50)) return false;
-                if( !DeepComparable.IsExactly(HalfLifePeriod, otherT.HalfLifePeriod)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -1945,9 +1901,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    foreach (var elem in AreaUnderCurve) { if (elem != null) yield return elem; }
-                    foreach (var elem in LethalDose50) { if (elem != null) yield return elem; }
-                    if (HalfLifePeriod != null) yield return HalfLifePeriod;
+                    if (Type != null) yield return Type;
+                    if (Value != null) yield return Value;
                 }
             }
 
@@ -1957,9 +1912,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in AreaUnderCurve) { if (elem != null) yield return new ElementValue("areaUnderCurve", elem); }
-                    foreach (var elem in LethalDose50) { if (elem != null) yield return new ElementValue("lethalDose50", elem); }
-                    if (HalfLifePeriod != null) yield return new ElementValue("halfLifePeriod", HalfLifePeriod);
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1968,9 +1922,23 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Business identifier for this medication
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
         /// Code that identifies this medication
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=90)]
+        [FhirElement("code", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -1983,7 +1951,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
         {
@@ -2015,7 +1983,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Manufacturer of the item
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=110)]
+        [FhirElement("manufacturer", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -2030,7 +1998,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// powder | tablets | capsule +
         /// </summary>
-        [FhirElement("doseForm", Order=120)]
+        [FhirElement("doseForm", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept DoseForm
         {
@@ -2043,7 +2011,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of drug in package
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=130)]
+        [FhirElement("amount", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Amount
         {
@@ -2056,7 +2024,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional names for a medication
         /// </summary>
-        [FhirElement("synonym", InSummary=true, Order=140)]
+        [FhirElement("synonym", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> SynonymElement
@@ -2089,7 +2057,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated or related medication information
         /// </summary>
-        [FhirElement("relatedMedicationKnowledge", Order=150)]
+        [FhirElement("relatedMedicationKnowledge", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent> RelatedMedicationKnowledge
@@ -2103,7 +2071,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A medication resource that is associated with this medication
         /// </summary>
-        [FhirElement("associatedMedication", Order=160)]
+        [FhirElement("associatedMedication", Order=170)]
         [CLSCompliant(false)]
 		[References("Medication")]
         [Cardinality(Min=0,Max=-1)]
@@ -2119,7 +2087,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Category of the medication or product
         /// </summary>
-        [FhirElement("productType", Order=170)]
+        [FhirElement("productType", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ProductType
@@ -2133,7 +2101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Associated documentation about the medication
         /// </summary>
-        [FhirElement("monograph", Order=180)]
+        [FhirElement("monograph", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent> Monograph
@@ -2147,7 +2115,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Active or inactive ingredient
         /// </summary>
-        [FhirElement("ingredient", Order=190)]
+        [FhirElement("ingredient", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent> Ingredient
@@ -2159,9 +2127,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent> _Ingredient;
         
         /// <summary>
+        /// A device associated with the medication (for example, a drug coated catheter or a drug impregnated dressing)
+        /// </summary>
+        [FhirElement("device", Order=210)]
+        [CLSCompliant(false)]
+		[References("Device")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Device
+        {
+            get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.ResourceReference>(); return _Device; }
+            set { _Device = value; OnPropertyChanged("Device"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Device;
+        
+        /// <summary>
         /// The instructions for preparing the medication
         /// </summary>
-        [FhirElement("preparationInstruction", Order=200)]
+        [FhirElement("preparationInstruction", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown PreparationInstruction
         {
@@ -2174,7 +2158,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The intended or approved route of administration
         /// </summary>
-        [FhirElement("intendedRoute", Order=210)]
+        [FhirElement("intendedRoute", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> IntendedRoute
@@ -2188,7 +2172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The pricing of the medication
         /// </summary>
-        [FhirElement("cost", Order=220)]
+        [FhirElement("cost", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent> Cost
@@ -2202,7 +2186,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Program under which a medication is reviewed
         /// </summary>
-        [FhirElement("monitoringProgram", Order=230)]
+        [FhirElement("monitoringProgram", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> MonitoringProgram
@@ -2214,23 +2198,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> _MonitoringProgram;
         
         /// <summary>
-        /// Guidelines for administration of the medication
+        /// Guidelines or protocols for administration of the medication
         /// </summary>
-        [FhirElement("administrationGuidelines", Order=240)]
+        [FhirElement("administrationGuideline", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent> AdministrationGuidelines
+        public List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelineComponent> AdministrationGuideline
         {
-            get { if(_AdministrationGuidelines==null) _AdministrationGuidelines = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent>(); return _AdministrationGuidelines; }
-            set { _AdministrationGuidelines = value; OnPropertyChanged("AdministrationGuidelines"); }
+            get { if(_AdministrationGuideline==null) _AdministrationGuideline = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelineComponent>(); return _AdministrationGuideline; }
+            set { _AdministrationGuideline = value; OnPropertyChanged("AdministrationGuideline"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent> _AdministrationGuidelines;
+        private List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelineComponent> _AdministrationGuideline;
         
         /// <summary>
         /// Categorization of the medication within a formulary or classification system
         /// </summary>
-        [FhirElement("medicineClassification", Order=250)]
+        [FhirElement("medicineClassification", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent> MedicineClassification
@@ -2244,7 +2228,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about packaged medications
         /// </summary>
-        [FhirElement("packaging", Order=260)]
+        [FhirElement("packaging", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent Packaging
         {
@@ -2257,7 +2241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specifies descriptive properties of the medicine
         /// </summary>
-        [FhirElement("drugCharacteristic", Order=270)]
+        [FhirElement("drugCharacteristic", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent> DrugCharacteristic
@@ -2271,23 +2255,23 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Potential clinical issue with or between medication(s)
         /// </summary>
-        [FhirElement("contraindication", Order=280)]
+        [FhirElement("clinicalUseIssue", Order=300)]
         [CLSCompliant(false)]
-		[References("DetectedIssue")]
+		[References("ClinicalUseIssue")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Contraindication
+        public List<Hl7.Fhir.Model.ResourceReference> ClinicalUseIssue
         {
-            get { if(_Contraindication==null) _Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Contraindication; }
-            set { _Contraindication = value; OnPropertyChanged("Contraindication"); }
+            get { if(_ClinicalUseIssue==null) _ClinicalUseIssue = new List<Hl7.Fhir.Model.ResourceReference>(); return _ClinicalUseIssue; }
+            set { _ClinicalUseIssue = value; OnPropertyChanged("ClinicalUseIssue"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Contraindication;
+        private List<Hl7.Fhir.Model.ResourceReference> _ClinicalUseIssue;
         
         /// <summary>
         /// Regulatory information about a medication
         /// </summary>
-        [FhirElement("regulatory", Order=290)]
+        [FhirElement("regulatory", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent> Regulatory
@@ -2301,16 +2285,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
         /// </summary>
-        [FhirElement("kinetics", Order=300)]
+        [FhirElement("kineticCharacteristic", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent> Kinetics
+        public List<Hl7.Fhir.Model.MedicationKnowledge.KineticCharacteristicComponent> KineticCharacteristic
         {
-            get { if(_Kinetics==null) _Kinetics = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent>(); return _Kinetics; }
-            set { _Kinetics = value; OnPropertyChanged("Kinetics"); }
+            get { if(_KineticCharacteristic==null) _KineticCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticCharacteristicComponent>(); return _KineticCharacteristic; }
+            set { _KineticCharacteristic = value; OnPropertyChanged("KineticCharacteristic"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent> _Kinetics;
+        private List<Hl7.Fhir.Model.MedicationKnowledge.KineticCharacteristicComponent> _KineticCharacteristic;
         
 
         public override void AddDefaultConstraints()
@@ -2326,6 +2310,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
@@ -2337,17 +2322,18 @@ namespace Hl7.Fhir.Model
                 if(ProductType != null) dest.ProductType = new List<Hl7.Fhir.Model.CodeableConcept>(ProductType.DeepCopy());
                 if(Monograph != null) dest.Monograph = new List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent>(Monograph.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent>(Ingredient.DeepCopy());
+                if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
                 if(PreparationInstruction != null) dest.PreparationInstruction = (Hl7.Fhir.Model.Markdown)PreparationInstruction.DeepCopy();
                 if(IntendedRoute != null) dest.IntendedRoute = new List<Hl7.Fhir.Model.CodeableConcept>(IntendedRoute.DeepCopy());
                 if(Cost != null) dest.Cost = new List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent>(Cost.DeepCopy());
                 if(MonitoringProgram != null) dest.MonitoringProgram = new List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent>(MonitoringProgram.DeepCopy());
-                if(AdministrationGuidelines != null) dest.AdministrationGuidelines = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent>(AdministrationGuidelines.DeepCopy());
+                if(AdministrationGuideline != null) dest.AdministrationGuideline = new List<Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelineComponent>(AdministrationGuideline.DeepCopy());
                 if(MedicineClassification != null) dest.MedicineClassification = new List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent>(MedicineClassification.DeepCopy());
                 if(Packaging != null) dest.Packaging = (Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent)Packaging.DeepCopy();
                 if(DrugCharacteristic != null) dest.DrugCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent>(DrugCharacteristic.DeepCopy());
-                if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.ResourceReference>(Contraindication.DeepCopy());
+                if(ClinicalUseIssue != null) dest.ClinicalUseIssue = new List<Hl7.Fhir.Model.ResourceReference>(ClinicalUseIssue.DeepCopy());
                 if(Regulatory != null) dest.Regulatory = new List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent>(Regulatory.DeepCopy());
-                if(Kinetics != null) dest.Kinetics = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent>(Kinetics.DeepCopy());
+                if(KineticCharacteristic != null) dest.KineticCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.KineticCharacteristicComponent>(KineticCharacteristic.DeepCopy());
                 return dest;
             }
             else
@@ -2365,6 +2351,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
@@ -2376,17 +2363,18 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ProductType, otherT.ProductType)) return false;
             if( !DeepComparable.Matches(Monograph, otherT.Monograph)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
+            if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(PreparationInstruction, otherT.PreparationInstruction)) return false;
             if( !DeepComparable.Matches(IntendedRoute, otherT.IntendedRoute)) return false;
             if( !DeepComparable.Matches(Cost, otherT.Cost)) return false;
             if( !DeepComparable.Matches(MonitoringProgram, otherT.MonitoringProgram)) return false;
-            if( !DeepComparable.Matches(AdministrationGuidelines, otherT.AdministrationGuidelines)) return false;
+            if( !DeepComparable.Matches(AdministrationGuideline, otherT.AdministrationGuideline)) return false;
             if( !DeepComparable.Matches(MedicineClassification, otherT.MedicineClassification)) return false;
             if( !DeepComparable.Matches(Packaging, otherT.Packaging)) return false;
             if( !DeepComparable.Matches(DrugCharacteristic, otherT.DrugCharacteristic)) return false;
-            if( !DeepComparable.Matches(Contraindication, otherT.Contraindication)) return false;
+            if( !DeepComparable.Matches(ClinicalUseIssue, otherT.ClinicalUseIssue)) return false;
             if( !DeepComparable.Matches(Regulatory, otherT.Regulatory)) return false;
-            if( !DeepComparable.Matches(Kinetics, otherT.Kinetics)) return false;
+            if( !DeepComparable.Matches(KineticCharacteristic, otherT.KineticCharacteristic)) return false;
             
             return true;
         }
@@ -2397,6 +2385,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
@@ -2408,17 +2397,18 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ProductType, otherT.ProductType)) return false;
             if( !DeepComparable.IsExactly(Monograph, otherT.Monograph)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
+            if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(PreparationInstruction, otherT.PreparationInstruction)) return false;
             if( !DeepComparable.IsExactly(IntendedRoute, otherT.IntendedRoute)) return false;
             if( !DeepComparable.IsExactly(Cost, otherT.Cost)) return false;
             if( !DeepComparable.IsExactly(MonitoringProgram, otherT.MonitoringProgram)) return false;
-            if( !DeepComparable.IsExactly(AdministrationGuidelines, otherT.AdministrationGuidelines)) return false;
+            if( !DeepComparable.IsExactly(AdministrationGuideline, otherT.AdministrationGuideline)) return false;
             if( !DeepComparable.IsExactly(MedicineClassification, otherT.MedicineClassification)) return false;
             if( !DeepComparable.IsExactly(Packaging, otherT.Packaging)) return false;
             if( !DeepComparable.IsExactly(DrugCharacteristic, otherT.DrugCharacteristic)) return false;
-            if( !DeepComparable.IsExactly(Contraindication, otherT.Contraindication)) return false;
+            if( !DeepComparable.IsExactly(ClinicalUseIssue, otherT.ClinicalUseIssue)) return false;
             if( !DeepComparable.IsExactly(Regulatory, otherT.Regulatory)) return false;
-            if( !DeepComparable.IsExactly(Kinetics, otherT.Kinetics)) return false;
+            if( !DeepComparable.IsExactly(KineticCharacteristic, otherT.KineticCharacteristic)) return false;
             
             return true;
         }
@@ -2429,6 +2419,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
 				if (StatusElement != null) yield return StatusElement;
 				if (Manufacturer != null) yield return Manufacturer;
@@ -2440,17 +2431,18 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ProductType) { if (elem != null) yield return elem; }
 				foreach (var elem in Monograph) { if (elem != null) yield return elem; }
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
+				foreach (var elem in Device) { if (elem != null) yield return elem; }
 				if (PreparationInstruction != null) yield return PreparationInstruction;
 				foreach (var elem in IntendedRoute) { if (elem != null) yield return elem; }
 				foreach (var elem in Cost) { if (elem != null) yield return elem; }
 				foreach (var elem in MonitoringProgram) { if (elem != null) yield return elem; }
-				foreach (var elem in AdministrationGuidelines) { if (elem != null) yield return elem; }
+				foreach (var elem in AdministrationGuideline) { if (elem != null) yield return elem; }
 				foreach (var elem in MedicineClassification) { if (elem != null) yield return elem; }
 				if (Packaging != null) yield return Packaging;
 				foreach (var elem in DrugCharacteristic) { if (elem != null) yield return elem; }
-				foreach (var elem in Contraindication) { if (elem != null) yield return elem; }
+				foreach (var elem in ClinicalUseIssue) { if (elem != null) yield return elem; }
 				foreach (var elem in Regulatory) { if (elem != null) yield return elem; }
-				foreach (var elem in Kinetics) { if (elem != null) yield return elem; }
+				foreach (var elem in KineticCharacteristic) { if (elem != null) yield return elem; }
             }
         }
 
@@ -2460,6 +2452,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (Code != null) yield return new ElementValue("code", Code);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
@@ -2471,17 +2464,18 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ProductType) { if (elem != null) yield return new ElementValue("productType", elem); }
                 foreach (var elem in Monograph) { if (elem != null) yield return new ElementValue("monograph", elem); }
                 foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+                foreach (var elem in Device) { if (elem != null) yield return new ElementValue("device", elem); }
                 if (PreparationInstruction != null) yield return new ElementValue("preparationInstruction", PreparationInstruction);
                 foreach (var elem in IntendedRoute) { if (elem != null) yield return new ElementValue("intendedRoute", elem); }
                 foreach (var elem in Cost) { if (elem != null) yield return new ElementValue("cost", elem); }
                 foreach (var elem in MonitoringProgram) { if (elem != null) yield return new ElementValue("monitoringProgram", elem); }
-                foreach (var elem in AdministrationGuidelines) { if (elem != null) yield return new ElementValue("administrationGuidelines", elem); }
+                foreach (var elem in AdministrationGuideline) { if (elem != null) yield return new ElementValue("administrationGuideline", elem); }
                 foreach (var elem in MedicineClassification) { if (elem != null) yield return new ElementValue("medicineClassification", elem); }
                 if (Packaging != null) yield return new ElementValue("packaging", Packaging);
                 foreach (var elem in DrugCharacteristic) { if (elem != null) yield return new ElementValue("drugCharacteristic", elem); }
-                foreach (var elem in Contraindication) { if (elem != null) yield return new ElementValue("contraindication", elem); }
+                foreach (var elem in ClinicalUseIssue) { if (elem != null) yield return new ElementValue("clinicalUseIssue", elem); }
                 foreach (var elem in Regulatory) { if (elem != null) yield return new ElementValue("regulatory", elem); }
-                foreach (var elem in Kinetics) { if (elem != null) yield return new ElementValue("kinetics", elem); }
+                foreach (var elem in KineticCharacteristic) { if (elem != null) yield return new ElementValue("kineticCharacteristic", elem); }
             }
         }
 

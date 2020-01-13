@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("encounter", Order=40)]
             [CLSCompliant(false)]
-			[References("Encounter","EpisodeOfCare")]
+			[References("Encounter")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Encounter
@@ -394,6 +394,22 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.ResourceReference> _Related;
             
+            /// <summary>
+            /// Procedure that caused this media to be created
+            /// </summary>
+            [FhirElement("basedOn", Order=110)]
+            [CLSCompliant(false)]
+			[References("ServiceRequest","CarePlan")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> BasedOn
+            {
+                get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+                set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ContextComponent;
@@ -408,6 +424,7 @@ namespace Hl7.Fhir.Model
                     if(PracticeSetting != null) dest.PracticeSetting = (Hl7.Fhir.Model.CodeableConcept)PracticeSetting.DeepCopy();
                     if(SourcePatientInfo != null) dest.SourcePatientInfo = (Hl7.Fhir.Model.ResourceReference)SourcePatientInfo.DeepCopy();
                     if(Related != null) dest.Related = new List<Hl7.Fhir.Model.ResourceReference>(Related.DeepCopy());
+                    if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                     return dest;
                 }
                 else
@@ -432,6 +449,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PracticeSetting, otherT.PracticeSetting)) return false;
                 if( !DeepComparable.Matches(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
                 if( !DeepComparable.Matches(Related, otherT.Related)) return false;
+                if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
                 
                 return true;
             }
@@ -449,6 +467,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PracticeSetting, otherT.PracticeSetting)) return false;
                 if( !DeepComparable.IsExactly(SourcePatientInfo, otherT.SourcePatientInfo)) return false;
                 if( !DeepComparable.IsExactly(Related, otherT.Related)) return false;
+                if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
                 
                 return true;
             }
@@ -467,6 +486,7 @@ namespace Hl7.Fhir.Model
                     if (PracticeSetting != null) yield return PracticeSetting;
                     if (SourcePatientInfo != null) yield return SourcePatientInfo;
                     foreach (var elem in Related) { if (elem != null) yield return elem; }
+                    foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -483,6 +503,7 @@ namespace Hl7.Fhir.Model
                     if (PracticeSetting != null) yield return new ElementValue("practiceSetting", PracticeSetting);
                     if (SourcePatientInfo != null) yield return new ElementValue("sourcePatientInfo", SourcePatientInfo);
                     foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", elem); }
+                    foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
                 }
             }
 
@@ -614,7 +635,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","Group","Device")]
+		[References("Patient","Practitioner","Group","Device","PractitionerRole","Specimen","Organization","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -661,7 +682,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("author", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
+		[References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author

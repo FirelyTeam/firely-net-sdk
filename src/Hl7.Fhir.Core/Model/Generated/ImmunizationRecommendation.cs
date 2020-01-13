@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,14 +80,15 @@ namespace Hl7.Fhir.Model
             /// Disease to be immunized against
             /// </summary>
             [FhirElement("targetDisease", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept TargetDisease
+            public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
             {
-                get { return _TargetDisease; }
+                get { if(_TargetDisease==null) _TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetDisease; }
                 set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _TargetDisease;
+            private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
             
             /// <summary>
             /// Vaccine which is contraindicated to fulfill the recommendation
@@ -279,7 +280,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(VaccineCode != null) dest.VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(VaccineCode.DeepCopy());
-                    if(TargetDisease != null) dest.TargetDisease = (Hl7.Fhir.Model.CodeableConcept)TargetDisease.DeepCopy();
+                    if(TargetDisease != null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
                     if(ContraindicatedVaccineCode != null) dest.ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(ContraindicatedVaccineCode.DeepCopy());
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
                     if(ForecastReason != null) dest.ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(ForecastReason.DeepCopy());
@@ -353,7 +354,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     foreach (var elem in VaccineCode) { if (elem != null) yield return elem; }
-                    if (TargetDisease != null) yield return TargetDisease;
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
                     foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return elem; }
                     if (ForecastStatus != null) yield return ForecastStatus;
                     foreach (var elem in ForecastReason) { if (elem != null) yield return elem; }
@@ -374,7 +375,7 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", elem); }
-                    if (TargetDisease != null) yield return new ElementValue("targetDisease", TargetDisease);
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", elem); }
                     foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", elem); }
                     if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
                     foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", elem); }

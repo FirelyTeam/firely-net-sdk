@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -261,6 +261,187 @@ namespace Hl7.Fhir.Model
                     if (Outcome != null) yield return new ElementValue("outcome", Outcome);
                     if (ContributedToDeathElement != null) yield return new ElementValue("contributedToDeath", ContributedToDeathElement);
                     if (Onset != null) yield return new ElementValue("onset", Onset);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("ProcedureComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProcedureComponent"; } }
+            
+            /// <summary>
+            /// Procedures performed on the related person
+            /// </summary>
+            [FhirElement("code", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// What happened following the procedure
+            /// </summary>
+            [FhirElement("outcome", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Outcome
+            {
+                get { return _Outcome; }
+                set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Outcome;
+            
+            /// <summary>
+            /// Whether the procedure contributed to the cause of death
+            /// </summary>
+            [FhirElement("contributedToDeath", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean ContributedToDeathElement
+            {
+                get { return _ContributedToDeathElement; }
+                set { _ContributedToDeathElement = value; OnPropertyChanged("ContributedToDeathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _ContributedToDeathElement;
+            
+            /// <summary>
+            /// Whether the procedure contributed to the cause of death
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? ContributedToDeath
+            {
+                get { return ContributedToDeathElement != null ? ContributedToDeathElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ContributedToDeathElement = null; 
+                    else
+                        ContributedToDeathElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("ContributedToDeath");
+                }
+            }
+            
+            /// <summary>
+            /// When the procedure was performed
+            /// </summary>
+            [FhirElement("performed", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirDateTime))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Performed
+            {
+                get { return _Performed; }
+                set { _Performed = value; OnPropertyChanged("Performed"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Performed;
+            
+            /// <summary>
+            /// Extra information about the procedure
+            /// </summary>
+            [FhirElement("note", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Annotation> Note
+            {
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Annotation> _Note;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProcedureComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
+                    if(ContributedToDeathElement != null) dest.ContributedToDeathElement = (Hl7.Fhir.Model.FhirBoolean)ContributedToDeathElement.DeepCopy();
+                    if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProcedureComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProcedureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.Matches(ContributedToDeathElement, otherT.ContributedToDeathElement)) return false;
+                if( !DeepComparable.Matches(Performed, otherT.Performed)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProcedureComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+                if( !DeepComparable.IsExactly(ContributedToDeathElement, otherT.ContributedToDeathElement)) return false;
+                if( !DeepComparable.IsExactly(Performed, otherT.Performed)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Code != null) yield return Code;
+                    if (Outcome != null) yield return Outcome;
+                    if (ContributedToDeathElement != null) yield return ContributedToDeathElement;
+                    if (Performed != null) yield return Performed;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Outcome != null) yield return new ElementValue("outcome", Outcome);
+                    if (ContributedToDeathElement != null) yield return new ElementValue("contributedToDeath", ContributedToDeathElement);
+                    if (Performed != null) yield return new ElementValue("performed", Performed);
                     foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 }
             }
@@ -582,37 +763,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why was family member history performed?
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=230)]
+        [FhirElement("reason", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Why was family member history performed?
-        /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=240)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse","DiagnosticReport","DocumentReference")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// General note about related person
         /// </summary>
-        [FhirElement("note", Order=250)]
+        [FhirElement("note", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -626,7 +791,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Condition that the related person had
         /// </summary>
-        [FhirElement("condition", Order=260)]
+        [FhirElement("condition", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition
@@ -636,6 +801,20 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
+        
+        /// <summary>
+        /// Procedures that the related person had
+        /// </summary>
+        [FhirElement("procedure", Order=260)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent> Procedure
+        {
+            get { if(_Procedure==null) _Procedure = new List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent>(); return _Procedure; }
+            set { _Procedure = value; OnPropertyChanged("Procedure"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent> _Procedure;
         
 
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
@@ -685,10 +864,10 @@ namespace Hl7.Fhir.Model
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
                 if(EstimatedAgeElement != null) dest.EstimatedAgeElement = (Hl7.Fhir.Model.FhirBoolean)EstimatedAgeElement.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(Condition.DeepCopy());
+                if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent>(Procedure.DeepCopy());
                 return dest;
             }
             else
@@ -720,10 +899,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Age, otherT.Age)) return false;
             if( !DeepComparable.Matches(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
             
             return true;
         }
@@ -748,10 +927,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
             if( !DeepComparable.IsExactly(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
             
             return true;
         }
@@ -776,10 +955,10 @@ namespace Hl7.Fhir.Model
 				if (Age != null) yield return Age;
 				if (EstimatedAgeElement != null) yield return EstimatedAgeElement;
 				if (Deceased != null) yield return Deceased;
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in Condition) { if (elem != null) yield return elem; }
+				foreach (var elem in Procedure) { if (elem != null) yield return elem; }
             }
         }
 
@@ -803,10 +982,10 @@ namespace Hl7.Fhir.Model
                 if (Age != null) yield return new ElementValue("age", Age);
                 if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", EstimatedAgeElement);
                 if (Deceased != null) yield return new ElementValue("deceased", Deceased);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
+                foreach (var elem in Procedure) { if (elem != null) yield return new ElementValue("procedure", elem); }
             }
         }
 

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -276,37 +276,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why device was used
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=180)]
+        [FhirElement("reason", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Why was DeviceUseStatement performed?
-        /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=190)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","DiagnosticReport","DocumentReference","Media")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=200)]
+        [FhirElement("bodySite", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
         {
@@ -319,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Addition details (comments, instructions)
         /// </summary>
-        [FhirElement("note", Order=210)]
+        [FhirElement("note", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -353,8 +337,7 @@ namespace Hl7.Fhir.Model
                 if(RecordedOnElement != null) dest.RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime)RecordedOnElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
@@ -383,8 +366,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RecordedOnElement, otherT.RecordedOnElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
@@ -406,8 +388,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RecordedOnElement, otherT.RecordedOnElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
@@ -429,8 +410,7 @@ namespace Hl7.Fhir.Model
 				if (RecordedOnElement != null) yield return RecordedOnElement;
 				if (Source != null) yield return Source;
 				if (Device != null) yield return Device;
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (BodySite != null) yield return BodySite;
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
@@ -451,8 +431,7 @@ namespace Hl7.Fhir.Model
                 if (RecordedOnElement != null) yield return new ElementValue("recordedOn", RecordedOnElement);
                 if (Source != null) yield return new ElementValue("source", Source);
                 if (Device != null) yield return new ElementValue("device", Device);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
             }

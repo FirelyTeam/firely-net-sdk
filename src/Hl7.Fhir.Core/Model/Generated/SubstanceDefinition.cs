@@ -39,21 +39,21 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// The detailed description of a substance, typically at a level beyond what is used for prescribing
     /// </summary>
-    [FhirType("SubstanceSpecification", IsResource=true)]
+    [FhirType("SubstanceDefinition", IsResource=true)]
     [DataContract]
-    public partial class SubstanceSpecification : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SubstanceSpecification; } }
+        public override ResourceType ResourceType { get { return ResourceType.SubstanceDefinition; } }
         [NotMapped]
-        public override string TypeName { get { return "SubstanceSpecification"; } }
+        public override string TypeName { get { return "SubstanceDefinition"; } }
         
         [FhirType("MoietyComponent", NamedBackboneElement=true)]
         [DataContract]
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
             
             /// <summary>
-            /// Molecular formula
+            /// Molecular formula for this moiety of this substance, typically using the Hill system
             /// </summary>
             [FhirElement("molecularFormula", InSummary=true, Order=90)]
             [DataMember]
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _MolecularFormulaElement;
             
             /// <summary>
-            /// Molecular formula
+            /// Molecular formula for this moiety of this substance, typically using the Hill system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -193,6 +193,19 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Element _Amount;
             
+            /// <summary>
+            /// The measurement type of the quantitative value
+            /// </summary>
+            [FhirElement("amountType", InSummary=true, Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept AmountType
+            {
+                get { return _AmountType; }
+                set { _AmountType = value; OnPropertyChanged("AmountType"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _AmountType;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MoietyComponent;
@@ -207,6 +220,7 @@ namespace Hl7.Fhir.Model
                     if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
                     if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
                     return dest;
                 }
                 else
@@ -231,6 +245,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(OpticalActivity, otherT.OpticalActivity)) return false;
                 if( !DeepComparable.Matches(MolecularFormulaElement, otherT.MolecularFormulaElement)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
                 
                 return true;
             }
@@ -248,6 +263,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(OpticalActivity, otherT.OpticalActivity)) return false;
                 if( !DeepComparable.IsExactly(MolecularFormulaElement, otherT.MolecularFormulaElement)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
                 
                 return true;
             }
@@ -266,6 +282,7 @@ namespace Hl7.Fhir.Model
                     if (OpticalActivity != null) yield return OpticalActivity;
                     if (MolecularFormulaElement != null) yield return MolecularFormulaElement;
                     if (Amount != null) yield return Amount;
+                    if (AmountType != null) yield return AmountType;
                 }
             }
 
@@ -282,6 +299,7 @@ namespace Hl7.Fhir.Model
                     if (OpticalActivity != null) yield return new ElementValue("opticalActivity", OpticalActivity);
                     if (MolecularFormulaElement != null) yield return new ElementValue("molecularFormula", MolecularFormulaElement);
                     if (Amount != null) yield return new ElementValue("amount", Amount);
+                    if (AmountType != null) yield return new ElementValue("amountType", AmountType);
                 }
             }
 
@@ -384,6 +402,35 @@ namespace Hl7.Fhir.Model
             
             private Hl7.Fhir.Model.Element _Amount;
             
+            /// <summary>
+            /// Range of typical values
+            /// </summary>
+            [FhirElement("referenceRange", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.Range ReferenceRange
+            {
+                get { return _ReferenceRange; }
+                set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+            }
+            
+            private Hl7.Fhir.Model.Range _ReferenceRange;
+            
+            /// <summary>
+            /// Supporting literature
+            /// </summary>
+            [FhirElement("source", InSummary=true, Order=100)]
+            [CLSCompliant(false)]
+			[References("DocumentReference")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Source
+            {
+                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+                set { _Source = value; OnPropertyChanged("Source"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Source;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PropertyComponent;
@@ -396,6 +443,8 @@ namespace Hl7.Fhir.Model
                     if(ParametersElement != null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)ParametersElement.DeepCopy();
                     if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.Element)DefiningSubstance.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(ReferenceRange != null) dest.ReferenceRange = (Hl7.Fhir.Model.Range)ReferenceRange.DeepCopy();
+                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
                 else
@@ -418,6 +467,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(ParametersElement, otherT.ParametersElement)) return false;
                 if( !DeepComparable.Matches(DefiningSubstance, otherT.DefiningSubstance)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
                 
                 return true;
             }
@@ -433,6 +484,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ParametersElement, otherT.ParametersElement)) return false;
                 if( !DeepComparable.IsExactly(DefiningSubstance, otherT.DefiningSubstance)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+                if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
+                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
                 
                 return true;
             }
@@ -449,6 +502,8 @@ namespace Hl7.Fhir.Model
                     if (ParametersElement != null) yield return ParametersElement;
                     if (DefiningSubstance != null) yield return DefiningSubstance;
                     if (Amount != null) yield return Amount;
+                    if (ReferenceRange != null) yield return ReferenceRange;
+                    foreach (var elem in Source) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -463,6 +518,8 @@ namespace Hl7.Fhir.Model
                     if (ParametersElement != null) yield return new ElementValue("parameters", ParametersElement);
                     if (DefiningSubstance != null) yield return new ElementValue("definingSubstance", DefiningSubstance);
                     if (Amount != null) yield return new ElementValue("amount", Amount);
+                    if (ReferenceRange != null) yield return new ElementValue("referenceRange", ReferenceRange);
+                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
 
@@ -504,7 +561,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
             
             /// <summary>
-            /// Molecular formula
+            /// Molecular formula of this substance, typically using the Hill system
             /// </summary>
             [FhirElement("molecularFormula", InSummary=true, Order=60)]
             [DataMember]
@@ -517,7 +574,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _MolecularFormulaElement;
             
             /// <summary>
-            /// Molecular formula
+            /// Molecular formula of this substance, typically using the Hill system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -573,56 +630,70 @@ namespace Hl7.Fhir.Model
             [FhirElement("isotope", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> Isotope
+            public List<Hl7.Fhir.Model.SubstanceDefinition.IsotopeComponent> Isotope
             {
-                get { if(_Isotope==null) _Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(); return _Isotope; }
+                get { if(_Isotope==null) _Isotope = new List<Hl7.Fhir.Model.SubstanceDefinition.IsotopeComponent>(); return _Isotope; }
                 set { _Isotope = value; OnPropertyChanged("Isotope"); }
             }
             
-            private List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> _Isotope;
+            private List<Hl7.Fhir.Model.SubstanceDefinition.IsotopeComponent> _Isotope;
             
             /// <summary>
             /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
             /// </summary>
             [FhirElement("molecularWeight", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent MolecularWeight
+            public Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent MolecularWeight
             {
                 get { return _MolecularWeight; }
                 set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
             }
             
-            private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
+            private Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent _MolecularWeight;
             
             /// <summary>
-            /// Supporting literature
+            /// Describes the source of information
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=100)]
+            [FhirElement("sourceCoding", InSummary=true, Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Coding> SourceCoding
+            {
+                get { if(_SourceCoding==null) _SourceCoding = new List<Hl7.Fhir.Model.Coding>(); return _SourceCoding; }
+                set { _SourceCoding = value; OnPropertyChanged("SourceCoding"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Coding> _SourceCoding;
+            
+            /// <summary>
+            /// Supporting literature about the source of information
+            /// </summary>
+            [FhirElement("sourceDocument", InSummary=true, Order=110)]
             [CLSCompliant(false)]
 			[References("DocumentReference")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Source
+            public List<Hl7.Fhir.Model.ResourceReference> SourceDocument
             {
-                get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
-                set { _Source = value; OnPropertyChanged("Source"); }
+                get { if(_SourceDocument==null) _SourceDocument = new List<Hl7.Fhir.Model.ResourceReference>(); return _SourceDocument; }
+                set { _SourceDocument = value; OnPropertyChanged("SourceDocument"); }
             }
             
-            private List<Hl7.Fhir.Model.ResourceReference> _Source;
+            private List<Hl7.Fhir.Model.ResourceReference> _SourceDocument;
             
             /// <summary>
             /// Molecular structural representation
             /// </summary>
-            [FhirElement("representation", InSummary=true, Order=110)]
+            [FhirElement("representation", InSummary=true, Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> Representation
+            public List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent> Representation
             {
-                get { if(_Representation==null) _Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(); return _Representation; }
+                get { if(_Representation==null) _Representation = new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>(); return _Representation; }
                 set { _Representation = value; OnPropertyChanged("Representation"); }
             }
             
-            private List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> _Representation;
+            private List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent> _Representation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -635,10 +706,11 @@ namespace Hl7.Fhir.Model
                     if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
                     if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
                     if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopy();
-                    if(Isotope != null) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(Isotope.DeepCopy());
-                    if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopy();
-                    if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-                    if(Representation != null) dest.Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(Representation.DeepCopy());
+                    if(Isotope != null) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceDefinition.IsotopeComponent>(Isotope.DeepCopy());
+                    if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent)MolecularWeight.DeepCopy();
+                    if(SourceCoding != null) dest.SourceCoding = new List<Hl7.Fhir.Model.Coding>(SourceCoding.DeepCopy());
+                    if(SourceDocument != null) dest.SourceDocument = new List<Hl7.Fhir.Model.ResourceReference>(SourceDocument.DeepCopy());
+                    if(Representation != null) dest.Representation = new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>(Representation.DeepCopy());
                     return dest;
                 }
                 else
@@ -662,7 +734,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(MolecularFormulaByMoietyElement, otherT.MolecularFormulaByMoietyElement)) return false;
                 if( !DeepComparable.Matches(Isotope, otherT.Isotope)) return false;
                 if( !DeepComparable.Matches(MolecularWeight, otherT.MolecularWeight)) return false;
-                if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+                if( !DeepComparable.Matches(SourceCoding, otherT.SourceCoding)) return false;
+                if( !DeepComparable.Matches(SourceDocument, otherT.SourceDocument)) return false;
                 if( !DeepComparable.Matches(Representation, otherT.Representation)) return false;
                 
                 return true;
@@ -680,7 +753,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(MolecularFormulaByMoietyElement, otherT.MolecularFormulaByMoietyElement)) return false;
                 if( !DeepComparable.IsExactly(Isotope, otherT.Isotope)) return false;
                 if( !DeepComparable.IsExactly(MolecularWeight, otherT.MolecularWeight)) return false;
-                if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+                if( !DeepComparable.IsExactly(SourceCoding, otherT.SourceCoding)) return false;
+                if( !DeepComparable.IsExactly(SourceDocument, otherT.SourceDocument)) return false;
                 if( !DeepComparable.IsExactly(Representation, otherT.Representation)) return false;
                 
                 return true;
@@ -699,7 +773,8 @@ namespace Hl7.Fhir.Model
                     if (MolecularFormulaByMoietyElement != null) yield return MolecularFormulaByMoietyElement;
                     foreach (var elem in Isotope) { if (elem != null) yield return elem; }
                     if (MolecularWeight != null) yield return MolecularWeight;
-                    foreach (var elem in Source) { if (elem != null) yield return elem; }
+                    foreach (var elem in SourceCoding) { if (elem != null) yield return elem; }
+                    foreach (var elem in SourceDocument) { if (elem != null) yield return elem; }
                     foreach (var elem in Representation) { if (elem != null) yield return elem; }
                 }
             }
@@ -716,7 +791,8 @@ namespace Hl7.Fhir.Model
                     if (MolecularFormulaByMoietyElement != null) yield return new ElementValue("molecularFormulaByMoiety", MolecularFormulaByMoietyElement);
                     foreach (var elem in Isotope) { if (elem != null) yield return new ElementValue("isotope", elem); }
                     if (MolecularWeight != null) yield return new ElementValue("molecularWeight", MolecularWeight);
-                    foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
+                    foreach (var elem in SourceCoding) { if (elem != null) yield return new ElementValue("sourceCoding", elem); }
+                    foreach (var elem in SourceDocument) { if (elem != null) yield return new ElementValue("sourceDocument", elem); }
                     foreach (var elem in Representation) { if (elem != null) yield return new ElementValue("representation", elem); }
                 }
             }
@@ -789,13 +865,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("molecularWeight", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent MolecularWeight
+            public Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent MolecularWeight
             {
                 get { return _MolecularWeight; }
                 set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
             }
             
-            private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
+            private Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent _MolecularWeight;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -808,7 +884,7 @@ namespace Hl7.Fhir.Model
                     if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
                     if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopy();
                     if(HalfLife != null) dest.HalfLife = (Quantity)HalfLife.DeepCopy();
-                    if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopy();
+                    if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent)MolecularWeight.DeepCopy();
                     return dest;
                 }
                 else
@@ -1167,7 +1243,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
-            /// Status of the code assignment
+            /// Status of the code assignment, for example 'provisional', 'approved'
             /// </summary>
             [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
@@ -1214,34 +1290,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Any comment can be provided in this field, if necessary
             /// </summary>
-            [FhirElement("comment", InSummary=true, Order=70)]
+            [FhirElement("note", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString CommentElement
+            public List<Hl7.Fhir.Model.Annotation> Note
             {
-                get { return _CommentElement; }
-                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _CommentElement;
-            
-            /// <summary>
-            /// Any comment can be provided in this field, if necessary
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Comment
-            {
-                get { return CommentElement != null ? CommentElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        CommentElement = null; 
-                    else
-                        CommentElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Comment");
-                }
-            }
+            private List<Hl7.Fhir.Model.Annotation> _Note;
             
             /// <summary>
             /// Supporting literature
@@ -1269,7 +1327,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                     if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
@@ -1291,7 +1349,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Status, otherT.Status)) return false;
                 if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
-                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
                 if( !DeepComparable.Matches(Source, otherT.Source)) return false;
                 
                 return true;
@@ -1306,7 +1364,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
                 if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
-                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
                 
                 return true;
@@ -1322,7 +1380,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return Code;
                     if (Status != null) yield return Status;
                     if (StatusDateElement != null) yield return StatusDateElement;
-                    if (CommentElement != null) yield return CommentElement;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
                     foreach (var elem in Source) { if (elem != null) yield return elem; }
                 }
             }
@@ -1336,7 +1394,7 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return new ElementValue("code", Code);
                     if (Status != null) yield return new ElementValue("status", Status);
                     if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
-                    if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                     foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
             }
@@ -1386,7 +1444,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Name type
+            /// Name type, for example 'systematic',  'scientific, 'brand'
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
@@ -1399,7 +1457,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// The status of the name
+            /// The status of the name, for example 'current', 'proposed'
             /// </summary>
             [FhirElement("status", InSummary=true, Order=60)]
             [DataMember]
@@ -1444,7 +1502,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Language of the name
+            /// Human language that the name is written in
             /// </summary>
             [FhirElement("language", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
@@ -1486,32 +1544,32 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
             
             /// <summary>
-            /// A synonym of this name
+            /// A synonym of this particular name, by which the substance is also known
             /// </summary>
             [FhirElement("synonym", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Synonym
+            public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Synonym
             {
-                get { if(_Synonym==null) _Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Synonym; }
+                get { if(_Synonym==null) _Synonym = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(); return _Synonym; }
                 set { _Synonym = value; OnPropertyChanged("Synonym"); }
             }
             
-            private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Synonym;
+            private List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> _Synonym;
             
             /// <summary>
-            /// A translation for this name
+            /// A translation for this name into another human language
             /// </summary>
             [FhirElement("translation", InSummary=true, Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Translation
+            public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Translation
             {
-                get { if(_Translation==null) _Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Translation; }
+                get { if(_Translation==null) _Translation = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(); return _Translation; }
                 set { _Translation = value; OnPropertyChanged("Translation"); }
             }
             
-            private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Translation;
+            private List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> _Translation;
             
             /// <summary>
             /// Details of the official nature of this name
@@ -1519,13 +1577,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("official", InSummary=true, Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> Official
+            public List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent> Official
             {
-                get { if(_Official==null) _Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(); return _Official; }
+                get { if(_Official==null) _Official = new List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent>(); return _Official; }
                 set { _Official = value; OnPropertyChanged("Official"); }
             }
             
-            private List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> _Official;
+            private List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent> _Official;
             
             /// <summary>
             /// Supporting literature
@@ -1557,9 +1615,9 @@ namespace Hl7.Fhir.Model
                     if(Language != null) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
                     if(Domain != null) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopy());
                     if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-                    if(Synonym != null) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Synonym.DeepCopy());
-                    if(Translation != null) dest.Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Translation.DeepCopy());
-                    if(Official != null) dest.Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(Official.DeepCopy());
+                    if(Synonym != null) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Synonym.DeepCopy());
+                    if(Translation != null) dest.Translation = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Translation.DeepCopy());
+                    if(Official != null) dest.Official = new List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent>(Official.DeepCopy());
                     if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
                 }
@@ -1680,7 +1738,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Authority;
             
             /// <summary>
-            /// The status of the official name
+            /// The status of the official name, for example 'provisional', 'approved'
             /// </summary>
             [FhirElement("status", InSummary=true, Order=50)]
             [DataMember]
@@ -1810,30 +1868,30 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A pointer to another substance, as a resource or just a representational code
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("substanceDefinition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Substance
+            public Hl7.Fhir.Model.Element SubstanceDefinition
             {
-                get { return _Substance; }
-                set { _Substance = value; OnPropertyChanged("Substance"); }
+                get { return _SubstanceDefinition; }
+                set { _SubstanceDefinition = value; OnPropertyChanged("SubstanceDefinition"); }
             }
             
-            private Hl7.Fhir.Model.Element _Substance;
+            private Hl7.Fhir.Model.Element _SubstanceDefinition;
             
             /// <summary>
-            /// For example "salt to parent", "active moiety", "starting material"
+            /// For example "salt to parent", "active moiety", "starting material", "polymorph"
             /// </summary>
-            [FhirElement("relationship", InSummary=true, Order=50)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Relationship
+            public Hl7.Fhir.Model.CodeableConcept Type
             {
-                get { return _Relationship; }
-                set { _Relationship = value; OnPropertyChanged("Relationship"); }
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Relationship;
+            private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships
@@ -1883,17 +1941,17 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Amount;
             
             /// <summary>
-            /// For use when the numeric
+            /// For use when the numeric has an uncertain range
             /// </summary>
-            [FhirElement("amountRatioLowLimit", InSummary=true, Order=80)]
+            [FhirElement("amountRatioHighLimit", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio AmountRatioLowLimit
+            public Hl7.Fhir.Model.Ratio AmountRatioHighLimit
             {
-                get { return _AmountRatioLowLimit; }
-                set { _AmountRatioLowLimit = value; OnPropertyChanged("AmountRatioLowLimit"); }
+                get { return _AmountRatioHighLimit; }
+                set { _AmountRatioHighLimit = value; OnPropertyChanged("AmountRatioHighLimit"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _AmountRatioLowLimit;
+            private Hl7.Fhir.Model.Ratio _AmountRatioHighLimit;
             
             /// <summary>
             /// An operator for the amount, for example "average", "approximately", "less than"
@@ -1931,11 +1989,11 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
-                    if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
+                    if(SubstanceDefinition != null) dest.SubstanceDefinition = (Hl7.Fhir.Model.Element)SubstanceDefinition.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
-                    if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopy();
+                    if(AmountRatioHighLimit != null) dest.AmountRatioHighLimit = (Hl7.Fhir.Model.Ratio)AmountRatioHighLimit.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
                     if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;
@@ -1955,11 +2013,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
-                if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.Matches(SubstanceDefinition, otherT.SubstanceDefinition)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(IsDefiningElement, otherT.IsDefiningElement)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
-                if( !DeepComparable.Matches(AmountRatioLowLimit, otherT.AmountRatioLowLimit)) return false;
+                if( !DeepComparable.Matches(AmountRatioHighLimit, otherT.AmountRatioHighLimit)) return false;
                 if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
                 if( !DeepComparable.Matches(Source, otherT.Source)) return false;
                 
@@ -1972,11 +2030,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
-                if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
+                if( !DeepComparable.IsExactly(SubstanceDefinition, otherT.SubstanceDefinition)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(IsDefiningElement, otherT.IsDefiningElement)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
-                if( !DeepComparable.IsExactly(AmountRatioLowLimit, otherT.AmountRatioLowLimit)) return false;
+                if( !DeepComparable.IsExactly(AmountRatioHighLimit, otherT.AmountRatioHighLimit)) return false;
                 if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
                 if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
                 
@@ -1990,11 +2048,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Substance != null) yield return Substance;
-                    if (Relationship != null) yield return Relationship;
+                    if (SubstanceDefinition != null) yield return SubstanceDefinition;
+                    if (Type != null) yield return Type;
                     if (IsDefiningElement != null) yield return IsDefiningElement;
                     if (Amount != null) yield return Amount;
-                    if (AmountRatioLowLimit != null) yield return AmountRatioLowLimit;
+                    if (AmountRatioHighLimit != null) yield return AmountRatioHighLimit;
                     if (AmountType != null) yield return AmountType;
                     foreach (var elem in Source) { if (elem != null) yield return elem; }
                 }
@@ -2006,11 +2064,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return new ElementValue("substance", Substance);
-                    if (Relationship != null) yield return new ElementValue("relationship", Relationship);
+                    if (SubstanceDefinition != null) yield return new ElementValue("substanceDefinition", SubstanceDefinition);
+                    if (Type != null) yield return new ElementValue("type", Type);
                     if (IsDefiningElement != null) yield return new ElementValue("isDefining", IsDefiningElement);
                     if (Amount != null) yield return new ElementValue("amount", Amount);
-                    if (AmountRatioLowLimit != null) yield return new ElementValue("amountRatioLowLimit", AmountRatioLowLimit);
+                    if (AmountRatioHighLimit != null) yield return new ElementValue("amountRatioHighLimit", AmountRatioHighLimit);
                     if (AmountType != null) yield return new ElementValue("amountType", AmountType);
                     foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
                 }
@@ -2034,17 +2092,36 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// High level categorization, e.g. polymer or nucleic acid
+        /// A business level identifier of the substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public Hl7.Fhir.Model.FhirString VersionElement
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return _VersionElement; }
+            set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private Hl7.Fhir.Model.FhirString _VersionElement;
+        
+        /// <summary>
+        /// A business level identifier of the substance
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Version
+        {
+            get { return VersionElement != null ? VersionElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  VersionElement = null; 
+                else
+                  VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Version");
+            }
+        }
         
         /// <summary>
         /// Status of substance within the catalogue e.g. approved
@@ -2060,9 +2137,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Status;
         
         /// <summary>
+        /// High level categorization, e.g. polymer or nucleic acid, or food, chemical, biological
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
         /// If the substance applies to only human or veterinary use
         /// </summary>
-        [FhirElement("domain", InSummary=true, Order=120)]
+        [FhirElement("domain", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Domain
         {
@@ -2075,39 +2165,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Textual description of the substance
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=130)]
+        [FhirElement("description", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement
+        public Hl7.Fhir.Model.Markdown Description
         {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _DescriptionElement;
-        
-        /// <summary>
-        /// Textual description of the substance
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Description");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
         /// Supporting literature
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=140)]
+        [FhirElement("source", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
@@ -2123,67 +2194,81 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Textual comment about this record of a substance
         /// </summary>
-        [FhirElement("comment", InSummary=true, Order=150)]
+        [FhirElement("note", InSummary=true, Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CommentElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _CommentElement; }
-            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CommentElement;
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// Textual comment about this record of a substance
+        /// A company that makes this substance
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Comment
+        [FhirElement("manufacturer", InSummary=true, Order=170)]
+        [CLSCompliant(false)]
+		[References("Organization")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
         {
-            get { return CommentElement != null ? CommentElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CommentElement = null; 
-                else
-                  CommentElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Comment");
-            }
+            get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+            set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
+        
+        /// <summary>
+        /// A company that supplies this substance
+        /// </summary>
+        [FhirElement("supplier", InSummary=true, Order=180)]
+        [CLSCompliant(false)]
+		[References("Organization")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Supplier
+        {
+            get { if(_Supplier==null) _Supplier = new List<Hl7.Fhir.Model.ResourceReference>(); return _Supplier; }
+            set { _Supplier = value; OnPropertyChanged("Supplier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Supplier;
         
         /// <summary>
         /// Moiety, for structural modifications
         /// </summary>
-        [FhirElement("moiety", InSummary=true, Order=160)]
+        [FhirElement("moiety", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> Moiety
+        public List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent> Moiety
         {
-            get { if(_Moiety==null) _Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(); return _Moiety; }
+            get { if(_Moiety==null) _Moiety = new List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent>(); return _Moiety; }
             set { _Moiety = value; OnPropertyChanged("Moiety"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> _Moiety;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent> _Moiety;
         
         /// <summary>
         /// General specifications for this substance, including how it is related to other substances
         /// </summary>
-        [FhirElement("property", InSummary=true, Order=170)]
+        [FhirElement("property", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> Property
+        public List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent> Property
         {
-            get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(); return _Property; }
+            get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent>(); return _Property; }
             set { _Property = value; OnPropertyChanged("Property"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> _Property;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent> _Property;
         
         /// <summary>
         /// General information detailing this substance
         /// </summary>
-        [FhirElement("referenceInformation", InSummary=true, Order=180)]
+        [FhirElement("referenceInformation", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("SubstanceReferenceInformation")]
         [DataMember]
@@ -2198,76 +2283,76 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Structural information
         /// </summary>
-        [FhirElement("structure", InSummary=true, Order=190)]
+        [FhirElement("structure", InSummary=true, Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.SubstanceSpecification.StructureComponent Structure
+        public Hl7.Fhir.Model.SubstanceDefinition.StructureComponent Structure
         {
             get { return _Structure; }
             set { _Structure = value; OnPropertyChanged("Structure"); }
         }
         
-        private Hl7.Fhir.Model.SubstanceSpecification.StructureComponent _Structure;
+        private Hl7.Fhir.Model.SubstanceDefinition.StructureComponent _Structure;
         
         /// <summary>
         /// Codes associated with the substance
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=200)]
+        [FhirElement("code", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> Code
+        public List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent> Code
         {
-            get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(); return _Code; }
+            get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent>(); return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> _Code;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent> _Code;
         
         /// <summary>
         /// Names applicable to this substance
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=210)]
+        [FhirElement("name", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Name
+        public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Name
         {
-            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Name; }
+            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Name;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> _Name;
         
         /// <summary>
         /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
         /// </summary>
-        [FhirElement("molecularWeight", InSummary=true, Order=220)]
+        [FhirElement("molecularWeight", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> MolecularWeight
+        public List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent> MolecularWeight
         {
-            get { if(_MolecularWeight==null) _MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(); return _MolecularWeight; }
+            get { if(_MolecularWeight==null) _MolecularWeight = new List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent>(); return _MolecularWeight; }
             set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> _MolecularWeight;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent> _MolecularWeight;
         
         /// <summary>
         /// A link between this substance and another, with details of the relationship
         /// </summary>
-        [FhirElement("relationship", InSummary=true, Order=230)]
+        [FhirElement("relationship", InSummary=true, Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> Relationship
+        public List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent> Relationship
         {
-            get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(); return _Relationship; }
+            get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent>(); return _Relationship; }
             set { _Relationship = value; OnPropertyChanged("Relationship"); }
         }
         
-        private List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> _Relationship;
+        private List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent> _Relationship;
         
         /// <summary>
         /// Data items specific to nucleic acids
         /// </summary>
-        [FhirElement("nucleicAcid", InSummary=true, Order=240)]
+        [FhirElement("nucleicAcid", InSummary=true, Order=270)]
         [CLSCompliant(false)]
 		[References("SubstanceNucleicAcid")]
         [DataMember]
@@ -2282,7 +2367,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data items specific to polymers
         /// </summary>
-        [FhirElement("polymer", InSummary=true, Order=250)]
+        [FhirElement("polymer", InSummary=true, Order=280)]
         [CLSCompliant(false)]
 		[References("SubstancePolymer")]
         [DataMember]
@@ -2297,7 +2382,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data items specific to proteins
         /// </summary>
-        [FhirElement("protein", InSummary=true, Order=260)]
+        [FhirElement("protein", InSummary=true, Order=290)]
         [CLSCompliant(false)]
 		[References("SubstanceProtein")]
         [DataMember]
@@ -2312,7 +2397,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Material or taxonomic/anatomical source for the substance
         /// </summary>
-        [FhirElement("sourceMaterial", InSummary=true, Order=270)]
+        [FhirElement("sourceMaterial", InSummary=true, Order=300)]
         [CLSCompliant(false)]
 		[References("SubstanceSourceMaterial")]
         [DataMember]
@@ -2333,26 +2418,29 @@ namespace Hl7.Fhir.Model
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as SubstanceSpecification;
+            var dest = other as SubstanceDefinition;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopy();
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
-                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(Moiety != null) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(Moiety.DeepCopy());
-                if(Property != null) dest.Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(Property.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+                if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
+                if(Moiety != null) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent>(Moiety.DeepCopy());
+                if(Property != null) dest.Property = new List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent>(Property.DeepCopy());
                 if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)ReferenceInformation.DeepCopy();
-                if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)Structure.DeepCopy();
-                if(Code != null) dest.Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(Code.DeepCopy());
-                if(Name != null) dest.Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Name.DeepCopy());
-                if(MolecularWeight != null) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(MolecularWeight.DeepCopy());
-                if(Relationship != null) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(Relationship.DeepCopy());
+                if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceDefinition.StructureComponent)Structure.DeepCopy();
+                if(Code != null) dest.Code = new List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent>(Code.DeepCopy());
+                if(Name != null) dest.Name = new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>(Name.DeepCopy());
+                if(MolecularWeight != null) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent>(MolecularWeight.DeepCopy());
+                if(Relationship != null) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent>(Relationship.DeepCopy());
                 if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)NucleicAcid.DeepCopy();
                 if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)Polymer.DeepCopy();
                 if(Protein != null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)Protein.DeepCopy();
@@ -2365,22 +2453,25 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new SubstanceSpecification());
+            return CopyTo(new SubstanceDefinition());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as SubstanceSpecification;
+            var otherT = other as SubstanceDefinition;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Domain, otherT.Domain)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.Matches(Supplier, otherT.Supplier)) return false;
             if( !DeepComparable.Matches(Moiety, otherT.Moiety)) return false;
             if( !DeepComparable.Matches(Property, otherT.Property)) return false;
             if( !DeepComparable.Matches(ReferenceInformation, otherT.ReferenceInformation)) return false;
@@ -2399,17 +2490,20 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as SubstanceSpecification;
+            var otherT = other as SubstanceDefinition;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Domain, otherT.Domain)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
+            if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
             if( !DeepComparable.IsExactly(Moiety, otherT.Moiety)) return false;
             if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
             if( !DeepComparable.IsExactly(ReferenceInformation, otherT.ReferenceInformation)) return false;
@@ -2433,12 +2527,15 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
-				if (Type != null) yield return Type;
+				if (VersionElement != null) yield return VersionElement;
 				if (Status != null) yield return Status;
+				if (Category != null) yield return Category;
 				if (Domain != null) yield return Domain;
-				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Description != null) yield return Description;
 				foreach (var elem in Source) { if (elem != null) yield return elem; }
-				if (CommentElement != null) yield return CommentElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
+				foreach (var elem in Supplier) { if (elem != null) yield return elem; }
 				foreach (var elem in Moiety) { if (elem != null) yield return elem; }
 				foreach (var elem in Property) { if (elem != null) yield return elem; }
 				if (ReferenceInformation != null) yield return ReferenceInformation;
@@ -2461,12 +2558,15 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-                if (Type != null) yield return new ElementValue("type", Type);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 if (Status != null) yield return new ElementValue("status", Status);
+                if (Category != null) yield return new ElementValue("category", Category);
                 if (Domain != null) yield return new ElementValue("domain", Domain);
-                if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                if (Description != null) yield return new ElementValue("description", Description);
                 foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
-                if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", elem); }
                 foreach (var elem in Moiety) { if (elem != null) yield return new ElementValue("moiety", elem); }
                 foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
                 if (ReferenceInformation != null) yield return new ElementValue("referenceInformation", ReferenceInformation);

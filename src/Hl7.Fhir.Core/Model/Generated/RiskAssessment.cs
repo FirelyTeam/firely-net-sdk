@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -455,37 +455,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the assessment was necessary?
         /// </summary>
-        [FhirElement("reasonCode", Order=200)]
+        [FhirElement("reason", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Why the assessment was necessary?
-        /// </summary>
-        [FhirElement("reasonReference", Order=210)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// Information used in assessment
         /// </summary>
-        [FhirElement("basis", Order=220)]
+        [FhirElement("basis", Order=210)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -501,7 +485,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Outcome predicted
         /// </summary>
-        [FhirElement("prediction", Order=230)]
+        [FhirElement("prediction", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
@@ -515,7 +499,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How to reduce risk
         /// </summary>
-        [FhirElement("mitigation", Order=240)]
+        [FhirElement("mitigation", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString MitigationElement
         {
@@ -547,7 +531,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the risk assessment
         /// </summary>
-        [FhirElement("note", Order=250)]
+        [FhirElement("note", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -603,8 +587,7 @@ namespace Hl7.Fhir.Model
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
                 if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
@@ -637,8 +620,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Basis, otherT.Basis)) return false;
             if( !DeepComparable.Matches(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.Matches(MitigationElement, otherT.MitigationElement)) return false;
@@ -664,8 +646,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Basis, otherT.Basis)) return false;
             if( !DeepComparable.IsExactly(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.IsExactly(MitigationElement, otherT.MitigationElement)) return false;
@@ -691,8 +672,7 @@ namespace Hl7.Fhir.Model
 				if (Occurrence != null) yield return Occurrence;
 				if (Condition != null) yield return Condition;
 				if (Performer != null) yield return Performer;
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				foreach (var elem in Basis) { if (elem != null) yield return elem; }
 				foreach (var elem in Prediction) { if (elem != null) yield return elem; }
 				if (MitigationElement != null) yield return MitigationElement;
@@ -717,8 +697,7 @@ namespace Hl7.Fhir.Model
                 if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
                 if (Condition != null) yield return new ElementValue("condition", Condition);
                 if (Performer != null) yield return new ElementValue("performer", Performer);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
                 foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", elem); }
                 if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);

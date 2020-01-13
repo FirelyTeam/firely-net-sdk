@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -467,39 +467,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _AppointmentType;
         
         /// <summary>
-        /// Coded reason this appointment is scheduled
+        /// Reason this appointment is scheduled
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=160)]
+        [FhirElement("reason", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Reason the appointment is to take place (resource)
-        /// </summary>
-        [FhirElement("reasonReference", Order=170)]
-        [CLSCompliant(false)]
-		[References("Condition","Procedure","Observation","ImmunizationRecommendation")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// Used to make informed decisions if needing to re-prioritize
         /// </summary>
-        [FhirElement("priority", Order=180)]
+        [FhirElement("priority", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt PriorityElement
         {
@@ -531,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Shown on a subject line in a meeting request, or appointment list
         /// </summary>
-        [FhirElement("description", Order=190)]
+        [FhirElement("description", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -563,7 +547,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information to support the appointment
         /// </summary>
-        [FhirElement("supportingInformation", Order=200)]
+        [FhirElement("supportingInformation", Order=190)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -579,7 +563,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When appointment is to take place
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=210)]
+        [FhirElement("start", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Instant StartElement
         {
@@ -611,7 +595,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When appointment is to conclude
         /// </summary>
-        [FhirElement("end", InSummary=true, Order=220)]
+        [FhirElement("end", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -643,7 +627,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Can be less than start/end (e.g. estimate)
         /// </summary>
-        [FhirElement("minutesDuration", Order=230)]
+        [FhirElement("minutesDuration", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt MinutesDurationElement
         {
@@ -675,7 +659,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The slots that this appointment is filling
         /// </summary>
-        [FhirElement("slot", Order=240)]
+        [FhirElement("slot", Order=230)]
         [CLSCompliant(false)]
 		[References("Slot")]
         [Cardinality(Min=0,Max=-1)]
@@ -691,7 +675,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The date that this appointment was initially created
         /// </summary>
-        [FhirElement("created", Order=250)]
+        [FhirElement("created", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -723,7 +707,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional comments
         /// </summary>
-        [FhirElement("comment", Order=260)]
+        [FhirElement("comment", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -755,7 +739,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detailed information and instructions for the patient
         /// </summary>
-        [FhirElement("patientInstruction", Order=270)]
+        [FhirElement("patientInstruction", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
         {
@@ -787,7 +771,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The service request this appointment is allocated to assess
         /// </summary>
-        [FhirElement("basedOn", Order=280)]
+        [FhirElement("basedOn", Order=270)]
         [CLSCompliant(false)]
 		[References("ServiceRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -803,7 +787,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Participants involved in appointment
         /// </summary>
-        [FhirElement("participant", Order=290)]
+        [FhirElement("participant", Order=280)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
@@ -817,7 +801,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Potential date/time interval(s) requested to allocate the appointment within
         /// </summary>
-        [FhirElement("requestedPeriod", Order=300)]
+        [FhirElement("requestedPeriod", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Period> RequestedPeriod
@@ -889,8 +873,7 @@ namespace Hl7.Fhir.Model
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
                 if(AppointmentType != null) dest.AppointmentType = (Hl7.Fhir.Model.CodeableConcept)AppointmentType.DeepCopy();
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.UnsignedInt)PriorityElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
@@ -928,8 +911,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
             if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.Matches(AppointmentType, otherT.AppointmentType)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
@@ -960,8 +942,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
             if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
             if( !DeepComparable.IsExactly(AppointmentType, otherT.AppointmentType)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
@@ -992,8 +973,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
 				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
 				if (AppointmentType != null) yield return AppointmentType;
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (PriorityElement != null) yield return PriorityElement;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
@@ -1023,8 +1003,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
                 foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
                 if (AppointmentType != null) yield return new ElementValue("appointmentType", AppointmentType);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
                 if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }

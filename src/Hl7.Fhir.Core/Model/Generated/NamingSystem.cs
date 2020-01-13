@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -352,9 +352,73 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Canonical identifier for this naming system, represented as a URI (globally unique)
+        /// </summary>
+        [FhirElement("url", InSummary=true, Order=90)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri UrlElement
+        {
+            get { return _UrlElement; }
+            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _UrlElement;
+        
+        /// <summary>
+        /// Canonical identifier for this naming system, represented as a URI (globally unique)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Url
+        {
+            get { return UrlElement != null ? UrlElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  UrlElement = null; 
+                else
+                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Url");
+            }
+        }
+        
+        /// <summary>
+        /// Business version of the naming system
+        /// </summary>
+        [FhirElement("version", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString VersionElement
+        {
+            get { return _VersionElement; }
+            set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _VersionElement;
+        
+        /// <summary>
+        /// Business version of the naming system
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Version
+        {
+            get { return VersionElement != null ? VersionElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  VersionElement = null; 
+                else
+                  VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Version");
+            }
+        }
+        
+        /// <summary>
         /// Name for this naming system (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=90)]
+        [FhirElement("name", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -387,7 +451,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=100)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -420,7 +484,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// codesystem | identifier | root
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=110)]
+        [FhirElement("kind", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement
@@ -453,7 +517,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=120)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -486,7 +550,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=130)]
+        [FhirElement("publisher", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -518,7 +582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=140)]
+        [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -532,7 +596,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who maintains system namespace?
         /// </summary>
-        [FhirElement("responsible", Order=150)]
+        [FhirElement("responsible", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ResponsibleElement
         {
@@ -564,7 +628,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// e.g. driver,  provider,  patient, bank etc.
         /// </summary>
-        [FhirElement("type", Order=160)]
+        [FhirElement("type", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -577,7 +641,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the naming system
         /// </summary>
-        [FhirElement("description", Order=170)]
+        [FhirElement("description", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -590,7 +654,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=180)]
+        [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -604,7 +668,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for naming system (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=190)]
+        [FhirElement("jurisdiction", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -618,7 +682,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How/where is it used
         /// </summary>
-        [FhirElement("usage", Order=200)]
+        [FhirElement("usage", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString UsageElement
         {
@@ -650,7 +714,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifiers used for system
         /// </summary>
-        [FhirElement("uniqueId", InSummary=true, Order=210)]
+        [FhirElement("uniqueId", InSummary=true, Order=230)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId
@@ -671,10 +735,10 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
         };
 
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent NamingSystem_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "nsd-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
@@ -694,7 +758,7 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(NamingSystem_NSD_1);
-            InvariantConstraints.Add(NamingSystem_NSD_0);
+            InvariantConstraints.Add(NamingSystem_CNL_0);
             InvariantConstraints.Add(NamingSystem_NSD_2);
         }
 
@@ -705,6 +769,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>)KindElement.DeepCopy();
@@ -735,6 +801,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
@@ -758,6 +826,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
@@ -781,6 +851,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				if (UrlElement != null) yield return UrlElement;
+				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (KindElement != null) yield return KindElement;
@@ -803,6 +875,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (KindElement != null) yield return new ElementValue("kind", KindElement);

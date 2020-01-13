@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "IngredientComponent"; } }
             
             /// <summary>
-            /// The actual ingredient or content
+            /// The ingredient (substance or medication) that the ingredient.strength relates to
             /// </summary>
             [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
@@ -140,15 +140,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantity of ingredient present
             /// </summary>
-            [FhirElement("strength", Order=60)]
+            [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio Strength
+            public Hl7.Fhir.Model.Element Strength
             {
                 get { return _Strength; }
                 set { _Strength = value; OnPropertyChanged("Strength"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _Strength;
+            private Hl7.Fhir.Model.Element _Strength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -159,7 +161,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
-                    if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
+                    if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Element)Strength.DeepCopy();
                     return dest;
                 }
                 else
@@ -445,15 +447,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// powder | tablets | capsule +
         /// </summary>
-        [FhirElement("form", Order=130)]
+        [FhirElement("doseForm", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Form
+        public Hl7.Fhir.Model.CodeableConcept DoseForm
         {
-            get { return _Form; }
-            set { _Form = value; OnPropertyChanged("Form"); }
+            get { return _DoseForm; }
+            set { _DoseForm = value; OnPropertyChanged("DoseForm"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Form;
+        private Hl7.Fhir.Model.CodeableConcept _DoseForm;
         
         /// <summary>
         /// Amount of drug in package
@@ -513,7 +515,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
-                if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
+                if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
                 if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Medication.IngredientComponent>(Ingredient.DeepCopy());
                 if(Batch != null) dest.Batch = (Hl7.Fhir.Model.Medication.BatchComponent)Batch.DeepCopy();
@@ -538,7 +540,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
-            if( !DeepComparable.Matches(Form, otherT.Form)) return false;
+            if( !DeepComparable.Matches(DoseForm, otherT.DoseForm)) return false;
             if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
             if( !DeepComparable.Matches(Batch, otherT.Batch)) return false;
@@ -556,7 +558,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
-            if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
+            if( !DeepComparable.IsExactly(DoseForm, otherT.DoseForm)) return false;
             if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
             if( !DeepComparable.IsExactly(Batch, otherT.Batch)) return false;
@@ -574,7 +576,7 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				if (StatusElement != null) yield return StatusElement;
 				if (Manufacturer != null) yield return Manufacturer;
-				if (Form != null) yield return Form;
+				if (DoseForm != null) yield return DoseForm;
 				if (Amount != null) yield return Amount;
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
 				if (Batch != null) yield return Batch;
@@ -591,7 +593,7 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return new ElementValue("code", Code);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
-                if (Form != null) yield return new ElementValue("form", Form);
+                if (DoseForm != null) yield return new ElementValue("doseForm", DoseForm);
                 if (Amount != null) yield return new ElementValue("amount", Amount);
                 foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
                 if (Batch != null) yield return new ElementValue("batch", Batch);

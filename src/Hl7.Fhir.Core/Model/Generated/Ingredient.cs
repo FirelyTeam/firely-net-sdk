@@ -39,21 +39,21 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// An ingredient of a manufactured item or pharmaceutical product
     /// </summary>
-    [FhirType("MedicinalProductIngredient", IsResource=true)]
+    [FhirType("Ingredient", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Ingredient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductIngredient; } }
+        public override ResourceType ResourceType { get { return ResourceType.Ingredient; } }
         [NotMapped]
-        public override string TypeName { get { return "MedicinalProductIngredient"; } }
+        public override string TypeName { get { return "Ingredient"; } }
         
         [FhirType("SpecifiedSubstanceComponent", NamedBackboneElement=true)]
         [DataContract]
@@ -63,18 +63,20 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SpecifiedSubstanceComponent"; } }
             
             /// <summary>
-            /// The specified substance
+            /// Substance as a 'specified substance', implying extra substance related characteristics
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.Element Code
             {
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Hl7.Fhir.Model.Element _Code;
             
             /// <summary>
             /// The group of specified substance, e.g. group 1 to 4
@@ -109,13 +111,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("strength", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
+            public List<Hl7.Fhir.Model.Ingredient.StrengthComponent> Strength
             {
-                get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(); return _Strength; }
+                get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(); return _Strength; }
                 set { _Strength = value; OnPropertyChanged("Strength"); }
             }
             
-            private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> _Strength;
+            private List<Hl7.Fhir.Model.Ingredient.StrengthComponent> _Strength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -124,10 +126,10 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.Element)Code.DeepCopy();
                     if(Group != null) dest.Group = (Hl7.Fhir.Model.CodeableConcept)Group.DeepCopy();
                     if(Confidentiality != null) dest.Confidentiality = (Hl7.Fhir.Model.CodeableConcept)Confidentiality.DeepCopy();
-                    if(Strength != null) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(Strength.DeepCopy());
+                    if(Strength != null) dest.Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(Strength.DeepCopy());
                     return dest;
                 }
                 else
@@ -209,7 +211,6 @@ namespace Hl7.Fhir.Model
             /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item
             /// </summary>
             [FhirElement("presentation", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Presentation
             {
@@ -220,17 +221,17 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _Presentation;
             
             /// <summary>
-            /// A lower limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the lower limit, with the presentation attribute becoming the upper limit
+            /// An upper limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the high limit, with the presentation attribute becoming the lower limit
             /// </summary>
-            [FhirElement("presentationLowLimit", InSummary=true, Order=50)]
+            [FhirElement("presentationHighLimit", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio PresentationLowLimit
+            public Hl7.Fhir.Model.Ratio PresentationHighLimit
             {
-                get { return _PresentationLowLimit; }
-                set { _PresentationLowLimit = value; OnPropertyChanged("PresentationLowLimit"); }
+                get { return _PresentationHighLimit; }
+                set { _PresentationHighLimit = value; OnPropertyChanged("PresentationHighLimit"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _PresentationLowLimit;
+            private Hl7.Fhir.Model.Ratio _PresentationHighLimit;
             
             /// <summary>
             /// The strength per unitary volume (or mass)
@@ -246,17 +247,17 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _Concentration;
             
             /// <summary>
-            /// A lower limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the upper limit
+            /// An upper limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the lower limit
             /// </summary>
-            [FhirElement("concentrationLowLimit", InSummary=true, Order=70)]
+            [FhirElement("concentrationHighLimit", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio ConcentrationLowLimit
+            public Hl7.Fhir.Model.Ratio ConcentrationHighLimit
             {
-                get { return _ConcentrationLowLimit; }
-                set { _ConcentrationLowLimit = value; OnPropertyChanged("ConcentrationLowLimit"); }
+                get { return _ConcentrationHighLimit; }
+                set { _ConcentrationHighLimit = value; OnPropertyChanged("ConcentrationHighLimit"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _ConcentrationLowLimit;
+            private Hl7.Fhir.Model.Ratio _ConcentrationHighLimit;
             
             /// <summary>
             /// For when strength is measured at a particular point or distance
@@ -310,13 +311,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("referenceStrength", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> ReferenceStrength
+            public List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> ReferenceStrength
             {
-                get { if(_ReferenceStrength==null) _ReferenceStrength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>(); return _ReferenceStrength; }
+                get { if(_ReferenceStrength==null) _ReferenceStrength = new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>(); return _ReferenceStrength; }
                 set { _ReferenceStrength = value; OnPropertyChanged("ReferenceStrength"); }
             }
             
-            private List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> _ReferenceStrength;
+            private List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> _ReferenceStrength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -326,12 +327,12 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Presentation != null) dest.Presentation = (Hl7.Fhir.Model.Ratio)Presentation.DeepCopy();
-                    if(PresentationLowLimit != null) dest.PresentationLowLimit = (Hl7.Fhir.Model.Ratio)PresentationLowLimit.DeepCopy();
+                    if(PresentationHighLimit != null) dest.PresentationHighLimit = (Hl7.Fhir.Model.Ratio)PresentationHighLimit.DeepCopy();
                     if(Concentration != null) dest.Concentration = (Hl7.Fhir.Model.Ratio)Concentration.DeepCopy();
-                    if(ConcentrationLowLimit != null) dest.ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio)ConcentrationLowLimit.DeepCopy();
+                    if(ConcentrationHighLimit != null) dest.ConcentrationHighLimit = (Hl7.Fhir.Model.Ratio)ConcentrationHighLimit.DeepCopy();
                     if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
                     if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
-                    if(ReferenceStrength != null) dest.ReferenceStrength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
+                    if(ReferenceStrength != null) dest.ReferenceStrength = new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
                     return dest;
                 }
                 else
@@ -350,9 +351,9 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Presentation, otherT.Presentation)) return false;
-                if( !DeepComparable.Matches(PresentationLowLimit, otherT.PresentationLowLimit)) return false;
+                if( !DeepComparable.Matches(PresentationHighLimit, otherT.PresentationHighLimit)) return false;
                 if( !DeepComparable.Matches(Concentration, otherT.Concentration)) return false;
-                if( !DeepComparable.Matches(ConcentrationLowLimit, otherT.ConcentrationLowLimit)) return false;
+                if( !DeepComparable.Matches(ConcentrationHighLimit, otherT.ConcentrationHighLimit)) return false;
                 if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.Matches(Country, otherT.Country)) return false;
                 if( !DeepComparable.Matches(ReferenceStrength, otherT.ReferenceStrength)) return false;
@@ -367,9 +368,9 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Presentation, otherT.Presentation)) return false;
-                if( !DeepComparable.IsExactly(PresentationLowLimit, otherT.PresentationLowLimit)) return false;
+                if( !DeepComparable.IsExactly(PresentationHighLimit, otherT.PresentationHighLimit)) return false;
                 if( !DeepComparable.IsExactly(Concentration, otherT.Concentration)) return false;
-                if( !DeepComparable.IsExactly(ConcentrationLowLimit, otherT.ConcentrationLowLimit)) return false;
+                if( !DeepComparable.IsExactly(ConcentrationHighLimit, otherT.ConcentrationHighLimit)) return false;
                 if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
                 if( !DeepComparable.IsExactly(ReferenceStrength, otherT.ReferenceStrength)) return false;
@@ -385,9 +386,9 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (Presentation != null) yield return Presentation;
-                    if (PresentationLowLimit != null) yield return PresentationLowLimit;
+                    if (PresentationHighLimit != null) yield return PresentationHighLimit;
                     if (Concentration != null) yield return Concentration;
-                    if (ConcentrationLowLimit != null) yield return ConcentrationLowLimit;
+                    if (ConcentrationHighLimit != null) yield return ConcentrationHighLimit;
                     if (MeasurementPointElement != null) yield return MeasurementPointElement;
                     foreach (var elem in Country) { if (elem != null) yield return elem; }
                     foreach (var elem in ReferenceStrength) { if (elem != null) yield return elem; }
@@ -401,9 +402,9 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Presentation != null) yield return new ElementValue("presentation", Presentation);
-                    if (PresentationLowLimit != null) yield return new ElementValue("presentationLowLimit", PresentationLowLimit);
+                    if (PresentationHighLimit != null) yield return new ElementValue("presentationHighLimit", PresentationHighLimit);
                     if (Concentration != null) yield return new ElementValue("concentration", Concentration);
-                    if (ConcentrationLowLimit != null) yield return new ElementValue("concentrationLowLimit", ConcentrationLowLimit);
+                    if (ConcentrationHighLimit != null) yield return new ElementValue("concentrationHighLimit", ConcentrationHighLimit);
                     if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
                     foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
                     foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", elem); }
@@ -424,15 +425,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relevant reference substance
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=40)]
+            [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Substance
+            public Hl7.Fhir.Model.Element Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Substance;
+            private Hl7.Fhir.Model.Element _Substance;
             
             /// <summary>
             /// Strength expressed in terms of a reference substance
@@ -449,17 +452,17 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _Strength;
             
             /// <summary>
-            /// Strength expressed in terms of a reference substance
+            /// Strength expressed in terms of a reference substance, upper limit
             /// </summary>
-            [FhirElement("strengthLowLimit", InSummary=true, Order=60)]
+            [FhirElement("strengthHighLimit", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Ratio StrengthLowLimit
+            public Hl7.Fhir.Model.Ratio StrengthHighLimit
             {
-                get { return _StrengthLowLimit; }
-                set { _StrengthLowLimit = value; OnPropertyChanged("StrengthLowLimit"); }
+                get { return _StrengthHighLimit; }
+                set { _StrengthHighLimit = value; OnPropertyChanged("StrengthHighLimit"); }
             }
             
-            private Hl7.Fhir.Model.Ratio _StrengthLowLimit;
+            private Hl7.Fhir.Model.Ratio _StrengthHighLimit;
             
             /// <summary>
             /// For when strength is measured at a particular point or distance
@@ -514,9 +517,9 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
-                    if(StrengthLowLimit != null) dest.StrengthLowLimit = (Hl7.Fhir.Model.Ratio)StrengthLowLimit.DeepCopy();
+                    if(StrengthHighLimit != null) dest.StrengthHighLimit = (Hl7.Fhir.Model.Ratio)StrengthHighLimit.DeepCopy();
                     if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
                     if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
                     return dest;
@@ -538,7 +541,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
                 if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
-                if( !DeepComparable.Matches(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
+                if( !DeepComparable.Matches(StrengthHighLimit, otherT.StrengthHighLimit)) return false;
                 if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.Matches(Country, otherT.Country)) return false;
                 
@@ -553,7 +556,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
                 if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
-                if( !DeepComparable.IsExactly(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
+                if( !DeepComparable.IsExactly(StrengthHighLimit, otherT.StrengthHighLimit)) return false;
                 if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
                 
@@ -569,7 +572,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Substance != null) yield return Substance;
                     if (Strength != null) yield return Strength;
-                    if (StrengthLowLimit != null) yield return StrengthLowLimit;
+                    if (StrengthHighLimit != null) yield return StrengthHighLimit;
                     if (MeasurementPointElement != null) yield return MeasurementPointElement;
                     foreach (var elem in Country) { if (elem != null) yield return elem; }
                 }
@@ -583,7 +586,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Substance != null) yield return new ElementValue("substance", Substance);
                     if (Strength != null) yield return new ElementValue("strength", Strength);
-                    if (StrengthLowLimit != null) yield return new ElementValue("strengthLowLimit", StrengthLowLimit);
+                    if (StrengthHighLimit != null) yield return new ElementValue("strengthHighLimit", StrengthHighLimit);
                     if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
                     foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
                 }
@@ -601,18 +604,20 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SubstanceComponent"; } }
             
             /// <summary>
-            /// The ingredient substance
+            /// A code that represents the ingredient substance
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.Element Code
             {
                 get { return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Hl7.Fhir.Model.Element _Code;
             
             /// <summary>
             /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
@@ -620,13 +625,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("strength", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
+            public List<Hl7.Fhir.Model.Ingredient.StrengthComponent> Strength
             {
-                get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(); return _Strength; }
+                get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(); return _Strength; }
                 set { _Strength = value; OnPropertyChanged("Strength"); }
             }
             
-            private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> _Strength;
+            private List<Hl7.Fhir.Model.Ingredient.StrengthComponent> _Strength;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -635,8 +640,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Strength != null) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(Strength.DeepCopy());
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.Element)Code.DeepCopy();
+                    if(Strength != null) dest.Strength = new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>(Strength.DeepCopy());
                     return dest;
                 }
                 else
@@ -700,7 +705,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Identifier for the ingredient
+        /// An identifier or code by which the ingredient can be referenced
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
@@ -759,7 +764,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Manufacturer of this Ingredient
+        /// The organization that manufactures this ingredient
         /// </summary>
         [FhirElement("manufacturer", InSummary=true, Order=120)]
         [CLSCompliant(false)]
@@ -780,26 +785,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("specifiedSubstance", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> SpecifiedSubstance
+        public List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent> SpecifiedSubstance
         {
-            get { if(_SpecifiedSubstance==null) _SpecifiedSubstance = new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>(); return _SpecifiedSubstance; }
+            get { if(_SpecifiedSubstance==null) _SpecifiedSubstance = new List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent>(); return _SpecifiedSubstance; }
             set { _SpecifiedSubstance = value; OnPropertyChanged("SpecifiedSubstance"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> _SpecifiedSubstance;
+        private List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent> _SpecifiedSubstance;
         
         /// <summary>
-        /// The ingredient substance
+        /// The substance that comprises this ingredient
         /// </summary>
         [FhirElement("substance", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent Substance
+        public Hl7.Fhir.Model.Ingredient.SubstanceComponent Substance
         {
             get { return _Substance; }
             set { _Substance = value; OnPropertyChanged("Substance"); }
         }
         
-        private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent _Substance;
+        private Hl7.Fhir.Model.Ingredient.SubstanceComponent _Substance;
         
 
         public override void AddDefaultConstraints()
@@ -810,7 +815,7 @@ namespace Hl7.Fhir.Model
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as MedicinalProductIngredient;
+            var dest = other as Ingredient;
             
             if (dest != null)
             {
@@ -819,8 +824,8 @@ namespace Hl7.Fhir.Model
                 if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                 if(AllergenicIndicatorElement != null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)AllergenicIndicatorElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
-                if(SpecifiedSubstance != null) dest.SpecifiedSubstance = new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>(SpecifiedSubstance.DeepCopy());
-                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent)Substance.DeepCopy();
+                if(SpecifiedSubstance != null) dest.SpecifiedSubstance = new List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent>(SpecifiedSubstance.DeepCopy());
+                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Ingredient.SubstanceComponent)Substance.DeepCopy();
                 return dest;
             }
             else
@@ -829,12 +834,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new MedicinalProductIngredient());
+            return CopyTo(new Ingredient());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as MedicinalProductIngredient;
+            var otherT = other as Ingredient;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -850,7 +855,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as MedicinalProductIngredient;
+            var otherT = other as Ingredient;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reason not done
+        /// Reason for current status
         /// </summary>
         [FhirElement("statusReason", Order=110)]
         [DataMember]
@@ -938,17 +938,19 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates the source of a secondarily reported record
+        /// Indicates the source of a  reported record
         /// </summary>
-        [FhirElement("reportOrigin", Order=180)]
+        [FhirElement("informationSource", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept ReportOrigin
+        public Hl7.Fhir.Model.Element InformationSource
         {
-            get { return _ReportOrigin; }
-            set { _ReportOrigin = value; OnPropertyChanged("ReportOrigin"); }
+            get { return _InformationSource; }
+            set { _InformationSource = value; OnPropertyChanged("InformationSource"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _ReportOrigin;
+        private Hl7.Fhir.Model.Element _InformationSource;
         
         /// <summary>
         /// Where immunization occurred
@@ -1114,37 +1116,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why immunization occurred
         /// </summary>
-        [FhirElement("reasonCode", Order=280)]
+        [FhirElement("reason", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Why immunization occurred
-        /// </summary>
-        [FhirElement("reasonReference", Order=290)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","DiagnosticReport")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// Dose potency
         /// </summary>
-        [FhirElement("isSubpotent", InSummary=true, Order=300)]
+        [FhirElement("isSubpotent", InSummary=true, Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean IsSubpotentElement
         {
@@ -1176,7 +1162,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for being subpotent
         /// </summary>
-        [FhirElement("subpotentReason", Order=310)]
+        [FhirElement("subpotentReason", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
@@ -1190,7 +1176,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Educational material presented to patient
         /// </summary>
-        [FhirElement("education", Order=320)]
+        [FhirElement("education", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.EducationComponent> Education
@@ -1204,7 +1190,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient eligibility for a vaccination program
         /// </summary>
-        [FhirElement("programEligibility", Order=330)]
+        [FhirElement("programEligibility", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ProgramEligibility
@@ -1218,7 +1204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Funding source for the vaccine
         /// </summary>
-        [FhirElement("fundingSource", Order=340)]
+        [FhirElement("fundingSource", Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept FundingSource
         {
@@ -1231,7 +1217,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of a reaction that follows immunization
         /// </summary>
-        [FhirElement("reaction", Order=350)]
+        [FhirElement("reaction", Order=340)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
@@ -1245,7 +1231,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Protocol followed by the provider
         /// </summary>
-        [FhirElement("protocolApplied", Order=360)]
+        [FhirElement("protocolApplied", Order=350)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> ProtocolApplied
@@ -1289,7 +1275,7 @@ namespace Hl7.Fhir.Model
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.FhirDateTime)RecordedElement.DeepCopy();
                 if(PrimarySourceElement != null) dest.PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)PrimarySourceElement.DeepCopy();
-                if(ReportOrigin != null) dest.ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)ReportOrigin.DeepCopy();
+                if(InformationSource != null) dest.InformationSource = (Hl7.Fhir.Model.Element)InformationSource.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
@@ -1299,8 +1285,7 @@ namespace Hl7.Fhir.Model
                 if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Immunization.PerformerComponent>(Performer.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(IsSubpotentElement != null) dest.IsSubpotentElement = (Hl7.Fhir.Model.FhirBoolean)IsSubpotentElement.DeepCopy();
                 if(SubpotentReason != null) dest.SubpotentReason = new List<Hl7.Fhir.Model.CodeableConcept>(SubpotentReason.DeepCopy());
                 if(Education != null) dest.Education = new List<Hl7.Fhir.Model.Immunization.EducationComponent>(Education.DeepCopy());
@@ -1334,7 +1319,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
             if( !DeepComparable.Matches(PrimarySourceElement, otherT.PrimarySourceElement)) return false;
-            if( !DeepComparable.Matches(ReportOrigin, otherT.ReportOrigin)) return false;
+            if( !DeepComparable.Matches(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
@@ -1344,8 +1329,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DoseQuantity, otherT.DoseQuantity)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(IsSubpotentElement, otherT.IsSubpotentElement)) return false;
             if( !DeepComparable.Matches(SubpotentReason, otherT.SubpotentReason)) return false;
             if( !DeepComparable.Matches(Education, otherT.Education)) return false;
@@ -1372,7 +1356,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(RecordedElement, otherT.RecordedElement)) return false;
             if( !DeepComparable.IsExactly(PrimarySourceElement, otherT.PrimarySourceElement)) return false;
-            if( !DeepComparable.IsExactly(ReportOrigin, otherT.ReportOrigin)) return false;
+            if( !DeepComparable.IsExactly(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
@@ -1382,8 +1366,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DoseQuantity, otherT.DoseQuantity)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(IsSubpotentElement, otherT.IsSubpotentElement)) return false;
             if( !DeepComparable.IsExactly(SubpotentReason, otherT.SubpotentReason)) return false;
             if( !DeepComparable.IsExactly(Education, otherT.Education)) return false;
@@ -1410,7 +1393,7 @@ namespace Hl7.Fhir.Model
 				if (Occurrence != null) yield return Occurrence;
 				if (RecordedElement != null) yield return RecordedElement;
 				if (PrimarySourceElement != null) yield return PrimarySourceElement;
-				if (ReportOrigin != null) yield return ReportOrigin;
+				if (InformationSource != null) yield return InformationSource;
 				if (Location != null) yield return Location;
 				if (Manufacturer != null) yield return Manufacturer;
 				if (LotNumberElement != null) yield return LotNumberElement;
@@ -1420,8 +1403,7 @@ namespace Hl7.Fhir.Model
 				if (DoseQuantity != null) yield return DoseQuantity;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (IsSubpotentElement != null) yield return IsSubpotentElement;
 				foreach (var elem in SubpotentReason) { if (elem != null) yield return elem; }
 				foreach (var elem in Education) { if (elem != null) yield return elem; }
@@ -1447,7 +1429,7 @@ namespace Hl7.Fhir.Model
                 if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
                 if (RecordedElement != null) yield return new ElementValue("recorded", RecordedElement);
                 if (PrimarySourceElement != null) yield return new ElementValue("primarySource", PrimarySourceElement);
-                if (ReportOrigin != null) yield return new ElementValue("reportOrigin", ReportOrigin);
+                if (InformationSource != null) yield return new ElementValue("informationSource", InformationSource);
                 if (Location != null) yield return new ElementValue("location", Location);
                 if (Manufacturer != null) yield return new ElementValue("manufacturer", Manufacturer);
                 if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
@@ -1457,8 +1439,7 @@ namespace Hl7.Fhir.Model
                 if (DoseQuantity != null) yield return new ElementValue("doseQuantity", DoseQuantity);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 if (IsSubpotentElement != null) yield return new ElementValue("isSubpotent", IsSubpotentElement);
                 foreach (var elem in SubpotentReason) { if (elem != null) yield return new ElementValue("subpotentReason", elem); }
                 foreach (var elem in Education) { if (elem != null) yield return new ElementValue("education", elem); }

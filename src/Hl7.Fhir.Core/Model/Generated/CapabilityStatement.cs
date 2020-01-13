@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,90 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CapabilityStatement"; } }
         
-        /// <summary>
-        /// The mode of a RESTful capability statement.
-        /// (url: http://hl7.org/fhir/ValueSet/restful-capability-mode)
-        /// </summary>
-        [FhirEnumeration("RestfulCapabilityMode")]
-        public enum RestfulCapabilityMode
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-capability-mode)
-            /// </summary>
-            [EnumLiteral("client", "http://hl7.org/fhir/restful-capability-mode"), Description("Client")]
-            Client,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-capability-mode)
-            /// </summary>
-            [EnumLiteral("server", "http://hl7.org/fhir/restful-capability-mode"), Description("Server")]
-            Server,
-        }
-
-        /// <summary>
-        /// Operations supported by REST at the type or instance level.
-        /// (url: http://hl7.org/fhir/ValueSet/type-restful-interaction)
-        /// </summary>
-        [FhirEnumeration("TypeRestfulInteraction")]
-        public enum TypeRestfulInteraction
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("read", "http://hl7.org/fhir/restful-interaction"), Description("read")]
-            Read,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("vread", "http://hl7.org/fhir/restful-interaction"), Description("vread")]
-            Vread,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
-            Update,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("patch", "http://hl7.org/fhir/restful-interaction"), Description("patch")]
-            Patch,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
-            Delete,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("history-instance", "http://hl7.org/fhir/restful-interaction"), Description("history-instance")]
-            HistoryInstance,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("history-type", "http://hl7.org/fhir/restful-interaction"), Description("history-type")]
-            HistoryType,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
-            Create,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("search-type", "http://hl7.org/fhir/restful-interaction"), Description("search-type")]
-            SearchType,
-        }
-
         /// <summary>
         /// How the system supports versioning for a resource.
         /// (url: http://hl7.org/fhir/ValueSet/versioning-policy)
@@ -263,39 +179,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("local", "http://hl7.org/fhir/reference-handling-policy"), Description("Local References Only")]
             Local,
-        }
-
-        /// <summary>
-        /// Operations supported by REST at the system level.
-        /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
-        /// </summary>
-        [FhirEnumeration("SystemRestfulInteraction")]
-        public enum SystemRestfulInteraction
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("transaction", "http://hl7.org/fhir/restful-interaction"), Description("transaction")]
-            Transaction,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("batch", "http://hl7.org/fhir/restful-interaction"), Description("batch")]
-            Batch,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("search-system", "http://hl7.org/fhir/restful-interaction"), Description("search-system")]
-            SearchSystem,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
-            [EnumLiteral("history-system", "http://hl7.org/fhir/restful-interaction"), Description("history-system")]
-            HistorySystem,
         }
 
         /// <summary>
@@ -696,13 +579,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("mode", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode> ModeElement
+            public Code<Hl7.Fhir.Model.RestfulCapabilityMode> ModeElement
             {
                 get { return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode> _ModeElement;
+            private Code<Hl7.Fhir.Model.RestfulCapabilityMode> _ModeElement;
             
             /// <summary>
             /// client | server
@@ -710,7 +593,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode? Mode
+            public Hl7.Fhir.Model.RestfulCapabilityMode? Mode
             {
                 get { return ModeElement != null ? ModeElement.Value : null; }
                 set
@@ -718,7 +601,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         ModeElement = null; 
                     else
-                        ModeElement = new Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode>(value);
+                        ModeElement = new Code<Hl7.Fhir.Model.RestfulCapabilityMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -845,7 +728,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode>)ModeElement.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.RestfulCapabilityMode>)ModeElement.DeepCopy();
                     if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
                     if(Security != null) dest.Security = (Hl7.Fhir.Model.CapabilityStatement.SecurityComponent)Security.DeepCopy();
                     if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.CapabilityStatement.ResourceComponent>(Resource.DeepCopy());
@@ -1723,13 +1606,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction> CodeElement
+            public Code<Hl7.Fhir.Model.TypeRestfulInteraction> CodeElement
             {
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction> _CodeElement;
+            private Code<Hl7.Fhir.Model.TypeRestfulInteraction> _CodeElement;
             
             /// <summary>
             /// read | vread | update | patch | delete | history-instance | history-type | create | search-type
@@ -1737,7 +1620,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction? Code
+            public Hl7.Fhir.Model.TypeRestfulInteraction? Code
             {
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
@@ -1745,7 +1628,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         CodeElement = null; 
                     else
-                        CodeElement = new Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.TypeRestfulInteraction>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -1770,7 +1653,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction>)CodeElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.TypeRestfulInteraction>)CodeElement.DeepCopy();
                     if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
                     return dest;
                 }
@@ -2208,13 +2091,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction> CodeElement
+            public Code<Hl7.Fhir.Model.SystemRestfulInteraction> CodeElement
             {
                 get { return _CodeElement; }
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction> _CodeElement;
+            private Code<Hl7.Fhir.Model.SystemRestfulInteraction> _CodeElement;
             
             /// <summary>
             /// transaction | batch | search-system | history-system
@@ -2222,7 +2105,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction? Code
+            public Hl7.Fhir.Model.SystemRestfulInteraction? Code
             {
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
@@ -2230,7 +2113,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         CodeElement = null; 
                     else
-                        CodeElement = new Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.SystemRestfulInteraction>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -2255,7 +2138,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction>)CodeElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.SystemRestfulInteraction>)CodeElement.DeepCopy();
                     if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
                     return dest;
                 }
@@ -3550,6 +3433,15 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent> _Document;
         
 
+        public static ElementDefinition.ConstraintComponent CapabilityStatement_CNL_0 = new ElementDefinition.ConstraintComponent()
+        { 
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "cnl-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+        };
+
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_7 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "document.select(profile&mode).isDistinct()",
@@ -3613,15 +3505,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:rest) or exists(f:messaging) or exists(f:document)"
         };
 
-        public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "cpb-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
         public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_9 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "rest.all(resource.select(type).isDistinct())",
@@ -3644,6 +3527,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(CapabilityStatement_CNL_0);
             InvariantConstraints.Add(CapabilityStatement_CPB_7);
             InvariantConstraints.Add(CapabilityStatement_CPB_16);
             InvariantConstraints.Add(CapabilityStatement_CPB_15);
@@ -3651,7 +3535,6 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(CapabilityStatement_CPB_14);
             InvariantConstraints.Add(CapabilityStatement_CPB_2);
             InvariantConstraints.Add(CapabilityStatement_CPB_1);
-            InvariantConstraints.Add(CapabilityStatement_CPB_0);
             InvariantConstraints.Add(CapabilityStatement_CPB_9);
             InvariantConstraints.Add(CapabilityStatement_CPB_12);
         }

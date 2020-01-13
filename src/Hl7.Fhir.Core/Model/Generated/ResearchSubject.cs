@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,6 +142,184 @@ namespace Hl7.Fhir.Model
             Withdrawn,
         }
 
+        [FhirType("ProgressComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class ProgressComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ProgressComponent"; } }
+            
+            /// <summary>
+            /// Kind of state that is being described
+            /// </summary>
+            [FhirElement("type", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Type
+            {
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Type;
+            
+            /// <summary>
+            /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
+            /// </summary>
+            [FhirElement("state", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept State
+            {
+                get { return _State; }
+                set { _State = value; OnPropertyChanged("State"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _State;
+            
+            /// <summary>
+            /// SignedUp | Screened | Randomized
+            /// </summary>
+            [FhirElement("milestone", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Milestone
+            {
+                get { return _Milestone; }
+                set { _Milestone = value; OnPropertyChanged("Milestone"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Milestone;
+            
+            /// <summary>
+            /// State change reason
+            /// </summary>
+            [FhirElement("reason", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Reason
+            {
+                get { return _Reason; }
+                set { _Reason = value; OnPropertyChanged("Reason"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Reason;
+            
+            /// <summary>
+            /// State change date
+            /// </summary>
+            [FhirElement("startDate", Order=80)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime StartDateElement
+            {
+                get { return _StartDateElement; }
+                set { _StartDateElement = value; OnPropertyChanged("StartDateElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _StartDateElement;
+            
+            /// <summary>
+            /// State change date
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string StartDate
+            {
+                get { return StartDateElement != null ? StartDateElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        StartDateElement = null; 
+                    else
+                        StartDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("StartDate");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ProgressComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(State != null) dest.State = (Hl7.Fhir.Model.CodeableConcept)State.DeepCopy();
+                    if(Milestone != null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)Milestone.DeepCopy();
+                    if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
+                    if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ProgressComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ProgressComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(State, otherT.State)) return false;
+                if( !DeepComparable.Matches(Milestone, otherT.Milestone)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.Matches(StartDateElement, otherT.StartDateElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ProgressComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(State, otherT.State)) return false;
+                if( !DeepComparable.IsExactly(Milestone, otherT.Milestone)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.IsExactly(StartDateElement, otherT.StartDateElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Type != null) yield return Type;
+                    if (State != null) yield return State;
+                    if (Milestone != null) yield return Milestone;
+                    if (Reason != null) yield return Reason;
+                    if (StartDateElement != null) yield return StartDateElement;
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (State != null) yield return new ElementValue("state", State);
+                    if (Milestone != null) yield return new ElementValue("milestone", Milestone);
+                    if (Reason != null) yield return new ElementValue("reason", Reason);
+                    if (StartDateElement != null) yield return new ElementValue("startDate", StartDateElement);
+                }
+            }
+
+            
+        }
+        
+        
         /// <summary>
         /// Business Identifier for research subject in a study
         /// </summary>
@@ -190,9 +368,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Subject status
+        /// </summary>
+        [FhirElement("progress", Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> Progress
+        {
+            get { if(_Progress==null) _Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(); return _Progress; }
+            set { _Progress = value; OnPropertyChanged("Progress"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> _Progress;
+        
+        /// <summary>
         /// Start and end of participation
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=110)]
+        [FhirElement("period", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -205,7 +397,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Study subject is part of
         /// </summary>
-        [FhirElement("study", InSummary=true, Order=120)]
+        [FhirElement("study", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("ResearchStudy")]
         [Cardinality(Min=1,Max=1)]
@@ -221,7 +413,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is part of study
         /// </summary>
-        [FhirElement("individual", InSummary=true, Order=130)]
+        [FhirElement("individual", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
@@ -237,7 +429,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What path should be followed
         /// </summary>
-        [FhirElement("assignedArm", Order=140)]
+        [FhirElement("assignedArm", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString AssignedArmElement
         {
@@ -269,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What path was followed
         /// </summary>
-        [FhirElement("actualArm", Order=150)]
+        [FhirElement("actualArm", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ActualArmElement
         {
@@ -301,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Agreement to participate in study
         /// </summary>
-        [FhirElement("consent", Order=160)]
+        [FhirElement("consent", Order=170)]
         [CLSCompliant(false)]
 		[References("Consent")]
         [DataMember]
@@ -329,6 +521,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>)StatusElement.DeepCopy();
+                if(Progress != null) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
                 if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopy();
@@ -354,6 +547,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Progress, otherT.Progress)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Study, otherT.Study)) return false;
             if( !DeepComparable.Matches(Individual, otherT.Individual)) return false;
@@ -372,6 +566,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Progress, otherT.Progress)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
             if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
@@ -390,6 +585,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Progress) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
 				if (Study != null) yield return Study;
 				if (Individual != null) yield return Individual;
@@ -407,6 +603,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+                foreach (var elem in Progress) { if (elem != null) yield return new ElementValue("progress", elem); }
                 if (Period != null) yield return new ElementValue("period", Period);
                 if (Study != null) yield return new ElementValue("study", Study);
                 if (Individual != null) yield return new ElementValue("individual", Individual);

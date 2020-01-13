@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,6 +55,78 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "EvidenceVariable"; } }
         
+        /// <summary>
+        /// The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive).
+        /// (url: http://hl7.org/fhir/ValueSet/variable-type)
+        /// </summary>
+        [FhirEnumeration("EvidenceVariableType")]
+        public enum EvidenceVariableType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/variable-type)
+            /// </summary>
+            [EnumLiteral("dichotomous", "http://hl7.org/fhir/variable-type"), Description("Dichotomous")]
+            Dichotomous,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/variable-type)
+            /// </summary>
+            [EnumLiteral("continuous", "http://hl7.org/fhir/variable-type"), Description("Continuous")]
+            Continuous,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/variable-type)
+            /// </summary>
+            [EnumLiteral("descriptive", "http://hl7.org/fhir/variable-type"), Description("Descriptive")]
+            Descriptive,
+        }
+
+        /// <summary>
+        /// Possible group measure aggregates (E.g. Mean, Median).
+        /// (url: http://hl7.org/fhir/ValueSet/group-measure)
+        /// </summary>
+        [FhirEnumeration("GroupMeasure")]
+        public enum GroupMeasure
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("mean", "http://hl7.org/fhir/group-measure"), Description("Mean")]
+            Mean,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("median", "http://hl7.org/fhir/group-measure"), Description("Median")]
+            Median,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("mean-of-mean", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Means")]
+            MeanOfMean,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("mean-of-median", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Medins")]
+            MeanOfMedian,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("median-of-mean", "http://hl7.org/fhir/group-measure"), Description("Median of Study Means")]
+            MedianOfMean,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/group-measure)
+            /// </summary>
+            [EnumLiteral("median-of-median", "http://hl7.org/fhir/group-measure"), Description("Median of Study Medians")]
+            MedianOfMedian,
+        }
+
         [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -111,23 +183,70 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Definition;
             
             /// <summary>
-            /// What code/value pairs define members?
+            /// Method used for describing characteristic
             /// </summary>
-            [FhirElement("usageContext", Order=60)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("method", Order=60)]
             [DataMember]
-            public List<UsageContext> UsageContext
+            public Hl7.Fhir.Model.CodeableConcept Method
             {
-                get { if(_UsageContext==null) _UsageContext = new List<UsageContext>(); return _UsageContext; }
-                set { _UsageContext = value; OnPropertyChanged("UsageContext"); }
+                get { return _Method; }
+                set { _Method = value; OnPropertyChanged("Method"); }
             }
             
-            private List<UsageContext> _UsageContext;
+            private Hl7.Fhir.Model.CodeableConcept _Method;
+            
+            /// <summary>
+            /// Device used for determining characteristic
+            /// </summary>
+            [FhirElement("device", Order=70)]
+            [CLSCompliant(false)]
+			[References("Device","DeviceMetric")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Device
+            {
+                get { return _Device; }
+                set { _Device = value; OnPropertyChanged("Device"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Device;
+            
+            /// <summary>
+            /// What code/value pairs define members?
+            /// </summary>
+            [FhirElement("booleanSet", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.FhirString> BooleanSetElement
+            {
+                get { if(_BooleanSetElement==null) _BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(); return _BooleanSetElement; }
+                set { _BooleanSetElement = value; OnPropertyChanged("BooleanSetElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.FhirString> _BooleanSetElement;
+            
+            /// <summary>
+            /// What code/value pairs define members?
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> BooleanSet
+            {
+                get { return BooleanSetElement != null ? BooleanSetElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                        BooleanSetElement = null; 
+                    else
+                        BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    OnPropertyChanged("BooleanSet");
+                }
+            }
             
             /// <summary>
             /// Whether the characteristic includes or excludes members
             /// </summary>
-            [FhirElement("exclude", Order=70)]
+            [FhirElement("exclude", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExcludeElement
             {
@@ -159,7 +278,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What time period do participants cover
             /// </summary>
-            [FhirElement("participantEffective", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("participantEffective", Order=100, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -174,7 +293,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Observation time from study start
             /// </summary>
-            [FhirElement("timeFromStart", Order=90)]
+            [FhirElement("timeFromStart", Order=110)]
             [DataMember]
             public Duration TimeFromStart
             {
@@ -187,15 +306,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
             /// </summary>
-            [FhirElement("groupMeasure", Order=100)]
+            [FhirElement("groupMeasure", Order=120)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.GroupMeasure> GroupMeasureElement
+            public Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> GroupMeasure_Element
             {
-                get { return _GroupMeasureElement; }
-                set { _GroupMeasureElement = value; OnPropertyChanged("GroupMeasureElement"); }
+                get { return _GroupMeasure_Element; }
+                set { _GroupMeasure_Element = value; OnPropertyChanged("GroupMeasure_Element"); }
             }
             
-            private Code<Hl7.Fhir.Model.GroupMeasure> _GroupMeasureElement;
+            private Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> _GroupMeasure_Element;
             
             /// <summary>
             /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
@@ -203,16 +322,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.GroupMeasure? GroupMeasure
+            public Hl7.Fhir.Model.EvidenceVariable.GroupMeasure? GroupMeasure_
             {
-                get { return GroupMeasureElement != null ? GroupMeasureElement.Value : null; }
+                get { return GroupMeasure_Element != null ? GroupMeasure_Element.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                        GroupMeasureElement = null; 
+                        GroupMeasure_Element = null; 
                     else
-                        GroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasure>(value);
-                    OnPropertyChanged("GroupMeasure");
+                        GroupMeasure_Element = new Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure>(value);
+                    OnPropertyChanged("GroupMeasure_");
                 }
             }
             
@@ -225,11 +344,13 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
-                    if(UsageContext != null) dest.UsageContext = new List<UsageContext>(UsageContext.DeepCopy());
+                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
+                    if(BooleanSetElement != null) dest.BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(BooleanSetElement.DeepCopy());
                     if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
                     if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.Element)ParticipantEffective.DeepCopy();
                     if(TimeFromStart != null) dest.TimeFromStart = (Duration)TimeFromStart.DeepCopy();
-                    if(GroupMeasureElement != null) dest.GroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)GroupMeasureElement.DeepCopy();
+                    if(GroupMeasure_Element != null) dest.GroupMeasure_Element = (Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure>)GroupMeasure_Element.DeepCopy();
                     return dest;
                 }
                 else
@@ -249,11 +370,13 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
-                if( !DeepComparable.Matches(UsageContext, otherT.UsageContext)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(Device, otherT.Device)) return false;
+                if( !DeepComparable.Matches(BooleanSetElement, otherT.BooleanSetElement)) return false;
                 if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
                 if( !DeepComparable.Matches(ParticipantEffective, otherT.ParticipantEffective)) return false;
                 if( !DeepComparable.Matches(TimeFromStart, otherT.TimeFromStart)) return false;
-                if( !DeepComparable.Matches(GroupMeasureElement, otherT.GroupMeasureElement)) return false;
+                if( !DeepComparable.Matches(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
                 
                 return true;
             }
@@ -266,11 +389,13 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
-                if( !DeepComparable.IsExactly(UsageContext, otherT.UsageContext)) return false;
+                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
+                if( !DeepComparable.IsExactly(BooleanSetElement, otherT.BooleanSetElement)) return false;
                 if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
                 if( !DeepComparable.IsExactly(ParticipantEffective, otherT.ParticipantEffective)) return false;
                 if( !DeepComparable.IsExactly(TimeFromStart, otherT.TimeFromStart)) return false;
-                if( !DeepComparable.IsExactly(GroupMeasureElement, otherT.GroupMeasureElement)) return false;
+                if( !DeepComparable.IsExactly(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
                 
                 return true;
             }
@@ -284,11 +409,13 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Definition != null) yield return Definition;
-                    foreach (var elem in UsageContext) { if (elem != null) yield return elem; }
+                    if (Method != null) yield return Method;
+                    if (Device != null) yield return Device;
+                    foreach (var elem in BooleanSetElement) { if (elem != null) yield return elem; }
                     if (ExcludeElement != null) yield return ExcludeElement;
                     if (ParticipantEffective != null) yield return ParticipantEffective;
                     if (TimeFromStart != null) yield return TimeFromStart;
-                    if (GroupMeasureElement != null) yield return GroupMeasureElement;
+                    if (GroupMeasure_Element != null) yield return GroupMeasure_Element;
                 }
             }
 
@@ -300,11 +427,13 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                     if (Definition != null) yield return new ElementValue("definition", Definition);
-                    foreach (var elem in UsageContext) { if (elem != null) yield return new ElementValue("usageContext", elem); }
+                    if (Method != null) yield return new ElementValue("method", Method);
+                    if (Device != null) yield return new ElementValue("device", Device);
+                    foreach (var elem in BooleanSetElement) { if (elem != null) yield return new ElementValue("booleanSet", elem); }
                     if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
                     if (ParticipantEffective != null) yield return new ElementValue("participantEffective", ParticipantEffective);
                     if (TimeFromStart != null) yield return new ElementValue("timeFromStart", TimeFromStart);
-                    if (GroupMeasureElement != null) yield return new ElementValue("groupMeasure", GroupMeasureElement);
+                    if (GroupMeasure_Element != null) yield return new ElementValue("groupMeasure", GroupMeasure_Element);
                 }
             }
 
@@ -863,13 +992,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("type", InSummary=true, Order=340)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.EvidenceVariableType> TypeElement
+        public Code<Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType> TypeElement
         {
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.EvidenceVariableType> _TypeElement;
+        private Code<Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType> _TypeElement;
         
         /// <summary>
         /// dichotomous | continuous | descriptive
@@ -877,7 +1006,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.EvidenceVariableType? Type
+        public Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType? Type
         {
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
@@ -885,16 +1014,48 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   TypeElement = null; 
                 else
-                  TypeElement = new Code<Hl7.Fhir.Model.EvidenceVariableType>(value);
+                  TypeElement = new Code<Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType>(value);
                 OnPropertyChanged("Type");
+            }
+        }
+        
+        /// <summary>
+        /// Actual or conceptual
+        /// </summary>
+        [FhirElement("actual", Order=350)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActualElement
+        {
+            get { return _ActualElement; }
+            set { _ActualElement = value; OnPropertyChanged("ActualElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActualElement;
+        
+        /// <summary>
+        /// Actual or conceptual
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Actual
+        {
+            get { return ActualElement != null ? ActualElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActualElement = null; 
+                else
+                  ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Actual");
             }
         }
         
         /// <summary>
         /// What defines the members of the evidence element
         /// </summary>
-        [FhirElement("characteristic", InSummary=true, Order=350)]
-        [Cardinality(Min=1,Max=-1)]
+        [FhirElement("characteristic", InSummary=true, Order=360)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> Characteristic
         {
@@ -905,10 +1066,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> _Characteristic;
         
 
-        public static ElementDefinition.ConstraintComponent EvidenceVariable_EVV_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent EvidenceVariable_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "evv-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
@@ -918,7 +1079,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(EvidenceVariable_EVV_0);
+            InvariantConstraints.Add(EvidenceVariable_CNL_0);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -953,7 +1114,8 @@ namespace Hl7.Fhir.Model
                 if(Reviewer != null) dest.Reviewer = new List<ContactDetail>(Reviewer.DeepCopy());
                 if(Endorser != null) dest.Endorser = new List<ContactDetail>(Endorser.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.EvidenceVariableType>)TypeElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType>)TypeElement.DeepCopy();
+                if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent>(Characteristic.DeepCopy());
                 return dest;
             }
@@ -998,6 +1160,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Endorser, otherT.Endorser)) return false;
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
             
             return true;
@@ -1035,6 +1198,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Endorser, otherT.Endorser)) return false;
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
             
             return true;
@@ -1072,6 +1236,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Endorser) { if (elem != null) yield return elem; }
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
+				if (ActualElement != null) yield return ActualElement;
 				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
             }
         }
@@ -1108,6 +1273,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
                 foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
             }
         }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1927,22 +1927,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
         /// <summary>
-        /// Use and/or publishing restrictions
-        /// </summary>
-        [FhirElement("copyright", Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.Markdown Copyright
-        {
-            get { return _Copyright; }
-            set { _Copyright = value; OnPropertyChanged("Copyright"); }
-        }
-        
-        private Hl7.Fhir.Model.Markdown _Copyright;
-        
-        /// <summary>
         /// The purpose of the example, e.g. to illustrate a scenario
         /// </summary>
-        [FhirElement("purpose", Order=210)]
+        [FhirElement("purpose", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Purpose
         {
@@ -1951,6 +1938,19 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Markdown _Purpose;
+        
+        /// <summary>
+        /// Use and/or publishing restrictions
+        /// </summary>
+        [FhirElement("copyright", Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Copyright
+        {
+            get { return _Copyright; }
+            set { _Copyright = value; OnPropertyChanged("Copyright"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
         /// Actor participating in the resource
@@ -2028,10 +2028,10 @@ namespace Hl7.Fhir.Model
         }
         
 
-        public static ElementDefinition.ConstraintComponent ExampleScenario_ESC_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent ExampleScenario_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "esc-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
@@ -2041,7 +2041,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(ExampleScenario_ESC_0);
+            InvariantConstraints.Add(ExampleScenario_CNL_0);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2062,8 +2062,8 @@ namespace Hl7.Fhir.Model
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-                if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
+                if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.ExampleScenario.ActorComponent>(Actor.DeepCopy());
                 if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent>(Instance.DeepCopy());
                 if(Process != null) dest.Process = new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>(Process.DeepCopy());
@@ -2096,8 +2096,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
-            if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
+            if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
             if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
             if( !DeepComparable.Matches(Process, otherT.Process)) return false;
@@ -2123,8 +2123,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
-            if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
+            if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
             if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
             if( !DeepComparable.IsExactly(Process, otherT.Process)) return false;
@@ -2150,8 +2150,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
-				if (Copyright != null) yield return Copyright;
 				if (Purpose != null) yield return Purpose;
+				if (Copyright != null) yield return Copyright;
 				foreach (var elem in Actor) { if (elem != null) yield return elem; }
 				foreach (var elem in Instance) { if (elem != null) yield return elem; }
 				foreach (var elem in Process) { if (elem != null) yield return elem; }
@@ -2176,8 +2176,8 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
                 foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
-                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
                 if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
                 foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
                 foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
                 foreach (var elem in Process) { if (elem != null) yield return new ElementValue("process", elem); }

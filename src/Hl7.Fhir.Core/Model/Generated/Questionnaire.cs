@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1708,6 +1708,15 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
         
 
+        public static ElementDefinition.ConstraintComponent Questionnaire_CNL_0 = new ElementDefinition.ConstraintComponent()
+        { 
+            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
+            Key = "cnl-0",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
+        };
+
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_2 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "descendants().linkId.isDistinct()",
@@ -1715,15 +1724,6 @@ namespace Hl7.Fhir.Model
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The link ids for groups and questions must be unique within the questionnaire",
             Xpath = "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "que-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_9 = new ElementDefinition.ConstraintComponent()
@@ -1838,8 +1838,8 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Questionnaire_CNL_0);
             InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_0);
             InvariantConstraints.Add(Questionnaire_QUE_9);
             InvariantConstraints.Add(Questionnaire_QUE_8);
             InvariantConstraints.Add(Questionnaire_QUE_6);

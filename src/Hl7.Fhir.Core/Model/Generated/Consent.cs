@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A healthcare consumer's  choices to permit or deny recipients or roles to perform actions for specific purposes and periods of time
+    /// A healthcare consumer's  or third party's choices to permit or deny recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
     [FhirType("Consent", IsResource=true)]
     [DataContract]
@@ -72,20 +72,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("proposed", "http://hl7.org/fhir/consent-state-codes"), Description("Proposed")]
-            Proposed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
             [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
             Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/consent-state-codes)
-            /// </summary>
-            [EnumLiteral("rejected", "http://hl7.org/fhir/consent-state-codes"), Description("Rejected")]
-            Rejected,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
@@ -98,6 +86,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
             EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/consent-state-codes)
+            /// </summary>
+            [EnumLiteral("unknown", "http://hl7.org/fhir/consent-state-codes"), Description("Unknown")]
+            Unknown,
         }
 
         /// <summary>
@@ -111,13 +105,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-provision-type)
             /// </summary>
-            [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Opt Out")]
+            [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Deny")]
             Deny,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-provision-type)
             /// </summary>
-            [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Opt In")]
+            [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Permit")]
             Permit,
         }
 
@@ -337,9 +331,37 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Business case of verification
+            /// </summary>
+            [FhirElement("verificationType", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept VerificationType
+            {
+                get { return _VerificationType; }
+                set { _VerificationType = value; OnPropertyChanged("VerificationType"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _VerificationType;
+            
+            /// <summary>
+            /// Person conducting verification
+            /// </summary>
+            [FhirElement("verifiedBy", Order=60)]
+            [CLSCompliant(false)]
+			[References("Organization","Practitioner","PractitionerRole")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference VerifiedBy
+            {
+                get { return _VerifiedBy; }
+                set { _VerifiedBy = value; OnPropertyChanged("VerifiedBy"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _VerifiedBy;
+            
+            /// <summary>
             /// Person who verified
             /// </summary>
-            [FhirElement("verifiedWith", Order=50)]
+            [FhirElement("verifiedWith", Order=70)]
             [CLSCompliant(false)]
 			[References("Patient","RelatedPerson")]
             [DataMember]
@@ -354,15 +376,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When consent verified
             /// </summary>
-            [FhirElement("verificationDate", Order=60)]
+            [FhirElement("verificationDate", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime VerificationDateElement
+            public List<Hl7.Fhir.Model.FhirDateTime> VerificationDateElement
             {
-                get { return _VerificationDateElement; }
+                get { if(_VerificationDateElement==null) _VerificationDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(); return _VerificationDateElement; }
                 set { _VerificationDateElement = value; OnPropertyChanged("VerificationDateElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDateTime _VerificationDateElement;
+            private List<Hl7.Fhir.Model.FhirDateTime> _VerificationDateElement;
             
             /// <summary>
             /// When consent verified
@@ -370,15 +393,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string VerificationDate
+            public IEnumerable<string> VerificationDate
             {
-                get { return VerificationDateElement != null ? VerificationDateElement.Value : null; }
+                get { return VerificationDateElement != null ? VerificationDateElement.Select(elem => elem.Value) : null; }
                 set
                 {
                     if (value == null)
                         VerificationDateElement = null; 
                     else
-                        VerificationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        VerificationDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(value.Select(elem=>new Hl7.Fhir.Model.FhirDateTime(elem)));
                     OnPropertyChanged("VerificationDate");
                 }
             }
@@ -391,8 +414,10 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(VerifiedElement != null) dest.VerifiedElement = (Hl7.Fhir.Model.FhirBoolean)VerifiedElement.DeepCopy();
+                    if(VerificationType != null) dest.VerificationType = (Hl7.Fhir.Model.CodeableConcept)VerificationType.DeepCopy();
+                    if(VerifiedBy != null) dest.VerifiedBy = (Hl7.Fhir.Model.ResourceReference)VerifiedBy.DeepCopy();
                     if(VerifiedWith != null) dest.VerifiedWith = (Hl7.Fhir.Model.ResourceReference)VerifiedWith.DeepCopy();
-                    if(VerificationDateElement != null) dest.VerificationDateElement = (Hl7.Fhir.Model.FhirDateTime)VerificationDateElement.DeepCopy();
+                    if(VerificationDateElement != null) dest.VerificationDateElement = new List<Hl7.Fhir.Model.FhirDateTime>(VerificationDateElement.DeepCopy());
                     return dest;
                 }
                 else
@@ -411,6 +436,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(VerifiedElement, otherT.VerifiedElement)) return false;
+                if( !DeepComparable.Matches(VerificationType, otherT.VerificationType)) return false;
+                if( !DeepComparable.Matches(VerifiedBy, otherT.VerifiedBy)) return false;
                 if( !DeepComparable.Matches(VerifiedWith, otherT.VerifiedWith)) return false;
                 if( !DeepComparable.Matches(VerificationDateElement, otherT.VerificationDateElement)) return false;
                 
@@ -424,6 +451,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(VerifiedElement, otherT.VerifiedElement)) return false;
+                if( !DeepComparable.IsExactly(VerificationType, otherT.VerificationType)) return false;
+                if( !DeepComparable.IsExactly(VerifiedBy, otherT.VerifiedBy)) return false;
                 if( !DeepComparable.IsExactly(VerifiedWith, otherT.VerifiedWith)) return false;
                 if( !DeepComparable.IsExactly(VerificationDateElement, otherT.VerificationDateElement)) return false;
                 
@@ -438,8 +467,10 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.Children) yield return item;
                     if (VerifiedElement != null) yield return VerifiedElement;
+                    if (VerificationType != null) yield return VerificationType;
+                    if (VerifiedBy != null) yield return VerifiedBy;
                     if (VerifiedWith != null) yield return VerifiedWith;
-                    if (VerificationDateElement != null) yield return VerificationDateElement;
+                    foreach (var elem in VerificationDateElement) { if (elem != null) yield return elem; }
                 }
             }
 
@@ -450,8 +481,10 @@ namespace Hl7.Fhir.Model
                 {
                     foreach (var item in base.NamedChildren) yield return item;
                     if (VerifiedElement != null) yield return new ElementValue("verified", VerifiedElement);
+                    if (VerificationType != null) yield return new ElementValue("verificationType", VerificationType);
+                    if (VerifiedBy != null) yield return new ElementValue("verifiedBy", VerifiedBy);
                     if (VerifiedWith != null) yield return new ElementValue("verifiedWith", VerifiedWith);
-                    if (VerificationDateElement != null) yield return new ElementValue("verificationDate", VerificationDateElement);
+                    foreach (var elem in VerificationDateElement) { if (elem != null) yield return new ElementValue("verificationDate", elem); }
                 }
             }
 
@@ -1002,7 +1035,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// draft | proposed | active | rejected | inactive | entered-in-error
+        /// draft | active | inactive | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -1016,7 +1049,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Consent.ConsentState> _StatusElement;
         
         /// <summary>
-        /// draft | proposed | active | rejected | inactive | entered-in-error
+        /// draft | active | inactive | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1078,7 +1111,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// When this Consent was created or indexed
+        /// When consent was agreed to
         /// </summary>
         [FhirElement("dateTime", InSummary=true, Order=140)]
         [DataMember]
@@ -1091,7 +1124,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
         
         /// <summary>
-        /// When this Consent was created or indexed
+        /// When consent was agreed to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1114,7 +1147,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=150)]
         [CLSCompliant(false)]
-		[References("Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
+		[References("CareTeam","HealthcareService","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -1144,22 +1177,37 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Source from which this consent is taken
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("sourceAttachment", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Source
+        public List<Hl7.Fhir.Model.Attachment> SourceAttachment
         {
-            get { return _Source; }
-            set { _Source = value; OnPropertyChanged("Source"); }
+            get { if(_SourceAttachment==null) _SourceAttachment = new List<Hl7.Fhir.Model.Attachment>(); return _SourceAttachment; }
+            set { _SourceAttachment = value; OnPropertyChanged("SourceAttachment"); }
         }
         
-        private Hl7.Fhir.Model.Element _Source;
+        private List<Hl7.Fhir.Model.Attachment> _SourceAttachment;
+        
+        /// <summary>
+        /// Source from which this consent is taken
+        /// </summary>
+        [FhirElement("sourceReference", Order=180)]
+        [CLSCompliant(false)]
+		[References("Consent","DocumentReference","Contract","QuestionnaireResponse")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> SourceReference
+        {
+            get { if(_SourceReference==null) _SourceReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _SourceReference; }
+            set { _SourceReference = value; OnPropertyChanged("SourceReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _SourceReference;
         
         /// <summary>
         /// Policies covered by this consent
         /// </summary>
-        [FhirElement("policy", Order=180)]
+        [FhirElement("policy", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
@@ -1173,7 +1221,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Regulation that this consents to
         /// </summary>
-        [FhirElement("policyRule", InSummary=true, Order=190)]
+        [FhirElement("policyRule", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PolicyRule
         {
@@ -1186,7 +1234,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Consent Verified by patient or family
         /// </summary>
-        [FhirElement("verification", InSummary=true, Order=200)]
+        [FhirElement("verification", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Consent.VerificationComponent> Verification
@@ -1198,9 +1246,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Consent.VerificationComponent> _Verification;
         
         /// <summary>
-        /// Constraints to the base Consent.policyRule
+        /// Constraints to the base Consent.policyRule/Consent.policy
         /// </summary>
-        [FhirElement("provision", InSummary=true, Order=210)]
+        [FhirElement("provision", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Consent.provisionComponent Provision
         {
@@ -1211,13 +1259,13 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Consent.provisionComponent _Provision;
         
 
-        public static ElementDefinition.ConstraintComponent Consent_PPC_4 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent Consent_PPC_6 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='adr').exists().not()",
-            Key = "ppc-4",
+            Expression = "Consent.provision.extension(\"http://hl7.org/fhir/StructureDefinition/consent-ResearchStudyContext\").exists() or scope.coding.where(system='something' and code='research').exists().not()",
+            Key = "ppc-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "IF Scope=adr, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr'])))"
+            Human = "IF Scope=research, ResearchStudyContext allowed",
+            Xpath = "exists(f:Consent.provision.extension('http://hl7.org/fhir/StructureDefinition/consent-ResearchStudyContext')  or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_5 = new ElementDefinition.ConstraintComponent()
@@ -1260,7 +1308,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(Consent_PPC_4);
+            InvariantConstraints.Add(Consent_PPC_6);
             InvariantConstraints.Add(Consent_PPC_5);
             InvariantConstraints.Add(Consent_PPC_2);
             InvariantConstraints.Add(Consent_PPC_3);
@@ -1282,7 +1330,8 @@ namespace Hl7.Fhir.Model
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Organization != null) dest.Organization = new List<Hl7.Fhir.Model.ResourceReference>(Organization.DeepCopy());
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
+                if(SourceAttachment != null) dest.SourceAttachment = new List<Hl7.Fhir.Model.Attachment>(SourceAttachment.DeepCopy());
+                if(SourceReference != null) dest.SourceReference = new List<Hl7.Fhir.Model.ResourceReference>(SourceReference.DeepCopy());
                 if(Policy != null) dest.Policy = new List<Hl7.Fhir.Model.Consent.PolicyComponent>(Policy.DeepCopy());
                 if(PolicyRule != null) dest.PolicyRule = (Hl7.Fhir.Model.CodeableConcept)PolicyRule.DeepCopy();
                 if(Verification != null) dest.Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(Verification.DeepCopy());
@@ -1312,7 +1361,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+            if( !DeepComparable.Matches(SourceAttachment, otherT.SourceAttachment)) return false;
+            if( !DeepComparable.Matches(SourceReference, otherT.SourceReference)) return false;
             if( !DeepComparable.Matches(Policy, otherT.Policy)) return false;
             if( !DeepComparable.Matches(PolicyRule, otherT.PolicyRule)) return false;
             if( !DeepComparable.Matches(Verification, otherT.Verification)) return false;
@@ -1335,7 +1385,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+            if( !DeepComparable.IsExactly(SourceAttachment, otherT.SourceAttachment)) return false;
+            if( !DeepComparable.IsExactly(SourceReference, otherT.SourceReference)) return false;
             if( !DeepComparable.IsExactly(Policy, otherT.Policy)) return false;
             if( !DeepComparable.IsExactly(PolicyRule, otherT.PolicyRule)) return false;
             if( !DeepComparable.IsExactly(Verification, otherT.Verification)) return false;
@@ -1358,7 +1409,8 @@ namespace Hl7.Fhir.Model
 				if (DateTimeElement != null) yield return DateTimeElement;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				foreach (var elem in Organization) { if (elem != null) yield return elem; }
-				if (Source != null) yield return Source;
+				foreach (var elem in SourceAttachment) { if (elem != null) yield return elem; }
+				foreach (var elem in SourceReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Policy) { if (elem != null) yield return elem; }
 				if (PolicyRule != null) yield return PolicyRule;
 				foreach (var elem in Verification) { if (elem != null) yield return elem; }
@@ -1380,7 +1432,8 @@ namespace Hl7.Fhir.Model
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
                 foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", elem); }
-                if (Source != null) yield return new ElementValue("source", Source);
+                foreach (var elem in SourceAttachment) { if (elem != null) yield return new ElementValue("sourceAttachment", elem); }
+                foreach (var elem in SourceReference) { if (elem != null) yield return new ElementValue("sourceReference", elem); }
                 foreach (var elem in Policy) { if (elem != null) yield return new ElementValue("policy", elem); }
                 if (PolicyRule != null) yield return new ElementValue("policyRule", PolicyRule);
                 foreach (var elem in Verification) { if (elem != null) yield return new ElementValue("verification", elem); }

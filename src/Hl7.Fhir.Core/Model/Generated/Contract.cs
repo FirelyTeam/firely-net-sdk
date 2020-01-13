@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+            /// amended | appended | cancelled | disputed | entered-in-error | executable +
             /// </summary>
             [FhirElement("publicationStatus", Order=80)]
             [Cardinality(Min=1,Max=1)]
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Contract.ContractResourcePublicationStatusCodes> _PublicationStatusElement;
             
             /// <summary>
-            /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+            /// amended | appended | cancelled | disputed | entered-in-error | executable +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2823,70 +2823,21 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why is action (not) needed?
             /// </summary>
-            [FhirElement("reasonCode", Order=190)]
+            [FhirElement("reason", Order=190)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+            public List<Hl7.Fhir.Model.CodeableReference> Reason
             {
-                get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-                set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+                get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+                set { _Reason = value; OnPropertyChanged("Reason"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-            
-            /// <summary>
-            /// Why is action (not) needed?
-            /// </summary>
-            [FhirElement("reasonReference", Order=200)]
-            [CLSCompliant(false)]
-			[References("Condition","Observation","DiagnosticReport","DocumentReference","Questionnaire","QuestionnaireResponse")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-            {
-                get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-                set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
-            
-            /// <summary>
-            /// Why action is to be performed
-            /// </summary>
-            [FhirElement("reason", Order=210)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> ReasonElement
-            {
-                get { if(_ReasonElement==null) _ReasonElement = new List<Hl7.Fhir.Model.FhirString>(); return _ReasonElement; }
-                set { _ReasonElement = value; OnPropertyChanged("ReasonElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.FhirString> _ReasonElement;
-            
-            /// <summary>
-            /// Why action is to be performed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Reason
-            {
-                get { return ReasonElement != null ? ReasonElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        ReasonElement = null; 
-                    else
-                        ReasonElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                    OnPropertyChanged("Reason");
-                }
-            }
+            private List<Hl7.Fhir.Model.CodeableReference> _Reason;
             
             /// <summary>
             /// Pointer to specific item
             /// </summary>
-            [FhirElement("reasonLinkId", Order=220)]
+            [FhirElement("reasonLinkId", Order=200)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> ReasonLinkIdElement
@@ -2919,7 +2870,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Comments about the action
             /// </summary>
-            [FhirElement("note", Order=230)]
+            [FhirElement("note", Order=210)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Annotation> Note
@@ -2933,7 +2884,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Action restriction numbers
             /// </summary>
-            [FhirElement("securityLabelNumber", Order=240)]
+            [FhirElement("securityLabelNumber", Order=220)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.UnsignedInt> SecurityLabelNumberElement
@@ -2985,9 +2936,7 @@ namespace Hl7.Fhir.Model
                     if(PerformerRole != null) dest.PerformerRole = (Hl7.Fhir.Model.CodeableConcept)PerformerRole.DeepCopy();
                     if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                     if(PerformerLinkIdElement != null) dest.PerformerLinkIdElement = new List<Hl7.Fhir.Model.FhirString>(PerformerLinkIdElement.DeepCopy());
-                    if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                    if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
-                    if(ReasonElement != null) dest.ReasonElement = new List<Hl7.Fhir.Model.FhirString>(ReasonElement.DeepCopy());
+                    if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                     if(ReasonLinkIdElement != null) dest.ReasonLinkIdElement = new List<Hl7.Fhir.Model.FhirString>(ReasonLinkIdElement.DeepCopy());
                     if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     if(SecurityLabelNumberElement != null) dest.SecurityLabelNumberElement = new List<Hl7.Fhir.Model.UnsignedInt>(SecurityLabelNumberElement.DeepCopy());
@@ -3023,9 +2972,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PerformerRole, otherT.PerformerRole)) return false;
                 if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.Matches(PerformerLinkIdElement, otherT.PerformerLinkIdElement)) return false;
-                if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-                if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
-                if( !DeepComparable.Matches(ReasonElement, otherT.ReasonElement)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.Matches(ReasonLinkIdElement, otherT.ReasonLinkIdElement)) return false;
                 if( !DeepComparable.Matches(Note, otherT.Note)) return false;
                 if( !DeepComparable.Matches(SecurityLabelNumberElement, otherT.SecurityLabelNumberElement)) return false;
@@ -3054,9 +3001,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PerformerRole, otherT.PerformerRole)) return false;
                 if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
                 if( !DeepComparable.IsExactly(PerformerLinkIdElement, otherT.PerformerLinkIdElement)) return false;
-                if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-                if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
-                if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 if( !DeepComparable.IsExactly(ReasonLinkIdElement, otherT.ReasonLinkIdElement)) return false;
                 if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 if( !DeepComparable.IsExactly(SecurityLabelNumberElement, otherT.SecurityLabelNumberElement)) return false;
@@ -3086,9 +3031,7 @@ namespace Hl7.Fhir.Model
                     if (PerformerRole != null) yield return PerformerRole;
                     if (Performer != null) yield return Performer;
                     foreach (var elem in PerformerLinkIdElement) { if (elem != null) yield return elem; }
-                    foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-                    foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
-                    foreach (var elem in ReasonElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in ReasonLinkIdElement) { if (elem != null) yield return elem; }
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                     foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return elem; }
@@ -3116,9 +3059,7 @@ namespace Hl7.Fhir.Model
                     if (PerformerRole != null) yield return new ElementValue("performerRole", PerformerRole);
                     if (Performer != null) yield return new ElementValue("performer", Performer);
                     foreach (var elem in PerformerLinkIdElement) { if (elem != null) yield return new ElementValue("performerLinkId", elem); }
-                    foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                    foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
-                    foreach (var elem in ReasonElement) { if (elem != null) yield return new ElementValue("reason", elem); }
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                     foreach (var elem in ReasonLinkIdElement) { if (elem != null) yield return new ElementValue("reasonLinkId", elem); }
                     foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                     foreach (var elem in SecurityLabelNumberElement) { if (elem != null) yield return new ElementValue("securityLabelNumber", elem); }
@@ -3709,7 +3650,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+        /// amended | appended | cancelled | disputed | entered-in-error | executable +
         /// </summary>
         [FhirElement("status", InSummary=true, Order=120)]
         [DataMember]
@@ -3722,7 +3663,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes> _StatusElement;
         
         /// <summary>
-        /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+        /// amended | appended | cancelled | disputed | entered-in-error | executable +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

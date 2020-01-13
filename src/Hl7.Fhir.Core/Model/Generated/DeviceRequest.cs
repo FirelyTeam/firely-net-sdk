@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -535,39 +535,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
-        /// Coded Reason for request
+        /// Coded/Linked Reason for request
         /// </summary>
-        [FhirElement("reasonCode", InSummary=true, Order=270)]
+        [FhirElement("reason", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// Linked Reason for request
-        /// </summary>
-        [FhirElement("reasonReference", InSummary=true, Order=280)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// Associated insurance coverage
         /// </summary>
-        [FhirElement("insurance", Order=290)]
+        [FhirElement("insurance", Order=280)]
         [CLSCompliant(false)]
 		[References("Coverage","ClaimResponse")]
         [Cardinality(Min=0,Max=-1)]
@@ -583,7 +567,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional clinical information
         /// </summary>
-        [FhirElement("supportingInfo", Order=300)]
+        [FhirElement("supportingInfo", Order=290)]
         [CLSCompliant(false)]
 		[References()]
         [Cardinality(Min=0,Max=-1)]
@@ -599,7 +583,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes or comments
         /// </summary>
-        [FhirElement("note", Order=310)]
+        [FhirElement("note", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -613,7 +597,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request provenance
         /// </summary>
-        [FhirElement("relevantHistory", Order=320)]
+        [FhirElement("relevantHistory", Order=310)]
         [CLSCompliant(false)]
 		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
@@ -658,8 +642,7 @@ namespace Hl7.Fhir.Model
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.ResourceReference>(Insurance.DeepCopy());
                 if(SupportingInfo != null) dest.SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInfo.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
@@ -699,8 +682,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(PerformerType, otherT.PerformerType)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Insurance, otherT.Insurance)) return false;
             if( !DeepComparable.Matches(SupportingInfo, otherT.SupportingInfo)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -733,8 +715,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(PerformerType, otherT.PerformerType)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Insurance, otherT.Insurance)) return false;
             if( !DeepComparable.IsExactly(SupportingInfo, otherT.SupportingInfo)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
@@ -767,8 +748,7 @@ namespace Hl7.Fhir.Model
 				if (Requester != null) yield return Requester;
 				if (PerformerType != null) yield return PerformerType;
 				if (Performer != null) yield return Performer;
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				foreach (var elem in Insurance) { if (elem != null) yield return elem; }
 				foreach (var elem in SupportingInfo) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
@@ -800,8 +780,7 @@ namespace Hl7.Fhir.Model
                 if (Requester != null) yield return new ElementValue("requester", Requester);
                 if (PerformerType != null) yield return new ElementValue("performerType", PerformerType);
                 if (Performer != null) yield return new ElementValue("performer", Performer);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
                 foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }

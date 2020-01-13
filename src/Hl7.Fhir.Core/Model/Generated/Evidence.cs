@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A research context or question
+    /// Single evidence bit
     /// </summary>
     [FhirType("Evidence", IsResource=true)]
     [DataContract]
@@ -55,8 +55,674 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Evidence"; } }
         
+        [FhirType("ReferentGroupComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class ReferentGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ReferentGroupComponent"; } }
+            
+            /// <summary>
+            /// Textual description of referent group
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Markdown Description
+            {
+                get { return _Description; }
+                set { _Description = value; OnPropertyChanged("Description"); }
+            }
+            
+            private Hl7.Fhir.Model.Markdown _Description;
+            
+            /// <summary>
+            /// Footnotes and/or explanatory notes
+            /// </summary>
+            [FhirElement("note", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Annotation> Note
+            {
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Annotation> _Note;
+            
+            /// <summary>
+            /// Various information categories of group
+            /// </summary>
+            [FhirElement("evidenceSource", Order=60)]
+            [CLSCompliant(false)]
+			[References("Group")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference EvidenceSource
+            {
+                get { return _EvidenceSource; }
+                set { _EvidenceSource = value; OnPropertyChanged("EvidenceSource"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _EvidenceSource;
+            
+            /// <summary>
+            /// Non-actual group that is a set of characteristics
+            /// </summary>
+            [FhirElement("intendedGroup", Order=70)]
+            [CLSCompliant(false)]
+			[References("Group")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference IntendedGroup
+            {
+                get { return _IntendedGroup; }
+                set { _IntendedGroup = value; OnPropertyChanged("IntendedGroup"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _IntendedGroup;
+            
+            /// <summary>
+            /// low | moderate | high | exact
+            /// </summary>
+            [FhirElement("directnessMatch", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept DirectnessMatch
+            {
+                get { return _DirectnessMatch; }
+                set { _DirectnessMatch = value; OnPropertyChanged("DirectnessMatch"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _DirectnessMatch;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ReferentGroupComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                    if(EvidenceSource != null) dest.EvidenceSource = (Hl7.Fhir.Model.ResourceReference)EvidenceSource.DeepCopy();
+                    if(IntendedGroup != null) dest.IntendedGroup = (Hl7.Fhir.Model.ResourceReference)IntendedGroup.DeepCopy();
+                    if(DirectnessMatch != null) dest.DirectnessMatch = (Hl7.Fhir.Model.CodeableConcept)DirectnessMatch.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ReferentGroupComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ReferentGroupComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                if( !DeepComparable.Matches(EvidenceSource, otherT.EvidenceSource)) return false;
+                if( !DeepComparable.Matches(IntendedGroup, otherT.IntendedGroup)) return false;
+                if( !DeepComparable.Matches(DirectnessMatch, otherT.DirectnessMatch)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ReferentGroupComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                if( !DeepComparable.IsExactly(EvidenceSource, otherT.EvidenceSource)) return false;
+                if( !DeepComparable.IsExactly(IntendedGroup, otherT.IntendedGroup)) return false;
+                if( !DeepComparable.IsExactly(DirectnessMatch, otherT.DirectnessMatch)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Description != null) yield return Description;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                    if (EvidenceSource != null) yield return EvidenceSource;
+                    if (IntendedGroup != null) yield return IntendedGroup;
+                    if (DirectnessMatch != null) yield return DirectnessMatch;
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Description != null) yield return new ElementValue("description", Description);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                    if (EvidenceSource != null) yield return new ElementValue("evidenceSource", EvidenceSource);
+                    if (IntendedGroup != null) yield return new ElementValue("intendedGroup", IntendedGroup);
+                    if (DirectnessMatch != null) yield return new ElementValue("directnessMatch", DirectnessMatch);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("VariableDefinitionComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "VariableDefinitionComponent"; } }
+            
+            /// <summary>
+            /// Description of the variable
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Markdown Description
+            {
+                get { return _Description; }
+                set { _Description = value; OnPropertyChanged("Description"); }
+            }
+            
+            private Hl7.Fhir.Model.Markdown _Description;
+            
+            /// <summary>
+            /// Footnotes and/or explanatory notes
+            /// </summary>
+            [FhirElement("note", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Annotation> Note
+            {
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Annotation> _Note;
+            
+            /// <summary>
+            /// exposure | referenceExposure | measuredVariable | confounder
+            /// </summary>
+            [FhirElement("variableRole", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept VariableRole
+            {
+                get { return _VariableRole; }
+                set { _VariableRole = value; OnPropertyChanged("VariableRole"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _VariableRole;
+            
+            /// <summary>
+            /// Definition of the actual variable related to the statistic(s)
+            /// </summary>
+            [FhirElement("actualDefinition", InSummary=true, Order=70)]
+            [CLSCompliant(false)]
+			[References("EvidenceVariable")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference ActualDefinition
+            {
+                get { return _ActualDefinition; }
+                set { _ActualDefinition = value; OnPropertyChanged("ActualDefinition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _ActualDefinition;
+            
+            /// <summary>
+            /// Definition of the intended variable related to the Evidence
+            /// </summary>
+            [FhirElement("intendedDefinition", Order=80)]
+            [CLSCompliant(false)]
+			[References("EvidenceVariable")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference IntendedDefinition
+            {
+                get { return _IntendedDefinition; }
+                set { _IntendedDefinition = value; OnPropertyChanged("IntendedDefinition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _IntendedDefinition;
+            
+            /// <summary>
+            /// low | moderate | high | exact
+            /// </summary>
+            [FhirElement("directnessMatch", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept DirectnessMatch
+            {
+                get { return _DirectnessMatch; }
+                set { _DirectnessMatch = value; OnPropertyChanged("DirectnessMatch"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _DirectnessMatch;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as VariableDefinitionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                    if(VariableRole != null) dest.VariableRole = (Hl7.Fhir.Model.CodeableConcept)VariableRole.DeepCopy();
+                    if(ActualDefinition != null) dest.ActualDefinition = (Hl7.Fhir.Model.ResourceReference)ActualDefinition.DeepCopy();
+                    if(IntendedDefinition != null) dest.IntendedDefinition = (Hl7.Fhir.Model.ResourceReference)IntendedDefinition.DeepCopy();
+                    if(DirectnessMatch != null) dest.DirectnessMatch = (Hl7.Fhir.Model.CodeableConcept)DirectnessMatch.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new VariableDefinitionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as VariableDefinitionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                if( !DeepComparable.Matches(VariableRole, otherT.VariableRole)) return false;
+                if( !DeepComparable.Matches(ActualDefinition, otherT.ActualDefinition)) return false;
+                if( !DeepComparable.Matches(IntendedDefinition, otherT.IntendedDefinition)) return false;
+                if( !DeepComparable.Matches(DirectnessMatch, otherT.DirectnessMatch)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as VariableDefinitionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                if( !DeepComparable.IsExactly(VariableRole, otherT.VariableRole)) return false;
+                if( !DeepComparable.IsExactly(ActualDefinition, otherT.ActualDefinition)) return false;
+                if( !DeepComparable.IsExactly(IntendedDefinition, otherT.IntendedDefinition)) return false;
+                if( !DeepComparable.IsExactly(DirectnessMatch, otherT.DirectnessMatch)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Description != null) yield return Description;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                    if (VariableRole != null) yield return VariableRole;
+                    if (ActualDefinition != null) yield return ActualDefinition;
+                    if (IntendedDefinition != null) yield return IntendedDefinition;
+                    if (DirectnessMatch != null) yield return DirectnessMatch;
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Description != null) yield return new ElementValue("description", Description);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                    if (VariableRole != null) yield return new ElementValue("variableRole", VariableRole);
+                    if (ActualDefinition != null) yield return new ElementValue("actualDefinition", ActualDefinition);
+                    if (IntendedDefinition != null) yield return new ElementValue("intendedDefinition", IntendedDefinition);
+                    if (DirectnessMatch != null) yield return new ElementValue("directnessMatch", DirectnessMatch);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("CertaintyComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CertaintyComponent"; } }
+            
+            /// <summary>
+            /// Textual description of certainty
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Textual description of certainty
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Footnotes and/or explanatory notes
+            /// </summary>
+            [FhirElement("note", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Annotation Note
+            {
+                get { return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private Hl7.Fhir.Model.Annotation _Note;
+            
+            /// <summary>
+            /// Rating of certainty
+            /// </summary>
+            [FhirElement("rating", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Rating
+            {
+                get { if(_Rating==null) _Rating = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Rating; }
+                set { _Rating = value; OnPropertyChanged("Rating"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Rating;
+            
+            /// <summary>
+            /// Subcomponent of certainty
+            /// </summary>
+            [FhirElement("certaintySubcomponent", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Evidence.CertaintySubcomponentComponent> CertaintySubcomponent
+            {
+                get { if(_CertaintySubcomponent==null) _CertaintySubcomponent = new List<Hl7.Fhir.Model.Evidence.CertaintySubcomponentComponent>(); return _CertaintySubcomponent; }
+                set { _CertaintySubcomponent = value; OnPropertyChanged("CertaintySubcomponent"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Evidence.CertaintySubcomponentComponent> _CertaintySubcomponent;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CertaintyComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                    if(Rating != null) dest.Rating = new List<Hl7.Fhir.Model.CodeableConcept>(Rating.DeepCopy());
+                    if(CertaintySubcomponent != null) dest.CertaintySubcomponent = new List<Hl7.Fhir.Model.Evidence.CertaintySubcomponentComponent>(CertaintySubcomponent.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CertaintyComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CertaintyComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                if( !DeepComparable.Matches(Rating, otherT.Rating)) return false;
+                if( !DeepComparable.Matches(CertaintySubcomponent, otherT.CertaintySubcomponent)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CertaintyComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                if( !DeepComparable.IsExactly(Rating, otherT.Rating)) return false;
+                if( !DeepComparable.IsExactly(CertaintySubcomponent, otherT.CertaintySubcomponent)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Note != null) yield return Note;
+                    foreach (var elem in Rating) { if (elem != null) yield return elem; }
+                    foreach (var elem in CertaintySubcomponent) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Note != null) yield return new ElementValue("note", Note);
+                    foreach (var elem in Rating) { if (elem != null) yield return new ElementValue("rating", elem); }
+                    foreach (var elem in CertaintySubcomponent) { if (elem != null) yield return new ElementValue("certaintySubcomponent", elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("CertaintySubcomponentComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CertaintySubcomponentComponent"; } }
+            
+            /// <summary>
+            /// Textual description of certainty subcomponent
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Textual description of certainty subcomponent
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Textual note of certainty subcomponent
+            /// </summary>
+            [FhirElement("note", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Annotation Note
+            {
+                get { return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private Hl7.Fhir.Model.Annotation _Note;
+            
+            /// <summary>
+            /// Footnotes and/or explanatory notes
+            /// </summary>
+            [FhirElement("type", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Type
+            {
+                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+            
+            /// <summary>
+            /// Rating of certainty subcomponent
+            /// </summary>
+            [FhirElement("rating", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Rating
+            {
+                get { if(_Rating==null) _Rating = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Rating; }
+                set { _Rating = value; OnPropertyChanged("Rating"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Rating;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CertaintySubcomponentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+                    if(Rating != null) dest.Rating = new List<Hl7.Fhir.Model.CodeableConcept>(Rating.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CertaintySubcomponentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CertaintySubcomponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Rating, otherT.Rating)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CertaintySubcomponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Rating, otherT.Rating)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Note != null) yield return Note;
+                    foreach (var elem in Type) { if (elem != null) yield return elem; }
+                    foreach (var elem in Rating) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Note != null) yield return new ElementValue("note", Note);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+                    foreach (var elem in Rating) { if (elem != null) yield return new ElementValue("rating", elem); }
+                }
+            }
+
+            
+        }
+        
+        
         /// <summary>
-        /// Canonical identifier for this evidence, represented as a URI (globally unique)
+        /// Canonical identifier for this evidence, represented as a globally unique URI
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -69,7 +735,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Canonical identifier for this evidence, represented as a URI (globally unique)
+        /// Canonical identifier for this evidence, represented as a globally unique URI
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -88,7 +754,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Additional identifier for the evidence
+        /// Additional identifier for the summary
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -102,7 +768,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Business version of the evidence
+        /// Business version of this summary
         /// </summary>
         [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
@@ -115,7 +781,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
-        /// Business version of the evidence
+        /// Business version of this summary
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -134,41 +800,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name for this evidence (computer friendly)
+        /// Name for this summary (human friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement
-        {
-            get { return _NameElement; }
-            set { _NameElement = value; OnPropertyChanged("NameElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _NameElement;
-        
-        /// <summary>
-        /// Name for this evidence (computer friendly)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Name
-        {
-            get { return NameElement != null ? NameElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  NameElement = null; 
-                else
-                  NameElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Name");
-            }
-        }
-        
-        /// <summary>
-        /// Name for this evidence (human friendly)
-        /// </summary>
-        [FhirElement("title", InSummary=true, Order=130)]
+        [FhirElement("title", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -179,7 +813,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
         /// <summary>
-        /// Name for this evidence (human friendly)
+        /// Name for this summary (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -198,73 +832,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Title for use in informal contexts
-        /// </summary>
-        [FhirElement("shortTitle", Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString ShortTitleElement
-        {
-            get { return _ShortTitleElement; }
-            set { _ShortTitleElement = value; OnPropertyChanged("ShortTitleElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _ShortTitleElement;
-        
-        /// <summary>
-        /// Title for use in informal contexts
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ShortTitle
-        {
-            get { return ShortTitleElement != null ? ShortTitleElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  ShortTitleElement = null; 
-                else
-                  ShortTitleElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <summary>
-        /// Subordinate title of the Evidence
-        /// </summary>
-        [FhirElement("subtitle", Order=150)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString SubtitleElement
-        {
-            get { return _SubtitleElement; }
-            set { _SubtitleElement = value; OnPropertyChanged("SubtitleElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _SubtitleElement;
-        
-        /// <summary>
-        /// Subordinate title of the Evidence
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Subtitle
-        {
-            get { return SubtitleElement != null ? SubtitleElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  SubtitleElement = null; 
-                else
-                  SubtitleElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Subtitle");
-            }
-        }
-        
-        /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -297,7 +867,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=170)]
+        [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -327,82 +897,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of the publisher (organization or individual)
+        /// Use context
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PublisherElement
-        {
-            get { return _PublisherElement; }
-            set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PublisherElement;
-        
-        /// <summary>
-        /// Name of the publisher (organization or individual)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Publisher
-        {
-            get { return PublisherElement != null ? PublisherElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PublisherElement = null; 
-                else
-                  PublisherElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Publisher");
-            }
-        }
-        
-        /// <summary>
-        /// Contact details for the publisher
-        /// </summary>
-        [FhirElement("contact", InSummary=true, Order=190)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<ContactDetail> Contact
-        {
-            get { if(_Contact==null) _Contact = new List<ContactDetail>(); return _Contact; }
-            set { _Contact = value; OnPropertyChanged("Contact"); }
-        }
-        
-        private List<ContactDetail> _Contact;
-        
-        /// <summary>
-        /// Natural language description of the evidence
-        /// </summary>
-        [FhirElement("description", InSummary=true, Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.Markdown Description
-        {
-            get { return _Description; }
-            set { _Description = value; OnPropertyChanged("Description"); }
-        }
-        
-        private Hl7.Fhir.Model.Markdown _Description;
-        
-        /// <summary>
-        /// Used for footnotes or explanatory notes
-        /// </summary>
-        [FhirElement("note", Order=210)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Annotation> Note
-        {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Annotation> _Note;
-        
-        /// <summary>
-        /// The context that the content is intended to support
-        /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=220)]
+        [FhirElement("useContext", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -414,36 +911,9 @@ namespace Hl7.Fhir.Model
         private List<UsageContext> _UseContext;
         
         /// <summary>
-        /// Intended jurisdiction for evidence (if applicable)
+        /// When the summary was approved by publisher
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=230)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
-        {
-            get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
-            set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
-        
-        /// <summary>
-        /// Use and/or publishing restrictions
-        /// </summary>
-        [FhirElement("copyright", Order=240)]
-        [DataMember]
-        public Hl7.Fhir.Model.Markdown Copyright
-        {
-            get { return _Copyright; }
-            set { _Copyright = value; OnPropertyChanged("Copyright"); }
-        }
-        
-        private Hl7.Fhir.Model.Markdown _Copyright;
-        
-        /// <summary>
-        /// When the evidence was approved by publisher
-        /// </summary>
-        [FhirElement("approvalDate", Order=250)]
+        [FhirElement("approvalDate", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Date ApprovalDateElement
         {
@@ -454,7 +924,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _ApprovalDateElement;
         
         /// <summary>
-        /// When the evidence was approved by publisher
+        /// When the summary was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -473,9 +943,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When the evidence was last reviewed
+        /// When the summary was last reviewed
         /// </summary>
-        [FhirElement("lastReviewDate", Order=260)]
+        [FhirElement("lastReviewDate", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Date LastReviewDateElement
         {
@@ -486,7 +956,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _LastReviewDateElement;
         
         /// <summary>
-        /// When the evidence was last reviewed
+        /// When the summary was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -505,92 +975,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When the evidence is expected to be used
+        /// Contact detail and role for contributor to summary
         /// </summary>
-        [FhirElement("effectivePeriod", InSummary=true, Order=270)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period EffectivePeriod
-        {
-            get { return _EffectivePeriod; }
-            set { _EffectivePeriod = value; OnPropertyChanged("EffectivePeriod"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _EffectivePeriod;
-        
-        /// <summary>
-        /// The category of the Evidence, such as Education, Treatment, Assessment, etc.
-        /// </summary>
-        [FhirElement("topic", Order=280)]
+        [FhirElement("contributor", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Topic
+        public List<Contributor> Contributor
         {
-            get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Topic; }
-            set { _Topic = value; OnPropertyChanged("Topic"); }
+            get { if(_Contributor==null) _Contributor = new List<Contributor>(); return _Contributor; }
+            set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
+        private List<Contributor> _Contributor;
         
         /// <summary>
-        /// Who authored the content
+        /// Link or citation to artifact associated with the summary
         /// </summary>
-        [FhirElement("author", Order=290)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<ContactDetail> Author
-        {
-            get { if(_Author==null) _Author = new List<ContactDetail>(); return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private List<ContactDetail> _Author;
-        
-        /// <summary>
-        /// Who edited the content
-        /// </summary>
-        [FhirElement("editor", Order=300)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<ContactDetail> Editor
-        {
-            get { if(_Editor==null) _Editor = new List<ContactDetail>(); return _Editor; }
-            set { _Editor = value; OnPropertyChanged("Editor"); }
-        }
-        
-        private List<ContactDetail> _Editor;
-        
-        /// <summary>
-        /// Who reviewed the content
-        /// </summary>
-        [FhirElement("reviewer", Order=310)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<ContactDetail> Reviewer
-        {
-            get { if(_Reviewer==null) _Reviewer = new List<ContactDetail>(); return _Reviewer; }
-            set { _Reviewer = value; OnPropertyChanged("Reviewer"); }
-        }
-        
-        private List<ContactDetail> _Reviewer;
-        
-        /// <summary>
-        /// Who endorsed the content
-        /// </summary>
-        [FhirElement("endorser", Order=320)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<ContactDetail> Endorser
-        {
-            get { if(_Endorser==null) _Endorser = new List<ContactDetail>(); return _Endorser; }
-            set { _Endorser = value; OnPropertyChanged("Endorser"); }
-        }
-        
-        private List<ContactDetail> _Endorser;
-        
-        /// <summary>
-        /// Additional documentation, citations, etc.
-        /// </summary>
-        [FhirElement("relatedArtifact", Order=330)]
+        [FhirElement("relatedArtifact", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<RelatedArtifact> RelatedArtifact
@@ -602,58 +1003,146 @@ namespace Hl7.Fhir.Model
         private List<RelatedArtifact> _RelatedArtifact;
         
         /// <summary>
-        /// What population?
+        /// Description of the particular summary
         /// </summary>
-        [FhirElement("exposureBackground", InSummary=true, Order=340)]
-        [CLSCompliant(false)]
-		[References("EvidenceVariable")]
+        [FhirElement("description", Order=200)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Description
+        {
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Description;
+        
+        /// <summary>
+        /// Declarative description of the Evidence
+        /// </summary>
+        [FhirElement("assertion", Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Assertion
+        {
+            get { return _Assertion; }
+            set { _Assertion = value; OnPropertyChanged("Assertion"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Assertion;
+        
+        /// <summary>
+        /// Footnotes and/or explanatory notes
+        /// </summary>
+        [FhirElement("note", Order=220)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
+        /// <summary>
+        /// Group being referenced
+        /// </summary>
+        [FhirElement("referentGroup", InSummary=true, Order=230)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ExposureBackground
+        public Hl7.Fhir.Model.Evidence.ReferentGroupComponent ReferentGroup
         {
-            get { return _ExposureBackground; }
-            set { _ExposureBackground = value; OnPropertyChanged("ExposureBackground"); }
+            get { return _ReferentGroup; }
+            set { _ReferentGroup = value; OnPropertyChanged("ReferentGroup"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _ExposureBackground;
+        private Hl7.Fhir.Model.Evidence.ReferentGroupComponent _ReferentGroup;
         
         /// <summary>
-        /// What exposure?
+        /// Evidence variable
         /// </summary>
-        [FhirElement("exposureVariant", InSummary=true, Order=350)]
-        [CLSCompliant(false)]
-		[References("EvidenceVariable")]
+        [FhirElement("variableDefinition", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ExposureVariant
+        public List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent> VariableDefinition
         {
-            get { if(_ExposureVariant==null) _ExposureVariant = new List<Hl7.Fhir.Model.ResourceReference>(); return _ExposureVariant; }
-            set { _ExposureVariant = value; OnPropertyChanged("ExposureVariant"); }
+            get { if(_VariableDefinition==null) _VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(); return _VariableDefinition; }
+            set { _VariableDefinition = value; OnPropertyChanged("VariableDefinition"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _ExposureVariant;
+        private List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent> _VariableDefinition;
         
         /// <summary>
-        /// What outcome?
+        /// The particular type of synthesis if this is a synthesis summary
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=360)]
-        [CLSCompliant(false)]
-		[References("EvidenceVariable")]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("synthesisType", Order=250)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Outcome
+        public Hl7.Fhir.Model.CodeableConcept SynthesisType
         {
-            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.ResourceReference>(); return _Outcome; }
-            set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            get { return _SynthesisType; }
+            set { _SynthesisType = value; OnPropertyChanged("SynthesisType"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Outcome;
+        private Hl7.Fhir.Model.CodeableConcept _SynthesisType;
+        
+        /// <summary>
+        /// The type of study that produced this summary
+        /// </summary>
+        [FhirElement("studyType", Order=260)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept StudyType
+        {
+            get { return _StudyType; }
+            set { _StudyType = value; OnPropertyChanged("StudyType"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _StudyType;
+        
+        /// <summary>
+        /// Values and parameters for a single statistic
+        /// </summary>
+        [FhirElement("statistic", Order=270)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Statistic> Statistic
+        {
+            get { if(_Statistic==null) _Statistic = new List<Statistic>(); return _Statistic; }
+            set { _Statistic = value; OnPropertyChanged("Statistic"); }
+        }
+        
+        private List<Statistic> _Statistic;
+        
+        /// <summary>
+        /// An ordered group of statistics
+        /// </summary>
+        [FhirElement("distribution", Order=280)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<OrderedDistribution> Distribution
+        {
+            get { if(_Distribution==null) _Distribution = new List<OrderedDistribution>(); return _Distribution; }
+            set { _Distribution = value; OnPropertyChanged("Distribution"); }
+        }
+        
+        private List<OrderedDistribution> _Distribution;
+        
+        /// <summary>
+        /// Level of certainty
+        /// </summary>
+        [FhirElement("certainty", Order=290)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Evidence.CertaintyComponent> Certainty
+        {
+            get { if(_Certainty==null) _Certainty = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(); return _Certainty; }
+            set { _Certainty = value; OnPropertyChanged("Certainty"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Evidence.CertaintyComponent> _Certainty;
         
 
-        public static ElementDefinition.ConstraintComponent Evidence_EVI_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent Evidence_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "evi-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
@@ -663,7 +1152,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(Evidence_EVI_0);
+            InvariantConstraints.Add(Evidence_CNL_0);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -676,31 +1165,24 @@ namespace Hl7.Fhir.Model
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
-                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(ShortTitleElement != null) dest.ShortTitleElement = (Hl7.Fhir.Model.FhirString)ShortTitleElement.DeepCopy();
-                if(SubtitleElement != null) dest.SubtitleElement = (Hl7.Fhir.Model.FhirString)SubtitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
-                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
-                if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-                if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
                 if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
-                if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-                if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
-                if(Author != null) dest.Author = new List<ContactDetail>(Author.DeepCopy());
-                if(Editor != null) dest.Editor = new List<ContactDetail>(Editor.DeepCopy());
-                if(Reviewer != null) dest.Reviewer = new List<ContactDetail>(Reviewer.DeepCopy());
-                if(Endorser != null) dest.Endorser = new List<ContactDetail>(Endorser.DeepCopy());
+                if(Contributor != null) dest.Contributor = new List<Contributor>(Contributor.DeepCopy());
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
-                if(ExposureBackground != null) dest.ExposureBackground = (Hl7.Fhir.Model.ResourceReference)ExposureBackground.DeepCopy();
-                if(ExposureVariant != null) dest.ExposureVariant = new List<Hl7.Fhir.Model.ResourceReference>(ExposureVariant.DeepCopy());
-                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.ResourceReference>(Outcome.DeepCopy());
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+                if(Assertion != null) dest.Assertion = (Hl7.Fhir.Model.Markdown)Assertion.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(ReferentGroup != null) dest.ReferentGroup = (Hl7.Fhir.Model.Evidence.ReferentGroupComponent)ReferentGroup.DeepCopy();
+                if(VariableDefinition != null) dest.VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(VariableDefinition.DeepCopy());
+                if(SynthesisType != null) dest.SynthesisType = (Hl7.Fhir.Model.CodeableConcept)SynthesisType.DeepCopy();
+                if(StudyType != null) dest.StudyType = (Hl7.Fhir.Model.CodeableConcept)StudyType.DeepCopy();
+                if(Statistic != null) dest.Statistic = new List<Statistic>(Statistic.DeepCopy());
+                if(Distribution != null) dest.Distribution = new List<OrderedDistribution>(Distribution.DeepCopy());
+                if(Certainty != null) dest.Certainty = new List<Hl7.Fhir.Model.Evidence.CertaintyComponent>(Certainty.DeepCopy());
                 return dest;
             }
             else
@@ -721,31 +1203,24 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
-            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-            if( !DeepComparable.Matches(ShortTitleElement, otherT.ShortTitleElement)) return false;
-            if( !DeepComparable.Matches(SubtitleElement, otherT.SubtitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
-            if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
             if( !DeepComparable.Matches(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
-            if( !DeepComparable.Matches(EffectivePeriod, otherT.EffectivePeriod)) return false;
-            if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(Editor, otherT.Editor)) return false;
-            if( !DeepComparable.Matches(Reviewer, otherT.Reviewer)) return false;
-            if( !DeepComparable.Matches(Endorser, otherT.Endorser)) return false;
+            if( !DeepComparable.Matches(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
-            if( !DeepComparable.Matches(ExposureBackground, otherT.ExposureBackground)) return false;
-            if( !DeepComparable.Matches(ExposureVariant, otherT.ExposureVariant)) return false;
-            if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+            if( !DeepComparable.Matches(Assertion, otherT.Assertion)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(ReferentGroup, otherT.ReferentGroup)) return false;
+            if( !DeepComparable.Matches(VariableDefinition, otherT.VariableDefinition)) return false;
+            if( !DeepComparable.Matches(SynthesisType, otherT.SynthesisType)) return false;
+            if( !DeepComparable.Matches(StudyType, otherT.StudyType)) return false;
+            if( !DeepComparable.Matches(Statistic, otherT.Statistic)) return false;
+            if( !DeepComparable.Matches(Distribution, otherT.Distribution)) return false;
+            if( !DeepComparable.Matches(Certainty, otherT.Certainty)) return false;
             
             return true;
         }
@@ -759,31 +1234,24 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
-            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-            if( !DeepComparable.IsExactly(ShortTitleElement, otherT.ShortTitleElement)) return false;
-            if( !DeepComparable.IsExactly(SubtitleElement, otherT.SubtitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-            if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
-            if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
             if( !DeepComparable.IsExactly(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
-            if( !DeepComparable.IsExactly(EffectivePeriod, otherT.EffectivePeriod)) return false;
-            if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(Editor, otherT.Editor)) return false;
-            if( !DeepComparable.IsExactly(Reviewer, otherT.Reviewer)) return false;
-            if( !DeepComparable.IsExactly(Endorser, otherT.Endorser)) return false;
+            if( !DeepComparable.IsExactly(Contributor, otherT.Contributor)) return false;
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
-            if( !DeepComparable.IsExactly(ExposureBackground, otherT.ExposureBackground)) return false;
-            if( !DeepComparable.IsExactly(ExposureVariant, otherT.ExposureVariant)) return false;
-            if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+            if( !DeepComparable.IsExactly(Assertion, otherT.Assertion)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(ReferentGroup, otherT.ReferentGroup)) return false;
+            if( !DeepComparable.IsExactly(VariableDefinition, otherT.VariableDefinition)) return false;
+            if( !DeepComparable.IsExactly(SynthesisType, otherT.SynthesisType)) return false;
+            if( !DeepComparable.IsExactly(StudyType, otherT.StudyType)) return false;
+            if( !DeepComparable.IsExactly(Statistic, otherT.Statistic)) return false;
+            if( !DeepComparable.IsExactly(Distribution, otherT.Distribution)) return false;
+            if( !DeepComparable.IsExactly(Certainty, otherT.Certainty)) return false;
             
             return true;
         }
@@ -797,31 +1265,24 @@ namespace Hl7.Fhir.Model
 				if (UrlElement != null) yield return UrlElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
-				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;
-				if (ShortTitleElement != null) yield return ShortTitleElement;
-				if (SubtitleElement != null) yield return SubtitleElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (DateElement != null) yield return DateElement;
-				if (PublisherElement != null) yield return PublisherElement;
-				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (Description != null) yield return Description;
-				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
-				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
-				if (Copyright != null) yield return Copyright;
 				if (ApprovalDateElement != null) yield return ApprovalDateElement;
 				if (LastReviewDateElement != null) yield return LastReviewDateElement;
-				if (EffectivePeriod != null) yield return EffectivePeriod;
-				foreach (var elem in Topic) { if (elem != null) yield return elem; }
-				foreach (var elem in Author) { if (elem != null) yield return elem; }
-				foreach (var elem in Editor) { if (elem != null) yield return elem; }
-				foreach (var elem in Reviewer) { if (elem != null) yield return elem; }
-				foreach (var elem in Endorser) { if (elem != null) yield return elem; }
+				foreach (var elem in Contributor) { if (elem != null) yield return elem; }
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
-				if (ExposureBackground != null) yield return ExposureBackground;
-				foreach (var elem in ExposureVariant) { if (elem != null) yield return elem; }
-				foreach (var elem in Outcome) { if (elem != null) yield return elem; }
+				if (Description != null) yield return Description;
+				if (Assertion != null) yield return Assertion;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (ReferentGroup != null) yield return ReferentGroup;
+				foreach (var elem in VariableDefinition) { if (elem != null) yield return elem; }
+				if (SynthesisType != null) yield return SynthesisType;
+				if (StudyType != null) yield return StudyType;
+				foreach (var elem in Statistic) { if (elem != null) yield return elem; }
+				foreach (var elem in Distribution) { if (elem != null) yield return elem; }
+				foreach (var elem in Certainty) { if (elem != null) yield return elem; }
             }
         }
 
@@ -834,31 +1295,24 @@ namespace Hl7.Fhir.Model
                 if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (VersionElement != null) yield return new ElementValue("version", VersionElement);
-                if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-                if (ShortTitleElement != null) yield return new ElementValue("shortTitle", ShortTitleElement);
-                if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (DateElement != null) yield return new ElementValue("date", DateElement);
-                if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-                if (Description != null) yield return new ElementValue("description", Description);
-                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
-                if (Copyright != null) yield return new ElementValue("copyright", Copyright);
                 if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", ApprovalDateElement);
                 if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", LastReviewDateElement);
-                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", EffectivePeriod);
-                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
-                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
-                foreach (var elem in Editor) { if (elem != null) yield return new ElementValue("editor", elem); }
-                foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", elem); }
-                foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
+                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", elem); }
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
-                if (ExposureBackground != null) yield return new ElementValue("exposureBackground", ExposureBackground);
-                foreach (var elem in ExposureVariant) { if (elem != null) yield return new ElementValue("exposureVariant", elem); }
-                foreach (var elem in Outcome) { if (elem != null) yield return new ElementValue("outcome", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
+                if (Assertion != null) yield return new ElementValue("assertion", Assertion);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+                if (ReferentGroup != null) yield return new ElementValue("referentGroup", ReferentGroup);
+                foreach (var elem in VariableDefinition) { if (elem != null) yield return new ElementValue("variableDefinition", elem); }
+                if (SynthesisType != null) yield return new ElementValue("synthesisType", SynthesisType);
+                if (StudyType != null) yield return new ElementValue("studyType", StudyType);
+                foreach (var elem in Statistic) { if (elem != null) yield return new ElementValue("statistic", elem); }
+                foreach (var elem in Distribution) { if (elem != null) yield return new ElementValue("distribution", elem); }
+                foreach (var elem in Certainty) { if (elem != null) yield return new ElementValue("certainty", elem); }
             }
         }
 

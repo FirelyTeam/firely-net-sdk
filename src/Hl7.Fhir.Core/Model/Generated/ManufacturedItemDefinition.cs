@@ -39,26 +39,147 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// The manufactured item as contained in the packaged medicinal product
+    /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product
     /// </summary>
-    [FhirType("MedicinalProductManufactured", IsResource=true)]
+    [FhirType("ManufacturedItemDefinition", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductManufactured : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductManufactured; } }
+        public override ResourceType ResourceType { get { return ResourceType.ManufacturedItemDefinition; } }
         [NotMapped]
-        public override string TypeName { get { return "MedicinalProductManufactured"; } }
+        public override string TypeName { get { return "ManufacturedItemDefinition"; } }
+        
+        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CharacteristicComponent"; } }
+            
+            /// <summary>
+            /// A code expressing the type of characteristic
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// A value for the characteristic
+            /// </summary>
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Value;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CharacteristicComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CharacteristicComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CharacteristicComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CharacteristicComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Value != null) yield return new ElementValue("value", Value);
+                }
+            }
+
+            
+        }
+        
+        
+        /// <summary>
+        /// Unique identifier
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Dose form as manufactured and before any transformation into the pharmaceutical product
         /// </summary>
-        [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
+        [FhirElement("manufacturedDoseForm", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
@@ -72,7 +193,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The “real world” units in which the quantity of the manufactured item is described
         /// </summary>
-        [FhirElement("unitOfPresentation", InSummary=true, Order=100)]
+        [FhirElement("unitOfPresentation", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
         {
@@ -81,20 +202,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
-        
-        /// <summary>
-        /// The quantity or "count number" of the manufactured item
-        /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Quantity Quantity
-        {
-            get { return _Quantity; }
-            set { _Quantity = value; OnPropertyChanged("Quantity"); }
-        }
-        
-        private Quantity _Quantity;
         
         /// <summary>
         /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
@@ -113,11 +220,11 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
         
         /// <summary>
-        /// Ingredient
+        /// The ingredients that make up this manufactured item
         /// </summary>
         [FhirElement("ingredient", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("MedicinalProductIngredient")]
+		[References("Ingredient")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Ingredient
@@ -129,31 +236,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Ingredient;
         
         /// <summary>
-        /// Dimensions, color etc.
+        /// General characteristics of this item
         /// </summary>
-        [FhirElement("physicalCharacteristics", InSummary=true, Order=140)]
-        [DataMember]
-        public ProdCharacteristic PhysicalCharacteristics
-        {
-            get { return _PhysicalCharacteristics; }
-            set { _PhysicalCharacteristics = value; OnPropertyChanged("PhysicalCharacteristics"); }
-        }
-        
-        private ProdCharacteristic _PhysicalCharacteristics;
-        
-        /// <summary>
-        /// Other codeable characteristics
-        /// </summary>
-        [FhirElement("otherCharacteristics", InSummary=true, Order=150)]
+        [FhirElement("characteristic", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
+        public List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent> Characteristic
         {
-            get { if(_OtherCharacteristics==null) _OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OtherCharacteristics; }
-            set { _OtherCharacteristics = value; OnPropertyChanged("OtherCharacteristics"); }
+            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent>(); return _Characteristic; }
+            set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _OtherCharacteristics;
+        private List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent> _Characteristic;
         
 
         public override void AddDefaultConstraints()
@@ -164,18 +258,17 @@ namespace Hl7.Fhir.Model
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as MedicinalProductManufactured;
+            var dest = other as ManufacturedItemDefinition;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopy();
                 if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
-                if(PhysicalCharacteristics != null) dest.PhysicalCharacteristics = (ProdCharacteristic)PhysicalCharacteristics.DeepCopy();
-                if(OtherCharacteristics != null) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(OtherCharacteristics.DeepCopy());
+                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent>(Characteristic.DeepCopy());
                 return dest;
             }
             else
@@ -184,39 +277,37 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new MedicinalProductManufactured());
+            return CopyTo(new ManufacturedItemDefinition());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as MedicinalProductManufactured;
+            var otherT = other as ManufacturedItemDefinition;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
             if( !DeepComparable.Matches(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
-            if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
-            if( !DeepComparable.Matches(PhysicalCharacteristics, otherT.PhysicalCharacteristics)) return false;
-            if( !DeepComparable.Matches(OtherCharacteristics, otherT.OtherCharacteristics)) return false;
+            if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
             
             return true;
         }
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as MedicinalProductManufactured;
+            var otherT = other as ManufacturedItemDefinition;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
             if( !DeepComparable.IsExactly(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
-            if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
-            if( !DeepComparable.IsExactly(PhysicalCharacteristics, otherT.PhysicalCharacteristics)) return false;
-            if( !DeepComparable.IsExactly(OtherCharacteristics, otherT.OtherCharacteristics)) return false;
+            if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
             
             return true;
         }
@@ -227,13 +318,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ManufacturedDoseForm != null) yield return ManufacturedDoseForm;
 				if (UnitOfPresentation != null) yield return UnitOfPresentation;
-				if (Quantity != null) yield return Quantity;
 				foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
-				if (PhysicalCharacteristics != null) yield return PhysicalCharacteristics;
-				foreach (var elem in OtherCharacteristics) { if (elem != null) yield return elem; }
+				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
             }
         }
 
@@ -243,13 +333,12 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (ManufacturedDoseForm != null) yield return new ElementValue("manufacturedDoseForm", ManufacturedDoseForm);
                 if (UnitOfPresentation != null) yield return new ElementValue("unitOfPresentation", UnitOfPresentation);
-                if (Quantity != null) yield return new ElementValue("quantity", Quantity);
                 foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
                 foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
-                if (PhysicalCharacteristics != null) yield return new ElementValue("physicalCharacteristics", PhysicalCharacteristics);
-                foreach (var elem in OtherCharacteristics) { if (elem != null) yield return new ElementValue("otherCharacteristics", elem); }
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
             }
         }
 

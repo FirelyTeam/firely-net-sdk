@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -186,13 +186,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("size", InSummary=true, Order=70)]
         [DataMember]
-        public Hl7.Fhir.Model.UnsignedInt SizeElement
+        public Hl7.Fhir.Model.Integer64 SizeElement
         {
             get { return _SizeElement; }
             set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
         }
         
-        private Hl7.Fhir.Model.UnsignedInt _SizeElement;
+        private Hl7.Fhir.Model.Integer64 _SizeElement;
         
         /// <summary>
         /// Number of bytes of content (if url provided)
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public int? Size
+        public long? Size
         {
             get { return SizeElement != null ? SizeElement.Value : null; }
             set
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   SizeElement = null; 
                 else
-                  SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                  SizeElement = new Hl7.Fhir.Model.Integer64(value);
                 OnPropertyChanged("Size");
             }
         }
@@ -309,6 +309,166 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Height of the image in pixels (photo/video)
+        /// </summary>
+        [FhirElement("height", Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt HeightElement
+        {
+            get { return _HeightElement; }
+            set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _HeightElement;
+        
+        /// <summary>
+        /// Height of the image in pixels (photo/video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Height
+        {
+            get { return HeightElement != null ? HeightElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  HeightElement = null; 
+                else
+                  HeightElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Height");
+            }
+        }
+        
+        /// <summary>
+        /// Width of the image in pixels (photo/video)
+        /// </summary>
+        [FhirElement("width", Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt WidthElement
+        {
+            get { return _WidthElement; }
+            set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _WidthElement;
+        
+        /// <summary>
+        /// Width of the image in pixels (photo/video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Width
+        {
+            get { return WidthElement != null ? WidthElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  WidthElement = null; 
+                else
+                  WidthElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Width");
+            }
+        }
+        
+        /// <summary>
+        /// Number of frames if &gt; 1 (photo)
+        /// </summary>
+        [FhirElement("frames", Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt FramesElement
+        {
+            get { return _FramesElement; }
+            set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _FramesElement;
+        
+        /// <summary>
+        /// Number of frames if &gt; 1 (photo)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Frames
+        {
+            get { return FramesElement != null ? FramesElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  FramesElement = null; 
+                else
+                  FramesElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Frames");
+            }
+        }
+        
+        /// <summary>
+        /// Length in seconds (audio / video)
+        /// </summary>
+        [FhirElement("duration", Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDecimal DurationElement
+        {
+            get { return _DurationElement; }
+            set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDecimal _DurationElement;
+        
+        /// <summary>
+        /// Length in seconds (audio / video)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public decimal? Duration
+        {
+            get { return DurationElement != null ? DurationElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  DurationElement = null; 
+                else
+                  DurationElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                OnPropertyChanged("Duration");
+            }
+        }
+        
+        /// <summary>
+        /// Number of printed pages
+        /// </summary>
+        [FhirElement("pages", Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.PositiveInt PagesElement
+        {
+            get { return _PagesElement; }
+            set { _PagesElement = value; OnPropertyChanged("PagesElement"); }
+        }
+        
+        private Hl7.Fhir.Model.PositiveInt _PagesElement;
+        
+        /// <summary>
+        /// Number of printed pages
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Pages
+        {
+            get { return PagesElement != null ? PagesElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  PagesElement = null; 
+                else
+                  PagesElement = new Hl7.Fhir.Model.PositiveInt(value);
+                OnPropertyChanged("Pages");
+            }
+        }
+        
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -321,10 +481,15 @@ namespace Hl7.Fhir.Model
                 if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                 if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
-                if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.UnsignedInt)SizeElement.DeepCopy();
+                if(SizeElement != null) dest.SizeElement = (Hl7.Fhir.Model.Integer64)SizeElement.DeepCopy();
                 if(HashElement != null) dest.HashElement = (Hl7.Fhir.Model.Base64Binary)HashElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(CreationElement != null) dest.CreationElement = (Hl7.Fhir.Model.FhirDateTime)CreationElement.DeepCopy();
+                if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)HeightElement.DeepCopy();
+                if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)WidthElement.DeepCopy();
+                if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)FramesElement.DeepCopy();
+                if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopy();
+                if(PagesElement != null) dest.PagesElement = (Hl7.Fhir.Model.PositiveInt)PagesElement.DeepCopy();
                 return dest;
             }
             else
@@ -350,6 +515,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(CreationElement, otherT.CreationElement)) return false;
+            if( !DeepComparable.Matches(HeightElement, otherT.HeightElement)) return false;
+            if( !DeepComparable.Matches(WidthElement, otherT.WidthElement)) return false;
+            if( !DeepComparable.Matches(FramesElement, otherT.FramesElement)) return false;
+            if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
+            if( !DeepComparable.Matches(PagesElement, otherT.PagesElement)) return false;
             
             return true;
         }
@@ -368,6 +538,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(CreationElement, otherT.CreationElement)) return false;
+            if( !DeepComparable.IsExactly(HeightElement, otherT.HeightElement)) return false;
+            if( !DeepComparable.IsExactly(WidthElement, otherT.WidthElement)) return false;
+            if( !DeepComparable.IsExactly(FramesElement, otherT.FramesElement)) return false;
+            if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
+            if( !DeepComparable.IsExactly(PagesElement, otherT.PagesElement)) return false;
             
             return true;
         }
@@ -386,6 +561,11 @@ namespace Hl7.Fhir.Model
                 if (HashElement != null) yield return HashElement;
                 if (TitleElement != null) yield return TitleElement;
                 if (CreationElement != null) yield return CreationElement;
+                if (HeightElement != null) yield return HeightElement;
+                if (WidthElement != null) yield return WidthElement;
+                if (FramesElement != null) yield return FramesElement;
+                if (DurationElement != null) yield return DurationElement;
+                if (PagesElement != null) yield return PagesElement;
             }
         }
 
@@ -403,6 +583,11 @@ namespace Hl7.Fhir.Model
                 if (HashElement != null) yield return new ElementValue("hash", HashElement);
                 if (TitleElement != null) yield return new ElementValue("title", TitleElement);
                 if (CreationElement != null) yield return new ElementValue("creation", CreationElement);
+                if (HeightElement != null) yield return new ElementValue("height", HeightElement);
+                if (WidthElement != null) yield return new ElementValue("width", WidthElement);
+                if (FramesElement != null) yield return new ElementValue("frames", FramesElement);
+                if (DurationElement != null) yield return new ElementValue("duration", DurationElement);
+                if (PagesElement != null) yield return new ElementValue("pages", PagesElement);
  
             } 
         } 

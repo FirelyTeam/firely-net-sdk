@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -428,37 +428,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The reason why the supply item was requested
         /// </summary>
-        [FhirElement("reasonCode", Order=200)]
+        [FhirElement("reason", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        public List<Hl7.Fhir.Model.CodeableReference> Reason
         {
-            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableReference>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
-        
-        /// <summary>
-        /// The reason why the supply item was requested
-        /// </summary>
-        [FhirElement("reasonReference", Order=210)]
-        [CLSCompliant(false)]
-		[References("Condition","Observation","DiagnosticReport","DocumentReference")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
-        {
-            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        private List<Hl7.Fhir.Model.CodeableReference> _Reason;
         
         /// <summary>
         /// The origin of the supply
         /// </summary>
-        [FhirElement("deliverFrom", Order=220)]
+        [FhirElement("deliverFrom", Order=210)]
         [CLSCompliant(false)]
 		[References("Organization","Location")]
         [DataMember]
@@ -473,7 +457,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The destination of the supply
         /// </summary>
-        [FhirElement("deliverTo", Order=230)]
+        [FhirElement("deliverTo", Order=220)]
         [CLSCompliant(false)]
 		[References("Organization","Location","Patient")]
         [DataMember]
@@ -510,8 +494,7 @@ namespace Hl7.Fhir.Model
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
-                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableReference>(Reason.DeepCopy());
                 if(DeliverFrom != null) dest.DeliverFrom = (Hl7.Fhir.Model.ResourceReference)DeliverFrom.DeepCopy();
                 if(DeliverTo != null) dest.DeliverTo = (Hl7.Fhir.Model.ResourceReference)DeliverTo.DeepCopy();
                 return dest;
@@ -542,8 +525,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(Supplier, otherT.Supplier)) return false;
-            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(DeliverFrom, otherT.DeliverFrom)) return false;
             if( !DeepComparable.Matches(DeliverTo, otherT.DeliverTo)) return false;
             
@@ -567,8 +549,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
-            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(DeliverFrom, otherT.DeliverFrom)) return false;
             if( !DeepComparable.IsExactly(DeliverTo, otherT.DeliverTo)) return false;
             
@@ -592,8 +573,7 @@ namespace Hl7.Fhir.Model
 				if (AuthoredOnElement != null) yield return AuthoredOnElement;
 				if (Requester != null) yield return Requester;
 				foreach (var elem in Supplier) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (DeliverFrom != null) yield return DeliverFrom;
 				if (DeliverTo != null) yield return DeliverTo;
             }
@@ -616,8 +596,7 @@ namespace Hl7.Fhir.Model
                 if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
                 if (Requester != null) yield return new ElementValue("requester", Requester);
                 foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", elem); }
-                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
                 if (DeliverFrom != null) yield return new ElementValue("deliverFrom", DeliverFrom);
                 if (DeliverTo != null) yield return new ElementValue("deliverTo", DeliverTo);
             }

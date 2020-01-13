@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,8 +96,26 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("BackboneType", "http://hl7.org/fhir/data-types"), Description("BackboneType")]
+            BackboneType,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("Base", "http://hl7.org/fhir/data-types"), Description("Base")]
+            Base,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/data-types"), Description("CodeableConcept")]
             CodeableConcept,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("CodeableReference", "http://hl7.org/fhir/data-types"), Description("CodeableReference")]
+            CodeableReference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -134,6 +152,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DataRequirement", "http://hl7.org/fhir/data-types"), Description("DataRequirement")]
             DataRequirement,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("DataType", "http://hl7.org/fhir/data-types"), Description("DataType")]
+            DataType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -222,6 +246,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("OrderedDistribution", "http://hl7.org/fhir/data-types"), Description("OrderedDistribution")]
+            OrderedDistribution,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("ParameterDefinition", "http://hl7.org/fhir/data-types"), Description("ParameterDefinition")]
             ParameterDefinition,
             /// <summary>
@@ -236,6 +266,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Population", "http://hl7.org/fhir/data-types"), Description("Population")]
             Population,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("PrimitiveType", "http://hl7.org/fhir/data-types"), Description("PrimitiveType")]
+            PrimitiveType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -296,6 +332,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("SimpleQuantity", "http://hl7.org/fhir/data-types"), Description("SimpleQuantity")]
             SimpleQuantity,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
+            [EnumLiteral("Statistic", "http://hl7.org/fhir/data-types"), Description("Statistic")]
+            Statistic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -384,6 +426,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("integer64", "http://hl7.org/fhir/data-types"), Description("integer64")]
+            Integer64,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("markdown", "http://hl7.org/fhir/data-types"), Description("markdown")]
             Markdown,
             /// <summary>
@@ -456,6 +504,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("AdministrableProductDefinition", "http://hl7.org/fhir/resource-types"), Description("AdministrableProductDefinition")]
+            AdministrableProductDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/resource-types"), Description("AdverseEvent")]
             AdverseEvent,
             /// <summary>
@@ -522,6 +576,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("CapabilityStatement2", "http://hl7.org/fhir/resource-types"), Description("CapabilityStatement2")]
+            CapabilityStatement2,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("CarePlan", "http://hl7.org/fhir/resource-types"), Description("CarePlan")]
             CarePlan,
             /// <summary>
@@ -570,6 +630,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ClinicalUseIssue", "http://hl7.org/fhir/resource-types"), Description("ClinicalUseIssue")]
+            ClinicalUseIssue,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("CodeSystem", "http://hl7.org/fhir/resource-types"), Description("CodeSystem")]
             CodeSystem,
             /// <summary>
@@ -608,6 +674,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Condition", "http://hl7.org/fhir/resource-types"), Description("Condition")]
             Condition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ConditionDefinition", "http://hl7.org/fhir/resource-types"), Description("ConditionDefinition")]
+            ConditionDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -698,12 +770,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DomainResource", "http://hl7.org/fhir/resource-types"), Description("DomainResource")]
             DomainResource,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("EffectEvidenceSynthesis", "http://hl7.org/fhir/resource-types"), Description("EffectEvidenceSynthesis")]
-            EffectEvidenceSynthesis,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -840,6 +906,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("Ingredient", "http://hl7.org/fhir/resource-types"), Description("Ingredient")]
+            Ingredient,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("InsurancePlan", "http://hl7.org/fhir/resource-types"), Description("InsurancePlan")]
             InsurancePlan,
             /// <summary>
@@ -876,6 +948,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("ManufacturedItemDefinition", "http://hl7.org/fhir/resource-types"), Description("ManufacturedItemDefinition")]
+            ManufacturedItemDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Measure", "http://hl7.org/fhir/resource-types"), Description("Measure")]
             Measure,
             /// <summary>
@@ -884,12 +962,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("MeasureReport", "http://hl7.org/fhir/resource-types"), Description("MeasureReport")]
             MeasureReport,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("Media", "http://hl7.org/fhir/resource-types"), Description("Media")]
-            Media,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -924,68 +996,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationStatement", "http://hl7.org/fhir/resource-types"), Description("MedicationStatement")]
-            MedicationStatement,
+            [EnumLiteral("MedicationUsage", "http://hl7.org/fhir/resource-types"), Description("MedicationUsage")]
+            MedicationUsage,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicinalProduct", "http://hl7.org/fhir/resource-types"), Description("MedicinalProduct")]
-            MedicinalProduct,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductAuthorization", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductAuthorization")]
-            MedicinalProductAuthorization,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductContraindication", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductContraindication")]
-            MedicinalProductContraindication,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductIndication", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductIndication")]
-            MedicinalProductIndication,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductIngredient", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductIngredient")]
-            MedicinalProductIngredient,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductInteraction", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductInteraction")]
-            MedicinalProductInteraction,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductManufactured", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductManufactured")]
-            MedicinalProductManufactured,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductPackaged", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductPackaged")]
-            MedicinalProductPackaged,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductPharmaceutical", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductPharmaceutical")]
-            MedicinalProductPharmaceutical,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("MedicinalProductUndesirableEffect", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductUndesirableEffect")]
-            MedicinalProductUndesirableEffect,
+            [EnumLiteral("MedicinalProductDefinition", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductDefinition")]
+            MedicinalProductDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1010,6 +1028,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("NamingSystem", "http://hl7.org/fhir/resource-types"), Description("NamingSystem")]
             NamingSystem,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("NutritionIntake", "http://hl7.org/fhir/resource-types"), Description("NutritionIntake")]
+            NutritionIntake,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1052,6 +1076,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("OrganizationAffiliation", "http://hl7.org/fhir/resource-types"), Description("OrganizationAffiliation")]
             OrganizationAffiliation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("PackagedProductDefinition", "http://hl7.org/fhir/resource-types"), Description("PackagedProductDefinition")]
+            PackagedProductDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1128,6 +1158,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("RegulatedAuthorization", "http://hl7.org/fhir/resource-types"), Description("RegulatedAuthorization")]
+            RegulatedAuthorization,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/resource-types"), Description("RelatedPerson")]
             RelatedPerson,
             /// <summary>
@@ -1136,18 +1172,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("RequestGroup", "http://hl7.org/fhir/resource-types"), Description("RequestGroup")]
             RequestGroup,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ResearchDefinition", "http://hl7.org/fhir/resource-types"), Description("ResearchDefinition")]
-            ResearchDefinition,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("ResearchElementDefinition", "http://hl7.org/fhir/resource-types"), Description("ResearchElementDefinition")]
-            ResearchElementDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1172,12 +1196,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/resource-types"), Description("RiskAssessment")]
             RiskAssessment,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("RiskEvidenceSynthesis", "http://hl7.org/fhir/resource-types"), Description("RiskEvidenceSynthesis")]
-            RiskEvidenceSynthesis,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1242,6 +1260,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("SubstanceDefinition", "http://hl7.org/fhir/resource-types"), Description("SubstanceDefinition")]
+            SubstanceDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/resource-types"), Description("SubstanceNucleicAcid")]
             SubstanceNucleicAcid,
             /// <summary>
@@ -1268,12 +1292,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/resource-types"), Description("SubstanceSourceMaterial")]
             SubstanceSourceMaterial,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("SubstanceSpecification", "http://hl7.org/fhir/resource-types"), Description("SubstanceSpecification")]
-            SubstanceSpecification,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1310,6 +1328,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
             TestScript,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("Topic", "http://hl7.org/fhir/resource-types"), Description("Topic")]
+            Topic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -5715,10 +5739,10 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.TestScript.TeardownComponent _Teardown;
         
 
-        public static ElementDefinition.ConstraintComponent TestScript_TST_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "tst-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
@@ -5845,7 +5869,7 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(TestScript_TST_0);
+            InvariantConstraints.Add(TestScript_CNL_0);
             InvariantConstraints.Add(TestScript_TST_4);
             InvariantConstraints.Add(TestScript_TST_3);
             InvariantConstraints.Add(TestScript_TST_1);

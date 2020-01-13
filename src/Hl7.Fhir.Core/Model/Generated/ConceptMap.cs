@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,72 +56,42 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ConceptMap"; } }
         
         /// <summary>
-        /// The degree of equivalence between concepts.
-        /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
+        /// The relationship between concepts.
+        /// (url: http://hl7.org/fhir/ValueSet/concept-map-relationship)
         /// </summary>
-        [FhirEnumeration("ConceptMapEquivalence")]
-        public enum ConceptMapEquivalence
+        [FhirEnumeration("ConceptMapRelationship")]
+        public enum ConceptMapRelationship
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
+            /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("relatedto", "http://hl7.org/fhir/concept-map-equivalence"), Description("Related To")]
-            Relatedto,
+            [EnumLiteral("related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Related To")]
+            RelatedTo,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
+            /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equivalent")]
+            [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-relationship"), Description("Equivalent")]
             Equivalent,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
+            /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("equal", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equal")]
-            Equal,
+            [EnumLiteral("broader", "http://hl7.org/fhir/concept-map-relationship"), Description("Broader")]
+            Broader,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
+            /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("wider", "http://hl7.org/fhir/concept-map-equivalence"), Description("Wider")]
-            Wider,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
-            /// </summary>
-            [EnumLiteral("subsumes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Subsumes")]
-            Subsumes,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
-            /// </summary>
-            [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-equivalence"), Description("Narrower")]
+            [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-relationship"), Description("Narrower")]
             Narrower,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
+            /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("specializes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Specializes")]
-            Specializes,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
-            /// </summary>
-            [EnumLiteral("inexact", "http://hl7.org/fhir/concept-map-equivalence"), Description("Inexact")]
-            Inexact,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
-            /// </summary>
-            [EnumLiteral("unmatched", "http://hl7.org/fhir/concept-map-equivalence"), Description("Unmatched")]
-            Unmatched,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/concept-map-equivalence)
-            /// </summary>
-            [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
-            Disjoint,
+            [EnumLiteral("not-related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Not Related To")]
+            NotRelatedTo,
         }
 
         /// <summary>
@@ -301,7 +271,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
             
             /// <summary>
-            /// What to do when there is no mapping for the source concept
+            /// What to do when there is no mapping target for the source concept
             /// </summary>
             [FhirElement("unmapped", Order=90)]
             [DataMember]
@@ -476,9 +446,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// No mapping to a target concept for this source concept
+            /// </summary>
+            [FhirElement("noMap", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean NoMapElement
+            {
+                get { return _NoMapElement; }
+                set { _NoMapElement = value; OnPropertyChanged("NoMapElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _NoMapElement;
+            
+            /// <summary>
+            /// No mapping to a target concept for this source concept
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? NoMap
+            {
+                get { return NoMapElement != null ? NoMapElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        NoMapElement = null; 
+                    else
+                        NoMapElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("NoMap");
+                }
+            }
+            
+            /// <summary>
             /// Concept in target system for element
             /// </summary>
-            [FhirElement("target", Order=60)]
+            [FhirElement("target", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> Target
@@ -498,6 +500,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+                    if(NoMapElement != null) dest.NoMapElement = (Hl7.Fhir.Model.FhirBoolean)NoMapElement.DeepCopy();
                     if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent>(Target.DeepCopy());
                     return dest;
                 }
@@ -518,6 +521,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.Matches(NoMapElement, otherT.NoMapElement)) return false;
                 if( !DeepComparable.Matches(Target, otherT.Target)) return false;
                 
                 return true;
@@ -531,6 +535,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.IsExactly(NoMapElement, otherT.NoMapElement)) return false;
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
@@ -545,6 +550,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (DisplayElement != null) yield return DisplayElement;
+                    if (NoMapElement != null) yield return NoMapElement;
                     foreach (var elem in Target) { if (elem != null) yield return elem; }
                 }
             }
@@ -557,6 +563,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (CodeElement != null) yield return new ElementValue("code", CodeElement);
                     if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+                    if (NoMapElement != null) yield return new ElementValue("noMap", NoMapElement);
                     foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
                 }
             }
@@ -637,35 +644,35 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
+            /// related-to | equivalent | broader | narrower | not-related-to
             /// </summary>
-            [FhirElement("equivalence", Order=60)]
+            [FhirElement("relationship", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
+            public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
             {
-                get { return _EquivalenceElement; }
-                set { _EquivalenceElement = value; OnPropertyChanged("EquivalenceElement"); }
+                get { return _RelationshipElement; }
+                set { _RelationshipElement = value; OnPropertyChanged("RelationshipElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> _EquivalenceElement;
+            private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> _RelationshipElement;
             
             /// <summary>
-            /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
+            /// related-to | equivalent | broader | narrower | not-related-to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence? Equivalence
+            public Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship? Relationship
             {
-                get { return EquivalenceElement != null ? EquivalenceElement.Value : null; }
+                get { return RelationshipElement != null ? RelationshipElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                        EquivalenceElement = null; 
+                        RelationshipElement = null; 
                     else
-                        EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
-                    OnPropertyChanged("Equivalence");
+                        RelationshipElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship>(value);
+                    OnPropertyChanged("Relationship");
                 }
             }
             
@@ -738,7 +745,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
+                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship>)RelationshipElement.DeepCopy();
                     if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                     if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(DependsOn.DeepCopy());
                     if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(Product.DeepCopy());
@@ -761,7 +768,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-                if( !DeepComparable.Matches(EquivalenceElement, otherT.EquivalenceElement)) return false;
+                if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.Matches(DependsOn, otherT.DependsOn)) return false;
                 if( !DeepComparable.Matches(Product, otherT.Product)) return false;
@@ -777,7 +784,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-                if( !DeepComparable.IsExactly(EquivalenceElement, otherT.EquivalenceElement)) return false;
+                if( !DeepComparable.IsExactly(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.IsExactly(DependsOn, otherT.DependsOn)) return false;
                 if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
@@ -794,7 +801,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (DisplayElement != null) yield return DisplayElement;
-                    if (EquivalenceElement != null) yield return EquivalenceElement;
+                    if (RelationshipElement != null) yield return RelationshipElement;
                     if (CommentElement != null) yield return CommentElement;
                     foreach (var elem in DependsOn) { if (elem != null) yield return elem; }
                     foreach (var elem in Product) { if (elem != null) yield return elem; }
@@ -809,7 +816,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (CodeElement != null) yield return new ElementValue("code", CodeElement);
                     if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
-                    if (EquivalenceElement != null) yield return new ElementValue("equivalence", EquivalenceElement);
+                    if (RelationshipElement != null) yield return new ElementValue("relationship", RelationshipElement);
                     if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
                     foreach (var elem in DependsOn) { if (elem != null) yield return new ElementValue("dependsOn", elem); }
                     foreach (var elem in Product) { if (elem != null) yield return new ElementValue("product", elem); }
@@ -1651,22 +1658,31 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
         
 
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_0 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent ConceptMap_CNL_0 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "cmd-0",
+            Key = "cnl-0",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_4 = new ElementDefinition.ConstraintComponent()
+        { 
+            Expression = "group.element.all((noMap.exists() and target.empty()) or noMap.empty())",
+            Key = "cmd-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If noMap is present, target SHALL NOT be present",
+            Xpath = "(exists(f:noMap) and not(exists(f:target))) or not(exists(f:noMap))"
+        };
+
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
+            Expression = "group.element.target.all(comment.exists() or relationship.empty() or ((relationship != 'narrower') and (relationship != 'not-related-to')))",
             Key = "cmd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the map is narrower or inexact, there SHALL be some comments",
-            Xpath = "exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+            Human = "If the map is narrower or not-related-to, there SHALL be some comments",
+            Xpath = "exists(f:comment) or not(exists(f:relationship)) or ((f:relationship/@value != 'narrower') and (f:v/@value != 'not-related-to'))"
         };
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()
@@ -1691,7 +1707,8 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(ConceptMap_CMD_0);
+            InvariantConstraints.Add(ConceptMap_CNL_0);
+            InvariantConstraints.Add(ConceptMap_CMD_4);
             InvariantConstraints.Add(ConceptMap_CMD_1);
             InvariantConstraints.Add(ConceptMap_CMD_3);
             InvariantConstraints.Add(ConceptMap_CMD_2);

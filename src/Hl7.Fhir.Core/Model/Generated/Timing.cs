@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,43 +64,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("s", "http://unitsofmeasure.org"), Description("秒")]
+            [EnumLiteral("s", "http://unitsofmeasure.org"), Description("second")]
             S,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("min", "http://unitsofmeasure.org"), Description("分钟")]
+            [EnumLiteral("min", "http://unitsofmeasure.org"), Description("minute")]
             Min,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("h", "http://unitsofmeasure.org"), Description("小时")]
+            [EnumLiteral("h", "http://unitsofmeasure.org"), Description("hour")]
             H,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("d", "http://unitsofmeasure.org"), Description("天")]
+            [EnumLiteral("d", "http://unitsofmeasure.org"), Description("day")]
             D,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("星期")]
+            [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("week")]
             Wk,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("月")]
+            [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("month")]
             Mo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("a", "http://unitsofmeasure.org"), Description("年")]
+            [EnumLiteral("a", "http://unitsofmeasure.org"), Description("year")]
             A,
         }
 

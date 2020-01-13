@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.1
+// Generated for FHIR v4.2.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DeviceNameComponent"; } }
             
             /// <summary>
-            /// The name of the device
+            /// The name that identifies the device
             /// </summary>
             [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// The name of the device
+            /// The name that identifies the device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "VersionComponent"; } }
             
             /// <summary>
-            /// The type of the device version
+            /// The type of the device version, e.g. manufacturer, approved, internal
             /// </summary>
             [FhirElement("type", Order=40)]
             [DataMember]
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Device.DeviceNameComponent> _DeviceName;
         
         /// <summary>
-        /// The model number for the device
+        /// The manufacturer's model number for the device
         /// </summary>
         [FhirElement("modelNumber", Order=210)]
         [DataMember]
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ModelNumberElement;
         
         /// <summary>
-        /// The model number for the device
+        /// The manufacturer's model number for the device
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1286,7 +1286,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The part number of the device
+        /// The part number or catalog number of the device
         /// </summary>
         [FhirElement("partNumber", Order=220)]
         [DataMember]
@@ -1299,7 +1299,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PartNumberElement;
         
         /// <summary>
-        /// The part number of the device
+        /// The part number or catalog number of the device
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1492,7 +1492,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Safety;
         
         /// <summary>
-        /// The parent device
+        /// The device that this device is attached to or is part of
         /// </summary>
         [FhirElement("parent", Order=340)]
         [CLSCompliant(false)]
