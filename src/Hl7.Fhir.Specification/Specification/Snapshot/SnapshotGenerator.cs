@@ -702,8 +702,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
-            AddConstraintSource(targetElement, typeStructure.Url);
+            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);            
+            AddConstraintSource(targetElement, typeStructure?.Url);
+            
+           
 
             if (!(targetElement is null))
             {
@@ -775,7 +777,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private static void AddConstraintSource(ElementDefinition targetElement, string url)
         {
-            if (targetElement != null && targetElement.Constraint.Any(c => string.IsNullOrEmpty(c.Source)))
+
+            if (targetElement != null && targetElement?.Constraint.Any(c => string.IsNullOrEmpty(c.Source)) == true)
             {
                 foreach (var constraint in targetElement.Constraint.Where(c => string.IsNullOrEmpty(c.Source)))
                 {
