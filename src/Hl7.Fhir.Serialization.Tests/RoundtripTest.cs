@@ -265,6 +265,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true; // not a resource
             if (file.Contains("choice-elements"))
                 return true; // not a resource
+            if (file.Contains("hl7.fhir.r5.core.manifest"))
+                return true; // not a resource
+            if (file.Contains("hl7.fhir.r5.corexml.manifest"))
+                return true; // not a resource
+            if (file.Contains("uml.json"))
+                return true; // not a resource
 
             if (file.Contains("v2-tables"))
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
