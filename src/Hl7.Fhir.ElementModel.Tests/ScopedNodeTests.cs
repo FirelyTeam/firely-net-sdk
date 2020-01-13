@@ -1,5 +1,8 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -186,38 +189,6 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void ITypedElementFromLogicalModelHasChildrenDefinition()
-        {
-
-            bool CCDATypeNameMapper(string typeName, out string canonical)
-            {
-                if (ModelInfo.IsPrimitive(typeName))
-                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typeName;
-                else
-                    canonical = "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
-
-                return true;
-            }
-
-            var ccdaInstanceXml = File.ReadAllText(Path.Combine("TestData", "CCDA_Instance_Example.xml"));
-            var ccdaNode = FhirXmlNode.Parse(ccdaInstanceXml);
-
-            var summaryProvider = new StructureDefinitionSummaryProvider(new CCDAResourceResolver(), CCDATypeNameMapper);
-
-            var typedElement = ccdaNode.ToTypedElement(summaryProvider);
-            Assert.IsNotNull(typedElement);
-
-            var error = typedElement.VisitAndCatch();
-
-            Console.WriteLine("Test");
-
-            // realmCode
-            // id
-            // title
-            // languageCode
-        }
-
-        [TestMethod]
         public void CcdaWithXhtmlTag()
         {
             bool CCDATypeNameMapper(string typeName, out string canonical)
@@ -242,11 +213,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             Assert.IsTrue(!errors.Any());
 
-            var assertXHtml = typedElement.Children("component").First().
-                Children("structuredBody").First().
-                Children("component").First().
-                Children("section").First().
-                Children("text");
+            var assertXHtml = typedElement.Children("text");
 
             Assert.IsNotNull(assertXHtml);
             Assert.AreEqual(1, assertXHtml.Count());
@@ -268,7 +235,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             {
                 _cache = new Dictionary<string, StructureDefinition>();
                 _zipSource = new ZipSource("specification.zip");
-                _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/ccda")));
+                _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
             }
 
             public Resource ResolveByCanonicalUri(string uri)
