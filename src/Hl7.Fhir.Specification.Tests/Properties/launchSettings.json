@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hl7.Fhir.Specification.Tests": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

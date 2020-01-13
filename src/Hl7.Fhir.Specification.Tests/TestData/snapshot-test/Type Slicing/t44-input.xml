@@ -2,7 +2,7 @@
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="t44"/>
-  <url value="urn:uuid:ecb6f563-2957-4da8-832e-cb6d94329a93"/>
+  <url value="urn:uuid:63301565-73ba-4be3-afbb-f0d5b62667ee"/>
   <name value="t44"/>
   <status value="draft"/>
   <description value="fixture for #44: Choice Types: constrain list of choices to 1 and constrain the type (shortcut)"/>

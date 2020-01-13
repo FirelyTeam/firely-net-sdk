@@ -40,10 +40,54 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="TestData\snapshot-test\Type Slicing\au-base.json" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\logical1-expected.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\logical1-input.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\logical2-expected.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\logical2-input.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-expected.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-input.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-expected.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-input.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-expected.xml" />
+    <Content Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
+  </ItemGroup>
   <ItemGroup>
     <None Remove="TestData\CustomBasic-StructureDefinition-R4.json" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\ResourcesInSubfolder.zip" />
+    <None Remove="TestData\snapshot-test\Type Slicing\au-base.json" />
+    <None Remove="TestData\snapshot-test\Type Slicing\logical1-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\logical1-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\logical2-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\logical2-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-1-1-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-1-1-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-1-2-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-1-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-1-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-1-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-1-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-2-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-2-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-3-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2b-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-2b-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-3-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-badfixed-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-badfixed-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-badpattern-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\obs-badpattern-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-input.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-expected.xml" />
+    <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
   </ItemGroup>
 

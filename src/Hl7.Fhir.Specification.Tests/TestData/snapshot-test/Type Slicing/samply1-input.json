@@ -1,5 +1,6 @@
 {
   "resourceType": "StructureDefinition",
+  "id" : "samply1",
   "url": "https://fhir.bbmri.de/StructureDefinition/BbmriBiobank",
   "name": "BbmriBiobank",
   "status": "draft",

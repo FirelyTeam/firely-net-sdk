@@ -39,6 +39,7 @@
           <type value="type"/>
           <path value="$this"/>
         </discriminator>
+        <rules value="closed"/>
       </slicing>
       <type>
         <code value="string"/>

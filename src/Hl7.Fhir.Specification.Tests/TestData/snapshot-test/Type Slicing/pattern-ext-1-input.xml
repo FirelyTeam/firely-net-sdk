@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir file:///C:/Users/Eric/Documents/HL7/FHIR/BUILD_EDIT_FILES/fhir-all-xsd-4.0.1/fhir-all.xsd">
+	<id value="test1-messageheader-profile"/>
+	<url value="http://www.fhir.org/guides/test3/StructureDefinition/test1-messageheader-profile"/>
+	<version value="0.0.0"/>
+	<name value="Test1MessageHeader"/>
+	<title value="Test1 MessageHeader Profile"/>
+	<status value="active"/>
+	<experimental value="false"/>
+	<date value="2019-11-13T00:00:00-08:00"/>
+	<publisher value="Health eData Inc"/>
+	<description value="This MessageHeader Profile sets the event[x] to eventCoding"/>
+	<jurisdiction>
+		<coding>
+			<system value="urn:iso:std:iso:3166"/>
+			<code value="US"/>
+			<display value="United States of America"/>
+		</coding>
+	</jurisdiction>
+	<fhirVersion value="4.0.1"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="MessageHeader"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/MessageHeader"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="MessageHeader">
+			<path value="MessageHeader"/>
+			<mustSupport value="false"/>
+		</element>
+		<element id="MessageHeader.eventCoding">
+			<path value="MessageHeader.eventCoding"/>
+			<min value="1"/>
+			<max value="1"/>
+			<type>
+				<code value="Coding"/>
+			</type>
+			<mustSupport value="true"/>
+			<binding>
+				<strength value="extensible"/>
+				<valueSet value="http://www.fhir.org/guides/test3/ValueSet/blah-codes"/>
+			</binding>
+		</element>
+	</differential>
+</StructureDefinition>

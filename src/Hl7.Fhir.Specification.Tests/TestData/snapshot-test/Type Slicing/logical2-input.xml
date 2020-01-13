@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ANY2"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/ANY2"/>
+  <name value="ANY2"/>
+  <title value="ANY2 - constraint on ANY to test out making constraints in specializations"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <publisher value="HL7"/>
+  <description value="test constraints in specializations"/>
+  <kind value="logical"/>
+  <abstract value="true"/>
+  <type value="ANY"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ANY.nullFlavor">
+      <path value="ANY.nullFlavor"/>
+      <fixedCode value="UNK"/>
+    </element>
+  </differential>
+</StructureDefinition>

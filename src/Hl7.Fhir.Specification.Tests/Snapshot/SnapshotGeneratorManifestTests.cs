@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
-        {
+        {            
             ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
@@ -507,6 +507,21 @@ namespace Hl7.Fhir.Specification.Tests
         // R4:   ElementDefinition.binding.valueSet    : Canonical
         [TestMethod] public void Test_au3() => ExecuteTest("au3");
 
+
+        [TestMethod] public void Test_obs1_0() => ExecuteTest("obs-1");
+        [TestMethod] public void Test_obs1_1() => ExecuteTest("obs-1-1");
+        [TestMethod] public void Test_obs1_2() => ExecuteTest("obs-1-2");
+        [TestMethod] public void Test_obs2_0() => ExecuteTest("obs-2");
+        [TestMethod] public void Test_obs2_0a() => ExecuteTest("obs-2a");
+        [TestMethod] public void Test_obs2_0b() => ExecuteTest("obs-2b");
+        [TestMethod] public void Test_obs2_1() => ExecuteTest("obs-2-1");
+        [TestMethod] public void Test_obs2_2() => ExecuteTest("obs-2-2");
+        [TestMethod] public void Test_obs2_3() => ExecuteTest("obs-2-3");
+        [TestMethod] public void Test_obs3_0() => ExecuteTest("obs-3");
+        [TestMethod] public void Test_obs4_0() => ExecuteTest("obs-4");
+        [TestMethod] public void Test_obs5_0() => ExecuteTest("obs-5");
+
+
         void ExecuteTest(string id) => ExecuteTest(_manifest.Test.FirstOrDefault(t => t.Id == id));
 
         void ExecuteTest(SnapshotGenerationManifestTest test)
@@ -598,7 +613,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
             Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
-
+        
         StructureDefinition Load(string id, string fileNameFormat)
         {
             //var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
@@ -659,7 +674,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var manifest = (SnapshotGenerationManifest)serializer.Deserialize(fs);
                 // Fix known invalid invariants
-                FixManifest(manifest);
+               // FixManifest(manifest);
                 return manifest;
             }
         }

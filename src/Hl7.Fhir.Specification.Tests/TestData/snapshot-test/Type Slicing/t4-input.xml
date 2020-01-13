@@ -2,7 +2,7 @@
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="t4"/>
-  <url value="urn:uuid:71e0a5a6-95bf-4e04-aa6a-4af0ebef3f29"/>
+  <url value="urn:uuid:ce62a83d-afb5-4cc9-a553-7bbb6d4d2f75"/>
   <name value="t4"/>
   <status value="draft"/>
   <description value="fixture for #4: test appending documentation"/>

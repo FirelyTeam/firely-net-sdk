@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t44"/>
+  <url value="urn:uuid:982383bc-d44a-437f-bb97-c0e4e2573c2b"/>
+  <name value="t44"/>
+  <status value="draft"/>
+  <description value="fixture for #44: Choice Types: constrain list of choices to 1 and constrain the type (shortcut)"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Observation"/>
+    </element>
+<!--    <element>
+      <path value="Observation.value[x]"/>
+      <short value="some text"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element> -->
+    <element>
+      <path value="Observation.valueQuantity"/>
+      <short value="some text for quantity"/>
+    </element>
+    <element>
+      <path value="Observation.valueQuantity.value"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>
