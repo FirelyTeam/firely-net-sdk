@@ -42,7 +42,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <h1>test</h1>
+                        <h1 xmlns="newNamespace">test</h1>
+                        <testroot>
+                            <testValue xmlns="onemmore">test</testValue>
+                        </testroot>>      
                     </text>
                 </section>
             </component>

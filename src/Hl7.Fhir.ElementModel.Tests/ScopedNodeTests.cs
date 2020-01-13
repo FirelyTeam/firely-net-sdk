@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.FhirPath;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -258,8 +259,17 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
             Assert.AreEqual("text", assertXHtml.First().Location);
             Assert.IsNotNull(assertXHtml.First().Value);
+            Assert.AreEqual("<table border=\"1\" width=\"100%\"><colgroup><col width=\"14%\" /><col width=\"14%\" /><col width=\"14%\" /><col width=\"14%\" /><col width=\"14%\" /><col width=\"14%\" /><col width=\"14%\" /></colgroup><thead><tr><th>Normalized Allergy Type</th><th>Allergy classification</th><th>Reported allergen</th><th>Date of Allergy Onset</th><th>Reaction(s)</th><th>Care Provider</th><th>Facility</th></tr></thead><tbody><tr ID=\"allergies00001\"><td>Drug Allergy (2 sources.)</td><td>NSAIDs</td><td ID=\"allergies00001value\">NSAIDs</td><td>05-10-2014 -</td><td>rash, nausea and vomiting</td><td>Phil Wellington 62781</td><td>Emergency Room (27710) (Work Phone: (555)555-5000)</td></tr></tbody></table><h1 xmlns=\"newNamespace\">test</h1><testroot><testValue xmlns=\"onemmore\">test</testValue></testroot>", assertXHtml.First().Value);
+        }
 
+        [TestMethod]
+        public void testest()
+        {
+            var ccdaInstanceXml = File.ReadAllText(Path.Combine("TestData", "CCDA_With_Xhtml_Tag.xml"));
 
+            var x = XDocument.Parse(ccdaInstanceXml);
+
+            Console.Write("hi");
         }
 
         private class CCDAResourceResolver : IResourceResolver
