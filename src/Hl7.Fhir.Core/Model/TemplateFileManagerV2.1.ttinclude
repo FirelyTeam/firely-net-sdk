@@ -6,8 +6,7 @@
 <#@ assembly name="System.Windows.Forms" #>
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="EnvDTE80" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell.10.0"#>
-<#@ assembly name="Microsoft.VisualStudio.Shell.Interop "#>
+<#@ assembly name="Microsoft.VisualStudio.Shell.15.0"#>
 <#@ import namespace="Microsoft.VisualStudio.Shell.Interop"#>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Data" #>
@@ -80,15 +79,15 @@ void WriteLineToBuildPane (string message){
 /// </summary>
 /// <param name="message">Text to output</param>
 void WriteToBuildPane (string message){
-       IVsOutputWindow outWindow = (this.Host as IServiceProvider).GetService(
-typeof( SVsOutputWindow ) ) as IVsOutputWindow;
-       Guid generalPaneGuid =
-Microsoft.VisualStudio.VSConstants.OutputWindowPaneGuid.BuildOutputPane_guid;
+//       IVsOutputWindow outWindow = (this.Host as IServiceProvider).GetService(
+// typeof( SVsOutputWindow ) ) as IVsOutputWindow;
+//       Guid generalPaneGuid = Microsoft.VisualStudio.VSConstants.OutputWindowPaneGuid.BuildOutputPane_guid;
 		// P.S. There's also the GUID_OutWindowDebugPane available.
-       IVsOutputWindowPane generalPane;
-       outWindow.GetPane( ref generalPaneGuid , out generalPane );
-       generalPane.OutputString( message  );
-       generalPane.Activate(); // Brings this pane into view
+//       IVsOutputWindowPane generalPane;
+//       outWindow.GetPane( ref generalPaneGuid , out generalPane );
+//       generalPane.OutputString( message  );
+//       generalPane.Activate(); // Brings this pane into view
+		System.Diagnostics.Debug.Write(message);
 }
 
 /// <summary>
@@ -178,6 +177,10 @@ public class TemplateFileManager
 	/// <returns></returns>
 	public System.Text.Encoding Encoding { get; set; }
 
+    public void StartNewFile(string name, string projectName)
+        {
+            StartNewFile(name, projectName, "", null);
+        }
     /// <summary>
     /// Marks the end of the last file if there was one, and starts a new
     /// and marks this point in generation as a new file.
@@ -187,7 +190,7 @@ public class TemplateFileManager
 	/// <param name="folderName">Name of the target folder for the new file.</param>
 	/// <param name="fileProperties">File property settings in vs for the new File</param>
     public void StartNewFile(string name
-		, string projectName = "", string folderName = "", FileProperties fileProperties = null)
+		, string projectName, string folderName, FileProperties fileProperties)
     {
         if (String.IsNullOrWhiteSpace(name) == true)
         {
@@ -230,10 +233,14 @@ public class TemplateFileManager
         currentBlock = null;
     }
 
+	public virtual IEnumerable<OutputFile> Process()
+    {
+        return Process(true);
+    }
     /// <summary>
     /// Produce the template output files.
     /// </summary>
-    public virtual IEnumerable<OutputFile> Process(bool split = true)
+    public virtual IEnumerable<OutputFile> Process(bool split)
     {
 		var list = new List<OutputFile>();
 

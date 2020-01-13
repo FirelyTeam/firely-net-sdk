@@ -101,7 +101,7 @@
 			//	|| resourceName == "DomainResource"
 				)
 				continue;
-			manager.StartNewFile("Generated\\"+resourceName + ".cs");
+			manager.StartNewFile("Generated\\"+resourceName + ".cs", null);
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
@@ -461,7 +461,7 @@ if(!abstractType) {
                 {
                     foreach (var item in base.Children) yield return item;
 <#
-					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", withName:false);
+					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", false);
 #>
                 }
             }
@@ -473,7 +473,7 @@ if(!abstractType) {
                 {
                     foreach (var item in base.NamedChildren) yield return item;
 <#
-					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", withName:true);
+					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", true);
 #>
                 }
             }
@@ -692,7 +692,7 @@ if(!abstractType) {
             {
                 foreach (var item in base.Children) yield return item;
 <#
-				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				", withName:false, fhirVersion:fhirVersion);
+				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				", false, fhirVersion);
 #>
             }
         }
@@ -704,7 +704,7 @@ if(!abstractType) {
             {
                 foreach (var item in base.NamedChildren) yield return item;
 <#
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true, fhirVersion:fhirVersion);
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", true, fhirVersion);
 #>
             }
         }
@@ -722,7 +722,7 @@ if(!abstractType) {
 	// -------------------------------------------------------------------------
 	// Generate the ModelInfo class
 	// -------------------------------------------------------------------------
-	manager.StartNewFile("Generated\\Template-ModelInfo.cs");
+	manager.StartNewFile("Generated\\Template-ModelInfo.cs", null);
 	
 	System.Xml.XmlDocument docSearch = new	System.Xml.XmlDocument();
     docSearch.Load(System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\Source\\search-parameters.xml");
@@ -735,7 +735,7 @@ if(!abstractType) {
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical' and fhir:abstract/@value != 'true']", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
 	// -------------------------------------------------------------------------
 	// Generate the Bindings class
 	// -------------------------------------------------------------------------
-	manager.StartNewFile("Generated\\Template-Bindings.cs");
+	manager.StartNewFile("Generated\\Template-Bindings.cs", null);
 	generatedSets.Clear();
 #>
 using Hl7.Fhir.Utility;
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
-			manager.StartNewFile("Generated\\"+resourceName + ".cs");
+			manager.StartNewFile("Generated\\"+resourceName + ".cs", null);
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			bool isPrimitive = false;
@@ -1247,7 +1247,7 @@ namespace Hl7.Fhir.Model
 	foreach (System.Xml.XmlNode e in docTypes.DocumentElement.SelectNodes(
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Address' or fhir:id/@value = 'Coding' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/BackboneElement' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown' or fhir:id/@value = 'url' or fhir:id/@value = 'canonical']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:abstract/@value= 'false' and (fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/BackboneElement' or fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/BackboneType' or fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/DataType' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown' or fhir:id/@value = 'url' or fhir:id/@value = 'canonical' or fhir:id/@value = 'CodeableReference' or fhir:id/@value = 'integer64' or fhir:id/@value = 'OrderedDistribution')]", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -1304,6 +1304,10 @@ namespace Hl7.Fhir.Model
 				resourceName = "Integer";
 				primitiveTypeName = "int?";
 			}
+			else if (resourceName == "integer64") {
+				resourceName = "Integer64";
+				primitiveTypeName = "long?";
+			}
 			else if (resourceName == "positiveInt") {
 				resourceName = "PositiveInt";
 				primitiveTypeName = "int?";
@@ -1323,6 +1327,9 @@ namespace Hl7.Fhir.Model
 			else if (resourceName == "Reference") {
 				resourceName = "ResourceReference";
 			} 
+			else if (resourceName == "CodeableReference") {
+				resourceName = "CodeableReference";
+			} 
 			else 
 			{
 				resourceName = resourceName.Substring(0,1).ToUpper() + resourceName.Substring(1);
@@ -1339,7 +1346,7 @@ namespace Hl7.Fhir.Model
 				|| resourceName == "Extension"
 				|| resourceName == "Xhtml")
 				continue;
-			manager.StartNewFile("Generated\\"+resourceName + ".cs");
+			manager.StartNewFile("Generated\\"+resourceName + ".cs", null);
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			bool isPrimitive = false;
@@ -1351,7 +1358,11 @@ namespace Hl7.Fhir.Model
                 {
 						resourceBaseType = "Hl7.Fhir.Model.BackboneElement";
                 }
-				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/BackboneType")
+                {
+						resourceBaseType = "Hl7.Fhir.Model.BackboneElement";
+                }
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element" || resourceBaseType == "http://hl7.org/fhir/StructureDefinition/DataType")
                 {
 					if (rawResourceName.Substring(0,1).ToLower() == rawResourceName.Substring(0,1))
                     {
@@ -1461,7 +1472,7 @@ if (!abstractType){
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
 <#
-	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
+	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && resourceName != "Integer64" && 
 		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant" 
 		&& resourceName != "FhirString" && resourceName != "Markdown" && resourceName != "Base64Binary"
 		&& resourceName != "FhirUrl" && resourceName != "Canonical" && resourceName != "FhirBoolean"
@@ -1754,7 +1765,7 @@ if (!abstractType){
                 {
                     foreach (var item in base.Children) yield return item;
 <#
-					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ", withName: false);
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ",  false);
 #>
                 }
             }
@@ -1766,7 +1777,7 @@ if (!abstractType){
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
 <# 
-					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ", withName:true); 
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ", true); 
 #> 
                 } 
             } 
@@ -1794,7 +1805,7 @@ if (!abstractType){
         /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;") #>
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
-<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
+<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
         [CLSCompliant(false)]
 		[References(<#= pd.ReferenceTargets #>)]
 <# }
@@ -1949,7 +1960,7 @@ if (!abstractType){
             {
                 foreach (var item in base.Children) yield return item;
 <#
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName: false, fhirVersion:fhirVersion);
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", false, fhirVersion);
 #>
             }
         }
@@ -1961,7 +1972,7 @@ if (!abstractType){
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
 <# 
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true, fhirVersion:fhirVersion); 
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", true, fhirVersion); 
 #> 
             } 
         } 
@@ -1991,6 +2002,7 @@ if (!abstractType){
 			case "id" : return "Hl7.Fhir.Model.Id";
 			case "Identifier" : return "Hl7.Fhir.Model.Identifier";
 			case "CodeableConcept" : return "Hl7.Fhir.Model.CodeableConcept";
+            case "CodeableReference" : return "Hl7.Fhir.Model.CodeableReference";
 			case "Reference" : return "Hl7.Fhir.Model.ResourceReference";
 			case "Resource" : return "Hl7.Fhir.Model.Resource"; 
 			case "code" : return "Hl7.Fhir.Model.Code"; 
@@ -2023,6 +2035,7 @@ if (!abstractType){
 			case "xhtml" : return "Hl7.Fhir.Model.XHtml";
 			case "instant" : return "Hl7.Fhir.Model.Instant";
 			case "integer" : return "Hl7.Fhir.Model.Integer";
+			case "integer64" : return "Hl7.Fhir.Model.Integer64";
 			case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";
 			case "positiveInt" : return "Hl7.Fhir.Model.PositiveInt"; 
 			case "Range" : return "Hl7.Fhir.Model.Range";
@@ -2130,6 +2143,7 @@ if (!abstractType){
 				case "id" : return "Hl7.Fhir.Model.Id";
 				case "Identifier" : return "Hl7.Fhir.Model.Identifier";
 				case "CodeableConcept" : return "Hl7.Fhir.Model.CodeableConcept";
+                case "CodeableReference" : return "Hl7.Fhir.Model.CodeableReference";
 				case "Reference" : return "Hl7.Fhir.Model.ResourceReference";
 				case "Resource" : return "Hl7.Fhir.Model.Resource"; 
 				case "SampledData" : return "Hl7.Fhir.Model.SampledData"; 
@@ -2161,6 +2175,7 @@ if (!abstractType){
 				case "xhtml" : return "Hl7.Fhir.Model.XHtml";
 				case "instant" : return "Hl7.Fhir.Model.Instant";
 				case "integer" : return "Hl7.Fhir.Model.Integer";
+				case "integer64" : return "Hl7.Fhir.Model.Integer64";
 				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";
 				case "positiveInt" : return "Hl7.Fhir.Model.PositiveInt"; 
 				case "Range" : return "Hl7.Fhir.Model.Range";
@@ -2261,7 +2276,7 @@ if (!abstractType){
 			if (element.SelectSingleNode("fhir:max/@value", nsR) != null)
 				result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 
-			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "integer64", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "url", "canonical", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeName = result.Name;
@@ -2276,6 +2291,7 @@ if (!abstractType){
 								break;
 				case "Identifier" : result.PropType = "Hl7.Fhir.Model.Identifier"; break;
 				case "CodeableConcept" : result.PropType = "Hl7.Fhir.Model.CodeableConcept"; break;
+                case "CodeableReference" : result.PropType = "Hl7.Fhir.Model.CodeableReference"; break;
 				case "Reference" : result.PropType = "Hl7.Fhir.Model.ResourceReference"; break;
 				case "Code" : result.PropType = "Hl7.Fhir.Model.Code"; 
 								result.NativeType = "string";
@@ -2306,6 +2322,9 @@ if (!abstractType){
 								break;
 				case "integer" : result.PropType = "Hl7.Fhir.Model.Integer"; 
 								result.NativeType = "int?";
+								break;
+				case "integer64" : result.PropType = "Hl7.Fhir.Model.Integer64"; 
+								result.NativeType = "long?";
 								break;
 				case "boolean" : result.PropType = "Hl7.Fhir.Model.FhirBoolean"; 
 								result.NativeType = "bool?";
@@ -2540,7 +2559,7 @@ if (!abstractType){
 					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
                 }
 			}
-			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "canonical", "url", "base64Binary" };
+			string[] NativeTypes = { "decimal", "dateTime", "integer", "integer64", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "canonical", "url", "base64Binary" };
 			if (NativeTypes.Contains(result.PropType))
             {
 				result.NativeType = result.PropType;
@@ -2553,6 +2572,7 @@ if (!abstractType){
 								break;
 				case "Identifier" : result.PropType = "Hl7.Fhir.Model.Identifier"; break;
 				case "CodeableConcept" : result.PropType = "Hl7.Fhir.Model.CodeableConcept"; break;
+                case "CodeableReference" : result.PropType = "Hl7.Fhir.Model.CodeableReference"; break;
 				case "Reference" : result.PropType = "Hl7.Fhir.Model.ResourceReference"; break;
 				case "Resource" : result.PropType = "Hl7.Fhir.Model.Resource"; 
 								result.AllowedTypes = "typeof(Hl7.Fhir.Model.Resource)";
@@ -2588,6 +2608,9 @@ if (!abstractType){
 								break;
 				case "integer" : result.PropType = "Hl7.Fhir.Model.Integer"; 
 								result.NativeType = "int?";
+								break;
+				case "integer64" : result.PropType = "Hl7.Fhir.Model.Integer64"; 
+								result.NativeType = "long?";
 								break;
 				case "boolean" : result.PropType = "Hl7.Fhir.Model.FhirBoolean"; 
 								result.NativeType = "bool?";
