@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public ElementDefinition MergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
             var result = (ElementDefinition)snap.DeepCopy();
-            ElementDefnMerger.Merge(this, result, diff, mergeElementId);
+            ElementDefnMerger.Merge(this, result, diff, mergeElementId, _stack.CurrentProfileUri);
             return result;
         }
 
@@ -703,6 +703,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
+            AddConstraintSource(targetElement, typeStructure.Url);
+
             if (!(targetElement is null))
             {
                 // New element with type profile
@@ -769,6 +771,17 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge children
             mergeElement(snap, diff);
+        }
+
+        private static void AddConstraintSource(ElementDefinition targetElement, string url)
+        {
+            if (targetElement != null && targetElement.Constraint.Any(c => string.IsNullOrEmpty(c.Source)))
+            {
+                foreach (var constraint in targetElement.Constraint.Where(c => string.IsNullOrEmpty(c.Source)))
+                {
+                    constraint.Source = url;
+                }
+            }
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
@@ -915,7 +928,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
 
             // [WMR 20170421] Add parameter to control when (not) to inherit Element.id
-            ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
+            ElementDefnMerger.Merge(this, snap, diff, mergeElementId, _stack.CurrentProfileUri);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -2170,7 +2183,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Otherwise, cloning & expanding the result will pick up incorrect root element from original... WRONG!
 #endif
                 // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, diffRoot.Path);
+                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url) ;
 
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return snapRoot;
