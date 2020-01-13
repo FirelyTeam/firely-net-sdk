@@ -8,7 +8,7 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
-    <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
+    <AssemblyName>Hl7.FhirPath.R5.Tests</AssemblyName>
     <ContainsTests>true</ContainsTests>
   </PropertyGroup>
 

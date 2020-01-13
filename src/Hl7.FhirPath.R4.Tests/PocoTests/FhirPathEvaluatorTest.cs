@@ -25,7 +25,7 @@ using System.Xml.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.FhirPath.R5.Tests
 {
     public class PatientFixture : IDisposable
     {

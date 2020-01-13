@@ -17,7 +17,7 @@ using Hl7.FhirPath.Tests;
 using System.Linq;
 using Xunit;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.FhirPath.R5.Tests
 {
     public class FhirPathNavTest
     {

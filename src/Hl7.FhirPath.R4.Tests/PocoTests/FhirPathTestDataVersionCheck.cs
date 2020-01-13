@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.FhirPath.R5.Tests
 {
     /// <summary>
     /// All this is to do is read all the unit test data to ensure that they are all compatible with STU3

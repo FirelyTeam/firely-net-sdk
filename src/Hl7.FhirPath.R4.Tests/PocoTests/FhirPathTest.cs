@@ -21,7 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.FhirPath.R5.Tests
 {
     [TestClass]
     public class FhirPathTest
