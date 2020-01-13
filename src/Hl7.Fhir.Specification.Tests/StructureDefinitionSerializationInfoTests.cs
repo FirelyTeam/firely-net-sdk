@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
-            source = ZipSource.CreateValidationSource();
+            source = new MultiResolver(ZipSource.CreateValidationSource(), new DirectorySource("TestData", new DirectorySourceSettings(includeSubdirectories: true)));
         }
 
         static IResourceResolver source = null;
@@ -30,6 +30,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         public void TestValueIsNotAChild() => SerializationInfoTestHelpers.TestValueIsNotAChild(new StructureDefinitionSummaryProvider(source));
+
+        [TestMethod]
+        public void TestXmlRepresetation() => SerializationInfoTestHelpers.TestXmlRepresetation(new StructureDefinitionSummaryProvider(source));
 
     }
 }
