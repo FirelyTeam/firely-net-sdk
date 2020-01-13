@@ -267,19 +267,25 @@
     <display value="Eve Everywoman"/>
   </subject>
   <addresses>
-    <reference value="#p1"/>
-    <!--  Local reference  -->
-    <display value="GERDS"/>
+    <reference>
+      <reference value="#p1"/>    
+      <!--  Local reference  -->
+      <display value="GERDS"/>
+    </reference>
   </addresses>
   <addresses>
-    <reference value="#p2"/>
-    <!--  Local reference  -->
-    <display value="Obesity"/>
+    <reference>
+      <reference value="#p2"/>
+      <!--  Local reference  -->
+      <display value="Obesity"/>
+    </reference>
   </addresses>
   <addresses>
-    <reference value="#p3"/>
-    <!--  Local reference  -->
-    <display value="Psoriasis"/>
+    <reference>
+      <reference value="#p3"/>
+      <!--  Local reference  -->
+      <display value="Psoriasis"/>
+    </reference>
   </addresses>
   <goal>
     <reference value="#g1"/>
