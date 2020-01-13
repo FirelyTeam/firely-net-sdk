@@ -5996,8 +5996,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         static StructureDefinition MedicationStatementWithSimpleQuantitySlice => new StructureDefinition()
         {
-            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
+            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
             Name = "MedicationStatementWithSimpleQuantitySlice",
             Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,

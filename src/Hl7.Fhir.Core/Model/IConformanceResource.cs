@@ -170,32 +170,5 @@ namespace Hl7.Fhir.Model
             get { return null; }
             set { throw new NotImplementedException(); }
         }
-
-        /// <summary>
-        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
-        /// </summary>
-        [NotMapped]
-        public string Url
-        {
-            get
-            {
-                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
-                return preferred ?? UniqueId.FirstOrDefault()?.Value;
-            }
-            set { throw new NotImplementedException(); }
-        }
-
-        [NotMapped]
-        public FhirUri UrlElement
-        {
-            get
-            {
-                if (Url != null)
-                    return new FhirUri(Url);
-                else
-                    return null;
-            }
-            set { throw new NotImplementedException(); }
-        }
     }
 }
