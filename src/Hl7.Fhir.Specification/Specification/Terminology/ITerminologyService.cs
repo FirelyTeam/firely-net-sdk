@@ -7,11 +7,65 @@
  */
 
 using Hl7.Fhir.Model;
+using System;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public interface ITerminologyService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="typeName"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Resource Expand(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Parameters Lookup(Parameters parameters, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Parameters Translate(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Resource Subsumes(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Resource Closure(Parameters parameters, bool useGet = false);
+
         /// <summary>
         /// Will check whether the a code is a member of the given valueset.
         /// </summary>
@@ -29,10 +83,10 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="displayLanguage">Language to be used for description when validating the display property</param>
         /// <returns>An OperationOutcome with the result of the validation</returns>
         /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
+        [Obsolete("This method is obsolete, use method with signature 'ValidateCode(Parameters, string, string, bool)'")]
         OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, string code = null,
                 string system = null, string version = null, string display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 bool? @abstract = null, string displayLanguage = null);
-
     }
 }

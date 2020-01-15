@@ -1,8 +1,5 @@
 ﻿using System;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -17,6 +14,43 @@ namespace Hl7.Fhir.Specification.Terminology
             _fallbackService = fallback;
         }
 
+        public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about fallback sequence
+            throw new NotImplementedException();
+        }
+
+        public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about fallback sequence
+            throw new NotImplementedException();
+        }
+
+        public Parameters Lookup(Parameters parameters, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about fallback sequence
+            throw new NotImplementedException();
+        }
+
+        public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about catch sequence
+            throw new NotImplementedException();
+        }
+
+        public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about fallback sequence
+            throw new NotImplementedException();
+        }
+
+        public Resource Closure(Parameters parameters, bool useGet = false)
+        {
+            // TODO: KM: Talk to EK about fallback sequence
+            throw new NotImplementedException();
+        }
+
+        [Obsolete("This method is obsolete, use method with signature 'ValidateCode(Parameters, string, string, bool)'")]
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
             string code = null, string system = null, string version = null, string display = null, 
             Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 

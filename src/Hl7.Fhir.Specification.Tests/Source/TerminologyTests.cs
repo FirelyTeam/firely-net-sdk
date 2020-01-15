@@ -199,6 +199,245 @@ namespace Hl7.Fhir.Specification.Tests
                 () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
         }
 
+        [Fact]
+        public void ExternalServiceTranslateSimpleTranslate()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("system", new FhirUri("http://hl7.org/fhir/v2/0487"));
+            parameters.Add("code", new Code("ACNE"));
+            parameters.Add("target", new FhirUri("http:/snomed.info/sct"));
+
+            var result = svc.Translate(parameters, "102", useGet: true);
+            Assert.NotNull(result);
+
+            bool? isMatch = ((FhirBoolean)result.Parameter.First().Value).Value;
+            if (isMatch.HasValue && isMatch.Value)
+            {
+                Assert.Collection(result.Parameter,
+                    param =>
+                    {
+                        // This is the same parameter were we fetched the isMatch parameter.
+                        // Need to include this since Assert.Collection does not skip any elements
+                        Assert.Equal("result", param.Name);
+                    },
+                    param =>
+                    {
+                        Assert.Equal("match", param.Name);
+                        Assert.Collection(param.Part,
+                            part =>
+                            {
+                                Assert.Equal("equivalence", part.Name);
+                            },
+                            part =>
+                            {
+                                Assert.Equal("concept", part.Name);
+                                Coding concept = (Coding)part.Value;
+                                Assert.Equal("http://snomed.info/sct", concept.System);
+                                Assert.Equal("309068002", concept.Code);
+                            },
+                            part =>
+                            {
+                                Assert.Equal("source", part.Name);
+                                Assert.Equal("http://hl7.org/fhir/ConceptMap/102", ((FhirString)part.Value).Value);
+                            });
+                    });
+            }
+        }
+
+        [Fact]
+        public void ExternalServiceTranslateSimpleAutomap()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("source", new FhirUri("http://snomed.info/sct?fhir_vs"));
+            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            parameters.Add("code", new Code("90260006"));
+            parameters.Add("target", new FhirUri("http://hl7.org/fhir/ValueSet/substance-category"));
+
+            var result = svc.Translate(parameters, useGet: true);
+            Assert.NotNull(result);
+            var param1 = result.Parameter.FirstOrDefault();
+            Assert.Equal("result", param1.Name);
+        }
+
+        [Fact]
+        public void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            parameters.Add("code", new Code("45313011000036107"));
+            parameters.Add("property", new FhirString("inactive"));
+            parameters.Add("version", new FhirString("http://snomed.info/sct/32506021000036107/version/20160630"));
+            parameters.Add("property", new FhirString("display"));
+
+            var result = svc.Lookup(parameters);
+            Assert.NotNull(result);
+
+            var paramDisplay = result.Parameter.Find(p => p.Name == "display");
+            Assert.NotNull(paramDisplay);
+            Assert.IsType<FhirString>(paramDisplay.Value);
+            Assert.Equal("teriparatide 20 microgram injection, 2.4 mL cartridge", ((FhirString)paramDisplay.Value).Value);
+
+            var paramProperty = result.Parameter.Find(p => p.Name == "property");
+            Assert.NotNull(paramProperty);
+            Assert.Collection(paramProperty.Part,
+                part =>
+                {
+                    Assert.Equal("code", part.Name);
+                    Assert.IsType<Code>(part.Value);
+                    Assert.Equal("inactive", ((Code)part.Value).Value);
+                },
+                part =>
+                {
+                    Assert.Equal("valueBoolean", part.Name);
+                    Assert.IsType<FhirBoolean>(part.Value);
+                    Assert.Equal(true, ((FhirBoolean)part.Value).Value);
+                });
+        }
+
+        [Fact]
+        public void ExternalServiceLookupInactiveStatus()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            parameters.Add("code", new Code("45313011000036107"));
+            parameters.Add("property", new FhirString("inactive"));
+            parameters.Add("version", new FhirString("http://snomed.info/sct/32506021000036107/version/20160630"));
+
+            var result = svc.Lookup(parameters, true);
+            
+            Assert.NotNull(result);
+
+            var parameter = result.Parameter.Find(p => p.Name == "property");
+            Assert.NotNull(parameter);
+
+            Assert.Collection(parameter.Part,
+                part =>
+                {
+                    Assert.Equal("code", part.Name);
+                    Assert.IsType<Code>(part.Value);
+                    Assert.Equal("inactive", ((Code)part.Value).Value);
+                },
+                part =>
+                {
+                    Assert.Equal("valueBoolean", part.Name);
+                    Assert.IsType<FhirBoolean>(part.Value);
+                    Assert.Equal(true, ((FhirBoolean)part.Value).Value);
+                });
+        }
+
+        [Fact]
+        public void ExternalServiceLookupSNOMEDCode()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            parameters.Add("code", new Code("263495000"));
+
+            var result = svc.Lookup(parameters);
+            Assert.NotNull(result);
+            Assert.True(result.Parameter.Count > 0);
+        }
+
+        [Fact]
+        public void ExternalServiceExpandExplicitValueSet()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var result = svc.Expand(null, "education-levels") as ValueSet;
+            Assert.NotNull(result);
+            Assert.True(result.Expansion.Contains.Count > 0, "Expected more than 0 items.");
+        }
+
+        [Fact]
+        public void ExternalServiceExpandImplicitValueSetWithFilter()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("url", new FhirUri("http://snomed.info/sct?fhir_vs=refset/142321000036106"));
+            parameters.Add("count", new Integer(10));
+            parameters.Add("filter", new FhirString("met"));
+
+            var result = svc.Expand(parameters) as ValueSet;
+            Assert.NotNull(result);
+            // Exactly 10 items all starting with 'met'.
+            Assert.Collection(result.Expansion.Contains,
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                });
+        }
+
+        //[Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        [Fact]
+        public void ExternalServiceValidateCodeTest2()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            Parameters parameters = new Parameters();
+            parameters.Add("url", new FhirUri("http://hl7.org/fhir/ValueSet/substance-code"));
+            parameters.Add("code", new Code("1166006"));
+            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            var result = svc.ValidateCode(parameters, "ValueSet");
+            Parameters.ParameterComponent parameter = result.Get("result").SingleOrDefault();
+            Assert.NotNull(parameter);
+            Assert.IsType<FhirBoolean>(parameter.Value);
+            Assert.True(((FhirBoolean)parameter.Value).Value);
+        }
+
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {

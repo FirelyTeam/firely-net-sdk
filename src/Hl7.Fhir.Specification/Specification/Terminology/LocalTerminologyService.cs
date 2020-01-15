@@ -38,6 +38,36 @@ namespace Hl7.Fhir.Specification.Terminology
             return _resolver.FindValueSet(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
+        
+        public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Parameters Lookup(Parameters parameters, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resource Closure(Parameters parameters, bool useGet = false)
+        {
+            throw new NotImplementedException();
+        }
 
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
             string code = null, string system = null, string version = null, string display = null, 
@@ -148,7 +178,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
             return result;
         }
-
     }
 }
 

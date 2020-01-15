@@ -33,6 +33,16 @@ namespace Hl7.Fhir.Rest
         /// "validate-code" operation
         /// </summary>
         public const string VALIDATE_CODE = "validate-code";
+
+        /// <summary>
+        /// "closure" operation
+        /// </summary>
+        public const string CLOSURE = "closure";
+
+        /// <summary>
+        /// "subsumes" operation
+        /// </summary>
+        public const string SUBSUMES = "subsumes";
     }
 
     public class ValidateCodeResult
