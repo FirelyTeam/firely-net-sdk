@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);            
-            AddConstraintSource(targetElement, typeStructure?.Url);
+            addConstraintSource(targetElement, typeStructure?.Url);
             
            
 
@@ -775,16 +775,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElement(snap, diff);
         }
 
-        private static void AddConstraintSource(ElementDefinition targetElement, string url)
-        {
-
-            if (targetElement != null && targetElement?.Constraint.Any(c => string.IsNullOrEmpty(c.Source)) == true)
+        private static void addConstraintSource(ElementDefinition targetElement, string url)
+        {           
+            foreach (var constraint in targetElement?.Constraint.Where(c => string.IsNullOrEmpty(c.Source)) ?? Enumerable.Empty<ElementDefinition.ConstraintComponent>())
             {
-                foreach (var constraint in targetElement.Constraint.Where(c => string.IsNullOrEmpty(c.Source)))
-                {
-                    constraint.Source = url;
-                }
-            }
+                constraint.Source = url;
+            }            
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
