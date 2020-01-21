@@ -96,6 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GenerateSnapshotForExternalProfiles()
         {
+            //Test external type profile
             var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
 
@@ -114,6 +115,28 @@ namespace Hl7.Fhir.Specification.Tests
 
             sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
             Assert.IsNotNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+
+            //Test external base profile
+            var sdDerived = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
+            Assert.IsNotNull(sdDerived);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+            Assert.IsNotNull(sdDerived.Snapshot);
+
+            var sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+
+            sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNotNull(sdBase.Snapshot);
             dumpOutcome(_generator.Outcome);
         }
 
