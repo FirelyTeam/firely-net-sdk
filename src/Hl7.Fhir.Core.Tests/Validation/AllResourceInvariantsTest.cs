@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
-using System.Linq;
+using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -19,6 +17,8 @@ namespace Hl7.Fhir.FhirPath
                 for (int n = 0; n < 10; n++)
                 {
                     Type rt = ModelInfo.GetTypeForFhirType(item);
+                    if (rt is null)
+                        continue;
                     Resource dr = (Resource)Activator.CreateInstance(rt);
                     dr.AddDefaultConstraints();
                     if (dr.InvariantConstraints == null || dr.InvariantConstraints.Count == 0)
