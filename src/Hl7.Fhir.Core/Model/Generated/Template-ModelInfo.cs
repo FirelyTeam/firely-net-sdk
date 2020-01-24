@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Model
             get { return "4.2.0"; }
         }
         
+        //TODO: fix t4 template to auto-generate missing Element and BackboneElement
         public static Dictionary<string,Type> FhirTypeToCsType =
             new Dictionary<string,Type>()
             {
@@ -210,6 +211,9 @@ namespace Hl7.Fhir.Model
                 { "Age", typeof(Age) },
                 { "Annotation", typeof(Hl7.Fhir.Model.Annotation) },
                 { "Attachment", typeof(Hl7.Fhir.Model.Attachment) },
+                //Manually added BackboneElement here
+                //TODO: fix t4 template to auto-generate tis again
+                { "BackboneElement", typeof(BackboneElement) },
                 { "base64Binary", typeof(Hl7.Fhir.Model.Base64Binary) },
                 { "boolean", typeof(Hl7.Fhir.Model.FhirBoolean) },
                 { "canonical", typeof(Hl7.Fhir.Model.Canonical) },
@@ -228,6 +232,9 @@ namespace Hl7.Fhir.Model
                 { "Distance", typeof(Distance) },
                 { "Dosage", typeof(Dosage) },
                 { "Duration", typeof(Duration) },
+                //Manually added Element here
+                //TODO: fix t4 template to auto-generate this again
+                { "Element", typeof(Element) },
                 { "ElementDefinition", typeof(Hl7.Fhir.Model.ElementDefinition) },
                 { "Expression", typeof(Expression) },
                 { "Extension", typeof(Hl7.Fhir.Model.Extension) },
