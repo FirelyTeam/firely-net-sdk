@@ -258,7 +258,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(resourceIds);
             Assert.IsTrue(resourceIds.Count > 0);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
-            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
+
+            // xhtml is not represented in the pocos
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  
+
+            //remove interface datatypes, which are not represented in the pocos
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/Base");
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/PrimitiveType");
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/DataType");
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/BackboneType");
+          
+
 
             // + total number of known FHIR core types
             // - total number of known (concrete) resources
@@ -272,7 +282,6 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             )
                                                             .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();
-
             Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
