@@ -424,14 +424,17 @@ namespace Hl7.Fhir.Model
                 { "VerificationResult", typeof(Hl7.Fhir.Model.VerificationResult) },
                 { "VisionPrescription", typeof(Hl7.Fhir.Model.VisionPrescription) },
             };
-        
-        public static Dictionary<Type,string> FhirCsTypeToString =
-            new Dictionary<Type,string>()
+
+        public static Dictionary<Type, string> FhirCsTypeToString =
+            new Dictionary<Type, string>()
             {
                 { typeof(Hl7.Fhir.Model.Address), "Address" },
                 { typeof(Age), "Age" },
                 { typeof(Hl7.Fhir.Model.Annotation), "Annotation" },
                 { typeof(Hl7.Fhir.Model.Attachment), "Attachment" },
+                 //Manually added BackboneElement here
+                //TODO: fix t4 template to auto-generate tis again
+                { typeof(Hl7.Fhir.Model.BackboneElement), "BackboneElement" },
                 { typeof(Hl7.Fhir.Model.Base64Binary), "base64Binary" },
                 { typeof(Hl7.Fhir.Model.FhirBoolean), "boolean" },
                 { typeof(Hl7.Fhir.Model.Canonical), "canonical" },
@@ -450,6 +453,9 @@ namespace Hl7.Fhir.Model
                 { typeof(Distance), "Distance" },
                 { typeof(Dosage), "Dosage" },
                 { typeof(Duration), "Duration" },
+                //Manually added Element here
+                //TODO: fix t4 template to auto-generate tis again
+                { typeof(Hl7.Fhir.Model.Element), "Element" },
                 { typeof(Hl7.Fhir.Model.ElementDefinition), "ElementDefinition" },
                 { typeof(Expression), "Expression" },
                 { typeof(Hl7.Fhir.Model.Extension), "Extension" },
