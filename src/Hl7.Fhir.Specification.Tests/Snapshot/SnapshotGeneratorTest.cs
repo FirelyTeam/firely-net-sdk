@@ -357,7 +357,14 @@ namespace Hl7.Fhir.Specification.Tests
             // -3 inline children, of type CodeableConcept
             // -3*12 full expansion of CodeableConcept
             // -3 inherited children (id, extension, modifierExtension)
-            Assert.AreEqual(277, fullElems.Count);
+            // [MV 20200128] R5 Fixed - 4 elements of Attachment were added:
+            // - Patient.photo.height | Attachment.height
+            // - Patient.photo.width | Attachment.width
+            // - Patient.photo.frames | Attachment.frames
+            // - Patient.photo.duration | Attachment.duration
+            // - Patient.photo.pages | Attachment.pages
+            //Assert.AreEqual(277, fullElems.Count);
+            Assert.AreEqual(282, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify

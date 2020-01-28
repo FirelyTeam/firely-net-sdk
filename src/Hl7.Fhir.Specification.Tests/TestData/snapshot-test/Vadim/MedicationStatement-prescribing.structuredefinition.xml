@@ -19,7 +19,7 @@
   <kind value="resource" />
   <abstract value="false" />
   <type value="MedicationStatement" />
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationStatement" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationUsage" />
   <differential>
     <element>
       <path value="MedicationStatement" />

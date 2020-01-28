@@ -2,7 +2,6 @@
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Validation;
 using System;
 using System.Linq;
 using Xunit;
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             expander.Expand(testVs);
-            Assert.Equal(11, testVs.Expansion.Total);
+            Assert.Equal(12, testVs.Expansion.Total);
         }
 
 
@@ -183,7 +182,7 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
             // Do common tests for service
-            testService(svc); 
+            testService(svc);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");
