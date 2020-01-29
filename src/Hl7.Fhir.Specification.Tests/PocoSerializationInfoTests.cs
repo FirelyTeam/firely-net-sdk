@@ -22,6 +22,8 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoStructureDefinitionSummaryProvider());
 
+
+        [Ignore("What would be the type of element.id? Needs more research: ")]
         [TestMethod]
         public void TestSpecialTypes() => SerializationInfoTestHelpers.TestSpecialTypes(new PocoStructureDefinitionSummaryProvider());
 

@@ -7420,7 +7420,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify fhir-type extension
             var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
             Assert.IsNotNull(fhirTypeExpr);
-            var typeValue = fhirTypeExpr.Value as FhirUrl;
+            var typeValue = fhirTypeExpr.Value as FhirUri;
             Assert.IsNotNull(typeValue);
             Assert.AreEqual("string", typeValue.Value);
 
@@ -7529,7 +7529,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("value[x]"));
             var elem = nav.Current;
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(11, elem.Type.Count); // Unconstrained
+            Assert.AreEqual(12, elem.Type.Count); // Unconstrained
 
             // Verify implicit type constraint
 #if NORMALIZE_RENAMED_TYPESLICE
