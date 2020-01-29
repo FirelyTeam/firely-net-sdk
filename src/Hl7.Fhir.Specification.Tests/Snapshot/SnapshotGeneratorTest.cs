@@ -11,6 +11,7 @@
 // Don't throw exception but emit OperationOutcome issue(s) and continue
 #define HACK_STU3_RECURSION
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -20,6 +21,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,6 +67,78 @@ namespace Hl7.Fhir.Specification.Tests
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
             _zipSource = new ZipSource("specification.zip");
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
+        }
+
+        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        {
+            return new StructureDefinition
+            {
+                Url = url,
+                Name = "bla",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Practitioner",
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = elements.ToList()
+                }
+            };
+        }
+
+        [TestMethod]
+        public void OverriddenNestedStructureDefinitionLists()
+        {
+            var baseSD = CreateStructureDefinition("http://bla",
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Open,
+                        Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                        {
+                            new ElementDefinition.DiscriminatorComponent
+                            {
+                                Type = ElementDefinition.DiscriminatorType.Value,
+                                Path = "system"
+                            }
+                        }
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test",
+                    SliceName = "test",
+                    Condition = new[] { "bla" },
+                    Code = new List<Coding>
+                    {
+                        new Coding{Code = "blu"}
+                    }
+                });
+
+            var derivedSD = CreateStructureDefinition("http://bli",
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Closed
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test"
+                });
+            derivedSD.BaseDefinition = baseSD.Url;
+
+            var resourceResolver = new Mock<IResourceResolver>();
+            resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
+            var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
+            snapshotGenerator.Update(derivedSD);
+
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be("system", "The discriminator should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be("blu", "The code should be copied from base");
         }
 
         [TestMethod]
