@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
             return new StructureDefinition
             {
                 Url = url,
-                Name = "bla",
+                Name = "name",
                 Status = PublicationStatus.Draft,
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
                 Abstract = false,
@@ -89,7 +89,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void OverriddenNestedStructureDefinitionLists()
         {
-            var baseSD = CreateStructureDefinition("http://bla",
+            var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
+            var code = "someCode";
+            var discriminatorPath = "system";
+
+            var baseSD = CreateStructureDefinition(baseCanonical,
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -101,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.DiscriminatorComponent
                             {
                                 Type = ElementDefinition.DiscriminatorType.Value,
-                                Path = "system"
+                                Path = discriminatorPath
                             }
                         }
                     }
@@ -110,14 +114,14 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     Path = "Practitioner.identifier:test",
                     SliceName = "test",
-                    Condition = new[] { "bla" },
+                    Condition = new[] { "http://system.org" },
                     Code = new List<Coding>
                     {
-                        new Coding{Code = "blu"}
+                        new Coding{Code = code}
                     }
                 });
 
-            var derivedSD = CreateStructureDefinition("http://bli",
+            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -137,8 +141,8 @@ namespace Hl7.Fhir.Specification.Tests
             var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
             snapshotGenerator.Update(derivedSD);
 
-            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be("system", "The discriminator should be copied from base");
-            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be("blu", "The code should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be(code, "The code should be copied from base");
         }
 
         [TestMethod]
