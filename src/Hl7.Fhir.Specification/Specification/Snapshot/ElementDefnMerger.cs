@@ -170,8 +170,29 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
 
-                // Mappings are cumulative, but keep unique on full contents
-                snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
+                // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
+                var originalDiscriminator = snap.Slicing?.Discriminator;
+                snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
+                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
+
+                // [WMR 20160817] TODO: Merge extensions
+                // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
+
+                // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
+                // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
+                snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+
+                // [EK 20170301] Added this after comparison with Java generated snapshot
+                snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
+            }
+
+            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            {
+                if (replacement is List<T> list && !list.Any())
+                {
+                    // list has been replaced inadvertently. Change it back
+                    setBase(originalBase);
+                }
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
