@@ -2381,8 +2381,7 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
         }
 
-        // [WMR 20190130] DEBUGGING
-        [Ignore("[MV 20200129] Difference in Questionnaire.text and DomainResource.text. TODO")]
+        // [WMR 20190130] DEBUGGING        
         [TestMethod]
         public void TestExpandQuestionnaireResource()
         {
@@ -2390,7 +2389,7 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
         }
 
-        [Ignore("[MV 20200129] Differences found. TODO")]
+    
         [TestMethod]
         public void TestExpandCoreArtifacts()
         {
@@ -2427,7 +2426,6 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResources(coreTypeUrls.ToArray());
         }
 
-        [Ignore("[MV 20200129] Differences found. TODO")]
         [TestMethod]
         [TestCategory("LongRunner")]
         public void TestExpandAllCoreResources()
@@ -2621,7 +2619,11 @@ namespace Hl7.Fhir.Specification.Tests
                     // [WMR 20190131] Fixed
                     var baseDef = expanded.BaseDefinition;
                     bool isDerivedFromResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
-                    bool isDerivedFromDomainResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
+                    // [MS 20200130] Added new base definitions MetadataResource and CanonicalResource
+                    bool isDerivedFromDomainResource =  (baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource).ToString() 
+                                                        || baseDef == "http://hl7.org/fhir/StructureDefinition/MetadataResource" 
+                                                        || baseDef == "http://hl7.org/fhir/StructureDefinition/CanonicalResource");
+
                     bool isDomainResource = expanded.Name == "DomainResource";
 
                     // [WMR 20190130] STU3
