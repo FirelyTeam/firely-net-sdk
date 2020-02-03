@@ -307,8 +307,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summaries);
             // [WMR 20181213] R4 NEW
             // [MV 20191212] R4.0.1 NEW
-            Assert.AreEqual(11611, summaries.Count); // STU3: 7941
-            Assert.AreEqual(7430, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            // [MV 20200203] R4.0.1 (after reducing dataelements.xml)
+            Assert.AreEqual(5148, summaries.Count); // STU3: 7941
+            Assert.AreEqual(967, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 
