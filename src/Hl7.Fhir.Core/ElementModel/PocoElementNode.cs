@@ -145,15 +145,15 @@ namespace Hl7.Fhir.ElementModel
                         case Hl7.Fhir.Model.Integer fint:
                             if (!fint.Value.HasValue)
                                 return null;
-                            return (long)fint.Value;
+                            return (int)fint.Value;
                         case Hl7.Fhir.Model.PositiveInt pint:
                             if (!pint.Value.HasValue)
                                 return null;
-                            return (long)pint.Value;
+                            return (int)pint.Value;
                         case Hl7.Fhir.Model.UnsignedInt unsint:
                             if (!unsint.Value.HasValue)
                                 return null;
-                            return (long)unsint.Value;
+                            return (int)unsint.Value;
                         case Hl7.Fhir.Model.Base64Binary b64:
                             return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
                         case Primitive prim:

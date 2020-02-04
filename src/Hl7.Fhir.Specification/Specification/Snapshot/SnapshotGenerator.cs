@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
             // Then snapshot root is already generated and annotated to differential.Element[0]
             //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (before merge)] diff root is annotated with cached snapshot root...");
-
+            
             merge(nav, diff);
 
             result = nav.ToListOfElements();
@@ -950,6 +950,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+                
+                if(_settings.GenerateSnapshotForExternalProfiles)
+                    ensureSnapshot(typeStructure, primaryDiffTypeProfile);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
                 // [WMR 20170823] WRONG! Base element may specify multiple type options
@@ -1785,7 +1788,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                    && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
