@@ -107,24 +107,24 @@ namespace Hl7.Fhir.Tests.Serialization
         public void FhirDeserialization_ProducesDoseAsQuantity_AndFailsAllowedTypeValidation()
         {
             // Arrange
-            var medicationStatement = generateMedicationStatementWithDose();
+            var medicationUsage = generateMedicationUsageWithDose();
             var serializer = new FhirJsonSerializer();
-            var json = serializer.SerializeToString(medicationStatement);
+            var json = serializer.SerializeToString(medicationUsage);
             var parser = new FhirJsonParser();
             var results = new List<ValidationResult>();
 
             // Act
-            var medicationStatementDeserialized = parser.Parse<MedicationStatement>(json);
+            var medicationUsageDeserialized = parser.Parse<MedicationUsage>(json);
 
             // Assert
             // (1) Show the types of the original and deserialized Dose property. They should be the same.
-            var origDoseAsElement = medicationStatement.Dosage[0].DoseAndRate[0].Dose;
+            var origDoseAsElement = medicationUsage.Dosage[0].DoseAndRate[0].Dose;
             Assert.IsTrue(origDoseAsElement.TypeName == "SimpleQuantity");
-            var doseAsElement = medicationStatementDeserialized.Dosage[0].DoseAndRate[0].Dose;
+            var doseAsElement = medicationUsageDeserialized.Dosage[0].DoseAndRate[0].Dose;
             Assert.IsTrue(doseAsElement.TypeName == "Quantity");
 
             // (2) Show that validation fails, with error in AllowedType validation
-            var isValid = DotNetAttributeValidation.TryValidate(medicationStatementDeserialized, results, true);
+            var isValid = DotNetAttributeValidation.TryValidate(medicationUsageDeserialized, results, true);
             Assert.IsTrue(isValid); // expect to pass
             //isValid.Should().BeFalse(); // woops
             //results[0].ErrorMessage.Should().Be("Value is of type Hl7.Fhir.Model.Quantity, which is not an allowed choice");
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
         }
 
-        private static MedicationStatement generateMedicationStatementWithDose()
+        private static MedicationUsage generateMedicationUsageWithDose()
         {
             var dose = new SimpleQuantity
             {
@@ -150,15 +150,15 @@ namespace Hl7.Fhir.Tests.Serialization
                         Dose = dose
                     }
                 }
-              
+
             };
-            var ms = new MedicationStatement
+            var ms = new MedicationUsage
             {
                 // Min = 1 for Status, Subject, Medication
-                Status = MedicationStatement.MedicationStatusCodes.Intended,
+                Status = MedicationUsage.MedicationUsageStatusCodes.Intended,
                 Subject = new ResourceReference("Patient/123"),
                 Medication = new ResourceReference("#med0309"),
-                Dosage = new List<Dosage> { dosage }                
+                Dosage = new List<Dosage> { dosage }
             };
 
             return ms;
