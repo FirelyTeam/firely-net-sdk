@@ -85,10 +85,10 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if(definition.MinValue != null)
+            if (definition.MinValue != null)
                 outcome.Add(validateMinMaxValue(validator, definition.MinValue, instance, -1, "MinValue"));
 
-            if(definition.MaxValue != null)
+            if (definition.MaxValue != null)
                 outcome.Add(validateMinMaxValue(validator, definition.MaxValue, instance, 1, "MaxValue"));
 
             return outcome;
