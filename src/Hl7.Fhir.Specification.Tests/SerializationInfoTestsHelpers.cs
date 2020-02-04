@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Serialization.Tests
             checkType(div, "div", false, "xhtml");
 
             // Element.id
-            checkType(div, "id", false, "id");
+            checkType(div, "id", false, "string");
 
             var ext = provider.Provide("Extension");
 

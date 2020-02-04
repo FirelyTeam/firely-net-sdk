@@ -197,14 +197,19 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("uri") };
             }
             else
-            {
-                if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
+            {                
+                var basePath = nav.Current?.Base?.Path;
+                if (basePath == "Resource.id")
                 {
                     // [MV 20191217] it should be url?.Value, but there is something wrong in the 
                     // specification (https://jira.hl7.org/browse/FHIR-25262), so I manually change it to "id".
                     //return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
 
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
+                }
+                else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
+                {
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
                 }
                 else
                     return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();
