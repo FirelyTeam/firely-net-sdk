@@ -26,8 +26,8 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var result2 = sourceNode.Annotation<IResourceTypeSupplier>();
             Assert.IsNotNull(result2);
-            Assert.AreEqual("PocoElementNode", result2.GetType().Name); // I use the classname here, because PocoElementNode is internal in Hl7.Fhir.Core
-            Assert.AreSame(typedElement, result2);
+            Assert.AreEqual("TypedElementToSourceNodeAdapter", result2.GetType().Name); // I use the classname here, because PocoElementNode is internal in Hl7.Fhir.Core
+            Assert.AreSame(sourceNode, result2);
         }
 
         [TestMethod]
@@ -51,7 +51,27 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var result3 = sourceNode.Annotation<IResourceTypeSupplier>();
             Assert.IsNotNull(result3);
-            Assert.AreEqual(typeof(FhirJsonNode), result3.GetType()); 
+            Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result3.GetType()); 
+        }
+
+        [TestMethod]
+        public void SourceNodeFromElementNodeReturnsResourceTypeSupplier()
+        {
+            var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
+            var patientJson = "{\"resourceType\":\"Patient\", \"active\":\"true\"}";
+            var patientNode = FhirJsonNode.Parse(patientJson);
+            var typedPatient = patientNode.ToTypedElement(_sdsProvider, "Patient");
+
+            var elementNode = ElementNode.FromElement(typedPatient);
+            var adapter = elementNode.ToSourceNode();
+
+            Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), adapter.GetType(), "ISourceNode is provided by TypedElementToSourceNodeAdapter");
+
+            var result = adapter.Annotation<IResourceTypeSupplier>();
+            Assert.IsNotNull(result);
+            Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result.GetType());
+            Assert.AreEqual("Patient", adapter.GetResourceTypeIndicator());
+            Assert.AreSame(adapter, result);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
-            new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
+            new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) => 
             MakeElementStack(instance, summary, elements)

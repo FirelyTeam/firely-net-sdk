@@ -6,16 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -47,6 +47,12 @@ namespace Hl7.Fhir.Tests.Serialization
                             continue;
                         if (entry.Name.EndsWith("questionnaireresponse-example(3141).xml"))
                             continue;
+                        // que-2
+                        if (entry.Name.EndsWith("questionnaire-bp-questionnaire(qs1).xml"))
+                            continue;
+                        if (entry.Name.EndsWith("questionnaire-lipidprofile-questionnaire(qs1).xml"))
+                            continue;
+
 
                         // vsd-3, vsd-8
                         //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
@@ -106,7 +112,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
-           string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
+            string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
@@ -234,9 +240,9 @@ namespace Hl7.Fhir.Tests.Serialization
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
                             }
-                          //  Trace.WriteLine("-------------------------");
-                          //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
-                          //  Trace.WriteLine("-------------------------");
+                            //  Trace.WriteLine("-------------------------");
+                            //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                            //  Trace.WriteLine("-------------------------");
                             // count the issue
                             errorCount++;
                         }
@@ -258,8 +264,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
                 Debug.WriteLine("");
             }
-            // There are 7 example observation resources that don't pass the vital signs profile (and rightly shouldn't)
-            Assert.AreEqual(7, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
+            // [MV 20191217] Technical correction 3.0.2 reduced the error count to 2. Those are que-2 invariants
+            Assert.AreEqual(2, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
         }
     }
 }
