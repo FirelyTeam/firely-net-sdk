@@ -80,10 +80,6 @@
     <None Remove="TestData\snapshot-test\Type Slicing\obs-2b-expected.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\obs-2b-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\obs-3-input.xml" />
-    <None Remove="TestData\snapshot-test\Type Slicing\obs-badfixed-expected.xml" />
-    <None Remove="TestData\snapshot-test\Type Slicing\obs-badfixed-input.xml" />
-    <None Remove="TestData\snapshot-test\Type Slicing\obs-badpattern-expected.xml" />
-    <None Remove="TestData\snapshot-test\Type Slicing\obs-badpattern-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-expected.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pat-choice-ms-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-expected.xml" />
