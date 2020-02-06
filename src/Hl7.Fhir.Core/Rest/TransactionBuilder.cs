@@ -66,7 +66,8 @@ namespace Hl7.Fhir.Rest
 
         private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
         {
-            newEntry.Request.Url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl).ToString();
+            var url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl);
+            newEntry.Request.Url = url.OriginalString;
             _result.Entry.Add(newEntry);
         }
 

@@ -33,6 +33,22 @@ namespace Hl7.Fhir.Test
             var e = b.Entry[0];
 
             Assert.AreEqual(relativeEscapedUrl, e.Request.Url);
+
+
+            var relativeEscapedUrl2 = "Location?name=Enc%C3%B6ding%20T%C3%A9st";
+            var location = new Location
+            {
+                Name = "Encöding Tést",
+            };
+
+            var trxBuilder = new TransactionBuilder("http://example.org/test/fhir", Bundle.BundleType.Transaction);
+            var cond = new SearchParams()
+                .Add("name", location.Name);
+
+            var b2 = trxBuilder.Update(cond, location).ToBundle();
+            var e2 = b2.Entry[0];
+
+            Assert.AreEqual(relativeEscapedUrl2, e2.Request.Url);            
         }
 
         [TestMethod]
