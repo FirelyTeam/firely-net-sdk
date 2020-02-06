@@ -155,10 +155,10 @@ namespace Hl7.Fhir.Rest
             }
             else if (searchUsingPost)
             {
-                IDictionary<string, string> bodyParameters = new Dictionary<string, string>();
-                foreach(Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
+                var bodyParameters = new List<KeyValuePair<string, string>>();
+                foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
-                    bodyParameters.Add(parameter.Name, parameter.Value.ToString());
+                    bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
                 }
                 if (bodyParameters.Count > 0)
                 {
