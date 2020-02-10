@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // [MMS 20200203] Skip interface structures while looking for base profile
-                while (baseStructure.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-interface") == true)
+                while (baseStructure.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
                 {
                     var newBase = _resolver.FindStructureDefinition(baseStructure.BaseDefinition);
                     if (newBase == null)
