@@ -8,7 +8,7 @@
   <description value="fixture for #14: see task 8742"/>
   <kind value="resource"/>
   <abstract value="false"/>
-  <type value="Organization"/>
+  <type value="Patient"/>
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization"/>
   <derivation value="constraint"/>
   <differential>

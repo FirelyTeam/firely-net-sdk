@@ -10,7 +10,7 @@
   "publisher": "National Children's Digital Health Collaborative (NCDHC)",
   "description": "Define a bsae profile for NCDHC Observation",
   "purpose": "To define NCDHC base profile",
-  "fhirVersion": "4.0.0",
+  "fhirVersion": "3.0.1",
   "kind": "resource",
   "abstract": true,
   "type": "Observation",

@@ -38,7 +38,7 @@
       <sliceName value="name2"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/patient-disability"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName"/>
       </type>
     </element>
   </differential>

@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
-        {            
+        {
             ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
             Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
-        
+
         StructureDefinition Load(string id, string fileNameFormat)
         {
             //var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var manifest = (SnapshotGenerationManifest)serializer.Deserialize(fs);
                 // Fix known invalid invariants
-               // FixManifest(manifest);
+                FixManifest(manifest);
                 return manifest;
             }
         }

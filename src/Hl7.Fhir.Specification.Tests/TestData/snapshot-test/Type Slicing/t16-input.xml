@@ -22,7 +22,7 @@
     </element>
     <element>
       <path value="Patient.address.extension.extension.valueDecimal.extension"/>
-      <sliceName value="Geolocation-latitude-rendered"/>
+      <sliceName value="Geolocation.latitude.rendered"/>
       <type>
         <code value="Extension"/>
         <profile value="http://hl7.org/fhir/StructureDefinition/rendered-value"/>
@@ -39,7 +39,7 @@
     </element>
     <element>
       <path value="Patient.address.extension.extension.valueDecimal.extension"/>
-      <sliceName value="Geolocation-longitude-rendered"/>
+      <sliceName value="Geolocation.longitude.rendered"/>
       <type>
         <code value="Extension"/>
         <profile value="http://hl7.org/fhir/StructureDefinition/rendered-value"/>

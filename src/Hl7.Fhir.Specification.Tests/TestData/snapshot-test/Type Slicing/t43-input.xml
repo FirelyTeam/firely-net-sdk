@@ -22,7 +22,6 @@
           <type value="type"/>
           <path value="$this"/>
         </discriminator>
-        <rules value="closed"/>
       </slicing>
       <short value="some text"/>
       <type>
