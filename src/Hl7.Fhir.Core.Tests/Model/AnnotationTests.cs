@@ -7,14 +7,12 @@
  */
 
 using Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -130,6 +128,9 @@ namespace Hl7.Fhir.Tests.Model
             {
                 Assert.Fail($"AddAnnotation should not throw an exception, but it did: {ex.Message}");
             }
+
+            Assert.AreEqual(1, element.Annotations(typeof(AnnotationData)).Count());
+
         }
     }
 }
