@@ -200,12 +200,35 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void TestConstraintSources()
+        {
+            var dom = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/DomainResource");
+            Assert.IsNotNull(dom);
+            generateSnapshotAndCompare(dom);
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ext-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Extension") == true);
+
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ele-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Element") == true);
+
+
+            var pat = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(pat);
+            generateSnapshotAndCompare(pat);
+            Assert.IsTrue(pat.Snapshot?.Element
+                          .Where(e => e.Path == "Patient").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);       
+
+        }    
+
+        [TestMethod]
         public void GenerateSnapshotForExternalProfiles()
         {
             //Test external type profile
             var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
-
             _settings.GenerateSnapshotForExternalProfiles = false;
             _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.Update(sd);

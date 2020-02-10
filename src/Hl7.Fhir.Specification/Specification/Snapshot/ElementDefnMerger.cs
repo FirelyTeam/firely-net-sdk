@@ -30,10 +30,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId);
+                merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
             readonly SnapshotGenerator _generator;
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator ?? throw new ArgumentNullException(nameof(generator));
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 // [WMR 20170421] Element.Id is NOT inherited!
                 // Merge custom Element id value from differential in same profile into snapshot
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
                 // [WMR 20190723] R4 NEW: Initialize Constraint.source property
                 //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
-                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, ElementDefinitionNavigator.GetPathRoot(diff.Path));
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
