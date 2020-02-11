@@ -41,7 +41,7 @@
       </type>
       <binding>
         <strength value="required"/>
-        <valueSet value="http://terminology.hl7.org/ValueSet/v3-NullFlavor"/>
+        <valueSetUri value="http://terminology.hl7.org/ValueSet/v3-NullFlavor"/>
       </binding>
     </element>
   </differential>

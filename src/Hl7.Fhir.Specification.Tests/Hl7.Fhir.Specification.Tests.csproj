@@ -42,13 +42,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="TestData\CustomBasic-StructureDefinition-R4.json" />
-    <None Remove="TestData\profiles-types.json" />
-    <None Remove="TestData\ResourcesInSubfolder.zip" />
-    <None Remove="TestData\validation\obs-with-sliced-value.xml" />
-    <None Remove="TestData\CCDA_ANY.xml" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="TestData\validation\list-with-profile-slicing.xml" />
