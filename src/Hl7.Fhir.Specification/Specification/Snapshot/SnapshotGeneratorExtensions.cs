@@ -25,6 +25,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
         // public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         public static readonly string CONSTRAINED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/constrainedByDifferentialExtension";
+        public static readonly string STRUCTURE_DEFINITION_INTERFACE_EXT = "http://hl7.org/fhir/StructureDefinition/structuredefinition-interface";
 
         /// <summary>
         /// Decorate the specified snapshot element definition with a special extension

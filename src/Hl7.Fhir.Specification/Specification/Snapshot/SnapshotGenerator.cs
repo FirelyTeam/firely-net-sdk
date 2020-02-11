@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ElementDefinitionNavigator nav;
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
-            {
+            {               
                 var baseStructure = _resolver.FindStructureDefinition(structure.BaseDefinition);
 
                 // [WMR 20161208] Handle unresolved base profile
@@ -283,6 +283,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                     addIssueProfileNotFound(structure.BaseDefinition);
                     // Fatal error...
                     return null;
+                }
+
+                // [MMS 20200203] Skip interface structures while looking for base profile
+                while (baseStructure.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
+                {
+                    var newBase = _resolver.FindStructureDefinition(baseStructure.BaseDefinition);
+                    if (newBase == null)
+                    {
+                        addIssueProfileNotFound(baseStructure.BaseDefinition);
+                        // Fatal error...
+                        return null;
+                    }
+                    baseStructure = newBase;
                 }
 
                 // [WMR 20161208] Handle missing differential
@@ -714,6 +727,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20190723] FIX: Initialize base cardinality from current diff element
                 // Do NOT inherit from target, e.g. Resource.id (0...1) inherits from id root (0...*)
                 // [DEBUGGING] Debug.Assert(newElement.Path != "Resource.id");
+
                 newElement.Base = new ElementDefinition.BaseComponent()
                 {
                     Path = newElement.Path,
