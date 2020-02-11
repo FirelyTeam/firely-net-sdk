@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Validation
                 validator.Trace(outcome, $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
 
             // Bail out if we are asked to follow an *external reference* when this is disabled in the settings
-            if (validator.Settings.ResolveExteralReferences == false && encounteredKind == ElementDefinition.AggregationMode.Referenced)
+            if (validator.Settings.ResolveExternalReferences == false && encounteredKind == ElementDefinition.AggregationMode.Referenced)
                 return outcome;
 
             // If we failed to find a referenced resource within the current instance, try to resolve it using an external method

@@ -2,7 +2,7 @@
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="data-absent-reason" />
-  <url value="http://hl7.org/fhir/StructureDefinition/data-absent-reason" />
+  <url value="http://hl7.org/fhir/StructureDefinition/data-absent-reason-fortest" />
   <name value="Data Absent Reason" />
   <title value="Why value is missing" />
   <status value="draft" />
@@ -177,6 +177,7 @@
     </element>
     <element id="Extension:dataabsentreason.valueCode">
       <path value="Extension.valueCode" />
+      <label value="Is dit de juiste?" />
       <type>
         <code value="code" />
       </type>

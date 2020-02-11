@@ -16,7 +16,6 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -31,10 +30,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId);
+                merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
             readonly SnapshotGenerator _generator;
@@ -44,7 +43,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator ?? throw new ArgumentNullException(nameof(generator));
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 // [WMR 20170421] Element.Id is NOT inherited!
                 // Merge custom Element id value from differential in same profile into snapshot
@@ -106,7 +105,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20180611] Use custom matching
                 snap.Code = mergeCollection(snap.Code, diff.Code, matchCoding);
 
+                // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
+                var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
+                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.Definition = mergePrimitiveElement(snap.Definition, diff.Definition, true);
@@ -134,14 +136,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.Fixed = mergeComplexAttribute(snap.Fixed, diff.Fixed);
                 snap.Pattern = mergeComplexAttribute(snap.Pattern, diff.Pattern);
-                
+
                 // Examples are cumulative based on the full value
                 // [EK 20170301] In STU3, this was turned into a collection
                 snap.Example = mergeCollection(snap.Example, diff.Example, matchExactly);
 
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
-                
+
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.MaxLengthElement = mergePrimitiveElement(snap.MaxLengthElement, diff.MaxLengthElement);
 
@@ -157,7 +159,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
                 // [WMR 20190723] R4 NEW: Initialize Constraint.source property
                 //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
-                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, ElementDefinitionNavigator.GetPathRoot(diff.Path));
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -172,6 +174,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
+            }
+
+            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            {
+                if (replacement is List<T> list && !list.Any())
+                {
+                    // list has been replaced inadvertently. Change it back
+                    setBase(originalBase);
+                }
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
@@ -331,7 +342,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // differential is allowed to REMOVE profiles from base
             // Use differential profile collection if not empty, otherwise fall back to snapshot (no merging)
             List<Canonical> mergeCanonicals(List<Canonical> snap, List<Canonical> diff)
-                //=> mergeCollection(snap, diff, matchCanonicals);
+            //=> mergeCollection(snap, diff, matchCanonicals);
             {
                 return diff is null || diff.Count == 0 ? snap : diff;
             }

@@ -29,7 +29,7 @@
 */
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -389,6 +389,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
         N4_0_0,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/FHIR-version)
+        /// </summary>
+        [EnumLiteral("4.0.1", "http://hl7.org/fhir/FHIR-version"), Description("4.0.1")]
+        N4_0_1,
     }
 
     /// <summary>

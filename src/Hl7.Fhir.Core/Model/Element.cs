@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using Hl7.Fhir.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -49,39 +47,39 @@ namespace Hl7.Fhir.Model
     [Serializable]
 #endif
     [DataContract]
-    [FhirType("Element", IsResource=false)]
+    [FhirType("Element", IsResource = false)]
     public abstract partial class Element : Base, IExtendable
     {
         [NotMapped]
         public override string TypeName { get { return "Element"; } }
-        
+
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=10, TypeRedirect = typeof(FhirString))]
+        [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 10, TypeRedirect = typeof(FhirString))]
         [DataMember]
         public string ElementId
         {
             get { return _ElementId; }
             set { _ElementId = value; OnPropertyChanged("ElementId"); }
         }
-        
+
         private string _ElementId;
-        
+
         /// <summary>
         /// Additional Content defined by implementations
         /// </summary>
-        [FhirElement("extension", InSummary=false, Order=20)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("extension", InSummary = false, Order = 20)]
+        [Cardinality(Min = 0, Max = -1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension
         {
-            get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+            get { if (_Extension == null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
-        
+
         private List<Hl7.Fhir.Model.Extension> _Extension;
-        
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             if (other is Element dest)
@@ -94,26 +92,26 @@ namespace Hl7.Fhir.Model
             else
                 throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
-        
+
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Element;
-            if(otherT == null) return false;
-            
-            if( ElementId != otherT.ElementId ) return false;
-            if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
-            
+            if (otherT == null) return false;
+
+            if (ElementId != otherT.ElementId) return false;
+            if (!DeepComparable.Matches(Extension, otherT.Extension)) return false;
+
             return true;
         }
-        
+
         public override bool IsExactly(IDeepComparable other)
         {
             var otherT = other as Element;
-            if(otherT == null) return false;
-            
-            if( ElementId != otherT.ElementId ) return false;
-            if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
-            
+            if (otherT == null) return false;
+
+            if (ElementId != otherT.ElementId) return false;
+            if (!DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
+
             return true;
         }
 
@@ -133,8 +131,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (ElementId != null)  yield return new ElementValue("id", new FhirString(ElementId));
-                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",p); }
+                if (ElementId != null) yield return new ElementValue("id", new FhirString(ElementId));
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension", p); }
             }
         }
 

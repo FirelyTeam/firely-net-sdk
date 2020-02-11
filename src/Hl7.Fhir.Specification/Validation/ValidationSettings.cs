@@ -89,7 +89,10 @@ namespace Hl7.Fhir.Validation
         /// external reference. Note: References that refer to resources inside the current instance (i.e.
         /// contained resources, Bundle entries) will always be followed and validated.
         /// </summary>
-        public bool ResolveExteralReferences { get; set; } // = false;
+        public bool ResolveExternalReferences { get; set; } // = false;
+
+        [Obsolete("Typo. Please use the correct ResolveExternalReferences property. Obsolete since 2019-11-13")]
+        public bool ResolveExteralReferences { get { return ResolveExternalReferences; } set { ResolveExternalReferences = value; } }
 
         /// <summary>
         /// If set to true (and the XDocument specific overloads of validate() are used), the validator will run
@@ -123,7 +126,7 @@ namespace Hl7.Fhir.Validation
             other.GenerateSnapshot = GenerateSnapshot;
             other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
             other.EnableXsdValidation = EnableXsdValidation;
-            other.ResolveExteralReferences = ResolveExteralReferences;
+            other.ResolveExternalReferences = ResolveExternalReferences;
             other.ResourceResolver = ResourceResolver;
             other.SkipConstraintValidation = SkipConstraintValidation;
             other.TerminologyService = TerminologyService;

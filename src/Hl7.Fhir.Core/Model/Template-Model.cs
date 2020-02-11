@@ -1,6 +1,6 @@
 ﻿
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 // Generated Shared Enumeration: Use (http://hl7.org/fhir/ValueSet/claim-use)
 	// Used in model class (resource): Claim.use
