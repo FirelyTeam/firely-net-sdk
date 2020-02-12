@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 var representation = summaryElements.Where(e => e.ElementName == element.ToString()).FirstOrDefault().Representation;
                 if (!representation.Equals(element))
                 {
-                    Assert.Fail("Respresentation is expected to be the same as the name of the test element");
+                    Assert.Fail("Representation is expected to be the same as the name of the test element");
                 }
             }
         }
