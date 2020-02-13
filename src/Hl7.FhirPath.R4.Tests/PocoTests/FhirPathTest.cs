@@ -17,6 +17,7 @@ using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -298,6 +299,43 @@ namespace Hl7.FhirPath.R4.Tests
             var divExists = nav.Scalar("text.`div`.exists()");
 
             Assert.AreEqual(true, divExists);
+        }
+
+        [TestMethod]
+        public void TestFhirPathInBundle()
+        {
+            var appointment = new Appointment
+            {
+                IdElement = new Id("f1b652f7-61c5-4036-a897-9935b245b30c"),
+                Status = Appointment.AppointmentStatus.Booked,
+                Start = new System.DateTimeOffset(2019, 08, 03, 08, 00, 00, System.TimeSpan.FromHours(2.00)),
+                End = new System.DateTimeOffset(2019, 08, 03, 08, 30, 00, System.TimeSpan.FromHours(2.00)),
+                Participant = new List<Appointment.ParticipantComponent>
+                {
+                    new Appointment.ParticipantComponent
+                    {
+                        Actor = new ResourceReference("Practitioner/d33a6cd1-7127-4eaf-b6fc-45c28a5277b0"),
+                        Status = ParticipationStatus.Accepted
+                    }
+                }
+            };
+            var bundle = new Bundle
+            {
+                IdElement = new Id("18c8c73a-9d96-498f-95c3-3e8c59636177"),
+                Type = Bundle.BundleType.Collection,
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new Bundle.EntryComponent
+                    {
+                        FullUrl = "Appointment/f1b652f7-61c5-4036-a897-9935b245b30c",
+                        Resource = appointment
+                    }
+                }
+            };
+
+            var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
+            var invariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
+            Assert.AreEqual(true, invariantcheck);
         }
     }
 }
