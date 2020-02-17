@@ -334,8 +334,12 @@ namespace Hl7.FhirPath.R4.Tests
             };
 
             var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
-            var invariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
+            var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
+            Assert.AreEqual(true, absolutueInvariantcheck);
+            
+            var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
             Assert.AreEqual(true, invariantcheck);
+
         }
     }
 }
