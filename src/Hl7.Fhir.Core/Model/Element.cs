@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// xml:id (or equivalent in JSON)
         /// </summary>
-        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, Order=10, TypeRedirect = typeof(Id))]
+        [FhirElement("id", XmlSerialization=XmlRepresentation.XmlAttr, InSummary=Version.All, Order=10, TypeRedirect = typeof(Id))]
         [CLSCompliant(false)]
         [IdPattern]
         [DataMember]
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
 
         internal void SerializeElement(SerializerSink sink)
         {
-            sink.StringValue("id", ElementId, summaryVersions: Version.None);
+            sink.StringValue("id", ElementId, summaryVersions: Version.All);
             base.Serialize(sink);
             sink.BeginList("extension", summaryVersions: Version.None);
             foreach (var extension in Extension)

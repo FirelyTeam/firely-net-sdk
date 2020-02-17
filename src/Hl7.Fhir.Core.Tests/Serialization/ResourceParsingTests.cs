@@ -255,7 +255,6 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(json2);
             File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
 
-            List<string> errors = new List<string>();
             JsonAssert.AreSame(json, json2);
         }
 

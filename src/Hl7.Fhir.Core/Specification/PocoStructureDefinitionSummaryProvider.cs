@@ -84,12 +84,25 @@ namespace Hl7.Fhir.Specification
         public bool IsAbstract => _classMapping.IsAbstract;
         public bool IsResource => _classMapping.IsResource;
 
-        public IEnumerable<IElementDefinitionSummary> GetElements()
+        public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
         {
             var version = _version;
             return _classMapping.GetPropertyMappings(version)
                 .Where(pm => !pm.RepresentsValueElement)
-                .Select(pm => (IElementDefinitionSummary)new PocoElementSerializationInfo(version, pm));
+                .Select(pm => (IElementDefinitionSummary)new PocoElementSerializationInfo(version, pm))
+#if NET40
+                .ToReadOnlyCollection();
+#else
+                .ToList();
+#endif
+        }
+
+        public IElementDefinitionSummary GetElement(string name)
+        {
+            var version = _version;
+            return _classMapping.GetPropertyMappings(version)
+                .Where(pm => !pm.RepresentsValueElement && pm.Name == name)
+                .Select(s => (IElementDefinitionSummary)new PocoElementSerializationInfo(version, s)).SingleOrDefault();
         }
     }
 
