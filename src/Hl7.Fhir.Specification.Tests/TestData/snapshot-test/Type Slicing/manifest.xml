@@ -226,4 +226,18 @@
   <test gen="true" id="au2"/>
   <test gen="true" id="au3"/>
   <test gen="true" id="dv1"/>
+  
+  <!--type slice tests-->
+  <test gen="true" id="obs-1" description="closed type slicing"/>
+  <test gen="true" id="obs-1-1" description="re-constraining closed type slicing"/>
+  <test gen="true" id="obs-1-2" fail="true" reason="trying to profile a type already profiled out" description="trying to profile a type already profiled out"/>
+  <test gen="true" id="obs-2" description="open type slicing"/>
+  <test gen="true" id="obs-2a" description="open type slicing + constain base"/>
+  <test gen="true" id="obs-2b" description="open type slicing + min on slice"/>
+  <test gen="true" id="obs-2-1" description="reslciing choice to closed"/>
+  <test gen="true" id="obs-2-2" description="reslicing slice a different type"/>
+  <test gen="true" id="obs-2-3" fail="true" reason="trying to profile an illegal type" description="trying to profile an illegal type (not in slices remaining)"/>
+  <test gen="true" id="obs-3" fail="true" reason="trying to profile an illegal type" description="trying to profile an illegal type (not in element)"/>
+  <test gen="true" id="obs-4" description="open with min cardinality"/>
+  <test gen="true" id="obs-5" fail="true" reason="More than one type slice has min=1" description="More than one type slice has min=1"/>
 </snapshot-generation-tests>

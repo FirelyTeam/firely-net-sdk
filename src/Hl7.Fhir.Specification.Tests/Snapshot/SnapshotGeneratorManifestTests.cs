@@ -507,6 +507,35 @@ namespace Hl7.Fhir.Specification.Tests
         // R4:   ElementDefinition.binding.valueSet    : Canonical
         [TestMethod] public void Test_au3() => ExecuteTest("au3");
 
+
+        [TestMethod] public void Test_obs1_0() => ExecuteTest("obs-1");
+        [TestMethod] public void Test_obs1_1() => ExecuteTest("obs-1-1");
+
+        [Ignore("snapshot generation should fail: issue #1252")]
+        [TestMethod] public void Test_obs1_2() => ExecuteTest("obs-1-2");
+
+        [Ignore("issue #1253")]
+        [TestMethod] public void Test_obs2_0() => ExecuteTest("obs-2");
+        [Ignore("issue #1253")]
+        [TestMethod] public void Test_obs2_0a() => ExecuteTest("obs-2a");
+        [Ignore("issue #1253")]
+        [TestMethod] public void Test_obs2_0b() => ExecuteTest("obs-2b");
+        
+        [TestMethod] public void Test_obs2_1() => ExecuteTest("obs-2-1");
+        [TestMethod] public void Test_obs2_2() => ExecuteTest("obs-2-2");
+
+        [Ignore("issue #1254")]
+        [TestMethod] public void Test_obs2_3() => ExecuteTest("obs-2-3");
+        [Ignore("issue #1254")]
+        [TestMethod] public void Test_obs3_0() => ExecuteTest("obs-3");
+       
+        [Ignore("issue #1255")]
+        [TestMethod] public void Test_obs4_0() => ExecuteTest("obs-4");
+        
+        [Ignore("issue #1256")]
+        [TestMethod] public void Test_obs5_0() => ExecuteTest("obs-5");
+
+
         void ExecuteTest(string id) => ExecuteTest(_manifest.Test.FirstOrDefault(t => t.Id == id));
 
         void ExecuteTest(SnapshotGenerationManifestTest test)
