@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(data, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
-            Assert.Equal(3, report.Errors); // boolean.id [0..1], extension.url [1..1], ext-1
+            Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
             Assert.Equal(0, report.Warnings);
         }
 
