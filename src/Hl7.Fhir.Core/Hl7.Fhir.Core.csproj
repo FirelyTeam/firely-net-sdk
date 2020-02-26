@@ -76,10 +76,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Update="Model\Generated\Template-Model.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Update="Model\Generated\Template-ModelInfo.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

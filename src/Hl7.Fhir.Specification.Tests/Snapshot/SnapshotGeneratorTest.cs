@@ -11,6 +11,7 @@
 // Don't throw exception but emit OperationOutcome issue(s) and continue
 #define HACK_STU3_RECURSION
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -20,6 +21,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,6 +69,82 @@ namespace Hl7.Fhir.Specification.Tests
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
+        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        {
+            return new StructureDefinition
+            {
+                Url = url,
+                Name = "name",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Practitioner",
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = elements.ToList()
+                }
+            };
+        }
+
+        [TestMethod]
+        public void OverriddenNestedStructureDefinitionLists()
+        {
+            var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
+            var code = "someCode";
+            var discriminatorPath = "system";
+
+            var baseSD = CreateStructureDefinition(baseCanonical,
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Open,
+                        Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                        {
+                            new ElementDefinition.DiscriminatorComponent
+                            {
+                                Type = ElementDefinition.DiscriminatorType.Value,
+                                Path = discriminatorPath
+                            }
+                        }
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test",
+                    SliceName = "test",
+                    Condition = new[] { "http://system.org" },
+                    Code = new List<Coding>
+                    {
+                        new Coding{Code = code}
+                    }
+                });
+
+            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Closed
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test"
+                });
+            derivedSD.BaseDefinition = baseSD.Url;
+
+            var resourceResolver = new Mock<IResourceResolver>();
+            resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
+            var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
+            snapshotGenerator.Update(derivedSD);
+
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be(code, "The code should be copied from base");
+        }
+
         [TestMethod]
         public void GenerateExtensionSnapshot()
         {
@@ -93,6 +171,52 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
         }
 
+        [TestMethod]
+        public void GenerateSnapshotForExternalProfiles()
+        {
+            //Test external type profile
+            var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
+            Assert.IsNotNull(sd);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+
+            sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNotNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+
+            //Test external base profile
+            var sdDerived = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
+            Assert.IsNotNull(sdDerived);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+            Assert.IsNotNull(sdDerived.Snapshot);
+
+            var sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+
+            sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNotNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+        }
 
         [TestMethod]
         public void GenerateSingleSnapshot()

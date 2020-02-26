@@ -48,10 +48,10 @@ namespace Hl7.Fhir.Support
         public static string ToFhirDateTime(this System.DateTimeOffset? me) => me.HasValue ? PrimitiveTypeConverter.ConvertTo<string>(me) : null;
 
         #region Obsolete members
-        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset me) instead")]
+        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset me) instead, see https://docs.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset")]
         public static string ToFhirDateTime(this System.DateTime me) => PrimitiveTypeConverter.ConvertTo<string>(me);
 
-        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset? me) instead")]
+        [Obsolete("Use ToFhirDateTime(this System.DateTimeOffset? me) instead, see https://docs.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset")]
         public static string ToFhirDateTime(this System.DateTime? me) => me.HasValue ? PrimitiveTypeConverter.ConvertTo<string>(me) : null;
         #endregion
 
