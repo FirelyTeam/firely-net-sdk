@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element MinimumVolume
             {

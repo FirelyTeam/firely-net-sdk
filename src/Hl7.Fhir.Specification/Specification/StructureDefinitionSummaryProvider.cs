@@ -112,7 +112,8 @@ namespace Hl7.Fhir.Specification
         }
 #endif
 
-        private static bool isPrimitiveValueConstraint(ElementDefinition ed) => ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
+        private static bool isPrimitiveValueConstraint(ElementDefinition ed) => (ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code == null)) ||
+            (ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code.StartsWith("http://hl7.org/fhirpath/System.")));
 
         internal static IEnumerable<IElementDefinitionSummary> getElements(ElementDefinitionNavigator nav)
         {
@@ -128,7 +129,7 @@ namespace Hl7.Fhir.Specification
                 {
                     if (nav.PathName == lastName) continue;    // ignore slices
                     if (isPrimitiveValueConstraint(nav.Current)) continue;      // ignore value attribute
-                            
+
                     lastName = nav.PathName;
                     yield return new ElementDefinitionSerializationInfo(nav.ShallowCopy());
                 }
@@ -191,12 +192,28 @@ namespace Hl7.Fhir.Specification
 
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
-            else if(nav.Current.Path == "Extension.url")        // Compiler magic since R4
+            else if (nav.Current.Path == "Extension.url")        // Compiler magic since R4
             {
                 return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("uri") };
             }
             else
-                return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();
+            {                
+                var basePath = nav.Current?.Base?.Path;
+                if (basePath == "Resource.id")
+                {
+                    // [MV 20191217] it should be url?.Value, but there is something wrong in the 
+                    // specification (https://jira.hl7.org/browse/FHIR-25262), so I manually change it to "id".
+                    //return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
+
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
+                }
+                else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
+                {
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
+                }
+                else
+                    return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();
+            }
         }
 
         public string ElementName { get; private set; }
@@ -209,7 +226,8 @@ namespace Hl7.Fhir.Specification
 
         public XmlRepresentation Representation
         {
-            get {
+            get
+            {
                 if (!_definition.Representation.Any()) return XmlRepresentation.XmlElement;
 
                 switch (_definition.Representation.First())
@@ -230,7 +248,7 @@ namespace Hl7.Fhir.Specification
 
         // TODO: This is actually not complete: the Type might be any subclass of Resource (including DomainResource), but this will
         // do for all current situations. I will regret doing this at some point in the future.
-        private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
+        private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 &&
             (defn.Type[0].Code == "Resource" || defn.Type[0].Code == "DomainResource");
 
         public ITypeSerializationInfo[] Type => _types.Value;

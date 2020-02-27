@@ -123,9 +123,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             output.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            // TODO 20190829: we know that 104 tests are still failing. In the next release we make sure that these test will succeed again.
-            if(numFailed != 104)
-                Assert.True(false,$"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
+            // MV 20191210: For version 4.0.1 we added some extra functions in FhirPath (intersect and ` is allowed), so now 97 tests (instead of 103) are failing
+            Assert.True(97 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)

@@ -119,10 +119,10 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.identifier.exists()");
             fixture.IsTrue(@"Patient.dientifeir.exists().not()");
             fixture.IsTrue(@"Patient.telecom.rank.exists()");
-            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"identifier.count()"));
-            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"Patient.identifier.count()"));
-            Assert.AreEqual(3L, fixture.TestInput.Scalar(@"Patient.identifier.value.count()"));
-            Assert.AreEqual(1L, fixture.TestInput.Scalar(@"Patient.telecom.rank"));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"identifier.count()"));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.count()"));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.value.count()"));
+            Assert.Equal(1, fixture.TestInput.Scalar(@"Patient.telecom.rank"));
             fixture.IsTrue(@"Patient.telecom.rank = 1");
         }
 

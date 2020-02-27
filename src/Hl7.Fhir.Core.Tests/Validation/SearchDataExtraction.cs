@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Test.Validation
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = resource.ToTypedElement();
+            var resourceModel = new ScopedNode(resource.ToTypedElement());
 
             IEnumerable<ITypedElement> results;
             try

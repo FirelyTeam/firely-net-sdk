@@ -370,9 +370,9 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Oid));
 
-            // FHIR: Canonical derives from Uri (not from String)
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Canonical));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Url));
+            // FHIR: Canonical derives from Uri (not from String), but as gForge cofirmed Url and Canonical cannot be used as substitutes for Uri
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Canonical));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Uri, FHIRAllTypes.Url));
             Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.String, FHIRAllTypes.Canonical));
 
             // FHIR: Money derives from Quantity; MoneyQuantity is a profile on Quantity

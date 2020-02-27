@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -165,7 +164,7 @@ namespace Hl7.Fhir.Rest
 
             return endpoint;
         }
-        
+
         #region Read
 
         /// <summary>
@@ -813,7 +812,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.NoContent });
         }
         public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
@@ -827,7 +826,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
-            return executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.NoContent });
         }
         public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
         {
@@ -1023,7 +1022,7 @@ namespace Hl7.Fhir.Rest
             {
                 if (disposing)
                 {
-                    if(Requester is IDisposable disposableRequester)
+                    if (Requester is IDisposable disposableRequester)
                     {
                         disposableRequester.Dispose();
                     }

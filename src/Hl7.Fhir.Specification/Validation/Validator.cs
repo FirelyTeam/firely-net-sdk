@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Validation
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {
-            if (!Settings.ResolveExteralReferences) return null;
+            if (!Settings.ResolveExternalReferences) return null;
 
             try
             {

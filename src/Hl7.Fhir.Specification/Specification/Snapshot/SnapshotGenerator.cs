@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public ElementDefinition MergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
             var result = (ElementDefinition)snap.DeepCopy();
-            ElementDefnMerger.Merge(this, result, diff, mergeElementId);
+            ElementDefnMerger.Merge(this, result, diff, mergeElementId, _stack.CurrentProfileUri);
             return result;
         }
 
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
             // Then snapshot root is already generated and annotated to differential.Element[0]
             //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (before merge)] diff root is annotated with cached snapshot root...");
-
+            
             merge(nav, diff);
 
             result = nav.ToListOfElements();
@@ -702,7 +702,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
+            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);            
+            addConstraintSource(targetElement, typeStructure?.Url);
+            
+           
+
             if (!(targetElement is null))
             {
                 // New element with type profile
@@ -769,6 +773,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge children
             mergeElement(snap, diff);
+        }
+
+        private static void addConstraintSource(ElementDefinition targetElement, string url)
+        {           
+            foreach (var constraint in targetElement?.Constraint.Where(c => string.IsNullOrEmpty(c.Source)) ?? Enumerable.Empty<ElementDefinition.ConstraintComponent>())
+            {
+                constraint.Source = url;
+            }            
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
@@ -915,7 +927,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
 
             // [WMR 20170421] Add parameter to control when (not) to inherit Element.id
-            ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
+            ElementDefnMerger.Merge(this, snap, diff, mergeElementId, _stack.CurrentProfileUri);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -1029,6 +1041,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+                
+                if(_settings.GenerateSnapshotForExternalProfiles)
+                    ensureSnapshot(typeStructure, primaryDiffTypeProfile);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
                 // [WMR 20170823] WRONG! Base element may specify multiple type options
@@ -1294,7 +1309,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var elems = nav.Elements;
 
                 for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
-                    i < typeElems.Count && pos < elems.Count; 
+                    i < typeElems.Count && pos < elems.Count;
                     i++, pos++)
                 {
                     var typeElem = typeElems[i];
@@ -1303,7 +1318,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Proceed while current target element is a (grand)child of the start element
 
                     if (typeRootPos > 0 // If typeNav represents target of a contentReference...
-                        // and if this element is NOT a child of the target contentReference...
+                                        // and if this element is NOT a child of the target contentReference...
                         && !ElementDefinitionNavigator.IsChildPath(typeRootPath, typeElem.Path))
                     {
                         // Then we're done processing the subtree
@@ -1942,7 +1957,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20161004] Remove configuration setting; always merge type profiles
             // [WMR 20180723] Also expand custom profile on Reference
             if (!string.IsNullOrEmpty(typeProfile)) // && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
-                {
+            {
                 // Try to resolve the custom element type profile reference
                 baseStructure = _resolver.FindStructureDefinition(typeProfile);
                 isValidProfile = ensureSnapshot
@@ -1951,9 +1966,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
+            // [MV 20191217] stop when it is a special type (System.*). Introduced in the technical correction 4.0.1
             var typeCodeElem = typeRef.CodeElement;
-            string typeName;
-            if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
@@ -2030,7 +2045,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.GenerateSnapshotForExternalProfiles
-                    && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                && (!sd.HasSnapshot || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -2170,7 +2185,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Otherwise, cloning & expanding the result will pick up incorrect root element from original... WRONG!
 #endif
                 // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, diffRoot.Path);
+                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url) ;
 
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return snapRoot;
