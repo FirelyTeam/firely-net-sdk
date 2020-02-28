@@ -216,13 +216,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             var assertXHtml = typedElement.Children("text");
 
             Assert.IsNotNull(assertXHtml);
-            Assert.AreEqual(1, assertXHtml.Count());
+            Assert.AreEqual(2, assertXHtml.Count());
+            
             Assert.AreEqual("text", assertXHtml.First().Name);
             Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
-            Assert.AreEqual("text", assertXHtml.First().Location);
+            Assert.AreEqual("Section.text[0]", assertXHtml.First().Location);
             Assert.IsNotNull(assertXHtml.First().Value);
 
-
+            Assert.AreEqual("Section.text[1]", assertXHtml.Skip(1).First().Location);
+            Assert.IsNotNull(assertXHtml.Skip(1).First().Value);
         }
 
         private class CCDAResourceResolver : IResourceResolver

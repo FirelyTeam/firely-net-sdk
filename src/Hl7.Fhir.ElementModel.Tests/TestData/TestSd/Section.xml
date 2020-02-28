@@ -17,7 +17,7 @@
             <path value="Section.text"/>
             <representation value="cdaText"/>
             <min value="0"/>
-            <max value="1"/>
+            <max value="2"/>
             <type>
                 <code value="xhtml"/>
             </type>

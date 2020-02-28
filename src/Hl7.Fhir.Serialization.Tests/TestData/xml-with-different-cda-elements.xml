@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- An example CDA document with some very common CDA/v3 XML constructs to verify the FhirXmlNode can parse these -->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="C:\XML\CDA_SDTC_Schema\infrastructure\cda\CDA_SDTC.xsd">
+  <given>Richard</given>
+  <effectiveTime value="201507221800-0500" />
+  <statusCode code="completed" />
+  <text>
+    History of coronary artery disease, as noted <linkHtml href="#SECT001">above</linkHtml> and maybe somewhere else.
+  </text>
+  <para>
+    <p>See below:</p>
+    <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Dates</th>
+            <th>Location/Qualifier</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+      </table>
+  </para>
+  <translation xsi:type="CD" code="V49.75" codeSystem="2.16.840.1.113883.6.103" codeSystemName="ICD-9" displayName="Below Knee Amputation Status" />
+  <sdtc:raceCode nullFlavor="UNK"/>
+</ClinicalDocument>

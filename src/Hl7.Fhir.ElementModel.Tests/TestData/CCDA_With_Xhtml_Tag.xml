@@ -37,4 +37,7 @@
         </table>
         <h1>test</h1>
     </text>
+    <text>
+        History of coronary artery disease, as noted <linkHtml href="#SECT001">above</linkHtml> and maybe somewhere else.
+    </text>
 </Section>
