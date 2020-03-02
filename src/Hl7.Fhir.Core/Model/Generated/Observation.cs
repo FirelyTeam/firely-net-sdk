@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
+            Expression = "value.empty() or component.code.where(coding.intersect(%resource.code.coding).exists()).empty()",
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If Observation.code is the same as an Observation.component.code then the value element associated with the code SHALL NOT be present",

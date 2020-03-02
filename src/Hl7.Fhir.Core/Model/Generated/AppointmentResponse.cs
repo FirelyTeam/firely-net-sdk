@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
-        /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
+        /// accepted | declined | tentative | needs-action
         /// </summary>
         [FhirElement("participantStatus", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ParticipationStatus> _ParticipantStatusElement;
         
         /// <summary>
-        /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
+        /// accepted | declined | tentative | needs-action
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

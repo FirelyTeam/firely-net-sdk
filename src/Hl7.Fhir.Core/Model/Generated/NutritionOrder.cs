@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("rate", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposal | plan | order
+        /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         [FhirElement("intent", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
         
         /// <summary>
-        /// proposal | plan | order
+        /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

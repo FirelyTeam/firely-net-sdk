@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered-in-error
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
         [FhirElement("docStatus", InSummary=true, Order=120)]
         [DataMember]
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.CompositionStatus> _DocStatusElement;
         
         /// <summary>
-        /// preliminary | final | appended | amended | entered-in-error
+        /// preliminary | final | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

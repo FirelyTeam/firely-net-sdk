@@ -7,14 +7,12 @@
  */
 
 using Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -101,6 +99,38 @@ namespace Hl7.Fhir.Tests.Model
 
             p.ResourceBase = new Uri("http://nu.nl/");
             Assert.AreEqual("http://nu.nl/", p.ResourceBase.ToString());
+        }
+
+        /// <summary>
+        /// Pre-generate testNumber of annotations.
+        /// Set them on a single element in parallel.
+        /// </summary>
+        [TestMethod]
+        public void SetAnnotationIsThreadSafe()
+        {
+            var testNumber = 10;
+            var rnd = new Random();
+            var annotations =
+                    Enumerable.Range(0, testNumber)
+                    .Select(i => new AnnotationData() { Data = rnd.Next(0, testNumber).ToString() })
+                    .ToArray();
+            var element = new FhirBoolean();
+            try
+            {
+                Parallel.For(0, testNumber, new ParallelOptions() { MaxDegreeOfParallelism = testNumber }, (i) =>
+                {
+                    element.SetAnnotation(annotations[i]);
+                }
+                );
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"AddAnnotation should not throw an exception, but it did: {ex.Message}");
+            }
+
+            Assert.AreEqual(1, element.Annotations(typeof(AnnotationData)).Count());
+
         }
     }
 }

@@ -6,18 +6,19 @@
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
-    <Copyright>Copyright 2013-2019 Firely.  Contains materials (C) HL7 International</Copyright>
+    <Copyright>Copyright 2013-2020 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/FirelyTeam/fhir-net-api</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FirelyTeam/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageIconUrl>https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
-    <PackageReleaseNotes>See http://docs.simplifier.net/fhirnetapi/releasenotes.html</PackageReleaseNotes>
+    <PackageIcon>icon-fhir-32.png</PackageIcon>
+    <PackageReleaseNotes>See https://github.com/FirelyTeam/fhir-net-api/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="..\..\icon-fhir-32.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Although netstandard1.1 support codegen using the Expression class, we need at least

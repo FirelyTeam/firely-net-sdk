@@ -453,7 +453,6 @@ namespace Hl7.Fhir.Model
         private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
                             FHIRAllTypes.Count, FHIRAllTypes.Money };
         private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
-        private static readonly FHIRAllTypes[] URI_SUBCLASSES = new[] { FHIRAllTypes.Url, FHIRAllTypes.Canonical, FHIRAllTypes.Oid, FHIRAllTypes.Uuid };
         private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
@@ -477,8 +476,6 @@ namespace Hl7.Fhir.Model
                     return QUANTITY_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.String)
                     return STRING_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.Uri)
-                    return URI_SUBCLASSES.Contains(subclass);
                 else if (superclass == FHIRAllTypes.Integer)
                     return INTEGER_SUBCLASSES.Contains(subclass);
                 else

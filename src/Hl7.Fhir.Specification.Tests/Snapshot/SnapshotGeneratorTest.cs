@@ -23,6 +23,7 @@
 // e.g. diff: "valueString" => snap: "value[x]:valueString"
 #define NORMALIZE_RENAMED_TYPESLICE
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -32,6 +33,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -78,6 +80,82 @@ namespace Hl7.Fhir.Specification.Tests
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
+        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        {
+            return new StructureDefinition
+            {
+                Url = url,
+                Name = "name",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Practitioner",
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = elements.ToList()
+                }
+            };
+        }
+
+        [TestMethod]
+        public void OverriddenNestedStructureDefinitionLists()
+        {
+            var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
+            var code = "someCode";
+            var discriminatorPath = "system";
+
+            var baseSD = CreateStructureDefinition(baseCanonical,
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Open,
+                        Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                        {
+                            new ElementDefinition.DiscriminatorComponent
+                            {
+                                Type = ElementDefinition.DiscriminatorType.Value,
+                                Path = discriminatorPath
+                            }
+                        }
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test",
+                    SliceName = "test",
+                    Condition = new[] { "http://system.org" },
+                    Code = new List<Coding>
+                    {
+                        new Coding{Code = code}
+                    }
+                });
+
+            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Closed
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test"
+                });
+            derivedSD.BaseDefinition = baseSD.Url;
+
+            var resourceResolver = new Mock<IResourceResolver>();
+            resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
+            var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
+            snapshotGenerator.Update(derivedSD);
+
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be(code, "The code should be copied from base");
+        }
+
         [TestMethod]
         public void GenerateExtensionSnapshot()
         {
@@ -121,6 +199,75 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
         }
 
+        [TestMethod]
+        public void TestConstraintSources()
+        {
+            var dom = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/DomainResource");
+            Assert.IsNotNull(dom);
+            generateSnapshotAndCompare(dom);
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ext-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Extension") == true);
+
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ele-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Element") == true);
+
+
+            var pat = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(pat);
+            generateSnapshotAndCompare(pat);
+            Assert.IsTrue(pat.Snapshot?.Element
+                          .Where(e => e.Path == "Patient").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);       
+
+        }    
+
+        [TestMethod]
+        public void GenerateSnapshotForExternalProfiles()
+        {
+            //Test external type profile
+            var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
+            Assert.IsNotNull(sd);
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+
+            sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNotNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+
+            //Test external base profile
+            var sdDerived = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
+            Assert.IsNotNull(sdDerived);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+            Assert.IsNotNull(sdDerived.Snapshot);
+
+            var sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+
+            sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNotNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+        }
 
         [TestMethod]
         public void GenerateSingleSnapshot()
@@ -427,7 +574,15 @@ namespace Hl7.Fhir.Specification.Tests
                 // +1 Organization.address.line.extension:buildingNumberSuffix.value[x]
                 // +1 Organization.address.line.extension:unitID.value[x]
                 // +1 Organization.address.line.extension:additionalLocator.value[x]
-                Assert.AreEqual(361, fullElems.Count);
+
+                // [MV 20191216] Fixed
+                // R4.0.1: snapshot only includes "value[x]" constraints not "valueString" constraints anymore
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                Assert.AreEqual(356, fullElems.Count);
 
                 Assert.AreEqual(0, issues.Count);
 
@@ -1464,8 +1619,8 @@ namespace Hl7.Fhir.Specification.Tests
                     //    );
 
                     return be != null ?
-                        $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path} <== #{be.GetHashCode(),-8} {formatElementPathName(be)} | {be.Base?.Path}"
-                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}";
+                        $"  {formatElementPathName(e)} | {e.Base?.Path} <== {formatElementPathName(be)} | {be.Base?.Path}"
+                      : $"  {formatElementPathName(e)} | {e.Base?.Path}";
                 })
             ));
         }
@@ -7395,18 +7550,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify default regular expression
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(2, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
 
-            // Verify json/xml/rdf type extensions
-            Assert.IsNull(elem.Type[0].Code); // Primitive value types are compiler magic...
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expection extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+            // Verify fhir-type extension
+            var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
+            Assert.IsNotNull(fhirTypeExpr);
+            var typeValue = fhirTypeExpr.Value as FhirUrl;
+            Assert.IsNotNull(typeValue);
+            Assert.AreEqual("string", typeValue.Value);
+
+
+            // Verify the 'special' System.String type
+            Assert.IsNotNull(elem.Type[0].Code);
+            Assert.AreEqual("http://hl7.org/fhirpath/System.String", elem.Type[0].Code);
         }
 
         [TestMethod]
@@ -7441,17 +7602,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify constraint on regular expression extension value
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(1, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[A-Z].*", extValue.Value); // Constrained
-
-            // Verify that primitive type extensions are included
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expecting extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
         }
 
         // [WMR 20190819] #1067 SnapshotGenerator - support implicit type constraints on renamed elements
@@ -8339,7 +8495,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestNormalizeTypeSliceInExtension()
         {
-            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason";
+            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason-fortest";
 
             var sd = _testResolver.FindStructureDefinition(url);
             Assert.IsNotNull(sd);
