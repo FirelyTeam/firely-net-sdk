@@ -93,7 +93,12 @@ namespace Hl7.Fhir.Specification.Tests
         public void ListSummaries()
         {
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
-                new DirectorySourceSettings { IncludeSubDirectories = true });
+                new DirectorySourceSettings
+                {
+                    IncludeSubDirectories = true,
+                    // [WMR 20190822] Exclude SnapGen unit test manifest (not a FHIR resource)
+                    Excludes = new string[] { "manifest.xml" }
+                });
 
             var sd = source.ListSummaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
             var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());

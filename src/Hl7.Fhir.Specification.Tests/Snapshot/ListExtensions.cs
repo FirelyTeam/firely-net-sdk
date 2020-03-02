@@ -30,17 +30,25 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLineIf(!string.IsNullOrEmpty(header), header);
             for (int i = 0; i < elements.Count; i++)
             {
-                var elem = elements[i];
-                Debug.Write(elem.Path);
-                Debug.WriteIf(elem.SliceName != null, " '" + elem.SliceName + "'");
-                if (elem.Slicing != null)
-                {
-                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));
-                }
-                Debug.WriteLine("");
+                Debug.WriteLine($"{i,3}: {Format(elements[i])}");
             }
         }
 
+        [Conditional("DEBUG")]
+        public static void Log(this List<ElementDefinition> elements, string header = null)
+        {
+            if (!string.IsNullOrEmpty(header))
+            {
+                Console.WriteLine(header);
+            }
+            for (int i = 0; i < elements.Count; i++)
+            {
+                Console.WriteLine($"{i,3}: {Format(elements[i])}");
+            }
+        }
+
+        static string Format(ElementDefinition elem)
+            => $"{elem.Path}{(elem.SliceName is null ? "" : " '" + elem.SliceName + "'")}{(elem.Slicing is null ? "" : " => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator.Select(d => d.Type + ":" + d.Path)))}";
 
     }
 }

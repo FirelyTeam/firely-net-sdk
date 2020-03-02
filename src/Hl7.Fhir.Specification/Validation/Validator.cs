@@ -272,13 +272,13 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                List<ElementDefinitionNavigator> allDefinitions = new List<ElementDefinitionNavigator>(definitions);
+                var allDefinitions = definitions.ToList();
 
                 if (allDefinitions.Count() == 1)
                     outcome.Add(validateElement(allDefinitions.Single(), instance));
                 else
                 {
-                    var validators = allDefinitions.Select(nav => createValidator(nav, instance));
+                    var validators = allDefinitions.Select(nav => createValidator(nav));
                     outcome.Add(this.Combine(BatchValidationMode.All, instance, validators));
                 }
             }
@@ -288,22 +288,15 @@ namespace Hl7.Fhir.Validation
             }
 
             return outcome;
+
+            Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav) =>
+                () => validateElement(nav, instance);
+
         }
-
-
-        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, ScopedNode instance)
-        {
-            return () => validateElement(nav, instance);
-        }
-
-
-        //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance)
         {
             var outcome = new OperationOutcome();
-
-            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // If navigator cannot be moved to content, there's really nothing to validate against.
             if (definition.AtRoot && !definition.MoveToFirstChild())
@@ -311,6 +304,8 @@ namespace Hl7.Fhir.Validation
                 outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                 return outcome;
             }
+
+            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.CanonicalPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // This does not work, since the children might still be empty, we need something better
             //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
@@ -377,6 +372,7 @@ namespace Hl7.Fhir.Validation
             //outcome.Add(ValidateMaxLength(elementConstraints, instance));
             outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
             outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+            outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
             // new style validator - has a configure and then execute step.
             // will be separated when all logic has been converted.
@@ -466,42 +462,42 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        //internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance)
-        //{
-        //    var outcome = new OperationOutcome();
-        //    if (definition.Binding == null) return outcome;
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance) =>
+            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path) : new OperationOutcome();
 
-        //    var ts = Settings.TerminologyService;
-        //    if (ts == null)
-        //    {
-        //        if (Settings.ResourceResolver == null)
-        //        {
-        //            Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
-        //                Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
-        //            return outcome;
-        //        }
+        internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath)
+        {
+            var outcome = new OperationOutcome();
 
-        //        ts = new LocalTerminologyService(Settings.ResourceResolver);
-        //    }
+            // new style validator - has a configure and then execute step.
+            // will be separated when all logic has been converted.
+            var ts = Settings.TerminologyService;
+            if (ts == null)
+            {
+                if (Settings.ResourceResolver == null)
+                {
+                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                    return outcome;
+                }
 
-        //    var bindingValidator = new BindingValidator(ts, instance.Location);
+                ts = new LocalTerminologyService(Settings.ResourceResolver);
+            }
 
-        //    try
-        //    {
-        //        Element bindable = instance.ParseBindable();
+            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
-        //        // If the instance is not bindeable, ignore the Binding specified on the element, 
-        //        // it's simply not applicable
-        //        if (bindable != null)
-        //            return bindingValidator.ValidateBinding(bindable, definition.Binding);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
-        //    }
+            try
+            {
+                    Binding b = binding.ToValidatable();
+                    outcome.Add(b.Validate(instance, vc));
+            }
+            catch (IncorrectElementDefinitionException iede)
+            {
+                Trace(outcome, "Incorrect binding spec: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, defPath);
+            }
 
-        //    return outcome;
-        //}
+            return outcome;
+        }
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNode instance)
         {
@@ -607,7 +603,7 @@ namespace Hl7.Fhir.Validation
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {
-            if (!Settings.ResolveExteralReferences) return null;
+            if (!Settings.ResolveExternalReferences) return null;
 
             try
             {

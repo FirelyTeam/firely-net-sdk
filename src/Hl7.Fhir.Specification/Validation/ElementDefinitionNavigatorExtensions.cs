@@ -6,11 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Diagnostics;
-using System.Linq;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -40,7 +37,9 @@ namespace Hl7.Fhir.Validation
             // R4: ElementDefinition.type.code.value is empty for primitive core element definitions:
             // - [Primitive].value
             // - Extension.url
-            var isPrimitive = ed.Type.Count == 1 && ed.Type[0].Code is null;
+            // [MV 20191712]
+            // R 4.0.1: ElementDefinition.type.code.value is not empty and start with http://hl7.org/fhirpath/System.
+            var isPrimitive = (ed.Type.Count == 1 && ed.Type[0].Code is null) || (ed.Type.Count == 1 && ed.Type[0].Code?.StartsWith("http://hl7.org/fhirpath/System.") == true);
 
 #if DEBUG
             // DEBUGGING
@@ -49,17 +48,17 @@ namespace Hl7.Fhir.Validation
             // we only expect to find empty type code in combination with special "compiler magic" extensions
             if (isPrimitive)
             {
-                Debug.Assert(ed.Type[0].CodeElement.Extension.Count >= 3);
-                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null);
-                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type") != null);
-                Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type") != null);
+                //Debug.Assert(ed.Type[0].CodeElement.Extension.Count >= 3);
+                //Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type") != null);
+                //Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type") != null);
+                //Debug.Assert(ed.Type[0].CodeElement.GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type") != null);
 
                 // Elements represented as XmlAttr (and Xhtml) are always primitives
-                Debug.Assert(
-                    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr) ||
-                    // For xhtml.value
-                    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.Xhtml)
-                );
+                //Debug.Assert(
+                //    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.XmlAttr) ||
+                //    // For xhtml.value
+                //    ed.Representation.Contains(ElementDefinition.PropertyRepresentation.Xhtml)
+                //);
 
             }
 
@@ -105,19 +104,6 @@ namespace Hl7.Fhir.Validation
                 desc += " \"" + cc.Human + "\"";
 
             return desc;
-        }
-
-
-        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
-        {
-            string path = "";
-
-            if (nav.StructureDefinition != null && nav.StructureDefinition.Url != null)
-                path = "{" + nav.StructureDefinition.Url + "}";
-
-            path += nav.Path;
-
-            return path;
         }
     }
 

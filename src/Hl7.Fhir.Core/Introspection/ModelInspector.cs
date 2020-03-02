@@ -79,7 +79,20 @@ namespace Hl7.Fhir.Introspection
                 else
                 {
                     var key = mapping.Name.ToUpperInvariant();
-                    _dataTypeClasses[key] = mapping;
+                    if (_dataTypeClasses.TryGetValue(key, out var currentMapping))
+                    {
+#if NETSTANDARD1_1
+                        if (currentMapping.NativeType.GetTypeInfo().IsSubclassOf(mapping.NativeType))
+                            _dataTypeClasses[key] = mapping;
+#else
+                        if (currentMapping.NativeType.IsSubclassOf(mapping.NativeType))
+                            _dataTypeClasses[key] = mapping;
+#endif
+                    }
+                    else
+                    {
+                        _dataTypeClasses[key] = mapping;
+                    }
                 }
             }
 

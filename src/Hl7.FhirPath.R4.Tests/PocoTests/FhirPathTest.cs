@@ -17,6 +17,7 @@ using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -185,5 +186,71 @@ namespace Hl7.FhirPath.R4.Tests
         //    Assert.False(TypeInfo.Any.CanBeCastTo(typeof(long)));
         //}
 
+        [TestMethod]
+        public void TestFhirPathRootResource()
+        {
+            var bundle = new Bundle() { Type = Bundle.BundleType.Collection, Id = "bundle-1" };
+            var patient = new Patient() { Id = "patient-1" };
+            var containedPat = new Patient() { Id = "contained-1" };
+            patient.Contained.Add(containedPat);
+            patient.Link.Add(new Patient.LinkComponent() { Other = new ResourceReference("#contained-1"), Type = Patient.LinkType.Seealso });
+            bundle.AddResourceEntry(patient, "http://example.com/patient1");
+
+            var patBundle = new ScopedNode(bundle.ToTypedElement());
+
+            // focus on the contained resource
+            EvaluationContext ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource.contained")?.FirstOrDefault());
+            Assert.AreEqual("contained-1", patBundle.Scalar("%resource.id", ctx));
+            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
+
+            // focus on the property of a contained resource
+            ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource.id")?.FirstOrDefault());
+            Assert.AreEqual("patient-1", patBundle.Scalar("%resource", ctx));
+            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource", ctx));
+
+
+            //focus on bundle entry
+            ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource")?.FirstOrDefault());
+            Assert.AreEqual("patient-1", patBundle.Scalar("%resource.id", ctx));
+            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
+
+            // focus on bundle 
+            ctx = new FhirEvaluationContext(patBundle);
+            Assert.AreEqual("bundle-1", patBundle.Scalar("%resource.id", ctx));
+            Assert.AreEqual("bundle-1", patBundle.Scalar("%rootResource.id", ctx));
+
+            // Testing %context and $this
+            var node = patBundle.Select("entry.first().resource.contained")?.FirstOrDefault();
+            Assert.AreEqual("contained-1", node.Scalar("%context.id", ctx));
+            Assert.AreEqual("contained-1", node.Scalar("$this.id", ctx));
+        }
+
+        [TestMethod]
+        public void TestBackTick()
+        {
+            var patient = new Patient() { Text = new Narrative() { Div = "<p>test</p>" } };
+
+            var nav = patient.ToTypedElement();
+
+            var divExists = nav.Scalar("text.`div`.exists()");
+
+            Assert.AreEqual(true, divExists);
+        }
+
+        [TestMethod]
+        public void TestFhirPathInBundle()
+        {
+            var bundle = new Bundle();
+            bundle.AddResourceEntry(new Appointment { Id = "1" }, "http://some.org/Appointment/1");
+
+            var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
+
+            var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
+            Assert.AreEqual(true, absolutueInvariantcheck);
+            
+            var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
+            Assert.AreEqual(true, invariantcheck);
+
+        }
     }
 }

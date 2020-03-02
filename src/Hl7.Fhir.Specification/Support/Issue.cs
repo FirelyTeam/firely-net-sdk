@@ -109,6 +109,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue PROFILE_ELEMENTDEF_INCORRECT = Create(2012, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         [Obsolete("This issue will not be raised by the validator anymore. Use 'PROFILE_ELEMENTDEF_INCORRECT' instead.")] // Obsolete on 20190409 by Marco
         public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue PROFILE_INSTANCE_MATCHES_MULTIPLE_SLICES = Create(2013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Structure);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);

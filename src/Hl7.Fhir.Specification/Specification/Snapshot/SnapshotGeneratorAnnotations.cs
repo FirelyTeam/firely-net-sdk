@@ -6,10 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+ #define DEBUG_SNAP_ELEM_ANNOTATIONS
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
@@ -107,6 +110,18 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         #region Annotation: Snapshot ElementDefinition
 
+        // [WMR 20190806] Special internal annotation to save temporary reference to generated snapshot (root) element
+        // Used for handling recursive profiles, e.g. Element & Extension
+        // 1. Generate the new snapshot root element
+        // 2. Temporarily annotate original diff root element with reference to generated snapshot root
+        // 3. Generate the remaining snapshot elements
+        // 4. When having to resolve a recursive reference to currently generated snapshot,
+        //    retrieve the generated snapshot root element from the annotation, for merging
+        //    e.g. Element.id => Element, Extension.extension => Extension
+        // 5. Finally, remove temporary annotation from diff root element before returning result to caller
+        //    Annotation class is internal; must explicitly clean up all instances ourselves
+        //    WARNING: DeepCopy() also copies annotations, take care...
+
         /// <summary>For annotating a differential element definition with a reference to the associated generated snapshot element definition.</summary>
 #if !NETSTANDARD1_1
         [Serializable]
@@ -118,11 +133,33 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// Returns a reference to the associated <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Snapshot"/> component.
             /// </summary>
             public ElementDefinition SnapshotElement { get; }
-            public SnapshotElementDefinitionAnnotation(ElementDefinition snapshotElement)
+
+            public SnapshotElementDefinitionAnnotation(ElementDefinition snapshotElement
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+                , ElementDefinition diffElement
+#endif
+                )
             {
-                if (snapshotElement == null) { throw Error.ArgumentNull(nameof(snapshotElement)); }
+                if (snapshotElement is null) { throw Error.ArgumentNull(nameof(snapshotElement)); }
                 SnapshotElement = snapshotElement;
+
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+                if (diffElement is null) { throw Error.ArgumentNull(nameof(diffElement)); }
+                DiffElement = diffElement;
+#endif
             }
+
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+            // [WMR 20190806] Custom property for detecting annotations on cloned elements
+
+            /// <summary>
+            /// DEBUGGING
+            /// Returns a reference to the original parent <see cref="ElementDefinition"/> that owns the annotation.
+            /// Should be equal to the actual owner.
+            /// Otherwise, indicates that the element has been cloned (with annotations).
+            /// </summary>
+            public ElementDefinition DiffElement { get; }
+#endif
         }
 
         /// <summary>
@@ -140,27 +177,65 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="diffElemDef"></param>
         /// <param name="snapElemDef"></param>
-        internal static void SetSnapshotElementAnnotation(this ElementDefinition diffElemDef, ElementDefinition snapElemDef)
+        static void SetSnapshotElementAnnotation(this ElementDefinition diffElemDef, ElementDefinition snapElemDef)
         {
-            diffElemDef?.AddAnnotation(new SnapshotElementDefinitionAnnotation(snapElemDef));
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+            Debug.WriteLine($"[{nameof(SnapshotGeneratorAnnotations)}.{nameof(SetSnapshotElementAnnotation)}] #{diffElemDef.GetHashCode()}");
+#endif
+            diffElemDef?.SetAnnotation(new SnapshotElementDefinitionAnnotation(snapElemDef
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+                , diffElemDef
+#endif
+                ));
         }
 
         /// <summary>
         /// Return the annotated reference to the associated root <see cref="ElementDefinition"/> instance
         /// in the <see cref="StructureDefinition.Snapshot"/> component, if it exists, or <c>null</c> otherwise.
         /// </summary>
-        internal static ElementDefinition GetSnapshotRootElementAnnotation(this StructureDefinition sd) => sd?.Differential?.Element[0]?.GetSnapshotElementAnnotation();
+        internal static ElementDefinition GetSnapshotRootElementAnnotation(this StructureDefinition sd) 
+            => sd?.Differential?.Element[0]?.GetSnapshotElementAnnotation();
 
         /// <summary>
         /// Return the annotated reference to the associated <see cref="ElementDefinition"/> instance
         /// in the <see cref="StructureDefinition.Snapshot"/> component, if it exists, or <c>null</c> otherwise.
         /// </summary>
-        internal static ElementDefinition GetSnapshotElementAnnotation(this ElementDefinition ed) => ed?.Annotation<SnapshotElementDefinitionAnnotation>()?.SnapshotElement;
+        internal static ElementDefinition GetSnapshotElementAnnotation(this ElementDefinition ed)
+#if DEBUG_SNAP_ELEM_ANNOTATIONS
+        {
+            var ann = ed?.Annotation<SnapshotElementDefinitionAnnotation>();
+
+            // If the element has been cloned, the annotation no longer applies
+            if (!(ann is null))
+            {
+                if (object.ReferenceEquals(ed, ann.DiffElement))
+                {
+                    return ann.SnapshotElement;
+                }
+                Debug.WriteLine($"[{nameof(SnapshotGeneratorAnnotations)}.{nameof(GetSnapshotElementAnnotation)}] Detected cloned annotation, removing...");
+                ed?.RemoveSnapshotElementAnnotations();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// DEBUGGING
+        /// Indicates if the specified <see cref="ElementDefinition"/> is annotated
+        /// with a reference to the associated snapshot element definition.
+        /// </summary>
+        internal static bool HasSnapshotElementAnnotation(this ElementDefinition ed)
+            => !(ed?.Annotation<SnapshotElementDefinitionAnnotation>() is null);
+#else
+            => ed?.Annotation<SnapshotElementDefinitionAnnotation>()?.SnapshotElement;
+#endif
+
+        /// <summary>Remove all <see cref="SnapshotElementDefinitionAnnotation"/> instances from the root <see cref="ElementDefinition"/>.</summary>
+        internal static void RemoveSnapshotRootElementAnnotation(this StructureDefinition sd) => sd?.Differential?.Element[0]?.RemoveSnapshotElementAnnotations();
 
         /// <summary>Remove all <see cref="SnapshotElementDefinitionAnnotation"/> instances from the specified <see cref="ElementDefinition"/>.</summary>
         internal static void RemoveSnapshotElementAnnotations(this ElementDefinition ed) { ed?.RemoveAnnotations<SnapshotElementDefinitionAnnotation>(); }
 
-        #endregion
+#endregion
 
     }
 }

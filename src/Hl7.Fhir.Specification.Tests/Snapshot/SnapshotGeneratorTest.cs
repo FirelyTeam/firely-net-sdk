@@ -11,23 +11,36 @@
 // Don't throw exception but emit OperationOutcome issue(s) and continue
 #define HACK_STU3_RECURSION
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+// [WMR 20190822] R4: Custom element Ids are no longer allowed/supported
+// http://hl7.org/fhir/elementdefinition.html#id
+// #define CUSTOM_ELEMENT_IDS
+
+// [WMR 20190828] Auto-generate slice names for type slices if missing from the diff
+// Note: Also defined by ElementMatcher class; must define/undefine both
+#define GENERATE_MISSING_TYPE_SLICE_NAMES
+
+// [WMR 20190828] R4: Normalize renamed type slices in snapshot
+// e.g. diff: "valueString" => snap: "value[x]:valueString"
+#define NORMALIZE_RENAMED_TYPESLICE
+
+using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Serialization;
-using System.Collections.Generic;
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Snapshot;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Rest;
+using System.Linq;
 using System.Text;
 using System.Xml;
-using Hl7.Fhir.Utility;
-using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -39,6 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         SnapshotGenerator _generator;
+        ZipSource _zipSource;
         IResourceResolver _testResolver;
         TimingSource _source;
 
@@ -62,11 +76,84 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _testResolver = new CachedResolver(
-                new MultiResolver(
-                    // _source,
-                    new ZipSource("specification.zip"),
-                    _source));
+            _zipSource = new ZipSource("specification.zip");
+            _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
+        }
+
+        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        {
+            return new StructureDefinition
+            {
+                Url = url,
+                Name = "name",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Practitioner",
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = elements.ToList()
+                }
+            };
+        }
+
+        [TestMethod]
+        public void OverriddenNestedStructureDefinitionLists()
+        {
+            var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
+            var code = "someCode";
+            var discriminatorPath = "system";
+
+            var baseSD = CreateStructureDefinition(baseCanonical,
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Open,
+                        Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                        {
+                            new ElementDefinition.DiscriminatorComponent
+                            {
+                                Type = ElementDefinition.DiscriminatorType.Value,
+                                Path = discriminatorPath
+                            }
+                        }
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test",
+                    SliceName = "test",
+                    Condition = new[] { "http://system.org" },
+                    Code = new List<Coding>
+                    {
+                        new Coding{Code = code}
+                    }
+                });
+
+            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier",
+                    Slicing = new ElementDefinition.SlicingComponent
+                    {
+                        Rules = ElementDefinition.SlicingRules.Closed
+                    }
+                },
+                new ElementDefinition
+                {
+                    Path = "Practitioner.identifier:test"
+                });
+            derivedSD.BaseDefinition = baseSD.Url;
+
+            var resourceResolver = new Mock<IResourceResolver>();
+            resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
+            var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
+            snapshotGenerator.Update(derivedSD);
+
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
+            derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be(code, "The code should be copied from base");
         }
 
         [TestMethod]
@@ -103,9 +190,84 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual("Extension.valueBoolean", elems[4].Path);
             // R4
             Assert.AreEqual("Extension.value[x]", elems[4].Path);
-            Assert.AreEqual("Extension.valueBoolean", elems[5].Path);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.AreEqual("Extension.value[x]", elems[5].Path);
+            Assert.AreEqual("valueBoolean", elems[5].SliceName);
+#else
+            //Assert.AreEqual("Extension.valueBoolean", elems[5].Path);
+#endif
         }
 
+        [TestMethod]
+        public void TestConstraintSources()
+        {
+            var dom = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/DomainResource");
+            Assert.IsNotNull(dom);
+            generateSnapshotAndCompare(dom);
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ext-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Extension") == true);
+
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ele-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Element") == true);
+
+
+            var pat = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(pat);
+            generateSnapshotAndCompare(pat);
+            Assert.IsTrue(pat.Snapshot?.Element
+                          .Where(e => e.Path == "Patient").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);       
+
+        }    
+
+        [TestMethod]
+        public void GenerateSnapshotForExternalProfiles()
+        {
+            //Test external type profile
+            var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
+            Assert.IsNotNull(sd);
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sd);
+
+            sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            Assert.IsNotNull(sdRef.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+
+            //Test external base profile
+            var sdDerived = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
+            Assert.IsNotNull(sdDerived);
+
+            _settings.GenerateSnapshotForExternalProfiles = false;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+            Assert.IsNotNull(sdDerived.Snapshot);
+
+            var sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+
+            _settings.GenerateSnapshotForExternalProfiles = true;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(sdDerived);
+
+            sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            Assert.IsNotNull(sdBase.Snapshot);
+            dumpOutcome(_generator.Outcome);
+        }
 
         [TestMethod]
         public void GenerateSingleSnapshot()
@@ -248,7 +410,7 @@ namespace Hl7.Fhir.Specification.Tests
                     issues.AddRange(_generator.Outcome.Issue);
                 }
 
-                Debug.Print($"[{nameof(fullyExpandElement)}] " + nav.Path);
+                Debug.WriteLine($"[{nameof(fullyExpandElement)}] " + nav.Path);
                 var bm = nav.Bookmark();
                 if (nav.MoveToFirstChild())
                 {
@@ -403,7 +565,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // +8 in total
                 //Assert.AreEqual(347, fullElems.Count);
                 //Assert.AreEqual(355, fullElems.Count);
-                
+
                 // [WMR 20190211] Fixed
                 // R4: snapshot now includes both "value[x]" and "valueString" constraints
                 // +1 Organization.address.extension.value[x]
@@ -412,7 +574,15 @@ namespace Hl7.Fhir.Specification.Tests
                 // +1 Organization.address.line.extension:buildingNumberSuffix.value[x]
                 // +1 Organization.address.line.extension:unitID.value[x]
                 // +1 Organization.address.line.extension:additionalLocator.value[x]
-                Assert.AreEqual(361, fullElems.Count);
+
+                // [MV 20191216] Fixed
+                // R4.0.1: snapshot only includes "value[x]" constraints not "valueString" constraints anymore
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                // -1 Organization.address.line.extension.value[x]:valueString
+                Assert.AreEqual(356, fullElems.Count);
 
                 Assert.AreEqual(0, issues.Count);
 
@@ -603,14 +773,24 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
 
-            // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+            // [WMR 20170614] Fixed; element id for type slice is based on original element name ending with "[x]"
             // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
-
+            // [WMR 20190822] Fixed; element id for type slice should contain type slice name "value[x]:valueBoolean"
+            //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
+#if NORMALIZE_RENAMED_TYPESLICE
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:legalCase.value[x]"); // Slice entry
+            verifier.VerifyElement("Patient.extension.value[x]", "valueBoolean", "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.value[x].extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.value[x].extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#else
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#endif
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
 
@@ -755,14 +935,24 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
 
-
             // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
             // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
             // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+            // [WMR 20190822] Fixed; element id for type slice should contain type slice name "value[x]:valueBoolean"
+            //verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            //verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+#if NORMALIZE_RENAMED_TYPESLICE
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:legalCase.value[x]"); // Slice entry
+            verifier.VerifyElement("Patient.extension.value[x]", "valueBoolean", "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.value[x].extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.value[x].extension", "leadCounsel", "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#else
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]:valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x]:valueBoolean.extension:leadCounsel");
+#endif
 
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
@@ -794,6 +984,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
             verifier.VerifyElement("Patient.extension.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
             verifier.VerifyElement("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
+            verifier.VerifyElement("Patient.extension.value[x]", null, "Patient.extension:researchAuth/grandfatheredResAuth.value[x]");
 
             // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
@@ -1317,7 +1508,8 @@ namespace Hl7.Fhir.Specification.Tests
                         Assert.IsTrue(nav.Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
                         if (!nav.MoveToNext())
                         {
-                            Debug.Assert(!typeNav.MoveToNext());
+                            //Debug.Assert(!typeNav.MoveToNext());
+                            Assert.IsFalse(typeNav.MoveToNext());
                             break;
                         }
                         // [WMR 20170412] Backbone elements can introduce additional child elements
@@ -1427,8 +1619,8 @@ namespace Hl7.Fhir.Specification.Tests
                     //    );
 
                     return be != null ?
-                        $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path} <== #{be.GetHashCode(),-8} {formatElementPathName(be)} | {be.Base?.Path}"
-                      : $"  #{e.GetHashCode(),-8} {formatElementPathName(e)} | {e.Base?.Path}";
+                        $"  {formatElementPathName(e)} | {e.Base?.Path} <== {formatElementPathName(be)} | {be.Base?.Path}"
+                      : $"  {formatElementPathName(e)} | {e.Base?.Path}";
                 })
             ));
         }
@@ -1481,7 +1673,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (issue.Diagnostics != null) { sb.AppendFormat(" Profile: '{0}'", issue.Diagnostics); }
             if (issue.Location != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Location)); }
 
-            Debug.Print(sb.ToString());
+            Debug.WriteLine(sb.ToString());
         }
 
 
@@ -1867,7 +2059,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(uri);
                 Assert.AreEqual(extensionDefinitionUrl, uri.Value);
 
+#if NORMALIZE_RENAMED_TYPESLICE
+                // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+                Assert.IsTrue(nav.MoveToNext("value[x]"));          // Slice entry
+                Assert.IsTrue(nav.MoveToNextSlice("valueString"));  // Type slice
+#else
                 Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
                 elem = nav.Current;
                 Assert.AreEqual(1, elem.Min);            // Inline profile constraint overriding the extension definition
                 Assert.IsTrue(elem.MinElement.IsConstrainedByDiff());
@@ -1881,6 +2079,96 @@ namespace Hl7.Fhir.Specification.Tests
                 // [WMR 20181212] R4 - Definition type changed from string to markdown
                 Assert.IsTrue(elem.Definition.IsExactly(baseElem.Definition));
                 Assert.IsFalse(elem.Definition.IsConstrainedByDiff());
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
+        // [WMR 20190805] Updated, verify base annotation on extension definition root element
+        // Should point to core "Extension", not "Element"
+        [TestMethod]
+        public void TestBaseAnnotations_ExtensionDefinition()
+        {
+            const string url = @"http://example.org/fhir/StructureDefinition/MyTestExtension";
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "MyTestExtension",
+                Url = url,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension")
+                        {
+                            Short = "TEST"
+                        },
+                        new ElementDefinition("Extension.url")
+                        {
+                            Fixed = new FhirString(url)
+                        }
+                    }
+                }
+            };
+
+            var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.GenerateAnnotationsOnConstraints = true;
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+
+                // Replace root element and re-expand
+                var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
+
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                //Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
+                Assert.IsFalse(coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
+
+                Assert.IsNotNull(coreExtension);
+                coreExtension.Snapshot = null;
+                _generator.Update(coreExtension);
+
+                Assert.IsTrue(coreExtension.HasSnapshot);
+                var coreDiffRoot = coreExtension.Differential.Element[0];
+                var coreSnapRoot = coreExtension.Snapshot.Element[0];
+
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                //Debug.Assert(!coreDiffRoot.HasSnapshotElementAnnotation());
+                Assert.IsFalse(coreDiffRoot.HasSnapshotElementAnnotation());
+
+                var userDiffRoot = (ElementDefinition)coreDiffRoot.DeepCopy();
+
+                sd.Differential.Element[0] = userDiffRoot;
+
+                var expanded = _generator.Generate(sd);
+                dumpOutcome(_generator.Outcome);
+                assertBaseDefs(expanded, settings);
+
+                var userSnapRoot = expanded[0];
+                Assert.AreNotSame(coreSnapRoot, userSnapRoot);
+                Assert.IsTrue(userSnapRoot.TryGetAnnotation<BaseDefAnnotation>(out var anno));
+                Assert.AreEqual("Extension", anno.BaseStructureDefinition.Name);
+                Assert.AreEqual("Extension", anno.BaseElementDefinition.Path);
+
+                // [WMR 20190806] SnapGen should never expose/leak internal annotations
+                //Debug.Assert(!userDiffRoot.HasSnapshotElementAnnotation());
+                Assert.IsFalse(userDiffRoot.HasSnapshotElementAnnotation());
+
             }
             finally
             {
@@ -1986,9 +2274,9 @@ namespace Hl7.Fhir.Specification.Tests
             var baseProfile = e.BaseProfile;
             Assert.IsNotNull(baseProfile);
             Debug.WriteLine("[SnapshotBaseProfileHandler] Profile #{0} '{1}' BaseDefinition = '{2}'".FormatWith(profile.GetHashCode(), profile.Url, profile.BaseDefinition));
-            Debug.Print("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
+            Debug.WriteLine("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
             var rootElem = baseProfile.Snapshot.Element[0];
-            Debug.Print("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
+            Debug.WriteLine("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
             Assert.AreEqual(profile.BaseDefinition, baseProfile.Url);
         }
 
@@ -2004,7 +2292,7 @@ namespace Hl7.Fhir.Specification.Tests
             // When the snapshot generator expands external profiles, then this handler is called once for each
             // profile in the base hierarchy, starting at the root profile, e.g. Resource => DomainResource => Patient.
             // Each time we recreate the annotation, so the final annotation contains a reference to the immediate base.
-            if (ann != null)
+            if (!(ann is null))
             {
                 elem.RemoveAnnotations<BaseDefAnnotation>();
             }
@@ -2022,8 +2310,9 @@ namespace Hl7.Fhir.Specification.Tests
             if (elem != null)
             {
                 var changed = elem.IsConstrainedByDiff();
-                Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
-                Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
+                //Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
+                Assert.IsTrue(!_settings.GenerateAnnotationsOnConstraints || changed);
+                Debug.WriteLine("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
 
@@ -2031,15 +2320,20 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
-            var elems = sd.Snapshot.Element;
+            Debug.WriteLine("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
+            assertBaseDefs(sd.Snapshot.Element, settings);
+        }
+
+        static void assertBaseDefs(List<ElementDefinition> elems, SnapshotGeneratorSettings settings)
+        {
             Assert.IsNotNull(elems);
             Assert.IsTrue(elems.Count > 0);
 
-            var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
+            //var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
-            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
-            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
-            Debug.Print(new string('=', 100));
+            Debug.WriteLine("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
+            Debug.WriteLine(new string('=', 100));
+
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
@@ -2055,7 +2349,8 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
-                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path)
+                    //Debug.Assert(
+                    Assert.IsTrue(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path)
                         // [WMR 20170713] Added, e.g. Patient.identifier.use <=> code
                         || !baseDef.Path.Contains(".")
                         );
@@ -2104,8 +2399,10 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170713] Added
             if (ignoreTypeProfile)
             {
-                Debug.Assert(elem.Type.Count > 0);
-                Debug.Assert(baseClone.Type.Count > 0);
+                //Debug.Assert(elem.Type.Count > 0);
+                //Debug.Assert(baseClone.Type.Count > 0);
+                Assert.IsTrue(elem.Type.Count > 0);
+                Assert.IsTrue(baseClone.Type.Count > 0);
                 baseClone.Type[0].Profile = elem.Type[0].Profile;
             }
 
@@ -2724,6 +3021,11 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                     ,new ElementDefinition("Observation.value[x]")
                     {
+#if !GENERATE_MISSING_TYPE_SLICE_NAMES
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
+                        SliceName = "valueString",
+#endif
+
                         Type = new List<ElementDefinition.TypeRefComponent>()
                         {
                             new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
@@ -2767,6 +3069,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
+#if GENERATE_MISSING_TYPE_SLICE_NAMES
+            // Expecting informational messages about generated slice names
+            dumpOutcome(_generator.Outcome);
+#endif
+
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value slice:");
 
             var nav = new ElementDefinitionNavigator(expanded);
@@ -2775,13 +3082,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueString
+            //Assert.AreEqual(nav.PathName, "valueString"); // NOT Normalized
+            Assert.AreEqual(nav.PathName, "value[x]"); // Normalized
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
             // Add an additional type slice: { value[x], value[x] : String, value[x] : CodeableConcept }
             profile.Differential.Element.Add(
                 new ElementDefinition("Observation.value[x]")
                 {
+#if !GENERATE_MISSING_TYPE_SLICE_NAMES
+                    // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
+                    SliceName = "valueCodeableConcept",
+#endif
                     Type = new List<ElementDefinition.TypeRefComponent>()
                     {
                         new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.CodeableConcept.GetLiteral() }
@@ -2873,6 +3185,11 @@ namespace Hl7.Fhir.Specification.Tests
                     // Constraint on existing type slice value[x] : String
                     ,new ElementDefinition("Observation.value[x]")
                     {
+#if !GENERATE_MISSING_TYPE_SLICE_NAMES
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
+                        SliceName = "valueString",
+#endif
+
                         Max = "1", // New constraint
                         Type = new List<ElementDefinition.TypeRefComponent>()
                         {
@@ -2885,6 +3202,11 @@ namespace Hl7.Fhir.Specification.Tests
                     // Add a new type slice value[x]: Integer
                     ,new ElementDefinition("Observation.value[x]")
                     {
+#if !GENERATE_MISSING_TYPE_SLICE_NAMES
+                        // [WMR 20190828] SnapshotGenerator generates missing sliceNames for type slices
+                        SliceName = "valueInteger",
+#endif
+
                         Type = new List<ElementDefinition.TypeRefComponent>()
                         {
                             new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Integer.GetLiteral() }
@@ -2909,6 +3231,11 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(profile, out var expanded);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
+
+#if GENERATE_MISSING_TYPE_SLICE_NAMES
+            // Expecting informational messages about generated slice names
+            dumpOutcome(_generator.Outcome);
+#endif
 
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value reslice:");
 
@@ -2977,7 +3304,12 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsTrue(nav.MoveToChild("valueString"));
             // [WMR 20190204] R4: snapshot should include both "value[x]" and "valueString"
             Assert.IsTrue(nav.MoveToChild("value[x]"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
 
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
@@ -3022,12 +3354,22 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsTrue(nav.MoveToChild("valueString"));
             // [WMR 20190204] R4: snapshot should include "value[x]" "valueString", and "valueInteger"
             Assert.IsTrue(nav.MoveToChild("value[x]"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
 
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueInteger"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueInteger"));
+#endif
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
@@ -3035,7 +3377,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsNotNull(outcome);
             //Assert.AreEqual(1, outcome.Issue.Count);
             //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            
+
             // [WMR 20190211] R4: Allow multiple renamed choice type constraints
             Assert.IsNull(outcome);
         }
@@ -3153,7 +3495,7 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
                                 {
-                                    ForTypeSlice()
+                                    ElementDefinition.DiscriminatorComponent.ForTypeSlice()
                                 }
                             },
                         },
@@ -3247,7 +3589,12 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
             Assert.AreNotEqual(1, nav.Current.Type.Count);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual(100, nav.Current.MaxLength);
         }
 
@@ -3304,10 +3651,20 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify: type-specific constraint on valueString does NOT limit the list of allowable types
             Assert.AreNotEqual(1, nav.Current.Type.Count);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueString"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual(100, nav.Current.MaxLength);
 
-            Assert.IsTrue(nav.JumpToFirst("Observation.valueInteger"));
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueInteger"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueInteger"));
+#endif
             Assert.IsTrue(nav.Current.MinValue is Integer i && i.Value == 0);
         }
 
@@ -3883,7 +4240,7 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition SlicedNationalPatientProfile => new StructureDefinition()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            BaseDefinition = NationalPatientProfile.Url,
             Name = "SlicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/SlicedNationalPatientProfile",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
@@ -4078,7 +4435,7 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition ReslicedNationalPatientProfile => new StructureDefinition()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            BaseDefinition = NationalPatientProfile.Url,
             Name = "ReslicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/ReslicedNationalPatientProfile",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
@@ -4099,7 +4456,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         Min = 1,
                         // Append to comment inherited from base
-                        Comment = new Markdown("...SlicedNationalPatientProfile")
+                        Comment = new Markdown("...ReslicedNationalPatientProfile")
                     }
                     // Slice: bsn
                     ,new ElementDefinition("Patient.identifier")
@@ -4151,8 +4508,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = NationalPatientProfile;
             var profile = ReslicedNationalPatientProfile;
-
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
+
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
@@ -4200,7 +4557,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("*", nav.Current.Max);
             // Slice entry should inherit Comments from base element, merged with diff constraints
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile\r\nReslicedNationalPatientProfile", nav.Current.Comment?.Value);
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4601,7 +4958,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
 
             // Snapshot should contain renamed elements
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueQuantity"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
+#endif
+
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.SimpleQuantity.GetLiteral(), nav.Current.Type[0].Code);
@@ -4680,7 +5044,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(nav.Current.Slicing); // BUG!
 
             // Condition.extension:typedStaging.extension:type.valueCodeableConcept
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueCodeableConcept"));
+#else
             Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
+#endif
             Assert.IsNotNull(nav.Current.Binding);
             var valueSetReference = nav.Current.Binding.ValueSet;
             Assert.IsNotNull(valueSetReference);
@@ -4702,8 +5072,13 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new ElementDefinition("Questionnaire.url")
                     {
+#if CUSTOM_ELEMENT_IDS
                         // Override default element id
+                        // [WMR 20190822] R4: No longer allowed/supported
+                        // http://hl7.org/fhir/elementdefinition.html#id
+                        // SnapGen now always emits standardized element ids
                         ElementId = "CustomId"
+#endif
                     },
                     // Verify that slices receive unique element id
                     new ElementDefinition("Questionnaire.code")
@@ -4776,10 +5151,15 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Default snapshot: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
+#if CUSTOM_ELEMENT_IDS
                 // Verify overriden element id in default snapshot
+                // [WMR 20190822] R4: No longer allowed/supported
+                // http://hl7.org/fhir/elementdefinition.html#id
+                // SnapGen now always emits standardized element ids
                 var elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(urlElement.ElementId, elem.ElementId);
+#endif
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 // IMPORTANT: also hook elementHandler event during fullExpansion, to emit (custom) base element annotations
@@ -4789,11 +5169,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Full expansion: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
+#if CUSTOM_ELEMENT_IDS
                 // ExpandElement should NOT re-generate the id of the specified element; only for newly expanded children!
                 // Verify overriden element id in full expansion
-                elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
+                var elem = elems.FirstOrDefault(e => e.Path == urlElement.Path);
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(urlElement.ElementId, elem.ElementId);
+#endif
             }
             finally
             {
@@ -5775,7 +6157,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = ForTypeSlice().ToList()
+                            Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
                     new ElementDefinition("MedicationStatement.dosage.dose[x]")
@@ -5995,7 +6377,7 @@ namespace Hl7.Fhir.Specification.Tests
             var url = nav.Current.Fixed as FhirUri;
             Assert.IsNotNull(url);
             Assert.AreEqual(SL_HumanNameTitleSuffixUri, url.Value);
-            
+
             // [WMR 20190211] FIXED
             // STU3: Verify there are no constraints on value[x]
             //Assert.IsFalse(nav.MoveToNext("value[x]"));
@@ -6003,7 +6385,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("value[x]"));
 
             // Verify merged constraints on valueString
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
             Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
             Assert.AreEqual("NameSuffix", nav.Current.Short);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
@@ -6263,7 +6650,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify element renaming is not affected
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
 
             // [WMR 20180723] Changed: SnapshotGenerator.getStructureForTypeRef
             // Snapshot generator now also expands type.profile for resource references,
@@ -6349,7 +6742,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify element renaming is not affected
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
             // Verify expansion of child element valueReference.reference
             // Expect expansion of core type profile for ResourceReference
             Assert.IsTrue(nav.MoveToChild("reference"));
@@ -6417,7 +6816,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.JumpToFirst("Extension.value[x]"));
+            Assert.IsTrue(nav.MoveToNextSlice("valueReference"));
+#else
             Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+#endif
             // Verify expansion of child element valueReference.reference
             // Expect expansion of core type profile for ResourceReference
             Assert.IsTrue(nav.MoveToChild("reference"));
@@ -7145,18 +7550,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify default regular expression
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(2, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
 
-            // Verify json/xml/rdf type extensions
-            Assert.IsNull(elem.Type[0].Code); // Primitive value types are compiler magic...
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expection extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+            // Verify fhir-type extension
+            var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
+            Assert.IsNotNull(fhirTypeExpr);
+            var typeValue = fhirTypeExpr.Value as FhirUrl;
+            Assert.IsNotNull(typeValue);
+            Assert.AreEqual("string", typeValue.Value);
+
+
+            // Verify the 'special' System.String type
+            Assert.IsNotNull(elem.Type[0].Code);
+            Assert.AreEqual("http://hl7.org/fhirpath/System.String", elem.Type[0].Code);
         }
 
         [TestMethod]
@@ -7167,7 +7578,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new Fhir.Validation.TestProfileArtifactSource();
             var testResolver = new CachedResolver(
                 new MultiResolver(
-                    new ZipSource("specification.zip"),
+                    _zipSource, //new ZipSource("specification.zip"),
                     src));
             var generator = _generator = new SnapshotGenerator(testResolver, _settings);
 
@@ -7191,19 +7602,1217 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify constraint on regular expression extension value
             Assert.IsNotNull(elem.Type[0].Extension);
-            Assert.AreEqual(1, elem.Type[0].Extension.Count);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/regex", elem.Type[0].Extension[0].Url);
-            var extValue = elem.Type[0].Extension[0].Value as FhirString;
+            Assert.AreEqual(1, elem.Type[0].Extension.Count); // 1: regex extension, 2: fhir-type extension
+            var regularExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/regex");
+            Assert.IsNotNull(regularExpr);
+            var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
             Assert.AreEqual("[A-Z].*", extValue.Value); // Constrained
+        }
 
-            // Verify that primitive type extensions are included
-            Assert.IsNotNull(elem.Type[0].CodeElement);
-            Assert.IsNotNull(elem.Type[0].CodeElement.Extension);
-            // Expecting extensions for json-type, xml-type & rdf-type
-            Assert.AreEqual(3, elem.Type[0].CodeElement.Extension.Count);
+        // [WMR 20190819] #1067 SnapshotGenerator - support implicit type constraints on renamed elements
+        // Example: https://www.hl7.org/fhir/bodyheight.html
+        //
+        // <element id="Observation.valueQuantity">
+        //    <path value="Observation.valueQuantity"/> 
+        // </element>
+        //
+        // The element renaming implies a type constraint on Quantity:
+        //
+        // <type> 
+        //    <code value="Quantity"/> 
+        // </type> 
+        [TestMethod]
+        public void TestRenamedElementImpliesTypeConstraint()
+        {
+            StructureDefinition ObservationProfileWithImplicitTypeSlice = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = nameof(ObservationProfileWithImplicitTypeSlice),
+                Url = "http://example.org/fhir/StructureDefinition/ObservationProfileWithImplicitTypeSlice",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Renamed element w/o any constraints implies type constraint
+                        new ElementDefinition("Observation.valueQuantity")
+                        {
+                            // Implied:
+                            //Type = new List<ElementDefinition.TypeRefComponent>()
+                            //{
+                            //    new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Quantity.GetLiteral() }
+                            //}
+                        },
+                    }
+                }
+            };
+
+            //var resolver = new InMemoryProfileResolver(ObservationProfileWithImplicitTypeSlice);
+            //var multiResolver = new MultiResolver(_testResolver, resolver);
+            //_generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var obs = ObservationProfileWithImplicitTypeSlice;
+            Assert.IsNotNull(obs);
+            generateSnapshotAndCompare(obs, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            Assert.IsTrue(nav.MoveToNext("value[x]"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(11, elem.Type.Count); // Unconstrained
+
+            // Verify implicit type constraint
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueQuantity"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueQuantity"));
+#endif
+            elem = nav.Current;
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), elem.Type[0].Code);
+        }
+
+        // [WMR 20190819] Verify behavior
+        // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Validator.20error.20for.20modified.20binding.20strength
+        [TestMethod]
+        public void TestBindingStrengthConstraint()
+        {
+            StructureDefinition SpecimenProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Specimen.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Specimen),
+                Name = nameof(SpecimenProfile),
+                Url = "http://example.org/fhir/StructureDefinition/SpecimenProfile",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Renamed element w/o any constraints implies type constraint
+                        new ElementDefinition("Specimen.collection.fastingStatus[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.CodeableConcept.GetLiteral()
+                                }
+                            },
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                            {
+                                Strength = BindingStrength.Required
+                            }
+                        },
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SpecimenProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            //dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            //Assert.IsTrue(nav.JumpToFirst("Specimen.collection.fastingStatus[x]");
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToChild("collection"));
+            Assert.IsTrue(nav.MoveToChild("fastingStatus[x]"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Binding);
+            Assert.AreEqual(BindingStrength.Required, elem.Binding.Strength);
+        }
+
+        // [WMR 20190822] R4
+        // Verify SnapGen always generates type slicing entry, even if omitted from the diff
+        [TestMethod]
+        public void TestTypeSliceGeneratesSliceEntry()
+        {
+            StructureDefinition SimpleTypeSliceObservationProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Name = nameof(SimpleTypeSliceObservationProfile),
+                Url = "http://example.org/fhir/StructureDefinition/SimpleTypeSliceObservation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.valueInteger") { MinValue = new Integer(1) }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SimpleTypeSliceObservationProfile, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            //dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify that the snapshot contains type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+
+            // Verify that the SnapshotGenerator added a default Slicing component
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
+            //Assert.AreEqual(ElementDefinition.DiscriminatorType.Type, nav.Current.Slicing.Discriminator[0].Type);
+            //Assert.AreEqual(ElementDefinition.DiscriminatorComponent.TypeDiscriminatorPath, nav.Current.Slicing.Discriminator[0].Path);
+
+            Assert.IsTrue(nav.MoveToNext());
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.AreEqual("value[x]", nav.PathName);
+#else
+            Assert.AreEqual("valueInteger", nav.PathName);
+#endif
+            Assert.AreEqual("valueInteger", nav.Current.SliceName);
+            Assert.IsTrue(nav.Current.MinValue is Integer i && i.Value == 1);
+        }
+
+        // [WMR 20190826] Verify correct handling of implicit type slicing through element renaming
+
+        static readonly StructureDefinition ExtensionWithImplicitTypeSlice = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Extension.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+            Name = nameof(ExtensionWithImplicitTypeSlice),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(ExtensionWithImplicitTypeSlice),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Extension.value[x]")
+                    {
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                        },
+
+#if GENERATE_MISSING_TYPE_SLICE_NAMES && false
+                        // Optional slicing component, to indicate slice entry element
+                        // Not required by the SnapshotGenerator; may be omitted
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = { ElementDefinition.DiscriminatorComponent.ForTypeSlice() }
+                        }
+#endif
+
+                    },
+                    // Renamed element implies type slice
+                    new ElementDefinition("Extension.valueString") { Short = "TEST" }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestExtensionWithImplicitTypeSlice()
+        {
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            generateSnapshotAndCompare(ExtensionWithImplicitTypeSlice, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(ExtensionWithImplicitTypeSlice));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short);
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
+        }
+
+        StructureDefinition PatientWithExtensionWithImplicitTypeSlice = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = nameof(PatientWithExtensionWithImplicitTypeSlice),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(PatientWithExtensionWithImplicitTypeSlice),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "hairColor",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { ExtensionWithImplicitTypeSlice.Url }
+                                }
+                            }
+                        },
+                        // Constrain extension child element to force expansion
+                        // Constraint on renamed element, similar to the target extension definition
+                        new ElementDefinition("Patient.extension.valueString")
+                        {
+                            Min = 1
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestPatientWithExtensionWithImplicitTypeSlice()
+        {
+            var resolver = new InMemoryProfileResolver(ExtensionWithImplicitTypeSlice);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(PatientWithExtensionWithImplicitTypeSlice, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(PatientWithExtensionWithImplicitTypeSlice));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify extension slice entry
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            var elem = nav.Current;
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
+
+            // Verify named extension slice
+            Assert.IsTrue(nav.MoveToNext("extension"));
+            elem = nav.Current;
+            Assert.AreEqual("hairColor", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
+            var profile = elem.Type[0].Profile.FirstOrDefault();
+            Assert.IsNotNull(profile);
+            Assert.AreEqual(ExtensionWithImplicitTypeSlice.Url, profile);
+
+            // Verify type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            elem = nav.Current;
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+            // Verify named type slice
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
+            Assert.AreEqual(1, elem.Min);        // Inline profile constraint
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
+        }
+
+        StructureDefinition PatientWithExtensionWithImplicitTypeSliceMixed = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = nameof(PatientWithExtensionWithImplicitTypeSliceMixed),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(PatientWithExtensionWithImplicitTypeSliceMixed),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "hairColor",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { ExtensionWithImplicitTypeSlice.Url }
+                                }
+                            }
+                        },
+                        // Constrain extension child element to force expansion
+                        // Constraint on explicit type slice, should match renamed element "valueString"
+                        new ElementDefinition("Patient.extension.value[x]")
+                        {
+                            SliceName = "valueString",
+                            Min = 1
+                        }
+                    }
+            }
+        };
+
+        // Verify merging of type slicing constraints using mixed notation
+        // Referenced extension definition specifies implicit type slice (renaming)
+        // Inline profile constraint specifies verbose type slice (no renaming)
+
+        [TestMethod]
+        public void TestPatientWithExtensionWithImplicitTypeSliceMixed()
+        {
+            var resolver = new InMemoryProfileResolver(ExtensionWithImplicitTypeSlice);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(PatientWithExtensionWithImplicitTypeSliceMixed, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(PatientWithExtensionWithImplicitTypeSliceMixed));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify extension slice entry
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            var elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
+
+            // Verify named extension slice
+            Assert.IsTrue(nav.MoveToNext("extension"));
+            elem = nav.Current;
+            Assert.AreEqual("hairColor", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
+            var profile = elem.Type[0].Profile.FirstOrDefault();
+            Assert.IsNotNull(profile);
+            Assert.AreEqual(ExtensionWithImplicitTypeSlice.Url, profile);
+
+            // Verify type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+            // Verify named type slice
+#if NORMALIZE_RENAMED_TYPESLICE
+            // [WMR 20190828] R4: Normalize renamed type slices in snapshot
+            Assert.IsTrue(nav.MoveToNextSlice("valueString"));
+#else
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+#endif
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
+            Assert.AreEqual(1, elem.Min);        // Inline profile constraint
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
         }
 
 
+        // [WMR 20190826] Verify correct handling of verbose type slicing w/o renaming
+
+        static readonly StructureDefinition ExtensionWithVerboseTypeSlice = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Extension.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+            Name = nameof(ExtensionWithVerboseTypeSlice),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(ExtensionWithVerboseTypeSlice),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                            },
+                            // Explicit Slicing entry
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    ElementDefinition.DiscriminatorComponent.ForTypeSlice()
+                                }
+                            }
+                        },
+                        // Named type slice w/o renaming
+                        new ElementDefinition("Extension.value[x]")
+                        {
+                            SliceName = "valueString",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                            },
+                            Short="TEST"
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestExtensionWithVerboseTypeSlice()
+        {
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            generateSnapshotAndCompare(ExtensionWithVerboseTypeSlice, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(ExtensionWithVerboseTypeSlice));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            var elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+            Assert.IsTrue(nav.MoveToNext("value[x]"));
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short);
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
+        }
+
+        StructureDefinition PatientWithExtensionWithVerboseTypeSlice = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = nameof(PatientWithExtensionWithVerboseTypeSlice),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(PatientWithExtensionWithVerboseTypeSlice),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        // Omitted: implicit slice on Patient.extension
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "hairColor",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { ExtensionWithVerboseTypeSlice.Url }
+                                }
+                            }
+                        },
+                        // Constrain extension child element to force expansion
+                        new ElementDefinition("Patient.extension.value[x]")
+                        {
+                            SliceName = "valueString",
+                            Min = 1
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestPatientWithExtensionWithVerboseTypeSlice()
+        {
+            var resolver = new InMemoryProfileResolver(ExtensionWithVerboseTypeSlice);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(PatientWithExtensionWithVerboseTypeSlice, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(PatientWithExtensionWithVerboseTypeSlice));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify extension slice entry
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            var elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
+
+            // Verify named extension slice
+            Assert.IsTrue(nav.MoveToNext("extension"));
+            elem = nav.Current;
+            Assert.AreEqual("hairColor", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
+            var profile = elem.Type[0].Profile.FirstOrDefault();
+            Assert.IsNotNull(profile);
+            Assert.AreEqual(ExtensionWithVerboseTypeSlice.Url, profile);
+
+            // Verify type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+            // Verify named type slice
+            Assert.IsTrue(nav.MoveToNext("value[x]"));
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
+            Assert.AreEqual(1, elem.Min);        // Inline profile constraint
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
+        }
+
+        StructureDefinition PatientWithExtensionWithVerboseTypeSliceMixed = new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = nameof(PatientWithExtensionWithVerboseTypeSliceMixed),
+            Url = "http://example.org/fhir/StructureDefinition/" + nameof(PatientWithExtensionWithVerboseTypeSliceMixed),
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                    {
+                        // Omitted: implicit slice on Patient.extension
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "hairColor",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { ExtensionWithVerboseTypeSlice.Url }
+                                }
+                            }
+                        },
+                        // Constrain extension child element to force expansion
+                        // Constraint on renamed element, unlike target extension definition (with verbose type slice)
+                        new ElementDefinition("Patient.extension.valueString")
+                        {
+                            Min = 1
+                        }
+                    }
+            }
+        };
+
+        [TestMethod]
+        public void TestPatientWithExtensionWithVerboseTypeSliceMixed()
+        {
+            var resolver = new InMemoryProfileResolver(ExtensionWithVerboseTypeSlice);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(PatientWithExtensionWithVerboseTypeSliceMixed, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, nameof(PatientWithExtensionWithVerboseTypeSliceMixed));
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify extension slice entry
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            var elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
+
+            // Verify named extension slice
+            Assert.IsTrue(nav.MoveToNext("extension"));
+            elem = nav.Current;
+            Assert.AreEqual("hairColor", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
+            var profile = elem.Type[0].Profile.FirstOrDefault();
+            Assert.IsNotNull(profile);
+            Assert.AreEqual(ExtensionWithVerboseTypeSlice.Url, profile);
+
+            // Verify type slice entry
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            elem = nav.Current;
+            Assert.IsNull(elem.SliceName);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.IsNotNull(elem.Slicing.Discriminator);
+            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+
+            // Verify named type slice
+            //Assert.IsTrue(nav.MoveToNext("valueString")); // NOT normalized...
+            Assert.IsTrue(nav.MoveToNext("value[x]"));      // Normalized
+            elem = nav.Current;
+            Assert.AreEqual("valueString", elem.SliceName);
+            Assert.IsNotNull(elem.Type);
+            Assert.AreEqual(1, elem.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
+            Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
+
+            // [WMR 20190826] FAILS!
+            // Problem: invalid matching
+            //
+            // Matches for children of 'PatientWithExtensionWithVerboseTypeSliceMixed' : Patient.extension 'Extension'
+            // B:Patient.extension.id <-- Merge --> D:Patient.extension.id
+            // B:Patient.extension.extension <-- Slice --> D:Patient.extension.extension -- SliceBase: Patient.extension.extension
+            // B:Patient.extension.url <-- Merge --> D:Patient.extension.url
+            // B:Patient.extension.value[x] <-- Slice --> D:Patient.extension.value[x] -- SliceBase: Patient.extension.value[x]
+            // [WRONG!] B:Patient.extension.value[x] 'valueString' <-- Merge --> D:Patient.extension.value[x] 'valueString' -- SliceBase: Patient.extension.value[x] 'valueString'
+            // Matches for children of 'PatientWithExtensionWithVerboseTypeSliceMixed' : Patient.extension 'hairColor'
+            // B:Patient.extension.value[x] <-- Merge --> D:Patient.extension.valueString -- SliceBase: Patient.extension.value[x]
+            //
+
+            Assert.AreEqual(1, elem.Min);        // Inline profile constraint
+
+            // Verify end of slice
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            Assert.IsFalse(nav.MoveToNext("valueString"));
+        }
+
+#if false
+
+        // [WMR 20190823] Verify profile with reference to extension with type slice on Extension.value[x]
+        [TestMethod]
+        public void TestProfileExtensionValue()
+        {
+            StructureDefinition SimplePatientExtension = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = nameof(SimplePatientExtension),
+                Url = "http://example.org/fhir/StructureDefinition/" + nameof(SimplePatientExtension),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                            }
+                            // Implicit type Slicing entry
+                        },
+                        // Renaming implies type constraint
+                        new ElementDefinition("Extension.valueString")
+                        {
+                        }
+                    }
+                }
+            };
+
+            StructureDefinition PatientWithExtension = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = nameof(PatientWithExtension),
+                Url = "http://example.org/fhir/StructureDefinition/" + nameof(PatientWithExtension),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "hairColor",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { SimplePatientExtension.Url }
+                                }
+                            }
+                        },
+
+
+                        // [WMR 20190823] TODO - Gracefully handle both notations
+                        // - "valueString" => snapshot is correct
+                        // - "value[x]:valueString" => snapshot is incorrect, includes valueString + value[x]:valueString (WRONG!)
+                        // Create separate unit tests for both notations, to prevent regressions
+
+
+                        // Constrain extension child element to force expansion
+                        //new ElementDefinition("Patient.extension.valueString")
+                        new ElementDefinition("Patient.extension.value[x]")
+                        {
+                            SliceName = "valueString",
+                            //Comment = new Markdown("TEST")
+                            Short="TEST"
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(PatientWithExtension, SimplePatientExtension);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(PatientWithExtension, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToChild("extension"));
+
+            // Verify that the SnapshotGenerator added a default Slicing component for extension
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
+
+            Assert.IsTrue(nav.MoveToNext("extension"));
+            Assert.AreEqual("hairColor", nav.Current.SliceName);
+
+            // Verify type slice entry for value[x] element
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
+            Assert.IsNotNull(nav.Current.Type);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
+
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("value[x]", nav.PathName);
+            //Assert.AreEqual("valueString", nav.PathName); // Hmmm... snapshot should be normalized to value[x]
+            Assert.AreEqual("valueString", nav.Current.SliceName);
+
+            //var comment = nav.Current.Comment as Markdown;
+            //Assert.IsNotNull(comment);
+            //Assert.AreEqual("TEST", comment.Value);
+            Assert.AreEqual("TEST", nav.Current.Short);
+
+            Assert.IsNotNull(nav.Current.Type);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
+
+            // Verify that this is the last slice
+            Assert.IsFalse(nav.MoveToNext());
+        }
+#endif
+
+        // [WMR 20190910] Issue #1098 - Normalize element paths of type slices in referenced extensions
+        [TestMethod]
+        public void TestNormalizeTypeSliceInExtension()
+        {
+            const string url = @"http://hl7.org/fhir/StructureDefinition/data-absent-reason-fortest";
+
+            var sd = _testResolver.FindStructureDefinition(url);
+            Assert.IsNotNull(sd);
+
+            var nav = ElementDefinitionNavigator.ForDifferential(sd);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify that differential specifies renamed type slice
+            Assert.IsTrue(nav.MoveToChild("valueCode"));
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element, expanded.Title);
+
+            nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify type slice in snapshot has normalized element path "value[x]:valueCode"
+            Assert.IsFalse(nav.MoveToChild("valueCode"));
+        }
+
+        // #1116 Extension.url requires fixedUri, not fixedString
+        // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Extension.2Eurl.20-.20fixedString.20or.20fixedUri.3F
+
+        [TestMethod]
+        public void TestExtensionUrlFixedValueSimple()
+        {
+            StructureDefinition SimpleTestExtension = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = nameof(SimpleTestExtension),
+                Url = "http://example.org/fhir/StructureDefinition/" + nameof(SimpleTestExtension),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Extension.url omitted, should be generated by SnapGen
+                        new ElementDefinition("Extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
+                            }
+                        }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SimpleTestExtension, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            AssertExtensionUrlChildElement(nav, SimpleTestExtension.Url);
+        }
+
+        [TestMethod]
+        public void TestExtensionUrlFixedValueComplex()
+        {
+            StructureDefinition ComplexTestExtension = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = nameof(ComplexTestExtension),
+                Url = "http://example.org/fhir/StructureDefinition/" + nameof(ComplexTestExtension),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Extension.url omitted, should be generated by SnapGen
+                        new ElementDefinition("Extension.extension")
+                        {
+                            SliceName = "X"
+                        },
+                        // Extension.extension.url omitted, should be generated by SnapGen
+                        new ElementDefinition("Extension.extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Decimal.GetLiteral() }
+                            }
+                        },
+                        new ElementDefinition("Extension.extension")
+                        {
+                            SliceName = "Y"
+                        },
+                        // Extension.extension.url omitted, should be generated by SnapGen
+                        new ElementDefinition("Extension.extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Decimal.GetLiteral() }
+                            }
+                        }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(ComplexTestExtension, out StructureDefinition expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("X", nav.Current.SliceName);
+
+            AssertExtensionUrlChildElement(nav, "X");
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("Y", nav.Current.SliceName);
+
+            AssertExtensionUrlChildElement(nav, "Y");
+
+            Assert.IsTrue(nav.MoveToNext("url"));
+            AssertExtensionUrlElement(nav, ComplexTestExtension.Url);
+        }
+
+        // TODO: Derived extension profile
+        // fixedUri should inherit values from base profile
+        // i.e. do NOT replace with canonical url of derived profile...!
+
+        void AssertExtensionUrlChildElement(ElementDefinitionNavigator nav, string url)
+        {
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("url"));
+            AssertExtensionUrlElement(nav, url);
+            nav.ReturnToBookmark(bm);
+        }
+
+        void AssertExtensionUrlElement(ElementDefinitionNavigator nav, string url)
+        {
+            Assert.IsTrue(nav.Path.ToLowerInvariant().EndsWith("extension.url"));
+            var fixedValue = nav.Current.Fixed;
+            Assert.IsNotNull(fixedValue);
+            Assert.IsInstanceOfType(fixedValue, typeof(IStringValue));
+            Assert.IsInstanceOfType(fixedValue, typeof(FhirUri));
+            var fixedUrl = (IStringValue)fixedValue;
+            Assert.AreEqual(url, fixedUrl.Value);
+        }
+
+        [TestMethod]
+        public void TestElementWithoutPath()
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyInvalidPatient",
+                Url = "http://example.org/fhir/StructureDefinition/InvalidPatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            // No path...
+                            Min = 1
+                        },
+                    }
+                }
+            };
+
+            void generate()
+            {
+                generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            }
+
+            // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
+            Assert.ThrowsException<InvalidOperationException>(generate);
+        }
+
+        // [WMR 20190902] #1090 SnapshotGenerator should support logical models
+        // STU3: Serialize logical model to StructureDefinition.snapshot, .differential is always empty
+        // R4: Serialize logical model to StructureDefinition.differential, generate .snapshot
+        [TestMethod]
+        public void TestLogicalModel()
+        {
+            const string rootPath = "MyModel";
+            var SimpleLogicalModel = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/SimpleLogicalModel",
+                Name = "SimpleLogicalModel",
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                // Last segment equals root element name
+                Type = "http://example.org/fhir/StructureDefinition/" + rootPath,
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition(rootPath)
+                        {
+                            //Min = 0,
+                            //Max = "*",
+                            //Type = new List<ElementDefinition.TypeRefComponent>()
+                            //{
+                            //    new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Element.GetLiteral() }
+                            //}
+                        },
+                        new ElementDefinition(rootPath + ".target")
+                        {
+                            Min = 0,
+                            Max = "1",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    TargetProfile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Person) }
+                                }
+                            }
+                        },
+                        new ElementDefinition(rootPath + ".value[x]")
+                        {
+                            Min = 0,
+                            Max = "*",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.String.GetLiteral(),
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Boolean.GetLiteral(),
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(SimpleLogicalModel, out StructureDefinition expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            void assertElementBase(ElementDefinition elem)
+            {
+                Assert.IsNotNull(elem);
+                Assert.IsNotNull(elem.Base);
+                Assert.IsNotNull(elem.Base.Path);
+                Assert.IsNotNull(elem.Base.MinElement);
+                Assert.IsNotNull(elem.Base.MaxElement);
+            }
+
+            // Verify sdf-8b: "All snapshot elements must have a base definition"
+            expanded.Snapshot.Element.ForEach(e => assertElementBase(e));
+        }
+
+
+        // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
+
+        [TestMethod]
+        public void TestElementDefinitionBase_ContentReference()
+        {
+            // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
+            var ProvenanceProfile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Provenance.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Provenance),
+                Name = "ProvenanceProfile",
+                Url = "http://example.org/fhir/StructureDefinition/ProvenanceProfile",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Provenance.entity.agent.who[x]")
+                        {
+                            Comment = new Markdown("CustomReference")
+                        },
+                    }
+                }
+            };
+
+            generateSnapshotAndCompare(ProvenanceProfile, out StructureDefinition expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Provenance.agent"));
+            var refNav = new ElementDefinitionNavigator(nav);
+            Assert.IsTrue(refNav.JumpToFirst("Provenance.entity.agent"));
+            Assert.IsNotNull(refNav.Current.Base);
+            Assert.AreEqual(refNav.Current.Path, refNav.Current.Base.Path);
+
+            // Verify that content reference children inherit .base.path from content reference target
+            var startPos = nav.OrdinalPosition.Value;
+            var refRootPath = refNav.Path;
+            for (int i = startPos + 1; i < nav.Elements.Count; i++)
+            {
+                var tgtElem = nav.Elements[i];
+                var refElem = refNav.Elements[i];
+                if (i > startPos && !ElementDefinitionNavigator.IsChildPath(refRootPath, refElem.Path))
+                {
+                    break;
+                }
+                Assert.IsNotNull(refElem.Base);
+                Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
+            }
+        }
     }
 }

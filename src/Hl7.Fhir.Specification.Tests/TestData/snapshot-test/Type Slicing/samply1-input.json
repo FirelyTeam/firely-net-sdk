@@ -1,0 +1,277 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "https://fhir.bbmri.de/StructureDefinition/BbmriBiobank",
+  "name": "BbmriBiobank",
+  "status": "draft",
+  "fhirVersion": "4.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Organization",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Organization.extension",
+        "path": "Organization.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Organization.extension:description",
+        "path": "Organization.extension",
+        "sliceName": "description",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://fhir.bbmri.de/StructureDefinition/BbmriOrganizationDescription"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Organization.extension:juridicalPerson",
+        "path": "Organization.extension",
+        "sliceName": "juridicalPerson",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://fhir.bbmri.de/StructureDefinition/BbmriJuridicalPerson"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Organization.extension:qualityStandard",
+        "path": "Organization.extension",
+        "sliceName": "qualityStandard",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://fhir.bbmri.de/StructureDefinition/BbmriQualityStandards"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Organization.identifier",
+        "path": "Organization.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Organization.identifier:Bbmri-EricId",
+        "path": "Organization.identifier",
+        "sliceName": "Bbmri-EricId",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Organization.identifier:Bbmri-EricId.system",
+        "path": "Organization.identifier.system",
+        "fixedUri": "http://www.bbmri-eric.eu/"
+      },
+      {
+        "id": "Organization.identifier:Bbmri-EricId.value",
+        "path": "Organization.identifier.value",
+        "constraint": [
+          {
+            "key": "bbmri-id-1",
+            "requirements": "Make sure valid BBMRI IDs are provided",
+            "severity": "warning",
+            "human": "<CC>_<local id>: SHALL contain valid ISO-3166-1 alpha 2 country code followed by _ followed by biobank ID of national registry (if present).",
+            "expression": "matches('^([a-z]){2}_([a-zA-Z\\\\d])+$')"
+          }
+        ]
+      },
+      {
+        "id": "Organization.name",
+        "path": "Organization.name",
+        "min": 1
+      },
+      {
+        "id": "Organization.alias",
+        "path": "Organization.alias",
+        "max": "1"
+      },
+      {
+        "id": "Organization.telecom",
+        "path": "Organization.telecom",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Organization.telecom:url",
+        "path": "Organization.telecom",
+        "sliceName": "url"
+      },
+      {
+        "id": "Organization.telecom:url.system",
+        "path": "Organization.telecom.system",
+        "min": 1,
+        "fixedCode": "url"
+      },
+      {
+        "id": "Organization.telecom:url.value",
+        "path": "Organization.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Organization.address",
+        "path": "Organization.address",
+        "min": 1
+      },
+      {
+        "id": "Organization.address.country",
+        "path": "Organization.address.country",
+        "min": 1
+      },
+      {
+        "id": "Organization.contact",
+        "path": "Organization.contact",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "purpose"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 2
+      },
+      {
+        "id": "Organization.contact:head",
+        "path": "Organization.contact",
+        "sliceName": "head",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Organization.contact:head.purpose.coding.system",
+        "path": "Organization.contact.purpose.coding.system",
+        "fixedUri": "http://terminology.hl7.org/CodeSystem/contactentity-type"
+      },
+      {
+        "id": "Organization.contact:head.purpose.coding.code",
+        "path": "Organization.contact.purpose.coding.code",
+        "fixedCode": "ADMIN"
+      },
+      {
+        "id": "Organization.contact:head.name.family",
+        "path": "Organization.contact.name.family",
+        "min": 1
+      },
+      {
+        "id": "Organization.contact:head.name.given",
+        "path": "Organization.contact.name.given",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Organization.contact:contact",
+        "path": "Organization.contact",
+        "sliceName": "contact",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Organization.contact:contact.purpose.coding.system",
+        "path": "Organization.contact.purpose.coding.system",
+        "fixedUri": "https://fhir.bbmri.de/CodeSystem/BbmriContactTypes"
+      },
+      {
+        "id": "Organization.contact:contact.purpose.coding.code",
+        "path": "Organization.contact.purpose.coding.code",
+        "fixedCode": "RESEARCH"
+      },
+      {
+        "id": "Organization.contact:contact.telecom",
+        "path": "Organization.contact.telecom",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Organization.contact:contact.telecom:phone",
+        "path": "Organization.contact.telecom",
+        "sliceName": "phone"
+      },
+      {
+        "id": "Organization.contact:contact.telecom:phone.system",
+        "path": "Organization.contact.telecom.system",
+        "fixedCode": "phone"
+      },
+      {
+        "id": "Organization.contact:contact.telecom:email",
+        "path": "Organization.contact.telecom",
+        "sliceName": "email",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Organization.contact:contact.telecom:email.system",
+        "path": "Organization.contact.telecom.system",
+        "fixedCode": "email"
+      },
+      {
+        "id": "Organization.contact:contact.telecom:email.value",
+        "path": "Organization.contact.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Organization.contact:contact.address",
+        "path": "Organization.contact.address",
+        "min": 1
+      },
+      {
+        "id": "Organization.contact:contact.address.line",
+        "path": "Organization.contact.address.line",
+        "max": "1"
+      },
+      {
+        "id": "Organization.contact:contact.address.country",
+        "path": "Organization.contact.address.country",
+        "min": 1
+      }
+    ]
+  }
+}

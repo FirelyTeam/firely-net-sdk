@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-claim"/>
+  <url value="http://hl7.org/fhir/us/davinci-pas/StructureDefinition/profile-claim"/>
+  <name value="PASClaim"/>
+  <status value="draft"/>
+  <fhirVersion value="4.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Claim"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Claim"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Claim">
+      <path value="Claim"/>
+      <isModifier value="false"/>
+    </element>
+    <element id="Claim.supportingInfo">
+      <path value="Claim.supportingInfo"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="category"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <isModifier value="false"/>
+    </element>
+    <element id="Claim.supportingInfo:RelatedCauses">
+      <path value="Claim.supportingInfo"/>
+      <sliceName value="RelatedCauses"/>
+      <isModifier value="false"/>
+    </element>
+    <element id="Claim.supportingInfo:RelatedCauses.category">
+      <path value="Claim.supportingInfo.category"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/us/davinci-pas/CodeSystem/PASSupportingInfoType"/>
+          <code value="relatedCauses"/>
+        </coding>
+      </patternCodeableConcept>
+      <isModifier value="false"/>
+    </element>
+  </differential>
+</StructureDefinition>

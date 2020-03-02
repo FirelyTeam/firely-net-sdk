@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t17"/>
+  <url value="urn:uuid:1313b735-ddb1-4bd4-aa8e-a3156d2919a8"/>
+  <name value="t17"/>
+  <status value="draft"/>
+  <description value="fixture for #17: use a modifier extension instead"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.modifierExtension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <max value="3"/>
+    </element>
+    <element>
+      <path value="Patient.modifierExtension"/>
+      <sliceName value="name1"/>
+      <min value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthTime"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.modifierExtension"/>
+      <sliceName value="name2"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

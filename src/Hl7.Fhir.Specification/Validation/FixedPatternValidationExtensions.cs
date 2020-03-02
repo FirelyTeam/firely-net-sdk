@@ -18,42 +18,46 @@ namespace Hl7.Fhir.Validation
 {
     internal static class FixedPatternValidationExtensions
     {
-        public static OperationOutcome ValidateFixed(this Validator v, ElementDefinition definition, ITypedElement instance)
+        public static OperationOutcome ValidateFixed(this Validator v, Element fixedValue, ITypedElement instance)
         {
+            if (fixedValue is null) throw new ArgumentNullException(nameof(fixedValue));
+
             var outcome = new OperationOutcome();
 
-            if (definition.Fixed != null)
-            {
-                ITypedElement fixedValueNav = definition.Fixed.ToTypedElement();
+            ITypedElement fixedValueNav = fixedValue.ToTypedElement();
 
-                if (!instance.IsExactlyEqualTo(fixedValueNav))
-                {
-                    v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(definition.Fixed)}'",
-                            Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
-                }
+            if (!instance.IsExactlyEqualTo(fixedValueNav))
+            {
+                v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(fixedValue)}'",
+                        Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
             }
 
             return outcome;
         }
 
-        public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, ITypedElement instance)
+        public static OperationOutcome ValidateFixed(this Validator v, ElementDefinition definition, ITypedElement instance) =>
+            definition.Fixed != null ? v.ValidateFixed(definition.Fixed, instance) : new OperationOutcome();
+
+        public static OperationOutcome ValidatePattern(this Validator v, Element pattern, ITypedElement instance)
         {
+            if (pattern is null) throw new ArgumentNullException(nameof(pattern));
+
             var outcome = new OperationOutcome();
 
-            if (definition.Pattern != null)
-            {
-                ITypedElement patternValueNav = definition.Pattern.ToTypedElement();
+            ITypedElement patternValueNav = pattern.ToTypedElement();
 
-                if (!instance.Matches(patternValueNav))
-                {
-                    v.Trace(outcome, $"Value does not match pattern '{toReadable(definition.Pattern)}'",
-                            Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
-                }
+            if (!instance.Matches(patternValueNav))
+            {
+                v.Trace(outcome, $"Value does not match pattern '{toReadable(pattern)}'",
+                        Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
             }
 
             return outcome;
         }
 
+
+        public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, ITypedElement instance) =>
+              definition.Pattern != null ? v.ValidatePattern(definition.Pattern, instance) : new OperationOutcome();
 
         private static string toReadable(Base value)
         {

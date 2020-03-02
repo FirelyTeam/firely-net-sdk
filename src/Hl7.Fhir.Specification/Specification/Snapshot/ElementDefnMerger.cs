@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,13 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20190910] R4: Normalize renamed type slices in snapshot
+// e.g. diff: "valueString" => snap: "value[x]:valueString"
+#define NORMALIZE_RENAMED_TYPESLICE
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -27,10 +30,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId);
+                merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
             readonly SnapshotGenerator _generator;
@@ -40,7 +43,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator ?? throw new ArgumentNullException(nameof(generator));
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 // [WMR 20170421] Element.Id is NOT inherited!
                 // Merge custom Element id value from differential in same profile into snapshot
@@ -58,8 +61,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
 
                 // [WMR 20171004] Determine *distinct* type codes
-                if (snap.Path != diff.Path && snap.IsChoice())
+                // [WMR 20190910] Only inspect last path segment; ignore parent element name mismatches
+                //if (snap.Path != diff.Path)
+                if (!IsEqualName(snap.GetNameFromPath(), diff.GetNameFromPath()))
                 {
+                    // [WMR 20190910] Element renaming is only allowed for choice types
+                    // If paths don't match, then base element should be a choice type - otherwise bug in SnapGen
+                    if (!snap.IsChoice())
+                    {
+                        throw Error.InvalidOperation($"Invalid operation in snapshot generator. Unexpected element match from '{diff.Path}' to '{snap.Path}'.");
+                    }
+
+#if !NORMALIZE_RENAMED_TYPESLICE
+                    // [WMR 20190828] R4: Snapshot always represents type slice using full slicing notation
+                    // => Always use base path (with '[x]' suffix); ignore renamed diff path
+
                     var distinctTypeCodes = diff.DistinctTypeCodes();
                     if (distinctTypeCodes.Count == 1)
                     {
@@ -67,10 +83,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                         if (!ElementDefinitionNavigator.IsCandidateBasePath(snap.Path, diff.Path))
                         {
-                            throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
+                            //throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
+                            throw Error.InvalidOperation($"Invalid operation in snapshot generator. Unexpected element match from '{diff.Path}' to '{snap.Path}'.");
                         }
                         snap.PathElement = mergePrimitiveElement(snap.PathElement, diff.PathElement);
                     }
+#endif
                 }
 
                 // [EK 20170301] Added this after comparison with Java generated snapshot
@@ -87,7 +105,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20180611] Use custom matching
                 snap.Code = mergeCollection(snap.Code, diff.Code, matchCoding);
 
+                // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
+                var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
+                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.Definition = mergePrimitiveElement(snap.Definition, diff.Definition, true);
@@ -115,14 +136,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.Fixed = mergeComplexAttribute(snap.Fixed, diff.Fixed);
                 snap.Pattern = mergeComplexAttribute(snap.Pattern, diff.Pattern);
-                
+
                 // Examples are cumulative based on the full value
                 // [EK 20170301] In STU3, this was turned into a collection
                 snap.Example = mergeCollection(snap.Example, diff.Example, matchExactly);
 
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
-                
+
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.MaxLengthElement = mergePrimitiveElement(snap.MaxLengthElement, diff.MaxLengthElement);
 
@@ -136,7 +157,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
                 // additional identical constraints inherited from e.g. BackboneElement.
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
+                // [WMR 20190723] R4 NEW: Initialize Constraint.source property
+                //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -151,6 +174,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
+            }
+
+            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            {
+                if (replacement is List<T> list && !list.Any())
+                {
+                    // list has been replaced inadvertently. Change it back
+                    setBase(originalBase);
+                }
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
@@ -310,7 +342,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // differential is allowed to REMOVE profiles from base
             // Use differential profile collection if not empty, otherwise fall back to snapshot (no merging)
             List<Canonical> mergeCanonicals(List<Canonical> snap, List<Canonical> diff)
-                //=> mergeCollection(snap, diff, matchCanonicals);
+            //=> mergeCollection(snap, diff, matchCanonicals);
             {
                 return diff is null || diff.Count == 0 ? snap : diff;
             }
@@ -319,6 +351,67 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Match extensions on url
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
                 => mergeCollection(snap, diff, matchExtensions);
+
+            List<ElementDefinition.ConstraintComponent> mergeConstraints(
+                List<ElementDefinition.ConstraintComponent> snap,
+                List<ElementDefinition.ConstraintComponent> diff,
+                string source)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopy());
+                        // Properly merge matching collection items
+                        foreach (var diffItem in diff)
+                        {
+                            // [WMR 20190723] FIX #1052: WRONG! Initializing .source breaks matching...
+                            // Instead, match element constraints on id
+                            //var idx = snap.FindIndex(e => matchExactly(e, diffItem));
+                            var idx = snap.FindIndex(e => IsEqualString(e.Key, diffItem.Key));
+
+                            ElementDefinition.ConstraintComponent mergedItem;
+                            if (idx < 0)
+                            {
+                                // No match; add diff item
+                                mergedItem = (ElementDefinition.ConstraintComponent)diffItem.DeepCopy();
+                                result.Add(mergedItem);
+                            }
+                            else
+                            {
+                                // Match; merge diff with snap
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
+                            }
+                            onConstraint(mergedItem);
+                        }
+                    }
+
+                    // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
+                    InitializeConstraintSource(result, source);
+
+                }
+                return result;
+            }
+
+            // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
+            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source)
+            {
+                foreach (var constraint in constraints)
+                {
+                    if (string.IsNullOrEmpty(constraint.Source))
+                    {
+                        constraint.Source = source;
+                    }
+                }
+            }
 
             // Merge two collections
             // Differential collection items replace/overwrite matching snapshot collection items

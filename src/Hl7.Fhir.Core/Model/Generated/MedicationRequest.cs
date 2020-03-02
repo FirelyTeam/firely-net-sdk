@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _StatusReason;
         
         /// <summary>
-        /// proposal | plan | order | original-order | instance-order | option
+        /// proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         [FhirElement("intent", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent> _IntentElement;
         
         /// <summary>
-        /// proposal | plan | order | original-order | instance-order | option
+        /// proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

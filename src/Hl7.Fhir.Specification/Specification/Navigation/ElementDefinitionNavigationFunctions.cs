@@ -95,8 +95,35 @@ namespace Hl7.Fhir.Specification.Navigation
             return otherName != null
                 && IsChoiceTypeElement(choiceName)
                 && otherName.Length > (choiceName.Length - 3)
-                && String.Compare(choiceName, 0, otherName, 0, choiceName.Length - 3) == 0;
+                && String.Compare(choiceName, 0, otherName, 0, choiceName.Length - 3) == 0
+                // [WMR 20190812] Do NOT match '[x]' element to itself
+                && otherName != choiceName;
         }
+
+        /// <summary>Parse the type name from a renamed choice type element.</summary>
+        /// <param name="rename">The new name of a renamed choice type element. Example: <c>valueQuantity</c>.</param>
+        /// <param name="choiceName">The original choice type element name. Must end with "[x]". Example: <c>value[x]</c>.</param>
+        /// <returns>A type name, or <c>null</c>.</returns>
+        /// <example><code>ParseTypeFromRenamedElement("valueQuantity", "value[x]")</code></example>
+        public static string ParseTypeFromRenamedElement(string rename, string choiceName)
+        {
+            if (!string.IsNullOrEmpty(choiceName)
+                && choiceName.EndsWith("[x]")
+                && !string.IsNullOrEmpty(rename)
+                && !StringComparer.Ordinal.Equals(rename, choiceName))
+            {
+                //return rename.Substring(choiceName.Length - 3);
+                var typeName = rename.Substring(choiceName.Length - 3);
+
+                // Primitive types start with a lower-case character
+                var altTypeName = Utility.StringExtensions.Uncapitalize(typeName);
+                if (Model.ModelInfo.IsPrimitive(altTypeName)) { return altTypeName; }
+                return typeName;
+
+            }
+            return null;
+        }
+
 
         /// <summary>Determines if the specified element path matches a base element path.</summary>
         /// <param name="basePath">A base element path.</param>

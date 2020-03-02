@@ -21,10 +21,12 @@ If ([string]::IsNullOrEmpty($newVersion))
 $oldSuffix = $oldSuffix.Trim()
 
 # when the suffix is not alpha (probably beta), it cannot be overriden by the parameter 
-if (!$oldSuffix.StartsWith("alpha"))
+if (!$oldSuffix.StartsWith("alpha") -or [string]::IsNullOrEmpty($oldSuffix))
 {
 	$suffix = $oldSuffix
 }
+
+Write-Host "Replacing version information with version: [$newVersion] suffix: [$suffix]" 
 
 #Replacing the version and suffix
 (Get-Content fhir-net-api.props) |

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
                 GenerateSnapshot = true,
                 EnableXsdValidation = true,
                 Trace = false,
-                ResolveExteralReferences = true
+                ResolveExternalReferences = true
             };
 
 

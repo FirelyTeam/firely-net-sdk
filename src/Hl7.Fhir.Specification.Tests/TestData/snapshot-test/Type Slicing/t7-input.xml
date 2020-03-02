@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t7"/>
+  <url value="urn:uuid:7a1d096b-bb61-40f7-880a-8cc4ba0329b9"/>
+  <name value="t7"/>
+  <status value="draft"/>
+  <description value="fixture for #7: type mapping resolution"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="test"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

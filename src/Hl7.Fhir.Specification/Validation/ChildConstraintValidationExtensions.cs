@@ -60,13 +60,14 @@ namespace Hl7.Fhir.Validation
                 validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
                     Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
 
-            var cardinality = Cardinality.FromElementDefinition(definition);
-
             IBucket bucket;
+
+            var resolver = validator?.Settings?.ResourceResolver ??
+                throw Error.Argument("Discriminator validation needs a ResourceResolver to be set in the ValidationSettings.");
 
             try
             {
-                bucket = BucketFactory.CreateRoot(match.Definition, validator);
+                bucket = BucketFactory.CreateRoot(match.Definition, resolver, validator);
             }
             catch(NotImplementedException ni)
             {
