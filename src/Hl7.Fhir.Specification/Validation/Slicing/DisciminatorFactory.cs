@@ -11,6 +11,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Linq;
 
@@ -18,12 +19,12 @@ namespace Hl7.Fhir.Validation
 {
     internal static class DiscriminatorFactory
     {
-        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, 
+        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec,
             IResourceResolver resolver,
             string location, ElementDefinitionNavigator root, Validator validator)
         {
             if (spec?.Type == null) throw new ArgumentNullException(nameof(spec), "Encountered a discriminator component without a discriminator type.");
-            if(resolver == null) throw Error.ArgumentNull(nameof(resolver));
+            if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
             var condition = walkToCondition(root, spec.Path, resolver);
 
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Validation
                 return new ValueDiscriminator(spec.Fixed, discriminator, validator);
             else if (spec.Binding != null)
                 return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
-            else if(spec.Fixed != null && spec.Binding != null)
+            else if (spec.Fixed != null && spec.Binding != null)
                 throw new IncorrectElementDefinitionException($"The value discriminator has both a 'fixed[x]' AND 'binding' element set on '{nav.CanonicalPath()}'.");
             else
                 throw new IncorrectElementDefinitionException($"The value discriminator should have either a 'fixed[x]' or 'binding' element set on '{nav.CanonicalPath()}'.");
@@ -80,8 +81,8 @@ namespace Hl7.Fhir.Validation
         private static IDiscriminator buildProfileDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
             var spec = nav.Current;
-            
-            if(spec.IsRootElement())
+
+            if (spec.IsRootElement())
             {
                 // Firsts case: we are at the root of a StructureDefinition, most commonly because
                 // the discriminator path ended in a resolve(). We need to find the canonical url
@@ -98,7 +99,7 @@ namespace Hl7.Fhir.Validation
                 // the current element can only be profiled by the <profile> tag(s) on the <type> element.
                 // Note that the element pointed to by the discriminator should have constrained the types
                 // to a single (unique) type, but we will allow multiple <profile>s.
-                if(spec.Type.Count != 1)   // in R4 codes are always unique
+                if (spec.Type.Count != 1)   // in R4 codes are always unique
                     throw new IncorrectElementDefinitionException($"The profile discriminator '{discriminator}' should navigate to an ElementDefinition with exactly one 'type' element at '{nav.CanonicalPath()}'.");
 
                 var profiles = spec.Type.Single().Profile;
