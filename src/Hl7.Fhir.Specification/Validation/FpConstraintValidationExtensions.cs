@@ -103,7 +103,8 @@ namespace Hl7.Fhir.Validation
                     try
                     {
                         compiledExpression = v.FpCompiler.Compile(fpExpressionText);
-                        constraintElement.AddAnnotation(new CompiledConstraintAnnotation { Expression = compiledExpression });
+                        constraintElement.SetAnnotation(new CompiledConstraintAnnotation { Expression = compiledExpression });
+
                     }
                     catch (Exception e)
                     {

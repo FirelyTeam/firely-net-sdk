@@ -48,6 +48,14 @@ namespace Hl7.Fhir.Validation
             else if (instance is long && definition is UnsignedInt ui)
                 return instance.CompareTo((long)ui.Value.Value);
 
+            else if (instance is int && definition is Integer i32)
+                return instance.CompareTo(i32.Value.Value);
+            else if (instance is int && definition is PositiveInt pi32)
+                return instance.CompareTo(pi32.Value.Value);
+            else if (instance is int && definition is UnsignedInt ui32)
+                return instance.CompareTo(ui32.Value.Value);
+
+
             else if (instance is string && definition is FhirString fs)
                 return instance.CompareTo(fs.Value);
 
@@ -82,10 +90,10 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if(definition.MinValue != null)
+            if (definition.MinValue != null)
                 outcome.Add(validateMinMaxValue(validator, definition.MinValue, instance, -1, "MinValue"));
 
-            if(definition.MaxValue != null)
+            if (definition.MaxValue != null)
                 outcome.Add(validateMinMaxValue(validator, definition.MaxValue, instance, 1, "MaxValue"));
 
             return outcome;

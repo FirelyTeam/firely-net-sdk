@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests
         //        GenerateSnapshot = true,
         //        EnableXsdValidation = true,
         //        Trace = false,
-        //        ResolveExteralReferences = true
+        //        ResolveExternalReferences = true
         //    };
 
         //    _validator = new Validator(ctx);
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(data, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
-            Assert.Equal(3, report.Errors); // boolean.id [0..1], extension.url [1..1], ext-1
+            Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
             Assert.Equal(0, report.Warnings);
         }
 
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void DoNotFollowRefsSuppressesWarning()
         {
-            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExteralReferences = true });
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ResolveExternalReferences = true });
 
             Patient p = new Patient
             {
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(1, result.Warnings);
             Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
 
-            validator.Settings.ResolveExteralReferences = false;
+            validator.Settings.ResolveExternalReferences = false;
 
             result = validator.Validate(p);
             Assert.True(result.Success);
@@ -436,6 +436,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(2, report.Errors);
             Assert.Equal(0, report.Warnings);
             Assert.Contains("does not match regex", report.Issue[0].Details.Text);
+        }
+
+
+        [Fact]
+        public void ValidateFhirDateFormat()
+        {
+            Patient p = new Patient
+            {
+                BirthDate = "1974-12-25+03:00"
+            };
+            
+            var report = _validator.Validate(p);
+            Assert.Equal(1, report.Errors);
+            Assert.Contains("Value '1974-12-25+03:00' does not match regex", report.Issue[0].Details.Text);
+            Assert.Equal(0, report.Warnings);
         }
 
         [Fact]
@@ -583,7 +598,7 @@ namespace Hl7.Fhir.Specification.Tests
                 GenerateSnapshot = false,
                 EnableXsdValidation = false,
                 Trace = false,
-                ResolveExteralReferences = true
+                ResolveExternalReferences = true
             };
 
             var validator = new Validator(ctx);
@@ -611,7 +626,7 @@ namespace Hl7.Fhir.Specification.Tests
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.NotNull(bundle);
 
-            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExteralReferences = true, Trace = false };
+            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExternalReferences = true, Trace = false };
             bool hitResolution = false;
 
             _validator = new Validator(ctx);
@@ -819,6 +834,8 @@ namespace Hl7.Fhir.Specification.Tests
             // in the /data directory for this invariant, so this unit-test will normally pass.
             // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
             // still contains this mistake.
+            // [MV 20191217] Still with the FHIR spec 3.0.2 this problem arises. I have manually corrected profiles-types.xml
+            // again.
             var sd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
             sd.Snapshot.Element[0].SliceName = "dummy";
 
@@ -874,7 +891,7 @@ namespace Hl7.Fhir.Specification.Tests
                 GenerateSnapshot = true,
                 EnableXsdValidation = true,
                 Trace = false,
-                ResolveExteralReferences = true
+                ResolveExternalReferences = true
             };
 
             var validator = new Validator(ctx);
@@ -917,7 +934,7 @@ namespace Hl7.Fhir.Specification.Tests
                 GenerateSnapshot = true,
                 EnableXsdValidation = true,
                 Trace = false,
-                ResolveExteralReferences = true
+                ResolveExternalReferences = true
             };
 
             return new Validator(ctx);

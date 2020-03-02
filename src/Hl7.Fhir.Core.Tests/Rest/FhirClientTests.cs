@@ -788,6 +788,26 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentException()
+        {
+            // This test case proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1206 is fixed. 
+            // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the 
+            // name part of the parameters to be unique.
+            // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
+            var client = new FhirClient(testEndpoint);
+
+            var sp = new SearchParams();
+            sp.Parameters.Add(new Tuple<string, string>("_id", "8465,8479"));
+            sp.Include.Add("subject");
+
+            // Add a further include
+            sp.Include.Add("encounter");
+
+            client.SearchUsingPost<Procedure>(sp);
+        }
+
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
