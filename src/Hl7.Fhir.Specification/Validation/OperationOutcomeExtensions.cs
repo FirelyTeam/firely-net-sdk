@@ -59,15 +59,8 @@ namespace Hl7.Fhir.Validation
 
         public int GetHashCode(OperationOutcome.IssueComponent issue)
         {
-            var hash = issue?.Location?.FirstOrDefault()?.GetHashCode() ^ issue?.Details?.Text?.GetHashCode();
-            if(hash is null)
-            {
-                return 0;
-            }
-            else
-            {
-                return hash.Value;
-            }
+            var hash = unchecked(issue?.Location?.FirstOrDefault()?.GetHashCode() ^ issue?.Details?.Text?.GetHashCode());
+            return (hash is null) ? 0 : hash.Value;
         }
         
     }
