@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var summary = provider.Provide("http://hl7.org/fhir/StructureDefinition/TestXmlRepresentation");
             var summaryElements = summary.GetElements();
 
-            foreach(var element in testElements)
+            foreach (var element in testElements)
             {
                 var representation = summaryElements.Where(e => e.ElementName == element.ToString()).FirstOrDefault().Representation;
                 if (!representation.Equals(element))
