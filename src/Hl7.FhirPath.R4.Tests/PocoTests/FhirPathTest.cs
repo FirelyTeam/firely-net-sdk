@@ -17,6 +17,7 @@ using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -298,6 +299,22 @@ namespace Hl7.FhirPath.R5.Tests
             var divExists = nav.Scalar("text.`div`.exists()");
 
             Assert.AreEqual(true, divExists);
+        }
+
+        [TestMethod]
+        public void TestFhirPathInBundle()
+        {
+            var bundle = new Bundle();
+            bundle.AddResourceEntry(new Appointment { Id = "1" }, "http://some.org/Appointment/1");
+
+            var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
+
+            var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
+            Assert.AreEqual(true, absolutueInvariantcheck);
+            
+            var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
+            Assert.AreEqual(true, invariantcheck);
+
         }
     }
 }

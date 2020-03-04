@@ -200,12 +200,36 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        [Ignore("TODO: why is this failing?")]
+        public void TestConstraintSources()
+        {
+            var dom = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/DomainResource");
+            Assert.IsNotNull(dom);
+            generateSnapshotAndCompare(dom);
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ext-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Extension") == true);
+
+            Assert.IsTrue(dom.Snapshot?.Element
+                          .Where(e => e.Path == "DomainResource.extension").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "ele-1" && c.Source == "http://hl7.org/fhir/StructureDefinition/Element") == true);
+                
+
+            var pat = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(pat);
+            generateSnapshotAndCompare(pat);
+            Assert.IsTrue(pat.Snapshot?.Element
+                          .Where(e => e.Path == "Patient").FirstOrDefault()
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);
+
+        }
+
+        [TestMethod]
         public void GenerateSnapshotForExternalProfiles()
         {
             //Test external type profile
             var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
-
             _settings.GenerateSnapshotForExternalProfiles = false;
             _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.Update(sd);
@@ -2513,7 +2537,7 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
         }
 
-    
+
         [TestMethod]
         public void TestExpandCoreArtifacts()
         {
@@ -2744,8 +2768,8 @@ namespace Hl7.Fhir.Specification.Tests
                     var baseDef = expanded.BaseDefinition;
                     bool isDerivedFromResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
                     // [MS 20200130] Added new base definitions MetadataResource and CanonicalResource
-                    bool isDerivedFromDomainResource =  (baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource).ToString() 
-                                                        || baseDef == "http://hl7.org/fhir/StructureDefinition/MetadataResource" 
+                    bool isDerivedFromDomainResource = (baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource).ToString()
+                                                        || baseDef == "http://hl7.org/fhir/StructureDefinition/MetadataResource"
                                                         || baseDef == "http://hl7.org/fhir/StructureDefinition/CanonicalResource");
 
                     bool isDomainResource = expanded.Name == "DomainResource";
