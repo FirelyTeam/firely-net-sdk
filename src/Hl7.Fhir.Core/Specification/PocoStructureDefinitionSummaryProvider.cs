@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ namespace Hl7.Fhir.Specification
             var isLocalType = !canonical.Contains("/");
             var typeName = canonical;
 
-            if(!isLocalType)
+            if (!isLocalType)
             {
                 // So, we have received a canonical url, not being a relative path
                 // (know resource/datatype), we -for now- only know how to get a ClassMapping
@@ -121,7 +120,7 @@ namespace Hl7.Fhir.Specification
                 return new ITypeSerializationInfo[] { info };
             }
             else
-            {              
+            {
                 var names = pm.FhirType.Select(ft => getFhirTypeName(ft));
                 return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
             }
@@ -164,5 +163,7 @@ namespace Hl7.Fhir.Specification
         }
 
         public string NonDefaultNamespace => null;
+
+        public string DefaultTypeName => null;
     }
 }
