@@ -183,8 +183,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(data, boolSd);
             output.WriteLine(report.ToString());
-            Assert.Equal(0, report.Fatals);            
-            Assert.Equal(1, report.Errors); // ext-1
+            Assert.Equal(0, report.Fatals);
+            Assert.Equal(2, report.Errors); // ext-1, Extension.value[x] cardinality [1..1]
             Assert.Equal(0, report.Warnings);
         }
 
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Text = "ext-1: value or extension"
                         }
-                    }                    
+                    }
                 }
             };
 
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 BirthDate = "1974-12-25+03:00"
             };
-            
+
             var report = _validator.Validate(p);
             Assert.Equal(1, report.Errors);
             Assert.Contains("Value '1974-12-25+03:00' does not match regex", report.Issue[0].Details.Text);
