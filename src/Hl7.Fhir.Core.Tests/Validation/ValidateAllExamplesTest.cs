@@ -63,30 +63,34 @@ namespace Hl7.Fhir.Tests.Serialization
 
                         testFileCount++;
                         // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
-                        resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
-                        resource.AddDefaultConstraints();
-                        var outcome = new OperationOutcome();
-                        resource.ValidateInvariants(outcome);
-                        if (outcome.Issue.Count > 0)
+
+                        if (resource is IElementConstraintContainer ecc)
                         {
-                            Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
-                            foreach (var item in outcome.Issue)
+                            ecc.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+                            resource.AddDefaultConstraints();
+                            var outcome = new OperationOutcome();
+                            resource.ValidateInvariants(outcome);
+                            if (outcome.Issue.Count > 0)
                             {
-                                if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
-                                    failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
-                                else
-                                    failedInvariantCodes[item.Details.Coding[0].Code]++;
+                                Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
+                                foreach (var item in outcome.Issue)
+                                {
+                                    if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
+                                        failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
+                                    else
+                                        failedInvariantCodes[item.Details.Coding[0].Code]++;
 
-                                Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+                                    Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+                                }
+
+                                Trace.WriteLine("-------------------------");
+                                Trace.WriteLine(new FhirXmlSerializer().SerializeToString(resource));
+                                Trace.WriteLine("-------------------------");
                             }
-
-                            Trace.WriteLine("-------------------------");
-                            Trace.WriteLine(new FhirXmlSerializer().SerializeToString(resource));
-                            Trace.WriteLine("-------------------------");
-                        }
-                        if (outcome.Issue.Count != 0)
-                        {
-                            errorCount++;
+                            if (outcome.Issue.Count != 0)
+                            {
+                                errorCount++;
+                            }
                         }
                     }
                 }
@@ -195,35 +199,40 @@ namespace Hl7.Fhir.Tests.Serialization
                         testFileCount++;
                         // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
                         resource.AddDefaultConstraints();
-                        if (invariantCache.ContainsKey(resource.ResourceType.ToString()))
+                        if (invariantCache.ContainsKey(resource.ResourceType.ToString()) && resource is IElementConstraintContainer ecc)
                         {
-                            resource.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
+                            ecc.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
                         }
                         var outcome = new OperationOutcome();
                         resource.ValidateInvariants(outcome);
                         // Debug.WriteLine("Key: " + String.Join(", ", resource.InvariantConstraints.Select(s => s.Key)));
-                        foreach (var item in resource.InvariantConstraints)
-                        {
-                            if (checkedCode.Contains(item.Key))
-                                continue;
-                            checkedCode.Add(item.Key);
-                            string expression = item.Expression;
-                            if (expression.Contains("[x]"))
-                                Debug.WriteLine(String.Format("Expression {0} had an [x] in it '{1}'", item.Key, expression));
-                            if (expression.Contains("\"%\""))
-                                Debug.WriteLine(String.Format("Expression {0} had an \"%\" in it '{1}'", item.Key, expression));
-                            if (expression.Contains("$parent"))
-                                Debug.WriteLine(String.Format("Expression {0} had a '$parent' in it '{1}'", item.Key, expression));
-                            if (expression.Contains("descendents"))
-                                Debug.WriteLine(String.Format("Expression {0} had an 'descendents' in it '{1}'", item.Key, expression));
-                            if (expression.Contains("Decimal"))
-                                Debug.WriteLine(String.Format("Expression {0} had an 'Decimal' in it '{1}'", item.Key, expression));
-                            if (expression.Contains("String"))
-                                Debug.WriteLine(String.Format("Expression {0} had an 'String' in it '{1}'", item.Key, expression));
-                            if (expression.Contains("Integer"))
-                                Debug.WriteLine(String.Format("Expression {0} had an 'Integer' in it '{1}'", item.Key, expression));
 
+                        if (resource is IElementConstraintContainer ecc2)
+                        {
+                            foreach (var item in ecc2.InvariantConstraints)
+                            {
+                                if (checkedCode.Contains(item.Key))
+                                    continue;
+                                checkedCode.Add(item.Key);
+                                string expression = item.Expression;
+                                if (expression.Contains("[x]"))
+                                    Debug.WriteLine(String.Format("Expression {0} had an [x] in it '{1}'", item.Key, expression));
+                                if (expression.Contains("\"%\""))
+                                    Debug.WriteLine(String.Format("Expression {0} had an \"%\" in it '{1}'", item.Key, expression));
+                                if (expression.Contains("$parent"))
+                                    Debug.WriteLine(String.Format("Expression {0} had a '$parent' in it '{1}'", item.Key, expression));
+                                if (expression.Contains("descendents"))
+                                    Debug.WriteLine(String.Format("Expression {0} had an 'descendents' in it '{1}'", item.Key, expression));
+                                if (expression.Contains("Decimal"))
+                                    Debug.WriteLine(String.Format("Expression {0} had an 'Decimal' in it '{1}'", item.Key, expression));
+                                if (expression.Contains("String"))
+                                    Debug.WriteLine(String.Format("Expression {0} had an 'String' in it '{1}'", item.Key, expression));
+                                if (expression.Contains("Integer"))
+                                    Debug.WriteLine(String.Format("Expression {0} had an 'Integer' in it '{1}'", item.Key, expression));
+
+                            }
                         }
+
                         // we can skip the US zipcode validations
                         if (outcome.Issue.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
                         {

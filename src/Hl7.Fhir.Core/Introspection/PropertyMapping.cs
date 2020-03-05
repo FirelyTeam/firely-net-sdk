@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
@@ -81,7 +82,17 @@ namespace Hl7.Fhir.Introspection
             // * for a choice, ImplementingType = Any, but FhirType[] contains the possible choices
             // * some elements (e.g. Extension.url) have ImplementingType = string, but FhirType = FhirUri, etc.
             if (allowedTypes != null)
-                result.FhirType = allowedTypes.Types;
+            {
+                if (allowedTypes.AllowOpenTypes)
+                {
+                    result.FhirType = ModelInfo.OpenTypes
+                            .Select(ft =>
+                                ModelInfo.GetTypeForFhirType(ft.GetLiteral()))
+                            .ToArray();
+                }
+                else
+                    result.FhirType = allowedTypes.Types;
+            }
             else if (elementAttr?.TypeRedirect != null)
                 result.FhirType = new[] { elementAttr.TypeRedirect };
             else

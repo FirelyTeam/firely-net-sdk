@@ -49,8 +49,15 @@ namespace Hl7.Fhir.Model
     /// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
     /// </summary>
     [System.Diagnostics.DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
-    public partial class Parameters
-    {   
+    public partial class Parameters : IElementConstraintContainer
+    {
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
+
+        public override void AddDefaultConstraints()
+        {
+        }
+
         /// <summary>
         /// Add a parameter with a given name and value.
         /// </summary>

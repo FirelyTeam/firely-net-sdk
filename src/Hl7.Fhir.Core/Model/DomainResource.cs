@@ -35,6 +35,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -42,6 +43,9 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public abstract partial class DomainResource : IModifierExtendable
     {
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
+
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>(base.Validate(validationContext));

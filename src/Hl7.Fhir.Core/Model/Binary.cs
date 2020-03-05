@@ -4,6 +4,7 @@ using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Introspection;
 
 /*
   Copyright (c) 2011-2012, HL7, Inc
@@ -40,8 +41,11 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource for capturing binary data
     /// </summary>
-    public partial class Binary
+    public partial class Binary : IElementConstraintContainer
     {
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
+
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>();

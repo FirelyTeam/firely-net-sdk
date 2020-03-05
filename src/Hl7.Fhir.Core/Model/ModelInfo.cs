@@ -465,6 +465,55 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
+        public static readonly FHIRAllTypes[] OpenTypes =
+        {
+            FHIRAllTypes.Address,
+            FHIRAllTypes.Age,
+            FHIRAllTypes.Annotation,
+            FHIRAllTypes.Attachment,
+            FHIRAllTypes.Base64Binary,
+            FHIRAllTypes.Boolean,
+            FHIRAllTypes.Code,
+            FHIRAllTypes.CodeableConcept,
+            FHIRAllTypes.Coding,
+            FHIRAllTypes.ContactDetail,
+            FHIRAllTypes.ContactPoint,
+            FHIRAllTypes.Contributor,
+            FHIRAllTypes.Count,
+            FHIRAllTypes.DataRequirement,
+            FHIRAllTypes.Date,
+            FHIRAllTypes.DateTime,
+            FHIRAllTypes.Decimal,
+            FHIRAllTypes.Distance,
+            FHIRAllTypes.Dosage,
+            FHIRAllTypes.Duration,
+            FHIRAllTypes.HumanName,
+            FHIRAllTypes.Id,
+            FHIRAllTypes.Identifier,
+            FHIRAllTypes.Instant,
+            FHIRAllTypes.Integer,
+            FHIRAllTypes.Markdown,
+            FHIRAllTypes.Money,
+            FHIRAllTypes.ParameterDefinition,
+            FHIRAllTypes.Period,
+            FHIRAllTypes.PositiveInt,
+            FHIRAllTypes.Quantity,
+            FHIRAllTypes.Range,
+            FHIRAllTypes.Ratio,
+            FHIRAllTypes.Reference,
+            FHIRAllTypes.RelatedArtifact,
+            FHIRAllTypes.SampledData,
+            FHIRAllTypes.Signature,
+            FHIRAllTypes.String,
+            FHIRAllTypes.Time,
+            FHIRAllTypes.Timing,
+            FHIRAllTypes.TriggerDefinition,
+            FHIRAllTypes.UnsignedInt,
+            FHIRAllTypes.Uri,
+            FHIRAllTypes.UsageContext,
+            FHIRAllTypes.Uuid
+        };
+
     }
 
     public static class ModelInfoExtensions

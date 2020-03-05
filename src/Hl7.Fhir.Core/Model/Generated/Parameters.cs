@@ -243,14 +243,7 @@ namespace Hl7.Fhir.Model
             Human = "A parameter must have only one of (value, resource, part)",
             Xpath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
         };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Parameters_INV_1);
-        }
-
+  
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Parameters;
