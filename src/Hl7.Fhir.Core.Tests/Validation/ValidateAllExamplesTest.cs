@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {

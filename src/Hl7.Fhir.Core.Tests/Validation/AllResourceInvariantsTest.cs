@@ -10,7 +10,7 @@ namespace Hl7.Fhir.FhirPath
     [TestClass]
     public class AllResourceInvariantsTest
     {
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestAllResourceInvariants()
         {
             string failedExpressions = null;

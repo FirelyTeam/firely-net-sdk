@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
+            InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
             InvariantConstraints.Add(DomainResource_DOM_2);
             InvariantConstraints.Add(DomainResource_DOM_1);
             InvariantConstraints.Add(DomainResource_DOM_4);

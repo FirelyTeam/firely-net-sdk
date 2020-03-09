@@ -1385,6 +1385,7 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
+            InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
             InvariantConstraints.Add(Bundle_BDL_7);
             InvariantConstraints.Add(Bundle_BDL_9);
             InvariantConstraints.Add(Bundle_BDL_3);
