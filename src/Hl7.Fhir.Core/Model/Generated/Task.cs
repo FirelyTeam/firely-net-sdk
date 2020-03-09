@@ -1106,13 +1106,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Task_INV_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Task;

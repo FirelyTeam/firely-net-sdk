@@ -629,15 +629,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_2);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_3);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as FamilyMemberHistory;

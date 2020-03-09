@@ -1616,14 +1616,7 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(TestReport_INV_1);
-            InvariantConstraints.Add(TestReport_INV_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as TestReport;

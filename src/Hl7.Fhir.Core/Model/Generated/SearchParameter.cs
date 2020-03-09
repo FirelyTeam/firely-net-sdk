@@ -1041,14 +1041,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(SearchParameter_SPD_1);
-            InvariantConstraints.Add(SearchParameter_SPD_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SearchParameter;

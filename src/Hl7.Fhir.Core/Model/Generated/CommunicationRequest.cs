@@ -610,13 +610,7 @@ namespace Hl7.Fhir.Model
             Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CommunicationRequest_CMR_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CommunicationRequest;

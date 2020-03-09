@@ -43,17 +43,11 @@ using System.Diagnostics;
 namespace Hl7.Fhir.Model
 {    
     [InvokeIValidatableObject]
-    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject, IElementConstraintContainer
+    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
-        [NotMapped]
-        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
-
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class EntryComponent
         {
-            [NotMapped]
-            public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
-
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             [NotMapped]
             private string DebuggerDisplay

@@ -648,13 +648,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:answer) and exists(f:item))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as QuestionnaireResponse;

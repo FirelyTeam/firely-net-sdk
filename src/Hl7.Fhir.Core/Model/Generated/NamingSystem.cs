@@ -704,15 +704,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(NamingSystem_NSD_1);
-            InvariantConstraints.Add(NamingSystem_NSD_3);
-            InvariantConstraints.Add(NamingSystem_NSD_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NamingSystem;

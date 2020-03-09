@@ -1362,13 +1362,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:policy) or exists(f:policyRule)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Consent_PPC_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Consent;

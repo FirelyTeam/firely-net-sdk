@@ -2687,14 +2687,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:element) or (f:context)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(StructureMap_SMP_2);
-            InvariantConstraints.Add(StructureMap_SMP_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as StructureMap;

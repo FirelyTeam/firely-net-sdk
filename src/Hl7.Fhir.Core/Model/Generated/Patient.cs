@@ -984,13 +984,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Patient_PAT_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Patient;

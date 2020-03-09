@@ -1383,19 +1383,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
-            InvariantConstraints.Add(Bundle_BDL_7);
-            InvariantConstraints.Add(Bundle_BDL_9);
-            InvariantConstraints.Add(Bundle_BDL_3);
-            InvariantConstraints.Add(Bundle_BDL_4);
-            InvariantConstraints.Add(Bundle_BDL_1);
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_8);
-            InvariantConstraints.Add(Bundle_BDL_5);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Bundle;

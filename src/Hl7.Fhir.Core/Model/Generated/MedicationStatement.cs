@@ -465,13 +465,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:reasonNotTaken)) or f:taken/@value='n'"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MedicationStatement_MST_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationStatement;

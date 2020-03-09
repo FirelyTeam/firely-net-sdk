@@ -41,11 +41,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource for capturing binary data
     /// </summary>
-    public partial class Binary : IElementConstraintContainer
+    public partial class Binary
     {
-        [NotMapped]
-        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
-
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>();

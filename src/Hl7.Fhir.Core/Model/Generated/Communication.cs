@@ -521,13 +521,7 @@ namespace Hl7.Fhir.Model
             Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Communication_COM_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Communication;

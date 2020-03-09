@@ -1352,14 +1352,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(OperationDefinition_OPD_1);
-            InvariantConstraints.Add(OperationDefinition_OPD_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationDefinition;

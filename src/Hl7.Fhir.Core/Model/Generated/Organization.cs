@@ -422,15 +422,7 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:use[@value='home']) = 0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Organization_ORG_1);
-            InvariantConstraints.Add(Organization_ORG_3);
-            InvariantConstraints.Add(Organization_ORG_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Organization;

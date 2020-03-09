@@ -1512,22 +1512,7 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:*[starts-with(local-name(.), 'answer')]|self::f:hasAnswer) = 1"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_9);
-            InvariantConstraints.Add(Questionnaire_QUE_8);
-            InvariantConstraints.Add(Questionnaire_QUE_6);
-            InvariantConstraints.Add(Questionnaire_QUE_5);
-            InvariantConstraints.Add(Questionnaire_QUE_4);
-            InvariantConstraints.Add(Questionnaire_QUE_3);
-            InvariantConstraints.Add(Questionnaire_QUE_10);
-            InvariantConstraints.Add(Questionnaire_QUE_1);
-            InvariantConstraints.Add(Questionnaire_QUE_7);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Questionnaire;

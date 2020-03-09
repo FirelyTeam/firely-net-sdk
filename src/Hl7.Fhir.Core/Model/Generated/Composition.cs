@@ -1111,14 +1111,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Composition_CMP_1);
-            InvariantConstraints.Add(Composition_CMP_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Composition;

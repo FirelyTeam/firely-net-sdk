@@ -466,16 +466,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:type/@value='photo') or not(f:duration)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Media_MDA_1);
-            InvariantConstraints.Add(Media_MDA_2);
-            InvariantConstraints.Add(Media_MDA_3);
-            InvariantConstraints.Add(Media_MDA_4);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Media;

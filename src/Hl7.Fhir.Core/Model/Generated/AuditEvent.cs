@@ -1477,13 +1477,7 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name)) or not(exists(f:query))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AuditEvent_SEV_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AuditEvent;

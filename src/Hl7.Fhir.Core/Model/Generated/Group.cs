@@ -635,13 +635,7 @@ namespace Hl7.Fhir.Model
             Xpath = "f:actual/@value=true() or not(exists(f:member))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Group_GRP_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Group;

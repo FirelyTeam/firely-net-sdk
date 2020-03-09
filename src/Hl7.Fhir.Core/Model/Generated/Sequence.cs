@@ -1850,16 +1850,7 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Sequence_SEQ_3);
-            InvariantConstraints.Add(Sequence_SEQ_4);
-            InvariantConstraints.Add(Sequence_SEQ_5);
-            InvariantConstraints.Add(Sequence_SEQ_6);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Sequence;

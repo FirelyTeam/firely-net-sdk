@@ -361,12 +361,7 @@ namespace Hl7.Fhir.Model
         private List<DataRequirement> _DataRequirement;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as GuidanceResponse;

@@ -837,14 +837,7 @@ namespace Hl7.Fhir.Model
             Xpath = "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AllergyIntolerance_AIT_1);
-            InvariantConstraints.Add(AllergyIntolerance_AIT_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AllergyIntolerance;

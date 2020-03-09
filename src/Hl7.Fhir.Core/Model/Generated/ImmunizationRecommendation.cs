@@ -710,13 +710,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ImmunizationRecommendation_IMR_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ImmunizationRecommendation;

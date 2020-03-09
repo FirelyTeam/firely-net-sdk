@@ -877,13 +877,7 @@ namespace Hl7.Fhir.Model
             Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MessageDefinition_MD_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MessageDefinition;

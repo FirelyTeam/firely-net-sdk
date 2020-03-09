@@ -4145,22 +4145,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:supportedMessage) != exists(f:event)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CapabilityStatement_CPB_8);
-            InvariantConstraints.Add(CapabilityStatement_CPB_7);
-            InvariantConstraints.Add(CapabilityStatement_CPB_15);
-            InvariantConstraints.Add(CapabilityStatement_CPB_3);
-            InvariantConstraints.Add(CapabilityStatement_CPB_14);
-            InvariantConstraints.Add(CapabilityStatement_CPB_2);
-            InvariantConstraints.Add(CapabilityStatement_CPB_1);
-            InvariantConstraints.Add(CapabilityStatement_CPB_9);
-            InvariantConstraints.Add(CapabilityStatement_CPB_12);
-            InvariantConstraints.Add(CapabilityStatement_CPB_16);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CapabilityStatement;

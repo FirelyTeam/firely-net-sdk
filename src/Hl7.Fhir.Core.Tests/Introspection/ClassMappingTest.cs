@@ -83,15 +83,12 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType]
     public class Way : Resource
     {
-        public override void AddDefaultConstraints() => throw new NotImplementedException(); 
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException(); 
     }
 
     [FhirType("Way", Profile = "http://nu.nl/profile#street")]
     public class ProfiledWay : Resource 
     {
-        public override void AddDefaultConstraints() => throw new NotImplementedException();
-
         public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } 
     }
 

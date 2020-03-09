@@ -780,15 +780,7 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:type) or exists(f:actor))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Appointment_APP_3);
-            InvariantConstraints.Add(Appointment_APP_2);
-            InvariantConstraints.Add(Appointment_APP_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Appointment;

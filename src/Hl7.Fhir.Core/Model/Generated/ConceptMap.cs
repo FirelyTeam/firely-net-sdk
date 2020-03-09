@@ -1677,15 +1677,7 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ConceptMap_CMD_1);
-            InvariantConstraints.Add(ConceptMap_CMD_3);
-            InvariantConstraints.Add(ConceptMap_CMD_2);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ConceptMap;

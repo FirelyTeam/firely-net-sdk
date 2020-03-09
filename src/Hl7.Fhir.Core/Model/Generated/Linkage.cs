@@ -278,13 +278,7 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:item)>1"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Linkage_LNK_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Linkage;

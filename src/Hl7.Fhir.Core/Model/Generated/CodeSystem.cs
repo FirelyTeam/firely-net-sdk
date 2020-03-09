@@ -1756,13 +1756,7 @@ namespace Hl7.Fhir.Model
             Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CodeSystem_CSD_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CodeSystem;

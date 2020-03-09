@@ -457,13 +457,7 @@ namespace Hl7.Fhir.Model
             Xpath = "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CareTeam_CTM_1);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CareTeam;

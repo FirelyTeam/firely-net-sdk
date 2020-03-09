@@ -1539,14 +1539,7 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:language) or exists(f:use)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ExpansionProfile_EXP_3);
-            InvariantConstraints.Add(ExpansionProfile_EXP_4);
-        }
-
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ExpansionProfile;
