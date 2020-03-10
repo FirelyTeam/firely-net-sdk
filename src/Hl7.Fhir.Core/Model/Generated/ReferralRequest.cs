@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ReferralRequest; } }
-        [NotMapped]
         public override string TypeName { get { return "ReferralRequest"; } }
         
         [FhirType("RequesterComponent")]

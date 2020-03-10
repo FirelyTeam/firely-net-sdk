@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class AuditEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AuditEvent; } }
-        [NotMapped]
         public override string TypeName { get { return "AuditEvent"; } }
         
         /// <summary>

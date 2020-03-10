@@ -518,6 +518,14 @@ namespace Hl7.Fhir.Model
 
     public static class ModelInfoExtensions
     {
+        public static bool TryDeriveResourceType(this Resource r, out ResourceType rt)
+        {
+            var result = ModelInfo.FhirTypeNameToResourceType(r.TypeName);
+            rt = result.GetValueOrDefault(default);
+            return result.HasValue;
+        }
+
+
         [Obsolete("Use ModelInfo.GetFhirTypeNameForType() instead.")]       // Obsoleted on 20181213 by EK
         public static string GetCollectionName(this Type type)
         {

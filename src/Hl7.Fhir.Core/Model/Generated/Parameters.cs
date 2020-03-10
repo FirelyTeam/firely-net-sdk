@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Parameters : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Parameters; } }
-        [NotMapped]
         public override string TypeName { get { return "Parameters"; } }
         
         [FhirType("ParameterComponent")]

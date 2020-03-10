@@ -170,9 +170,7 @@ if(true) {
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
+        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#

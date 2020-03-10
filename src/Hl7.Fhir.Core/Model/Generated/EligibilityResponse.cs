@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.EligibilityResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "EligibilityResponse"; } }
         
         [FhirType("InsuranceComponent")]

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationDispense; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationDispense"; } }
         
         /// <summary>

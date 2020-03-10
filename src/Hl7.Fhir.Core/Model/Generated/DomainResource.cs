@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DomainResource; } }
-        [NotMapped]
         public override string TypeName { get { return "DomainResource"; } }
         
         /// <summary>

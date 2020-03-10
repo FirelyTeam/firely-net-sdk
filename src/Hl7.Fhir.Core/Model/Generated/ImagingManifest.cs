@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImagingManifest; } }
-        [NotMapped]
         public override string TypeName { get { return "ImagingManifest"; } }
         
         [FhirType("StudyComponent")]

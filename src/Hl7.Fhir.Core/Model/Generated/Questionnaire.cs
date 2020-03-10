@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
-        [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>

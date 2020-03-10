@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DetectedIssue; } }
-        [NotMapped]
         public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>

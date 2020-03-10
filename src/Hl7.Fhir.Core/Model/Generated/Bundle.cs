@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Bundle : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Bundle; } }
-        [NotMapped]
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>

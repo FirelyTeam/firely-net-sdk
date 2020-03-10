@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DocumentManifest; } }
-        [NotMapped]
         public override string TypeName { get { return "DocumentManifest"; } }
         
         [FhirType("ContentComponent")]
