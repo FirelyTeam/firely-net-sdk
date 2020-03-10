@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Goal", IsResource=true)]
     [DataContract]
-    public partial class Goal : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Goal : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Goal"; } }
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("TargetComponent")]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }

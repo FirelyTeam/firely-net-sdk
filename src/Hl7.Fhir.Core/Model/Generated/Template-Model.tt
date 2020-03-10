@@ -168,7 +168,7 @@ if(true) {
  #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
 <# }
 #>    [DataContract]
-    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
         [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
@@ -296,7 +296,7 @@ if(true) {
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }

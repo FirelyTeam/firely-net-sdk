@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataElement", IsResource=true)]
     [DataContract]
-    public partial class DataElement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataElement : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "DataElement"; } }
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MappingComponent")]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }

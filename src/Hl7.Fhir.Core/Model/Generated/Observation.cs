@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Observation", IsResource=true)]
     [DataContract]
-    public partial class Observation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Observation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Observation"; } }
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ReferenceRangeComponent")]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RelatedComponent")]
         [DataContract]
-        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedComponent"; } }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComponentComponent")]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }

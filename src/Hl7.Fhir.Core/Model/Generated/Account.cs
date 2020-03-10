@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Account", IsResource=true)]
     [DataContract]
-    public partial class Account : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Account : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Account"; } }
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CoverageComponent")]
         [DataContract]
-        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CoverageComponent"; } }
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GuarantorComponent")]
         [DataContract]
-        public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GuarantorComponent"; } }

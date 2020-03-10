@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
+using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -43,7 +47,7 @@ namespace Hl7.Fhir.Model
     /// Base for elements defined inside a resource
     /// </summary>
     [DataContract]
-    public abstract partial class BackboneElement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class BackboneElement : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "BackboneElement"; } }

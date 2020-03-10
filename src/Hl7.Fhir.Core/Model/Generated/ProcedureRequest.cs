@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ProcedureRequest", IsResource=true)]
     [DataContract]
-    public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ProcedureRequest"; } }
         
         [FhirType("RequesterComponent")]
         [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }

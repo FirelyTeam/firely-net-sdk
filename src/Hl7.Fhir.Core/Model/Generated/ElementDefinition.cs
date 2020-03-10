@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ElementDefinition")]
     [DataContract]
-    public partial class ElementDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ElementDefinition : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "ElementDefinition"; } }
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SlicingComponent")]
         [DataContract]
-        public partial class SlicingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SlicingComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SlicingComponent"; } }
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("DiscriminatorComponent")]
         [DataContract]
-        public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DiscriminatorComponent"; } }
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("BaseComponent")]
         [DataContract]
-        public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class BaseComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BaseComponent"; } }
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("TypeRefComponent")]
         [DataContract]
-        public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TypeRefComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TypeRefComponent"; } }
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("ExampleComponent")]
         [DataContract]
-        public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExampleComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExampleComponent"; } }
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("ConstraintComponent")]
         [DataContract]
-        public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConstraintComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConstraintComponent"; } }
@@ -1455,7 +1455,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("ElementDefinitionBindingComponent")]
         [DataContract]
-        public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ElementDefinitionBindingComponent"; } }
@@ -1615,7 +1615,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("MappingComponent")]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MappingComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }

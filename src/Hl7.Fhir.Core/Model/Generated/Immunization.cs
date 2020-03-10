@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Immunization", IsResource=true)]
     [DataContract]
-    public partial class Immunization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PractitionerComponent")]
         [DataContract]
-        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PractitionerComponent"; } }
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExplanationComponent")]
         [DataContract]
-        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExplanationComponent"; } }
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VaccinationProtocolComponent")]
         [DataContract]
-        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VaccinationProtocolComponent"; } }

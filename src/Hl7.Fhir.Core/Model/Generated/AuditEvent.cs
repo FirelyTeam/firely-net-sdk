@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("AuditEvent", IsResource=true)]
     [DataContract]
-    public partial class AuditEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AuditEvent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "AuditEvent"; } }
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NetworkComponent")]
         [DataContract]
-        public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NetworkComponent"; } }
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SourceComponent")]
         [DataContract]
-        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SourceComponent"; } }
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntityComponent")]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DetailComponent")]
         [DataContract]
-        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }

@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DocumentReference", IsResource=true)]
     [DataContract]
-    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "DocumentReference"; } }
         
         [FhirType("RelatesToComponent")]
         [DataContract]
-        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RelatesToComponent"; } }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContentComponent")]
         [DataContract]
-        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContentComponent"; } }
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContextComponent")]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContextComponent"; } }
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RelatedComponent")]
         [DataContract]
-        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedComponent"; } }

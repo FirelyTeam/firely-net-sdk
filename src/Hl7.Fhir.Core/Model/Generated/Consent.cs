@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Consent", IsResource=true)]
     [DataContract]
-    public partial class Consent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Consent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Consent"; } }
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ActorComponent")]
         [DataContract]
-        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActorComponent"; } }
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PolicyComponent")]
         [DataContract]
-        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DataComponent")]
         [DataContract]
-        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DataComponent"; } }
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptComponent")]
         [DataContract]
-        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptComponent"; } }
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptActorComponent")]
         [DataContract]
-        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptActorComponent"; } }
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptDataComponent")]
         [DataContract]
-        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExceptDataComponent"; } }

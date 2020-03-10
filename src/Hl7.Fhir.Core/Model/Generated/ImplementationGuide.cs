@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ImplementationGuide", IsResource=true)]
     [DataContract]
-    public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ImplementationGuide"; } }
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("DependencyComponent")]
         [DataContract]
-        public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DependencyComponent"; } }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PackageComponent")]
         [DataContract]
-        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PackageComponent"; } }
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResourceComponent")]
         [DataContract]
-        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GlobalComponent")]
         [DataContract]
-        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GlobalComponent"; } }
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PageComponent")]
         [DataContract]
-        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PageComponent"; } }

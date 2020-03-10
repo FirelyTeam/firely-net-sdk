@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Tue, 17 Dec 2019 20:38:19 GMT for FHIR v3.0.2
+// Model Generated on Tue, 10 Mar 2020 18:39:57 GMT for FHIR v3.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -82,7 +82,6 @@
 // Hl7.Fhir.Core\Model\Generated\Quantity.cs
 // Hl7.Fhir.Core\Model\Generated\Period.cs
 // Hl7.Fhir.Core\Model\Generated\ParameterDefinition.cs
-// Hl7.Fhir.Core\Model\Generated\Meta.cs
 // Hl7.Fhir.Core\Model\Generated\Identifier.cs
 // Hl7.Fhir.Core\Model\Generated\HumanName.cs
 // Hl7.Fhir.Core\Model\Generated\ElementDefinition.cs
@@ -91,26 +90,14 @@
 // Hl7.Fhir.Core\Model\Generated\Contributor.cs
 // Hl7.Fhir.Core\Model\Generated\ContactPoint.cs
 // Hl7.Fhir.Core\Model\Generated\ContactDetail.cs
-// Hl7.Fhir.Core\Model\Generated\Coding.cs
 // Hl7.Fhir.Core\Model\Generated\CodeableConcept.cs
 // Hl7.Fhir.Core\Model\Generated\Attachment.cs
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\Uuid.cs
-// Hl7.Fhir.Core\Model\Generated\FhirUri.cs
 // Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
 // Hl7.Fhir.Core\Model\Generated\Time.cs
-// Hl7.Fhir.Core\Model\Generated\FhirString.cs
 // Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
-// Hl7.Fhir.Core\Model\Generated\Oid.cs
 // Hl7.Fhir.Core\Model\Generated\Markdown.cs
-// Hl7.Fhir.Core\Model\Generated\Integer.cs
-// Hl7.Fhir.Core\Model\Generated\Instant.cs
-// Hl7.Fhir.Core\Model\Generated\Id.cs
 // Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
-// Hl7.Fhir.Core\Model\Generated\FhirDateTime.cs
-// Hl7.Fhir.Core\Model\Generated\Date.cs
-// Hl7.Fhir.Core\Model\Generated\Code.cs
-// Hl7.Fhir.Core\Model\Generated\FhirBoolean.cs
 // Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
 // Hl7.Fhir.Core\Model\Generated\BackboneElement.cs

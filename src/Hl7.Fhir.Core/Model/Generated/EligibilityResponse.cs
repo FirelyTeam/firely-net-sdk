@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("EligibilityResponse", IsResource=true)]
     [DataContract]
-    public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "EligibilityResponse"; } }
         
         [FhirType("InsuranceComponent")]
         [DataContract]
-        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InsuranceComponent"; } }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BenefitsComponent")]
         [DataContract]
-        public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BenefitsComponent"; } }
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BenefitComponent")]
         [DataContract]
-        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BenefitComponent"; } }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ErrorsComponent")]
         [DataContract]
-        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ErrorsComponent"; } }

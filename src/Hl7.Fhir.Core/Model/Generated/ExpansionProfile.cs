@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ExpansionProfile", IsResource=true)]
     [DataContract]
-    public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ExpansionProfile"; } }
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("FixedVersionComponent")]
         [DataContract]
-        public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FixedVersionComponent"; } }
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExcludedSystemComponent")]
         [DataContract]
-        public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExcludedSystemComponent"; } }
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationComponent")]
         [DataContract]
-        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationIncludeComponent")]
         [DataContract]
-        public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationIncludeComponent"; } }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationIncludeDesignationComponent")]
         [DataContract]
-        public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationIncludeDesignationComponent"; } }
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationExcludeComponent")]
         [DataContract]
-        public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationExcludeComponent"; } }
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationExcludeDesignationComponent")]
         [DataContract]
-        public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationExcludeDesignationComponent"; } }

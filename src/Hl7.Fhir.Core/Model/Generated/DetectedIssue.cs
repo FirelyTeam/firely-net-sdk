@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DetectedIssue", IsResource=true)]
     [DataContract]
-    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "DetectedIssue"; } }
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MitigationComponent")]
         [DataContract]
-        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MitigationComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Specimen", IsResource=true)]
     [DataContract]
-    public partial class Specimen : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Specimen : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Specimen"; } }
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CollectionComponent")]
         [DataContract]
-        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CollectionComponent"; } }
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcessingComponent")]
         [DataContract]
-        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessingComponent"; } }
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainerComponent")]
         [DataContract]
-        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }

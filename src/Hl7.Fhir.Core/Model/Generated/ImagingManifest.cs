@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ImagingManifest", IsResource=true)]
     [DataContract]
-    public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ImagingManifest"; } }
         
         [FhirType("StudyComponent")]
         [DataContract]
-        public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StudyComponent"; } }
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SeriesComponent")]
         [DataContract]
-        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InstanceComponent")]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Task", IsResource=true)]
     [DataContract]
-    public partial class Task : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Task : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Task"; } }
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("RequesterComponent")]
         [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RestrictionComponent")]
         [DataContract]
-        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RestrictionComponent"; } }
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OutputComponent")]
         [DataContract]
-        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OutputComponent"; } }

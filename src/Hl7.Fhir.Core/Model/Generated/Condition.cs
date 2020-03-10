@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Condition", IsResource=true)]
     [DataContract]
-    public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Condition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Condition"; } }
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StageComponent")]
         [DataContract]
-        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StageComponent"; } }
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EvidenceComponent")]
         [DataContract]
-        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EvidenceComponent"; } }

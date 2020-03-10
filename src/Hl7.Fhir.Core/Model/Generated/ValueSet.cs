@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ValueSet", IsResource=true)]
     [DataContract]
-    public partial class ValueSet : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
         
         [FhirType("ComposeComponent")]
         [DataContract]
-        public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComposeComponent"; } }
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConceptSetComponent")]
         [DataContract]
-        public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptSetComponent"; } }
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConceptReferenceComponent")]
         [DataContract]
-        public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConceptReferenceComponent"; } }
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DesignationComponent")]
         [DataContract]
-        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FilterComponent")]
         [DataContract]
-        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FilterComponent"; } }
@@ -958,7 +958,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExpansionComponent")]
         [DataContract]
-        public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExpansionComponent"; } }
@@ -1214,7 +1214,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainsComponent")]
         [DataContract]
-        public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainsComponent"; } }

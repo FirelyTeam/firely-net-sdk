@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataRequirement")]
     [DataContract]
-    public partial class DataRequirement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataRequirement : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "DataRequirement"; } }
         
         [FhirType("CodeFilterComponent")]
         [DataContract]
-        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CodeFilterComponent"; } }
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("DateFilterComponent")]
         [DataContract]
-        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DateFilterComponent"; } }

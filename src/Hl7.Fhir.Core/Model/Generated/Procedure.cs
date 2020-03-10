@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Procedure", IsResource=true)]
     [DataContract]
-    public partial class Procedure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Procedure : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Procedure"; } }
         
         [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FocalDeviceComponent")]
         [DataContract]
-        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FocalDeviceComponent"; } }

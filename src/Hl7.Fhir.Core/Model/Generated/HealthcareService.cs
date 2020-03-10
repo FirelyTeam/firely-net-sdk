@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("HealthcareService", IsResource=true)]
     [DataContract]
-    public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class HealthcareService : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "HealthcareService"; } }
         
         [FhirType("AvailableTimeComponent")]
         [DataContract]
-        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AvailableTimeComponent"; } }
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NotAvailableComponent")]
         [DataContract]
-        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NotAvailableComponent"; } }

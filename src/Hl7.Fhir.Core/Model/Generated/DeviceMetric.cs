@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DeviceMetric", IsResource=true)]
     [DataContract]
-    public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "DeviceMetric"; } }
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CalibrationComponent")]
         [DataContract]
-        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CalibrationComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Binary", IsResource=true)]
     [DataContract]
-    public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Binary : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
         public override string TypeName { get { return "Binary"; } }

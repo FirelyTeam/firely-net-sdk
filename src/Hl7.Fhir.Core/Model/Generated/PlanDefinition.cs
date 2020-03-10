@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("PlanDefinition", IsResource=true)]
     [DataContract]
-    public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "PlanDefinition"; } }
         
         [FhirType("GoalComponent")]
         [DataContract]
-        public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GoalComponent"; } }
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetComponent")]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionComponent")]
         [DataContract]
-        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RelatedActionComponent")]
         [DataContract]
-        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedActionComponent"; } }
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DynamicValueComponent")]
         [DataContract]
-        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DynamicValueComponent"; } }

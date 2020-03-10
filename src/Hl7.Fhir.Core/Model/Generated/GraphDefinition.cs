@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("GraphDefinition", IsResource=true)]
     [DataContract]
-    public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "GraphDefinition"; } }
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LinkComponent")]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetComponent")]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CompartmentComponent")]
         [DataContract]
-        public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CompartmentComponent"; } }

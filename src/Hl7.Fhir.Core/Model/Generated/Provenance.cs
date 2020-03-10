@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Provenance", IsResource=true)]
     [DataContract]
-    public partial class Provenance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Provenance : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Provenance"; } }
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntityComponent")]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }

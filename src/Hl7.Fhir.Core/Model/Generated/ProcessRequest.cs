@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ProcessRequest", IsResource=true)]
     [DataContract]
-    public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ProcessRequest"; } }
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemsComponent")]
         [DataContract]
-        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }

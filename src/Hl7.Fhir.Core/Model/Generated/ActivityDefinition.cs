@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ActivityDefinition", IsResource=true)]
     [DataContract]
-    public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "ActivityDefinition"; } }
         
         [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DynamicValueComponent")]
         [DataContract]
-        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DynamicValueComponent"; } }

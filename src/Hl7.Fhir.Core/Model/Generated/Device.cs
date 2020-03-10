@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Device", IsResource=true)]
     [DataContract]
-    public partial class Device : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Device : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Device"; } }
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("UdiComponent")]
         [DataContract]
-        public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "UdiComponent"; } }

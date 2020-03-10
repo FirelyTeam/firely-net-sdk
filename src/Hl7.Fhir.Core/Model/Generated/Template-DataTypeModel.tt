@@ -158,14 +158,11 @@
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
-			if (resourceName == "Resource"
-				|| resourceName == "DomainResource"
-				|| resourceName == "Xhtml"
-			//	|| resourceName == "ElementDefinition"
-				|| resourceName == "Narrative"
-				|| resourceName == "Extension"
-				|| resourceName == "Xhtml")
-				continue;
+	
+	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean",
+				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml" };
+			
+			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile(resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
@@ -256,7 +253,7 @@ if (!abstractType){
 #>    [FhirType("<#= rawResourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
 <#}
 #>    [DataContract]
-    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
 <# if (resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
@@ -425,7 +422,7 @@ if (!abstractType){
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }

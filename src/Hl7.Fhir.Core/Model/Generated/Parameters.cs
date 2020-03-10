@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Parameters", IsResource=true)]
     [DataContract]
-    public partial class Parameters : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Parameters : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
         public override string TypeName { get { return "Parameters"; } }
         
         [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }

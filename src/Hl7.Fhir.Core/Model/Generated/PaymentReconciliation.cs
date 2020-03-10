@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("PaymentReconciliation", IsResource=true)]
     [DataContract]
-    public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "PaymentReconciliation"; } }
         
         [FhirType("DetailsComponent")]
         [DataContract]
-        public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DetailsComponent"; } }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NotesComponent")]
         [DataContract]
-        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NotesComponent"; } }

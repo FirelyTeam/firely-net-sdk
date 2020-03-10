@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("NutritionOrder", IsResource=true)]
     [DataContract]
-    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("OralDietComponent")]
         [DataContract]
-        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OralDietComponent"; } }
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NutrientComponent")]
         [DataContract]
-        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NutrientComponent"; } }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TextureComponent")]
         [DataContract]
-        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TextureComponent"; } }
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SupplementComponent")]
         [DataContract]
-        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SupplementComponent"; } }
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EnteralFormulaComponent")]
         [DataContract]
-        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EnteralFormulaComponent"; } }
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AdministrationComponent")]
         [DataContract]
-        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AdministrationComponent"; } }

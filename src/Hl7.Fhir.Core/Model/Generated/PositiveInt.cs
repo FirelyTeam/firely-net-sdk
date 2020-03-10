@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("positiveInt")]
     [DataContract]
-    public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
+    public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>
     {
         [NotMapped]
         public override string TypeName { get { return "positiveInt"; } }

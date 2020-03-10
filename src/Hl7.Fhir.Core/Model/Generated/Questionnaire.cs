@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Questionnaire", IsResource=true)]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent")]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EnableWhenComponent")]
         [DataContract]
-        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EnableWhenComponent"; } }
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OptionComponent")]
         [DataContract]
-        public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OptionComponent"; } }
