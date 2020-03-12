@@ -6,14 +6,12 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
@@ -47,7 +45,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
-            var url = ModelInfo.CanonicalUriForFhirCoreType(typename);
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfo.CanonicalUriForFhirCoreType(typename).Value;
             return resolver.FindStructureDefinition(url);
         }
 
@@ -79,13 +77,8 @@ namespace Hl7.Fhir.Specification.Source
             return source.ResolveByCanonicalUri(uri) as CodeSystem;
         }
 
-        /// <summary>
-        /// List all the 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T:Resource
+
+        public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {
             var type = ModelInfo.GetFhirTypeNameForType(typeof(T));
 

@@ -88,58 +88,58 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(ITypedElement instance)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null).RemoveDuplicateMessages();
         }
 
         public OperationOutcome Validate(ITypedElement instance, params string[] definitionUris)
         {
-            return Validate(instance, (IEnumerable<string>)definitionUris);
+            return Validate(instance, (IEnumerable<string>)definitionUris).RemoveDuplicateMessages(); ;
         }
 
         public OperationOutcome Validate(ITypedElement instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); ;
         }
 
         public OperationOutcome Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions);
+            return Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages();
         }
 
         public OperationOutcome Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); ;
         }
 
         #region Obsolete public methods
         [Obsolete("Use Validate(ITypedElement instance) instead")]
         public OperationOutcome Validate(IElementNavigator instance)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null).RemoveDuplicateMessages(); ;
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params string[] definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
         {
-            return Validate(instance.ToTypedElement(), (IEnumerable<string>)definitionUris);
+            return Validate(instance.ToTypedElement(), (IEnumerable<string>)definitionUris).RemoveDuplicateMessages(); ;
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); 
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions);
+            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages(); 
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); 
         }
         #endregion
 
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
         {
-            return Validate(instance, new[] { definition });
+            return Validate(instance, new[] { definition }).RemoveDuplicateMessages(); ;
         }
 
 
