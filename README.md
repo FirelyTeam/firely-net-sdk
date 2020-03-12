@@ -39,7 +39,11 @@ and develop branches in this repository below:
 |DSTU2| https://github.com/FirelyTeam/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/|
 |DSTU1| https://github.com/FirelyTeam/fhir-net-api/tree/master-dstu1|https://www.nuget.org/packages/Hl7.Fhir.DSTU/|
 
-Please note that the source code for the FHIR .NET API is split up into two GitHub repo's: one (with the branches listed above) with code that is specific to a FHIR release (this repo), and one that contains the code that is applicable across all FHIR releases (a separate [common repository][common-repo]).  This second repository is included in the first one using a Git Submodule, so all you have to do is check out the main repo (this one) and learn how to work with Submodules.
+Please note that the source code for the FHIR .NET API is split up into two GitHub repos: one (with the branches listed above) with code that is specific to a FHIR release (this repo), and one that contains the code that is applicable across all FHIR releases (a separate [common repository][common-repo]).  This second repository is included in the first one using a Git Submodule, so all you have to do is check out the main repo (this one) and learn how to work with Submodules. To clone this repository with submodules, you can do:
+
+    git clone --recurse-submodules -j8 https://github.com/FirelyTeam/fhir-net-api.git .
+    
+Please refer to our [submodules overview](https://github.com/FirelyTeam/fhir-net-api/wiki/Clone-this-repository-with-submodule-common) for more details.
 
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/fhir-net-api/issues](https://github.com/FirelyTeam/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
