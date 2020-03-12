@@ -175,5 +175,21 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
         }
+
+        public static void TestXmlRepresetation(IStructureDefinitionSummaryProvider provider)
+        {
+            var testElements = new XmlRepresentation[] { XmlRepresentation.XmlAttr, XmlRepresentation.TypeAttr, XmlRepresentation.XHtml }; // Elements defined by TestXmlRepresentation (Logical Model)
+            var summary = provider.Provide("http://hl7.org/fhir/StructureDefinition/TestXmlRepresentation");
+            var summaryElements = summary.GetElements();
+
+            foreach (var element in testElements)
+            {
+                var representation = summaryElements.Where(e => e.ElementName == element.ToString()).FirstOrDefault().Representation;
+                if (!representation.Equals(element))
+                {
+                    Assert.Fail("Representation is expected to be the same as the name of the test element");
+                }
+            }
+        }
     }
 }
