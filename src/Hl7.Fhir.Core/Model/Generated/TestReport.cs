@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("TestReport", IsResource=true)]
     [DataContract]
-    public partial class TestReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class TestReport : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.TestReport; } }
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SetupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SetupComponent"; } }
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SetupActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SetupActionComponent"; } }
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OperationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AssertComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AssertComponent"; } }
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TestComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TestComponent"; } }
@@ -1044,7 +1044,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TestActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TestActionComponent"; } }
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TeardownComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TeardownComponent"; } }
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TeardownActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TeardownActionComponent"; } }

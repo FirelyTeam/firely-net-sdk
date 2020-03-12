@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
     /// A resource with narrative, extensions, and contained resources
     /// </summary>
     [DataContract]
-    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DomainResource; } }

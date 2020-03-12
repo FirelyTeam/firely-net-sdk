@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ObservationDefinition", IsResource=true)]
     [DataContract]
-    public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ObservationDefinition; } }
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("QuantitativeDetailsComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QuantitativeDetailsComponent"; } }
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QualifiedIntervalComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QualifiedIntervalComponent"; } }

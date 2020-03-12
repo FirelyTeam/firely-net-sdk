@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("markdown")]
     [DataContract]
-    public partial class Markdown : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
+    public partial class Markdown : Hl7.Fhir.Model.Primitive<string>
     {
         [NotMapped]
         public override string TypeName { get { return "markdown"; } }

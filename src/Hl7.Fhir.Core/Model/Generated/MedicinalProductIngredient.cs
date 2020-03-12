@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicinalProductIngredient", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicinalProductIngredient; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecifiedSubstanceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecifiedSubstanceComponent"; } }
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StrengthComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StrengthComponent"; } }
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReferenceStrengthComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceStrengthComponent"; } }
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstanceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubstanceComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Subscription", IsResource=true)]
     [DataContract]
-    public partial class Subscription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Subscription : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Subscription; } }
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ChannelComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ChannelComponent"; } }

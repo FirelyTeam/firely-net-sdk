@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicinalProductPackaged", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicinalProductPackaged; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "BatchIdentifierComponent"; } }
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PackageItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PackageItemComponent"; } }

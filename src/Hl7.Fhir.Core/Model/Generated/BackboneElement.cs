@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
     /// Base for elements defined inside a resource
     /// </summary>
     [DataContract]
-    public abstract partial class BackboneElement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class BackboneElement : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "BackboneElement"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("QuestionnaireResponse", IsResource=true)]
     [DataContract]
-    public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.QuestionnaireResponse; } }
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AnswerComponent"; } }

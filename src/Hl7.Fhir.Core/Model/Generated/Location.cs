@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Location", IsResource=true)]
     [DataContract]
-    public partial class Location : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Location : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Location; } }
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PositionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PositionComponent"; } }
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("HoursOfOperationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "HoursOfOperationComponent"; } }

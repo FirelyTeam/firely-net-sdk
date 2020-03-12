@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Task", IsResource=true)]
     [DataContract]
-    public partial class Task : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Task : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Task; } }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("RestrictionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RestrictionComponent"; } }
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OutputComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OutputComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ImmunizationRecommendation", IsResource=true)]
     [DataContract]
-    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ImmunizationRecommendation; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RecommendationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RecommendationComponent"; } }
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DateCriterionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DateCriterionComponent"; } }

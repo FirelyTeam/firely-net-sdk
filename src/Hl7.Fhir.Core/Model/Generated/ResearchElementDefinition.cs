@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ResearchElementDefinition", IsResource=true)]
     [DataContract]
-    public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ResearchElementDefinition; } }
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Questionnaire", IsResource=true)]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EnableWhenComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EnableWhenComponent"; } }
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerOptionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AnswerOptionComponent"; } }
@@ -1097,7 +1097,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InitialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InitialComponent"; } }

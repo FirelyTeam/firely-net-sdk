@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstancePolymer", IsResource=true)]
     [DataContract]
-    public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.SubstancePolymer; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MonomerSetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MonomerSetComponent"; } }
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StartingMaterialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StartingMaterialComponent"; } }
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatUnitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepeatUnitComponent"; } }
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DegreeOfPolymerisationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DegreeOfPolymerisationComponent"; } }
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StructuralRepresentationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StructuralRepresentationComponent"; } }

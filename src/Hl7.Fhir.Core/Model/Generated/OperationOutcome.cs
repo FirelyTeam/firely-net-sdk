@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("OperationOutcome", IsResource=true)]
     [DataContract]
-    public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.OperationOutcome; } }
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("IssueComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "IssueComponent"; } }

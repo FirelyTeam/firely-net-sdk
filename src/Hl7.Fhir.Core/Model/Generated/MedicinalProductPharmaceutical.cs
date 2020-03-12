@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicinalProductPharmaceutical", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicinalProductPharmaceutical; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CharacteristicsComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CharacteristicsComponent"; } }
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RouteOfAdministrationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RouteOfAdministrationComponent"; } }
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetSpeciesComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TargetSpeciesComponent"; } }
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("WithdrawalPeriodComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "WithdrawalPeriodComponent"; } }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("VisionPrescription", IsResource=true)]
     [DataContract]
-    public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.VisionPrescription; } }
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LensSpecificationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LensSpecificationComponent"; } }
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PrismComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PrismComponent"; } }

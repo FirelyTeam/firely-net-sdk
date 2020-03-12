@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("RequestGroup", IsResource=true)]
     [DataContract]
-    public partial class RequestGroup : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RequestGroup : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.RequestGroup; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ConditionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RelatedActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RelatedActionComponent"; } }

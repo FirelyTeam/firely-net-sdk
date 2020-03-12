@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MarketingStatus")]
     [DataContract]
-    public partial class MarketingStatus : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+    public partial class MarketingStatus : Hl7.Fhir.Model.BackboneElement
     {
         [NotMapped]
         public override string TypeName { get { return "MarketingStatus"; } }

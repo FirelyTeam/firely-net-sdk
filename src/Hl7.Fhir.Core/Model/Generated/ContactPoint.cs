@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ContactPoint")]
     [DataContract]
-    public partial class ContactPoint : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContactPoint : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "ContactPoint"; } }

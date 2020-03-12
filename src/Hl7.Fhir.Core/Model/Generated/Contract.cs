@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Contract", IsResource=true)]
     [DataContract]
-    public partial class Contract : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Contract : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Contract; } }
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ContentDefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContentDefinitionComponent"; } }
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TermComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TermComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TermComponent"; } }
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SecurityLabelComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SecurityLabelComponent"; } }
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContractOfferComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContractOfferComponent"; } }
@@ -1278,7 +1278,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContractPartyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContractPartyComponent"; } }
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AnswerComponent"; } }
@@ -1475,7 +1475,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContractAssetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContractAssetComponent"; } }
@@ -1902,7 +1902,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AssetContextComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AssetContextComponent"; } }
@@ -2046,7 +2046,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ValuedItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ValuedItemComponent"; } }
@@ -2507,7 +2507,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActionComponent"; } }
@@ -3131,7 +3131,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ActionSubjectComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActionSubjectComponent"; } }
@@ -3238,7 +3238,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SignatoryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SignatoryComponent"; } }
@@ -3365,7 +3365,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FriendlyLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FriendlyLanguageComponent"; } }
@@ -3454,7 +3454,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LegalLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LegalLanguageComponent"; } }
@@ -3543,7 +3543,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComputableLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComputableLanguageComponent"; } }

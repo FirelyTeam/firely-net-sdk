@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Consent", IsResource=true)]
     [DataContract]
-    public partial class Consent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Consent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Consent; } }
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PolicyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VerificationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VerificationComponent"; } }
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "provisionComponent"; } }
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionActorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "provisionActorComponent"; } }
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("provisionDataComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "provisionDataComponent"; } }

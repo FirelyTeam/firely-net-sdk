@@ -48,14 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstanceAmount")]
     [DataContract]
-    public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneElement
     {
         [NotMapped]
         public override string TypeName { get { return "SubstanceAmount"; } }
         
         [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }

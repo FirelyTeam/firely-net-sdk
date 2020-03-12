@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SpecimenDefinition", IsResource=true)]
     [DataContract]
-    public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.SpecimenDefinition; } }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("TypeTestedComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TypeTestedComponent"; } }
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element MinimumVolume
             {
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AdditiveComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AdditiveComponent"; } }
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("HandlingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "HandlingComponent"; } }

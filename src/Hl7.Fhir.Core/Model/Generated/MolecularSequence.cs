@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MolecularSequence", IsResource=true)]
     [DataContract]
-    public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MolecularSequence; } }
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ReferenceSeqComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReferenceSeqComponent"; } }
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VariantComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VariantComponent"; } }
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QualityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "QualityComponent"; } }
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RocComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RocComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RocComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RocComponent"; } }
@@ -1693,7 +1693,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepositoryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RepositoryComponent"; } }
@@ -1984,7 +1984,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StructureVariantComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StructureVariantComponent"; } }
@@ -2180,7 +2180,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OuterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OuterComponent"; } }
@@ -2322,7 +2322,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InnerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InnerComponent"; } }

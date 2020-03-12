@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ImplementationGuide", IsResource=true)]
     [DataContract]
-    public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ImplementationGuide; } }
@@ -2244,7 +2244,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("DependsOnComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DependsOnComponent"; } }
@@ -2424,7 +2424,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GlobalComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GlobalComponent"; } }
@@ -2568,7 +2568,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DefinitionComponent"; } }
@@ -2730,7 +2730,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GroupingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GroupingComponent"; } }
@@ -2873,7 +2873,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
@@ -3131,7 +3131,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PageComponent"; } }
@@ -3315,7 +3315,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -3459,7 +3459,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TemplateComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TemplateComponent"; } }
@@ -3640,7 +3640,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ManifestComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ManifestComponent"; } }
@@ -3859,7 +3859,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ManifestResourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ManifestResourceComponent"; } }
@@ -4005,7 +4005,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ManifestPageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ManifestPageComponent"; } }

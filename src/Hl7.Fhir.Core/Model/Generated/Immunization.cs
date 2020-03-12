@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Immunization", IsResource=true)]
     [DataContract]
-    public partial class Immunization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Immunization; } }
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EducationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EducationComponent"; } }
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReactionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProtocolAppliedComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProtocolAppliedComponent"; } }

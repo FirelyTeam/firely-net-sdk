@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstanceNucleicAcid", IsResource=true)]
     [DataContract]
-    public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.SubstanceNucleicAcid; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubunitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubunitComponent"; } }
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LinkageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LinkageComponent"; } }
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SugarComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SugarComponent"; } }

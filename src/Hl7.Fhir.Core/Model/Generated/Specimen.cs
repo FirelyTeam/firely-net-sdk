@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Specimen", IsResource=true)]
     [DataContract]
-    public partial class Specimen : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Specimen : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Specimen; } }
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CollectionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CollectionComponent"; } }
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcessingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessingComponent"; } }
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }

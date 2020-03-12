@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("EffectEvidenceSynthesis", IsResource=true)]
     [DataContract]
-    public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.EffectEvidenceSynthesis; } }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SampleSizeComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SampleSizeComponent"; } }
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResultsByExposureComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResultsByExposureComponent"; } }
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EffectEstimateComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EffectEstimateComponent"; } }
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PrecisionEstimateComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PrecisionEstimateComponent"; } }
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CertaintyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CertaintyComponent"; } }
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CertaintySubcomponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CertaintySubcomponentComponent"; } }

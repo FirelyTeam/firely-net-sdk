@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Money")]
     [DataContract]
-    public partial class Money : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Money : Hl7.Fhir.Model.Element
     {
         [NotMapped]
         public override string TypeName { get { return "Money"; } }

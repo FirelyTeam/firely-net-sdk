@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MessageHeader", IsResource=true)]
     [DataContract]
-    public partial class MessageHeader : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MessageHeader : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MessageHeader; } }
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MessageDestinationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MessageDestinationComponent"; } }
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MessageSourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MessageSourceComponent"; } }
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResponseComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ResponseComponent"; } }

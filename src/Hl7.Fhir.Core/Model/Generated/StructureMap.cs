@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("StructureMap", IsResource=true)]
     [DataContract]
-    public partial class StructureMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class StructureMap : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.StructureMap; } }
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StructureComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StructureComponent"; } }
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InputComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InputComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InputComponent"; } }
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RuleComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "RuleComponent"; } }
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SourceComponent"; } }
@@ -1712,7 +1712,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
@@ -2059,7 +2059,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
@@ -2148,7 +2148,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DependentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DependentComponent"; } }

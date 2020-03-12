@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("base64Binary")]
     [DataContract]
-    public partial class Base64Binary : Hl7.Fhir.Model.Primitive<byte[]>, System.ComponentModel.INotifyPropertyChanged
+    public partial class Base64Binary : Hl7.Fhir.Model.Primitive<byte[]>
     {
         [NotMapped]
         public override string TypeName { get { return "base64Binary"; } }

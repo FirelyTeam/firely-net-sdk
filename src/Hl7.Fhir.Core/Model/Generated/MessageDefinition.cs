@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MessageDefinition", IsResource=true)]
     [DataContract]
-    public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MessageDefinition; } }
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("FocusComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "FocusComponent"; } }
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AllowedResponseComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AllowedResponseComponent"; } }

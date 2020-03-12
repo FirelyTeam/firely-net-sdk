@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Coverage", IsResource=true)]
     [DataContract]
-    public partial class Coverage : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Coverage : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Coverage; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ClassComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ClassComponent"; } }
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CostToBeneficiaryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CostToBeneficiaryComponent"; } }
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExemptionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ExemptionComponent"; } }

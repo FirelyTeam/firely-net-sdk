@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicinalProduct", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicinalProduct; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NameComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class NameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NameComponent"; } }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NamePartComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NamePartComponent"; } }
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CountryLanguageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CountryLanguageComponent"; } }
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ManufacturingBusinessOperationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ManufacturingBusinessOperationComponent"; } }
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecialDesignationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecialDesignationComponent"; } }

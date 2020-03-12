@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ExampleScenario", IsResource=true)]
     [DataContract]
-    public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ExampleScenario; } }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ActorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ActorComponent"; } }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InstanceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VersionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "VersionComponent"; } }
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContainedInstanceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContainedInstanceComponent"; } }
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcessComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcessComponent"; } }
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StepComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StepComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StepComponent"; } }
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OperationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
@@ -1504,7 +1504,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AlternativeComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AlternativeComponent"; } }

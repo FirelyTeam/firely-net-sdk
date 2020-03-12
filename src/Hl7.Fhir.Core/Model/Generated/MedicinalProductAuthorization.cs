@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicinalProductAuthorization", IsResource=true)]
     [DataContract]
-    public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicinalProductAuthorization; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("JurisdictionalAuthorizationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "JurisdictionalAuthorizationComponent"; } }
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ProcedureComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ProcedureComponent"; } }

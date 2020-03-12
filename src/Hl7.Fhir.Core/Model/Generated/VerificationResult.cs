@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("VerificationResult", IsResource=true)]
     [DataContract]
-    public partial class VerificationResult : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class VerificationResult : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.VerificationResult; } }
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PrimarySourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PrimarySourceComponent"; } }
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AttestationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AttestationComponent"; } }
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ValidatorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ValidatorComponent"; } }

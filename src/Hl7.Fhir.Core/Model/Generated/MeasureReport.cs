@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MeasureReport", IsResource=true)]
     [DataContract]
-    public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MeasureReport; } }
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierComponent"; } }
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierGroupComponent"; } }
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupPopulationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }

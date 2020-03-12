@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DeviceDefinition", IsResource=true)]
     [DataContract]
-    public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.DeviceDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("UdiDeviceIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "UdiDeviceIdentifierComponent"; } }
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DeviceNameComponent"; } }
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecializationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecializationComponent"; } }
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CapabilityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CapabilityComponent"; } }
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PropertyComponent"; } }
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MaterialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "MaterialComponent"; } }

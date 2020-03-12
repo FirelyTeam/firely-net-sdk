@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("canonical")]
     [DataContract]
-    public partial class Canonical : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
+    public partial class Canonical : Hl7.Fhir.Model.Primitive<string>
     {
         [NotMapped]
         public override string TypeName { get { return "canonical"; } }

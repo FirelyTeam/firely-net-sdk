@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("MedicationRequest", IsResource=true)]
     [DataContract]
-    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.MedicationRequest; } }
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("DispenseRequestComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "DispenseRequestComponent"; } }
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InitialFillComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InitialFillComponent"; } }
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }

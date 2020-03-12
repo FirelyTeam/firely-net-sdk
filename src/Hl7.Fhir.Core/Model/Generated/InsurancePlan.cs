@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("InsurancePlan", IsResource=true)]
     [DataContract]
-    public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.InsurancePlan; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContactComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CoverageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CoverageComponent"; } }
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CoverageBenefitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CoverageBenefitComponent"; } }
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LimitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LimitComponent"; } }
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PlanComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PlanComponent"; } }
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GeneralCostComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "GeneralCostComponent"; } }
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecificCostComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SpecificCostComponent"; } }
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PlanBenefitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PlanBenefitComponent"; } }
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CostComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CostComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CostComponent"; } }

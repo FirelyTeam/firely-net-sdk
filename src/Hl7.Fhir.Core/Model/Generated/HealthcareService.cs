@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("HealthcareService", IsResource=true)]
     [DataContract]
-    public partial class HealthcareService : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class HealthcareService : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.HealthcareService; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EligibilityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "EligibilityComponent"; } }
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AvailableTimeComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "AvailableTimeComponent"; } }
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NotAvailableComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "NotAvailableComponent"; } }

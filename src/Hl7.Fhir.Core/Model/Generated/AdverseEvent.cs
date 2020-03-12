@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("AdverseEvent", IsResource=true)]
     [DataContract]
-    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.AdverseEvent; } }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SuspectEntityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SuspectEntityComponent"; } }
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CausalityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CausalityComponent"; } }

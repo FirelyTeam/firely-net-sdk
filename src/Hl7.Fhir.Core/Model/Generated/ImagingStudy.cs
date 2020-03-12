@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ImagingStudy", IsResource=true)]
     [DataContract]
-    public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ImagingStudy; } }
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SeriesComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InstanceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }

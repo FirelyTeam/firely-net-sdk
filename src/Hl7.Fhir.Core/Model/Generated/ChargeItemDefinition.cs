@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ChargeItemDefinition", IsResource=true)]
     [DataContract]
-    public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.ChargeItemDefinition; } }
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ApplicabilityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ApplicabilityComponent"; } }
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PropertyGroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PropertyGroupComponent"; } }
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "PriceComponentComponent"; } }

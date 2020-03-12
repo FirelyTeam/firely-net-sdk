@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Patient", IsResource=true)]
     [DataContract]
-    public partial class Patient : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Patient : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.Patient; } }
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ContactComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CommunicationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "CommunicationComponent"; } }
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
             [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
