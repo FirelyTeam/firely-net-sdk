@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.PlanDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "PlanDefinition"; } }
         
         [FhirType("GoalComponent", NamedBackboneElement=true)]
@@ -2388,12 +2386,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(PlanDefinition_PDF_0);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

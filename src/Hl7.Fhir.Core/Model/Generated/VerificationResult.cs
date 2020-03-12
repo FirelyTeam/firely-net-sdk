@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class VerificationResult : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.VerificationResult; } }
-        [NotMapped]
         public override string TypeName { get { return "VerificationResult"; } }
         
         /// <summary>
@@ -1021,11 +1019,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> _Validator;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

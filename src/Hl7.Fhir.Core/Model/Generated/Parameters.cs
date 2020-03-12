@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Parameters : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Parameters; } }
-        [NotMapped]
         public override string TypeName { get { return "Parameters"; } }
         
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
@@ -244,12 +242,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), 'value')])) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Parameters_INV_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ClaimResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "ClaimResponse"; } }
         
         [FhirType("ItemComponent", NamedBackboneElement=true)]
@@ -3186,11 +3184,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent> _Error;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

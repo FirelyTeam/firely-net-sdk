@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ConceptMap; } }
-        [NotMapped]
         public override string TypeName { get { return "ConceptMap"; } }
         
         /// <summary>
@@ -1687,15 +1685,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ConceptMap_CMD_0);
-            InvariantConstraints.Add(ConceptMap_CMD_1);
-            InvariantConstraints.Add(ConceptMap_CMD_3);
-            InvariantConstraints.Add(ConceptMap_CMD_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

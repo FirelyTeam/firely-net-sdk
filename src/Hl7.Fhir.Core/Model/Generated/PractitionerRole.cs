@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.PractitionerRole; } }
-        [NotMapped]
         public override string TypeName { get { return "PractitionerRole"; } }
         
         [FhirType("AvailableTimeComponent", NamedBackboneElement=true)]
@@ -636,11 +634,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DetectedIssue; } }
-        [NotMapped]
         public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>
@@ -580,11 +578,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class SubstanceProtein : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SubstanceProtein; } }
-        [NotMapped]
         public override string TypeName { get { return "SubstanceProtein"; } }
         
         [FhirType("SubunitComponent", NamedBackboneElement=true)]
@@ -455,11 +453,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> _Subunit;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

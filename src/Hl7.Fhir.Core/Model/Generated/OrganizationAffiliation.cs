@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class OrganizationAffiliation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.OrganizationAffiliation; } }
-        [NotMapped]
         public override string TypeName { get { return "OrganizationAffiliation"; } }
         
         /// <summary>
@@ -251,11 +249,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

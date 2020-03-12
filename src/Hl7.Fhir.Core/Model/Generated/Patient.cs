@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Patient : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Patient; } }
-        [NotMapped]
         public override string TypeName { get { return "Patient"; } }
         
         /// <summary>
@@ -848,12 +846,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Patient_PAT_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

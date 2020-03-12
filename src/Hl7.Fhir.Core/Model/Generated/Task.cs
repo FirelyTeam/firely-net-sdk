@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Task : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Task; } }
-        [NotMapped]
         public override string TypeName { get { return "Task"; } }
         
         /// <summary>
@@ -1157,12 +1155,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Task_INV_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

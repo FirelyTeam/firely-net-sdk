@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.OperationOutcome; } }
-        [NotMapped]
         public override string TypeName { get { return "OperationOutcome"; } }
         
         /// <summary>
@@ -573,11 +571,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

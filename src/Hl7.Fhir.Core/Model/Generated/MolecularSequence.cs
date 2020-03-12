@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MolecularSequence; } }
-        [NotMapped]
         public override string TypeName { get { return "MolecularSequence"; } }
         
         /// <summary>
@@ -2791,14 +2789,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MolecularSequence_MSQ_3);
-            InvariantConstraints.Add(MolecularSequence_MSQ_6);
-            InvariantConstraints.Add(MolecularSequence_MSQ_5);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

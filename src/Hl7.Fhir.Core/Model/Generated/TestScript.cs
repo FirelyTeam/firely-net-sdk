@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class TestScript : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.TestScript; } }
-        [NotMapped]
         public override string TypeName { get { return "TestScript"; } }
         
         /// <summary>
@@ -5841,25 +5839,6 @@ namespace Hl7.Fhir.Model
             Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(TestScript_TST_0);
-            InvariantConstraints.Add(TestScript_TST_4);
-            InvariantConstraints.Add(TestScript_TST_3);
-            InvariantConstraints.Add(TestScript_TST_1);
-            InvariantConstraints.Add(TestScript_TST_7);
-            InvariantConstraints.Add(TestScript_TST_12);
-            InvariantConstraints.Add(TestScript_TST_5);
-            InvariantConstraints.Add(TestScript_TST_10);
-            InvariantConstraints.Add(TestScript_TST_2);
-            InvariantConstraints.Add(TestScript_TST_8);
-            InvariantConstraints.Add(TestScript_TST_11);
-            InvariantConstraints.Add(TestScript_TST_13);
-            InvariantConstraints.Add(TestScript_TST_6);
-            InvariantConstraints.Add(TestScript_TST_9);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

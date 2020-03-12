@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AllergyIntolerance; } }
-        [NotMapped]
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
@@ -753,13 +751,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:verificationStatus/f:coding/f:code/@value='entered-in-error') or not(exists(f:clinicalStatus))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AllergyIntolerance_AIT_1);
-            InvariantConstraints.Add(AllergyIntolerance_AIT_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

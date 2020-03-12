@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class SubstanceReferenceInformation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SubstanceReferenceInformation; } }
-        [NotMapped]
         public override string TypeName { get { return "SubstanceReferenceInformation"; } }
         
         [FhirType("GeneComponent", NamedBackboneElement=true)]
@@ -755,11 +753,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent> _Target;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

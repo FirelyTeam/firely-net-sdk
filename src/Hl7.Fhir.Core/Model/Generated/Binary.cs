@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Binary : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Binary; } }
-        [NotMapped]
         public override string TypeName { get { return "Binary"; } }
         
         /// <summary>
@@ -136,11 +134,6 @@ namespace Hl7.Fhir.Model
         }
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

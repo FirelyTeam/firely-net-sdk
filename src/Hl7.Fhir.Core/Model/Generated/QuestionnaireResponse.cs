@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.QuestionnaireResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "QuestionnaireResponse"; } }
         
         /// <summary>
@@ -645,12 +643,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:answer) and exists(f:item))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

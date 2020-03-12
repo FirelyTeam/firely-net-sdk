@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Condition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Condition; } }
-        [NotMapped]
         public override string TypeName { get { return "Condition"; } }
         
         [FhirType("StageComponent", NamedBackboneElement=true)]
@@ -594,16 +592,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:code) or exists(f:detail)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Condition_CON_5);
-            InvariantConstraints.Add(Condition_CON_4);
-            InvariantConstraints.Add(Condition_CON_3);
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

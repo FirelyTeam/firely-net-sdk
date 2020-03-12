@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductPackaged; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
         [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
@@ -610,11 +608,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> _PackageItem;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

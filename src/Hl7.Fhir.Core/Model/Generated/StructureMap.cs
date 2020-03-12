@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class StructureMap : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.StructureMap; } }
-        [NotMapped]
         public override string TypeName { get { return "StructureMap"; } }
         
         /// <summary>
@@ -2733,14 +2731,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:element) or (f:context)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(StructureMap_SMP_0);
-            InvariantConstraints.Add(StructureMap_SMP_2);
-            InvariantConstraints.Add(StructureMap_SMP_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

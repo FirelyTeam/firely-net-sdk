@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
-        [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>
@@ -1834,25 +1832,6 @@ namespace Hl7.Fhir.Model
             Xpath = "f:operator/@value != 'exists' or exists(f:answerBoolean)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_0);
-            InvariantConstraints.Add(Questionnaire_QUE_9);
-            InvariantConstraints.Add(Questionnaire_QUE_8);
-            InvariantConstraints.Add(Questionnaire_QUE_6);
-            InvariantConstraints.Add(Questionnaire_QUE_5);
-            InvariantConstraints.Add(Questionnaire_QUE_4);
-            InvariantConstraints.Add(Questionnaire_QUE_3);
-            InvariantConstraints.Add(Questionnaire_QUE_10);
-            InvariantConstraints.Add(Questionnaire_QUE_1);
-            InvariantConstraints.Add(Questionnaire_QUE_13);
-            InvariantConstraints.Add(Questionnaire_QUE_11);
-            InvariantConstraints.Add(Questionnaire_QUE_12);
-            InvariantConstraints.Add(Questionnaire_QUE_7);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

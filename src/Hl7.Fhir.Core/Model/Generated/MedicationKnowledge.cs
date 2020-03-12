@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationKnowledge; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationKnowledge"; } }
         
         /// <summary>
@@ -2313,11 +2311,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent> _Kinetics;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

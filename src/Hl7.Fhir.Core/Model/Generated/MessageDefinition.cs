@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MessageDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "MessageDefinition"; } }
         
         /// <summary>
@@ -1068,13 +1066,6 @@ namespace Hl7.Fhir.Model
             Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MessageDefinition_MSD_0);
-            InvariantConstraints.Add(MessageDefinition_MD_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

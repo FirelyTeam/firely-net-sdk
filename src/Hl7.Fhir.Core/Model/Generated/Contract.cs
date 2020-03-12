@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Contract : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Contract; } }
-        [NotMapped]
         public override string TypeName { get { return "Contract"; } }
         
         /// <summary>
@@ -4265,11 +4263,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _LegallyBinding;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

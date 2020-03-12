@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class SearchParameter : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SearchParameter; } }
-        [NotMapped]
         public override string TypeName { get { return "SearchParameter"; } }
         
         /// <summary>
@@ -1143,14 +1141,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(SearchParameter_SPD_0);
-            InvariantConstraints.Add(SearchParameter_SPD_1);
-            InvariantConstraints.Add(SearchParameter_SPD_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

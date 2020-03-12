@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.FamilyMemberHistory; } }
-        [NotMapped]
         public override string TypeName { get { return "FamilyMemberHistory"; } }
         
         /// <summary>
@@ -656,13 +654,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_2);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

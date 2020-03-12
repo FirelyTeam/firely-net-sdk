@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.PaymentReconciliation; } }
-        [NotMapped]
         public override string TypeName { get { return "PaymentReconciliation"; } }
         
         [FhirType("DetailsComponent", NamedBackboneElement=true)]
@@ -779,11 +777,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> _ProcessNote;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

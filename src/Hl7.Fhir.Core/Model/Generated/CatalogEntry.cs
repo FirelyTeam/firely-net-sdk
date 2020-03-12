@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CatalogEntry; } }
-        [NotMapped]
         public override string TypeName { get { return "CatalogEntry"; } }
         
         /// <summary>
@@ -459,11 +457,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent> _RelatedEntry;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

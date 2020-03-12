@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ChargeItemDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "ChargeItemDefinition"; } }
         
         [FhirType("ApplicabilityComponent", NamedBackboneElement=true)]
@@ -1070,12 +1068,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ChargeItemDefinition_CID_0);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

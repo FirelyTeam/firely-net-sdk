@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.InsurancePlan; } }
-        [NotMapped]
         public override string TypeName { get { return "InsurancePlan"; } }
         
         [FhirType("ContactComponent", NamedBackboneElement=true)]
@@ -1555,12 +1553,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:identifier | f:name) > 0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(InsurancePlan_IPN_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

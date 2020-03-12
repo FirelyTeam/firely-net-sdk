@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CodeSystem; } }
-        [NotMapped]
         public override string TypeName { get { return "CodeSystem"; } }
         
         /// <summary>
@@ -1810,13 +1808,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CodeSystem_CSD_1);
-            InvariantConstraints.Add(CodeSystem_CSD_0);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

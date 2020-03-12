@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.PaymentNotice; } }
-        [NotMapped]
         public override string TypeName { get { return "PaymentNotice"; } }
         
         /// <summary>
@@ -287,11 +285,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _PaymentStatus;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

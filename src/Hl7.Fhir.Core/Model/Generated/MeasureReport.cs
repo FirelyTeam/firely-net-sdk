@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MeasureReport; } }
-        [NotMapped]
         public override string TypeName { get { return "MeasureReport"; } }
         
         /// <summary>
@@ -1148,13 +1146,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MeasureReport_MRP_2);
-            InvariantConstraints.Add(MeasureReport_MRP_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

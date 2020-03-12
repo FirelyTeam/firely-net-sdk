@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class TestReport : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.TestReport; } }
-        [NotMapped]
         public override string TypeName { get { return "TestReport"; } }
         
         /// <summary>
@@ -1616,13 +1614,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(TestReport_INV_1);
-            InvariantConstraints.Add(TestReport_INV_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

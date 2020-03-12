@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ExplanationOfBenefit; } }
-        [NotMapped]
         public override string TypeName { get { return "ExplanationOfBenefit"; } }
         
         /// <summary>
@@ -5628,11 +5626,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent> _BenefitBalance;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

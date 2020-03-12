@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class List : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.List; } }
-        [NotMapped]
         public override string TypeName { get { return "List"; } }
         
         /// <summary>
@@ -547,14 +545,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(List_LST_3);
-            InvariantConstraints.Add(List_LST_2);
-            InvariantConstraints.Add(List_LST_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

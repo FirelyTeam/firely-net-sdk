@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductInteraction; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductInteraction"; } }
         
         [FhirType("InteractantComponent", NamedBackboneElement=true)]
@@ -259,11 +257,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Management;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

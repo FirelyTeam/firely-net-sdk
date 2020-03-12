@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CarePlan : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CarePlan; } }
-        [NotMapped]
         public override string TypeName { get { return "CarePlan"; } }
         
         /// <summary>
@@ -1361,12 +1359,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CarePlan_CPL_3);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

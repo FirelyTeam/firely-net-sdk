@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Observation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Observation; } }
-        [NotMapped]
         public override string TypeName { get { return "Observation"; } }
         
         [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
@@ -830,14 +828,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Observation_OBS_7);
-            InvariantConstraints.Add(Observation_OBS_6);
-            InvariantConstraints.Add(Observation_OBS_3);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

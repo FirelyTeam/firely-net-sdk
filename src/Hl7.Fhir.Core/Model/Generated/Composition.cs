@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Composition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Composition; } }
-        [NotMapped]
         public override string TypeName { get { return "Composition"; } }
         
         /// <summary>
@@ -1107,13 +1105,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Composition_CMP_1);
-            InvariantConstraints.Add(Composition_CMP_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

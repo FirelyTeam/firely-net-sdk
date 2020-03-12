@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImmunizationRecommendation; } }
-        [NotMapped]
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
         [FhirType("RecommendationComponent", NamedBackboneElement=true)]
@@ -619,12 +617,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ImmunizationRecommendation_IMR_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

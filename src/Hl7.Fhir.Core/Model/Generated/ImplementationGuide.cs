@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImplementationGuide; } }
-        [NotMapped]
         public override string TypeName { get { return "ImplementationGuide"; } }
         
         /// <summary>
@@ -4691,14 +4689,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(for $id in (f:resource/f:groupingId) return $id[not(ancestor::f:grouping/@id=$id/@value)])=0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ImplementationGuide_IG_0);
-            InvariantConstraints.Add(ImplementationGuide_IG_2);
-            InvariantConstraints.Add(ImplementationGuide_IG_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class AuditEvent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AuditEvent; } }
-        [NotMapped]
         public override string TypeName { get { return "AuditEvent"; } }
         
         /// <summary>
@@ -1457,12 +1455,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:name)) or not(exists(f:query))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AuditEvent_SEV_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

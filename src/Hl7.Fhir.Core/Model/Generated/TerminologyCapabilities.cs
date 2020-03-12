@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.TerminologyCapabilities; } }
-        [NotMapped]
         public override string TypeName { get { return "TerminologyCapabilities"; } }
         
         /// <summary>
@@ -2200,17 +2198,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(count(f:version) <= 1) or not(exists(f:version[not(f:code)]))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_0);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_3);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_2);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_5);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_4);
-            InvariantConstraints.Add(TerminologyCapabilities_TCP_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

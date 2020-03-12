@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImagingStudy; } }
-        [NotMapped]
         public override string TypeName { get { return "ImagingStudy"; } }
         
         /// <summary>
@@ -1175,11 +1173,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> _Series;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

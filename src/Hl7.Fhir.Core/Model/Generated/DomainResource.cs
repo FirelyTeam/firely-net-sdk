@@ -50,8 +50,6 @@ namespace Hl7.Fhir.Model
     public abstract partial class DomainResource : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DomainResource; } }
-        [NotMapped]
         public override string TypeName { get { return "DomainResource"; } }
         
         /// <summary>
@@ -158,16 +156,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:contained/*/f:meta/f:security))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(DomainResource_DOM_2);
-            InvariantConstraints.Add(DomainResource_DOM_4);
-            InvariantConstraints.Add(DomainResource_DOM_3);
-            InvariantConstraints.Add(DomainResource_DOM_6);
-            InvariantConstraints.Add(DomainResource_DOM_5);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

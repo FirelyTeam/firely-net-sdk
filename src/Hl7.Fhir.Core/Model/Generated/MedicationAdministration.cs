@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationAdministration; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationAdministration"; } }
         
         /// <summary>
@@ -740,12 +738,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MedicationAdministration_MAD_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

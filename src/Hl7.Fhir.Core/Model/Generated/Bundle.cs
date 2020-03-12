@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Bundle : Hl7.Fhir.Model.Resource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Bundle; } }
-        [NotMapped]
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>
@@ -1454,22 +1452,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Bundle_BDL_7);
-            InvariantConstraints.Add(Bundle_BDL_9);
-            InvariantConstraints.Add(Bundle_BDL_3);
-            InvariantConstraints.Add(Bundle_BDL_4);
-            InvariantConstraints.Add(Bundle_BDL_12);
-            InvariantConstraints.Add(Bundle_BDL_1);
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_11);
-            InvariantConstraints.Add(Bundle_BDL_10);
-            InvariantConstraints.Add(Bundle_BDL_8);
-            InvariantConstraints.Add(Bundle_BDL_5);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

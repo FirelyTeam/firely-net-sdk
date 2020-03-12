@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Consent : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Consent; } }
-        [NotMapped]
         public override string TypeName { get { return "Consent"; } }
         
         /// <summary>
@@ -1256,16 +1254,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:policy) or exists(f:policyRule)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Consent_PPC_4);
-            InvariantConstraints.Add(Consent_PPC_5);
-            InvariantConstraints.Add(Consent_PPC_2);
-            InvariantConstraints.Add(Consent_PPC_3);
-            InvariantConstraints.Add(Consent_PPC_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

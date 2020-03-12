@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Organization : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Organization; } }
-        [NotMapped]
         public override string TypeName { get { return "Organization"; } }
         
         [FhirType("ContactComponent", NamedBackboneElement=true)]
@@ -422,14 +420,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:use[@value='home']) = 0"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Organization_ORG_1);
-            InvariantConstraints.Add(Organization_ORG_3);
-            InvariantConstraints.Add(Organization_ORG_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

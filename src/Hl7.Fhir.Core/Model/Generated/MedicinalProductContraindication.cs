@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicinalProductContraindication : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductContraindication; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductContraindication"; } }
         
         [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
@@ -264,11 +262,6 @@ namespace Hl7.Fhir.Model
         private List<Population> _Population;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.BiologicallyDerivedProduct; } }
-        [NotMapped]
         public override string TypeName { get { return "BiologicallyDerivedProduct"; } }
         
         /// <summary>
@@ -965,11 +963,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent> _Storage;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DeviceMetric; } }
-        [NotMapped]
         public override string TypeName { get { return "DeviceMetric"; } }
         
         /// <summary>
@@ -619,11 +617,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

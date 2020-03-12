@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductPharmaceutical; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductPharmaceutical"; } }
         
         [FhirType("CharacteristicsComponent", NamedBackboneElement=true)]
@@ -707,11 +705,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent> _RouteOfAdministration;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

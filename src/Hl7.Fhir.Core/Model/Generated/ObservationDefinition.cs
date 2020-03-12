@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ObservationDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "ObservationDefinition"; } }
         
         /// <summary>
@@ -845,11 +843,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

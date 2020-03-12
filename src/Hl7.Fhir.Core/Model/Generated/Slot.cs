@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Slot : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Slot; } }
-        [NotMapped]
         public override string TypeName { get { return "Slot"; } }
         
         /// <summary>
@@ -343,11 +341,6 @@ namespace Hl7.Fhir.Model
         }
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

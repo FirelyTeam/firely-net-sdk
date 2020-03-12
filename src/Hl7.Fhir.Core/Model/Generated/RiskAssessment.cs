@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.RiskAssessment; } }
-        [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
         [FhirType("PredictionComponent", NamedBackboneElement=true)]
@@ -577,13 +575,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(RiskAssessment_RAS_2);
-            InvariantConstraints.Add(RiskAssessment_RAS_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

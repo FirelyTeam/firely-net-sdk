@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImmunizationEvaluation; } }
-        [NotMapped]
         public override string TypeName { get { return "ImmunizationEvaluation"; } }
         
         /// <summary>
@@ -339,11 +337,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _SeriesDoses;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

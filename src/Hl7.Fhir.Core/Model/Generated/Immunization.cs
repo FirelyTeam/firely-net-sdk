@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Immunization; } }
-        [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
         /// <summary>
@@ -1266,12 +1264,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:documentType) or exists(f:reference)"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Immunization_IMM_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

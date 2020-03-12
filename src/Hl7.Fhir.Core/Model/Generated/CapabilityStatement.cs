@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CapabilityStatement; } }
-        [NotMapped]
         public override string TypeName { get { return "CapabilityStatement"; } }
         
         /// <summary>
@@ -3640,21 +3638,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CapabilityStatement_CPB_7);
-            InvariantConstraints.Add(CapabilityStatement_CPB_16);
-            InvariantConstraints.Add(CapabilityStatement_CPB_15);
-            InvariantConstraints.Add(CapabilityStatement_CPB_3);
-            InvariantConstraints.Add(CapabilityStatement_CPB_14);
-            InvariantConstraints.Add(CapabilityStatement_CPB_2);
-            InvariantConstraints.Add(CapabilityStatement_CPB_1);
-            InvariantConstraints.Add(CapabilityStatement_CPB_0);
-            InvariantConstraints.Add(CapabilityStatement_CPB_9);
-            InvariantConstraints.Add(CapabilityStatement_CPB_12);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

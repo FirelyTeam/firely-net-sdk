@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
-        [NotMapped]
         public override string TypeName { get { return "NamingSystem"; } }
         
         /// <summary>
@@ -689,14 +687,6 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(NamingSystem_NSD_1);
-            InvariantConstraints.Add(NamingSystem_NSD_0);
-            InvariantConstraints.Add(NamingSystem_NSD_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

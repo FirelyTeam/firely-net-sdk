@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.StructureDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "StructureDefinition"; } }
         
         /// <summary>
@@ -1538,35 +1536,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:element)=count(f:element[f:path/@value=ancestor::f:StructureDefinition/f:type/@value or starts-with(f:path/@value, concat(ancestor::f:StructureDefinition/f:type/@value, '.'))])"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(StructureDefinition_SDF_9);
-            InvariantConstraints.Add(StructureDefinition_SDF_15A);
-            InvariantConstraints.Add(StructureDefinition_SDF_19);
-            InvariantConstraints.Add(StructureDefinition_SDF_16);
-            InvariantConstraints.Add(StructureDefinition_SDF_15);
-            InvariantConstraints.Add(StructureDefinition_SDF_18);
-            InvariantConstraints.Add(StructureDefinition_SDF_17);
-            InvariantConstraints.Add(StructureDefinition_SDF_23);
-            InvariantConstraints.Add(StructureDefinition_SDF_11);
-            InvariantConstraints.Add(StructureDefinition_SDF_22);
-            InvariantConstraints.Add(StructureDefinition_SDF_14);
-            InvariantConstraints.Add(StructureDefinition_SDF_1);
-            InvariantConstraints.Add(StructureDefinition_SDF_21);
-            InvariantConstraints.Add(StructureDefinition_SDF_0);
-            InvariantConstraints.Add(StructureDefinition_SDF_6);
-            InvariantConstraints.Add(StructureDefinition_SDF_5);
-            InvariantConstraints.Add(StructureDefinition_SDF_4);
-            InvariantConstraints.Add(StructureDefinition_SDF_2);
-            InvariantConstraints.Add(StructureDefinition_SDF_8);
-            InvariantConstraints.Add(StructureDefinition_SDF_3);
-            InvariantConstraints.Add(StructureDefinition_SDF_8B);
-            InvariantConstraints.Add(StructureDefinition_SDF_10);
-            InvariantConstraints.Add(StructureDefinition_SDF_20);
-            InvariantConstraints.Add(StructureDefinition_SDF_8A);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Linkage : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Linkage; } }
-        [NotMapped]
         public override string TypeName { get { return "Linkage"; } }
         
         /// <summary>
@@ -280,12 +278,6 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:item)>1"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Linkage_LNK_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ValueSet; } }
-        [NotMapped]
         public override string TypeName { get { return "ValueSet"; } }
         
         [FhirType("ComposeComponent", NamedBackboneElement=true)]
@@ -2141,18 +2139,6 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:system) or not(exists(f:code))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ValueSet_VSD_0);
-            InvariantConstraints.Add(ValueSet_VSD_2);
-            InvariantConstraints.Add(ValueSet_VSD_3);
-            InvariantConstraints.Add(ValueSet_VSD_1);
-            InvariantConstraints.Add(ValueSet_VSD_6);
-            InvariantConstraints.Add(ValueSet_VSD_9);
-            InvariantConstraints.Add(ValueSet_VSD_10);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

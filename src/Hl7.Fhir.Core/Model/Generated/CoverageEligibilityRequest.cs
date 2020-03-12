@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CoverageEligibilityRequest; } }
-        [NotMapped]
         public override string TypeName { get { return "CoverageEligibilityRequest"; } }
         
         /// <summary>
@@ -1041,11 +1039,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> _Item;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

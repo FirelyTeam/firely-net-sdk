@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Practitioner : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Practitioner; } }
-        [NotMapped]
         public override string TypeName { get { return "Practitioner"; } }
         
         [FhirType("QualificationComponent", NamedBackboneElement=true)]
@@ -394,11 +392,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

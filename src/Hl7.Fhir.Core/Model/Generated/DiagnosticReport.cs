@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DiagnosticReport; } }
-        [NotMapped]
         public override string TypeName { get { return "DiagnosticReport"; } }
         
         /// <summary>
@@ -573,11 +571,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

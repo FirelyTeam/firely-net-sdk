@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Goal : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Goal; } }
-        [NotMapped]
         public override string TypeName { get { return "Goal"; } }
         
         /// <summary>
@@ -539,12 +537,6 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Goal_GOL_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

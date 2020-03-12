@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class Provenance : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Provenance; } }
-        [NotMapped]
         public override string TypeName { get { return "Provenance"; } }
         
         /// <summary>
@@ -568,11 +566,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Signature> _Signature;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Model
     public partial class CareTeam : Hl7.Fhir.Model.DomainResource
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CareTeam; } }
-        [NotMapped]
         public override string TypeName { get { return "CareTeam"; } }
         
         /// <summary>
@@ -472,12 +470,6 @@ namespace Hl7.Fhir.Model
             Xpath = "starts-with(f:member/f:reference/@value, 'Practitioner/') or contains(f:member/f:reference/@value, '/Practitioner/') or exists(ancestor::*/f:contains/f:Practitioner/f:id[@value=substring-after(current()/f:member/f:reference/@value, '#')]) or not(exists(f:onBehalfOf))"
         };
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CareTeam_CTM_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
