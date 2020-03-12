@@ -34,6 +34,7 @@ namespace Hl7.Fhir.Serialization
                 var result = new ModelInspector();
 
                 result.Import(typeof(Resource).GetTypeInfo().Assembly);
+                result.Import(typeof(DomainResource).GetTypeInfo().Assembly);
                 return result;
             });
 

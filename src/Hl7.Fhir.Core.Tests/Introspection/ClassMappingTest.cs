@@ -15,7 +15,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Tests.Introspection
 {
     [TestClass]
-	public class ClassMappingTest
+    public class ClassMappingTest
     {
         [TestMethod]
         public void TestResourceMappingCreation()
@@ -71,22 +71,28 @@ namespace Hl7.Fhir.Tests.Introspection
             // cannot have a datatype with a profile....
         }
 
-   }
+    }
 
 
     /*
      * Resource classes for tests 
      */
-    [FhirType(IsResource=true)]
-    public class Road {}
+    [FhirType(IsResource = true)]
+    public class Road { }
 
     [FhirType]
-    public class Way : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
-    
-    [FhirType("Way", Profile="http://nu.nl/profile#street")]
-    public class ProfiledWay : Resource { public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } }
+    public class Way : Resource
+    {
+        public override IDeepCopyable DeepCopy() => throw new NotImplementedException(); 
+    }
 
-    [FhirType("Street", IsResource=true)]
+    [FhirType("Way", Profile = "http://nu.nl/profile#street")]
+    public class ProfiledWay : Resource 
+    {
+        public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); } 
+    }
+
+    [FhirType("Street", IsResource = true)]
     public class NewStreet { }
 
 

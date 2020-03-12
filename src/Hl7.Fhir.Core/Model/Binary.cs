@@ -4,6 +4,7 @@ using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Introspection;
 
 /*
   Copyright (c) 2011-2012, HL7, Inc
