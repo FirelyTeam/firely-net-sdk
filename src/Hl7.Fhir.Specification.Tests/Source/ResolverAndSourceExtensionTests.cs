@@ -6,17 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.IO;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
-using System.Xml.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -110,7 +106,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindValueSet()
         {
             // As defined in the spec here: http://hl7.org/fhir/2016Sep/valueset-contact-point-system.html
-           
+
             var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
 
@@ -141,6 +137,34 @@ namespace Hl7.Fhir.Specification.Tests
             var boolean = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
             Assert.IsNotNull(boolean);
             Assert.AreEqual("boolean", boolean.Snapshot.Element[0].Path);
+        }
+
+        [TestMethod]
+        public void FindStructureDefinitionForCoreTypeLogicalModel()
+        {
+            var ccdaAnyCanonical = "http://hl7.org/fhir/cda/StructureDefinition/ANY";
+            var resolver = new MultiResolver(source, new LogicalModelTypeResourceResolver());
+            var logicalModel = resolver.FindStructureDefinitionForCoreType(ccdaAnyCanonical);
+            Assert.IsNotNull(logicalModel);
+            Assert.AreEqual(ccdaAnyCanonical, logicalModel.Type);
+        }
+
+        private class LogicalModelTypeResourceResolver : IResourceResolver
+        {
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                var customLogicalModelDataTypeXml = File.ReadAllText(Path.Combine("TestData/ccda", "CCDA_ANY.xml"));
+                var sd = new FhirXmlParser().Parse<StructureDefinition>(customLogicalModelDataTypeXml);
+                if (sd.Type.Equals(uri))
+                    return sd;
+
+                return null;
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                throw new NotImplementedException();
+            }
         }
 
     }
