@@ -2076,69 +2076,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
 
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "vsd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "compose.include.all((concept.exists() or filter.exists()) implies system.exists())",
-            Key = "vsd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A value set with concepts or filters SHALL include a system",
-            Xpath = "not(exists(f:concept) or exists(f:filter)) or exists(f:system)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "compose.include.all(concept.empty() or filter.empty())",
-            Key = "vsd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Cannot have both concept and filter",
-            Xpath = "not(exists(f:concept)) or not(exists(f:filter))"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "compose.include.all(valueSet.exists() or system.exists())",
-            Key = "vsd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A value set include/exclude SHALL have a value set or a system",
-            Xpath = "exists(f:valueSet) or exists(f:system)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "expansion.contains.all(code.exists() or display.exists())",
-            Key = "vsd-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have a code or a display",
-            Xpath = "exists(f:code) or exists(f:display)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "expansion.contains.all(code.exists() or abstract = true)",
-            Key = "vsd-9",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have a code if not abstract",
-            Xpath = "exists(f:code) or (f:abstract/@value = true())"
-        };
-
-        public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "expansion.contains.all(code.empty() or system.exists())",
-            Key = "vsd-10",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have a system if a code is present",
-            Xpath = "exists(f:system) or not(exists(f:code))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

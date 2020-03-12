@@ -1114,33 +1114,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
         
 
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "spd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "xpath.empty() or xpathUsage.exists()",
-            Key = "spd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If an xpath is present, there SHALL be an xpathUsage",
-            Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
-        };
-
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "chain.empty() or type = 'reference'",
-            Key = "spd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
-            Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -1656,24 +1656,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> _SupplementalData;
         
 
-        public static ElementDefinition.ConstraintComponent Measure_MEA_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.stratifier.all((code | description | criteria).exists() xor component.exists())",
-            Key = "mea-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stratifier SHALL be either a single criteria or a set of criteria components",
-            Xpath = "exists(f:group/stratifier/code) or exists(f:group/stratifier/component)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Measure_MEA_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "mea-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -1649,42 +1649,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
         
 
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "cmd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
-            Key = "cmd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the map is narrower or inexact, there SHALL be some comments",
-            Xpath = "exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
-        };
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
-            Key = "cmd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the mode is 'other-map', a url must be provided",
-            Xpath = "(f:mode/@value != 'other-map') or exists(f:url)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.unmapped.all((mode = 'fixed') implies code.exists())",
-            Key = "cmd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the mode is 'fixed', a code must be provided",
-            Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

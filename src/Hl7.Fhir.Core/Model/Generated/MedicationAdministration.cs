@@ -729,15 +729,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
         
 
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "dosage.all(dose.exists() or rate.exists())",
-            Key = "mad-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of dosage.dose or dosage.rate[x]",
-            Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

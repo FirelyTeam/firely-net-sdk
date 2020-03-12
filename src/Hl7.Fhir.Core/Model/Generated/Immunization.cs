@@ -1255,15 +1255,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> _ProtocolApplied;
         
 
-        public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "education.all(documentType.exists() or reference.exists())",
-            Key = "imm-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "One of documentType or reference SHALL be present",
-            Xpath = "exists(f:documentType) or exists(f:reference)"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

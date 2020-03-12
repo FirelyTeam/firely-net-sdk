@@ -1128,24 +1128,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
         
 
-        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.stratifier.stratum.all(value.exists() xor component.exists())",
-            Key = "mrp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stratifiers SHALL be either a single criteria or a set of criteria components",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
-        };
-
-        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(type != 'data-collection') or group.exists().not()",
-            Key = "mrp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Measure Reports used for data collection SHALL NOT communicate group and score information",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

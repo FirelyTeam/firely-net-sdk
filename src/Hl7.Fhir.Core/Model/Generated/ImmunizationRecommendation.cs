@@ -608,15 +608,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
 
-        public static ElementDefinition.ConstraintComponent ImmunizationRecommendation_IMR_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
-            Key = "imr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "One of vaccineCode or targetDisease SHALL be present",
-            Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

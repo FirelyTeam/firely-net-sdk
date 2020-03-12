@@ -827,42 +827,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
         
 
-        public static ElementDefinition.ConstraintComponent Appointment_APP_4 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "Appointment.cancelationReason.exists() implies (Appointment.status='no-show' or Appointment.status='cancelled')",
-            Key = "app-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Cancelation reason is only used for appointments that have been cancelled, or no-show",
-            Xpath = "not(exists(f:cancellationReason)) or f:status/@value=('no-show', 'cancelled')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled' | 'waitlist'))",
-            Key = "app-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only proposed or cancelled appointments can be missing start/end dates",
-            Xpath = "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled') or (f:status/@value='waitlist'))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "start.exists() = end.exists()",
-            Key = "app-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either start and end are specified, or neither",
-            Xpath = "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "participant.all(type.exists() or actor.exists())",
-            Key = "app-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either the type or actor on the participant SHALL be specified",
-            Xpath = "(exists(f:type) or exists(f:actor))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

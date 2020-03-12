@@ -1544,15 +1544,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.InsurancePlan.PlanComponent> _Plan;
         
 
-        public static ElementDefinition.ConstraintComponent InsurancePlan_IPN_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(identifier.count() + name.count()) > 0",
-            Key = "ipn-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The organization SHALL at least have a name or an idendtifier, and possibly more than one",
-            Xpath = "count(f:identifier | f:name) > 0"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

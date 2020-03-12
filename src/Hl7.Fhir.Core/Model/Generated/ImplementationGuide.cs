@@ -4662,33 +4662,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ImplementationGuide.ManifestComponent _Manifest;
         
 
-        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "ig-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "definition.resource.fhirVersion.all(%context.fhirVersion contains $this)",
-            Key = "ig-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource has a fhirVersion, it must be oe of the versions defined for the Implementation Guide",
-            Xpath = "count(for $id in (f:resource/f:fhirVersion) return $id[not(ancestor::f:fhirVersion/@value=$id/@value)])=0"
-        };
-
-        public static ElementDefinition.ConstraintComponent ImplementationGuide_IG_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "definition.all(resource.groupingId.all(%context.grouping.id contains $this))",
-            Key = "ig-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource has a groupingId, it must refer to a grouping defined in the Implementation Guide",
-            Xpath = "count(for $id in (f:resource/f:groupingId) return $id[not(ancestor::f:grouping/@id=$id/@value)])=0"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -686,15 +686,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
         
 
-        public static ElementDefinition.ConstraintComponent ServiceRequest_PRR_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "orderDetail.empty() or code.exists()",
-            Key = "prr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "orderDetail SHALL only be present if code is present",
-            Xpath = "exists(f:code) or not(exists(f:orderDetail))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

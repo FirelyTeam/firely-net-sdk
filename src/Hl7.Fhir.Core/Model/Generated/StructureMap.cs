@@ -2704,33 +2704,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.StructureMap.GroupComponent> _Group;
         
 
-        public static ElementDefinition.ConstraintComponent StructureMap_SMP_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "smp-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent StructureMap_SMP_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.rule.target.all(context.exists() implies contextType.exists())",
-            Key = "smp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have a contextType if you have a context",
-            Xpath = "not(f:context) or (f:contextType)"
-        };
-
-        public static ElementDefinition.ConstraintComponent StructureMap_SMP_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.rule.target.all(element.exists() implies context.exists())",
-            Key = "smp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have an element if you have a context",
-            Xpath = "not(f:element) or (f:context)"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

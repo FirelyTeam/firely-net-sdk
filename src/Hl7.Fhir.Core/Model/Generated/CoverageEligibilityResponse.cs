@@ -1213,15 +1213,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> _Error;
         
 
-        public static ElementDefinition.ConstraintComponent CoverageEligibilityResponse_CES_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "insurance.item.all(category.exists() xor productOrService.exists())",
-            Key = "ces-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL contain a category or a billcode but not both.",
-            Xpath = "exists(f:category) or exists(f:productOrService)"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

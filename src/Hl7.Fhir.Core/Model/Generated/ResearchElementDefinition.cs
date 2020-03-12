@@ -1237,15 +1237,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent> _Characteristic;
         
 
-        public static ElementDefinition.ConstraintComponent ResearchElementDefinition_RED_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "red-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -110,52 +110,6 @@ namespace Hl7.Fhir.Model
         private List<Extension> _ModifierExtension;
         
 
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "contained.contained.empty()",
-            Key = "dom-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
-            Xpath = "not(parent::f:contained and f:contained)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_4 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
-            Key = "dom-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
-            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
-            Key = "dom-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
-            Xpath = "not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_6 = new ElementDefinition.ConstraintComponent()
-        { 
-			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(true), Url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice"} },  
-            Expression = "text.`div`.exists()",
-            Key = "dom-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A resource should have narrative for robust management",
-            Xpath = "exists(f:text/h:div)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "contained.meta.security.empty()",
-            Key = "dom-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource is contained in another resource, it SHALL NOT have a security label",
-            Xpath = "not(exists(f:contained/*/f:meta/f:security))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

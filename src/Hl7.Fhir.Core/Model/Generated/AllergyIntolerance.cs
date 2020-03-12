@@ -733,24 +733,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
         
 
-        public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "verificationStatus.coding.where(system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification' and code = 'entered-in-error').exists() or clinicalStatus.exists()",
-            Key = "ait-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
-            Xpath = "f:verificationStatus/f:coding/f:code/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-
-        public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "verificationStatus.coding.where(system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification' and code = 'entered-in-error').empty() or clinicalStatus.empty()",
-            Key = "ait-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
-            Xpath = "not(f:verificationStatus/f:coding/f:code/@value='entered-in-error') or not(exists(f:clinicalStatus))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -2762,33 +2762,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent> _StructureVariant;
         
 
-        public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "coordinateSystem = 1 or coordinateSystem = 0",
-            Key = "msq-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only 0 and 1 are valid for coordinateSystem",
-            Xpath = "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
-        };
-
-        public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_6 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
-            Key = "msq-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
-            Xpath = "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
-        };
-
-        public static ElementDefinition.ConstraintComponent MolecularSequence_MSQ_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
-            Key = "msq-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "GenomeBuild and chromosome must be both contained if either one of them is contained",
-            Xpath = "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

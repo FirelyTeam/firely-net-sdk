@@ -557,7 +557,7 @@ if(!abstractType) {
         }
     }
 
-#><# if (true) { #>
+#><# if (false) { #>
 
 <#
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
@@ -594,6 +594,7 @@ if(!abstractType) {
 <#            }
 #>
 <#}#>
+
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

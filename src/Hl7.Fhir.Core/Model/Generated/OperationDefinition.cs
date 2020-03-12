@@ -1623,42 +1623,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> _Overload;
         
 
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "opd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(type.exists() or part.exists())",
-            Key = "opd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(searchType.exists() implies type = 'string')",
-            Key = "opd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A search type can only be specified for parameters of type string",
-            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(targetProfile.exists() implies (type = 'Reference' or type = 'canonical'))",
-            Key = "opd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A targetProfile can only be specified for parameters of type Reference or Canonical",
-            Xpath = "not(exists(f:targetProfile)) or ((f:type/@value = 'Reference') or (f:type/@value = 'canonical'))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

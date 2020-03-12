@@ -660,33 +660,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
 
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "kind != 'root' or uniqueId.all(type != 'uuid')",
-            Key = "nsd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Root systems cannot have uuid identifiers",
-            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "nsd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
-            Key = "nsd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can't have more than one preferred identifier for a type",
-            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -393,33 +393,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
 
-        public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(identifier.count() + name.count()) > 0",
-            Key = "org-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The organization SHALL at least have a name or an identifier, and possibly more than one",
-            Xpath = "count(f:identifier | f:name) > 0"
-        };
-
-        public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "telecom.all(where(use = 'home').empty())",
-            Key = "org-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The telecom of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
-        };
-
-        public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "address.all(where(use = 'home').empty())",
-            Key = "org-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "An address of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -528,15 +528,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _OutcomeReference;
         
 
-        public static ElementDefinition.ConstraintComponent Goal_GOL_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "target.all((detail.exists() and measure.exists()) or detail.exists().not())",
-            Key = "gol-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Goal.target.measure is required if Goal.target.detail is populated",
-            Xpath = "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
-        };
-
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
