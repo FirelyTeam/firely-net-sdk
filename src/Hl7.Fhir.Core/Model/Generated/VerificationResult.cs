@@ -57,8 +57,8 @@ namespace Hl7.Fhir.Model
         /// The validation status of the target
         /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
         /// </summary>
-        [FhirEnumeration("status")]
-        public enum status
+        [FhirEnumeration("VerificationResultStatus")]
+        public enum VerificationResultStatus
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -801,13 +801,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.status> StatusElement
+        public Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.status> _StatusElement;
+        private Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus> _StatusElement;
         
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.status? Status
+        public Hl7.Fhir.Model.VerificationResult.VerificationResultStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.status>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
                 if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.status>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
                 if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
                 if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());

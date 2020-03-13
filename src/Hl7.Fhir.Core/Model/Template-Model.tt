@@ -46,7 +46,7 @@
 			if (!String.IsNullOrEmpty(valuesetUrl) && valuesetUrl.EndsWith("|" + fhirVersion))
 				valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
 			// reformat the name so that it is a valid .NET enumeration name
-			enumName = enumName.Replace(" ", "").Replace("-", "_");
+			enumName = generateCsharpEnumName(enumName);
 
 			if (enumName == "MimeTypes")
 				continue;
@@ -207,20 +207,22 @@ if(!abstractType) {
 						// WriteLine("//		VSR: " + n4.Value);
 						valuesetUrl = n4.Value;
                     }
-					if (valuesetUrl.EndsWith("|"+fhirVersion))
-                    {
-						valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
-                    }
+
+					valuesetUrl = valuesetUrl.Split('|')[0];
+			
 					System.Xml.XmlElement valueset = docExpansions.SelectSingleNode(
 						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '"+valuesetUrl+"']", nsE)
 						 as System.Xml.XmlElement;
+					
+					if(valueset == null) WriteLine("// Cannnot find url '" + valuesetUrl + "'");
+
 					if (valueset != null)
                     {
 					string enumName = valueset.SelectSingleNode("fhir:name/@value", nsE).InnerText;
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_").Replace(".","_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (generatedSets.Contains(enumName))
 						continue;
@@ -263,6 +265,8 @@ if(!abstractType) {
 			defintion = valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE).Value;
 		if (string.IsNullOrEmpty(defintion))
 			defintion = "MISSING DESCRIPTION";
+
+
 #>
             /// <summary>
             /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "'") #>
@@ -1041,7 +1045,7 @@ namespace Hl7.Fhir.Model
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (enumName == "MimeTypes")
 						continue;
@@ -1489,7 +1493,7 @@ if (!abstractType){
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (generatedSets.Contains(enumName))
 						continue;
@@ -2380,7 +2384,15 @@ if (!abstractType){
 
 				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type/fhir:code/@value", nsR))
                 {
-					string allowType = "typeof(" +ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR) + ")";
+				    // exception: for choice types we cannot deal with constrained types since they will be serialized as their
+					// unconstrained type. To fix that for now we just make sure the only occurence of a constrained type in a choice
+					// is avoided here.  
+					// This is a HACK, we should just remove constrained types alltogether.
+					var convertedType = ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR);
+					if(convertedType == "Hl7.Fhir.Model.SimpleQuantity") convertedType = "Hl7.Fhir.Model.Quantity";
+					if(convertedType == "Hl7.Fhir.Model.MoneyQuantity") convertedType = "Hl7.Fhir.Model.Quantity";
+
+					string allowType = "typeof(" + convertedType + ")";
 					if (!result.AllowedTypes.Contains(allowType))
                     {
 						if (!string.IsNullOrEmpty(result.AllowedTypes))
@@ -2411,8 +2423,8 @@ if (!abstractType){
 				// Grab the binding from the element
 				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
 					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
-				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
-					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.Contains("|"))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Split('|')[0];
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2664,8 +2676,8 @@ if (!abstractType){
 				// Grab the binding from the element
 				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
 					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
-				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
-					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.Contains("|"))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Split('|')[0];
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2741,4 +2753,13 @@ if (!abstractType){
 					WriteLine("{0}if ({1} != null) yield return {1};", indent, pd.Name);
 			}
 	}
+#>
+
+<#+  
+private string generateCsharpEnumName(string fhirEnumName)
+{
+	// 
+	if(fhirEnumName == "status") return "VerificationResultStatus";
+	return fhirEnumName.Replace(" ", "").Replace("-", "_").Replace(".","_").Replace("v3_","");
+}
 #>

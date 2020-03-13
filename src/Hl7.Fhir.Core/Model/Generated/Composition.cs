@@ -54,6 +54,51 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Composition"; } }
         
         /// <summary>
+        ///  Set of codes used to value Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
+        /// (url: http://terminology.hl7.org/ValueSet/v3-ConfidentialityClassification)
+        /// </summary>
+        [FhirEnumeration("ConfidentialityClassification")]
+        public enum ConfidentialityClassification
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("U", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("unrestricted")]
+            U,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("L", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("low")]
+            L,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("M", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("moderate")]
+            M,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("N", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("normal")]
+            N,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("R", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("restricted")]
+            R,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
+            /// </summary>
+            [EnumLiteral("V", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("very restricted")]
+            V,
+        }
+
+        /// <summary>
         /// The way in which a person authenticated a composition.
         /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
         /// </summary>
@@ -988,13 +1033,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("confidentiality", InSummary=true, Order=180)]
         [DataMember]
-        public Code<Confidentiality> ConfidentialityElement
+        public Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> ConfidentialityElement
         {
             get { return _ConfidentialityElement; }
             set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
         }
         
-        private Code<Confidentiality> _ConfidentialityElement;
+        private Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> _ConfidentialityElement;
         
         /// <summary>
         /// As defined by affinity domain
@@ -1002,7 +1047,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Confidentiality? Confidentiality
+        public Hl7.Fhir.Model.Composition.ConfidentialityClassification? Confidentiality
         {
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
@@ -1010,7 +1055,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   ConfidentialityElement = null; 
                 else
-                  ConfidentialityElement = new Code<Confidentiality>(value);
+                  ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification>(value);
                 OnPropertyChanged("Confidentiality");
             }
         }
@@ -1104,7 +1149,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Confidentiality>)ConfidentialityElement.DeepCopy();
+                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
                 if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
                 if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(RelatesTo.DeepCopy());

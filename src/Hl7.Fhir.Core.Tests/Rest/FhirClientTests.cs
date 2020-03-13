@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = new Patient();
             pat.Meta = new Meta();
             var key = new Random().Next();
-            pat.Meta.ProfileElement.Add(new Canonical("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key));
+            pat.Meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key));
             pat.Meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));
             pat.Meta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag1-" + key));
 
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Tests.Rest
             // Now add some additional meta to the patient
 
             var newMeta = new Meta();
-            newMeta.ProfileElement.Add(new Canonical("http://someserver.org/fhir/StructureDefinition/XYZ2-" + key));
+            newMeta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/StructureDefinition/XYZ2-" + key));
             newMeta.Security.Add(new Coding("http://mysystem.com/sec", "5678-" + key));
             newMeta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag2-" + key));
 
