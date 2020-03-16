@@ -251,6 +251,44 @@ namespace Hl7.Fhir.Test
         }
 
         #endregion
+
+        #region TypedEntryResponse To BundleEntryResponse
+
+        [TestMethod]
+        public void TestTypedEntryResponseToBundle()
+        {
+            var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
+            var response = new EntryResponse
+            {
+                ContentType = "text/xml; charset=us-ascii",
+                Etag = "Test-Etag",
+                LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
+                Location = "Test-Location",
+                ResponseUri = new Uri("http://www.myserver.com"),
+                Status = "200",
+                Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
+                Body = Encoding.UTF8.GetBytes(xml),
+            };
+            var typedresponse = response.ToTypedEntryResponse(new Fhir.Serialization.ParserSettings(), new PocoStructureDefinitionSummaryProvider());
+
+            var settings = new ParserSettings
+            {
+                AcceptUnknownMembers = false,
+                AllowUnrecognizedEnums = false,
+                DisallowXsiAttributesOnRoot = true,
+                PermissiveParsing = false
+            };  
+
+            var bundleresponse = typedresponse.ToBundleEntry(settings);
+
+            Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
+            Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);
+            Assert.AreEqual(bundleresponse.Response.Status, response.Status);
+            Assert.AreEqual(bundleresponse.Response.Location, response.Location);
+            Assert.AreEqual(bundleresponse.Response.GetBody(), response.Body);
+        }
+
+        #endregion
     }
 }
  
