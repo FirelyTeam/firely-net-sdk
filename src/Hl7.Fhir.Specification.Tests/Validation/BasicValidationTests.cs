@@ -171,6 +171,55 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
+
+        //We've had issues where both boolean.extension and extension throw the same error of an invariant. This checks if all errors are reported just once
+        [Fact]
+        public void TestDuplicateValidationMessages()
+        {
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var data = SourceNode.Valued("active", "true",
+                          SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor")))
+                       .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
+
+            var report = _validator.Validate(data, boolSd);
+            output.WriteLine(report.ToString());
+            Assert.Equal(0, report.Fatals);
+            Assert.Equal(2, report.Errors); // ext-1, Extension.value[x] cardinality [1..1]
+            Assert.Equal(0, report.Warnings);
+        }
+
+        [Fact]
+        public void TestDuplicateOperationOutcomeIssues()
+        {
+            var outcome = new OperationOutcome
+            {
+                Issue = new List<OperationOutcome.IssueComponent>
+                {
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.extension"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ext-1: value or extension"
+                        }
+                    },
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.extension"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ext-1: value or extension"
+                        }
+                    }
+                }
+            };
+
+            outcome = outcome.RemoveDuplicateMessages();
+            Assert.Single(outcome.Issue);
+        }
+
         [Fact]
         public void ValidateCardinalityFromXml()
         {
@@ -503,7 +552,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 BirthDate = "1974-12-25+03:00"
             };
-            
+
             var report = _validator.Validate(p);
             Assert.Equal(1, report.Errors);
             Assert.Contains("Value '1974-12-25+03:00' does not match regex", report.Issue[0].Details.Text);
