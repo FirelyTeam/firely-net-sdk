@@ -6,10 +6,8 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
@@ -130,7 +128,7 @@ namespace Hl7.Fhir.Specification
                 {
                     if (nav.PathName == lastName) continue;    // ignore slices
                     if (isPrimitiveValueConstraint(nav.Current)) continue;      // ignore value attribute
-                            
+
                     lastName = nav.PathName;
                     yield return new ElementDefinitionSerializationInfo(nav.ShallowCopy());
                 }
@@ -207,13 +205,22 @@ namespace Hl7.Fhir.Specification
 
         public XmlRepresentation Representation
         {
-            get {
+            get
+            {
                 if (!_definition.Representation.Any()) return XmlRepresentation.XmlElement;
 
                 switch (_definition.Representation.First())
                 {
                     case ElementDefinition.PropertyRepresentation.XmlAttr:
                         return XmlRepresentation.XmlAttr;
+                    case ElementDefinition.PropertyRepresentation.XmlText:
+                        return XmlRepresentation.XmlText;
+                    case ElementDefinition.PropertyRepresentation.TypeAttr:
+                        return XmlRepresentation.TypeAttr;
+                    case ElementDefinition.PropertyRepresentation.CdaText:
+                        return XmlRepresentation.CdaText;
+                    case ElementDefinition.PropertyRepresentation.Xhtml:
+                        return XmlRepresentation.XHtml;
                     default:
                         return XmlRepresentation.XmlElement;
                 }
@@ -228,13 +235,15 @@ namespace Hl7.Fhir.Specification
 
         // TODO: This is actually not complete: the Type might be any subclass of Resource (including DomainResource), but this will
         // do for all current situations. I will regret doing this at some point in the future.
-        private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 && 
+        private static bool isResource(ElementDefinition defn) => defn.Type.Count == 1 &&
             (defn.Type[0].Code == "Resource" || defn.Type[0].Code == "DomainResource");
+
+        public string DefaultTypeName =>
+            _definition.GetStringExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-defaulttype");
 
         public ITypeSerializationInfo[] Type => _types.Value;
 
         public string NonDefaultNamespace =>
-            _definition.GetExtensionValue<FhirUri>("http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace")?.Value;
-
+            _definition.GetStringExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace");
     }
 }
