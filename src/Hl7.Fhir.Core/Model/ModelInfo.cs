@@ -472,6 +472,7 @@ namespace Hl7.Fhir.Model
             typeof(Model.Attachment),
             typeof(Model.Base64Binary),
             typeof(Model.FhirBoolean),
+            typeof(Model.Canonical),
             typeof(Model.Code),
             typeof(Model.CodeableConcept),
             typeof(Model.Coding),
@@ -510,7 +511,8 @@ namespace Hl7.Fhir.Model
             typeof(Model.Timing),
             typeof(Model.TriggerDefinition),
             typeof(Model.UnsignedInt),
-            typeof(Model.FhirUri),            
+            typeof(Model.FhirUri),
+            typeof(Model.FhirUrl),
             typeof(Model.UsageContext),
             typeof(Model.Uuid)
         };
