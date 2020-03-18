@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Tue, 10 Mar 2020 18:39:57 GMT for FHIR v3.0.2
+// Model Generated on Wed, 18 Mar 2020 14:01:00 GMT for FHIR v3.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -100,4 +100,3 @@
 // Hl7.Fhir.Core\Model\Generated\Markdown.cs
 // Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
 // Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
-// Hl7.Fhir.Core\Model\Generated\BackboneElement.cs

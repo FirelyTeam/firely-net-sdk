@@ -160,7 +160,7 @@
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
 	
 	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean",
-				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml" };
+				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml","BackboneElement" };
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile(resourceName + ".cs");

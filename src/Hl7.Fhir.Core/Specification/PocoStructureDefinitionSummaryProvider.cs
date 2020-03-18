@@ -125,12 +125,13 @@ namespace Hl7.Fhir.Specification
 
             if (pm.IsBackboneElement)
             {
-                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ImplementingType);
+                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
                 return new ITypeSerializationInfo[] { info };
             }
             else
-            {              
-                var names = pm.FhirType.Select(ft => getFhirTypeName(ft));
+            {
+                var typeList = pm.IsOpen ? ModelInfo.OpenTypes : pm.FhirType;
+                var names = typeList.Select(ft => getFhirTypeName(ft));
                 return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
             }
 
