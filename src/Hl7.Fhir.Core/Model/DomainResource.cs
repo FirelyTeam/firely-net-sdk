@@ -43,9 +43,6 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public abstract partial class DomainResource : IModifierExtendable
     {
-        [NotMapped]
-        public List<ElementDefinition.ConstraintComponent> InvariantConstraints { get; set; }
-
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var result = new List<ValidationResult>(base.Validate(validationContext));

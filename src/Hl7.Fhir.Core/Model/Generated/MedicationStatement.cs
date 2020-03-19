@@ -453,17 +453,6 @@ namespace Hl7.Fhir.Model
         
         private List<Dosage> _Dosage;
         
-
-        public static ElementDefinition.ConstraintComponent MedicationStatement_MST_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonNotTaken.exists().not() or (taken = 'n')",
-            Key = "mst-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not taken is only permitted if Taken is No",
-            Xpath = "not(exists(f:reasonNotTaken)) or f:taken/@value='n'"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationStatement;

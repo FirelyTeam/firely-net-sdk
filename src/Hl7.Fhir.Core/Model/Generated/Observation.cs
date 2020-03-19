@@ -937,35 +937,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
         
-
-        public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "value.empty() or component.code.where( (coding.code = %resource.code.coding.code) and (coding.system = %resource.code.coding.system)).empty()",
-            Key = "obs-7",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
-            Xpath = "not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "dataAbsentReason.empty() or value.empty()",
-            Key = "obs-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
-            Xpath = "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "referenceRange.all(low.exists() or high.exists() or text.exists())",
-            Key = "obs-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have at least a low or a high or text",
-            Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;

@@ -750,35 +750,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
         
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled'))",
-            Key = "app-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only proposed or cancelled appointments can be missing start/end dates",
-            Xpath = "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled'))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "start.empty() xor end.exists()",
-            Key = "app-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either start and end are specified, or neither",
-            Xpath = "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "participant.all(type.exists() or actor.exists())",
-            Key = "app-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either the type or actor on the participant SHALL be specified",
-            Xpath = "(exists(f:type) or exists(f:actor))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Appointment;

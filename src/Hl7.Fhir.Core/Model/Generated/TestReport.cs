@@ -1595,26 +1595,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.TestReport.TeardownComponent _Teardown;
         
-
-        public static ElementDefinition.ConstraintComponent TestReport_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "setup.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Setup action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
-        };
-
-        public static ElementDefinition.ConstraintComponent TestReport_INV_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "test.action.all(operation.exists() xor assert.exists())",
-            Key = "inv-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Test action SHALL contain either an operation or assert but not both.",
-            Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as TestReport;

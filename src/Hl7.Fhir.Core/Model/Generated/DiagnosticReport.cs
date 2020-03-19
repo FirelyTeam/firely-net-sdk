@@ -658,8 +658,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DiagnosticReport;

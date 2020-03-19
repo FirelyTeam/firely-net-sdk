@@ -1350,17 +1350,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
         
-
-        public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "policy.exists() or policyRule.exists()",
-            Key = "ppc-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a Policy or PolicyRule",
-            Xpath = "exists(f:policy) or exists(f:policyRule)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Consent;

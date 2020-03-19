@@ -232,17 +232,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
         
-
-        public static ElementDefinition.ConstraintComponent Parameters_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
-            Key = "inv-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A parameter must have only one of (value, resource, part)",
-            Xpath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Parameters;

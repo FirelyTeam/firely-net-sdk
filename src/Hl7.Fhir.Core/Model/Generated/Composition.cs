@@ -1090,26 +1090,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
         
-
-        public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "section.all(text.exists() or entry.exists() or section.exists())",
-            Key = "cmp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section must at least one of text, entries, or sub-sections",
-            Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "section.all(emptyReason.empty() or entry.empty())",
-            Key = "cmp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Composition;

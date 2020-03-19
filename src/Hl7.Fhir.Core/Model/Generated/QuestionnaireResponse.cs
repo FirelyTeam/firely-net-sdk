@@ -636,17 +636,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
         
-
-        public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "item.all((answer.exists() and item.exists()).not())",
-            Key = "qrs-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Nested item can't be beneath both item and answer",
-            Xpath = "not(exists(f:answer) and exists(f:item))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as QuestionnaireResponse;

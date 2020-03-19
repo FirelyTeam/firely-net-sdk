@@ -1744,17 +1744,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> _Concept;
         
-
-        public static ElementDefinition.ConstraintComponent CodeSystem_CSD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "(concept.code | descendants().concept.code).isDistinct()",
-            Key = "csd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Within a code system definition, all the codes SHALL be unique",
-            Xpath = "count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CodeSystem;

@@ -188,8 +188,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as BodySite;

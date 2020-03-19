@@ -923,8 +923,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DocumentReference;

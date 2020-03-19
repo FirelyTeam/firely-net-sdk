@@ -1178,17 +1178,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent CarePlan_CPL_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "activity.all(detail.empty() or reference.empty())",
-            Key = "cpl-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Provide a reference or detail, not both",
-            Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CarePlan;

@@ -590,17 +590,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
         
-
-        public static ElementDefinition.ConstraintComponent ReferralRequest_RFR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "requester.all((agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
-            Key = "rfr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ReferralRequest;

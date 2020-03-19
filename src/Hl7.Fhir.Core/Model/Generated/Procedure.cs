@@ -703,17 +703,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
         
-
-        public static ElementDefinition.ConstraintComponent Procedure_PRO_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "notDoneReason.empty() or notDone = true",
-            Key = "pro-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not done is only permitted if notDone indicator is true",
-            Xpath = "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;

@@ -865,17 +865,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> _AllowedResponse;
         
-
-        public static ElementDefinition.ConstraintComponent MessageDefinition_MD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "focus.all(max='*' or (max.toInteger() > 0))",
-            Key = "md-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Max must be postive int or *",
-            Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MessageDefinition;

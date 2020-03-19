@@ -539,35 +539,7 @@ if(true) {
         }
     }
 
-#><# if (true) { #>
-
-<#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
-            {
-                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
-                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
-                if (parentPath.Contains("."))
-                {
-                    // This expression applied to a backbone element, so need to give it scope
-                    expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
-                }
-                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
-                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
-                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
-                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "<#= expression.Replace("\"", "\\\"") #>",
-            Key = "<#= key #>",
-            Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
-            Human = "<#= human.Replace("\"", "\\\"") #>",
-            Xpath = "<#= xpath.Replace("\"", "\\\"") #>"
-        };
-
-<#            }
 #>
-<#}#>
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;

@@ -1342,17 +1342,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
         
-
-        public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "oralDiet.exists() or supplement.exists() or enteralFormula.exists()",
-            Key = "nor-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
-            Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NutritionOrder;

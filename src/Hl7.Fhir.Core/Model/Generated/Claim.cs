@@ -3164,8 +3164,6 @@ namespace Hl7.Fhir.Model
         
         private Money _Total;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Claim;

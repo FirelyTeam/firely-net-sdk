@@ -633,44 +633,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            Key = "con-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            Key = "con-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "stage.all(summary.exists() or assessment.exists())",
-            Key = "con-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "evidence.all(code.exists() or detail.exists())",
-            Key = "con-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Condition;

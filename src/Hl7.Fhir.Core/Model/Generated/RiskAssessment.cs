@@ -558,26 +558,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-
-        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "prediction.all(probability is decimal implies probability.as(decimal) <= 100)",
-            Key = "ras-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must be <= 100",
-            Xpath = "not(f:probabilityDecimal) or f:probabilityDecimal/@value <= 100"
-        };
-
-        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
-            Key = "ras-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "low and high must be percentages, if present",
-            Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RiskAssessment;

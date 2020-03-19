@@ -701,35 +701,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ElementDefinition> _Element;
         
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "mapping.all(uri.exists() or name.exists())",
-            Key = "dae-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "At least one of  name or uri SHALL be present",
-            Xpath = "exists(f:uri) or exists(f:name)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "element.all(base.empty())",
-            Key = "dae-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "No base allowed",
-            Xpath = "not(exists(f:base))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "element.all(slicing.empty())",
-            Key = "dae-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "No slicing allowed",
-            Xpath = "not(exists(f:slicing))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DataElement;

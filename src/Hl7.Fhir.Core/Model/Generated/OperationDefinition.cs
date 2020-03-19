@@ -1331,26 +1331,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> _Overload;
         
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "parameter.all(type.exists() or part.exists())",
-            Key = "opd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "parameter.all(searchType implies type = 'string')",
-            Key = "opd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A search type can only be specified for parameters of type string",
-            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationDefinition;

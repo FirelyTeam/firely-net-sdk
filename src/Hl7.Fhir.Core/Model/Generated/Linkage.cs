@@ -266,17 +266,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Linkage.ItemComponent> _Item;
         
-
-        public static ElementDefinition.ConstraintComponent Linkage_LNK_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "item.count()>1",
-            Key = "lnk-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have at least two items",
-            Xpath = "count(f:item)>1"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Linkage;

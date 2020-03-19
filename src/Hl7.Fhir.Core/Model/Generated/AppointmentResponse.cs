@@ -241,17 +241,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-
-        public static ElementDefinition.ConstraintComponent AppointmentResponse_APR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "participantType.exists() or actor.exists()",
-            Key = "apr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either the participantType or actor must be specified",
-            Xpath = "(exists(f:participantType) or exists(f:actor))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;

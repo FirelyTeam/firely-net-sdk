@@ -4813,8 +4813,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent> _BenefitBalance;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ExplanationOfBenefit;

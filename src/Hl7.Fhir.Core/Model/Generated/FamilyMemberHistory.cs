@@ -599,35 +599,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "age.exists() or estimatedAge.empty()",
-            Key = "fhs-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have estimatedAge if age[x] is present",
-            Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
-        };
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "notDone or notDoneReason.exists().not()",
-            Key = "fhs-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
-        };
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "age.empty() or born.empty()",
-            Key = "fhs-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can have age[x] or born[x], but not both",
-            Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as FamilyMemberHistory;

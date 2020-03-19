@@ -739,35 +739,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
         
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonNotGiven.empty() or notGiven = true",
-            Key = "mad-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not given is only permitted if NotGiven is true",
-            Xpath = "not(exists(f:reasonNotGiven) and f:notGiven/@value=false())"
-        };
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonCode.empty() or notGiven.empty() or notGiven = 'false'",
-            Key = "mad-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason given is only permitted if NotGiven is false",
-            Xpath = "not(exists(f:reasonCode) and f:notGiven/@value=true())"
-        };
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "dosage.all(dose.exists() or rate.exists())",
-            Key = "mad-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of dosage.dose or dosage.rate[x]",
-            Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationAdministration;

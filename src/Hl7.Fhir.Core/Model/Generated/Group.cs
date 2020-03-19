@@ -623,17 +623,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
-
-        public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "member.empty() or (actual = true)",
-            Key = "grp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have members if group is \"actual\"",
-            Xpath = "f:actual/@value=true() or not(exists(f:member))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Group;

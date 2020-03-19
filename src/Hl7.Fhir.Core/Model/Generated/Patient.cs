@@ -972,17 +972,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
         
-
-        public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contact.all(name.exists() or telecom.exists() or address.exists() or organization.exists())",
-            Key = "pat-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL at least contain a contact's details or a reference to an organization",
-            Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Patient;

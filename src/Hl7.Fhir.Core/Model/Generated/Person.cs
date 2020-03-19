@@ -406,8 +406,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Person;

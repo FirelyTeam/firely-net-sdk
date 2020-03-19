@@ -1465,17 +1465,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.AuditEvent.EntityComponent> _Entity;
         
-
-        public static ElementDefinition.ConstraintComponent AuditEvent_SEV_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "entity.all(name.empty() or query.empty())",
-            Key = "sev-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a name or a query (NOT both)",
-            Xpath = "not(exists(f:name)) or not(exists(f:query))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AuditEvent;

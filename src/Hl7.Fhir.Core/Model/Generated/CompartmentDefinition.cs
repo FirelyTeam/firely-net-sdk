@@ -609,8 +609,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CompartmentDefinition.ResourceComponent> _Resource;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CompartmentDefinition;

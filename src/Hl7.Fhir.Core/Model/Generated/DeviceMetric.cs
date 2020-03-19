@@ -616,8 +616,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
         
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceMetric;

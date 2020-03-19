@@ -1146,26 +1146,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
         
-
-        public static ElementDefinition.ConstraintComponent Immunization_IMM_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "(notGiven = true) or explanation.reasonNotGiven.empty()",
-            Key = "imm-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent.",
-            Xpath = "not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "(notGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
-            Key = "imm-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present",
-            Xpath = "not(f:notGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Immunization;

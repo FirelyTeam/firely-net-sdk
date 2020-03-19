@@ -674,35 +674,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
         
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "kind != 'root' or uniqueId.type = 'uuid'",
-            Key = "nsd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Root systems cannot have uuid identifiers",
-            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "replacedBy.empty() or status = 'retired'",
-            Key = "nsd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have replacedBy if naming system is retired",
-            Xpath = "not(f:replacedBy) or f:status/@value='retired'"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
-            Key = "nsd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can't have more than one preferred identifier for a type",
-            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NamingSystem;

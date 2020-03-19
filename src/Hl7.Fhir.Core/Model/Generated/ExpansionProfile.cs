@@ -1518,26 +1518,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-
-        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "designation.include.designation.all(language.exists() or use.exists())",
-            Key = "exp-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of language or use",
-            Xpath = "exists(f:language) or exists(f:use)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "designation.exclude.designation.all(language.exists() or use.exists())",
-            Key = "exp-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of language or use",
-            Xpath = "exists(f:language) or exists(f:use)"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ExpansionProfile;

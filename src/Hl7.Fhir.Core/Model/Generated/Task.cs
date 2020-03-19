@@ -1094,17 +1094,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Task.OutputComponent> _Output;
         
-
-        public static ElementDefinition.ConstraintComponent Task_INV_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "lastModified.exists().not() or authoredOn.exists().not() or lastModified >= authoredOn",
-            Key = "inv-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Last modified date must be greater than or equal to authored-on date.",
-            Xpath = "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
-        };
-
-    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Task;
