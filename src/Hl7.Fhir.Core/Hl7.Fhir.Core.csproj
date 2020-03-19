@@ -18,8 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Rest\OldFhirClient\**" />
     <Compile Remove="Rest\Search\**" />
+    <EmbeddedResource Remove="Rest\OldFhirClient\**" />
     <EmbeddedResource Remove="Rest\Search\**" />
+    <None Remove="Rest\OldFhirClient\**" />
     <None Remove="Rest\Search\**" />
   </ItemGroup>
  
