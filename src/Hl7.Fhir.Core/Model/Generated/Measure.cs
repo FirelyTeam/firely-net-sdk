@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A quality measure definition
     /// </summary>
-    [FhirType("Measure", IsResource=true)]
+    [FhirType("Measure")]
     [DataContract]
     public partial class Measure : Hl7.Fhir.Model.DomainResource
     {

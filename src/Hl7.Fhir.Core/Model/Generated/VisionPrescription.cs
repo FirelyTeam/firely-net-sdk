@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Prescription for vision correction products for a patient
     /// </summary>
-    [FhirType("VisionPrescription", IsResource=true)]
+    [FhirType("VisionPrescription")]
     [DataContract]
     public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
     {

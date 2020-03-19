@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// PaymentNotice request
     /// </summary>
-    [FhirType("PaymentNotice", IsResource=true)]
+    [FhirType("PaymentNotice")]
     [DataContract]
     public partial class PaymentNotice : Hl7.Fhir.Model.DomainResource
     {

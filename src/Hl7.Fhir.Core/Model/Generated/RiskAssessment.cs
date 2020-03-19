@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential outcomes for a subject with likelihood
     /// </summary>
-    [FhirType("RiskAssessment", IsResource=true)]
+    [FhirType("RiskAssessment")]
     [DataContract]
     public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
     {

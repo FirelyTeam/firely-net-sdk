@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource with narrative, extensions, and contained resources
     /// </summary>
-    [FhirType("DomainResource", IsResource=true)]
+    [FhirType("DomainResource")]
     [DataContract]
     public abstract partial class DomainResource : Hl7.Fhir.Model.Resource
     {

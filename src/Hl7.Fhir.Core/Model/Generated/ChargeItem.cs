@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item containing charge code(s) associated with the provision of healthcare provider products
     /// </summary>
-    [FhirType("ChargeItem", IsResource=true)]
+    [FhirType("ChargeItem")]
     [DataContract]
     public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
     {

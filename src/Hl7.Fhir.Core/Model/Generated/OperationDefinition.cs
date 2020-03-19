@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of an operation or a named query
     /// </summary>
-    [FhirType("OperationDefinition", IsResource=true)]
+    [FhirType("OperationDefinition")]
     [DataContract]
     public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource
     {

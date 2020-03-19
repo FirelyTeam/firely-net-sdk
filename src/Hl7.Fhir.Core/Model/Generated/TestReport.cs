@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the results of a TestScript execution
     /// </summary>
-    [FhirType("TestReport", IsResource=true)]
+    [FhirType("TestReport")]
     [DataContract]
     public partial class TestReport : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details and position information for a physical place
     /// </summary>
-    [FhirType("Location", IsResource=true)]
+    [FhirType("Location")]
     [DataContract]
     public partial class Location : Hl7.Fhir.Model.DomainResource
     {

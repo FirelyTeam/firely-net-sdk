@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of codes drawn from one or more code systems
     /// </summary>
-    [FhirType("ValueSet", IsResource=true)]
+    [FhirType("ValueSet")]
     [DataContract]
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {

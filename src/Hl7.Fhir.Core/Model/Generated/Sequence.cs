@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about a biological sequence
     /// </summary>
-    [FhirType("Sequence", IsResource=true)]
+    [FhirType("Sequence")]
     [DataContract]
     public partial class Sequence : Hl7.Fhir.Model.DomainResource
     {

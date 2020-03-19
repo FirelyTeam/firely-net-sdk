@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A person with a  formal responsibility in the provisioning of healthcare or related services
     /// </summary>
-    [FhirType("Practitioner", IsResource=true)]
+    [FhirType("Practitioner")]
     [DataContract]
     public partial class Practitioner : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Remittance resource
     /// </summary>
-    [FhirType("ClaimResponse", IsResource=true)]
+    [FhirType("ClaimResponse")]
     [DataContract]
     public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource
     {

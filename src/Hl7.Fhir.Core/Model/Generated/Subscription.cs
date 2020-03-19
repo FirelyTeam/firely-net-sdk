@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A server push subscription criteria
     /// </summary>
-    [FhirType("Subscription", IsResource=true)]
+    [FhirType("Subscription")]
     [DataContract]
     public partial class Subscription : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance or medical plan or a payment agreement
     /// </summary>
-    [FhirType("Coverage", IsResource=true)]
+    [FhirType("Coverage")]
     [DataContract]
     public partial class Coverage : Hl7.Fhir.Model.DomainResource
     {

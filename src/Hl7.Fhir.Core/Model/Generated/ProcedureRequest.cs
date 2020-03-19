@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A request for a procedure or diagnostic to be performed
     /// </summary>
-    [FhirType("ProcedureRequest", IsResource=true)]
+    [FhirType("ProcedureRequest")]
     [DataContract]
     public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
     {

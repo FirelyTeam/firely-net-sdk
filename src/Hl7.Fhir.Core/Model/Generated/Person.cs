@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A generic person record
     /// </summary>
-    [FhirType("Person", IsResource=true)]
+    [FhirType("Person")]
     [DataContract]
     public partial class Person : Hl7.Fhir.Model.DomainResource
     {

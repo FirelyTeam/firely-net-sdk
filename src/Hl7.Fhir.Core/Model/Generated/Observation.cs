@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Measurements and simple assertions
     /// </summary>
-    [FhirType("Observation", IsResource=true)]
+    [FhirType("Observation")]
     [DataContract]
     public partial class Observation : Hl7.Fhir.Model.DomainResource
     {

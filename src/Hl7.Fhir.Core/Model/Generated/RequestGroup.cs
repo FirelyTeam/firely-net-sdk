@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A group of related requests
     /// </summary>
-    [FhirType("RequestGroup", IsResource=true)]
+    [FhirType("RequestGroup")]
     [DataContract]
     public partial class RequestGroup : Hl7.Fhir.Model.DomainResource
     {

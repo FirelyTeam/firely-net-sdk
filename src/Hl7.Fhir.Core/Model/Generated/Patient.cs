@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about an individual or animal receiving health care services
     /// </summary>
-    [FhirType("Patient", IsResource=true)]
+    [FhirType("Patient")]
     [DataContract]
     public partial class Patient : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who, What, When for a set of resources
     /// </summary>
-    [FhirType("Provenance", IsResource=true)]
+    [FhirType("Provenance")]
     [DataContract]
     public partial class Provenance : Hl7.Fhir.Model.DomainResource
     {

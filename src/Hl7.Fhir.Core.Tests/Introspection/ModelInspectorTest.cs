@@ -24,31 +24,16 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var inspector = new ModelInspector();
 
-            inspector.ImportType(typeof(Road));
             inspector.ImportType(typeof(Way));
-            inspector.ImportType(typeof(ProfiledWay));
-            inspector.ImportType(typeof(NewStreet));
-            //inspector.Process();
+            inspector.ImportType(typeof(Way2));
 
-            var road = inspector.FindClassMappingForResource("roAd");
-            Assert.IsNotNull(road);
-            Assert.AreEqual(road.NativeType, typeof(Road));
-
-            var way = inspector.FindClassMappingForResource("Way");
+            var way = inspector.FindClassMappingForResource("wAy");
             Assert.IsNotNull(way);
             Assert.AreEqual(way.NativeType, typeof(Way));
 
-            var pway = inspector.FindClassMappingForResource("way", "http://nu.nl/profile#street");
-            Assert.IsNotNull(pway);
-            Assert.AreEqual(pway.NativeType, typeof(ProfiledWay));
-
-            var pway2 = inspector.FindClassMappingForResource("way", "http://nux.nl/profile#street");
-            Assert.IsNotNull(pway2);
-            Assert.AreEqual(pway2.NativeType, typeof(Way));
-
-            var street = inspector.FindClassMappingForResource("Street");
-            Assert.IsNotNull(street);
-            Assert.AreEqual(street.NativeType, typeof(NewStreet));
+            var way2 = inspector.FindClassMappingForResource("Way2");
+            Assert.IsNotNull(way2);
+            Assert.AreEqual(way2.NativeType, typeof(Way2));
 
             var noway = inspector.FindClassMappingForResource("nonexistent");
             Assert.IsNull(noway);

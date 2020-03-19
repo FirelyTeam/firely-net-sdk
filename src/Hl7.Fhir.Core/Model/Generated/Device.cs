@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item used in healthcare
     /// </summary>
-    [FhirType("Device", IsResource=true)]
+    [FhirType("Device")]
     [DataContract]
     public partial class Device : Hl7.Fhir.Model.DomainResource
     {

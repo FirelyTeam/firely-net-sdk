@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical issue with action
     /// </summary>
-    [FhirType("DetectedIssue", IsResource=true)]
+    [FhirType("DetectedIssue")]
     [DataContract]
     public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request for a medication, substance or device
     /// </summary>
-    [FhirType("SupplyRequest", IsResource=true)]
+    [FhirType("SupplyRequest")]
     [DataContract]
     public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource
     {

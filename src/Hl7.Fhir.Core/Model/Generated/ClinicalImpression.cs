@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A clinical assessment performed when planning treatments and management strategies for a patient
     /// </summary>
-    [FhirType("ClinicalImpression", IsResource=true)]
+    [FhirType("ClinicalImpression")]
     [DataContract]
     public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
     {

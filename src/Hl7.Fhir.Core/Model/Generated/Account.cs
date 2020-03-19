@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Tracks balance, charges, for patient or cost center
     /// </summary>
-    [FhirType("Account", IsResource=true)]
+    [FhirType("Account")]
     [DataContract]
     public partial class Account : Hl7.Fhir.Model.DomainResource
     {

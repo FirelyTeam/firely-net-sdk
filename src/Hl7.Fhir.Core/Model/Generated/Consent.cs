@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A healthcare consumer's policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
-    [FhirType("Consent", IsResource=true)]
+    [FhirType("Consent")]
     [DataContract]
     public partial class Consent : Hl7.Fhir.Model.DomainResource
     {

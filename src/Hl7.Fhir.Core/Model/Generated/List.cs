@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information summarized from a list of other resources
     /// </summary>
-    [FhirType("List", IsResource=true)]
+    [FhirType("List")]
     [DataContract]
     public partial class List : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A container for slots of time that may be available for booking appointments
     /// </summary>
-    [FhirType("Schedule", IsResource=true)]
+    [FhirType("Schedule")]
     [DataContract]
     public partial class Schedule : Hl7.Fhir.Model.DomainResource
     {

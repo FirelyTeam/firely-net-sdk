@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Guidance or advice relating to an immunization
     /// </summary>
-    [FhirType("ImmunizationRecommendation", IsResource=true)]
+    [FhirType("ImmunizationRecommendation")]
     [DataContract]
     public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource
     {

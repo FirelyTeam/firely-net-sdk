@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific and identified anatomical location
     /// </summary>
-    [FhirType("BodySite", IsResource=true)]
+    [FhirType("BodySite")]
     [DataContract]
     public partial class BodySite : Hl7.Fhir.Model.DomainResource
     {

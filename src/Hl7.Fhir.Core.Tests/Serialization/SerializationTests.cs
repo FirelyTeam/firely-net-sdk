@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
         }
 
-        [FhirType("Bundle", IsResource = true)]
+        [FhirType("Bundle")]
         //[DataContract]
         public class CustomBundle : Bundle
         {

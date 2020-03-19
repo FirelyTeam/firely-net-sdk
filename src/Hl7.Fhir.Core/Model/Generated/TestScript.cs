@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes a set of tests
     /// </summary>
-    [FhirType("TestScript", IsResource=true)]
+    [FhirType("TestScript")]
     [DataContract]
     public partial class TestScript : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the success/failure of an action
     /// </summary>
-    [FhirType("OperationOutcome", IsResource=true)]
+    [FhirType("OperationOutcome")]
     [DataContract]
     public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource
     {

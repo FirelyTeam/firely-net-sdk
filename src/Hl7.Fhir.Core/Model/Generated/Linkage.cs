@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links records for 'same' item
     /// </summary>
-    [FhirType("Linkage", IsResource=true)]
+    [FhirType("Linkage")]
     [DataContract]
     public partial class Linkage : Hl7.Fhir.Model.DomainResource
     {

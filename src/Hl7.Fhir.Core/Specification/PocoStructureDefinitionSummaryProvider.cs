@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace Hl7.Fhir.Specification
@@ -71,7 +72,7 @@ namespace Hl7.Fhir.Specification
         private string substituteQuantity(string name) =>
             ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
 
-        public bool IsAbstract => _classMapping.IsAbstract;
+        public bool IsAbstract => _classMapping.NativeType.GetTypeInfo().IsAbstract;
         public bool IsResource => _classMapping.IsResource;
 
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements() =>

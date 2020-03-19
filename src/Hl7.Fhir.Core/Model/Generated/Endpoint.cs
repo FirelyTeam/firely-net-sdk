@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services
     /// </summary>
-    [FhirType("Endpoint", IsResource=true)]
+    [FhirType("Endpoint")]
     [DataContract]
     public partial class Endpoint : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A structured set of questions
     /// </summary>
-    [FhirType("Questionnaire", IsResource=true)]
+    [FhirType("Questionnaire")]
     [DataContract]
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {

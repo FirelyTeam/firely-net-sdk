@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization
     /// </summary>
-    [FhirType("Goal", IsResource=true)]
+    [FhirType("Goal")]
     [DataContract]
     public partial class Goal : Hl7.Fhir.Model.DomainResource
     {

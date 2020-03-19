@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource data element
     /// </summary>
-    [FhirType("DataElement", IsResource=true)]
+    [FhirType("DataElement")]
     [DataContract]
     public partial class DataElement : Hl7.Fhir.Model.DomainResource
     {

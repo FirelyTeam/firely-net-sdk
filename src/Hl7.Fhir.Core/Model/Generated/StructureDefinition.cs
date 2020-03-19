@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structural Definition
     /// </summary>
-    [FhirType("StructureDefinition", IsResource=true)]
+    [FhirType("StructureDefinition")]
     [DataContract]
     public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource
     {

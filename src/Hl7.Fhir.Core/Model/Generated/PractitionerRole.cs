@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Roles/organizations the practitioner is associated with
     /// </summary>
-    [FhirType("PractitionerRole", IsResource=true)]
+    [FhirType("PractitionerRole")]
     [DataContract]
     public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource
     {

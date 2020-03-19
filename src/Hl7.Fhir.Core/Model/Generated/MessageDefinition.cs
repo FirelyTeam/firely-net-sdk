@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource that defines a type of message that can be exchanged between systems
     /// </summary>
-    [FhirType("MessageDefinition", IsResource=true)]
+    [FhirType("MessageDefinition")]
     [DataContract]
     public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
     {

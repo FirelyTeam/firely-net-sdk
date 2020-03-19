@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The definition of a specific activity to be taken, independent of any particular patient or context
     /// </summary>
-    [FhirType("ActivityDefinition", IsResource=true)]
+    [FhirType("ActivityDefinition")]
     [DataContract]
     public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource
     {

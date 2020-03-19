@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dispensing a medication to a named patient
     /// </summary>
-    [FhirType("MedicationDispense", IsResource=true)]
+    [FhirType("MedicationDispense")]
     [DataContract]
     public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
     {

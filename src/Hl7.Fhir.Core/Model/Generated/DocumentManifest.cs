@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list that defines a set of documents
     /// </summary>
-    [FhirType("DocumentManifest", IsResource=true)]
+    [FhirType("DocumentManifest")]
     [DataContract]
     public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ordering of medication for patient or group
     /// </summary>
-    [FhirType("MedicationRequest", IsResource=true)]
+    [FhirType("MedicationRequest")]
     [DataContract]
     public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Immunization event information
     /// </summary>
-    [FhirType("Immunization", IsResource=true)]
+    [FhirType("Immunization")]
     [DataContract]
     public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {

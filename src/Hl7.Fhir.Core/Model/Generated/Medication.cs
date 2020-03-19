@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of a Medication
     /// </summary>
-    [FhirType("Medication", IsResource=true)]
+    [FhirType("Medication")]
     [DataContract]
     public partial class Medication : Hl7.Fhir.Model.DomainResource
     {

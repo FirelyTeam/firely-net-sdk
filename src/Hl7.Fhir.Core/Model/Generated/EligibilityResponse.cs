@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// EligibilityResponse resource
     /// </summary>
-    [FhirType("EligibilityResponse", IsResource=true)]
+    [FhirType("EligibilityResponse")]
     [DataContract]
     public partial class EligibilityResponse : Hl7.Fhir.Model.DomainResource
     {

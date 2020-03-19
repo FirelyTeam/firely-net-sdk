@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The definition of a plan for a series of actions, independent of any specific patient or context
     /// </summary>
-    [FhirType("PlanDefinition", IsResource=true)]
+    [FhirType("PlanDefinition")]
     [DataContract]
     public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Group of multiple entities
     /// </summary>
-    [FhirType("Group", IsResource=true)]
+    [FhirType("Group")]
     [DataContract]
     public partial class Group : Hl7.Fhir.Model.DomainResource
     {

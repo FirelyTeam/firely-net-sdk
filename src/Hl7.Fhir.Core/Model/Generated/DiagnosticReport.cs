@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A Diagnostic report - a combination of request information, atomic results, images, interpretation, as well as formatted reports
     /// </summary>
-    [FhirType("DiagnosticReport", IsResource=true)]
+    [FhirType("DiagnosticReport")]
     [DataContract]
     public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
     {

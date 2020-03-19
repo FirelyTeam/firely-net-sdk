@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim, Pre-determination or Pre-authorization
     /// </summary>
-    [FhirType("Claim", IsResource=true)]
+    [FhirType("Claim")]
     [DataContract]
     public partial class Claim : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of codes drawn from one or more code systems
     /// </summary>
-    [FhirType("CodeSystem", IsResource=true)]
+    [FhirType("CodeSystem")]
     [DataContract]
     public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
     {

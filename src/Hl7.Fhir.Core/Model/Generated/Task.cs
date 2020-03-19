@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A task to be performed
     /// </summary>
-    [FhirType("Task", IsResource=true)]
+    [FhirType("Task")]
     [DataContract]
     public partial class Task : Hl7.Fhir.Model.DomainResource
     {

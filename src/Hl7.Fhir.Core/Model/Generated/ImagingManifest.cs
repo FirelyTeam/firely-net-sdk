@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key Object Selection
     /// </summary>
-    [FhirType("ImagingManifest", IsResource=true)]
+    [FhirType("ImagingManifest")]
     [DataContract]
     public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
     {

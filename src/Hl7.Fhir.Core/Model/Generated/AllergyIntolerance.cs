@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allergy or Intolerance (generally: Risk of adverse reaction to a substance)
     /// </summary>
-    [FhirType("AllergyIntolerance", IsResource=true)]
+    [FhirType("AllergyIntolerance")]
     [DataContract]
     public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
     {

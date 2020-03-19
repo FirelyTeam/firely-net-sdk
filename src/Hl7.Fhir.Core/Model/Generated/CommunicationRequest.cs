@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A request for information to be sent to a receiver
     /// </summary>
-    [FhirType("CommunicationRequest", IsResource=true)]
+    [FhirType("CommunicationRequest")]
     [DataContract]
     public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource
     {

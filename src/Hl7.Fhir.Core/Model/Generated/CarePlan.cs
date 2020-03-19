@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare plan for patient or group
     /// </summary>
-    [FhirType("CarePlan", IsResource=true)]
+    [FhirType("CarePlan")]
     [DataContract]
     public partial class CarePlan : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of an graph of resources
     /// </summary>
-    [FhirType("GraphDefinition", IsResource=true)]
+    [FhirType("GraphDefinition")]
     [DataContract]
     public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
     {

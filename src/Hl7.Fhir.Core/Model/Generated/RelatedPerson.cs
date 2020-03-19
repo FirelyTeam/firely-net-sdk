@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An person that is related to a patient, but who is not a direct target of care
     /// </summary>
-    [FhirType("RelatedPerson", IsResource=true)]
+    [FhirType("RelatedPerson")]
     [DataContract]
     public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource
     {

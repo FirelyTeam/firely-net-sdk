@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
-    [FhirType("ResearchSubject", IsResource=true)]
+    [FhirType("ResearchSubject")]
     [DataContract]
     public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource
     {

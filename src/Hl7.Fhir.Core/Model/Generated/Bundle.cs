@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contains a collection of resources
     /// </summary>
-    [FhirType("Bundle", IsResource=true)]
+    [FhirType("Bundle")]
     [DataContract]
     public partial class Bundle : Hl7.Fhir.Model.Resource
     {

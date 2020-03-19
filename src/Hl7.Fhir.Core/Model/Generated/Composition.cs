@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of resources composed into a single coherent clinical statement with clinical attestation
     /// </summary>
-    [FhirType("Composition", IsResource=true)]
+    [FhirType("Composition")]
     [DataContract]
     public partial class Composition : Hl7.Fhir.Model.DomainResource
     {

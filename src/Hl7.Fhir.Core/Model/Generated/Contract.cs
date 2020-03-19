@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Legal Agreement
     /// </summary>
-    [FhirType("Contract", IsResource=true)]
+    [FhirType("Contract")]
     [DataContract]
     public partial class Contract : Hl7.Fhir.Model.DomainResource
     {

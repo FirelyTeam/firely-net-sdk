@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
 <# }
 if(true) {
- #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+ #>    [FhirType("<#= resourceName #>")]
 <# }
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>

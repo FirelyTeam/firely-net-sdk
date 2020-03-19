@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ProcessResponse resource
     /// </summary>
-    [FhirType("ProcessResponse", IsResource=true)]
+    [FhirType("ProcessResponse")]
     [DataContract]
     public partial class ProcessResponse : Hl7.Fhir.Model.DomainResource
     {

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s)
     /// </summary>
-    [FhirType("Appointment", IsResource=true)]
+    [FhirType("Appointment")]
     [DataContract]
     public partial class Appointment : Hl7.Fhir.Model.DomainResource
     {

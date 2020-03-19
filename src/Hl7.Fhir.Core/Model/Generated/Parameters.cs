@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Operation Request or Response
     /// </summary>
-    [FhirType("Parameters", IsResource=true)]
+    [FhirType("Parameters")]
     [DataContract]
     public partial class Parameters : Hl7.Fhir.Model.Resource
     {
