@@ -176,6 +176,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DELETE", "http://hl7.org/fhir/http-verb"), Description("DELETE")]
             DELETE,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-verb)
+            /// </summary>
+            [EnumLiteral("PATCH", "http://hl7.org/fhir/http-verb"), Description("PATCH")]
+            PATCH,
         }
 
         [FhirType("LinkComponent")]

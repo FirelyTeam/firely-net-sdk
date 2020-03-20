@@ -334,21 +334,22 @@ namespace Hl7.Fhir.Rest
             return RefreshAsync<TResource>(current).WaitResult();
         }
 
-#endregion
+        #endregion
 
-#region Update
+        #region Update
 
         /// <summary>
         /// Update (or create) a resource
         /// </summary>
         /// <param name="resource">The resource to update</param>
+        /// <param name="verb">Http Verb to use, PUT is default</param>
         /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
         /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
         /// created.</remarks>
-        public Task<TResource> UpdateAsync<TResource>(TResource resource, bool versionAware=false) where TResource : Resource
+        public Task<TResource> UpdateAsync<TResource>(TResource resource, Bundle.HTTPVerb verb = Bundle.HTTPVerb.PUT, bool decodeURL = false, bool addPath = true, bool versionAware=false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Resource needs a non-null Id to send the update to");
@@ -356,25 +357,26 @@ namespace Hl7.Fhir.Rest
             var upd = new TransactionBuilder(Endpoint);
 
             if (versionAware && resource.HasVersionId)
-                upd.Update(resource.Id, resource, versionId: resource.VersionId);
+                upd.Update(resource.Id, resource, verb, addPath, versionId: resource.VersionId);
             else
-                upd.Update(resource.Id, resource);
+                upd.Update(resource.Id, resource, verb, addPath);
 
-            return internalUpdateAsync<TResource>(resource, upd.ToBundle());
+            return internalUpdateAsync<TResource>(resource, upd.ToBundle(), decodeURL);
         }
         /// <summary>
         /// Update (or create) a resource
         /// </summary>
         /// <param name="resource">The resource to update</param>
+        /// <param name="verb">Http Verb to use, PUT is default.</param>
         /// <param name="versionAware">If true, asks the server to verify we are updating the latest version</param>
         /// <typeparam name="TResource">The type of resource that is being updated</typeparam>
         /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
         /// created.</remarks>
-        public TResource Update<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
+        public TResource Update<TResource>(TResource resource, Bundle.HTTPVerb verb = Bundle.HTTPVerb.PUT, bool versionAware = false) where TResource : Resource
         {
-            return UpdateAsync<TResource>(resource, versionAware).WaitResult();
+            return UpdateAsync<TResource>(resource, verb, versionAware).WaitResult();
         }
 
         /// <summary>
@@ -416,12 +418,12 @@ namespace Hl7.Fhir.Rest
         {
             return UpdateAsync(resource, condition, versionAware).WaitResult();
         }
-        private Task<TResource> internalUpdateAsync<TResource>(TResource resource, Bundle tx) where TResource : Resource
+        private Task<TResource> internalUpdateAsync<TResource>(TResource resource, Bundle tx, bool decodeURL = false) where TResource : Resource
         {
             resource.ResourceBase = Endpoint;
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
-            return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK }, decodeURL);
         }
         private TResource internalUpdate<TResource>(TResource resource, Bundle tx) where TResource : Resource
         {
