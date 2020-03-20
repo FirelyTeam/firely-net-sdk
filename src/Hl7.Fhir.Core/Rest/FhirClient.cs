@@ -507,13 +507,13 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
-        public async System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition)
+        public async System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition, bool decodedURL = false)
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
-            await executeAsync<Resource>(tx,new[]{ HttpStatusCode.OK, HttpStatusCode.NoContent}).ConfigureAwait(false);
+            await executeAsync<Resource>(tx,new[]{ HttpStatusCode.OK, HttpStatusCode.NoContent}, decodedURL).ConfigureAwait(false);
         }
         /// <summary>
         /// Conditionally delete a resource
@@ -1059,12 +1059,12 @@ namespace Hl7.Fhir.Rest
             return executeAsync<TResource>(tx,  expect).WaitResult();
         }
 
-        private async Task<TResource> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
+        private async Task<TResource> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect, bool decodedURL = false) where TResource : Resource
         {
             verifyServerVersion();
 
             var request = tx.Entry[0];
-            var response = await _requester.ExecuteAsync(request).ConfigureAwait(false);
+            var response = await _requester.ExecuteAsync(request, decodedURL).ConfigureAwait(false);
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
