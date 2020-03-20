@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Rest
         {
             return ExecuteAsync(interaction).WaitResult();
         }
-        public async Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction)
+        public async Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction, bool decodedURL = false)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Rest
 
             byte[] outBody;
 
-            var request = interaction.ToHttpRequest(BaseUrl, this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(BaseUrl, this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody, decodedURL);
 
 #if !NETSTANDARD1_1
             request.Timeout = Timeout;

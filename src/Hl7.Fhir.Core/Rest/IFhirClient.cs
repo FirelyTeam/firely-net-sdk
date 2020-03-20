@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Rest
         void Delete(Uri location);
         System.Threading.Tasks.Task DeleteAsync(Resource resource);
         System.Threading.Tasks.Task DeleteAsync(string location);
-        System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition);
+        System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition, bool decodedURL = false);
         System.Threading.Tasks.Task DeleteAsync(Uri location);
         Task<TResource> executeAsync<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Resource;
         Resource Get(string url);

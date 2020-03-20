@@ -14,13 +14,16 @@ using System.Reflection;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Net.Http;
+#if !NETSTANDARD1_1
+using System.Web;
+#endif
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
         public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, Uri baseUrl,
-            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body, bool decodedURL = false)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -41,7 +44,16 @@ namespace Hl7.Fhir.Rest
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
 
-            var request = (HttpWebRequest)HttpWebRequest.Create(location.Uri);
+
+            HttpWebRequest request = null;
+            if(decodedURL)
+#if NETSTANDARD1_1
+                request = (HttpWebRequest)HttpWebRequest.Create(new Uri(WebUtility.UrlDecode(location.Uri.AbsoluteUri)));
+#else
+                request = (HttpWebRequest)HttpWebRequest.Create(new Uri(HttpUtility.UrlDecode(location.Uri.AbsoluteUri)));
+#endif
+            else
+                request = (HttpWebRequest)HttpWebRequest.Create(location.Uri);
             request.Method = interaction.Method.ToString();
             setAgent(request, ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
 
