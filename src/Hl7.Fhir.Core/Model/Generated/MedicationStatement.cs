@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicationStatement"; } }
         
         /// <summary>
@@ -210,7 +209,6 @@ namespace Hl7.Fhir.Model
         /// active | completed | entered-in-error | intended | stopped | on-hold
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus? Status
         {
@@ -286,7 +284,6 @@ namespace Hl7.Fhir.Model
         /// When the statement was asserted?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateAsserted
         {
@@ -366,7 +363,6 @@ namespace Hl7.Fhir.Model
         /// y | n | unk | na
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationStatement.MedicationStatementTaken? Taken
         {
@@ -545,7 +541,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -572,7 +567,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

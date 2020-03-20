@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
@@ -225,7 +224,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
@@ -272,7 +270,6 @@ namespace Hl7.Fhir.Model
             /// Description of the event as a whole
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -304,7 +301,6 @@ namespace Hl7.Fhir.Model
             /// Date(/time) when manifestations showed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Onset
             {
@@ -336,7 +332,6 @@ namespace Hl7.Fhir.Model
             /// mild | moderate | severe (of event as a whole)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity? Severity
             {
@@ -438,7 +433,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -454,7 +448,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -505,7 +498,6 @@ namespace Hl7.Fhir.Model
         /// active | inactive | resolved
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus? ClinicalStatus
         {
@@ -538,7 +530,6 @@ namespace Hl7.Fhir.Model
         /// unconfirmed | confirmed | refuted | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus? VerificationStatus
         {
@@ -570,7 +561,6 @@ namespace Hl7.Fhir.Model
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType? Type
         {
@@ -603,7 +593,6 @@ namespace Hl7.Fhir.Model
         /// food | medication | environment | biologic
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory?> Category
         {
@@ -635,7 +624,6 @@ namespace Hl7.Fhir.Model
         /// low | high | unable-to-assess
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality? Criticality
         {
@@ -711,7 +699,6 @@ namespace Hl7.Fhir.Model
         /// Date record was believed accurate
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AssertedDate
         {
@@ -773,7 +760,6 @@ namespace Hl7.Fhir.Model
         /// Date(/time) of last known occurrence of a reaction
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastOccurrence
         {
@@ -899,7 +885,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -923,7 +908,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -50,14 +50,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "CommunicationRequest"; } }
         
         [FhirType("PayloadComponent")]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
             
             /// <summary>
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -128,7 +125,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -146,7 +142,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
             
             /// <summary>
@@ -225,7 +220,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -236,7 +230,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -328,7 +321,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestStatus? Status
         {
@@ -374,7 +366,6 @@ namespace Hl7.Fhir.Model
         /// Message urgency
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestPriority? Priority
         {
@@ -511,7 +502,6 @@ namespace Hl7.Fhir.Model
         /// When request transitioned to being actionable
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AuthoredOn
         {
@@ -696,7 +686,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -725,7 +714,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

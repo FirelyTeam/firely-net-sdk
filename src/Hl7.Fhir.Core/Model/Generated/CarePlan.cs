@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class CarePlan : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "CarePlan"; } }
         
         /// <summary>
@@ -192,7 +191,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ActivityComponent"; } }
             
             /// <summary>
@@ -321,7 +319,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -335,7 +332,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -357,7 +353,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
@@ -465,7 +460,6 @@ namespace Hl7.Fhir.Model
             /// not-started | scheduled | in-progress | on-hold | completed | cancelled | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
             {
@@ -497,7 +491,6 @@ namespace Hl7.Fhir.Model
             /// Reason for current status
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string StatusReason
             {
@@ -529,7 +522,6 @@ namespace Hl7.Fhir.Model
             /// Do NOT do
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Prohibited
             {
@@ -648,7 +640,6 @@ namespace Hl7.Fhir.Model
             /// Extra info describing activity to perform
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -750,7 +741,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -775,7 +765,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -900,7 +889,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CarePlan.CarePlanStatus? Status
         {
@@ -933,7 +921,6 @@ namespace Hl7.Fhir.Model
         /// proposal | plan | order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CarePlan.CarePlanIntent? Intent
         {
@@ -979,7 +966,6 @@ namespace Hl7.Fhir.Model
         /// Human-friendly name for the CarePlan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1011,7 +997,6 @@ namespace Hl7.Fhir.Model
         /// Summary of nature of plan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -1276,7 +1261,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1305,7 +1289,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

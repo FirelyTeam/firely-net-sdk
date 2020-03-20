@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Binary : Hl7.Fhir.Model.Resource
     {
-        [NotMapped]
         public override string TypeName { get { return "Binary"; } }
         
         /// <summary>
@@ -71,7 +70,6 @@ namespace Hl7.Fhir.Model
         /// MimeType of the binary content
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ContentType
         {
@@ -119,7 +117,6 @@ namespace Hl7.Fhir.Model
         /// The actual content
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Content
         {
@@ -181,7 +178,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -193,7 +189,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

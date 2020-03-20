@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Media : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Media"; } }
         
         /// <summary>
@@ -128,7 +127,6 @@ namespace Hl7.Fhir.Model
         /// photo | video | audio
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Media.DigitalMediaType? Type
         {
@@ -288,7 +286,6 @@ namespace Hl7.Fhir.Model
         /// Height of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Height
         {
@@ -320,7 +317,6 @@ namespace Hl7.Fhir.Model
         /// Width of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Width
         {
@@ -352,7 +348,6 @@ namespace Hl7.Fhir.Model
         /// Number of frames if > 1 (photo)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Frames
         {
@@ -384,7 +379,6 @@ namespace Hl7.Fhir.Model
         /// Length in seconds (audio / video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Duration
         {
@@ -519,7 +513,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -546,7 +539,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

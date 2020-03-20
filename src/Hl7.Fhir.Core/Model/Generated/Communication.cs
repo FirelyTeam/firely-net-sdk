@@ -50,14 +50,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Communication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Communication"; } }
         
         [FhirType("PayloadComponent")]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
             
             /// <summary>
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -128,7 +125,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -222,7 +218,6 @@ namespace Hl7.Fhir.Model
         /// preparation | in-progress | suspended | aborted | completed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EventStatus? Status
         {
@@ -254,7 +249,6 @@ namespace Hl7.Fhir.Model
         /// Communication did not occur
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotDone
         {
@@ -389,7 +383,6 @@ namespace Hl7.Fhir.Model
         /// When sent
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Sent
         {
@@ -421,7 +414,6 @@ namespace Hl7.Fhir.Model
         /// When received
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Received
         {
@@ -607,7 +599,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -636,7 +627,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

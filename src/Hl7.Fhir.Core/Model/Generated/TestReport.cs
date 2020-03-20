@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class TestReport : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "TestReport"; } }
         
         /// <summary>
@@ -189,7 +188,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
@@ -210,7 +208,6 @@ namespace Hl7.Fhir.Model
             /// test-engine | client | server
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.TestReport.TestReportParticipantType? Type
             {
@@ -243,7 +240,6 @@ namespace Hl7.Fhir.Model
             /// The uri of the participant. An absolute URL is preferred
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uri
             {
@@ -275,7 +271,6 @@ namespace Hl7.Fhir.Model
             /// The display name of the participant
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
             {
@@ -338,7 +333,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -350,7 +344,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -370,7 +363,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SetupComponent"; } }
             
             /// <summary>
@@ -429,7 +421,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -439,7 +430,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -457,7 +447,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SetupActionComponent"; } }
             
             /// <summary>
@@ -531,7 +520,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -542,7 +530,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -561,7 +548,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OperationComponent"; } }
             
             /// <summary>
@@ -582,7 +568,6 @@ namespace Hl7.Fhir.Model
             /// pass | skip | fail | warning | error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
             {
@@ -627,7 +612,6 @@ namespace Hl7.Fhir.Model
             /// A link to further details on the result
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Detail
             {
@@ -690,7 +674,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -702,7 +685,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -722,7 +704,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AssertComponent"; } }
             
             /// <summary>
@@ -743,7 +724,6 @@ namespace Hl7.Fhir.Model
             /// pass | skip | fail | warning | error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
             {
@@ -788,7 +768,6 @@ namespace Hl7.Fhir.Model
             /// A link to further details on the result
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Detail
             {
@@ -851,7 +830,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -863,7 +841,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -883,7 +860,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TestComponent"; } }
             
             /// <summary>
@@ -903,7 +879,6 @@ namespace Hl7.Fhir.Model
             /// Tracking/logging name of this test
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -935,7 +910,6 @@ namespace Hl7.Fhir.Model
             /// Tracking/reporting short description of the test
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -1012,7 +986,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1024,7 +997,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1044,7 +1016,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TestActionComponent"; } }
             
             /// <summary>
@@ -1118,7 +1089,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1129,7 +1099,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1148,7 +1117,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TeardownComponent"; } }
             
             /// <summary>
@@ -1207,7 +1175,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1217,7 +1184,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1235,7 +1201,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TeardownActionComponent"; } }
             
             /// <summary>
@@ -1294,7 +1259,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1304,7 +1268,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1348,7 +1311,6 @@ namespace Hl7.Fhir.Model
         /// Informal name of the executed TestScript
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1381,7 +1343,6 @@ namespace Hl7.Fhir.Model
         /// completed | in-progress | waiting | stopped | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.TestReport.TestReportStatus? Status
         {
@@ -1430,7 +1391,6 @@ namespace Hl7.Fhir.Model
         /// pass | fail | pending
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.TestReport.TestReportResult? Result
         {
@@ -1462,7 +1422,6 @@ namespace Hl7.Fhir.Model
         /// The final score (percentage of tests passed) resulting from the execution of the TestScript
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Score
         {
@@ -1494,7 +1453,6 @@ namespace Hl7.Fhir.Model
         /// Name of the tester producing this report (Organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Tester
         {
@@ -1526,7 +1484,6 @@ namespace Hl7.Fhir.Model
         /// When the TestScript was executed and this TestReport was generated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Issued
         {
@@ -1669,7 +1626,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1690,7 +1646,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

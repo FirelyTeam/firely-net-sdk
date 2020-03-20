@@ -159,7 +159,7 @@
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
 	
-	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean",
+	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean", "Base64Binary",
 				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml","BackboneElement" };
 			
 			if (skippedTypes.Contains(resourceName)) continue;
@@ -255,9 +255,9 @@ if (!abstractType){
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
+<# if (resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
+<# } #>
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
 <# if (!string.IsNullOrEmpty(pattern)) {
@@ -424,7 +424,6 @@ if (!abstractType){
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -472,7 +471,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -559,7 +557,6 @@ if (!abstractType){
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -571,7 +568,6 @@ if (!abstractType){
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -641,7 +637,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -754,7 +749,6 @@ if (!abstractType){
 		// [WMR 20160818] START - implement generic properties collection
 #>
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -766,7 +760,6 @@ if (!abstractType){
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

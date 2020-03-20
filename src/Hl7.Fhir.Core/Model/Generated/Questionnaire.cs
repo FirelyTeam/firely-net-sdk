@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>
@@ -162,7 +161,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
@@ -183,7 +181,6 @@ namespace Hl7.Fhir.Model
             /// Unique id for item in questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string LinkId
             {
@@ -215,7 +212,6 @@ namespace Hl7.Fhir.Model
             /// ElementDefinition - details for the item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Definition
             {
@@ -261,7 +257,6 @@ namespace Hl7.Fhir.Model
             /// E.g. "1(a)", "2.5.3"
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Prefix
             {
@@ -293,7 +288,6 @@ namespace Hl7.Fhir.Model
             /// Primary text for the item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
             {
@@ -326,7 +320,6 @@ namespace Hl7.Fhir.Model
             /// group | display | boolean | decimal | integer | date | dateTime +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType? Type
             {
@@ -372,7 +365,6 @@ namespace Hl7.Fhir.Model
             /// Whether the item must be included in data results
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Required
             {
@@ -404,7 +396,6 @@ namespace Hl7.Fhir.Model
             /// Whether the item may repeat
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Repeats
             {
@@ -436,7 +427,6 @@ namespace Hl7.Fhir.Model
             /// Don't allow human editing
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? ReadOnly
             {
@@ -468,7 +458,6 @@ namespace Hl7.Fhir.Model
             /// No more than this many characters
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? MaxLength
             {
@@ -625,7 +614,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -649,7 +637,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -681,7 +668,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EnableWhenComponent"; } }
             
             /// <summary>
@@ -702,7 +688,6 @@ namespace Hl7.Fhir.Model
             /// Question that determines whether item is enabled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Question
             {
@@ -734,7 +719,6 @@ namespace Hl7.Fhir.Model
             /// Enable when answered or not
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? HasAnswer
             {
@@ -812,7 +796,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -824,7 +807,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -844,7 +826,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OptionComponent"; } }
             
             /// <summary>
@@ -905,7 +886,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -915,7 +895,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -946,7 +925,6 @@ namespace Hl7.Fhir.Model
         /// Logical URI to reference this questionnaire (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -992,7 +970,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the questionnaire
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1024,7 +1001,6 @@ namespace Hl7.Fhir.Model
         /// Name for this questionnaire (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1056,7 +1032,6 @@ namespace Hl7.Fhir.Model
         /// Name for this questionnaire (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1089,7 +1064,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1121,7 +1095,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1153,7 +1126,6 @@ namespace Hl7.Fhir.Model
         /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1185,7 +1157,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1243,7 +1214,6 @@ namespace Hl7.Fhir.Model
         /// When the questionnaire was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ApprovalDate
         {
@@ -1275,7 +1245,6 @@ namespace Hl7.Fhir.Model
         /// When the questionnaire was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastReviewDate
         {
@@ -1390,7 +1359,6 @@ namespace Hl7.Fhir.Model
         /// Resource that can be subject of QuestionnaireResponse
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ResourceType?> SubjectType
         {
@@ -1520,7 +1488,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1550,7 +1517,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

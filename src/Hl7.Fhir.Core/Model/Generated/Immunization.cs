@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
         /// <summary>
@@ -78,7 +77,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PractitionerComponent"; } }
             
             /// <summary>
@@ -155,7 +153,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -166,7 +163,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -185,7 +181,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExplanationComponent"; } }
             
             /// <summary>
@@ -261,7 +256,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -272,7 +266,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -291,7 +284,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
@@ -311,7 +303,6 @@ namespace Hl7.Fhir.Model
             /// When reaction started
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -358,7 +349,6 @@ namespace Hl7.Fhir.Model
             /// Indicates self-reported reaction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Reported
             {
@@ -421,7 +411,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -433,7 +422,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -453,7 +441,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "VaccinationProtocolComponent"; } }
             
             /// <summary>
@@ -473,7 +460,6 @@ namespace Hl7.Fhir.Model
             /// Dose number within series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DoseSequence
             {
@@ -505,7 +491,6 @@ namespace Hl7.Fhir.Model
             /// Details of vaccine protocol
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -552,7 +537,6 @@ namespace Hl7.Fhir.Model
             /// Name of vaccine series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Series
             {
@@ -584,7 +568,6 @@ namespace Hl7.Fhir.Model
             /// Recommended number of doses for immunity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? SeriesDoses
             {
@@ -703,7 +686,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -720,7 +702,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -773,7 +754,6 @@ namespace Hl7.Fhir.Model
         /// completed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
         {
@@ -806,7 +786,6 @@ namespace Hl7.Fhir.Model
         /// Flag for whether immunization was given
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotGiven
         {
@@ -883,7 +862,6 @@ namespace Hl7.Fhir.Model
         /// Vaccination administration date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -916,7 +894,6 @@ namespace Hl7.Fhir.Model
         /// Indicates context the data was recorded in
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? PrimarySource
         {
@@ -991,7 +968,6 @@ namespace Hl7.Fhir.Model
         /// Vaccine lot number
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LotNumber
         {
@@ -1023,7 +999,6 @@ namespace Hl7.Fhir.Model
         /// Vaccine expiration date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ExpirationDate
         {
@@ -1247,7 +1222,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1277,7 +1251,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

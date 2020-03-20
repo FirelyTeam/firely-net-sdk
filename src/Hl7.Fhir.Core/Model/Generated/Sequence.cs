@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Sequence : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Sequence"; } }
         
         /// <summary>
@@ -123,7 +122,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReferenceSeqComponent"; } }
             
             /// <summary>
@@ -156,7 +154,6 @@ namespace Hl7.Fhir.Model
             /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string GenomeBuild
             {
@@ -216,7 +213,6 @@ namespace Hl7.Fhir.Model
             /// A string to represent reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReferenceSeqString
             {
@@ -248,7 +244,6 @@ namespace Hl7.Fhir.Model
             /// Directionality of DNA ( +1/-1)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Strand
             {
@@ -281,7 +276,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the window on the  reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? WindowStart
             {
@@ -314,7 +308,6 @@ namespace Hl7.Fhir.Model
             /// End position of the window on the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? WindowEnd
             {
@@ -392,7 +385,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -409,7 +401,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -434,7 +425,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "VariantComponent"; } }
             
             /// <summary>
@@ -454,7 +444,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the variant on the  reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Start
             {
@@ -486,7 +475,6 @@ namespace Hl7.Fhir.Model
             /// End position of the variant on the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? End
             {
@@ -518,7 +506,6 @@ namespace Hl7.Fhir.Model
             /// Allele that was observed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ObservedAllele
             {
@@ -550,7 +537,6 @@ namespace Hl7.Fhir.Model
             /// Allele in the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReferenceAllele
             {
@@ -582,7 +568,6 @@ namespace Hl7.Fhir.Model
             /// Extended CIGAR string for aligning the sequence with reference bases
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Cigar
             {
@@ -669,7 +654,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -684,7 +668,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -707,7 +690,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "QualityComponent"; } }
             
             /// <summary>
@@ -728,7 +710,6 @@ namespace Hl7.Fhir.Model
             /// indel | snp | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Sequence.qualityType? Type
             {
@@ -773,7 +754,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Start
             {
@@ -805,7 +785,6 @@ namespace Hl7.Fhir.Model
             /// End position of the sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? End
             {
@@ -863,7 +842,6 @@ namespace Hl7.Fhir.Model
             /// True positives from the perspective of the truth data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? TruthTP
             {
@@ -895,7 +873,6 @@ namespace Hl7.Fhir.Model
             /// True positives from the perspective of the query data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? QueryTP
             {
@@ -927,7 +904,6 @@ namespace Hl7.Fhir.Model
             /// False negatives
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? TruthFN
             {
@@ -959,7 +935,6 @@ namespace Hl7.Fhir.Model
             /// False positives
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? QueryFP
             {
@@ -991,7 +966,6 @@ namespace Hl7.Fhir.Model
             /// False positives where the non-REF alleles in the Truth and Query Call Sets match
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? GtFP
             {
@@ -1023,7 +997,6 @@ namespace Hl7.Fhir.Model
             /// Precision of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Precision
             {
@@ -1055,7 +1028,6 @@ namespace Hl7.Fhir.Model
             /// Recall of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Recall
             {
@@ -1087,7 +1059,6 @@ namespace Hl7.Fhir.Model
             /// F-score
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? FScore
             {
@@ -1183,7 +1154,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1206,7 +1176,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1237,7 +1206,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RepositoryComponent"; } }
             
             /// <summary>
@@ -1258,7 +1226,6 @@ namespace Hl7.Fhir.Model
             /// directlink | openapi | login | oauth | other
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Sequence.repositoryType? Type
             {
@@ -1290,7 +1257,6 @@ namespace Hl7.Fhir.Model
             /// URI of the repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Url
             {
@@ -1322,7 +1288,6 @@ namespace Hl7.Fhir.Model
             /// Repository's name
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -1354,7 +1319,6 @@ namespace Hl7.Fhir.Model
             /// Id of the dataset that used to call for dataset in repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DatasetId
             {
@@ -1386,7 +1350,6 @@ namespace Hl7.Fhir.Model
             /// Id of the variantset that used to call for variantset in repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string VariantsetId
             {
@@ -1418,7 +1381,6 @@ namespace Hl7.Fhir.Model
             /// Id of the read
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReadsetId
             {
@@ -1490,7 +1452,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1505,7 +1466,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1555,7 +1515,6 @@ namespace Hl7.Fhir.Model
         /// aa | dna | rna
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Type
         {
@@ -1588,7 +1547,6 @@ namespace Hl7.Fhir.Model
         /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? CoordinateSystem
         {
@@ -1720,7 +1678,6 @@ namespace Hl7.Fhir.Model
         /// Sequence that was observed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ObservedSeq
         {
@@ -1766,7 +1723,6 @@ namespace Hl7.Fhir.Model
         /// Average number of reads representing a given nucleotide in the reconstructed sequence
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? ReadCoverage
         {
@@ -1894,7 +1850,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1918,7 +1873,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

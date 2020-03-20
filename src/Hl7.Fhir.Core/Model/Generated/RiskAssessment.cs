@@ -50,14 +50,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
         [FhirType("PredictionComponent")]
         [DataContract]
         public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PredictionComponent"; } }
             
             /// <summary>
@@ -119,7 +117,6 @@ namespace Hl7.Fhir.Model
             /// Relative likelihood
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? RelativeRisk
             {
@@ -166,7 +163,6 @@ namespace Hl7.Fhir.Model
             /// Explanation of prediction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Rationale
             {
@@ -238,7 +234,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -253,7 +248,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -333,7 +327,6 @@ namespace Hl7.Fhir.Model
         /// registered | preliminary | final | amended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ObservationStatus? Status
         {
@@ -511,7 +504,6 @@ namespace Hl7.Fhir.Model
         /// How to reduce risk
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Mitigation
         {
@@ -543,7 +535,6 @@ namespace Hl7.Fhir.Model
         /// Comments on the risk assessment
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -644,7 +635,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -669,7 +659,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

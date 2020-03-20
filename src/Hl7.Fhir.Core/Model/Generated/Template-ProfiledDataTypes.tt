@@ -95,7 +95,6 @@
 			manager.StartNewFile(resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
-			bool isPrimitive = false;
 			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
 				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
@@ -169,7 +168,6 @@ namespace Hl7.Fhir.Model
 #>    [FhirType("<#= isConstraintProfile ? "Quantity" : rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
         public override IDeepCopyable DeepCopy()

@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ImplementationGuide"; } }
         
         /// <summary>
@@ -135,7 +134,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DependencyComponent"; } }
             
             /// <summary>
@@ -156,7 +154,6 @@ namespace Hl7.Fhir.Model
             /// reference | inclusion
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType? Type
             {
@@ -189,7 +186,6 @@ namespace Hl7.Fhir.Model
             /// Where to find dependency
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uri
             {
@@ -249,7 +245,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -260,7 +255,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -279,7 +273,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PackageComponent"; } }
             
             /// <summary>
@@ -300,7 +293,6 @@ namespace Hl7.Fhir.Model
             /// Name used .page.package
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -332,7 +324,6 @@ namespace Hl7.Fhir.Model
             /// Human readable text describing the package
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -409,7 +400,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -421,7 +411,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -441,7 +430,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ResourceComponent"; } }
             
             /// <summary>
@@ -462,7 +450,6 @@ namespace Hl7.Fhir.Model
             /// If not an example, has its normal meaning
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Example
             {
@@ -494,7 +481,6 @@ namespace Hl7.Fhir.Model
             /// Human Name for the resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -526,7 +512,6 @@ namespace Hl7.Fhir.Model
             /// Reason why included in guide
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -558,7 +543,6 @@ namespace Hl7.Fhir.Model
             /// Short code to identify the resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Acronym
             {
@@ -661,7 +645,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -676,7 +659,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -699,7 +681,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GlobalComponent"; } }
             
             /// <summary>
@@ -720,7 +701,6 @@ namespace Hl7.Fhir.Model
             /// Type this profiles applies to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ResourceType? Type
             {
@@ -796,7 +776,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -807,7 +786,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -826,7 +804,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PageComponent"; } }
             
             /// <summary>
@@ -847,7 +824,6 @@ namespace Hl7.Fhir.Model
             /// Where to find that page
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Source
             {
@@ -880,7 +856,6 @@ namespace Hl7.Fhir.Model
             /// Short title shown for navigational assistance
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Title
             {
@@ -913,7 +888,6 @@ namespace Hl7.Fhir.Model
             /// page | example | list | include | directory | dictionary | toc | resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ImplementationGuide.GuidePageKind? Kind
             {
@@ -946,7 +920,6 @@ namespace Hl7.Fhir.Model
             /// Kind of resource to include in the list
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.ResourceType?> Type
             {
@@ -979,7 +952,6 @@ namespace Hl7.Fhir.Model
             /// Name of package to include
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Package
             {
@@ -1011,7 +983,6 @@ namespace Hl7.Fhir.Model
             /// Format of the page (e.g. html, markdown, etc.)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Format
             {
@@ -1100,7 +1071,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1116,7 +1086,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1154,7 +1123,6 @@ namespace Hl7.Fhir.Model
         /// Logical URI to reference this implementation guide (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -1186,7 +1154,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the implementation guide
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1219,7 +1186,6 @@ namespace Hl7.Fhir.Model
         /// Name for this implementation guide (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1252,7 +1218,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1284,7 +1249,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1316,7 +1280,6 @@ namespace Hl7.Fhir.Model
         /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1348,7 +1311,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1448,7 +1410,6 @@ namespace Hl7.Fhir.Model
         /// FHIR Version this Implementation Guide targets
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string FhirVersion
         {
@@ -1523,7 +1484,6 @@ namespace Hl7.Fhir.Model
         /// Image, css, script, etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Binary
         {
@@ -1643,7 +1603,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1670,7 +1629,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

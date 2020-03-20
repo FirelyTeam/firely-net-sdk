@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>
     {
-        [NotMapped]
         public override string TypeName { get { return "positiveInt"; } }
         
         // Must conform to the pattern "[1-9][0-9]*"

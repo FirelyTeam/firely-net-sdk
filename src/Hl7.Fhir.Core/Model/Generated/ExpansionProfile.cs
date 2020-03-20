@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ExpansionProfile"; } }
         
         /// <summary>
@@ -84,7 +83,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "FixedVersionComponent"; } }
             
             /// <summary>
@@ -105,7 +103,6 @@ namespace Hl7.Fhir.Model
             /// System to have its version fixed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string System
             {
@@ -138,7 +135,6 @@ namespace Hl7.Fhir.Model
             /// Specific version of the code system referred to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
             {
@@ -171,7 +167,6 @@ namespace Hl7.Fhir.Model
             /// default | check | override
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ExpansionProfile.SystemVersionProcessingMode? Mode
             {
@@ -234,7 +229,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -246,7 +240,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -266,7 +259,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExcludedSystemComponent"; } }
             
             /// <summary>
@@ -287,7 +279,6 @@ namespace Hl7.Fhir.Model
             /// The specific code system to be excluded
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string System
             {
@@ -319,7 +310,6 @@ namespace Hl7.Fhir.Model
             /// Specific version of the code system referred to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
             {
@@ -379,7 +369,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -390,7 +379,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -409,7 +397,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DesignationComponent"; } }
             
             /// <summary>
@@ -483,7 +470,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -494,7 +480,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -513,7 +498,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DesignationIncludeComponent"; } }
             
             /// <summary>
@@ -572,7 +556,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -582,7 +565,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -600,7 +582,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DesignationIncludeDesignationComponent"; } }
             
             /// <summary>
@@ -620,7 +601,6 @@ namespace Hl7.Fhir.Model
             /// Human language of the designation to be included
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Language
             {
@@ -693,7 +673,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -704,7 +683,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -723,7 +701,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DesignationExcludeComponent"; } }
             
             /// <summary>
@@ -782,7 +759,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -792,7 +768,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -810,7 +785,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DesignationExcludeDesignationComponent"; } }
             
             /// <summary>
@@ -830,7 +804,6 @@ namespace Hl7.Fhir.Model
             /// Human language of the designation to be excluded
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Language
             {
@@ -903,7 +876,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -914,7 +886,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -946,7 +917,6 @@ namespace Hl7.Fhir.Model
         /// Logical URI to reference this expansion profile (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -991,7 +961,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the expansion profile
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1023,7 +992,6 @@ namespace Hl7.Fhir.Model
         /// Name for this expansion profile (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1056,7 +1024,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1088,7 +1055,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1120,7 +1086,6 @@ namespace Hl7.Fhir.Model
         /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1152,7 +1117,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1266,7 +1230,6 @@ namespace Hl7.Fhir.Model
         /// Whether the expansion should include concept designations
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IncludeDesignations
         {
@@ -1311,7 +1274,6 @@ namespace Hl7.Fhir.Model
         /// Include or exclude the value set definition in the expansion
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IncludeDefinition
         {
@@ -1343,7 +1305,6 @@ namespace Hl7.Fhir.Model
         /// Include or exclude inactive concepts in the expansion
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? ActiveOnly
         {
@@ -1375,7 +1336,6 @@ namespace Hl7.Fhir.Model
         /// Nested codes in the expansion or not
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? ExcludeNested
         {
@@ -1407,7 +1367,6 @@ namespace Hl7.Fhir.Model
         /// Include or exclude codes which cannot be rendered in user interfaces in the value set expansion
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? ExcludeNotForUI
         {
@@ -1439,7 +1398,6 @@ namespace Hl7.Fhir.Model
         /// Include or exclude codes which are post coordinated expressions in the value set expansion
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? ExcludePostCoordinated
         {
@@ -1471,7 +1429,6 @@ namespace Hl7.Fhir.Model
         /// Specify the language for the display element of codes in the value set expansion
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DisplayLanguage
         {
@@ -1503,7 +1460,6 @@ namespace Hl7.Fhir.Model
         /// Controls behaviour of the value set expand operation when value sets are too large to be completely expanded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? LimitedExpansion
         {
@@ -1625,7 +1581,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1657,7 +1612,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

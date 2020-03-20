@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Observation : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Observation"; } }
         
         /// <summary>
@@ -102,7 +101,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
             
             /// <summary>
@@ -188,7 +186,6 @@ namespace Hl7.Fhir.Model
             /// Text based reference range in an observation
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
             {
@@ -260,7 +257,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -275,7 +271,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -298,7 +293,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RelatedComponent"; } }
             
             /// <summary>
@@ -318,7 +312,6 @@ namespace Hl7.Fhir.Model
             /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
             {
@@ -394,7 +387,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -405,7 +397,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -424,7 +415,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
             
             /// <summary>
@@ -550,7 +540,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -564,7 +553,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -630,7 +618,6 @@ namespace Hl7.Fhir.Model
         /// registered | preliminary | final | amended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ObservationStatus? Status
         {
@@ -735,7 +722,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time this was made available
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Issued
         {
@@ -824,7 +810,6 @@ namespace Hl7.Fhir.Model
         /// Comments about result
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -1038,7 +1023,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1068,7 +1052,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

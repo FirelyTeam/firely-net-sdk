@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Device : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Device"; } }
         
         /// <summary>
@@ -135,7 +134,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "UdiComponent"; } }
             
             /// <summary>
@@ -155,7 +153,6 @@ namespace Hl7.Fhir.Model
             /// Mandatory fixed portion of UDI
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DeviceIdentifier
             {
@@ -187,7 +184,6 @@ namespace Hl7.Fhir.Model
             /// Device Name as appears on UDI label
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -219,7 +215,6 @@ namespace Hl7.Fhir.Model
             /// Regional UDI authority
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Jurisdiction
             {
@@ -251,7 +246,6 @@ namespace Hl7.Fhir.Model
             /// UDI Human Readable Barcode String
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string CarrierHRF
             {
@@ -283,7 +277,6 @@ namespace Hl7.Fhir.Model
             /// UDI Machine Readable Barcode String
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] CarrierAIDC
             {
@@ -315,7 +308,6 @@ namespace Hl7.Fhir.Model
             /// UDI Issuing Organization
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Issuer
             {
@@ -347,7 +339,6 @@ namespace Hl7.Fhir.Model
             /// barcode | rfid | manual +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Device.UDIEntryType? EntryType
             {
@@ -422,7 +413,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -438,7 +428,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -502,7 +491,6 @@ namespace Hl7.Fhir.Model
         /// active | inactive | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Device.FHIRDeviceStatus? Status
         {
@@ -547,7 +535,6 @@ namespace Hl7.Fhir.Model
         /// Lot number of manufacture
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LotNumber
         {
@@ -579,7 +566,6 @@ namespace Hl7.Fhir.Model
         /// Name of device manufacturer
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Manufacturer
         {
@@ -611,7 +597,6 @@ namespace Hl7.Fhir.Model
         /// Date when the device was made
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ManufactureDate
         {
@@ -643,7 +628,6 @@ namespace Hl7.Fhir.Model
         /// Date and time of expiry of this device (if applicable)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ExpirationDate
         {
@@ -675,7 +659,6 @@ namespace Hl7.Fhir.Model
         /// Model id assigned by the manufacturer
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Model
         {
@@ -707,7 +690,6 @@ namespace Hl7.Fhir.Model
         /// Version number (i.e. software)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -798,7 +780,6 @@ namespace Hl7.Fhir.Model
         /// Network address to contact device
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -930,7 +911,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -956,7 +936,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

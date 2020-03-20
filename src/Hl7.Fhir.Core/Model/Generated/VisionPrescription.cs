@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "VisionPrescription"; } }
         
         /// <summary>
@@ -111,7 +110,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DispenseComponent"; } }
             
             /// <summary>
@@ -144,7 +142,6 @@ namespace Hl7.Fhir.Model
             /// right | left
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
             {
@@ -176,7 +173,6 @@ namespace Hl7.Fhir.Model
             /// Lens sphere
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Sphere
             {
@@ -208,7 +204,6 @@ namespace Hl7.Fhir.Model
             /// Lens cylinder
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Cylinder
             {
@@ -240,7 +235,6 @@ namespace Hl7.Fhir.Model
             /// Lens axis
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Axis
             {
@@ -272,7 +266,6 @@ namespace Hl7.Fhir.Model
             /// Lens prism
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Prism
             {
@@ -304,7 +297,6 @@ namespace Hl7.Fhir.Model
             /// up | down | in | out
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
             {
@@ -336,7 +328,6 @@ namespace Hl7.Fhir.Model
             /// Lens add
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Add
             {
@@ -368,7 +359,6 @@ namespace Hl7.Fhir.Model
             /// Contact lens power
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Power
             {
@@ -400,7 +390,6 @@ namespace Hl7.Fhir.Model
             /// Contact lens back curvature
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? BackCurve
             {
@@ -432,7 +421,6 @@ namespace Hl7.Fhir.Model
             /// Contact lens diameter
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Diameter
             {
@@ -477,7 +465,6 @@ namespace Hl7.Fhir.Model
             /// Color required
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Color
             {
@@ -509,7 +496,6 @@ namespace Hl7.Fhir.Model
             /// Brand required
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Brand
             {
@@ -622,7 +608,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -646,7 +631,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -705,7 +689,6 @@ namespace Hl7.Fhir.Model
         /// active | cancelled | draft | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
@@ -767,7 +750,6 @@ namespace Hl7.Fhir.Model
         /// When prescription was authorized
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateWritten
         {
@@ -888,7 +870,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -905,7 +886,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

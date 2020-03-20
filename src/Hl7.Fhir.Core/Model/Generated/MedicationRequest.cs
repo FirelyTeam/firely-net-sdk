@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicationRequest"; } }
         
         /// <summary>
@@ -180,7 +179,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
             
             /// <summary>
@@ -259,7 +257,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -270,7 +267,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -289,7 +285,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DispenseRequestComponent"; } }
             
             /// <summary>
@@ -322,7 +317,6 @@ namespace Hl7.Fhir.Model
             /// Number of refills authorized
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfRepeatsAllowed
             {
@@ -432,7 +426,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -446,7 +439,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -468,7 +460,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
             
             /// <summary>
@@ -489,7 +480,6 @@ namespace Hl7.Fhir.Model
             /// Whether substitution is allowed or not
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Allowed
             {
@@ -562,7 +552,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -573,7 +562,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -664,7 +652,6 @@ namespace Hl7.Fhir.Model
         /// active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus? Status
         {
@@ -697,7 +684,6 @@ namespace Hl7.Fhir.Model
         /// proposal | plan | order | instance-order
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent? Intent
         {
@@ -742,7 +728,6 @@ namespace Hl7.Fhir.Model
         /// routine | urgent | stat | asap
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationRequest.MedicationRequestPriority? Priority
         {
@@ -837,7 +822,6 @@ namespace Hl7.Fhir.Model
         /// When request was initially authored
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AuthoredOn
         {
@@ -1121,7 +1105,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1154,7 +1137,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

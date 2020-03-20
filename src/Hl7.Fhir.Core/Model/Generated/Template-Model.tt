@@ -170,7 +170,6 @@ if(true) {
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
@@ -298,7 +297,6 @@ if(true) {
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -346,7 +344,6 @@ if(true) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -434,7 +431,6 @@ if(true) {
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -446,7 +442,6 @@ if(true) {
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -518,7 +513,6 @@ if(true) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -607,7 +601,6 @@ if(true) {
 <#
 		// [WMR 20160818] START - implement generic properties collection
 #>
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -619,7 +612,6 @@ if(true) {
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

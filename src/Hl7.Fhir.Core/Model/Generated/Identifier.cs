@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Identifier : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Identifier"; } }
         
         /// <summary>
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
         /// usual | official | temp | secondary (If known)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Identifier.IdentifierUse? Use
         {
@@ -148,7 +146,6 @@ namespace Hl7.Fhir.Model
         /// The namespace for the identifier value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string System
         {
@@ -180,7 +177,6 @@ namespace Hl7.Fhir.Model
         /// The value that is unique
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Value
         {
@@ -280,7 +276,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -295,7 +290,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

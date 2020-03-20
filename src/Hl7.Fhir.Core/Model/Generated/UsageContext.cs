@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class UsageContext : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "UsageContext"; } }
         
         /// <summary>
@@ -128,7 +127,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -139,7 +137,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

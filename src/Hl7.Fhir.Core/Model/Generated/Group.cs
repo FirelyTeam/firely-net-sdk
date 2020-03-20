@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Group : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Group"; } }
         
         /// <summary>
@@ -102,7 +101,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
             
             /// <summary>
@@ -153,7 +151,6 @@ namespace Hl7.Fhir.Model
             /// Group includes or excludes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Exclude
             {
@@ -232,7 +229,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -245,7 +241,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -266,7 +261,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MemberComponent"; } }
             
             /// <summary>
@@ -315,7 +309,6 @@ namespace Hl7.Fhir.Model
             /// If member is no longer in group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Inactive
             {
@@ -378,7 +371,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -390,7 +382,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -437,7 +428,6 @@ namespace Hl7.Fhir.Model
         /// Whether this group's record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -470,7 +460,6 @@ namespace Hl7.Fhir.Model
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Group.GroupType? Type
         {
@@ -503,7 +492,6 @@ namespace Hl7.Fhir.Model
         /// Descriptive or actual
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Actual
         {
@@ -548,7 +536,6 @@ namespace Hl7.Fhir.Model
         /// Label for Group
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -580,7 +567,6 @@ namespace Hl7.Fhir.Model
         /// Number of members
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Quantity
         {
@@ -688,7 +674,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -706,7 +691,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

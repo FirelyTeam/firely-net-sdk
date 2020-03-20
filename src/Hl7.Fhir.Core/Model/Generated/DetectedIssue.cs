@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>
@@ -84,7 +83,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MitigationComponent"; } }
             
             /// <summary>
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
             /// Date committed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -196,7 +193,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -208,7 +204,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -255,7 +250,6 @@ namespace Hl7.Fhir.Model
         /// registered | preliminary | final | amended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ObservationStatus? Status
         {
@@ -300,7 +294,6 @@ namespace Hl7.Fhir.Model
         /// high | moderate | low
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity? Severity
         {
@@ -347,7 +340,6 @@ namespace Hl7.Fhir.Model
         /// When identified
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -410,7 +402,6 @@ namespace Hl7.Fhir.Model
         /// Description and context
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Detail
         {
@@ -442,7 +433,6 @@ namespace Hl7.Fhir.Model
         /// Authority for issue
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Reference
         {
@@ -542,7 +532,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -562,7 +551,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
