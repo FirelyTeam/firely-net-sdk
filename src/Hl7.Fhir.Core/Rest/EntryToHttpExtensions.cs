@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
             var interaction = entry.Request;
             body = null;
 
-            if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
+            if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT || interaction.Method == Bundle.HTTPVerb.PATCH))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
 
             // Create an absolute uri when the interaction.Url is relative.
@@ -186,6 +186,7 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
+                var datajson = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 body = format == ResourceFormat.Xml ?
                     new FhirXmlSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
                     new FhirJsonSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
