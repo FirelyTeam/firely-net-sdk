@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource that defines a type of message that can be exchanged between systems
     /// </summary>
-    [FhirType("MessageDefinition", IsResource=true)]
+    [FhirType("MessageDefinition")]
     [DataContract]
     public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MessageDefinition"; } }
         
         /// <summary>
@@ -117,7 +116,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "FocusComponent"; } }
             
             /// <summary>
@@ -138,7 +136,6 @@ namespace Hl7.Fhir.Model
             /// Type of resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ResourceType? Code
             {
@@ -170,7 +167,6 @@ namespace Hl7.Fhir.Model
             /// Profile that must be adhered to by focus
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Profile
             {
@@ -203,7 +199,6 @@ namespace Hl7.Fhir.Model
             /// Minimum number of focuses of this type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Min
             {
@@ -235,7 +230,6 @@ namespace Hl7.Fhir.Model
             /// Maximum number of focuses of this type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Max
             {
@@ -301,7 +295,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -314,7 +307,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -335,7 +327,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AllowedResponseComponent"; } }
             
             /// <summary>
@@ -356,7 +347,6 @@ namespace Hl7.Fhir.Model
             /// Reference to allowed message definition response
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Message
             {
@@ -429,7 +419,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -440,7 +429,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -472,7 +460,6 @@ namespace Hl7.Fhir.Model
         /// Business Identifier for a given MessageDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -518,7 +505,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the message definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -550,7 +536,6 @@ namespace Hl7.Fhir.Model
         /// Name for this message definition (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -582,7 +567,6 @@ namespace Hl7.Fhir.Model
         /// Name for this message definition (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -615,7 +599,6 @@ namespace Hl7.Fhir.Model
         /// Takes the place of
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Replaces
         {
@@ -648,7 +631,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -680,7 +662,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -713,7 +694,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -745,7 +725,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -858,7 +837,6 @@ namespace Hl7.Fhir.Model
         /// Definition this one is based on
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Base
         {
@@ -891,7 +869,6 @@ namespace Hl7.Fhir.Model
         /// Protocol/workflow this is part of
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Parent
         {
@@ -939,7 +916,6 @@ namespace Hl7.Fhir.Model
         /// consequence | currency | notification
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory? Category
         {
@@ -985,7 +961,6 @@ namespace Hl7.Fhir.Model
         /// always | on-error | never | on-success
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MessageDefinition.messageheader_response_request? ResponseRequired
         {
@@ -1032,7 +1007,6 @@ namespace Hl7.Fhir.Model
         /// Canonical reference to a GraphDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Graph
         {
@@ -1159,7 +1133,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1192,7 +1165,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A healthcare consumer's  choices to permit or deny recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
-    [FhirType("Consent", IsResource=true)]
+    [FhirType("Consent")]
     [DataContract]
     public partial class Consent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Consent"; } }
         
         /// <summary>
@@ -156,7 +155,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
             
             /// <summary>
@@ -176,7 +174,6 @@ namespace Hl7.Fhir.Model
             /// Enforcement source for policy
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Authority
             {
@@ -208,7 +205,6 @@ namespace Hl7.Fhir.Model
             /// Specific policy covered by this consent
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uri
             {
@@ -268,7 +264,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -279,7 +274,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -298,7 +292,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "VerificationComponent"; } }
             
             /// <summary>
@@ -319,7 +312,6 @@ namespace Hl7.Fhir.Model
             /// Has been verified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Verified
             {
@@ -366,7 +358,6 @@ namespace Hl7.Fhir.Model
             /// When consent verified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string VerificationDate
             {
@@ -429,7 +420,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -441,7 +431,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -461,7 +450,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "provisionComponent"; } }
             
             /// <summary>
@@ -481,7 +469,6 @@ namespace Hl7.Fhir.Model
             /// deny | permit
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Consent.ConsentProvisionType? Type
             {
@@ -706,7 +693,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -726,7 +712,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -754,7 +739,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "provisionActorComponent"; } }
             
             /// <summary>
@@ -832,7 +816,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -843,7 +826,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -862,7 +844,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "provisionDataComponent"; } }
             
             /// <summary>
@@ -883,7 +864,6 @@ namespace Hl7.Fhir.Model
             /// instance | related | dependents | authoredby
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
             {
@@ -959,7 +939,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -970,7 +949,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1017,7 +995,6 @@ namespace Hl7.Fhir.Model
         /// draft | proposed | active | rejected | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Consent.ConsentState? Status
         {
@@ -1092,7 +1069,6 @@ namespace Hl7.Fhir.Model
         /// When this Consent was created or indexed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateTime
         {
@@ -1287,7 +1263,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1309,7 +1284,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

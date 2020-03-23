@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A pharmaceutical product described in terms of its composition and dose form
     /// </summary>
-    [FhirType("MedicinalProductPharmaceutical", IsResource=true)]
+    [FhirType("MedicinalProductPharmaceutical")]
     [DataContract]
     public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductPharmaceutical"; } }
         
         [FhirType("CharacteristicsComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CharacteristicsComponent"; } }
             
             /// <summary>
@@ -132,7 +130,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -143,7 +140,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -162,7 +158,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RouteOfAdministrationComponent"; } }
             
             /// <summary>
@@ -318,7 +313,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -334,7 +328,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -358,7 +351,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TargetSpeciesComponent"; } }
             
             /// <summary>
@@ -434,7 +426,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -445,7 +436,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -464,7 +454,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "WithdrawalPeriodComponent"; } }
             
             /// <summary>
@@ -512,7 +501,6 @@ namespace Hl7.Fhir.Model
             /// Extra information about the withdrawal period
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SupportingInformation
             {
@@ -575,7 +563,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -587,7 +574,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -765,7 +751,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -781,7 +766,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

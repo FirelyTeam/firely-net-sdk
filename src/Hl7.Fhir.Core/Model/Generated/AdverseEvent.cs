@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medical care, research study or other healthcare event causing physical injury
     /// </summary>
-    [FhirType("AdverseEvent", IsResource=true)]
+    [FhirType("AdverseEvent")]
     [DataContract]
     public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "AdverseEvent"; } }
         
         /// <summary>
@@ -78,7 +77,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SuspectEntityComponent"; } }
             
             /// <summary>
@@ -156,7 +154,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -167,7 +164,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -186,7 +182,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CausalityComponent"; } }
             
             /// <summary>
@@ -219,7 +214,6 @@ namespace Hl7.Fhir.Model
             /// AdverseEvent.suspectEntity.causalityProductRelatedness
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ProductRelatedness
             {
@@ -313,7 +307,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -326,7 +319,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -374,7 +366,6 @@ namespace Hl7.Fhir.Model
         /// actual | potential
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
         {
@@ -464,7 +455,6 @@ namespace Hl7.Fhir.Model
         /// When the event occurred
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -496,7 +486,6 @@ namespace Hl7.Fhir.Model
         /// When the event was detected
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Detected
         {
@@ -528,7 +517,6 @@ namespace Hl7.Fhir.Model
         /// When the event was recorded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RecordedDate
         {
@@ -806,7 +794,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -835,7 +822,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

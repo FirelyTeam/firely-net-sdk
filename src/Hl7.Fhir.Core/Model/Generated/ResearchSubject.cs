@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical entity which is the primary unit of interest in the study
     /// </summary>
-    [FhirType("ResearchSubject", IsResource=true)]
+    [FhirType("ResearchSubject")]
     [DataContract]
     public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ResearchSubject"; } }
         
         /// <summary>
@@ -172,7 +171,6 @@ namespace Hl7.Fhir.Model
         /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
         {
@@ -249,7 +247,6 @@ namespace Hl7.Fhir.Model
         /// What path should be followed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AssignedArm
         {
@@ -281,7 +278,6 @@ namespace Hl7.Fhir.Model
         /// What path was followed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ActualArm
         {
@@ -375,7 +371,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -392,7 +387,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

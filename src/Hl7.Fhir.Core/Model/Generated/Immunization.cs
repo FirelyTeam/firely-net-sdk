@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Immunization event information
     /// </summary>
-    [FhirType("Immunization", IsResource=true)]
+    [FhirType("Immunization")]
     [DataContract]
     public partial class Immunization : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
         /// <summary>
@@ -84,7 +83,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
@@ -161,7 +159,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -172,7 +169,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -191,7 +187,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EducationComponent"; } }
             
             /// <summary>
@@ -211,7 +206,6 @@ namespace Hl7.Fhir.Model
             /// Educational material document identifier
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DocumentType
             {
@@ -243,7 +237,6 @@ namespace Hl7.Fhir.Model
             /// Educational material reference pointer
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Reference
             {
@@ -275,7 +268,6 @@ namespace Hl7.Fhir.Model
             /// Educational material publication date
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string PublicationDate
             {
@@ -307,7 +299,6 @@ namespace Hl7.Fhir.Model
             /// Educational material presentation date
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string PresentationDate
             {
@@ -373,7 +364,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -386,7 +376,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -407,7 +396,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
@@ -427,7 +415,6 @@ namespace Hl7.Fhir.Model
             /// When reaction started
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -474,7 +461,6 @@ namespace Hl7.Fhir.Model
             /// Indicates self-reported reaction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Reported
             {
@@ -537,7 +523,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -549,7 +534,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -569,7 +553,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ProtocolAppliedComponent"; } }
             
             /// <summary>
@@ -589,7 +572,6 @@ namespace Hl7.Fhir.Model
             /// Name of vaccine series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Series
             {
@@ -718,7 +700,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -732,7 +713,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -782,7 +762,6 @@ namespace Hl7.Fhir.Model
         /// completed | entered-in-error | not-done
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
         {
@@ -888,7 +867,6 @@ namespace Hl7.Fhir.Model
         /// When the immunization was first captured in the subject's record
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Recorded
         {
@@ -920,7 +898,6 @@ namespace Hl7.Fhir.Model
         /// Indicates context the data was recorded in
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? PrimarySource
         {
@@ -995,7 +972,6 @@ namespace Hl7.Fhir.Model
         /// Vaccine lot number
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LotNumber
         {
@@ -1027,7 +1003,6 @@ namespace Hl7.Fhir.Model
         /// Vaccine expiration date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ExpirationDate
         {
@@ -1156,7 +1131,6 @@ namespace Hl7.Fhir.Model
         /// Dose potency
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IsSubpotent
         {
@@ -1378,7 +1352,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1415,7 +1388,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Server push subscription criteria
     /// </summary>
-    [FhirType("Subscription", IsResource=true)]
+    [FhirType("Subscription")]
     [DataContract]
     public partial class Subscription : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Subscription"; } }
         
         /// <summary>
@@ -129,7 +128,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ChannelComponent"; } }
             
             /// <summary>
@@ -150,7 +148,6 @@ namespace Hl7.Fhir.Model
             /// rest-hook | websocket | email | sms | message
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Subscription.SubscriptionChannelType? Type
             {
@@ -182,7 +179,6 @@ namespace Hl7.Fhir.Model
             /// Where the channel points to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Endpoint
             {
@@ -214,7 +210,6 @@ namespace Hl7.Fhir.Model
             /// MIME type to send, or omit for no payload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Payload
             {
@@ -247,7 +242,6 @@ namespace Hl7.Fhir.Model
             /// Usage depends on the channel type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Header
             {
@@ -313,7 +307,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -326,7 +319,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -361,7 +353,6 @@ namespace Hl7.Fhir.Model
         /// requested | active | error | off
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Subscription.SubscriptionStatus? Status
         {
@@ -407,7 +398,6 @@ namespace Hl7.Fhir.Model
         /// When to automatically delete the subscription
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? End
         {
@@ -440,7 +430,6 @@ namespace Hl7.Fhir.Model
         /// Description of why this subscription was created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Reason
         {
@@ -473,7 +462,6 @@ namespace Hl7.Fhir.Model
         /// Rule for server push
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Criteria
         {
@@ -505,7 +493,6 @@ namespace Hl7.Fhir.Model
         /// Latest error note
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Error
         {
@@ -595,7 +582,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -611,7 +597,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

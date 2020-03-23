@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A task to be performed
     /// </summary>
-    [FhirType("Task", IsResource=true)]
+    [FhirType("Task")]
     [DataContract]
     public partial class Task : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Task"; } }
         
         /// <summary>
@@ -201,7 +200,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RestrictionComponent"; } }
             
             /// <summary>
@@ -221,7 +219,6 @@ namespace Hl7.Fhir.Model
             /// How many times to repeat
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Repetitions
             {
@@ -313,7 +310,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -325,7 +321,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -345,7 +340,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
@@ -423,7 +417,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -434,7 +427,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -453,7 +445,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OutputComponent"; } }
             
             /// <summary>
@@ -531,7 +522,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -542,7 +532,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -588,7 +577,6 @@ namespace Hl7.Fhir.Model
         /// Formal definition of task
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string InstantiatesCanonical
         {
@@ -620,7 +608,6 @@ namespace Hl7.Fhir.Model
         /// Formal definition of task
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string InstantiatesUri
         {
@@ -698,7 +685,6 @@ namespace Hl7.Fhir.Model
         /// draft | requested | received | accepted | +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Task.TaskStatus? Status
         {
@@ -757,7 +743,6 @@ namespace Hl7.Fhir.Model
         /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Task.TaskIntent? Intent
         {
@@ -789,7 +774,6 @@ namespace Hl7.Fhir.Model
         /// routine | urgent | asap | stat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestPriority? Priority
         {
@@ -834,7 +818,6 @@ namespace Hl7.Fhir.Model
         /// Human-readable explanation of task
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -924,7 +907,6 @@ namespace Hl7.Fhir.Model
         /// Task Creation Date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AuthoredOn
         {
@@ -956,7 +938,6 @@ namespace Hl7.Fhir.Model
         /// Task Last Modified Date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastModified
         {
@@ -1278,7 +1259,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1318,7 +1298,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

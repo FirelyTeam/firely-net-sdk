@@ -44,7 +44,6 @@ namespace Hl7.Fhir.Model
     [FhirType("Quantity")]
     public partial class SimpleQuantity : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "SimpleQuantity"; } }
         
         public override IDeepCopyable DeepCopy()

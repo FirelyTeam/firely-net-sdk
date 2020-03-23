@@ -72,7 +72,6 @@ namespace Hl7.Fhir.Model
             return textBuilder.ToString();
         }
 
-        [NotMapped]
         public bool Success
         {
             get
@@ -82,7 +81,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        [NotMapped]
         public int Fatals
         {
             get
@@ -91,7 +89,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public int Errors
         {
             get
@@ -100,7 +97,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public int Warnings
         {
             get
@@ -114,7 +110,6 @@ namespace Hl7.Fhir.Model
         public partial class IssueComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get
@@ -123,7 +118,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public bool Success
             {
                 get
@@ -167,7 +161,6 @@ namespace Hl7.Fhir.Model
 
             public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
 
-            [NotMapped]
             public int HierarchyLevel
             {
                 get

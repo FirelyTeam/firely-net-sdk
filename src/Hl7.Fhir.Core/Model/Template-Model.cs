@@ -268,15 +268,11 @@
 // Hl7.Fhir.Core\Model\Generated\Attachment.cs
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\FhirUrl.cs
 // Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
 // Hl7.Fhir.Core\Model\Generated\Time.cs
 // Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
 // Hl7.Fhir.Core\Model\Generated\Markdown.cs
 // Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
-// Hl7.Fhir.Core\Model\Generated\Canonical.cs
-// Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
-// Hl7.Fhir.Core\Model\Generated\BackboneElement.cs
 // Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
 // Hl7.Fhir.Core\Model\Generated\MoneyQuantity.cs
 // Hl7.Fhir.Core\Model\Generated\Template-Bindings.cs

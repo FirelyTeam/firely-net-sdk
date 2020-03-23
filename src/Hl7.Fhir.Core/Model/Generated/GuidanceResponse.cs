@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The formal response to a guidance request
     /// </summary>
-    [FhirType("GuidanceResponse", IsResource=true)]
+    [FhirType("GuidanceResponse")]
     [DataContract]
     public partial class GuidanceResponse : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "GuidanceResponse"; } }
         
         /// <summary>
@@ -159,7 +158,6 @@ namespace Hl7.Fhir.Model
         /// success | data-requested | data-required | in-progress | failure | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus? Status
         {
@@ -221,7 +219,6 @@ namespace Hl7.Fhir.Model
         /// When the guidance response was processed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string OccurrenceDateTime
         {
@@ -440,7 +437,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -464,7 +460,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

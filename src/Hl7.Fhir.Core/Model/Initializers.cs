@@ -167,7 +167,6 @@ namespace Hl7.Fhir.Model
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
         internal string DebuggerDisplay
         {
             get

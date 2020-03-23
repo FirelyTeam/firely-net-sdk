@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Markdown : Hl7.Fhir.Model.Primitive<string>
     {
-        [NotMapped]
         public override string TypeName { get { return "markdown"; } }
         
         // Must conform to the pattern "[ \r\n\t\S]+"

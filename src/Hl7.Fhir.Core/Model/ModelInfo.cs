@@ -29,7 +29,6 @@
 */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -44,7 +43,6 @@ namespace Hl7.Fhir.Model
         public class SearchParamDefinition
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get
@@ -92,10 +90,10 @@ namespace Hl7.Fhir.Model
         // [WMR 2017-10-25] Remove Lazy initialization
         // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
-        static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
+        private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
             = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
 
-        static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
+        private static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
             = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRAllTypes"/> enum value, or <c>null</c>.</summary>
@@ -498,58 +496,58 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
-        public static readonly FHIRAllTypes[] OpenTypes =
+        public static readonly Type[] OpenTypes =
         {
-            FHIRAllTypes.Address,
-            FHIRAllTypes.Age,
-            FHIRAllTypes.Annotation,
-            FHIRAllTypes.Attachment,
-            FHIRAllTypes.Base64Binary,
-            FHIRAllTypes.Boolean,
-            FHIRAllTypes.Canonical,
-            FHIRAllTypes.Code,
-            FHIRAllTypes.CodeableConcept,
-            FHIRAllTypes.Coding,
-            FHIRAllTypes.ContactDetail,
-            FHIRAllTypes.ContactPoint,
-            FHIRAllTypes.Contributor,
-            FHIRAllTypes.Count,
-            FHIRAllTypes.DataRequirement,
-            FHIRAllTypes.Date,
-            FHIRAllTypes.DateTime,
-            FHIRAllTypes.Decimal,
-            FHIRAllTypes.Distance,
-            FHIRAllTypes.Dosage,
-            FHIRAllTypes.Duration,
-            FHIRAllTypes.Expression,
-            FHIRAllTypes.HumanName,
-            FHIRAllTypes.Id,
-            FHIRAllTypes.Identifier,
-            FHIRAllTypes.Instant,
-            FHIRAllTypes.Integer,
-            FHIRAllTypes.Markdown,
-            FHIRAllTypes.Meta,
-            FHIRAllTypes.Money,
-            FHIRAllTypes.Oid,
-            FHIRAllTypes.ParameterDefinition,
-            FHIRAllTypes.Period,
-            FHIRAllTypes.PositiveInt,
-            FHIRAllTypes.Quantity,
-            FHIRAllTypes.Range,
-            FHIRAllTypes.Ratio,
-            FHIRAllTypes.Reference,
-            FHIRAllTypes.RelatedArtifact,
-            FHIRAllTypes.SampledData,
-            FHIRAllTypes.Signature,
-            FHIRAllTypes.String,
-            FHIRAllTypes.Time,
-            FHIRAllTypes.Timing,
-            FHIRAllTypes.TriggerDefinition,
-            FHIRAllTypes.UnsignedInt,
-            FHIRAllTypes.Uri,
-            FHIRAllTypes.Url,
-            FHIRAllTypes.UsageContext,
-            FHIRAllTypes.Uuid
+            typeof(Model.Address),
+            typeof(Model.Age),
+            typeof(Model.Annotation),
+            typeof(Model.Attachment),
+            typeof(Model.Base64Binary),
+            typeof(Model.FhirBoolean),
+            typeof(Model.Canonical),
+            typeof(Model.Code),
+            typeof(Model.CodeableConcept),
+            typeof(Model.Coding),
+            typeof(Model.ContactDetail),
+            typeof(Model.ContactPoint),
+            typeof(Model.Contributor),
+            typeof(Model.Count),
+            typeof(Model.DataRequirement),
+            typeof(Model.Date),
+            typeof(Model.FhirDateTime),
+            typeof(Model.FhirDecimal),
+            typeof(Model.Distance),
+            typeof(Model.Dosage),
+            typeof(Model.Duration),
+            typeof(Model.Expression),
+            typeof(Model.HumanName),
+            typeof(Model.Id),
+            typeof(Model.Identifier),
+            typeof(Model.Instant),
+            typeof(Model.Integer),
+            typeof(Model.Markdown),
+            typeof(Model.Meta),
+            typeof(Model.Money),
+            typeof(Model.Oid),
+            typeof(Model.ParameterDefinition),
+            typeof(Model.Period),
+            typeof(Model.PositiveInt),
+            typeof(Model.Quantity),
+            typeof(Model.Range),
+            typeof(Model.Ratio),
+            typeof(Model.ResourceReference),
+            typeof(Model.RelatedArtifact),
+            typeof(Model.SampledData),
+            typeof(Model.Signature),
+            typeof(Model.FhirString),
+            typeof(Model.Time),
+            typeof(Model.Timing),
+            typeof(Model.TriggerDefinition),
+            typeof(Model.UnsignedInt),
+            typeof(Model.FhirUri),
+            typeof(Model.FhirUrl),
+            typeof(Model.UsageContext),
+            typeof(Model.Uuid)
         };
 
     }

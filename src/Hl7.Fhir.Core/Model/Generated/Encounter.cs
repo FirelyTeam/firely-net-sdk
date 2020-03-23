@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An interaction during which services are provided to the patient
     /// </summary>
-    [FhirType("Encounter", IsResource=true)]
+    [FhirType("Encounter")]
     [DataContract]
     public partial class Encounter : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Encounter"; } }
         
         /// <summary>
@@ -153,7 +152,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
@@ -174,7 +172,6 @@ namespace Hl7.Fhir.Model
             /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
             {
@@ -248,7 +245,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -259,7 +255,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -278,7 +273,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ClassHistoryComponent"; } }
             
             /// <summary>
@@ -354,7 +348,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -365,7 +358,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -384,7 +376,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
@@ -477,7 +468,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -489,7 +479,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -509,7 +498,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
             
             /// <summary>
@@ -558,7 +546,6 @@ namespace Hl7.Fhir.Model
             /// Ranking of the diagnosis (for each role type)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Rank
             {
@@ -621,7 +608,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -633,7 +619,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -653,7 +638,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "HospitalizationComponent"; } }
             
             /// <summary>
@@ -846,7 +830,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -864,7 +847,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -890,7 +872,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "LocationComponent"; } }
             
             /// <summary>
@@ -926,7 +907,6 @@ namespace Hl7.Fhir.Model
             /// planned | active | reserved | completed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Encounter.EncounterLocationStatus? Status
             {
@@ -1018,7 +998,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1031,7 +1010,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1080,7 +1058,6 @@ namespace Hl7.Fhir.Model
         /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
         {
@@ -1506,7 +1483,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1538,7 +1514,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

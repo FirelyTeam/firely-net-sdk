@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneElement
     {
-        [NotMapped]
         public override string TypeName { get { return "ProdCharacteristic"; } }
         
         /// <summary>
@@ -148,7 +147,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Shape
         {
@@ -181,7 +179,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Color
         {
@@ -214,7 +211,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the imprint can be specified as text
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Imprint
         {
@@ -328,7 +324,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -348,7 +343,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

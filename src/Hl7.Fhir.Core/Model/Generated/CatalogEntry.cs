@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An entry in a catalog
     /// </summary>
-    [FhirType("CatalogEntry", IsResource=true)]
+    [FhirType("CatalogEntry")]
     [DataContract]
     public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "CatalogEntry"; } }
         
         /// <summary>
@@ -78,7 +77,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RelatedEntryComponent"; } }
             
             /// <summary>
@@ -99,7 +97,6 @@ namespace Hl7.Fhir.Model
             /// triggers | is-replaced-by
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType? Relationtype
             {
@@ -175,7 +172,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -186,7 +182,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -246,7 +241,6 @@ namespace Hl7.Fhir.Model
         /// Whether the entry represents an orderable item
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Orderable
         {
@@ -322,7 +316,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -367,7 +360,6 @@ namespace Hl7.Fhir.Model
         /// The date until which this catalog entry is expected to be active
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ValidTo
         {
@@ -399,7 +391,6 @@ namespace Hl7.Fhir.Model
         /// When was this catalog last updated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastUpdated
         {
@@ -535,7 +526,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -557,7 +547,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

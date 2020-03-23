@@ -151,7 +151,6 @@ namespace Hl7.Fhir.Model
             return Get(name, matchPrefix).SingleOrDefault();
         }
 
-        [NotMapped]
         public ParameterComponent this[string name] => GetSingle(name);
 
         /// <summary>
@@ -174,7 +173,6 @@ namespace Hl7.Fhir.Model
         public partial class ParameterComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get

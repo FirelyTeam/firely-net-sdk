@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The details of a healthcare service available at a location
     /// </summary>
-    [FhirType("HealthcareService", IsResource=true)]
+    [FhirType("HealthcareService")]
     [DataContract]
     public partial class HealthcareService : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "HealthcareService"; } }
         
         [FhirType("EligibilityComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EligibilityComponent"; } }
             
             /// <summary>
@@ -131,7 +129,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -142,7 +139,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -161,7 +157,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AvailableTimeComponent"; } }
             
             /// <summary>
@@ -182,7 +177,6 @@ namespace Hl7.Fhir.Model
             /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
             {
@@ -214,7 +208,6 @@ namespace Hl7.Fhir.Model
             /// Always available? e.g. 24 hour service
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? AllDay
             {
@@ -246,7 +239,6 @@ namespace Hl7.Fhir.Model
             /// Opening time of day (ignored if allDay = true)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AvailableStartTime
             {
@@ -278,7 +270,6 @@ namespace Hl7.Fhir.Model
             /// Closing time of day (ignored if allDay = true)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AvailableEndTime
             {
@@ -344,7 +335,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -357,7 +347,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -378,7 +367,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "NotAvailableComponent"; } }
             
             /// <summary>
@@ -399,7 +387,6 @@ namespace Hl7.Fhir.Model
             /// Reason presented to the user explaining why time not available
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -472,7 +459,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -483,7 +469,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -529,7 +514,6 @@ namespace Hl7.Fhir.Model
         /// Whether this HealthcareService record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -634,7 +618,6 @@ namespace Hl7.Fhir.Model
         /// Description of service as presented to a consumer while searching
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -666,7 +649,6 @@ namespace Hl7.Fhir.Model
         /// Additional description and/or any specific issues not covered elsewhere
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -838,7 +820,6 @@ namespace Hl7.Fhir.Model
         /// If an appointment is required for access to this service
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? AppointmentRequired
         {
@@ -898,7 +879,6 @@ namespace Hl7.Fhir.Model
         /// Description of availability exceptions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AvailabilityExceptions
         {
@@ -1041,7 +1021,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1074,7 +1053,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

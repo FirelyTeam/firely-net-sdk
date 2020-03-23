@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A quantified estimate of risk based on a body of evidence
     /// </summary>
-    [FhirType("RiskEvidenceSynthesis", IsResource=true)]
+    [FhirType("RiskEvidenceSynthesis")]
     [DataContract]
     public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "RiskEvidenceSynthesis"; } }
         
         [FhirType("SampleSizeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SampleSizeComponent"; } }
             
             /// <summary>
@@ -77,7 +75,6 @@ namespace Hl7.Fhir.Model
             /// Description of sample size
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -109,7 +106,6 @@ namespace Hl7.Fhir.Model
             /// How many studies?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfStudies
             {
@@ -141,7 +137,6 @@ namespace Hl7.Fhir.Model
             /// How many participants?
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfParticipants
             {
@@ -204,7 +199,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -216,7 +210,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -236,7 +229,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RiskEstimateComponent"; } }
             
             /// <summary>
@@ -256,7 +248,6 @@ namespace Hl7.Fhir.Model
             /// Description of risk estimate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -301,7 +292,6 @@ namespace Hl7.Fhir.Model
             /// Point estimate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Value
             {
@@ -346,7 +336,6 @@ namespace Hl7.Fhir.Model
             /// Sample size for group measured
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DenominatorCount
             {
@@ -378,7 +367,6 @@ namespace Hl7.Fhir.Model
             /// Number with the outcome
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumeratorCount
             {
@@ -467,7 +455,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -483,7 +470,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -507,7 +493,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PrecisionEstimateComponent"; } }
             
             /// <summary>
@@ -540,7 +525,6 @@ namespace Hl7.Fhir.Model
             /// Level of confidence interval
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Level
             {
@@ -572,7 +556,6 @@ namespace Hl7.Fhir.Model
             /// Lower bound
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? From
             {
@@ -604,7 +587,6 @@ namespace Hl7.Fhir.Model
             /// Upper bound
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? To
             {
@@ -670,7 +652,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -683,7 +664,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -704,7 +684,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CertaintyComponent"; } }
             
             /// <summary>
@@ -797,7 +776,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -809,7 +787,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -829,7 +806,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CertaintySubcomponentComponent"; } }
             
             /// <summary>
@@ -921,7 +897,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -933,7 +908,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -966,7 +940,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this risk evidence synthesis, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -1012,7 +985,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the risk evidence synthesis
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1044,7 +1016,6 @@ namespace Hl7.Fhir.Model
         /// Name for this risk evidence synthesis (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1076,7 +1047,6 @@ namespace Hl7.Fhir.Model
         /// Name for this risk evidence synthesis (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1109,7 +1079,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1141,7 +1110,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1173,7 +1141,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1287,7 +1254,6 @@ namespace Hl7.Fhir.Model
         /// When the risk evidence synthesis was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ApprovalDate
         {
@@ -1319,7 +1285,6 @@ namespace Hl7.Fhir.Model
         /// When the risk evidence synthesis was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastReviewDate
         {
@@ -1677,7 +1642,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1717,7 +1681,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

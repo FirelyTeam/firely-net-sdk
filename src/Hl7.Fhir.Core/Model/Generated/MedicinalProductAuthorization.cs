@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The regulatory authorization of a medicinal product
     /// </summary>
-    [FhirType("MedicinalProductAuthorization", IsResource=true)]
+    [FhirType("MedicinalProductAuthorization")]
     [DataContract]
     public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductAuthorization"; } }
         
         [FhirType("JurisdictionalAuthorizationComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "JurisdictionalAuthorizationComponent"; } }
             
             /// <summary>
@@ -181,7 +179,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -195,7 +192,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -217,7 +213,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ProcedureComponent"; } }
             
             /// <summary>
@@ -327,7 +322,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -340,7 +334,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -444,7 +437,6 @@ namespace Hl7.Fhir.Model
         /// The date at which the given status has become applicable
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string StatusDate
         {
@@ -476,7 +468,6 @@ namespace Hl7.Fhir.Model
         /// The date when a suspended the marketing or the marketing authorization of the product is anticipated to be restored
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RestoreDate
         {
@@ -534,7 +525,6 @@ namespace Hl7.Fhir.Model
         /// The date when the first authorization was granted by a Medicines Regulatory Agency
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateOfFirstAuthorization
         {
@@ -566,7 +556,6 @@ namespace Hl7.Fhir.Model
         /// Date of first marketing authorization for a company's new medicinal product in any country in the World
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string InternationalBirthDate
         {
@@ -739,7 +728,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -764,7 +752,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

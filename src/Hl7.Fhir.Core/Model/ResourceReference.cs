@@ -58,7 +58,6 @@ namespace Hl7.Fhir.Model
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
         private string DebuggerDisplay
         {
             get
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Native .net typed version of the string Reference property
         /// </summary>
-        [NotMapped]
         public Uri Url
         {
             get
@@ -98,7 +96,6 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines whether the ResourceReference is a reference to a contained resource (i.e. the reference value starts with an Url anchor ('#'))
         /// </summary>
-        [NotMapped]
         public bool IsContainedReference
         {
             get

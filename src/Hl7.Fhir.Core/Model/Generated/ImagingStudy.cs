@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of images produced in single study (one or more series of references images)
     /// </summary>
-    [FhirType("ImagingStudy", IsResource=true)]
+    [FhirType("ImagingStudy")]
     [DataContract]
     public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ImagingStudy"; } }
         
         /// <summary>
@@ -96,7 +95,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SeriesComponent"; } }
             
             /// <summary>
@@ -117,7 +115,6 @@ namespace Hl7.Fhir.Model
             /// DICOM Series Instance UID for the series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uid
             {
@@ -149,7 +146,6 @@ namespace Hl7.Fhir.Model
             /// Numeric identifier of this series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Number
             {
@@ -195,7 +191,6 @@ namespace Hl7.Fhir.Model
             /// A short human readable summary of the series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -227,7 +222,6 @@ namespace Hl7.Fhir.Model
             /// Number of Series Related Instances
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfInstances
             {
@@ -317,7 +311,6 @@ namespace Hl7.Fhir.Model
             /// When the series started
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Started
             {
@@ -435,7 +428,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -456,7 +448,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -485,7 +476,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
@@ -562,7 +552,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -573,7 +562,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -592,7 +580,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "InstanceComponent"; } }
             
             /// <summary>
@@ -613,7 +600,6 @@ namespace Hl7.Fhir.Model
             /// DICOM SOP Instance UID
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uid
             {
@@ -659,7 +645,6 @@ namespace Hl7.Fhir.Model
             /// The number of this instance in the series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Number
             {
@@ -691,7 +676,6 @@ namespace Hl7.Fhir.Model
             /// Description of instance
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Title
             {
@@ -757,7 +741,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -770,7 +753,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -819,7 +801,6 @@ namespace Hl7.Fhir.Model
         /// registered | available | cancelled | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ImagingStudy.ImagingStudyStatus? Status
         {
@@ -896,7 +877,6 @@ namespace Hl7.Fhir.Model
         /// When the study was started
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Started
         {
@@ -991,7 +971,6 @@ namespace Hl7.Fhir.Model
         /// Number of Study Related Series
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? NumberOfSeries
         {
@@ -1023,7 +1002,6 @@ namespace Hl7.Fhir.Model
         /// Number of Study Related Instances
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? NumberOfInstances
         {
@@ -1143,7 +1121,6 @@ namespace Hl7.Fhir.Model
         /// Institution-generated description
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -1272,7 +1249,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1301,7 +1277,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

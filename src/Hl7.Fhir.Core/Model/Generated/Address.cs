@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Address : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Address"; } }
         
         /// <summary>
@@ -136,7 +135,6 @@ namespace Hl7.Fhir.Model
         /// home | work | temp | old | billing - purpose of this address
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Address.AddressUse? Use
         {
@@ -168,7 +166,6 @@ namespace Hl7.Fhir.Model
         /// postal | physical | both
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Address.AddressType? Type
         {
@@ -200,7 +197,6 @@ namespace Hl7.Fhir.Model
         /// Text representation of the address
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text
         {
@@ -233,7 +229,6 @@ namespace Hl7.Fhir.Model
         /// Street name, number, direction &amp; P.O. Box etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Line
         {
@@ -265,7 +260,6 @@ namespace Hl7.Fhir.Model
         /// Name of city, town etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string City
         {
@@ -297,7 +291,6 @@ namespace Hl7.Fhir.Model
         /// District name (aka county)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string District
         {
@@ -329,7 +322,6 @@ namespace Hl7.Fhir.Model
         /// Sub-unit of country (abbreviations ok)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string State
         {
@@ -361,7 +353,6 @@ namespace Hl7.Fhir.Model
         /// Postal code for area
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string PostalCode
         {
@@ -393,7 +384,6 @@ namespace Hl7.Fhir.Model
         /// Country (e.g. can be ISO 3166 2 or 3 letter code)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Country
         {
@@ -490,7 +480,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -509,7 +498,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

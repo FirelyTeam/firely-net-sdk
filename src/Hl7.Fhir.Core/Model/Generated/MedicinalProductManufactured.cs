@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The manufactured item as contained in the packaged medicinal product
     /// </summary>
-    [FhirType("MedicinalProductManufactured", IsResource=true)]
+    [FhirType("MedicinalProductManufactured")]
     [DataContract]
     public partial class MedicinalProductManufactured : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductManufactured"; } }
         
         /// <summary>
@@ -214,7 +213,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -230,7 +228,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

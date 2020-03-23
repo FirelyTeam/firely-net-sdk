@@ -50,14 +50,12 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneElement
     {
-        [NotMapped]
         public override string TypeName { get { return "SubstanceAmount"; } }
         
         [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
             
             /// <summary>
@@ -130,7 +128,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -141,7 +138,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -199,7 +195,6 @@ namespace Hl7.Fhir.Model
         /// A textual comment on a numeric value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AmountText
         {
@@ -278,7 +273,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -291,7 +285,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

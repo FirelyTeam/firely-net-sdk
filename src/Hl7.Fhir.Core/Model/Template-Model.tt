@@ -173,12 +173,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
 <# }
 if(!abstractType) {
- #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+ #>    [FhirType("<#= resourceName #>")]
 <# }
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
@@ -320,7 +319,6 @@ if(!abstractType) {
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -368,7 +366,6 @@ if(!abstractType) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -456,7 +453,6 @@ if(!abstractType) {
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -468,7 +464,6 @@ if(!abstractType) {
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -540,7 +535,6 @@ if(!abstractType) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -667,7 +661,6 @@ if(!abstractType) {
 <#
 		// [WMR 20160818] START - implement generic properties collection
 #>
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -679,7 +672,6 @@ if(!abstractType) {
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
@@ -1125,7 +1117,6 @@ namespace Hl7.Fhir.Model
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
-			bool isPrimitive = false;
 			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
 				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
@@ -1199,7 +1190,6 @@ namespace Hl7.Fhir.Model
 #>    [FhirType("<#= isConstraintProfile ? "Quantity" : rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
         public override IDeepCopyable DeepCopy()
@@ -1314,8 +1304,9 @@ namespace Hl7.Fhir.Model
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
 			
-			var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean",
-				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml" };
+			var skippedTypes = new[] { "Narrative", "Extension", "Canonical", "Code", "Coding", "Date", "FhirBoolean", "BackboneElement",
+				"FhirDateTime", "FhirString", "FhirUri", "FhirUrl", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
+				"Base64Binary"};
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
@@ -1414,9 +1405,9 @@ if (!abstractType){
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.BackboneElement" && resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
+<# if (resourceBaseType != "Hl7.Fhir.Model.BackboneElement" && resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
+<# } #>
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
 <# if (!string.IsNullOrEmpty(pattern)) {
@@ -1591,7 +1582,6 @@ if (!abstractType){
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -1639,7 +1629,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -1726,7 +1715,6 @@ if (!abstractType){
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1738,7 +1726,6 @@ if (!abstractType){
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -1808,7 +1795,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -1921,7 +1907,6 @@ if (!abstractType){
 		// [WMR 20160818] START - implement generic properties collection
 #>
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1933,7 +1918,6 @@ if (!abstractType){
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
@@ -2061,7 +2045,6 @@ if (!abstractType){
 			result += bit.Substring(1);
         }
 		result = result.Replace(".", "_");
-		int IsIntegerValue;
 		if (Char.IsDigit(result[0]))
         {
 			result = "N" + result;

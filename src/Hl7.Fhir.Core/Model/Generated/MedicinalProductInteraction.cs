@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MedicinalProductInteraction
     /// </summary>
-    [FhirType("MedicinalProductInteraction", IsResource=true)]
+    [FhirType("MedicinalProductInteraction")]
     [DataContract]
     public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductInteraction"; } }
         
         [FhirType("InteractantComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "InteractantComponent"; } }
             
             /// <summary>
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -128,7 +125,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -175,7 +171,6 @@ namespace Hl7.Fhir.Model
         /// The interaction described
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -317,7 +312,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -333,7 +327,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

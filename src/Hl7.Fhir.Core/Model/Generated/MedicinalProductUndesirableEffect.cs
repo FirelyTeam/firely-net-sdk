@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MedicinalProductUndesirableEffect
     /// </summary>
-    [FhirType("MedicinalProductUndesirableEffect", IsResource=true)]
+    [FhirType("MedicinalProductUndesirableEffect")]
     [DataContract]
     public partial class MedicinalProductUndesirableEffect : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductUndesirableEffect"; } }
         
         /// <summary>
@@ -177,7 +176,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -191,7 +189,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

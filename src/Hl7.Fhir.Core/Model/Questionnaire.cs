@@ -48,7 +48,6 @@ namespace Hl7.Fhir.Model
         public partial class ItemComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             internal string DebuggerDisplay
             {
                 get

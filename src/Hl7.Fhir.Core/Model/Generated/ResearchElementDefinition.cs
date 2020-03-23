@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A population, intervention, or exposure definition
     /// </summary>
-    [FhirType("ResearchElementDefinition", IsResource=true)]
+    [FhirType("ResearchElementDefinition")]
     [DataContract]
     public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ResearchElementDefinition"; } }
         
         /// <summary>
@@ -84,7 +83,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
             
             /// <summary>
@@ -134,7 +132,6 @@ namespace Hl7.Fhir.Model
             /// Whether the characteristic includes or excludes members
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Exclude
             {
@@ -179,7 +176,6 @@ namespace Hl7.Fhir.Model
             /// What time period does the study cover
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string StudyEffectiveDescription
             {
@@ -239,7 +235,6 @@ namespace Hl7.Fhir.Model
             /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.GroupMeasure? StudyEffectiveGroupMeasure
             {
@@ -271,7 +266,6 @@ namespace Hl7.Fhir.Model
             /// What time period do participants cover
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ParticipantEffectiveDescription
             {
@@ -331,7 +325,6 @@ namespace Hl7.Fhir.Model
             /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.GroupMeasure? ParticipantEffectiveGroupMeasure
             {
@@ -421,7 +414,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -442,7 +434,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -484,7 +475,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this research element definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -530,7 +520,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the research element definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -562,7 +551,6 @@ namespace Hl7.Fhir.Model
         /// Name for this research element definition (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -594,7 +582,6 @@ namespace Hl7.Fhir.Model
         /// Name for this research element definition (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -626,7 +613,6 @@ namespace Hl7.Fhir.Model
         /// Title for use in informal contexts
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ShortTitle
         {
@@ -658,7 +644,6 @@ namespace Hl7.Fhir.Model
         /// Subordinate title of the ResearchElementDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Subtitle
         {
@@ -691,7 +676,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -723,7 +707,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -770,7 +753,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -802,7 +784,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -862,7 +843,6 @@ namespace Hl7.Fhir.Model
         /// Used for footnotes or explanatory notes
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Comment
         {
@@ -935,7 +915,6 @@ namespace Hl7.Fhir.Model
         /// Describes the clinical usage of the ResearchElementDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Usage
         {
@@ -980,7 +959,6 @@ namespace Hl7.Fhir.Model
         /// When the research element definition was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ApprovalDate
         {
@@ -1012,7 +990,6 @@ namespace Hl7.Fhir.Model
         /// When the research element definition was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastReviewDate
         {
@@ -1142,7 +1119,6 @@ namespace Hl7.Fhir.Model
         /// Logic used by the ResearchElementDefinition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Library
         {
@@ -1175,7 +1151,6 @@ namespace Hl7.Fhir.Model
         /// population | exposure | outcome
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType? Type
         {
@@ -1207,7 +1182,6 @@ namespace Hl7.Fhir.Model
         /// dichotomous | continuous | descriptive
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EvidenceVariableType? VariableType
         {
@@ -1375,7 +1349,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1417,7 +1390,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

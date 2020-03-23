@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A photo, video, or audio recording acquired or used in healthcare. The actual content may be inline or provided by direct reference
     /// </summary>
-    [FhirType("Media", IsResource=true)]
+    [FhirType("Media")]
     [DataContract]
     public partial class Media : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Media"; } }
         
         /// <summary>
@@ -117,7 +116,6 @@ namespace Hl7.Fhir.Model
         /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EventStatus? Status
         {
@@ -233,7 +231,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time this version was made available
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Issued
         {
@@ -307,7 +304,6 @@ namespace Hl7.Fhir.Model
         /// Name of the device/manufacturer
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DeviceName
         {
@@ -354,7 +350,6 @@ namespace Hl7.Fhir.Model
         /// Height of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Height
         {
@@ -386,7 +381,6 @@ namespace Hl7.Fhir.Model
         /// Width of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Width
         {
@@ -418,7 +412,6 @@ namespace Hl7.Fhir.Model
         /// Number of frames if > 1 (photo)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Frames
         {
@@ -450,7 +443,6 @@ namespace Hl7.Fhir.Model
         /// Length in seconds (audio / video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Duration
         {
@@ -599,7 +591,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -630,7 +621,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

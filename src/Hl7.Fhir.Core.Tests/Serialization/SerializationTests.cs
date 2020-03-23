@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }
 
-        [FhirType("Bundle", IsResource = true)]
+        [FhirType("Bundle")]
         //[DataContract]
         public class CustomBundle : Bundle
         {

@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of specimen
     /// </summary>
-    [FhirType("SpecimenDefinition", IsResource=true)]
+    [FhirType("SpecimenDefinition")]
     [DataContract]
     public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "SpecimenDefinition"; } }
         
         /// <summary>
@@ -78,7 +77,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TypeTestedComponent"; } }
             
             /// <summary>
@@ -98,7 +96,6 @@ namespace Hl7.Fhir.Model
             /// Primary or secondary specimen
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? IsDerived
             {
@@ -144,7 +141,6 @@ namespace Hl7.Fhir.Model
             /// preferred | alternate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference? Preference
             {
@@ -189,7 +185,6 @@ namespace Hl7.Fhir.Model
             /// Specimen requirements
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Requirement
             {
@@ -308,7 +303,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -325,7 +319,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -350,7 +343,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ContainerComponent"; } }
             
             /// <summary>
@@ -409,7 +401,6 @@ namespace Hl7.Fhir.Model
             /// Container description
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -483,7 +474,6 @@ namespace Hl7.Fhir.Model
             /// Specimen container preparation
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Preparation
             {
@@ -561,7 +551,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -578,7 +567,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -603,7 +591,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AdditiveComponent"; } }
             
             /// <summary>
@@ -664,7 +651,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -674,7 +660,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -692,7 +677,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "HandlingComponent"; } }
             
             /// <summary>
@@ -751,7 +735,6 @@ namespace Hl7.Fhir.Model
             /// Preservation instruction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Instruction
             {
@@ -817,7 +800,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -830,7 +812,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -904,7 +885,6 @@ namespace Hl7.Fhir.Model
         /// Time aspect for collection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string TimeAspect
         {
@@ -1005,7 +985,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1020,7 +999,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

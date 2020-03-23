@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance. This set of data elements shall be used to define polymer substances isolated from biological matrices. Taxonomic and anatomical origins shall be described using a controlled vocabulary as required. This information is captured for naturally derived polymers ( . starch) and structurally diverse substances. For Organisms belonging to the Kingdom Plantae the Substance level defines the fresh material of a single species or infraspecies, the Herbal Drug and the Herbal preparation. For Herbal preparations, the fraction information will be captured at the Substance information level and additional information for herbal extracts will be captured at the Specified Substance Group 1 information level. See for further explanation the Substance Class: Structurally Diverse and the herbal annex
     /// </summary>
-    [FhirType("SubstanceSourceMaterial", IsResource=true)]
+    [FhirType("SubstanceSourceMaterial")]
     [DataContract]
     public partial class SubstanceSourceMaterial : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "SubstanceSourceMaterial"; } }
         
         [FhirType("FractionDescriptionComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class FractionDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "FractionDescriptionComponent"; } }
             
             /// <summary>
@@ -77,7 +75,6 @@ namespace Hl7.Fhir.Model
             /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Fraction
             {
@@ -150,7 +147,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -161,7 +157,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -180,7 +175,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OrganismComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OrganismComponent"; } }
             
             /// <summary>
@@ -252,7 +246,6 @@ namespace Hl7.Fhir.Model
             /// The intraspecific description of an organism shall be specified based on a controlled vocabulary. For Influenza Vaccine, the intraspecific description shall contain the syntax of the antigen in line with the WHO convention
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string IntraspecificDescription
             {
@@ -370,7 +363,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -387,7 +379,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -412,7 +403,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class AuthorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AuthorComponent"; } }
             
             /// <summary>
@@ -445,7 +435,6 @@ namespace Hl7.Fhir.Model
             /// The author of an organism species shall be specified. The author year of an organism shall also be specified when applicable; refers to the year in which the first author(s) published the infraspecific plant/animal name (of any rank)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AuthorDescription
             {
@@ -505,7 +494,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -516,7 +504,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -535,7 +522,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class HybridComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "HybridComponent"; } }
             
             /// <summary>
@@ -555,7 +541,6 @@ namespace Hl7.Fhir.Model
             /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string MaternalOrganismId
             {
@@ -587,7 +572,6 @@ namespace Hl7.Fhir.Model
             /// The name of the maternal species constituting the hybrid organism shall be specified. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string MaternalOrganismName
             {
@@ -619,7 +603,6 @@ namespace Hl7.Fhir.Model
             /// The identifier of the paternal species constituting the hybrid organism shall be specified based on a controlled vocabulary
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string PaternalOrganismId
             {
@@ -651,7 +634,6 @@ namespace Hl7.Fhir.Model
             /// The name of the paternal species constituting the hybrid organism shall be specified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string PaternalOrganismName
             {
@@ -733,7 +715,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -747,7 +728,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -769,7 +749,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class OrganismGeneralComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OrganismGeneralComponent"; } }
             
             /// <summary>
@@ -875,7 +854,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -888,7 +866,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -909,7 +886,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class PartDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PartDescriptionComponent"; } }
             
             /// <summary>
@@ -983,7 +959,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -994,7 +969,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1078,7 +1052,6 @@ namespace Hl7.Fhir.Model
         /// The organism accepted Scientific name shall be provided based on the organism taxonomy
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string OrganismName
         {
@@ -1125,7 +1098,6 @@ namespace Hl7.Fhir.Model
         /// The parent substance of the Herbal Drug, or Herbal preparation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> ParentSubstanceName
         {
@@ -1172,7 +1144,6 @@ namespace Hl7.Fhir.Model
         /// The place/region where the plant is harvested or the places/regions where the animal source material has its habitat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> GeographicalLocation
         {
@@ -1320,7 +1291,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1342,7 +1312,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

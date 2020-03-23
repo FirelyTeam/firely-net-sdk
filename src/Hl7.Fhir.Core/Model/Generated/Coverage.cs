@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance or medical plan or a payment agreement
     /// </summary>
-    [FhirType("Coverage", IsResource=true)]
+    [FhirType("Coverage")]
     [DataContract]
     public partial class Coverage : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Coverage"; } }
         
         [FhirType("ClassComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ClassComponent"; } }
             
             /// <summary>
@@ -92,7 +90,6 @@ namespace Hl7.Fhir.Model
             /// Value associated with the type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Value
             {
@@ -124,7 +121,6 @@ namespace Hl7.Fhir.Model
             /// Human readable description of the type and value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -187,7 +183,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -199,7 +194,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -219,7 +213,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CostToBeneficiaryComponent"; } }
             
             /// <summary>
@@ -313,7 +306,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -325,7 +317,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -345,7 +336,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExemptionComponent"; } }
             
             /// <summary>
@@ -420,7 +410,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -431,7 +420,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -478,7 +466,6 @@ namespace Hl7.Fhir.Model
         /// active | cancelled | draft | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
@@ -553,7 +540,6 @@ namespace Hl7.Fhir.Model
         /// ID assigned to the subscriber
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string SubscriberId
         {
@@ -601,7 +587,6 @@ namespace Hl7.Fhir.Model
         /// Dependent number
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Dependent
         {
@@ -689,7 +674,6 @@ namespace Hl7.Fhir.Model
         /// Relative order of the coverage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Order
         {
@@ -721,7 +705,6 @@ namespace Hl7.Fhir.Model
         /// Insurer network
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Network
         {
@@ -767,7 +750,6 @@ namespace Hl7.Fhir.Model
         /// Reimbursement to insurer
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Subrogation
         {
@@ -889,7 +871,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -915,7 +896,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

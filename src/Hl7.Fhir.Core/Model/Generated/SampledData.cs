@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class SampledData : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "SampledData"; } }
         
         /// <summary>
@@ -85,7 +84,6 @@ namespace Hl7.Fhir.Model
         /// Number of milliseconds between samples
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Period
         {
@@ -117,7 +115,6 @@ namespace Hl7.Fhir.Model
         /// Multiply data by this before adding to origin
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Factor
         {
@@ -149,7 +146,6 @@ namespace Hl7.Fhir.Model
         /// Lower limit of detection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? LowerLimit
         {
@@ -181,7 +177,6 @@ namespace Hl7.Fhir.Model
         /// Upper limit of detection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? UpperLimit
         {
@@ -214,7 +209,6 @@ namespace Hl7.Fhir.Model
         /// Number of sample points at each time point
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Dimensions
         {
@@ -246,7 +240,6 @@ namespace Hl7.Fhir.Model
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Data
         {
@@ -321,7 +314,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -337,7 +329,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

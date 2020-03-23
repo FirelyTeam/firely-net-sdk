@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection
     /// </summary>
-    [FhirType("AppointmentResponse", IsResource=true)]
+    [FhirType("AppointmentResponse")]
     [DataContract]
     public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "AppointmentResponse"; } }
         
         /// <summary>
@@ -100,7 +99,6 @@ namespace Hl7.Fhir.Model
         /// Time from appointment, or requested new start time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Start
         {
@@ -132,7 +130,6 @@ namespace Hl7.Fhir.Model
         /// Time from appointment, or requested new end time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? End
         {
@@ -194,7 +191,6 @@ namespace Hl7.Fhir.Model
         /// accepted | declined | tentative | needs-action
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ParticipationStatus? ParticipantStatus
         {
@@ -226,7 +222,6 @@ namespace Hl7.Fhir.Model
         /// Additional comments
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -305,7 +300,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -322,7 +316,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

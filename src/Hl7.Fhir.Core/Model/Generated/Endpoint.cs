@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services
     /// </summary>
-    [FhirType("Endpoint", IsResource=true)]
+    [FhirType("Endpoint")]
     [DataContract]
     public partial class Endpoint : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Endpoint"; } }
         
         /// <summary>
@@ -130,7 +129,6 @@ namespace Hl7.Fhir.Model
         /// active | suspended | error | off | entered-in-error | test
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Endpoint.EndpointStatus? Status
         {
@@ -176,7 +174,6 @@ namespace Hl7.Fhir.Model
         /// A name that this endpoint can be identified by
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -265,7 +262,6 @@ namespace Hl7.Fhir.Model
         /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> PayloadMimeType
         {
@@ -298,7 +294,6 @@ namespace Hl7.Fhir.Model
         /// The technical base address for connecting to this endpoint
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Address
         {
@@ -331,7 +326,6 @@ namespace Hl7.Fhir.Model
         /// Usage depends on the channel type
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Header
         {
@@ -419,7 +413,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -439,7 +432,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of an observation
     /// </summary>
-    [FhirType("ObservationDefinition", IsResource=true)]
+    [FhirType("ObservationDefinition")]
     [DataContract]
     public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "ObservationDefinition"; } }
         
         /// <summary>
@@ -159,7 +158,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "QuantitativeDetailsComponent"; } }
             
             /// <summary>
@@ -205,7 +203,6 @@ namespace Hl7.Fhir.Model
             /// SI to Customary unit conversion factor
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? ConversionFactor
             {
@@ -237,7 +234,6 @@ namespace Hl7.Fhir.Model
             /// Decimal precision of observation quantitative results
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? DecimalPrecision
             {
@@ -303,7 +299,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -316,7 +311,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -337,7 +331,6 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "QualifiedIntervalComponent"; } }
             
             /// <summary>
@@ -357,7 +350,6 @@ namespace Hl7.Fhir.Model
             /// reference | critical | absolute
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory? Category
             {
@@ -429,7 +421,6 @@ namespace Hl7.Fhir.Model
             /// male | female | other | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AdministrativeGender? Gender
             {
@@ -487,7 +478,6 @@ namespace Hl7.Fhir.Model
             /// Condition associated with the reference range
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Condition
             {
@@ -565,7 +555,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -582,7 +571,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -663,7 +651,6 @@ namespace Hl7.Fhir.Model
         /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType?> PermittedDataType
         {
@@ -695,7 +682,6 @@ namespace Hl7.Fhir.Model
         /// Multiple results allowed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? MultipleResultsAllowed
         {
@@ -740,7 +726,6 @@ namespace Hl7.Fhir.Model
         /// Preferred report name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string PreferredReportName
         {
@@ -921,7 +906,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -943,7 +927,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -49,7 +49,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public abstract partial class DomainResource : Hl7.Fhir.Model.Resource
     {
-        [NotMapped]
         public override string TypeName { get { return "DomainResource"; } }
         
         /// <summary>
@@ -156,7 +155,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -169,7 +167,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

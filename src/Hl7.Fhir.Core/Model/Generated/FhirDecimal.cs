@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class FhirDecimal : Hl7.Fhir.Model.Primitive<decimal?>
     {
-        [NotMapped]
         public override string TypeName { get { return "decimal"; } }
         
         // Must conform to the pattern "-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?"

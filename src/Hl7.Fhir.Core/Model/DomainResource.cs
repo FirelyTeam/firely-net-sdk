@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
-    [FhirType("DomainResource", IsResource = true)]
+    [FhirType("DomainResource")]
     public abstract partial class DomainResource : IModifierExtendable
     {
         [NotMapped]

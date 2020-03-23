@@ -46,18 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MedicinalProductIndication
     /// </summary>
-    [FhirType("MedicinalProductIndication", IsResource=true)]
+    [FhirType("MedicinalProductIndication")]
     [DataContract]
     public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductIndication"; } }
         
         [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
         [DataContract]
         public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OtherTherapyComponent"; } }
             
             /// <summary>
@@ -135,7 +133,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -146,7 +143,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -354,7 +350,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -372,7 +367,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

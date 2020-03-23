@@ -46,11 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A slot of time on a schedule that may be available for booking appointments
     /// </summary>
-    [FhirType("Slot", IsResource=true)]
+    [FhirType("Slot")]
     [DataContract]
     public partial class Slot : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
         public override string TypeName { get { return "Slot"; } }
         
         /// <summary>
@@ -195,7 +194,6 @@ namespace Hl7.Fhir.Model
         /// busy | free | busy-unavailable | busy-tentative | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Slot.SlotStatus? Status
         {
@@ -228,7 +226,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time that the slot is to begin
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Start
         {
@@ -261,7 +258,6 @@ namespace Hl7.Fhir.Model
         /// Date/Time that the slot is to conclude
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? End
         {
@@ -293,7 +289,6 @@ namespace Hl7.Fhir.Model
         /// This slot has already been overbooked, appointments are unlikely to be accepted for this time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Overbooked
         {
@@ -325,7 +320,6 @@ namespace Hl7.Fhir.Model
         /// Comments on the slot to describe any extended information. Such as custom constraints on the slot
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -413,7 +407,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -433,7 +426,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

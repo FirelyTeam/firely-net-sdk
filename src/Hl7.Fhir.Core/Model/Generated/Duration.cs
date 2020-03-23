@@ -47,7 +47,6 @@ namespace Hl7.Fhir.Model
     [FhirType("Duration")]
     public partial class Duration : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "Duration"; } }
         
         public override IDeepCopyable DeepCopy()
