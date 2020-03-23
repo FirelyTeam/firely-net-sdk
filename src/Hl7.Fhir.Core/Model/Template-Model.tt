@@ -709,7 +709,7 @@ if(!abstractType) {
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+	    "/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical' and (not(fhir:derivation/@value) or (fhir:derivation/@value != 'constraint'))]", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)
@@ -1107,6 +1107,10 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
+		  if(resourceName == "SimpleQuantity") continue;
+		  if(resourceName == "MoneyQuantity") continue;
+
+
 			string resourceDescription = "";
 			string rawResourceName = resourceName;
 			string primitiveTypeName = null;
@@ -1993,29 +1997,7 @@ if (!abstractType){
 			case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-			case "Quantity" :
-							XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-							if (typeProfile == null)
-                            {
-								// result.PropType = "Hl7.Fhir.Model.FhirString";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                            {
-								return "Hl7.Fhir.Model.SimpleQuantity";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                            {
-								return "Hl7.Fhir.Model.Money";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                            {
-								return "Hl7.Fhir.Model.Age";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                            {
-								return "Hl7.Fhir.Model.Duration";
-                            }
-							break;
+			case "Quantity" : return "Hl7.Fhir.Model.Quantity";
         }
 		return propType;
     }
@@ -2130,29 +2112,7 @@ if (!abstractType){
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									return "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									return "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									return "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									return "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : return "Hl7.Fhir.Model.Quantity";
             }
 			return propType;
         }
@@ -2332,29 +2292,8 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
+                               								break;
             }
 
 			if (result.Name.Contains("[x]"))
@@ -2367,13 +2306,7 @@ if (!abstractType){
 
 				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type/fhir:code/@value", nsR))
                 {
-				    // exception: for choice types we cannot deal with constrained types since they will be serialized as their
-					// unconstrained type. To fix that for now we just make sure the only occurence of a constrained type in a choice
-					// is avoided here.  
-					// This is a HACK, we should just remove constrained types alltogether.
 					var convertedType = ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR);
-					if(convertedType == "Hl7.Fhir.Model.SimpleQuantity") convertedType = "Hl7.Fhir.Model.Quantity";
-					if(convertedType == "Hl7.Fhir.Model.MoneyQuantity") convertedType = "Hl7.Fhir.Model.Quantity";
 
 					string allowType = "typeof(" + convertedType + ")";
 					if (!result.AllowedTypes.Contains(allowType))
@@ -2614,28 +2547,7 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
 								break;
             }
 

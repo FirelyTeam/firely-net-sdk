@@ -594,26 +594,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// Amount of medication expressed as a timing amount
         /// </summary>
         [FhirElement("daysSupply", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity DaysSupply
+        public Hl7.Fhir.Model.Quantity DaysSupply
         {
             get { return _DaysSupply; }
             set { _DaysSupply = value; OnPropertyChanged("DaysSupply"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _DaysSupply;
+        private Hl7.Fhir.Model.Quantity _DaysSupply;
         
         /// <summary>
         /// When product was packaged and reviewed
@@ -803,8 +803,8 @@ namespace Hl7.Fhir.Model
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.SimpleQuantity)DaysSupply.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.Quantity)DaysSupply.DeepCopy();
                 if(WhenPreparedElement != null) dest.WhenPreparedElement = (Hl7.Fhir.Model.FhirDateTime)WhenPreparedElement.DeepCopy();
                 if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();

@@ -1048,13 +1048,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("doseQuantity", Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity DoseQuantity
+        public Hl7.Fhir.Model.Quantity DoseQuantity
         {
             get { return _DoseQuantity; }
             set { _DoseQuantity = value; OnPropertyChanged("DoseQuantity"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _DoseQuantity;
+        private Hl7.Fhir.Model.Quantity _DoseQuantity;
         
         /// <summary>
         /// Who performed event
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
                 if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.Date)ExpirationDateElement.DeepCopy();
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
-                if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
+                if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.Quantity)DoseQuantity.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Immunization.PerformerComponent>(Performer.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());

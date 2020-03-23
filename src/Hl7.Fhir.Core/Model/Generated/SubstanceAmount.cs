@@ -63,26 +63,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("lowLimit", InSummary=true, Order=40)]
             [DataMember]
-            public Quantity LowLimit
+            public Hl7.Fhir.Model.Quantity LowLimit
             {
                 get { return _LowLimit; }
                 set { _LowLimit = value; OnPropertyChanged("LowLimit"); }
             }
             
-            private Quantity _LowLimit;
+            private Hl7.Fhir.Model.Quantity _LowLimit;
             
             /// <summary>
             /// Upper limit possible or expected
             /// </summary>
             [FhirElement("highLimit", InSummary=true, Order=50)]
             [DataMember]
-            public Quantity HighLimit
+            public Hl7.Fhir.Model.Quantity HighLimit
             {
                 get { return _HighLimit; }
                 set { _HighLimit = value; OnPropertyChanged("HighLimit"); }
             }
             
-            private Quantity _HighLimit;
+            private Hl7.Fhir.Model.Quantity _HighLimit;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -91,8 +91,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(LowLimit != null) dest.LowLimit = (Quantity)LowLimit.DeepCopy();
-                    if(HighLimit != null) dest.HighLimit = (Quantity)HighLimit.DeepCopy();
+                    if(LowLimit != null) dest.LowLimit = (Hl7.Fhir.Model.Quantity)LowLimit.DeepCopy();
+                    if(HighLimit != null) dest.HighLimit = (Hl7.Fhir.Model.Quantity)HighLimit.DeepCopy();
                     return dest;
                 }
                 else
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("amount", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Amount
         {

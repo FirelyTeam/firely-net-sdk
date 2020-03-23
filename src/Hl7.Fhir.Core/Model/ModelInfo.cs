@@ -396,12 +396,6 @@ namespace Hl7.Fhir.Model
             return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
         }
 
-        public static bool IsProfiledQuantity(Type type)
-        {
-            return type == typeof(SimpleQuantity) || type == typeof(MoneyQuantity);
-        }
-
-
         public static bool IsBindable(string type)
         {
             switch (type)

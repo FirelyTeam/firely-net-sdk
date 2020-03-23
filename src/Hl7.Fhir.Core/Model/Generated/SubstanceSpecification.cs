@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Amount
             {
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Amount
             {
@@ -758,13 +758,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("halfLife", InSummary=true, Order=70)]
             [DataMember]
-            public Quantity HalfLife
+            public Hl7.Fhir.Model.Quantity HalfLife
             {
                 get { return _HalfLife; }
                 set { _HalfLife = value; OnPropertyChanged("HalfLife"); }
             }
             
-            private Quantity _HalfLife;
+            private Hl7.Fhir.Model.Quantity _HalfLife;
             
             /// <summary>
             /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopy();
                     if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopy();
-                    if(HalfLife != null) dest.HalfLife = (Quantity)HalfLife.DeepCopy();
+                    if(HalfLife != null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)HalfLife.DeepCopy();
                     if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopy();
                     return dest;
                 }
@@ -900,13 +900,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=60)]
             [DataMember]
-            public Quantity Amount
+            public Hl7.Fhir.Model.Quantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Quantity _Amount;
+            private Hl7.Fhir.Model.Quantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Amount != null) dest.Amount = (Quantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -1829,7 +1829,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Amount
             {

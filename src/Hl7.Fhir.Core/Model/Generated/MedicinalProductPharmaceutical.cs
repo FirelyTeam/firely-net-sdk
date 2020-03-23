@@ -179,39 +179,39 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("firstDose", InSummary=true, Order=50)]
             [DataMember]
-            public Quantity FirstDose
+            public Hl7.Fhir.Model.Quantity FirstDose
             {
                 get { return _FirstDose; }
                 set { _FirstDose = value; OnPropertyChanged("FirstDose"); }
             }
             
-            private Quantity _FirstDose;
+            private Hl7.Fhir.Model.Quantity _FirstDose;
             
             /// <summary>
             /// The maximum single dose that can be administered as per the protocol of a clinical trial can be specified using a numerical value and its unit of measurement
             /// </summary>
             [FhirElement("maxSingleDose", InSummary=true, Order=60)]
             [DataMember]
-            public Quantity MaxSingleDose
+            public Hl7.Fhir.Model.Quantity MaxSingleDose
             {
                 get { return _MaxSingleDose; }
                 set { _MaxSingleDose = value; OnPropertyChanged("MaxSingleDose"); }
             }
             
-            private Quantity _MaxSingleDose;
+            private Hl7.Fhir.Model.Quantity _MaxSingleDose;
             
             /// <summary>
             /// The maximum dose per day (maximum dose quantity to be administered in any one 24-h period) that can be administered as per the protocol referenced in the clinical trial authorisation
             /// </summary>
             [FhirElement("maxDosePerDay", InSummary=true, Order=70)]
             [DataMember]
-            public Quantity MaxDosePerDay
+            public Hl7.Fhir.Model.Quantity MaxDosePerDay
             {
                 get { return _MaxDosePerDay; }
                 set { _MaxDosePerDay = value; OnPropertyChanged("MaxDosePerDay"); }
             }
             
-            private Quantity _MaxDosePerDay;
+            private Hl7.Fhir.Model.Quantity _MaxDosePerDay;
             
             /// <summary>
             /// The maximum dose per treatment period that can be administered as per the protocol referenced in the clinical trial authorisation
@@ -261,9 +261,9 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(FirstDose != null) dest.FirstDose = (Quantity)FirstDose.DeepCopy();
-                    if(MaxSingleDose != null) dest.MaxSingleDose = (Quantity)MaxSingleDose.DeepCopy();
-                    if(MaxDosePerDay != null) dest.MaxDosePerDay = (Quantity)MaxDosePerDay.DeepCopy();
+                    if(FirstDose != null) dest.FirstDose = (Hl7.Fhir.Model.Quantity)FirstDose.DeepCopy();
+                    if(MaxSingleDose != null) dest.MaxSingleDose = (Hl7.Fhir.Model.Quantity)MaxSingleDose.DeepCopy();
+                    if(MaxDosePerDay != null) dest.MaxDosePerDay = (Hl7.Fhir.Model.Quantity)MaxDosePerDay.DeepCopy();
                     if(MaxDosePerTreatmentPeriod != null) dest.MaxDosePerTreatmentPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerTreatmentPeriod.DeepCopy();
                     if(MaxTreatmentPeriod != null) dest.MaxTreatmentPeriod = (Duration)MaxTreatmentPeriod.DeepCopy();
                     if(TargetSpecies != null) dest.TargetSpecies = new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent>(TargetSpecies.DeepCopy());
@@ -476,13 +476,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("value", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Quantity Value
+            public Hl7.Fhir.Model.Quantity Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Quantity _Value;
+            private Hl7.Fhir.Model.Quantity _Value;
             
             /// <summary>
             /// Extra information about the withdrawal period
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Tissue != null) dest.Tissue = (Hl7.Fhir.Model.CodeableConcept)Tissue.DeepCopy();
-                    if(Value != null) dest.Value = (Quantity)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Quantity)Value.DeepCopy();
                     if(SupportingInformationElement != null) dest.SupportingInformationElement = (Hl7.Fhir.Model.FhirString)SupportingInformationElement.DeepCopy();
                     return dest;
                 }

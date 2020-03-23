@@ -642,31 +642,13 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(isReference, ModelInfo.IsReference(typeFlag.Value));
             }
         }
-
-        [TestMethod]
-        public void TestIsProfiledQuantity()
-        {
-            // Verify that ModelInfo.IsProfiledQuantity overloads returns true for SimpleQuantity & MoneyQuantity
-            foreach (var type in FhirCsTypes)
-            {
-                var isProfiledQuantity = type == typeof(SimpleQuantity) || type == typeof(MoneyQuantity);
-                var typeName = ModelInfo.GetFhirTypeNameForType(type);
-                Assert.IsNotNull(typeName);
-                var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
-                Assert.IsTrue(typeFlag.HasValue);
-                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(type));
-                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(typeName));
-                Assert.AreEqual(isProfiledQuantity, ModelInfo.IsProfiledQuantity(typeFlag.Value));
-            }
-        }
-
+    
         [TestMethod]
         public void TestTypeHierarchy()
         {
             // Verify ModelInfo methods are in agreement with the actual type hierarchy
             // - ModelInfo.IsInstanceTypeFor
             // - ModelInfo.IsCoreSuperType
-            // - ModelInfo.IsProfiledQuantity
             var types = ModelInfo.FhirCsTypeToString.Keys;
             foreach (var type in types)
             {
@@ -689,16 +671,6 @@ namespace Hl7.Fhir.Tests.Model
                             Assert.IsNotNull(baseTypeName);
                             var baseTypeFlag = ModelInfo.FhirTypeNameToFhirType(baseTypeName);
                             Assert.IsTrue(baseTypeFlag.HasValue);
-
-                            // FHIR: MoneyQuantity & SimpleQuantity are defined as profiles on Quantity (not derived)
-                            // API: MoneyQuantity & SimpleQuantity are derived from Quantity
-                            if (ModelInfo.IsProfiledQuantity(type))
-                            {
-                                Assert.AreEqual(typeof(Quantity), baseType);
-                                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(baseTypeName, typeName));
-                                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(baseTypeFlag.Value, typeFlag.Value));
-                                break;
-                            }
 
                             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(baseTypeName, typeName));
                             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(baseTypeFlag.Value, typeFlag.Value));

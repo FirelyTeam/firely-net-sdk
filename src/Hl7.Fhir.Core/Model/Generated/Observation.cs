@@ -63,26 +63,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("low", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Low
+            public Hl7.Fhir.Model.Quantity Low
             {
                 get { return _Low; }
                 set { _Low = value; OnPropertyChanged("Low"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Low;
+            private Hl7.Fhir.Model.Quantity _Low;
             
             /// <summary>
             /// High Range, if relevant
             /// </summary>
             [FhirElement("high", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity High
+            public Hl7.Fhir.Model.Quantity High
             {
                 get { return _High; }
                 set { _High = value; OnPropertyChanged("High"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _High;
+            private Hl7.Fhir.Model.Quantity _High;
             
             /// <summary>
             /// Reference range qualifier
@@ -162,8 +162,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Low != null) dest.Low = (Hl7.Fhir.Model.SimpleQuantity)Low.DeepCopy();
-                    if(High != null) dest.High = (Hl7.Fhir.Model.SimpleQuantity)High.DeepCopy();
+                    if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
+                    if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(AppliesTo != null) dest.AppliesTo = new List<Hl7.Fhir.Model.CodeableConcept>(AppliesTo.DeepCopy());
                     if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("value", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {

@@ -834,13 +834,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("valueQuantity", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Quantity> ValueQuantity
+            public List<Hl7.Fhir.Model.Quantity> ValueQuantity
             {
-                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(); return _ValueQuantity; }
                 set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
             }
             
-            private List<Quantity> _ValueQuantity;
+            private List<Hl7.Fhir.Model.Quantity> _ValueQuantity;
             
             /// <summary>
             /// Property value as a code, e.g., NTP4 (synced to NTP)
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(ValueQuantity.DeepCopy());
                     if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
                     return dest;
                 }

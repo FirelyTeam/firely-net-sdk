@@ -212,13 +212,13 @@ namespace Hl7.FhirPath.R4.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void testDecimalRA()
         {
-            Model.RiskAssessment r = new Model.RiskAssessment();
-            Model.SimpleQuantity sq = new Model.SimpleQuantity();
+            var r = new Model.RiskAssessment();
+            var sq = new Model.Quantity();
             sq.setValue(0.2);
             sq.setUnit("%");
             sq.setCode("%");
             sq.setSystem("http://unitsofmeasure.org");
-            Model.SimpleQuantity sq1 = new Model.SimpleQuantity();
+            var sq1 = new Model.Quantity();
             sq1.setValue(0.4);
             sq1.setUnit("%");
             sq1.setCode("%");

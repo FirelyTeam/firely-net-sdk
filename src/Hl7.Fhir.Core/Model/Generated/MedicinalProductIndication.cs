@@ -231,13 +231,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("duration", InSummary=true, Order=140)]
         [DataMember]
-        public Quantity Duration
+        public Hl7.Fhir.Model.Quantity Duration
         {
             get { return _Duration; }
             set { _Duration = value; OnPropertyChanged("Duration"); }
         }
         
-        private Quantity _Duration;
+        private Hl7.Fhir.Model.Quantity _Duration;
         
         /// <summary>
         /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
                 if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
                 if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
                 if(IntendedEffect != null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableConcept)IntendedEffect.DeepCopy();
-                if(Duration != null) dest.Duration = (Quantity)Duration.DeepCopy();
+                if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
                 if(OtherTherapy != null) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
                 if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
                 if(Population != null) dest.Population = new List<Population>(Population.DeepCopy());

@@ -464,13 +464,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=40)]
             [DataMember]
-            public Quantity Value
+            public Hl7.Fhir.Model.Quantity Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Quantity _Value;
+            private Hl7.Fhir.Model.Quantity _Value;
             
             /// <summary>
             /// Benefit limit details
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Value != null) dest.Value = (Quantity)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Quantity)Value.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     return dest;
                 }
@@ -1167,13 +1167,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=70)]
             [DataMember]
-            public Quantity Value
+            public Hl7.Fhir.Model.Quantity Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Quantity _Value;
+            private Hl7.Fhir.Model.Quantity _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Applicability != null) dest.Applicability = (Hl7.Fhir.Model.CodeableConcept)Applicability.DeepCopy();
                     if(Qualifiers != null) dest.Qualifiers = new List<Hl7.Fhir.Model.CodeableConcept>(Qualifiers.DeepCopy());
-                    if(Value != null) dest.Value = (Quantity)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Quantity)Value.DeepCopy();
                     return dest;
                 }
                 else

@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Tests.Rest
             var observation = new Observation();
             observation.Status = ObservationStatus.Preliminary;
             observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
-            observation.Value = new SimpleQuantity()
+            observation.Value = new Quantity()
             {
                 System = "http://unitsofmeasure.org",
                 Value = 23,

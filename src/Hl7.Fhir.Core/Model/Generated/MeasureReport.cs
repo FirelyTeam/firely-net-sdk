@@ -150,13 +150,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("measureScore", InSummary=true, Order=60)]
             [DataMember]
-            public Quantity MeasureScore
+            public Hl7.Fhir.Model.Quantity MeasureScore
             {
                 get { return _MeasureScore; }
                 set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Quantity _MeasureScore;
+            private Hl7.Fhir.Model.Quantity _MeasureScore;
             
             /// <summary>
             /// Stratification results
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopy());
-                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopy();
                     if(Stratifier != null) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopy());
                     return dest;
                 }
@@ -545,13 +545,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("measureScore", Order=70)]
             [DataMember]
-            public Quantity MeasureScore
+            public Hl7.Fhir.Model.Quantity MeasureScore
             {
                 get { return _MeasureScore; }
                 set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Quantity _MeasureScore;
+            private Hl7.Fhir.Model.Quantity _MeasureScore;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
                     if(Component != null) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopy());
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
-                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopy();
                     return dest;
                 }
                 else

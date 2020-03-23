@@ -273,8 +273,6 @@
 // Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
 // Hl7.Fhir.Core\Model\Generated\Markdown.cs
 // Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
-// Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
-// Hl7.Fhir.Core\Model\Generated\MoneyQuantity.cs
 // Hl7.Fhir.Core\Model\Generated\Template-Bindings.cs
 // Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.cs
 // Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs

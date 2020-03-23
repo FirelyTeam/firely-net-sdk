@@ -139,13 +139,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Technique used to perform collection
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
                     if(Duration != null) dest.Duration = (Duration)Duration.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(FastingStatus != null) dest.FastingStatus = (Hl7.Fhir.Model.Element)FastingStatus.DeepCopy();
@@ -511,26 +511,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("capacity", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Capacity
+            public Hl7.Fhir.Model.Quantity Capacity
             {
                 get { return _Capacity; }
                 set { _Capacity = value; OnPropertyChanged("Capacity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Capacity;
+            private Hl7.Fhir.Model.Quantity _Capacity;
             
             /// <summary>
             /// Quantity of specimen within container
             /// </summary>
             [FhirElement("specimenQuantity", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity SpecimenQuantity
+            public Hl7.Fhir.Model.Quantity SpecimenQuantity
             {
                 get { return _SpecimenQuantity; }
                 set { _SpecimenQuantity = value; OnPropertyChanged("SpecimenQuantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _SpecimenQuantity;
+            private Hl7.Fhir.Model.Quantity _SpecimenQuantity;
             
             /// <summary>
             /// Additive associated with container
@@ -557,8 +557,8 @@ namespace Hl7.Fhir.Model
                     if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.SimpleQuantity)Capacity.DeepCopy();
-                    if(SpecimenQuantity != null) dest.SpecimenQuantity = (Hl7.Fhir.Model.SimpleQuantity)SpecimenQuantity.DeepCopy();
+                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.Quantity)Capacity.DeepCopy();
+                    if(SpecimenQuantity != null) dest.SpecimenQuantity = (Hl7.Fhir.Model.Quantity)SpecimenQuantity.DeepCopy();
                     if(Additive != null) dest.Additive = (Hl7.Fhir.Model.Element)Additive.DeepCopy();
                     return dest;
                 }

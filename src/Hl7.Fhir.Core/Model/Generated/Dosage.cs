@@ -378,26 +378,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("maxDosePerAdministration", InSummary=true, Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity MaxDosePerAdministration
+        public Hl7.Fhir.Model.Quantity MaxDosePerAdministration
         {
             get { return _MaxDosePerAdministration; }
             set { _MaxDosePerAdministration = value; OnPropertyChanged("MaxDosePerAdministration"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _MaxDosePerAdministration;
+        private Hl7.Fhir.Model.Quantity _MaxDosePerAdministration;
         
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
         [FhirElement("maxDosePerLifetime", InSummary=true, Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity MaxDosePerLifetime
+        public Hl7.Fhir.Model.Quantity MaxDosePerLifetime
         {
             get { return _MaxDosePerLifetime; }
             set { _MaxDosePerLifetime = value; OnPropertyChanged("MaxDosePerLifetime"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _MaxDosePerLifetime;
+        private Hl7.Fhir.Model.Quantity _MaxDosePerLifetime;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -418,8 +418,8 @@ namespace Hl7.Fhir.Model
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(DoseAndRate != null) dest.DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(DoseAndRate.DeepCopy());
                 if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
-                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.SimpleQuantity)MaxDosePerAdministration.DeepCopy();
-                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.SimpleQuantity)MaxDosePerLifetime.DeepCopy();
+                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)MaxDosePerAdministration.DeepCopy();
+                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)MaxDosePerLifetime.DeepCopy();
                 return dest;
             }
             else

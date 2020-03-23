@@ -634,13 +634,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("valueQuantity", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Quantity> ValueQuantity
+            public List<Hl7.Fhir.Model.Quantity> ValueQuantity
             {
-                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(); return _ValueQuantity; }
                 set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
             }
             
-            private List<Quantity> _ValueQuantity;
+            private List<Hl7.Fhir.Model.Quantity> _ValueQuantity;
             
             /// <summary>
             /// Property value as a code, e.g., NTP4 (synced to NTP)
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(ValueQuantity.DeepCopy());
                     if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
                     return dest;
                 }
@@ -1226,13 +1226,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=280)]
         [DataMember]
-        public Quantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Quantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// The parent device it can be part of
@@ -1291,7 +1291,7 @@ namespace Hl7.Fhir.Model
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(OnlineInformationElement != null) dest.OnlineInformationElement = (Hl7.Fhir.Model.FhirUri)OnlineInformationElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(ParentDevice != null) dest.ParentDevice = (Hl7.Fhir.Model.ResourceReference)ParentDevice.DeepCopy();
                 if(Material != null) dest.Material = new List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>(Material.DeepCopy());
                 return dest;

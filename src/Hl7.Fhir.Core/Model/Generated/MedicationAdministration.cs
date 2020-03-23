@@ -288,13 +288,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dose", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Dose
+            public Hl7.Fhir.Model.Quantity Dose
             {
                 get { return _Dose; }
                 set { _Dose = value; OnPropertyChanged("Dose"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Dose;
+            private Hl7.Fhir.Model.Quantity _Dose;
             
             /// <summary>
             /// Dose quantity per unit of time
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.SimpleQuantity)Dose.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Quantity)Dose.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     return dest;
                 }

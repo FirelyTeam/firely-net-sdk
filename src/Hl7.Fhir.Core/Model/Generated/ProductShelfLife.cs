@@ -85,13 +85,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("period", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Quantity Period
+        public Hl7.Fhir.Model.Quantity Period
         {
             get { return _Period; }
             set { _Period = value; OnPropertyChanged("Period"); }
         }
         
-        private Quantity _Period;
+        private Hl7.Fhir.Model.Quantity _Period;
         
         /// <summary>
         /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Period != null) dest.Period = (Quantity)Period.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Quantity)Period.DeepCopy();
                 if(SpecialPrecautionsForStorage != null) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopy());
                 return dest;
             }

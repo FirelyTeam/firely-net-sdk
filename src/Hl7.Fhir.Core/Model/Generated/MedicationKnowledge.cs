@@ -1161,13 +1161,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     return dest;
                 }
                 else
@@ -1700,13 +1700,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("quantity", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// The period that applies to the maximum number of units
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Period != null) dest.Period = (Duration)Period.DeepCopy();
                     return dest;
                 }
@@ -1802,13 +1802,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("areaUnderCurve", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SimpleQuantity> AreaUnderCurve
+            public List<Hl7.Fhir.Model.Quantity> AreaUnderCurve
             {
-                get { if(_AreaUnderCurve==null) _AreaUnderCurve = new List<Hl7.Fhir.Model.SimpleQuantity>(); return _AreaUnderCurve; }
+                get { if(_AreaUnderCurve==null) _AreaUnderCurve = new List<Hl7.Fhir.Model.Quantity>(); return _AreaUnderCurve; }
                 set { _AreaUnderCurve = value; OnPropertyChanged("AreaUnderCurve"); }
             }
             
-            private List<Hl7.Fhir.Model.SimpleQuantity> _AreaUnderCurve;
+            private List<Hl7.Fhir.Model.Quantity> _AreaUnderCurve;
             
             /// <summary>
             /// The median lethal dose of a drug
@@ -1816,13 +1816,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("lethalDose50", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.SimpleQuantity> LethalDose50
+            public List<Hl7.Fhir.Model.Quantity> LethalDose50
             {
-                get { if(_LethalDose50==null) _LethalDose50 = new List<Hl7.Fhir.Model.SimpleQuantity>(); return _LethalDose50; }
+                get { if(_LethalDose50==null) _LethalDose50 = new List<Hl7.Fhir.Model.Quantity>(); return _LethalDose50; }
                 set { _LethalDose50 = value; OnPropertyChanged("LethalDose50"); }
             }
             
-            private List<Hl7.Fhir.Model.SimpleQuantity> _LethalDose50;
+            private List<Hl7.Fhir.Model.Quantity> _LethalDose50;
             
             /// <summary>
             /// Time required for concentration in the body to decrease by half
@@ -1844,8 +1844,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(AreaUnderCurve != null) dest.AreaUnderCurve = new List<Hl7.Fhir.Model.SimpleQuantity>(AreaUnderCurve.DeepCopy());
-                    if(LethalDose50 != null) dest.LethalDose50 = new List<Hl7.Fhir.Model.SimpleQuantity>(LethalDose50.DeepCopy());
+                    if(AreaUnderCurve != null) dest.AreaUnderCurve = new List<Hl7.Fhir.Model.Quantity>(AreaUnderCurve.DeepCopy());
+                    if(LethalDose50 != null) dest.LethalDose50 = new List<Hl7.Fhir.Model.Quantity>(LethalDose50.DeepCopy());
                     if(HalfLifePeriod != null) dest.HalfLifePeriod = (Duration)HalfLifePeriod.DeepCopy();
                     return dest;
                 }
@@ -1988,13 +1988,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("amount", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Amount
+        public Hl7.Fhir.Model.Quantity Amount
         {
             get { return _Amount; }
             set { _Amount = value; OnPropertyChanged("Amount"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Amount;
+        private Hl7.Fhir.Model.Quantity _Amount;
         
         /// <summary>
         /// Additional names for a medication
@@ -2267,7 +2267,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>)StatusElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
                 if(DoseForm != null) dest.DoseForm = (Hl7.Fhir.Model.CodeableConcept)DoseForm.DeepCopy();
-                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                 if(SynonymElement != null) dest.SynonymElement = new List<Hl7.Fhir.Model.FhirString>(SynonymElement.DeepCopy());
                 if(RelatedMedicationKnowledge != null) dest.RelatedMedicationKnowledge = new List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent>(RelatedMedicationKnowledge.DeepCopy());
                 if(AssociatedMedication != null) dest.AssociatedMedication = new List<Hl7.Fhir.Model.ResourceReference>(AssociatedMedication.DeepCopy());

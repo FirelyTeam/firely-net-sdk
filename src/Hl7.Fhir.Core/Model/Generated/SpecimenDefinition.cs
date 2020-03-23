@@ -420,13 +420,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("capacity", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Capacity
+            public Hl7.Fhir.Model.Quantity Capacity
             {
                 get { return _Capacity; }
                 set { _Capacity = value; OnPropertyChanged("Capacity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Capacity;
+            private Hl7.Fhir.Model.Quantity _Capacity;
             
             /// <summary>
             /// Minimum volume
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Cap != null) dest.Cap = (Hl7.Fhir.Model.CodeableConcept)Cap.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.SimpleQuantity)Capacity.DeepCopy();
+                    if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.Quantity)Capacity.DeepCopy();
                     if(MinimumVolume != null) dest.MinimumVolume = (Hl7.Fhir.Model.Element)MinimumVolume.DeepCopy();
                     if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>(Additive.DeepCopy());
                     if(PreparationElement != null) dest.PreparationElement = (Hl7.Fhir.Model.FhirString)PreparationElement.DeepCopy();
