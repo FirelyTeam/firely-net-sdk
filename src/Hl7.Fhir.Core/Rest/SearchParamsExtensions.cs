@@ -7,12 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
@@ -80,6 +77,37 @@ namespace Hl7.Fhir.Rest
             return qry;
         }
 
+        //it's not used in our code.
+        public static SearchParams ToSearchParameters(this Parameters parameters)
+        {
+            var result = new SearchParams();
 
+            foreach (var parameter in parameters.Parameter)
+            {
+                var name = parameter.Name;
+                var value = parameter.Value;
+
+                if (value != null && value is Primitive)
+                {
+                    result.Add(parameter.Name, PrimitiveTypeConverter.ConvertTo<string>(value));
+                }
+                else
+                    if (value == null) throw Error.NotSupported("Can only convert primitive parameters to Uri parameters");
+            }
+
+            return result;
+        }
+
+        public static Parameters ToParameters(this SearchParams entry)
+        {
+            var result = new Parameters();
+
+            foreach (var parameter in entry.ToUriParamList())
+            {
+                result.Add(parameter.Item1, new FhirString(parameter.Item2));
+            }
+
+            return result;
+        }
     }
 }

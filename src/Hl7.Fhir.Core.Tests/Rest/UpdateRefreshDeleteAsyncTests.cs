@@ -8,11 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestClass]
-    public class UpdateRefreshDeleteAsyncTests
+    public partial class FhirClientAsyncTests
     {
-        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
@@ -55,8 +52,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
-            
+            await ExceptionAssert.Throws<FhirOperationException>(act);
             
             Console.WriteLine("Test Completed");
         }

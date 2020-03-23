@@ -1,275 +1,263 @@
-﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
- * See the file CONTRIBUTORS for details.
- * 
- * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
- */
+﻿///* 
+// * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+// * See the file CONTRIBUTORS for details.
+// * 
+// * This file is licensed under the BSD 3-Clause license
+// * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+// */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Model;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
+//using System;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Hl7.Fhir.Support;
+//using Hl7.Fhir.Rest;
+//using Hl7.Fhir.Model;
+//using System.Collections.Generic;
+//using System.Text;
+//using System.Net;
+//using static Hl7.Fhir.Model.Observation;
 
-namespace Hl7.Fhir.Test
-{
-    [TestClass]
-    public class TransactionBuilderTests
-    {
-        [TestMethod]
-        public void TestBundleEntryComponentUrlIsEncoded()
-        {
-            var relativeEscapedUrl = "Medication/DILUANT%20-%20MMR%20II";
-            var m = new Medication
-            {
-                Id = "DILUANT - MMR II"
-            };
-            var b = new TransactionBuilder("http://myserver.org/fhir")
-                .Update("DILUANT - MMR II", m)
-                .ToBundle();
-            var e = b.Entry[0];
+//namespace Hl7.Fhir.Test
+//{
+//    [TestClass]
+//    public class TransactionBuilderTests
+//    {
+//        [TestMethod]
+//        public void TestBuild()
+//        {
+//            var p = new Patient();
+//            var b = new TransactionBuilder("http://myserver.org/fhir")
+//                        .Create(p)
+//                        .ResourceHistory("Patient", "7")
+//                        .Delete("Patient", "8")
+//                        .Read("Patient", "9", versionId: "bla")
+//                        .ToBundle();
 
-            Assert.AreEqual(relativeEscapedUrl, e.Request.Url);
+//            Assert.AreEqual(4, b.Entry.Count);
 
+//            Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Request.Method);
+//            Assert.AreEqual(p, b.Entry[0].Resource);
 
-            var relativeEscapedUrl2 = "Location?name=Enc%C3%B6ding%20T%C3%A9st";
-            var location = new Location
-            {
-                Name = "Encöding Tést",
-            };
+//            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[1].Request.Method);
+//            Assert.AreEqual("Patient/7/_history", b.Entry[1].Request.Url);
 
-            var trxBuilder = new TransactionBuilder("http://example.org/test/fhir", Bundle.BundleType.Transaction);
-            var cond = new SearchParams()
-                .Add("name", location.Name);
+//            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[2].Request.Method);
+//            Assert.AreEqual("Patient/8", b.Entry[2].Request.Url);
 
-            var b2 = trxBuilder.Update(cond, location).ToBundle();
-            var e2 = b2.Entry[0];
+//            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[3].Request.Method);
+//            Assert.AreEqual("Patient/9", b.Entry[3].Request.Url);
+//            Assert.AreEqual("W/\"bla\"", b.Entry[3].Request.IfNoneMatch);
+//        }
 
-            Assert.AreEqual(relativeEscapedUrl2, e2.Request.Url);            
-        }
+//        [TestMethod]
+//        public void TestFormBody()
+//        {
+//            string expected = "given=test&Key=Value&Active=true";
 
-        [TestMethod]
-        public void TestBuild()
-        {
-            var p = new Patient();
-            var b = new TransactionBuilder("http://myserver.org/fhir")
-                        .Create(p)
-                        .ResourceHistory("Patient", "7")
-                        .Delete("Patient", "8")
-                        .Read("Patient", "9", versionId: "bla")
-                        .ToBundle();
+//            var endpoint = new Uri("http://myserver.org/fhir");
+//            string resourceType = "Patient";
 
-            Assert.AreEqual(4, b.Entry.Count);
+//            var parameters = new List<Tuple<string, string>>();
+//            parameters.Add(new Tuple<string, string>("given", "test"));
+//            parameters.Add(new Tuple<string, string>("Key", "Value"));
+//            parameters.Add(new Tuple<string, string>("Active", "true"));
+//            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Request.Method);
-            Assert.AreEqual(p, b.Entry[0].Resource);
+//            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+//            byte[] body;
 
-            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[1].Request.Method);
-            Assert.AreEqual("Patient/7/_history", b.Entry[1].Request.Url);
+//            HttpWebRequest request = bundle.Entry[0].ToHttpRequest( SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, true, out body);
 
-            Assert.AreEqual(Bundle.HTTPVerb.DELETE, b.Entry[2].Request.Method);
-            Assert.AreEqual("Patient/8", b.Entry[2].Request.Url);
+//            var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-            Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[3].Request.Method);
-            Assert.AreEqual("Patient/9", b.Entry[3].Request.Url);
-            Assert.AreEqual("W/\"bla\"", b.Entry[3].Request.IfNoneMatch);
-        }
+//            Assert.AreEqual(bodyText, expected);
+//        }
 
-        [TestMethod]
-        public void TestFormBody()
-        {
-            string expected = "given=test&Key=Value&Active=true";
+//        [TestMethod]
+//        public void TestInteractionType()
+//        {
+//            // just try a few
+//            var tx = new TransactionBuilder("http://myserver.org/fhir").ServerHistory();
+//            Assert.AreEqual(InteractionType.History, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
+//            tx = new TransactionBuilder("http://myserver.org/fhir").ServerOperation("$everything", null);
+//            Assert.AreEqual(InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("given", "test"));
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            parameters.Add(new Tuple<string, string>("Active", "true"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+//            var p = new Patient();
+//            tx = new TransactionBuilder("http://myserver.org/fhir").Create(p);
+//            Assert.AreEqual(InteractionType.Create, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
+//            tx = new TransactionBuilder("http://myserver.org/fhir").Search(new SearchParams().Where("name=ewout"), resourceType: "Patient");
+//            Assert.AreEqual(InteractionType.Search, tx.ToBundle().Entry[0].Annotation<InteractionType>());
+//        }
 
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+//        [TestMethod]
+//        public void TestUrlEncoding()
+//        {
+//            var endpoint  = new Uri("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f");
+//            var tx = new TransactionBuilder(endpoint);
+//            tx.Get("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=<=2014-09-08T18:42:02.000Z&context=14187710&_format=json");
+//            var b = tx.ToBundle();
 
-            var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
+//            byte[] body;
 
-            Assert.AreEqual(bodyText, expected);
-        }
+//            var req = b.Entry[0].ToHttpRequest(null, null, ResourceFormat.Json, useFormatParameter: true, body: out body);
 
-        [TestMethod]
-        public void TestUrlEncoding()
-        {
-            var endpoint  = new Uri("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f");
-            var tx = new TransactionBuilder(endpoint);
-            tx.Get("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=<=2014-09-08T18:42:02.000Z&context=14187710&_format=json");
-            var b = tx.ToBundle();
+//            Assert.AreEqual("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=%3C%3D2014-09-08T18%3A42%3A02.000Z&context=14187710&_format=json&_format=json", req.RequestUri.AbsoluteUri);
+//        }
 
-            byte[] body;
+//        [TestMethod]
+//        public void TestFormUrlEncoding()
+//        {
+//            // The URL encoding logic in Microsoft.Net.Http doesn't encode single quotes or parentheses, unlike System.Net.Http
+//#if NET40
+//            string expected = "Key=%3C%26%3E%22'%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40!%23%C2%A4%25%2F()%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
+//#else
+//            string expected = "Key=%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
+//#endif
 
-            var req = b.Entry[0].ToHttpRequest(endpoint, null, null, ResourceFormat.Json, useFormatParameter: true, CompressRequestBody: false, body: out body);
+//            string specialCharacters = "<&>\"'äëïoæøå€$£@!#¤%/()=?|§¨^\\[]{}";
+//            var  endpoint = new Uri("http://myserver.org/fhir");
+//            string resourceType = "Patient";
+//            var parameters = new List<Tuple<string, string>>();
+//            parameters.Add(new Tuple<string, string>("Key", specialCharacters));
+//            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-            Assert.AreEqual("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=%3C%3D2014-09-08T18%3A42%3A02.000Z&context=14187710&_format=json&_format=json", req.RequestUri.AbsoluteUri);
-        }
+//            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+//            byte[] body;
 
-        [TestMethod]
-        public void TestFormUrlEncoding()
-        {
-            // The URL encoding logic in Microsoft.Net.Http doesn't encode single quotes or parentheses, unlike System.Net.Http
-#if NET40
-            string expected = "Key=%3C%26%3E%22'%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40!%23%C2%A4%25%2F()%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
-#else
-            string expected = "Key=%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
-#endif
+//            bundle.Entry[0].ToEntryRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, out body);
 
-            string specialCharacters = "<&>\"'äëïoæøå€$£@!#¤%/()=?|§¨^\\[]{}";
-            var  endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", specialCharacters));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+//            string actual = Encoding.UTF8.GetString(body);
+//            Assert.AreEqual(expected, actual);
+//        }
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
+//        [TestMethod]
+//        public void TestSearchUsingPost_MethodIsPost()
+//        {
+//            string expected = "POST";
 
-            bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+//            var endpoint = new Uri("http://myserver.org/fhir");
+//            string resourceType = "Patient";
 
-            string actual = Encoding.UTF8.GetString(body);
-            Assert.AreEqual(expected, actual);
-        }
+//            var parameters = new List<Tuple<string, string>>();
+//            parameters.Add(new Tuple<string, string>("Key", "Value"));
+//            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-        [TestMethod]
-        public void TestSearchUsingPost_MethodIsPost()
-        {
-            string expected = "POST";
+//            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+//            byte[] body;
 
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
+//            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, out body);
 
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+//            Assert.AreEqual(expected, request.Method);
+//        }
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
+//        [TestMethod]
+//        public void TestSearchUsingPost_ContentTypeIsFormUrlEncoded()
+//        {
+//            string expected = "application/x-www-form-urlencoded";
 
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+//            var  endpoint = new Uri("http://myserver.org/fhir");
+//            string resourceType = "Patient";
 
-            Assert.AreEqual(expected, request.Method);
-        }
+//            var parameters = new List<Tuple<string, string>>();
+//            parameters.Add(new Tuple<string, string>("Key", "Value"));
+//            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-        [TestMethod]
-        public void TestSearchUsingPost_ContentTypeIsFormUrlEncoded()
-        {
-            string expected = "application/x-www-form-urlencoded";
+//            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+//            byte[] body;
 
-            var  endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
+//            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, out body);
 
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+//            Assert.AreEqual(expected, request.ContentType);
+//        }
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
+//        [TestMethod]
+//        public void TestSearchUsingPost_UrlIsSuffixedWith_search()
+//        {
+//            string expected = "http://myserver.org/fhir/Patient/_search?_format=json";
 
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
+//            var endpoint = new Uri("http://myserver.org/fhir");
+//            string resourceType = "Patient";
 
-            Assert.AreEqual(expected, request.ContentType);
-        }
+//            var parameters = new List<Tuple<string, string>>();
+//            parameters.Add(new Tuple<string, string>("Key", "value"));
+//            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
 
-        [TestMethod]
-        public void TestSearchUsingPost_UrlIsSuffixedWith_search()
-        {
-            string expected = "http://myserver.org/fhir/Patient/_search?_format=json";
+//            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
+//            byte[] body;
 
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
+//            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, out body);
 
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+//            string actual = request.RequestUri.AbsoluteUri;
+//            Assert.AreEqual(expected, actual);
+//        }
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
+//        [TestMethod]
+//        public void TestConditionalCreate()
+//        {
+//            var p = new Patient();
+//            var tx = new TransactionBuilder("http://myserver.org/fhir")
+//                        .Create(p, new SearchParams().Where("name=foobar"));
+//            var b = tx.ToBundle();
 
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            string actual = request.RequestUri.AbsoluteUri;
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void TestConditionalCreate()
-        {
-            var p = new Patient();
-            var tx = new TransactionBuilder("http://myserver.org/fhir")
-                        .Create(p, new SearchParams().Where("name=foobar"));
-            var b = tx.ToBundle();
-
-            Assert.AreEqual("name=foobar", b.Entry[0].Request.IfNoneExist);
-        }
+//            Assert.AreEqual("name=foobar", b.Entry[0].Request.IfNoneExist);
+//        }
 
 
-        [TestMethod]
-        public void TestConditionalUpdate()
-        {
-            var p = new Patient();
-            var tx = new TransactionBuilder("http://myserver.org/fhir")
-                        .Update(new SearchParams().Where("name=foobar"), p, versionId: "314");
-            var b = tx.ToBundle();
+//        [TestMethod]
+//        public void TestConditionalUpdate()
+//        {
+//            var p = new Patient();
+//            var tx = new TransactionBuilder("http://myserver.org/fhir")
+//                        .Update(new SearchParams().Where("name=foobar"), p, versionId: "314");
+//            var b = tx.ToBundle();
 
-            Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
-        }
+//            Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
+//        }
 
-        /// <summary>
-        /// Unit test to prove issue 536: 
-        /// https://github.com/FirelyTeam/fhir-net-api/issues/536
-        /// </summary>
-        [TestMethod]
-        public void TestTransactionWithForwardSlash()
-        {
-            var tx2 = new TransactionBuilder("http://myserver.org/fhir/");
-            var bundle = tx2.Get("@Patient/1").ToBundle();
+//        /// <summary>
+//        /// Unit test to prove issue 536: 
+//        /// https://github.com/FirelyTeam/fhir-net-api/issues/536
+//        /// </summary>
+//        [TestMethod]
+//        public void TestTransactionWithForwardSlash()
+//        {
+//            var tx2 = new TransactionBuilder("http://myserver.org/fhir/");
+//            var bundle = tx2.Get("@Patient/1").ToBundle();
 
-            var tx = new TransactionBuilder("http://myserver.org/fhir/")
-                .Transaction(bundle);
+//            var tx = new TransactionBuilder("http://myserver.org/fhir/")
+//                .Transaction(bundle);
 
-            var b = tx.ToBundle();
-            Assert.IsFalse(b.Entry[0].Request.Url.EndsWith(@"/"), "Url cannot end with forward slash");
-        }
+//            var b = tx.ToBundle();
+//            Assert.IsFalse(b.Entry[0].Request.Url.EndsWith(@"/"), "Url cannot end with forward slash");
+//        }
 
-        [TestMethod]
-        public void TestTransactionWithAbsoluteUri()
-        {
-            var observation = new Observation
-            {
-                Status = ObservationStatus.Final,
-                Code = new CodeableConcept("http://loinc.org", "29463-7", "Body weight"),
-                Value = new Quantity(74, "kg")
-            };
+//        [TestMethod]
+//        public void TestTransactionWithAbsoluteUri()
+//        {
+//            var observation = new Observation
+//            {
+//                Status = ObservationStatus.Final,
+//                Code = new CodeableConcept("http://loinc.org", "29463-7", "Body weight"),
+//                Value = new Quantity(74, "kg")
+//            };
 
-            var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
+//            var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
 
-            var client = new FhirClient(endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json
-            };
+//            var client = new FhirClient(endpoint)
+//            {
+//                PreferredFormat = ResourceFormat.Json
+//            };
 
-            var transaction = new TransactionBuilder(client.Endpoint)
-                .Create(observation)
-                .Get("Patient/1");
-            var bundle = transaction.ToBundle();
-            bundle.Type = Bundle.BundleType.Transaction;
+//            var transaction = new TransactionBuilder(client.Endpoint)
+//                .Create(observation)
+//                .Get("Patient/1");
+//            var bundle = transaction.ToBundle();
+//            bundle.Type = Bundle.BundleType.Transaction;
 
-            Assert.AreEqual(2, bundle.Entry.Count);
-            Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
-            Assert.AreEqual(nameof(Observation), bundle.Entry[0].Request.Url, "Entry must be a relative url");
-        }
-    }
-}
+//            Assert.AreEqual(2, bundle.Entry.Count);
+//            Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
+//            Assert.AreEqual(nameof(Observation), bundle.Entry[0].Request.Url, "Entry must be a relative url");
+//        }
+//    }
+//}
