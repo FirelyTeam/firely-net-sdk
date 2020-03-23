@@ -57,26 +57,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("low", InSummary=true, Order=30)]
         [DataMember]
-        public Quantity Low
+        public Hl7.Fhir.Model.Quantity Low
         {
             get { return _Low; }
             set { _Low = value; OnPropertyChanged("Low"); }
         }
         
-        private Quantity _Low;
+        private Hl7.Fhir.Model.Quantity _Low;
         
         /// <summary>
         /// High limit
         /// </summary>
         [FhirElement("high", InSummary=true, Order=40)]
         [DataMember]
-        public Quantity High
+        public Hl7.Fhir.Model.Quantity High
         {
             get { return _High; }
             set { _High = value; OnPropertyChanged("High"); }
         }
         
-        private Quantity _High;
+        private Hl7.Fhir.Model.Quantity _High;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -86,8 +86,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Low != null) dest.Low = (Quantity)Low.DeepCopy();
-                if(High != null) dest.High = (Quantity)High.DeepCopy();
+                if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
+                if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
                 return dest;
             }
             else

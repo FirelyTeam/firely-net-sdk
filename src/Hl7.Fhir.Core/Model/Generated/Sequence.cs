@@ -804,13 +804,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("score", InSummary=true, Order=80)]
             [DataMember]
-            public Quantity Score
+            public Hl7.Fhir.Model.Quantity Score
             {
                 get { return _Score; }
                 set { _Score = value; OnPropertyChanged("Score"); }
             }
             
-            private Quantity _Score;
+            private Hl7.Fhir.Model.Quantity _Score;
             
             /// <summary>
             /// Method to get quality
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
                     if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopy();
                     if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
                     if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
-                    if(Score != null) dest.Score = (Quantity)Score.DeepCopy();
+                    if(Score != null) dest.Score = (Hl7.Fhir.Model.Quantity)Score.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(TruthTPElement != null) dest.TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)TruthTPElement.DeepCopy();
                     if(QueryTPElement != null) dest.QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)QueryTPElement.DeepCopy();
@@ -1626,13 +1626,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", InSummary=true, Order=160)]
         [DataMember]
-        public Quantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Quantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// A sequence used as reference
@@ -1781,7 +1781,7 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(ReferenceSeq != null) dest.ReferenceSeq = (Hl7.Fhir.Model.Sequence.ReferenceSeqComponent)ReferenceSeq.DeepCopy();
                 if(Variant != null) dest.Variant = new List<Hl7.Fhir.Model.Sequence.VariantComponent>(Variant.DeepCopy());
                 if(ObservedSeqElement != null) dest.ObservedSeqElement = (Hl7.Fhir.Model.FhirString)ObservedSeqElement.DeepCopy();

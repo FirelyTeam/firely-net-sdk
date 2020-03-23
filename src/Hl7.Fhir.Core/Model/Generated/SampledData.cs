@@ -58,13 +58,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("origin", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Quantity Origin
+        public Hl7.Fhir.Model.Quantity Origin
         {
             get { return _Origin; }
             set { _Origin = value; OnPropertyChanged("Origin"); }
         }
         
-        private Quantity _Origin;
+        private Hl7.Fhir.Model.Quantity _Origin;
         
         /// <summary>
         /// Number of milliseconds between samples
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Origin != null) dest.Origin = (Quantity)Origin.DeepCopy();
+                if(Origin != null) dest.Origin = (Hl7.Fhir.Model.Quantity)Origin.DeepCopy();
                 if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                 if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                 if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();

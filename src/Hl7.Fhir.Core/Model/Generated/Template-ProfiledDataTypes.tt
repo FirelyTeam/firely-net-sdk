@@ -85,6 +85,7 @@
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
+            if(resourceName == "SimpleQuantity") continue;
 			string resourceDescription = "";
 			string rawResourceName = resourceName;
 			string primitiveTypeName = null;

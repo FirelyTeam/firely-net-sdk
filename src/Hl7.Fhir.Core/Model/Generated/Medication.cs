@@ -367,13 +367,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Amount
+            public Hl7.Fhir.Model.Quantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Amount;
+            private Hl7.Fhir.Model.Quantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
                 else

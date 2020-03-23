@@ -440,13 +440,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("duration", Order=150)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Duration
+            public Hl7.Fhir.Model.Quantity Duration
             {
                 get { return _Duration; }
                 set { _Duration = value; OnPropertyChanged("Duration"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Duration;
+            private Hl7.Fhir.Model.Quantity _Duration;
             
             /// <summary>
             /// Color required
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
                     if(PowerElement != null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)PowerElement.DeepCopy();
                     if(BackCurveElement != null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)BackCurveElement.DeepCopy();
                     if(DiameterElement != null) dest.DiameterElement = (Hl7.Fhir.Model.FhirDecimal)DiameterElement.DeepCopy();
-                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.SimpleQuantity)Duration.DeepCopy();
+                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
                     if(ColorElement != null) dest.ColorElement = (Hl7.Fhir.Model.FhirString)ColorElement.DeepCopy();
                     if(BrandElement != null) dest.BrandElement = (Hl7.Fhir.Model.FhirString)BrandElement.DeepCopy();
                     if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());

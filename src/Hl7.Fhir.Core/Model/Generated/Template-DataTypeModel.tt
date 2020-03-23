@@ -887,29 +887,7 @@ if (!abstractType){
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									return "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									return "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									return "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									return "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : return "Hl7.Fhir.Model.Quantity";
             }
 			return propType;
         }
@@ -1081,28 +1059,7 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
 								break;
             }
 
@@ -1339,29 +1296,8 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
+							   break;
             }
 
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")

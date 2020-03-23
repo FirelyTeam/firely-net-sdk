@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, 17 Dec 2019 20:38:57 GMT for FHIR v3.0.2
+// Generated on Mon, 23 Mar 2020 23:24:30 GMT for FHIR v3.0.2
 //
 
 using Hl7.Fhir.Model;
@@ -216,14 +216,13 @@ namespace Hl7.Fhir.Model
                 { "ParameterDefinition", typeof(ParameterDefinition) },
                 { "Period", typeof(Hl7.Fhir.Model.Period) },
                 { "positiveInt", typeof(Hl7.Fhir.Model.PositiveInt) },
-                { "Quantity", typeof(Quantity) },
+                { "Quantity", typeof(Hl7.Fhir.Model.Quantity) },
                 { "Range", typeof(Hl7.Fhir.Model.Range) },
                 { "Ratio", typeof(Hl7.Fhir.Model.Ratio) },
                 { "Reference", typeof(Hl7.Fhir.Model.ResourceReference) },
                 { "RelatedArtifact", typeof(RelatedArtifact) },
                 { "SampledData", typeof(Hl7.Fhir.Model.SampledData) },
                 { "Signature", typeof(Hl7.Fhir.Model.Signature) },
-                { "SimpleQuantity", typeof(SimpleQuantity) },
                 { "string", typeof(Hl7.Fhir.Model.FhirString) },
                 { "time", typeof(Hl7.Fhir.Model.Time) },
                 { "Timing", typeof(Hl7.Fhir.Model.Timing) },
@@ -395,14 +394,13 @@ namespace Hl7.Fhir.Model
                 { typeof(ParameterDefinition), "ParameterDefinition" },
                 { typeof(Hl7.Fhir.Model.Period), "Period" },
                 { typeof(Hl7.Fhir.Model.PositiveInt), "positiveInt" },
-                { typeof(Quantity), "Quantity" },
+                { typeof(Hl7.Fhir.Model.Quantity), "Quantity" },
                 { typeof(Hl7.Fhir.Model.Range), "Range" },
                 { typeof(Hl7.Fhir.Model.Ratio), "Ratio" },
                 { typeof(Hl7.Fhir.Model.ResourceReference), "Reference" },
                 { typeof(RelatedArtifact), "RelatedArtifact" },
                 { typeof(Hl7.Fhir.Model.SampledData), "SampledData" },
                 { typeof(Hl7.Fhir.Model.Signature), "Signature" },
-                { typeof(SimpleQuantity), "SimpleQuantity" },
                 { typeof(Hl7.Fhir.Model.FhirString), "string" },
                 { typeof(Hl7.Fhir.Model.Time), "time" },
                 { typeof(Hl7.Fhir.Model.Timing), "Timing" },

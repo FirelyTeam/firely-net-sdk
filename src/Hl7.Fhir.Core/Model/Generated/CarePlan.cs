@@ -602,26 +602,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dailyAmount", Order=170)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity DailyAmount
+            public Hl7.Fhir.Model.Quantity DailyAmount
             {
                 get { return _DailyAmount; }
                 set { _DailyAmount = value; OnPropertyChanged("DailyAmount"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _DailyAmount;
+            private Hl7.Fhir.Model.Quantity _DailyAmount;
             
             /// <summary>
             /// How much to administer/supply/consume
             /// </summary>
             [FhirElement("quantity", Order=180)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Extra info describing activity to perform
@@ -674,8 +674,8 @@ namespace Hl7.Fhir.Model
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
-                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.SimpleQuantity)DailyAmount.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.Quantity)DailyAmount.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     return dest;
                 }
