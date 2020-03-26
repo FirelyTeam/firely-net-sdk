@@ -48,12 +48,13 @@ namespace Hl7.Fhir.Validation
             {
                 if (_snapshotGenerator == null)
                 {
-                    var resolver = Settings.ResourceResolver;
+                    var resolver = Settings.AsyncResourceResolver;
                     if (resolver != null)
                     {
                         SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings
                             ?? SnapshotGeneratorSettings.CreateDefault();
-                        _snapshotGenerator = new SnapshotGenerator(resolver as IResourceResolverAsync, settings);
+
+                        _snapshotGenerator = new SnapshotGenerator(resolver, settings);
                     }
 
                 }

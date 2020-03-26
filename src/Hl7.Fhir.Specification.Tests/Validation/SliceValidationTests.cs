@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -14,7 +15,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class SliceValidationTests : IClassFixture<ValidationFixture>
     {
         private readonly Xunit.Abstractions.ITestOutputHelper output;
-        private IResourceResolver _resolver;
+        private IResourceResolverAsync _resolver;
         private Validator _validator;
 
         public SliceValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = _resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.NotNull(sd);
             var snapgen = new SnapshotGenerator(_resolver);
-            snapgen.Update(sd);
+            Task.Run( () => snapgen.UpdateAsync(sd)).Wait();
 
             // sd.Snapshot.Element.Where(e => e.Path.EndsWith(".telecom")).Select(e=>e.Path + " : " + e.Name ?? "").ToArray()
 

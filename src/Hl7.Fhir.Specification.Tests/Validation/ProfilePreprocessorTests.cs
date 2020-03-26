@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             OperationOutcome GenerateSnapshot(StructureDefinition sd)
             {
-                generator.Update(sd);
+                Task.Run(() => generator.UpdateAsync(sd)).Wait();  // yeah, but this is just in a test
                 System.Diagnostics.Debug.WriteLine(sd.HasSnapshot);
                 return generator.Outcome ?? new OperationOutcome();
             }

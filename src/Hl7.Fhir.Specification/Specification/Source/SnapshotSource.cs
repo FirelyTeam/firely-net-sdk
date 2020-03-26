@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Ensures that resolved <see cref="StructureDefinition"/> resources have a snapshot component (re-generate on demand).
     /// </summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class SnapshotSource : IResourceResolver
+    public class SnapshotSource : IResourceResolverAsync
     {
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified snapshot generator instance.</summary>
         /// <param name="generator">A <see cref="SnapshotGenerator"/> instance.</param>
@@ -92,6 +92,9 @@ namespace Hl7.Fhir.Specification.Source
             }
             return res;
         }
+
+        public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

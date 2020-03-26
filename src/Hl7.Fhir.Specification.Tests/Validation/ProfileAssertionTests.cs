@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Tests
 {
     public class ValidationFixture
     {
-        public IResourceResolver Resolver { get; }
+        public IResourceResolverAsync Resolver { get; }
 
         public Validator Validator { get; }
         public ValidationFixture()
