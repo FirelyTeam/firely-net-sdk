@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdAsync(typeof(TResource).GetCollectionName(), id, includes, pageSize, revIncludes);
+            return SearchByIdAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdUsingPostAsync(typeof(TResource).GetCollectionName(), id, includes, pageSize, revIncludes);
+            return SearchByIdUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
         /// <summary>
