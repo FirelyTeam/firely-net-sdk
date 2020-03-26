@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -45,15 +46,37 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
+        public static async Task<StructureDefinition> FindStructureDefinitionAsync(this IResourceResolverAsync resolver, string uri, bool requireSnapshot = false)
+        {
+            var sd = await resolver.ResolveByCanonicalUriAsync(uri) as StructureDefinition;
+            if (sd == null) return null;
+
+            if (sd.Snapshot == null && requireSnapshot)
+                return null;
+
+            return sd;
+        }
+
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
             var url = ModelInfo.CanonicalUriForFhirCoreType(typename);
             return resolver.FindStructureDefinition(url);
         }
 
+        public static Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IResourceResolverAsync resolver, string typename)
+        {
+            var url = ModelInfo.CanonicalUriForFhirCoreType(typename);
+            return resolver.FindStructureDefinitionAsync(url);
+        }
+
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRDefinedType type)
         {
             return resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+        }
+
+        public static Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IResourceResolverAsync resolver, FHIRDefinedType type)
+        {
+            return resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type));
         }
 
         /// <summary>
@@ -89,13 +112,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
         /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
         /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, Code<FHIRDefinedType> typeCodeElement)
+        internal static async Task<StructureDefinition> GetStructureDefinitionForTypeCodeAsync(this IResourceResolverAsync resolver, Code<FHIRDefinedType> typeCodeElement)
         {
             StructureDefinition sd = null;
             var typeCode = typeCodeElement.Value;
             if (typeCode.HasValue)
             {
-                sd = resolver.FindStructureDefinitionForCoreType(typeCode.Value);
+                sd = await resolver.FindStructureDefinitionForCoreTypeAsync(typeCode.Value);
             }
             else
             {
@@ -103,7 +126,7 @@ namespace Hl7.Fhir.Specification.Source
                 var typeName = typeCodeElement.ObjectValue as string;
                 if (!string.IsNullOrEmpty(typeName))
                 {
-                    sd = resolver.FindStructureDefinitionForCoreType(typeName);
+                    sd = await resolver.FindStructureDefinitionForCoreTypeAsync(typeName);
                 }
             }
             return sd;
@@ -122,13 +145,14 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="resolver">A resource resolver instance.</param>
         /// <param name="type">A FHIR type.</param>
         /// <param name="profile">A StructureDefinition instance.</param>
-        public static bool IsValidTypeProfile(this IResourceResolver resolver, FHIRDefinedType? type, StructureDefinition profile)
+        public static Task<bool> IsValidTypeProfileAsync(this IResourceResolverAsync resolver, FHIRDefinedType? type, StructureDefinition profile)
         {
             if (resolver == null) { throw new ArgumentNullException(nameof(resolver)); }
-            return isValidTypeProfile(resolver, new HashSet<string>(), type, profile);
+            return isValidTypeProfileAsync(resolver, new HashSet<string>(), type, profile);
         }
 
-        static bool isValidTypeProfile(this IResourceResolver resolver, HashSet<string> recursionStack, FHIRDefinedType? type, StructureDefinition profile)
+
+        static async Task<bool> isValidTypeProfileAsync(this IResourceResolverAsync resolver, HashSet<string> recursionStack, FHIRDefinedType? type, StructureDefinition profile)
         {
             // Recursively walk up the base profile hierarchy until we find a profile on baseType
             if (type == null) { return true; }
@@ -141,7 +165,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (sdType == type) { return true; }
             if (profile.Base == null) { return false; }
-            var sdBase = resolver.FindStructureDefinition(profile.Base);
+            var sdBase = await resolver.FindStructureDefinitionAsync(profile.Base);
             if (sdBase == null) { return false; }
             if (sdBase.Url == null) { return false; } // Shouldn't happen...
 
@@ -153,7 +177,7 @@ namespace Hl7.Fhir.Specification.Source
                 );
             }
 
-            return isValidTypeProfile(resolver, recursionStack, type, sdBase);
+            return await isValidTypeProfileAsync(resolver, recursionStack, type, sdBase);
         }
 
         // Helper method to retrieve debugger display strings for well-known implementations

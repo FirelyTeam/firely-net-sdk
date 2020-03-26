@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Hl7.Fhir.Validation
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Validation
                     {
                         SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings
                             ?? SnapshotGeneratorSettings.CreateDefault();
-                        _snapshotGenerator = new SnapshotGenerator(resolver, settings);
+                        _snapshotGenerator = new SnapshotGenerator(resolver as IResourceResolverAsync, settings);
                     }
 
                 }
@@ -520,7 +521,7 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
-                generator.Update(definition);
+                Task.Run(() => generator.UpdateAsync(definition)).Wait();
 
 #if DEBUG
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);

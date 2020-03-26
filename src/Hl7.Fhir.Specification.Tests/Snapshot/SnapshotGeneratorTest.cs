@@ -22,6 +22,7 @@ using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Utility;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -33,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         SnapshotGenerator _generator;
-        IResourceResolver _testResolver;
+        IResourceResolverAsync _testResolver;
         TimingSource _source;
 
         readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
@@ -193,7 +194,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
-        public void TestFullyExpandCoreOrganization()
+        async Task TestFullyExpandCoreOrganization()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
@@ -206,7 +207,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = sd.Snapshot.Element;
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var expanded = fullyExpand(sd.Snapshot.Element, issues);
+            var expanded = await fullyExpandAsync(sd.Snapshot.Element, issues);
 
             Assert.IsNotNull(expanded);
             dumpBaseElems(expanded);
@@ -216,7 +217,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180115] NEW - Replacement for expandAllComplexElements (OBSOLETE)
         // Expand all elements with complex type and no children
-        IList<ElementDefinition> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues)
+        async Task<IList<ElementDefinition>> fullyExpandAsync(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues)
         {
             var nav = new ElementDefinitionNavigator(elements);
             // Skip root element
@@ -226,29 +227,29 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     _generator = new SnapshotGenerator(_testResolver, _settings);
                 }
-                fullyExpandElement(nav, issues);
+                await fullyExpandElementAsync(nav, issues);
                 return nav.Elements;
             }
             return elements;
         }
 
         // Expand current element if it has a complex type and no children (recursively)
-        void fullyExpandElement(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
+        async Task fullyExpandElementAsync(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
         {
-            if (nav.HasChildren || (isExpandableElement(nav.Current) && _generator.ExpandElement(nav)))
+            if (nav.HasChildren || (isExpandableElement(nav.Current) && await _generator.ExpandElementAsync(nav)))
             {
                 if (_generator.Outcome != null)
                 {
                     issues.AddRange(_generator.Outcome.Issue);
                 }
 
-                Debug.Print($"[{nameof(fullyExpand)}] " + nav.Path);
+                Debug.Print($"[{nameof(fullyExpandAsync)}] " + nav.Path);
                 var bm = nav.Bookmark();
                 if (nav.MoveToFirstChild())
                 {
                     do
                     {
-                        fullyExpandElement(nav, issues);
+                        await fullyExpandElementAsync(nav, issues);
                     } while (nav.MoveToNext());
                     Assert.IsTrue(nav.ReturnToBookmark(bm));
                 }
@@ -305,7 +306,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(52, snapElems.Count);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var fullElems = fullyExpand(snapElems, issues);
+            var fullElems = fullyExpandAsync(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             
@@ -359,7 +360,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(60, snapElems.Count);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var fullElems = fullyExpand(snapElems, issues);
+            var fullElems = fullyExpandAsync(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             Assert.AreEqual(331, fullElems.Count);
@@ -1136,7 +1137,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
             var orgId = elem.ElementId;
 
-            var result = _generator.ExpandElement(elems, elem);
+            var result = _generator.ExpandElementAsync(elems, elem);
 
             dumpOutcome(_generator.Outcome);
             Assert.IsNull(_generator.Outcome);
@@ -3001,7 +3002,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             if (expandAll)
             {
-                elems = fullyExpand(elems, issues).ToList();
+                elems = fullyExpandAsync(elems, issues).ToList();
                 Debug.WriteLine($"Fully expanded: {elems.Count} elements");
             }
 
@@ -3279,7 +3280,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var elems = expanded.Snapshot.Element;
             issues = new List<OperationOutcome.IssueComponent>();
-            elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+            elems = expanded.Snapshot.Element = fullyExpandAsync(elems, issues).ToList();
             Debug.WriteLine($"Fully expanded: {elems.Count} elements");
 
             expanded.Snapshot.Element.Dump();
@@ -4258,7 +4259,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Force expansion of Patient.deceased[x]
             var nav = ElementDefinitionNavigator.ForDifferential(profile);
             Assert.IsTrue(nav.MoveToFirstChild());
-            var result = _generator.ExpandElement(nav);
+            var result = _generator.ExpandElementAsync(nav);
             profile.Differential.Element.Dump();
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(result);
@@ -4329,7 +4330,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             issues = new List<OperationOutcome.IssueComponent>();
             var elems = expanded.Snapshot.Element;
-            elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+            elems = expanded.Snapshot.Element = fullyExpandAsync(elems, issues).ToList();
             // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
             Assert.AreEqual(1, issues.Count);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
@@ -5062,7 +5063,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                elems = fullyExpand(elems, issues).ToList();
+                elems = fullyExpandAsync(elems, issues).ToList();
                 Assert.AreEqual(0, issues.Count);
 
                 // Verify that Bundle.entry.resource : List was properly expanded
@@ -5568,7 +5569,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.HasChildren);
 
             // Explicitly expand children of element DiagnosticReport.imagingStudy
-            Assert.IsTrue(generator.ExpandElement(nav));
+            Assert.IsTrue(generator.ExpandElementAsync(nav));
             Assert.IsTrue(nav.HasChildren);
             Assert.IsTrue(nav.MoveToChild("reference"));
             Assert.IsNotNull(nav.Current);

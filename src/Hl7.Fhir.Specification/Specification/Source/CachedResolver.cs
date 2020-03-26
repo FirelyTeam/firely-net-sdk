@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Specification.Source
 
     /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CachedResolver : IResourceResolver
+    public class CachedResolver : IResourceResolverAsync
     {
         /// <summary>Default expiration time for cached entries.</summary>
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
@@ -166,6 +167,9 @@ namespace Hl7.Fhir.Specification.Source
             OnLoad(url, resource);
             return resource;
         }
+
+        public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

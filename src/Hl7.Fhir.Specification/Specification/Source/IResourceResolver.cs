@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
@@ -20,6 +21,16 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         Resource ResolveByCanonicalUri(string uri); // IConformanceResource
+    }
+
+    public interface IResourceResolverAsync : IResourceResolver
+    {
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        Task<Resource> ResolveByUriAsync(string uri);
+
+
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        Task<Resource> ResolveByCanonicalUriAsync(string uri); // IConformanceResource
     }
 
 }
