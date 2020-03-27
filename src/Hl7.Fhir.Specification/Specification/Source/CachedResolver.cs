@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -41,15 +42,19 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
-            Source = source ?? throw Error.ArgumentNull(nameof(source));
+            if (source is IResourceResolverAsync asyncResolver)
+                Source = asyncResolver ?? throw Error.ArgumentNull(nameof(source));
+            else
+                throw new NotSupportedException();
+
             CacheDuration = cacheDuration;
 
-            _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
-            _resourcesByCanonical = new Cache<Resource>(id => InternalResolveByCanonicalUri(id), CacheDuration);
+            _resourcesByUri = new Cache<Resource>(id => InternalResolveByUriAsync(id), CacheDuration);
+            _resourcesByCanonical = new Cache<Resource>(id => InternalResolveByCanonicalUriAsync(id), CacheDuration);
         }
 
         /// <summary>Returns a reference to the internal artifact source.</summary>
-        public IResourceResolver Source { get; }
+        public IResourceResolverAsync Source { get; }
 
         /// <summary>Gets the default expiration time of a cache entry.</summary>
         public int CacheDuration { get; }
@@ -58,20 +63,25 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="url">The url of the target artifact.</param>
         /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public Resource ResolveByUri(string url)
+        public Resource ResolveByUri(string url) =>
+            Task.Run(() => ResolveByUriAsync(url)).Result;
+
+        public async Task<Resource> ResolveByUriAsync(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
+            return await _resourcesByUri.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
         }
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
         /// <param name="url">The canonical url of the target conformance resource.</param>
         /// <returns>A conformance <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public Resource ResolveByCanonicalUri(string url)
+        public Resource ResolveByCanonicalUri(string url) => Task.Run(() => ResolveByCanonicalUriAsync(url)).Result;
+
+        public async Task<Resource> ResolveByCanonicalUriAsync(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
+            return await _resourcesByCanonical.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
         }
 
         /// <summary>Retrieve the artifact with the specified url.</summary>
@@ -79,10 +89,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="strategy">Option flag to control the loading strategy.</param>
         /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public Resource ResolveByUri(string url, CachedResolverLoadingStrategy strategy)
+        public Resource ResolveByUri(string url, CachedResolverLoadingStrategy strategy) => Task.Run(() => ResolveByUriAsync(url,strategy)).Result;
+        public async Task<Resource> ResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, strategy);
+            return await _resourcesByUri.Get(url, strategy);
         }
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
@@ -90,10 +101,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="strategy">Option flag to control the loading strategy.</param>
         /// <returns>A conformance <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public Resource ResolveByCanonicalUri(string url, CachedResolverLoadingStrategy strategy)
+        public Resource ResolveByCanonicalUri(string url, CachedResolverLoadingStrategy strategy) => 
+            Task.Run(() => ResolveByCanonicalUriAsync(url, strategy)).Result;
+
+        public async Task<Resource> ResolveByCanonicalUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, strategy);
+            return await _resourcesByCanonical.Get(url, strategy);
         }
 
         /// <summary>Clear the cache entry for the artifact with the specified url, if it exists.</summary>
@@ -154,22 +168,19 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Called when an artifact is loaded into the cache.</summary>
         protected virtual void OnLoad(string url, Resource resource) => Load?.Invoke(this, new LoadResourceEventArgs(url, resource));
 
-        Resource InternalResolveByUri(string url)
+        internal async Task<Resource> InternalResolveByUriAsync(string url)
         {
-            var resource = Source.ResolveByUri(url);
+            var resource = await Source.ResolveByUriAsync(url);
             OnLoad(url, resource);
             return resource;
         }
 
-        Resource InternalResolveByCanonicalUri(string url)
+        internal async Task<Resource> InternalResolveByCanonicalUriAsync(string url)
         {
-            var resource = Source.ResolveByCanonicalUri(url);
+            var resource = await Source.ResolveByCanonicalUriAsync(url);
             OnLoad(url, resource);
             return resource;
         }
-
-        public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
-        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -180,28 +191,26 @@ namespace Hl7.Fhir.Specification.Source
 
         private class Cache<T>
         {
-            readonly Func<string,T> _onCacheMiss;
+            readonly Func<string, Task<T>> _onCacheMiss;
             readonly int _duration;
 
             readonly Object _getLock = new Object();
             readonly Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
-            public Cache(Func<string,T> onCacheMiss, int duration)
+            public Cache(Func<string, Task<T>> onCacheMiss, int duration)
             {
                 _onCacheMiss = onCacheMiss;
                 _duration = duration;
             }
 
-            public T Get(string identifier, CachedResolverLoadingStrategy strategy)
+            public async Task<T> Get(string identifier, CachedResolverLoadingStrategy strategy)
             {
                 lock (_getLock)
                 {
-                    var cache = _cache;
-
                     // Check the cache
                     if (strategy != CachedResolverLoadingStrategy.LoadFromSource)
                     {
-                        if (cache.TryGetValue(identifier, out CacheEntry<T> entry))
+                        if (_cache.TryGetValue(identifier, out CacheEntry<T> entry))
                         {
                             // If we still have a fresh entry, return it
                             if (!entry.IsExpired)
@@ -210,24 +219,33 @@ namespace Hl7.Fhir.Specification.Source
                             }
 
                             // Remove entry if it's too old
-                            cache.Remove(identifier);
+                            _cache.Remove(identifier);
                         }
                     }
-
-                    // Load from source
-                    if (strategy != CachedResolverLoadingStrategy.LoadFromCache)
-                    {
-                        // Otherwise, fetch it and cache it.
-                        T newData = _onCacheMiss(identifier);
-
-                        // Add new entry or update existing entry
-                        cache[identifier] = new CacheEntry<T>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
-
-                        return newData;
-                    }
-
-                    return default(T);
                 }
+
+                // Load from source
+                if (strategy != CachedResolverLoadingStrategy.LoadFromCache)
+                {
+                    // Otherwise, fetch it and cache it.
+                    T newData = await _onCacheMiss(identifier);
+
+                    lock (_getLock)
+                    {
+                        // finally double check whether some other thread has not created and added it by now, 
+                        // since we had to release the lock to run the async onCacheMiss.
+                        if (_cache.TryGetValue(identifier, out CacheEntry<T> existingEntry))
+                            return existingEntry.Data;
+                        else
+                        {
+                            // Add new entry or update existing entry
+                            _cache[identifier] = new CacheEntry<T>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
+                            return newData;
+                        }
+                    }
+                }
+
+                return default(T);
             }
 
             public bool Invalidate(string identifier)
