@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Guidance or advice relating to an immunization
     /// </summary>
-    [FhirType("ImmunizationRecommendation", IsResource=true)]
+    [FhirType("ImmunizationRecommendation")]
     [DataContract]
-    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ImmunizationRecommendation; } }
-        [NotMapped]
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
         [FhirType("RecommendationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RecommendationComponent"; } }
             
             /// <summary>
@@ -162,7 +158,6 @@ namespace Hl7.Fhir.Model
             /// Protocol details
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -194,7 +189,6 @@ namespace Hl7.Fhir.Model
             /// Name of vaccination series
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Series
             {
@@ -346,7 +340,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -367,7 +360,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -394,9 +386,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DateCriterionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DateCriterionComponent"; } }
             
             /// <summary>
@@ -431,7 +422,6 @@ namespace Hl7.Fhir.Model
             /// Recommended date
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Value
             {
@@ -491,7 +481,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -502,7 +491,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -565,7 +553,6 @@ namespace Hl7.Fhir.Model
         /// Date recommendation(s) created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -610,21 +597,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
 
-        public static ElementDefinition.ConstraintComponent ImmunizationRecommendation_IMR_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "recommendation.all(vaccineCode.exists() or targetDisease.exists())",
-            Key = "imr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "One of vaccineCode or targetDisease SHALL be present",
-            Xpath = "exists(f:vaccineCode) or exists(f:targetDisease)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ImmunizationRecommendation_IMR_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -679,7 +651,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -693,7 +664,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

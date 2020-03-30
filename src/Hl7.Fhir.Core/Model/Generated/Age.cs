@@ -47,7 +47,6 @@ namespace Hl7.Fhir.Model
     [FhirType("Age")]
     public partial class Age : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "Age"; } }
         
         public override IDeepCopyable DeepCopy()

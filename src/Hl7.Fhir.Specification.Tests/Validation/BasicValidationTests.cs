@@ -1087,8 +1087,8 @@ namespace Hl7.Fhir.Specification.Tests
             // this should not trigger rng-2
             instance.Value = new Range()
             {
-                Low = new SimpleQuantity() { Value = 5, Code = "kg", System = "ucum.org" },
-                High = new SimpleQuantity() { Value = 4, Code = "kg", System = "ucum.org" },
+                Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
+                High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
             };
 
             var report = _validator.Validate(instance, def);

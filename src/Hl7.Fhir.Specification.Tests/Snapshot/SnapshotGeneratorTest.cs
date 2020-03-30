@@ -6423,7 +6423,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition("Observation.component.referenceRange.low")
                         {
                             Min = 1,
-                            Fixed = new SimpleQuantity()
+                            Fixed = new Quantity()
                             {
                                 Value = 1.0m
                             }
@@ -6457,7 +6457,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, nav.Current.Min);
             // Verify inherited fixed value constraint { fixedDecimal = 1.0 }
             Assert.IsNotNull(nav.Current.Fixed);
-            var q = nav.Current.Fixed as SimpleQuantity;
+            var q = nav.Current.Fixed as Quantity;
             Assert.IsNotNull(q);
             Assert.AreEqual(1.0m, q.Value);
         }

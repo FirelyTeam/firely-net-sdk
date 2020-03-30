@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MedicinalProductContraindication
     /// </summary>
-    [FhirType("MedicinalProductContraindication", IsResource=true)]
+    [FhirType("MedicinalProductContraindication")]
     [DataContract]
-    public partial class MedicinalProductContraindication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductContraindication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductContraindication; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductContraindication"; } }
         
         [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OtherTherapyComponent"; } }
             
             /// <summary>
@@ -137,7 +133,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -148,7 +143,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -264,11 +258,6 @@ namespace Hl7.Fhir.Model
         private List<Population> _Population;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -329,7 +318,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -345,7 +333,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

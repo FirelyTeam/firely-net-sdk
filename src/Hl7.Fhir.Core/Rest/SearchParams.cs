@@ -201,7 +201,6 @@ namespace Hl7.Fhir.Rest
         /// Gets or sets the special _query search parameter which asks the server to run a 
         /// specific named query instead of the standard FHIR search.
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Query { get; set; }
 
@@ -210,7 +209,6 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Gets or sets the special _text search parameter which which search on the narrative of the resource. 
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text{ get; set; }
 
@@ -220,7 +218,6 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Gets or sets the special _text search parameter which which search on the entire content of the resource.
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Content{ get; set; }
 
@@ -234,7 +231,6 @@ namespace Hl7.Fhir.Rest
         /// <remark>The number of resources returned from the search may exceed this
         /// parameter, since additional _included resources for the matches are returned
         /// as well</remark>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Count { get; set; }
 
@@ -245,7 +241,6 @@ namespace Hl7.Fhir.Rest
         /// the server will not return all elements in each matching resource, but just
         /// the most important ones.
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public SummaryType? Summary { get; set; }
 
@@ -256,7 +251,6 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Gets or sets the special _filter search parameter to supply an advanced query expression
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Filter { get; set; }
 
@@ -271,7 +265,6 @@ namespace Hl7.Fhir.Rest
         /// Gets or sets the _sort parameter, to modify the sort order of the search result.
         /// Uses a tuple (name, sortorder).
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IList<Tuple<string, SortOrder>> Sort { get; private set; }
 
@@ -282,28 +275,24 @@ namespace Hl7.Fhir.Rest
         /// Returns a modifiable collection of _include parameters. These are used to include
         /// resources in the search result that the matched resources refer to.
         /// </summary>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IList<string> Include { get; private set; }
 
 
         public const string SEARCH_PARAM_REVINCLUDE = "_revinclude";
 
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IList<string> RevInclude { get; private set; }
 
 
         public const string SEARCH_PARAM_CONTAINED = "_contained";
 
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public ContainedSearch? Contained { get; private set; }
 
 
         public const string SEARCH_PARAM_CONTAINEDTYPE = "_containedType";
 
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public ContainedResult? ContainedType { get; private set; }
 

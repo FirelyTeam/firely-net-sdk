@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of an operation or a named query
     /// </summary>
-    [FhirType("OperationDefinition", IsResource=true)]
+    [FhirType("OperationDefinition")]
     [DataContract]
-    public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.OperationDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "OperationDefinition"; } }
         
         /// <summary>
@@ -78,9 +75,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
@@ -101,7 +97,6 @@ namespace Hl7.Fhir.Model
             /// Name in Parameters.parameter.name or in URL
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -134,7 +129,6 @@ namespace Hl7.Fhir.Model
             /// in | out
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.OperationParameterUse? Use
             {
@@ -167,7 +161,6 @@ namespace Hl7.Fhir.Model
             /// Minimum Cardinality
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Min
             {
@@ -200,7 +193,6 @@ namespace Hl7.Fhir.Model
             /// Maximum Cardinality (a number or *)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Max
             {
@@ -232,7 +224,6 @@ namespace Hl7.Fhir.Model
             /// Description of meaning/use
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Documentation
             {
@@ -264,7 +255,6 @@ namespace Hl7.Fhir.Model
             /// What type this parameter has
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.FHIRAllTypes? Type
             {
@@ -297,7 +287,6 @@ namespace Hl7.Fhir.Model
             /// If type is Reference | canonical, allowed targets
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> TargetProfile
             {
@@ -329,7 +318,6 @@ namespace Hl7.Fhir.Model
             /// number | date | string | token | reference | composite | quantity | uri | special
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.SearchParamType? SearchType
             {
@@ -457,7 +445,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -477,7 +464,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -503,9 +489,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BindingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "BindingComponent"; } }
             
             /// <summary>
@@ -526,7 +511,6 @@ namespace Hl7.Fhir.Model
             /// required | extensible | preferred | example
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.BindingStrength? Strength
             {
@@ -559,7 +543,6 @@ namespace Hl7.Fhir.Model
             /// Source of value set
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ValueSet
             {
@@ -619,7 +602,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -630,7 +612,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -647,9 +628,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ReferencedFromComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ReferencedFromComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferencedFromComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReferencedFromComponent"; } }
             
             /// <summary>
@@ -670,7 +650,6 @@ namespace Hl7.Fhir.Model
             /// Referencing parameter
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Source
             {
@@ -702,7 +681,6 @@ namespace Hl7.Fhir.Model
             /// Element id of reference
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SourceId
             {
@@ -762,7 +740,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -773,7 +750,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -790,9 +766,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OverloadComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OverloadComponent"; } }
             
             /// <summary>
@@ -813,7 +788,6 @@ namespace Hl7.Fhir.Model
             /// Name of parameter to include in overload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> ParameterName
             {
@@ -845,7 +819,6 @@ namespace Hl7.Fhir.Model
             /// Comments to go on overload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
             {
@@ -905,7 +878,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -916,7 +888,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -948,7 +919,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this operation definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -980,7 +950,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the operation definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1013,7 +982,6 @@ namespace Hl7.Fhir.Model
         /// Name for this operation definition (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1045,7 +1013,6 @@ namespace Hl7.Fhir.Model
         /// Name for this operation definition (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1078,7 +1045,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1111,7 +1077,6 @@ namespace Hl7.Fhir.Model
         /// operation | query
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.OperationDefinition.OperationKind? Kind
         {
@@ -1143,7 +1108,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1175,7 +1139,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1207,7 +1170,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1307,7 +1269,6 @@ namespace Hl7.Fhir.Model
         /// Whether content is changed by the operation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? AffectsState
         {
@@ -1340,7 +1301,6 @@ namespace Hl7.Fhir.Model
         /// Name used to invoke the operation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Code
         {
@@ -1385,7 +1345,6 @@ namespace Hl7.Fhir.Model
         /// Marks this as a profile of the base
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Base
         {
@@ -1418,7 +1377,6 @@ namespace Hl7.Fhir.Model
         /// Types this operation applies to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ResourceType?> Resource
         {
@@ -1451,7 +1409,6 @@ namespace Hl7.Fhir.Model
         /// Invoke at the system level?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? System
         {
@@ -1484,7 +1441,6 @@ namespace Hl7.Fhir.Model
         /// Invoke at the type level?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Type
         {
@@ -1517,7 +1473,6 @@ namespace Hl7.Fhir.Model
         /// Invoke on an instance?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Instance
         {
@@ -1549,7 +1504,6 @@ namespace Hl7.Fhir.Model
         /// Validation information for in parameters
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string InputProfile
         {
@@ -1581,7 +1535,6 @@ namespace Hl7.Fhir.Model
         /// Validation information for out parameters
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string OutputProfile
         {
@@ -1625,51 +1578,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> _Overload;
         
 
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "opd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(type.exists() or part.exists())",
-            Key = "opd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a type must be provided, or parts",
-            Xpath = "exists(f:type) or exists(f:part)"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(searchType.exists() implies type = 'string')",
-            Key = "opd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A search type can only be specified for parameters of type string",
-            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
-        };
-
-        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "parameter.all(targetProfile.exists() implies (type = 'Reference' or type = 'canonical'))",
-            Key = "opd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A targetProfile can only be specified for parameters of type Reference or Canonical",
-            Xpath = "not(exists(f:targetProfile)) or ((f:type/@value = 'Reference') or (f:type/@value = 'canonical'))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(OperationDefinition_OPD_0);
-            InvariantConstraints.Add(OperationDefinition_OPD_1);
-            InvariantConstraints.Add(OperationDefinition_OPD_2);
-            InvariantConstraints.Add(OperationDefinition_OPD_3);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1787,7 +1695,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1822,7 +1729,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

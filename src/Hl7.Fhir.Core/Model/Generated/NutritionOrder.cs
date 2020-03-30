@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Diet, formula or nutritional supplement request
     /// </summary>
-    [FhirType("NutritionOrder", IsResource=true)]
+    [FhirType("NutritionOrder")]
     [DataContract]
-    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.NutritionOrder; } }
-        [NotMapped]
         public override string TypeName { get { return "NutritionOrder"; } }
         
         [FhirType("OralDietComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OralDietComponent"; } }
             
             /// <summary>
@@ -149,7 +145,6 @@ namespace Hl7.Fhir.Model
             /// Instructions or additional information about the oral diet
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Instruction
             {
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -236,7 +230,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -257,9 +250,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NutrientComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "NutrientComponent"; } }
             
             /// <summary>
@@ -280,13 +272,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Amount
+            public Hl7.Fhir.Model.Quantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Amount;
+            private Hl7.Fhir.Model.Quantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -296,7 +288,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -333,7 +325,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -344,7 +335,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -361,9 +351,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TextureComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TextureComponent"; } }
             
             /// <summary>
@@ -437,7 +426,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -448,7 +436,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -465,9 +452,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SupplementComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SupplementComponent"; } }
             
             /// <summary>
@@ -500,7 +486,6 @@ namespace Hl7.Fhir.Model
             /// Product or brand name of the nutritional supplement
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ProductName
             {
@@ -534,13 +519,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Instructions or additional information about the oral supplement
@@ -559,7 +544,6 @@ namespace Hl7.Fhir.Model
             /// Instructions or additional information about the oral supplement
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Instruction
             {
@@ -584,7 +568,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopy();
                     if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
                 }
@@ -628,7 +612,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -642,7 +625,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -662,9 +644,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EnteralFormulaComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EnteralFormulaComponent"; } }
             
             /// <summary>
@@ -697,7 +678,6 @@ namespace Hl7.Fhir.Model
             /// Product or brand name of the enteral or infant formula
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string BaseFormulaProductName
             {
@@ -742,7 +722,6 @@ namespace Hl7.Fhir.Model
             /// Product or brand name of the modular additive
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AdditiveProductName
             {
@@ -762,13 +741,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("caloricDensity", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity CaloricDensity
+            public Hl7.Fhir.Model.Quantity CaloricDensity
             {
                 get { return _CaloricDensity; }
                 set { _CaloricDensity = value; OnPropertyChanged("CaloricDensity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _CaloricDensity;
+            private Hl7.Fhir.Model.Quantity _CaloricDensity;
             
             /// <summary>
             /// How the formula should enter the patient's gastrointestinal tract
@@ -802,13 +781,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("maxVolumeToDeliver", Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity MaxVolumeToDeliver
+            public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
             {
                 get { return _MaxVolumeToDeliver; }
                 set { _MaxVolumeToDeliver = value; OnPropertyChanged("MaxVolumeToDeliver"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _MaxVolumeToDeliver;
+            private Hl7.Fhir.Model.Quantity _MaxVolumeToDeliver;
             
             /// <summary>
             /// Formula feeding instructions expressed as text
@@ -827,7 +806,6 @@ namespace Hl7.Fhir.Model
             /// Formula feeding instructions expressed as text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AdministrationInstruction
             {
@@ -853,10 +831,10 @@ namespace Hl7.Fhir.Model
                     if(BaseFormulaProductNameElement != null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaProductNameElement.DeepCopy();
                     if(AdditiveType != null) dest.AdditiveType = (Hl7.Fhir.Model.CodeableConcept)AdditiveType.DeepCopy();
                     if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
-                    if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.SimpleQuantity)CaloricDensity.DeepCopy();
+                    if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
                     if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(Administration.DeepCopy());
-                    if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.SimpleQuantity)MaxVolumeToDeliver.DeepCopy();
+                    if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)MaxVolumeToDeliver.DeepCopy();
                     if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionElement.DeepCopy();
                     return dest;
                 }
@@ -908,7 +886,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -926,7 +903,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -950,9 +926,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AdministrationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AdministrationComponent"; } }
             
             /// <summary>
@@ -973,13 +948,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Speed with which the formula is provided per period of time
@@ -1004,7 +979,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     return dest;
                 }
@@ -1044,7 +1019,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1056,7 +1030,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1104,7 +1077,6 @@ namespace Hl7.Fhir.Model
         /// Instantiates FHIR protocol or definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> InstantiatesCanonical
         {
@@ -1137,7 +1109,6 @@ namespace Hl7.Fhir.Model
         /// Instantiates external protocol or definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> InstantiatesUri
         {
@@ -1170,7 +1141,6 @@ namespace Hl7.Fhir.Model
         /// Instantiates protocol or definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Instantiates
         {
@@ -1203,7 +1173,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestStatus? Status
         {
@@ -1236,7 +1205,6 @@ namespace Hl7.Fhir.Model
         /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestIntent? Intent
         {
@@ -1300,7 +1268,6 @@ namespace Hl7.Fhir.Model
         /// Date and time the nutrition order was requested
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateTime
         {
@@ -1429,21 +1396,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "oralDiet.exists() or supplement.exists() or enteralFormula.exists()",
-            Key = "nor-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
-            Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(NutritionOrder_NOR_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1534,7 +1486,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1560,7 +1511,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

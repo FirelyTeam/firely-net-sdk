@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource that describes a message that is exchanged between systems
     /// </summary>
-    [FhirType("MessageHeader", IsResource=true)]
+    [FhirType("MessageHeader")]
     [DataContract]
-    public partial class MessageHeader : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MessageHeader : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MessageHeader; } }
-        [NotMapped]
         public override string TypeName { get { return "MessageHeader"; } }
         
         /// <summary>
@@ -84,9 +81,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MessageDestinationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MessageDestinationComponent"; } }
             
             /// <summary>
@@ -106,7 +102,6 @@ namespace Hl7.Fhir.Model
             /// Name of system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -154,7 +149,6 @@ namespace Hl7.Fhir.Model
             /// Actual destination address or id
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Endpoint
             {
@@ -235,7 +229,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -248,7 +241,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -267,9 +259,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MessageSourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MessageSourceComponent"; } }
             
             /// <summary>
@@ -289,7 +280,6 @@ namespace Hl7.Fhir.Model
             /// Name of system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -321,7 +311,6 @@ namespace Hl7.Fhir.Model
             /// Name of software running the system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Software
             {
@@ -353,7 +342,6 @@ namespace Hl7.Fhir.Model
             /// Version of software running
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
             {
@@ -399,7 +387,6 @@ namespace Hl7.Fhir.Model
             /// Actual message source address or id
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Endpoint
             {
@@ -468,7 +455,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -482,7 +468,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -502,9 +487,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResponseComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
@@ -525,7 +509,6 @@ namespace Hl7.Fhir.Model
             /// Id of original message
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identifier
             {
@@ -558,7 +541,6 @@ namespace Hl7.Fhir.Model
             /// ok | transient-error | fatal-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
             {
@@ -636,7 +618,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -648,7 +629,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -827,7 +807,6 @@ namespace Hl7.Fhir.Model
         /// Link to the definition for this message
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Definition
         {
@@ -843,11 +822,6 @@ namespace Hl7.Fhir.Model
         }
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -920,7 +894,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -940,7 +913,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

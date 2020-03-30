@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Quantity")]
     [DataContract]
-    public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Quantity : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Quantity"; } }
         
         /// <summary>
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
         /// Numerical value (with implicit precision)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Value
         {
@@ -135,7 +133,6 @@ namespace Hl7.Fhir.Model
         /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Quantity.QuantityComparator? Comparator
         {
@@ -167,7 +164,6 @@ namespace Hl7.Fhir.Model
         /// Unit representation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Unit
         {
@@ -199,7 +195,6 @@ namespace Hl7.Fhir.Model
         /// System that defines coded unit form
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string System
         {
@@ -231,7 +226,6 @@ namespace Hl7.Fhir.Model
         /// Coded form of the unit
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Code
         {
@@ -300,7 +294,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -314,7 +307,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

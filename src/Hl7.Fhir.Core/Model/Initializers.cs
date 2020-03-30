@@ -140,26 +140,6 @@ namespace Hl7.Fhir.Model
         }
     }
 
-    public partial class Coding
-    {
-        public Coding()
-        {
-        }
-
-        public Coding(string system, string code)
-        {
-            this.System = system;
-            this.Code = code;
-        }
-
-        public Coding(string system, string code, string display)
-        {
-            this.System = system;
-            this.Code = code;
-            this.Display = display;
-        }
-    }
-
     public partial class Identifier
     {
         public Identifier()
@@ -187,7 +167,6 @@ namespace Hl7.Fhir.Model
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
         internal string DebuggerDisplay
         {
             get

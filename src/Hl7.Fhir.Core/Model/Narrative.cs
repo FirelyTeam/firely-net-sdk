@@ -50,7 +50,6 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
-        [NotMapped]
         public override string TypeName { get { return "Narrative"; } }
         
         /// <summary>
@@ -104,7 +103,6 @@ namespace Hl7.Fhir.Model
         /// generated | extensions | additional | empty
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
         {
@@ -178,7 +176,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -191,7 +188,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

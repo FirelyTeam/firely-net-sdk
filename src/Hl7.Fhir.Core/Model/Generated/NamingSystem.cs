@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// System of unique identification
     /// </summary>
-    [FhirType("NamingSystem", IsResource=true)]
+    [FhirType("NamingSystem")]
     [DataContract]
-    public partial class NamingSystem : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.NamingSystem; } }
-        [NotMapped]
         public override string TypeName { get { return "NamingSystem"; } }
         
         /// <summary>
@@ -117,9 +114,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("UniqueIdComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "UniqueIdComponent"; } }
             
             /// <summary>
@@ -140,7 +136,6 @@ namespace Hl7.Fhir.Model
             /// oid | uuid | uri | other
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType? Type
             {
@@ -173,7 +168,6 @@ namespace Hl7.Fhir.Model
             /// The unique identifier
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Value
             {
@@ -205,7 +199,6 @@ namespace Hl7.Fhir.Model
             /// Is this the id that should be used for this type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Preferred
             {
@@ -237,7 +230,6 @@ namespace Hl7.Fhir.Model
             /// Notes about identifier usage
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
             {
@@ -319,7 +311,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -333,7 +324,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -369,7 +359,6 @@ namespace Hl7.Fhir.Model
         /// Name for this naming system (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -402,7 +391,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -435,7 +423,6 @@ namespace Hl7.Fhir.Model
         /// codesystem | identifier | root
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.NamingSystem.NamingSystemType? Kind
         {
@@ -468,7 +455,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -500,7 +486,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -546,7 +531,6 @@ namespace Hl7.Fhir.Model
         /// Who maintains system namespace?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Responsible
         {
@@ -632,7 +616,6 @@ namespace Hl7.Fhir.Model
         /// How/where is it used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Usage
         {
@@ -662,41 +645,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
 
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "kind != 'root' or uniqueId.all(type != 'uuid')",
-            Key = "nsd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Root systems cannot have uuid identifiers",
-            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "nsd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
-            Key = "nsd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can't have more than one preferred identifier for a type",
-            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(NamingSystem_NSD_1);
-            InvariantConstraints.Add(NamingSystem_NSD_0);
-            InvariantConstraints.Add(NamingSystem_NSD_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -775,7 +723,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -797,7 +744,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

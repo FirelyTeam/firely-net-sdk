@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A quality measure definition
     /// </summary>
-    [FhirType("Measure", IsResource=true)]
+    [FhirType("Measure")]
     [DataContract]
-    public partial class Measure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Measure : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Measure; } }
-        [NotMapped]
         public override string TypeName { get { return "Measure"; } }
         
         [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
@@ -92,7 +88,6 @@ namespace Hl7.Fhir.Model
             /// Summary description
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -186,7 +181,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -199,7 +193,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -218,9 +211,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
             
             /// <summary>
@@ -253,7 +245,6 @@ namespace Hl7.Fhir.Model
             /// The human readable description of this population criteria
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -330,7 +321,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -342,7 +332,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -360,9 +349,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StratifierComponent"; } }
             
             /// <summary>
@@ -395,7 +383,6 @@ namespace Hl7.Fhir.Model
             /// The human readable description of this stratifier
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -488,7 +475,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -501,7 +487,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -520,9 +505,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
             
             /// <summary>
@@ -555,7 +539,6 @@ namespace Hl7.Fhir.Model
             /// The human readable description of this stratifier component
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -632,7 +615,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -644,7 +626,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -662,9 +643,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SupplementalDataComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SupplementalDataComponent"; } }
             
             /// <summary>
@@ -711,7 +691,6 @@ namespace Hl7.Fhir.Model
             /// The human readable description of this supplemental data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -791,7 +770,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -804,7 +782,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -838,7 +815,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this measure, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -884,7 +860,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -916,7 +891,6 @@ namespace Hl7.Fhir.Model
         /// Name for this measure (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -948,7 +922,6 @@ namespace Hl7.Fhir.Model
         /// Name for this measure (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -980,7 +953,6 @@ namespace Hl7.Fhir.Model
         /// Subordinate title of the measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Subtitle
         {
@@ -1013,7 +985,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1045,7 +1016,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1092,7 +1062,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1124,7 +1093,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1224,7 +1192,6 @@ namespace Hl7.Fhir.Model
         /// Describes the clinical usage of the measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Usage
         {
@@ -1269,7 +1236,6 @@ namespace Hl7.Fhir.Model
         /// When the measure was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ApprovalDate
         {
@@ -1301,7 +1267,6 @@ namespace Hl7.Fhir.Model
         /// When the measure was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastReviewDate
         {
@@ -1431,7 +1396,6 @@ namespace Hl7.Fhir.Model
         /// Logic used by the measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Library
         {
@@ -1516,7 +1480,6 @@ namespace Hl7.Fhir.Model
         /// How risk adjustment is applied for this measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RiskAdjustment
         {
@@ -1548,7 +1511,6 @@ namespace Hl7.Fhir.Model
         /// How is rate aggregation performed for this measure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RateAggregation
         {
@@ -1658,31 +1620,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> _SupplementalData;
         
 
-        public static ElementDefinition.ConstraintComponent Measure_MEA_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.stratifier.all((code | description | criteria).exists() xor component.exists())",
-            Key = "mea-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stratifier SHALL be either a single criteria or a set of criteria components",
-            Xpath = "exists(f:group/stratifier/code) or exists(f:group/stratifier/component)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Measure_MEA_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "mea-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Measure_MEA_1);
-            InvariantConstraints.Add(Measure_MEA_0);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1845,7 +1782,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1895,7 +1831,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

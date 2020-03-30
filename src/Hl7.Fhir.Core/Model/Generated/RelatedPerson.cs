@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A person that is related to a patient, but who is not a direct target of care
     /// </summary>
-    [FhirType("RelatedPerson", IsResource=true)]
+    [FhirType("RelatedPerson")]
     [DataContract]
-    public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.RelatedPerson; } }
-        [NotMapped]
         public override string TypeName { get { return "RelatedPerson"; } }
         
         [FhirType("CommunicationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CommunicationComponent"; } }
             
             /// <summary>
@@ -93,7 +89,6 @@ namespace Hl7.Fhir.Model
             /// Language preference indicator
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Preferred
             {
@@ -153,7 +148,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -164,7 +158,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -210,7 +203,6 @@ namespace Hl7.Fhir.Model
         /// Whether this related person's record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -300,7 +292,6 @@ namespace Hl7.Fhir.Model
         /// male | female | other | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AdministrativeGender? Gender
         {
@@ -332,7 +323,6 @@ namespace Hl7.Fhir.Model
         /// The date on which the related person was born
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string BirthDate
         {
@@ -403,11 +393,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent> _Communication;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -483,7 +468,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -504,7 +488,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

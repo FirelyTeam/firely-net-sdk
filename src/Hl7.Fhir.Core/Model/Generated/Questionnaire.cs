@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A structured set of questions
     /// </summary>
-    [FhirType("Questionnaire", IsResource=true)]
+    [FhirType("Questionnaire")]
     [DataContract]
-    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Questionnaire; } }
-        [NotMapped]
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>
@@ -234,9 +231,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
@@ -257,7 +253,6 @@ namespace Hl7.Fhir.Model
             /// Unique id for item in questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string LinkId
             {
@@ -289,7 +284,6 @@ namespace Hl7.Fhir.Model
             /// ElementDefinition - details for the item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Definition
             {
@@ -335,7 +329,6 @@ namespace Hl7.Fhir.Model
             /// E.g. "1(a)", "2.5.3"
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Prefix
             {
@@ -367,7 +360,6 @@ namespace Hl7.Fhir.Model
             /// Primary text for the item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
             {
@@ -400,7 +392,6 @@ namespace Hl7.Fhir.Model
             /// group | display | boolean | decimal | integer | date | dateTime +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType? Type
             {
@@ -446,7 +437,6 @@ namespace Hl7.Fhir.Model
             /// all | any
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Questionnaire.EnableWhenBehavior? EnableBehavior
             {
@@ -478,7 +468,6 @@ namespace Hl7.Fhir.Model
             /// Whether the item must be included in data results
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Required
             {
@@ -510,7 +499,6 @@ namespace Hl7.Fhir.Model
             /// Whether the item may repeat
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Repeats
             {
@@ -542,7 +530,6 @@ namespace Hl7.Fhir.Model
             /// Don't allow human editing
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? ReadOnly
             {
@@ -574,7 +561,6 @@ namespace Hl7.Fhir.Model
             /// No more than this many characters
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? MaxLength
             {
@@ -606,7 +592,6 @@ namespace Hl7.Fhir.Model
             /// Valueset containing permitted answers
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AnswerValueSet
             {
@@ -750,7 +735,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -775,7 +759,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -806,9 +789,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EnableWhenComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EnableWhenComponent"; } }
             
             /// <summary>
@@ -829,7 +811,6 @@ namespace Hl7.Fhir.Model
             /// Question that determines whether item is enabled
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Question
             {
@@ -862,7 +843,6 @@ namespace Hl7.Fhir.Model
             /// exists | = | != | > | &lt; | >= | &lt;=
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Questionnaire.QuestionnaireItemOperator? Operator
             {
@@ -882,7 +862,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Answer
@@ -941,7 +921,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -953,7 +932,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -971,9 +949,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerOptionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AnswerOptionComponent"; } }
             
             /// <summary>
@@ -1009,7 +986,6 @@ namespace Hl7.Fhir.Model
             /// Whether option is selected by default
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? InitialSelected
             {
@@ -1069,7 +1045,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1080,7 +1055,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1097,9 +1071,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("InitialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "InitialComponent"; } }
             
             /// <summary>
@@ -1107,7 +1080,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -1160,7 +1133,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1170,7 +1142,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1201,7 +1172,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this questionnaire, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -1247,7 +1217,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the questionnaire
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1279,7 +1248,6 @@ namespace Hl7.Fhir.Model
         /// Name for this questionnaire (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1311,7 +1279,6 @@ namespace Hl7.Fhir.Model
         /// Name for this questionnaire (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1344,7 +1311,6 @@ namespace Hl7.Fhir.Model
         /// Instantiates protocol or definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> DerivedFrom
         {
@@ -1377,7 +1343,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1409,7 +1374,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1442,7 +1406,6 @@ namespace Hl7.Fhir.Model
         /// Resource that can be subject of QuestionnaireResponse
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ResourceType?> SubjectType
         {
@@ -1474,7 +1437,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1506,7 +1468,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1619,7 +1580,6 @@ namespace Hl7.Fhir.Model
         /// When the questionnaire was approved by publisher
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ApprovalDate
         {
@@ -1651,7 +1611,6 @@ namespace Hl7.Fhir.Model
         /// When the questionnaire was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastReviewDate
         {
@@ -1708,151 +1667,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
         
 
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "descendants().linkId.isDistinct()",
-            Key = "que-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The link ids for groups and questions must be unique within the questionnaire",
-            Xpath = "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "que-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_9 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(type!='display' or readOnly.empty())",
-            Key = "que-9",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Read-only can't be specified for \"display\" items",
-            Xpath = "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_8 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all((type!='group' and type!='display') or initial.empty())",
-            Key = "que-8",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Initial values can't be specified for groups or display items",
-            Xpath = "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_6 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(type!='display' or (required.empty() and repeats.empty()))",
-            Key = "que-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Required and repeat aren't permitted for display items",
-            Xpath = "not(f:type/@value='display' and (f:required or f:repeats))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all((type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty()))",
-            Key = "que-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only 'choice' and 'open-choice' items can have answerValueSet",
-            Xpath = "f:type/@value=('choice','open-choice','decimal','integer','date','dateTime','time','string','quantity',') or not(f:answerOption or f:answerValueSet)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_4 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(answerOption.empty() or answerValueSet.empty())",
-            Key = "que-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A question cannot have both answerOption and answerValueSet",
-            Xpath = "not(f:answerValueSet and f:answerOption)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(type!='display' or code.empty())",
-            Key = "que-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Display items cannot have a \"code\" asserted",
-            Xpath = "not(f:type/@value='display' and f:code)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_10 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all((type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty())",
-            Key = "que-10",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Maximum length can only be declared for simple question types",
-            Xpath = "f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all((type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty()))",
-            Key = "que-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Group items must have nested items, display items cannot have nested items",
-            Xpath = "not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_13 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(repeats=true or initial.count() <= 1)",
-            Key = "que-13",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have multiple initial values for repeating items",
-            Xpath = "f:repeats/@value='true' or count(f:initial)<=1"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_11 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(answerOption.empty() or initial.empty())",
-            Key = "que-11",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If one or more answerOption is present, initial[x] must be missing",
-            Xpath = "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_12 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all(enableWhen.count() > 2 implies enableBehavior.exists())",
-            Key = "que-12",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If there are more than one enableWhen, enableBehavior must be specified",
-            Xpath = "not(f:answerOption) or not(count(f:*[starts-with(local-name(.), 'initial')]))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_7 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.enableWhen.all(operator = 'exists' implies (answer is Boolean))",
-            Key = "que-7",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the operator is 'exists', the value must be a boolean",
-            Xpath = "f:operator/@value != 'exists' or exists(f:answerBoolean)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Questionnaire_QUE_2);
-            InvariantConstraints.Add(Questionnaire_QUE_0);
-            InvariantConstraints.Add(Questionnaire_QUE_9);
-            InvariantConstraints.Add(Questionnaire_QUE_8);
-            InvariantConstraints.Add(Questionnaire_QUE_6);
-            InvariantConstraints.Add(Questionnaire_QUE_5);
-            InvariantConstraints.Add(Questionnaire_QUE_4);
-            InvariantConstraints.Add(Questionnaire_QUE_3);
-            InvariantConstraints.Add(Questionnaire_QUE_10);
-            InvariantConstraints.Add(Questionnaire_QUE_1);
-            InvariantConstraints.Add(Questionnaire_QUE_13);
-            InvariantConstraints.Add(Questionnaire_QUE_11);
-            InvariantConstraints.Add(Questionnaire_QUE_12);
-            InvariantConstraints.Add(Questionnaire_QUE_7);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1958,7 +1772,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1989,7 +1802,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

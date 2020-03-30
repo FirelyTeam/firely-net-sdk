@@ -46,7 +46,7 @@
 			if (!String.IsNullOrEmpty(valuesetUrl) && valuesetUrl.EndsWith("|" + fhirVersion))
 				valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
 			// reformat the name so that it is a valid .NET enumeration name
-			enumName = enumName.Replace(" ", "").Replace("-", "_");
+			enumName = generateCsharpEnumName(enumName);
 
 			if (enumName == "MimeTypes")
 				continue;
@@ -173,14 +173,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
 <# }
 if(!abstractType) {
- #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+ #>    [FhirType("<#= resourceName #>")]
 <# }
 #>    [DataContract]
-    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
@@ -209,20 +206,22 @@ if(!abstractType) {
 						// WriteLine("//		VSR: " + n4.Value);
 						valuesetUrl = n4.Value;
                     }
-					if (valuesetUrl.EndsWith("|"+fhirVersion))
-                    {
-						valuesetUrl = valuesetUrl.Replace("|" + fhirVersion, "");
-                    }
+
+					valuesetUrl = valuesetUrl.Split('|')[0];
+			
 					System.Xml.XmlElement valueset = docExpansions.SelectSingleNode(
 						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '"+valuesetUrl+"']", nsE)
 						 as System.Xml.XmlElement;
+					
+					if(valueset == null) WriteLine("// Cannnot find url '" + valuesetUrl + "'");
+
 					if (valueset != null)
                     {
 					string enumName = valueset.SelectSingleNode("fhir:name/@value", nsE).InnerText;
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_").Replace(".","_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (generatedSets.Contains(enumName))
 						continue;
@@ -265,6 +264,8 @@ if(!abstractType) {
 			defintion = valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE).Value;
 		if (string.IsNullOrEmpty(defintion))
 			defintion = "MISSING DESCRIPTION";
+
+
 #>
             /// <summary>
             /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "'") #>
@@ -316,9 +317,8 @@ if(!abstractType) {
 #>
         [FhirType("<#= componentName #>", NamedBackboneElement=true)]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -366,7 +366,6 @@ if(!abstractType) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -454,7 +453,6 @@ if(!abstractType) {
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -466,7 +464,6 @@ if(!abstractType) {
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -538,7 +535,6 @@ if(!abstractType) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -559,7 +555,7 @@ if(!abstractType) {
         }
     }
 
-#><# if (true) { #>
+#><# if (false) { #>
 
 <#
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
@@ -596,27 +592,7 @@ if(!abstractType) {
 <#            }
 #>
 <#}#>
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
 
-<#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
-            {
-                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
-                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
-                if (parentPath.Contains("."))
-                {
-                    // This expression applied to a backbone element, so need to give it scope
-                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
-                }
-                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
-                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
-                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
-                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>            InvariantConstraints.Add(<#= resourceName + "_" + key.Replace("-", "_").ToUpper() #>);
-<#            }
-#>        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -685,7 +661,6 @@ if(!abstractType) {
 <#
 		// [WMR 20160818] START - implement generic properties collection
 #>
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -697,7 +672,6 @@ if(!abstractType) {
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
@@ -735,7 +709,7 @@ if(!abstractType) {
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+	    "/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical' and (not(fhir:derivation/@value) or (fhir:derivation/@value != 'constraint'))]", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)
@@ -1063,7 +1037,7 @@ namespace Hl7.Fhir.Model
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (enumName == "MimeTypes")
 						continue;
@@ -1133,6 +1107,10 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
+		  if(resourceName == "SimpleQuantity") continue;
+		  if(resourceName == "MoneyQuantity") continue;
+
+
 			string resourceDescription = "";
 			string rawResourceName = resourceName;
 			string primitiveTypeName = null;
@@ -1143,7 +1121,6 @@ namespace Hl7.Fhir.Model
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
-			bool isPrimitive = false;
 			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
 				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
@@ -1217,7 +1194,6 @@ namespace Hl7.Fhir.Model
 #>    [FhirType("<#= isConstraintProfile ? "Quantity" : rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
         public override IDeepCopyable DeepCopy()
@@ -1331,14 +1307,12 @@ namespace Hl7.Fhir.Model
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
-			if (resourceName == "Resource"
-				|| resourceName == "DomainResource"
-				|| resourceName == "Xhtml"
-			//	|| resourceName == "ElementDefinition"
-				|| resourceName == "Narrative"
-				|| resourceName == "Extension"
-				|| resourceName == "Xhtml")
-				continue;
+			
+			var skippedTypes = new[] { "Narrative", "Extension", "Canonical", "Code", "Coding", "Date", "FhirBoolean", "BackboneElement",
+				"FhirDateTime", "FhirString", "FhirUri", "FhirUrl", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
+				"Base64Binary"};
+			
+			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
@@ -1433,11 +1407,11 @@ if (!abstractType){
 #>    [FhirType("<#= rawResourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
 <#}
 #>    [DataContract]
-    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.BackboneElement" && resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>        [NotMapped]
+<# if (resourceBaseType != "Hl7.Fhir.Model.BackboneElement" && resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
+<# } #>
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
         
 <# if (!string.IsNullOrEmpty(pattern)) {
@@ -1514,7 +1488,7 @@ if (!abstractType){
 					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
 					
 					// reformat the name so that it is a valid .NET enumeration name
-					enumName = enumName.Replace(" ", "").Replace("-", "_");
+					enumName = generateCsharpEnumName(enumName);
 
 					if (generatedSets.Contains(enumName))
 						continue;
@@ -1610,9 +1584,8 @@ if (!abstractType){
 #>
         [FhirType("<#= componentName #>", NamedBackboneElement=true)]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -1660,7 +1633,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -1747,7 +1719,6 @@ if (!abstractType){
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1759,7 +1730,6 @@ if (!abstractType){
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -1829,7 +1799,6 @@ if (!abstractType){
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -1942,7 +1911,6 @@ if (!abstractType){
 		// [WMR 20160818] START - implement generic properties collection
 #>
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1954,7 +1922,6 @@ if (!abstractType){
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
@@ -2030,29 +1997,7 @@ if (!abstractType){
 			case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-			case "Quantity" :
-							XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-							if (typeProfile == null)
-                            {
-								// result.PropType = "Hl7.Fhir.Model.FhirString";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                            {
-								return "Hl7.Fhir.Model.SimpleQuantity";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                            {
-								return "Hl7.Fhir.Model.Money";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                            {
-								return "Hl7.Fhir.Model.Age";
-                            }
-							else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                            {
-								return "Hl7.Fhir.Model.Duration";
-                            }
-							break;
+			case "Quantity" : return "Hl7.Fhir.Model.Quantity";
         }
 		return propType;
     }
@@ -2082,7 +2027,6 @@ if (!abstractType){
 			result += bit.Substring(1);
         }
 		result = result.Replace(".", "_");
-		int IsIntegerValue;
 		if (Char.IsDigit(result[0]))
         {
 			result = "N" + result;
@@ -2168,29 +2112,7 @@ if (!abstractType){
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									return "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									return "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									return "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									return "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : return "Hl7.Fhir.Model.Quantity";
             }
 			return propType;
         }
@@ -2370,29 +2292,8 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
+                               								break;
             }
 
 			if (result.Name.Contains("[x]"))
@@ -2405,7 +2306,9 @@ if (!abstractType){
 
 				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type/fhir:code/@value", nsR))
                 {
-					string allowType = "typeof(" +ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR) + ")";
+					var convertedType = ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR);
+
+					string allowType = "typeof(" + convertedType + ")";
 					if (!result.AllowedTypes.Contains(allowType))
                     {
 						if (!string.IsNullOrEmpty(result.AllowedTypes))
@@ -2436,8 +2339,8 @@ if (!abstractType){
 				// Grab the binding from the element
 				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
 					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
-				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
-					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.Contains("|"))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Split('|')[0];
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2644,28 +2547,7 @@ if (!abstractType){
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:targetProfile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
 								break;
             }
 
@@ -2689,8 +2571,8 @@ if (!abstractType){
 				// Grab the binding from the element
 				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR) != null)
 					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required' and fhir:valueSet/@value != 'http://hl7.org/fhir/ValueSet/mimetypes|"+fhirVersion+"']/fhir:valueSet/@value", nsR).Value;
-				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.EndsWith("|" + fhirVersion))
-					result.CodeRequiredBinding = result.CodeRequiredBinding.Replace("|" + fhirVersion, "");
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding.Contains("|"))
+					result.CodeRequiredBinding = result.CodeRequiredBinding.Split('|')[0];
 				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
                 {
 					if (!enums.ContainsKey(result.CodeRequiredBinding))
@@ -2766,4 +2648,13 @@ if (!abstractType){
 					WriteLine("{0}if ({1} != null) yield return {1};", indent, pd.Name);
 			}
 	}
+#>
+
+<#+  
+private string generateCsharpEnumName(string fhirEnumName)
+{
+	// 
+	if(fhirEnumName == "status") return "VerificationResultStatus";
+	return fhirEnumName.Replace(" ", "").Replace("-", "_").Replace(".","_").Replace("v3_","");
+}
 #>

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Results of a measure evaluation
     /// </summary>
-    [FhirType("MeasureReport", IsResource=true)]
+    [FhirType("MeasureReport")]
     [DataContract]
-    public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MeasureReport; } }
-        [NotMapped]
         public override string TypeName { get { return "MeasureReport"; } }
         
         /// <summary>
@@ -117,9 +114,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("GroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
@@ -154,13 +150,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("measureScore", InSummary=true, Order=60)]
             [DataMember]
-            public Quantity MeasureScore
+            public Hl7.Fhir.Model.Quantity MeasureScore
             {
                 get { return _MeasureScore; }
                 set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Quantity _MeasureScore;
+            private Hl7.Fhir.Model.Quantity _MeasureScore;
             
             /// <summary>
             /// Stratification results
@@ -185,7 +181,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>(Population.DeepCopy());
-                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopy();
                     if(Stratifier != null) dest.Stratifier = new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>(Stratifier.DeepCopy());
                     return dest;
                 }
@@ -227,7 +223,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -240,7 +235,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -259,9 +253,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PopulationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PopulationComponent"; } }
             
             /// <summary>
@@ -294,7 +287,6 @@ namespace Hl7.Fhir.Model
             /// Size of the population
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Count
             {
@@ -372,7 +364,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -384,7 +375,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -402,9 +392,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StratifierComponent"; } }
             
             /// <summary>
@@ -480,7 +469,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -491,7 +479,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -508,9 +495,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StratifierGroupComponent"; } }
             
             /// <summary>
@@ -559,13 +545,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("measureScore", Order=70)]
             [DataMember]
-            public Quantity MeasureScore
+            public Hl7.Fhir.Model.Quantity MeasureScore
             {
                 get { return _MeasureScore; }
                 set { _MeasureScore = value; OnPropertyChanged("MeasureScore"); }
             }
             
-            private Quantity _MeasureScore;
+            private Hl7.Fhir.Model.Quantity _MeasureScore;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -577,7 +563,7 @@ namespace Hl7.Fhir.Model
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
                     if(Component != null) dest.Component = new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>(Component.DeepCopy());
                     if(Population != null) dest.Population = new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>(Population.DeepCopy());
-                    if(MeasureScore != null) dest.MeasureScore = (Quantity)MeasureScore.DeepCopy();
+                    if(MeasureScore != null) dest.MeasureScore = (Hl7.Fhir.Model.Quantity)MeasureScore.DeepCopy();
                     return dest;
                 }
                 else
@@ -618,7 +604,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -631,7 +616,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -650,9 +634,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
             
             /// <summary>
@@ -728,7 +711,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -739,7 +721,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -756,9 +737,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StratifierGroupPopulationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }
             
             /// <summary>
@@ -791,7 +771,6 @@ namespace Hl7.Fhir.Model
             /// Size of the population
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Count
             {
@@ -869,7 +848,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -881,7 +859,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -929,7 +906,6 @@ namespace Hl7.Fhir.Model
         /// complete | pending | error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MeasureReport.MeasureReportStatus? Status
         {
@@ -962,7 +938,6 @@ namespace Hl7.Fhir.Model
         /// individual | subject-list | summary | data-collection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
         {
@@ -995,7 +970,6 @@ namespace Hl7.Fhir.Model
         /// What measure was calculated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Measure
         {
@@ -1042,7 +1016,6 @@ namespace Hl7.Fhir.Model
         /// When the report was generated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1130,31 +1103,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EvaluatedResource;
         
 
-        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "group.stratifier.stratum.all(value.exists() xor component.exists())",
-            Key = "mrp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stratifiers SHALL be either a single criteria or a set of criteria components",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
-        };
-
-        public static ElementDefinition.ConstraintComponent MeasureReport_MRP_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(type != 'data-collection') or group.exists().not()",
-            Key = "mrp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Measure Reports used for data collection SHALL NOT communicate group and score information",
-            Xpath = "not(f:kind/@value='data-collection') or not(exists(f:group))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MeasureReport_MRP_2);
-            InvariantConstraints.Add(MeasureReport_MRP_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1227,7 +1175,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1247,7 +1194,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

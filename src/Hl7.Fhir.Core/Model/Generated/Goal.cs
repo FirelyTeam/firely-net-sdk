@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization
     /// </summary>
-    [FhirType("Goal", IsResource=true)]
+    [FhirType("Goal")]
     [DataContract]
-    public partial class Goal : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Goal : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Goal; } }
-        [NotMapped]
         public override string TypeName { get { return "Goal"; } }
         
         /// <summary>
@@ -120,9 +117,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
             
             /// <summary>
@@ -143,7 +139,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
             public Hl7.Fhir.Model.Element Detail
             {
@@ -216,7 +212,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -228,7 +223,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -276,7 +270,6 @@ namespace Hl7.Fhir.Model
         /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Goal.GoalLifecycleStatus? LifecycleStatus
         {
@@ -407,7 +400,6 @@ namespace Hl7.Fhir.Model
         /// When goal status took effect
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string StatusDate
         {
@@ -439,7 +431,6 @@ namespace Hl7.Fhir.Model
         /// Reason for current status
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string StatusReason
         {
@@ -530,21 +521,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _OutcomeReference;
         
 
-        public static ElementDefinition.ConstraintComponent Goal_GOL_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "target.all((detail.exists() and measure.exists()) or detail.exists().not())",
-            Key = "gol-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Goal.target.measure is required if Goal.target.detail is populated",
-            Xpath = "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Goal_GOL_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -632,7 +608,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -657,7 +632,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

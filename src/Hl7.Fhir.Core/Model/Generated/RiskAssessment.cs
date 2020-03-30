@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential outcomes for a subject with likelihood
     /// </summary>
-    [FhirType("RiskAssessment", IsResource=true)]
+    [FhirType("RiskAssessment")]
     [DataContract]
-    public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.RiskAssessment; } }
-        [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
         [FhirType("PredictionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PredictionComponent"; } }
             
             /// <summary>
@@ -120,7 +116,6 @@ namespace Hl7.Fhir.Model
             /// Relative likelihood
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? RelativeRisk
             {
@@ -167,7 +162,6 @@ namespace Hl7.Fhir.Model
             /// Explanation of prediction
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Rationale
             {
@@ -239,7 +233,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -254,7 +247,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -335,7 +327,6 @@ namespace Hl7.Fhir.Model
         /// registered | preliminary | final | amended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ObservationStatus? Status
         {
@@ -529,7 +520,6 @@ namespace Hl7.Fhir.Model
         /// How to reduce risk
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Mitigation
         {
@@ -559,31 +549,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "prediction.all(probability is decimal implies (probability as decimal) <= 100)",
-            Key = "ras-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must be <= 100",
-            Xpath = "not(f:probabilityDecimal) or f:probabilityDecimal/@value <= 100"
-        };
-
-        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
-            Key = "ras-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "low and high must be percentages, if present",
-            Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(RiskAssessment_RAS_2);
-            InvariantConstraints.Add(RiskAssessment_RAS_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -674,7 +639,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -700,7 +664,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

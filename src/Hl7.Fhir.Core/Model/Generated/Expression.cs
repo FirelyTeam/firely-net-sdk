@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Expression")]
     [DataContract]
-    public partial class Expression : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Expression : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Expression"; } }
         
         /// <summary>
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
         /// Natural language description of the condition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Model
         /// Short name assigned to expression for reuse
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -135,7 +132,6 @@ namespace Hl7.Fhir.Model
         /// text/cql | text/fhirpath | application/x-fhir-query | etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Language
         {
@@ -167,7 +163,6 @@ namespace Hl7.Fhir.Model
         /// Expression in specified language
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Expression_
         {
@@ -199,7 +194,6 @@ namespace Hl7.Fhir.Model
         /// Where the expression is found
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Reference
         {
@@ -268,7 +262,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -282,7 +275,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

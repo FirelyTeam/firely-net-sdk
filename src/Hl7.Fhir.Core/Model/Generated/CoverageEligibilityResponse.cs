@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// CoverageEligibilityResponse resource
     /// </summary>
-    [FhirType("CoverageEligibilityResponse", IsResource=true)]
+    [FhirType("CoverageEligibilityResponse")]
     [DataContract]
-    public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CoverageEligibilityResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "CoverageEligibilityResponse"; } }
         
         /// <summary>
@@ -90,9 +87,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("InsuranceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "InsuranceComponent"; } }
             
             /// <summary>
@@ -128,7 +124,6 @@ namespace Hl7.Fhir.Model
             /// Coverage inforce indicator
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Inforce
             {
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -234,7 +228,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -253,9 +246,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ItemsComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ItemsComponent"; } }
             
             /// <summary>
@@ -330,7 +322,6 @@ namespace Hl7.Fhir.Model
             /// Excluded from the plan
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Excluded
             {
@@ -362,7 +353,6 @@ namespace Hl7.Fhir.Model
             /// Short name for the benefit
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -394,7 +384,6 @@ namespace Hl7.Fhir.Model
             /// Description of the benefit or services covered
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -479,7 +468,6 @@ namespace Hl7.Fhir.Model
             /// Authorization required flag
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? AuthorizationRequired
             {
@@ -525,7 +513,6 @@ namespace Hl7.Fhir.Model
             /// Preauthorization requirements endpoint
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AuthorizationUrl
             {
@@ -621,7 +608,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -644,7 +630,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -673,9 +658,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BenefitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "BenefitComponent"; } }
             
             /// <summary>
@@ -770,7 +754,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -782,7 +765,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -800,9 +782,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ErrorsComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ErrorsComponent"; } }
             
             /// <summary>
@@ -861,7 +842,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -871,7 +851,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -917,7 +896,6 @@ namespace Hl7.Fhir.Model
         /// active | cancelled | draft | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
@@ -950,7 +928,6 @@ namespace Hl7.Fhir.Model
         /// auth-requirements | benefits | discovery | validation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose?> Purpose
         {
@@ -1014,7 +991,6 @@ namespace Hl7.Fhir.Model
         /// Response creation date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Created
         {
@@ -1078,7 +1054,6 @@ namespace Hl7.Fhir.Model
         /// queued | complete | error | partial
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ClaimProcessingCodes? Outcome
         {
@@ -1110,7 +1085,6 @@ namespace Hl7.Fhir.Model
         /// Disposition Message
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Disposition
         {
@@ -1172,7 +1146,6 @@ namespace Hl7.Fhir.Model
         /// Preauthorization reference
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string PreAuthRef
         {
@@ -1215,21 +1188,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> _Error;
         
 
-        public static ElementDefinition.ConstraintComponent CoverageEligibilityResponse_CES_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "insurance.item.all(category.exists() xor productOrService.exists())",
-            Key = "ces-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL contain a category or a billcode but not both.",
-            Xpath = "exists(f:category) or exists(f:productOrService)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CoverageEligibilityResponse_CES_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1314,7 +1272,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1338,7 +1295,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

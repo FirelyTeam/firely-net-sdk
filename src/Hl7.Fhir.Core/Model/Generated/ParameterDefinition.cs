@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ParameterDefinition")]
     [DataContract]
-    public partial class ParameterDefinition : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ParameterDefinition : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "ParameterDefinition"; } }
         
         /// <summary>
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
         /// Name used to access the parameter value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -103,7 +101,6 @@ namespace Hl7.Fhir.Model
         /// in | out
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.OperationParameterUse? Use
         {
@@ -135,7 +132,6 @@ namespace Hl7.Fhir.Model
         /// Minimum cardinality
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Min
         {
@@ -167,7 +163,6 @@ namespace Hl7.Fhir.Model
         /// Maximum cardinality (a number of *)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Max
         {
@@ -199,7 +194,6 @@ namespace Hl7.Fhir.Model
         /// A brief description of the parameter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Documentation
         {
@@ -232,7 +226,6 @@ namespace Hl7.Fhir.Model
         /// What type of value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FHIRAllTypes? Type
         {
@@ -264,7 +257,6 @@ namespace Hl7.Fhir.Model
         /// What profile the value is expected to be
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Profile
         {
@@ -339,7 +331,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -355,7 +346,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

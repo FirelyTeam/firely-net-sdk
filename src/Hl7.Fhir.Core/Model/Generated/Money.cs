@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Money")]
     [DataContract]
-    public partial class Money : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Money : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Money"; } }
         
         /// <summary>
@@ -1171,7 +1170,6 @@ namespace Hl7.Fhir.Model
         /// Numerical value (with implicit precision)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Value
         {
@@ -1203,7 +1201,6 @@ namespace Hl7.Fhir.Model
         /// ISO 4217 Currency Code
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Money.Currencies? Currency
         {
@@ -1263,7 +1260,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1274,7 +1270,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

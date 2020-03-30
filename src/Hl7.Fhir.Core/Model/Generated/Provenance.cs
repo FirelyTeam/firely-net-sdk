@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who, What, When for a set of resources
     /// </summary>
-    [FhirType("Provenance", IsResource=true)]
+    [FhirType("Provenance")]
     [DataContract]
-    public partial class Provenance : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Provenance : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Provenance; } }
-        [NotMapped]
         public override string TypeName { get { return "Provenance"; } }
         
         /// <summary>
@@ -96,9 +93,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AgentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
@@ -210,7 +206,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -223,7 +218,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -242,9 +236,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
@@ -265,7 +258,6 @@ namespace Hl7.Fhir.Model
             /// derivation | revision | quotation | source | removal
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Provenance.ProvenanceEntityRole? Role
             {
@@ -358,7 +350,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -370,7 +361,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -435,7 +425,6 @@ namespace Hl7.Fhir.Model
         /// When the activity was recorded / updated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Recorded
         {
@@ -468,7 +457,6 @@ namespace Hl7.Fhir.Model
         /// Policy or plan the activity was defined by
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Policy
         {
@@ -568,11 +556,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Signature> _Signature;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -642,7 +625,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -661,7 +643,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

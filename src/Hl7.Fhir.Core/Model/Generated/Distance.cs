@@ -47,7 +47,6 @@ namespace Hl7.Fhir.Model
     [FhirType("Distance")]
     public partial class Distance : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "Distance"; } }
         
         public override IDeepCopyable DeepCopy()

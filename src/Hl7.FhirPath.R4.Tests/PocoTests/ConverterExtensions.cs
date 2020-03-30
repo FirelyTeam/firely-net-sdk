@@ -41,12 +41,12 @@ namespace Hl7.FhirPath.R4.Tests
             return me.ValueSetElement;
         }
 
-        public static Model.Range setLow(this Model.Range me, Model.SimpleQuantity value)
+        public static Model.Range setLow(this Model.Range me, Model.Quantity value)
         {
             me.Low = value;
             return me;
         }
-        public static Model.Range setHigh(this Model.Range me, Model.SimpleQuantity value)
+        public static Model.Range setHigh(this Model.Range me, Model.Quantity value)
         {
             me.High = value;
             return me;

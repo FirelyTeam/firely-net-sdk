@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Search parameter for a resource
     /// </summary>
-    [FhirType("SearchParameter", IsResource=true)]
+    [FhirType("SearchParameter")]
     [DataContract]
-    public partial class SearchParameter : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SearchParameter : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SearchParameter; } }
-        [NotMapped]
         public override string TypeName { get { return "SearchParameter"; } }
         
         /// <summary>
@@ -240,9 +237,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ComponentComponent"; } }
             
             /// <summary>
@@ -263,7 +259,6 @@ namespace Hl7.Fhir.Model
             /// Defines how the part works
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Definition
             {
@@ -296,7 +291,6 @@ namespace Hl7.Fhir.Model
             /// Subexpression relative to main expression
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Expression
             {
@@ -356,7 +350,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -367,7 +360,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -400,7 +392,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this search parameter, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -432,7 +423,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the search parameter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -465,7 +455,6 @@ namespace Hl7.Fhir.Model
         /// Name for this search parameter (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -497,7 +486,6 @@ namespace Hl7.Fhir.Model
         /// Original definition for the search parameter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DerivedFrom
         {
@@ -530,7 +518,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -562,7 +549,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -594,7 +580,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -626,7 +611,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -728,7 +712,6 @@ namespace Hl7.Fhir.Model
         /// Code used in URL
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Code
         {
@@ -761,7 +744,6 @@ namespace Hl7.Fhir.Model
         /// The resource type(s) this search parameter applies to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ResourceType?> Base
         {
@@ -794,7 +776,6 @@ namespace Hl7.Fhir.Model
         /// number | date | string | token | reference | composite | quantity | uri | special
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.SearchParamType? Type
         {
@@ -826,7 +807,6 @@ namespace Hl7.Fhir.Model
         /// FHIRPath expression that extracts the values
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Expression
         {
@@ -858,7 +838,6 @@ namespace Hl7.Fhir.Model
         /// XPath that extracts the values
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Xpath
         {
@@ -890,7 +869,6 @@ namespace Hl7.Fhir.Model
         /// normal | phonetic | nearby | distance | other
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.SearchParameter.XPathUsageType? XpathUsage
         {
@@ -923,7 +901,6 @@ namespace Hl7.Fhir.Model
         /// Types of resource (if a resource reference)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.ResourceType?> Target
         {
@@ -955,7 +932,6 @@ namespace Hl7.Fhir.Model
         /// Allow multiple values per parameter (or)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? MultipleOr
         {
@@ -987,7 +963,6 @@ namespace Hl7.Fhir.Model
         /// Allow multiple parameters (and)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? MultipleAnd
         {
@@ -1020,7 +995,6 @@ namespace Hl7.Fhir.Model
         /// eq | ne | gt | lt | ge | le | sa | eb | ap
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchComparator?> Comparator
         {
@@ -1053,7 +1027,6 @@ namespace Hl7.Fhir.Model
         /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | ofType
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchModifierCode?> Modifier
         {
@@ -1086,7 +1059,6 @@ namespace Hl7.Fhir.Model
         /// Chained names supported
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Chain
         {
@@ -1116,41 +1088,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
         
 
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "spd-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "xpath.empty() or xpathUsage.exists()",
-            Key = "spd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If an xpath is present, there SHALL be an xpathUsage",
-            Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
-        };
-
-        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "chain.empty() or type = 'reference'",
-            Key = "spd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
-            Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(SearchParameter_SPD_0);
-            InvariantConstraints.Add(SearchParameter_SPD_1);
-            InvariantConstraints.Add(SearchParameter_SPD_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1268,7 +1205,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1303,7 +1239,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
