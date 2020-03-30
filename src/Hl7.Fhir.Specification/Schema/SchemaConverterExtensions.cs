@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         private static IAssertion BuildCardinality(ElementDefinition def) =>
-            def.Min != null ? new CardinalityAssertion(def.Min, def.Max) : null;
+            def.Min != null || def.Max != null ? new CardinalityAssertion(def.Min, def.Max, def.Path) : null;
 
         private static IAssertion BuildRegex(ElementDefinition def)
         {

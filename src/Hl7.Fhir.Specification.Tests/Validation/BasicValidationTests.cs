@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
-        [Fact(Skip = "After TC 4.0.1, this unit test fails (2 x ext-1 errors). I have no clue why. [MV 20191217]")]
+        [Fact]
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);

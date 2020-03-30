@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -66,12 +65,16 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             var patient = poco.ToTypedElement();
 
             var schemaElement = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/Patient", UriKind.Absolute));
-            var results = schemaElement.Validate(new[] { patient }, new ValidationContext());
-            Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.Count);
-            Assert.AreEqual(0, results[0].Item1.Count);
             var json = schemaElement.ToJson().ToString();
-            Debug.WriteLine(json);
+            //Debug.WriteLine(json);
+
+
+            var results = schemaElement.Validate(new[] { patient }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+            Assert.IsNotNull(results);
+            var r = _resolver as ElementSchemaResolver;
+            r.DumpCache();
+            //Assert.AreEqual(1, results.Count);
+            //Assert.AreEqual(0, results[0].Item1.Count);
             //json.ToString(); 
 
         }
@@ -134,9 +137,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             var results = schemaElement.Validate(new[] { element }, new ValidationContext());
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
-            var assertResult = results[0].Item1.Result;
-            Assert.IsNotNull(assertResult);
-            Assert.IsFalse(assertResult.IsSuccessful, "HumanName is not valid");
+            Assert.IsFalse(results.Result.IsSuccessful, "HumanName is not valid");
 
             /*
             string json2 = "";
@@ -164,7 +165,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             var result = instantSchema.Validate(new[] { element }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
-            Assert.IsTrue(result[0].Item1.Result.IsSuccessful);
+            Assert.IsTrue(result.Result.IsSuccessful);
         }
 
         [TestMethod]
@@ -174,11 +175,14 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             var stringSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/string", UriKind.Absolute));
 
-            var results = stringSchema.Validate(new[] { fhirString }, new ValidationContext());
+            var results = stringSchema.Validate(new[] { fhirString }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsNotNull(results);
+
+            var validationResult = results.OfType<ResultAssertion>();
+
             Assert.AreEqual(1, results.Count);
-            var assertResult = results[0].Item1.Result;
+            var assertResult = results.Result;
             Assert.IsNotNull(assertResult);
             Assert.IsFalse(assertResult.IsSuccessful, "fhirString is not valid");
         }
@@ -201,7 +205,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count > 0);
-            var assertResult = results[0].Item1.Result;
+            var assertResult = results.Result;
             Assert.IsNotNull(assertResult);
             Assert.IsFalse(assertResult.IsSuccessful, "poco should be not valid");
         }

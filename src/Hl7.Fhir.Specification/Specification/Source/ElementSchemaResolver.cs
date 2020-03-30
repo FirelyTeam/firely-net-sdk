@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Specification.Source
 {
@@ -72,5 +73,14 @@ namespace Hl7.Fhir.Specification.Specification.Source
         public Resource ResolveByCanonicalUri(string uri) => _wrapped.ResolveByCanonicalUri(uri);
 
         public Resource ResolveByUri(string uri) => _wrapped.ResolveByUri(uri);
+
+        public void DumpCache()
+        {
+            foreach (var item in _cache)
+            {
+                Debug.WriteLine($"==== {item.Key} ====");
+                Debug.WriteLine(item.Value.ToJson());
+            }
+        }
     }
 }

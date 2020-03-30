@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Specification.Schema
                 // Don't add empty schemas (i.e. empty ElementDefs in a differential)
                 if (!childSchema.IsEmpty)
                 {
-                    var schemaWithOrder = childSchema.With(new XmlOrder(xmlOrder));
+                    var schemaWithOrder = childSchema.With(new XmlOrder(xmlOrder, childNav.PathName));
                     children.Add(childNav.PathName, schemaWithOrder);
                 }
             }

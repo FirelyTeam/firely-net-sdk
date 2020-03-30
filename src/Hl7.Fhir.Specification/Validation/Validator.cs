@@ -208,7 +208,10 @@ namespace Hl7.Fhir.Validation
 
             if (outcome.Success)
             {
-                var _resolver = new ElementSchemaResolver(Settings?.ResourceResolver);
+
+                var node = instance as ScopedNode ?? new ScopedNode(instance);
+
+                var resolver = new ElementSchemaResolver(Settings?.ResourceResolver);
 
                 var symbolTable = new SymbolTable();
                 symbolTable.AddStandardFP();
@@ -217,14 +220,16 @@ namespace Hl7.Fhir.Validation
 
                 var validationContext = new ValidationContext()
                 {
-                    FhirPathCompiler = new FhirPathCompiler(symbolTable)
+                    FhirPathCompiler = new FhirPathCompiler(symbolTable),
+                    ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
                 };
 
-                var result = new List<(Assertions, ITypedElement)>();
+                var result = Assertions.Empty;
                 foreach (var profile in processor.Result)
                 {
-                    var schema = _resolver.GetSchema(profile);
-                    result.AddRange(schema.Validate(new[] { instance }, validationContext));
+                    var schema = resolver.GetSchema(profile);
+                    resolver.DumpCache();
+                    result += schema.Validate(new[] { node }, validationContext);
                 }
                 outcome.Add(ConvertToOutcome(result));
             }
@@ -234,25 +239,39 @@ namespace Hl7.Fhir.Validation
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
+
         }
 
-        private OperationOutcome ConvertToOutcome(IList<(Assertions, ITypedElement)> validationAssertions)
+        private OperationOutcome ConvertToOutcome(Assertions assertions)
         {
             var outcome = new OperationOutcome();
 
-            foreach (var (assertions, element) in validationAssertions)
-            {
-                var issues = assertions.OfType<IssueAssertion>();
+            var issues = assertions.OfType<IssueAssertion>();
 
-                foreach (var item in issues)
-                {
-                    var issue = Issue.Create(item.IssueNumber, (OperationOutcome.IssueSeverity)item.Severity, OperationOutcome.IssueType.Invalid);
-                    outcome.AddIssue(item.Message, issue, element);
-                }
+            foreach (var item in issues)
+            {
+                var issue = Issue.Create(item.IssueNumber, ConvertToSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
+                outcome.AddIssue(item.Message, issue, (ITypedElement)null);
             }
 
             // TODO Refactor VALIDATION
             return outcome;
+        }
+
+        private OperationOutcome.IssueSeverity ConvertToSeverity(IssueSeverity? severity)
+        {
+            switch (severity)
+            {
+                case IssueSeverity.Fatal:
+                    return OperationOutcome.IssueSeverity.Fatal;
+                case IssueSeverity.Error:
+                    return OperationOutcome.IssueSeverity.Error;
+                case IssueSeverity.Warning:
+                    return OperationOutcome.IssueSeverity.Warning;
+                case IssueSeverity.Information:
+                default:
+                    return OperationOutcome.IssueSeverity.Information;
+            }
         }
         #endregion
 
