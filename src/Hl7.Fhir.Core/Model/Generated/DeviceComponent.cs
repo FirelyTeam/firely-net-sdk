@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An instance of a medical-related component of a medical device
     /// </summary>
-    [FhirType("DeviceComponent", IsResource=true)]
+    [FhirType("DeviceComponent")]
     [DataContract]
-    public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DeviceComponent; } }
-        [NotMapped]
         public override string TypeName { get { return "DeviceComponent"; } }
         
         /// <summary>
@@ -132,9 +129,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ProductionSpecificationComponent")]
         [DataContract]
-        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ProductionSpecificationComponent"; } }
             
             /// <summary>
@@ -180,7 +176,6 @@ namespace Hl7.Fhir.Model
             /// A printable string defining the component
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ProductionSpec
             {
@@ -243,7 +238,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -255,7 +249,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -316,7 +309,6 @@ namespace Hl7.Fhir.Model
         /// Recent system change timestamp
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? LastSystemChange
         {
@@ -405,7 +397,6 @@ namespace Hl7.Fhir.Model
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
         {
@@ -447,13 +438,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceComponent;
@@ -522,7 +506,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -541,7 +524,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Attachment")]
     [DataContract]
-    public partial class Attachment : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Attachment : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Attachment"; } }
         
         /// <summary>
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
         /// Mime type of the content, with charset etc.
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ContentType
         {
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Model
         /// Human language of the content (BCP-47)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Language
         {
@@ -134,7 +131,6 @@ namespace Hl7.Fhir.Model
         /// Data inline, base64ed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Data
         {
@@ -166,7 +162,6 @@ namespace Hl7.Fhir.Model
         /// Uri where the data can be found
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -198,7 +193,6 @@ namespace Hl7.Fhir.Model
         /// Number of bytes of content (if url provided)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Size
         {
@@ -230,7 +224,6 @@ namespace Hl7.Fhir.Model
         /// Hash of the data (sha-1, base64ed)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Hash
         {
@@ -262,7 +255,6 @@ namespace Hl7.Fhir.Model
         /// Label to display in place of the data
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -294,7 +286,6 @@ namespace Hl7.Fhir.Model
         /// Date attachment was first created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Creation
         {
@@ -372,7 +363,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -389,7 +379,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

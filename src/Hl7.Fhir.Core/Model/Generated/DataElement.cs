@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource data element
     /// </summary>
-    [FhirType("DataElement", IsResource=true)]
+    [FhirType("DataElement")]
     [DataContract]
-    public partial class DataElement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataElement : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DataElement; } }
-        [NotMapped]
         public override string TypeName { get { return "DataElement"; } }
         
         /// <summary>
@@ -102,9 +99,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MappingComponent")]
         [DataContract]
-        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MappingComponent"; } }
             
             /// <summary>
@@ -125,7 +121,6 @@ namespace Hl7.Fhir.Model
             /// Internal id when this mapping is used
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Identity
             {
@@ -157,7 +152,6 @@ namespace Hl7.Fhir.Model
             /// Identifies what this mapping refers to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uri
             {
@@ -189,7 +183,6 @@ namespace Hl7.Fhir.Model
             /// Names what this mapping refers to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -221,7 +214,6 @@ namespace Hl7.Fhir.Model
             /// Versions, issues, scope limitations, etc.
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
             {
@@ -287,7 +279,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -300,7 +291,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -334,7 +324,6 @@ namespace Hl7.Fhir.Model
         /// Logical URI to reference this data element (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -380,7 +369,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the data element
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -413,7 +401,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -445,7 +432,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -477,7 +463,6 @@ namespace Hl7.Fhir.Model
         /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -509,7 +494,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -541,7 +525,6 @@ namespace Hl7.Fhir.Model
         /// Name for this data element (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -573,7 +556,6 @@ namespace Hl7.Fhir.Model
         /// Name for this data element (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -660,7 +642,6 @@ namespace Hl7.Fhir.Model
         /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DataElement.DataElementStringency? Stringency
         {
@@ -703,43 +684,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ElementDefinition> _Element;
         
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "mapping.all(uri.exists() or name.exists())",
-            Key = "dae-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "At least one of  name or uri SHALL be present",
-            Xpath = "exists(f:uri) or exists(f:name)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "element.all(base.empty())",
-            Key = "dae-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "No base allowed",
-            Xpath = "not(exists(f:base))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "element.all(slicing.empty())",
-            Key = "dae-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "No slicing allowed",
-            Xpath = "not(exists(f:slicing))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(DataElement_DAE_3);
-            InvariantConstraints.Add(DataElement_DAE_1);
-            InvariantConstraints.Add(DataElement_DAE_2);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DataElement;
@@ -826,7 +770,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -851,7 +794,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

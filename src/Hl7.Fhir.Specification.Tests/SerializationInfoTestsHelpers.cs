@@ -38,7 +38,6 @@ namespace Hl7.Fhir.Serialization.Tests
             // Try constrained quantities
             tryGetType("Money", "Money");
             tryGetType("Distance", "Distance");
-            tryGetType("SimpleQuantity", "Quantity");
 
             // The weird xhtml datatype
             tryGetType("xhtml");
@@ -156,7 +155,6 @@ namespace Hl7.Fhir.Serialization.Tests
             hasCorrectOrder("HumanName");
             hasCorrectOrder("Element");
             hasCorrectOrder("string");
-            hasCorrectOrder("SimpleQuantity");
             hasCorrectOrder("Distance");
             hasCorrectOrder("xhtml");
 

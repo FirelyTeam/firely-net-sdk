@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.IsPrimitive)
             {
                 var reader = new PrimitiveValueReader(_current);
-                return reader.Deserialize(prop.ImplementingType);
+                return reader.Deserialize(prop.ElementType);
             }
 
             // A Choice property that contains a choice of any resource
@@ -69,8 +69,8 @@ namespace Hl7.Fhir.Serialization
                     "Underlying data source was not able to provide the actual instance type of the resource.", _current.Location);
 
             ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
-                ? getMappingForType(prop, memberName, _current.InstanceType)
-                : _inspector.ImportType(prop.ImplementingType);
+                ? getMappingForType(memberName, _current.InstanceType)
+                : _inspector.ImportType(prop.ElementType);
 
             // Handle other Choices having any datatype or a list of datatypes
 
@@ -79,14 +79,12 @@ namespace Hl7.Fhir.Serialization
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
-        private ClassMapping getMappingForType(PropertyMapping mappedProperty, string memberName, string typeName)
+        private ClassMapping getMappingForType(string memberName, string typeName)
         {
-            ClassMapping result = null;
-
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now
             // assume the caller has Imported all types in the right (overriding) order.
-            result = _inspector.FindClassMappingForFhirDataType(typeName);
+            ClassMapping result = _inspector.FindClassMappingByName(typeName);
 
             if (result == null)
                 ComplexTypeReader.RaiseFormatError(

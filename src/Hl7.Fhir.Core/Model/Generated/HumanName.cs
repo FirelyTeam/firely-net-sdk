@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("HumanName")]
     [DataContract]
-    public partial class HumanName : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class HumanName : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "HumanName"; } }
         
         /// <summary>
@@ -121,7 +120,6 @@ namespace Hl7.Fhir.Model
         /// usual | official | temp | nickname | anonymous | old | maiden
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.HumanName.NameUse? Use
         {
@@ -153,7 +151,6 @@ namespace Hl7.Fhir.Model
         /// Text representation of the full name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text
         {
@@ -185,7 +182,6 @@ namespace Hl7.Fhir.Model
         /// Family name (often called 'Surname')
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Family
         {
@@ -218,7 +214,6 @@ namespace Hl7.Fhir.Model
         /// Given names (not always 'first'). Includes middle names
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Given
         {
@@ -251,7 +246,6 @@ namespace Hl7.Fhir.Model
         /// Parts that come before the name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Prefix
         {
@@ -284,7 +278,6 @@ namespace Hl7.Fhir.Model
         /// Parts that come after the name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Suffix
         {
@@ -372,7 +365,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -388,7 +380,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific and identified anatomical location
     /// </summary>
-    [FhirType("BodySite", IsResource=true)]
+    [FhirType("BodySite")]
     [DataContract]
-    public partial class BodySite : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class BodySite : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.BodySite; } }
-        [NotMapped]
         public override string TypeName { get { return "BodySite"; } }
         
         /// <summary>
@@ -86,7 +83,6 @@ namespace Hl7.Fhir.Model
         /// Whether this body site record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -145,7 +141,6 @@ namespace Hl7.Fhir.Model
         /// Anatomical location description
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -190,13 +185,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as BodySite;
@@ -256,7 +244,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -272,7 +259,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

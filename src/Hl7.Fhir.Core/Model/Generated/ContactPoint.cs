@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ContactPoint")]
     [DataContract]
-    public partial class ContactPoint : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContactPoint : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "ContactPoint"; } }
         
         /// <summary>
@@ -160,7 +159,6 @@ namespace Hl7.Fhir.Model
         /// phone | fax | email | pager | url | sms | other
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ContactPoint.ContactPointSystem? System
         {
@@ -192,7 +190,6 @@ namespace Hl7.Fhir.Model
         /// The actual contact point details
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Value
         {
@@ -224,7 +221,6 @@ namespace Hl7.Fhir.Model
         /// home | work | temp | old | mobile - purpose of this contact point
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ContactPoint.ContactPointUse? Use
         {
@@ -256,7 +252,6 @@ namespace Hl7.Fhir.Model
         /// Specify preferred order of use (1 = highest)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Rank
         {
@@ -338,7 +333,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -352,7 +346,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

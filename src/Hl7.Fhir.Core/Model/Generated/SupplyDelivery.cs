@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Delivery of bulk Supplies
     /// </summary>
-    [FhirType("SupplyDelivery", IsResource=true)]
+    [FhirType("SupplyDelivery")]
     [DataContract]
-    public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SupplyDelivery; } }
-        [NotMapped]
         public override string TypeName { get { return "SupplyDelivery"; } }
         
         /// <summary>
@@ -90,9 +87,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SuppliedItemComponent")]
         [DataContract]
-        public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SuppliedItemComponent"; } }
             
             /// <summary>
@@ -100,13 +96,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("quantity", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Medication, Substance, or Device supplied
@@ -130,7 +126,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     return dest;
                 }
@@ -168,7 +164,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -179,7 +174,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -256,7 +250,6 @@ namespace Hl7.Fhir.Model
         /// in-progress | completed | abandoned | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus? Status
         {
@@ -373,13 +366,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SupplyDelivery;
@@ -451,7 +437,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -471,7 +456,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

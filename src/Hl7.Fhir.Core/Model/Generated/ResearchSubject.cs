@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
-    [FhirType("ResearchSubject", IsResource=true)]
+    [FhirType("ResearchSubject")]
     [DataContract]
-    public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ResearchSubject; } }
-        [NotMapped]
         public override string TypeName { get { return "ResearchSubject"; } }
         
         /// <summary>
@@ -131,7 +128,6 @@ namespace Hl7.Fhir.Model
         /// candidate | enrolled | active | suspended | withdrawn | completed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
         {
@@ -208,7 +204,6 @@ namespace Hl7.Fhir.Model
         /// What path should be followed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AssignedArm
         {
@@ -240,7 +235,6 @@ namespace Hl7.Fhir.Model
         /// What path was followed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ActualArm
         {
@@ -270,13 +264,6 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Consent;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ResearchSubject;
@@ -339,7 +326,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -356,7 +342,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

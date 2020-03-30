@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A request for referral or transfer of care
     /// </summary>
-    [FhirType("ReferralRequest", IsResource=true)]
+    [FhirType("ReferralRequest")]
     [DataContract]
-    public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ReferralRequest; } }
-        [NotMapped]
         public override string TypeName { get { return "ReferralRequest"; } }
         
         [FhirType("RequesterComponent")]
         [DataContract]
-        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RequesterComponent"; } }
             
             /// <summary>
@@ -138,7 +134,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -149,7 +144,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -257,7 +251,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestStatus? Status
         {
@@ -290,7 +283,6 @@ namespace Hl7.Fhir.Model
         /// proposal | plan | order
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestIntent? Intent
         {
@@ -335,7 +327,6 @@ namespace Hl7.Fhir.Model
         /// Urgency of referral / transfer of care request
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestPriority? Priority
         {
@@ -427,7 +418,6 @@ namespace Hl7.Fhir.Model
         /// Date of creation/activation
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AuthoredOn
         {
@@ -531,7 +521,6 @@ namespace Hl7.Fhir.Model
         /// A textual description of the referral
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -592,23 +581,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _RelevantHistory;
         
-
-        public static ElementDefinition.ConstraintComponent ReferralRequest_RFR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "requester.all((agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not())",
-            Key = "rfr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ReferralRequest_RFR_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ReferralRequest;
@@ -716,7 +688,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -748,7 +719,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

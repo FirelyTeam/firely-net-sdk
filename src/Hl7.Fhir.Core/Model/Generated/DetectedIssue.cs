@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical issue with action
     /// </summary>
-    [FhirType("DetectedIssue", IsResource=true)]
+    [FhirType("DetectedIssue")]
     [DataContract]
-    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DetectedIssue; } }
-        [NotMapped]
         public override string TypeName { get { return "DetectedIssue"; } }
         
         /// <summary>
@@ -84,9 +81,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MitigationComponent")]
         [DataContract]
-        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MitigationComponent"; } }
             
             /// <summary>
@@ -120,7 +116,6 @@ namespace Hl7.Fhir.Model
             /// Date committed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -198,7 +193,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -210,7 +204,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -257,7 +250,6 @@ namespace Hl7.Fhir.Model
         /// registered | preliminary | final | amended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ObservationStatus? Status
         {
@@ -302,7 +294,6 @@ namespace Hl7.Fhir.Model
         /// high | moderate | low
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity? Severity
         {
@@ -349,7 +340,6 @@ namespace Hl7.Fhir.Model
         /// When identified
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -412,7 +402,6 @@ namespace Hl7.Fhir.Model
         /// Description and context
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Detail
         {
@@ -444,7 +433,6 @@ namespace Hl7.Fhir.Model
         /// Authority for issue
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Reference
         {
@@ -473,13 +461,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DetectedIssue;
@@ -551,7 +532,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -571,7 +551,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event record kept for security purposes
     /// </summary>
-    [FhirType("AuditEvent", IsResource=true)]
+    [FhirType("AuditEvent")]
     [DataContract]
-    public partial class AuditEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AuditEvent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AuditEvent; } }
-        [NotMapped]
         public override string TypeName { get { return "AuditEvent"; } }
         
         /// <summary>
@@ -168,9 +165,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AgentComponent")]
         [DataContract]
-        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
@@ -232,7 +228,6 @@ namespace Hl7.Fhir.Model
             /// Alternative User id e.g. authentication
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AltId
             {
@@ -264,7 +259,6 @@ namespace Hl7.Fhir.Model
             /// Human-meaningful name for the agent
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -297,7 +291,6 @@ namespace Hl7.Fhir.Model
             /// Whether user is initiator
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Requestor
             {
@@ -345,7 +338,6 @@ namespace Hl7.Fhir.Model
             /// Policy that authorized event
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Policy
             {
@@ -472,7 +464,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -492,7 +483,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -518,9 +508,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("NetworkComponent")]
         [DataContract]
-        public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "NetworkComponent"; } }
             
             /// <summary>
@@ -540,7 +529,6 @@ namespace Hl7.Fhir.Model
             /// Identifier for the network access point of the user device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Address
             {
@@ -572,7 +560,6 @@ namespace Hl7.Fhir.Model
             /// The type of network access point
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType? Type
             {
@@ -632,7 +619,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -643,7 +629,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -660,9 +645,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SourceComponent")]
         [DataContract]
-        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SourceComponent"; } }
             
             /// <summary>
@@ -682,7 +666,6 @@ namespace Hl7.Fhir.Model
             /// Logical source location within the enterprise
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Site
             {
@@ -773,7 +756,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -785,7 +767,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -803,9 +784,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntityComponent")]
         [DataContract]
-        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
@@ -906,7 +886,6 @@ namespace Hl7.Fhir.Model
             /// Descriptor for entity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -938,7 +917,6 @@ namespace Hl7.Fhir.Model
             /// Descriptive text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -970,7 +948,6 @@ namespace Hl7.Fhir.Model
             /// Query parameters
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] Query
             {
@@ -1068,7 +1045,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1087,7 +1063,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1112,9 +1087,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DetailComponent")]
         [DataContract]
-        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
@@ -1135,7 +1109,6 @@ namespace Hl7.Fhir.Model
             /// Name of the property
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Type
             {
@@ -1168,7 +1141,6 @@ namespace Hl7.Fhir.Model
             /// Property value
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public byte[] Value
             {
@@ -1228,7 +1200,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1239,7 +1210,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1299,7 +1269,6 @@ namespace Hl7.Fhir.Model
         /// Type of action performed during the event
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
         {
@@ -1332,7 +1301,6 @@ namespace Hl7.Fhir.Model
         /// Time when the event occurred on source
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Recorded
         {
@@ -1364,7 +1332,6 @@ namespace Hl7.Fhir.Model
         /// Whether the event succeeded or failed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AuditEvent.AuditEventOutcome? Outcome
         {
@@ -1396,7 +1363,6 @@ namespace Hl7.Fhir.Model
         /// Description of the event outcome
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string OutcomeDesc
         {
@@ -1467,23 +1433,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.AuditEvent.EntityComponent> _Entity;
         
-
-        public static ElementDefinition.ConstraintComponent AuditEvent_SEV_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "entity.all(name.empty() or query.empty())",
-            Key = "sev-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a name or a query (NOT both)",
-            Xpath = "not(exists(f:name)) or not(exists(f:query))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AuditEvent_SEV_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AuditEvent;
@@ -1552,7 +1501,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1571,7 +1519,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

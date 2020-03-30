@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of a Medication
     /// </summary>
-    [FhirType("Medication", IsResource=true)]
+    [FhirType("Medication")]
     [DataContract]
-    public partial class Medication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Medication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Medication; } }
-        [NotMapped]
         public override string TypeName { get { return "Medication"; } }
         
         /// <summary>
@@ -84,9 +81,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("IngredientComponent")]
         [DataContract]
-        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "IngredientComponent"; } }
             
             /// <summary>
@@ -122,7 +118,6 @@ namespace Hl7.Fhir.Model
             /// Active ingredient indicator
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? IsActive
             {
@@ -198,7 +193,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -210,7 +204,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -228,9 +221,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PackageComponent")]
         [DataContract]
-        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PackageComponent"; } }
             
             /// <summary>
@@ -322,7 +314,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -334,7 +325,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -352,9 +342,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContentComponent")]
         [DataContract]
-        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ContentComponent"; } }
             
             /// <summary>
@@ -378,13 +367,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("amount", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Amount
+            public Hl7.Fhir.Model.Quantity Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Amount;
+            private Hl7.Fhir.Model.Quantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -394,7 +383,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -431,7 +420,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -442,7 +430,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -459,9 +446,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("BatchComponent")]
         [DataContract]
-        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "BatchComponent"; } }
             
             /// <summary>
@@ -481,7 +467,6 @@ namespace Hl7.Fhir.Model
             /// Identifier assigned to batch
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string LotNumber
             {
@@ -513,7 +498,6 @@ namespace Hl7.Fhir.Model
             /// When batch will expire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ExpirationDate
             {
@@ -573,7 +557,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -584,7 +567,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -629,7 +611,6 @@ namespace Hl7.Fhir.Model
         /// active | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Medication.MedicationStatus? Status
         {
@@ -661,7 +642,6 @@ namespace Hl7.Fhir.Model
         /// True if a brand
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IsBrand
         {
@@ -693,7 +673,6 @@ namespace Hl7.Fhir.Model
         /// True if medication does not require a prescription
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? IsOverTheCounter
         {
@@ -777,13 +756,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Attachment> _Image;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Medication;
@@ -849,7 +821,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -867,7 +838,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

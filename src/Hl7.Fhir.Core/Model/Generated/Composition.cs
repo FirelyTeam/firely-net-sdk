@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of resources composed into a single coherent clinical statement with clinical attestation
     /// </summary>
-    [FhirType("Composition", IsResource=true)]
+    [FhirType("Composition")]
     [DataContract]
-    public partial class Composition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Composition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Composition; } }
-        [NotMapped]
         public override string TypeName { get { return "Composition"; } }
         
         /// <summary>
@@ -135,9 +132,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("AttesterComponent")]
         [DataContract]
-        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AttesterComponent"; } }
             
             /// <summary>
@@ -158,7 +154,6 @@ namespace Hl7.Fhir.Model
             /// personal | professional | legal | official
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode?> Mode
             {
@@ -190,7 +185,6 @@ namespace Hl7.Fhir.Model
             /// When the composition was attested
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Time
             {
@@ -268,7 +262,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -280,7 +273,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -298,9 +290,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RelatesToComponent")]
         [DataContract]
-        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RelatesToComponent"; } }
             
             /// <summary>
@@ -321,7 +312,6 @@ namespace Hl7.Fhir.Model
             /// replaces | transforms | signs | appends
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.DocumentRelationshipType? Code
             {
@@ -397,7 +387,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -408,7 +397,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -425,9 +413,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EventComponent")]
         [DataContract]
-        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
@@ -521,7 +508,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -533,7 +519,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -551,9 +536,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SectionComponent")]
         [DataContract]
-        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SectionComponent"; } }
             
             /// <summary>
@@ -573,7 +557,6 @@ namespace Hl7.Fhir.Model
             /// Label for section (e.g. for ToC)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Title
             {
@@ -631,7 +614,6 @@ namespace Hl7.Fhir.Model
             /// working | snapshot | changes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ListMode? Mode
             {
@@ -765,7 +747,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -782,7 +763,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -834,7 +814,6 @@ namespace Hl7.Fhir.Model
         /// preliminary | final | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CompositionStatus? Status
         {
@@ -925,7 +904,6 @@ namespace Hl7.Fhir.Model
         /// Composition editing time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -974,7 +952,6 @@ namespace Hl7.Fhir.Model
         /// Human Readable name/title
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1006,7 +983,6 @@ namespace Hl7.Fhir.Model
         /// As defined by affinity domain
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Composition.ConfidentialityClassification? Confidentiality
         {
@@ -1092,33 +1068,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
         
-
-        public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "section.all(text.exists() or entry.exists() or section.exists())",
-            Key = "cmp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section must at least one of text, entries, or sub-sections",
-            Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "section.all(emptyReason.empty() or entry.empty())",
-            Key = "cmp-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A section can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Composition_CMP_1);
-            InvariantConstraints.Add(Composition_CMP_2);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Composition;
@@ -1202,7 +1151,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1226,7 +1174,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

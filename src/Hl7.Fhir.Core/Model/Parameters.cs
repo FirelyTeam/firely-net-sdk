@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [System.Diagnostics.DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
     public partial class Parameters
-    {   
+    {
         /// <summary>
         /// Add a parameter with a given name and value.
         /// </summary>

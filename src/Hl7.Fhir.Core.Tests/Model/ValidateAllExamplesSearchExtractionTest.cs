@@ -18,7 +18,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -115,7 +114,8 @@ namespace Hl7.Fhir.Tests.Model
         private void ExtractValuesForSearchParameterFromFile(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = SpList[resource.ResourceType];
+            resource.TryDeriveResourceType(out var rt);
+            var searchparameters = SpList[rt];
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache

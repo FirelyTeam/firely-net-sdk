@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Planned participants in the coordination and delivery of care for a patient or group
     /// </summary>
-    [FhirType("CareTeam", IsResource=true)]
+    [FhirType("CareTeam")]
     [DataContract]
-    public partial class CareTeam : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CareTeam : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CareTeam; } }
-        [NotMapped]
         public override string TypeName { get { return "CareTeam"; } }
         
         /// <summary>
@@ -96,9 +93,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
@@ -208,7 +204,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -269,7 +263,6 @@ namespace Hl7.Fhir.Model
         /// proposed | active | suspended | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CareTeam.CareTeamStatus? Status
         {
@@ -315,7 +308,6 @@ namespace Hl7.Fhir.Model
         /// Name of the team, such as crisis assessment team
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -447,23 +439,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent CareTeam_CTM_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
-            Key = "ctm-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
-            Xpath = "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CareTeam_CTM_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CareTeam;
@@ -538,7 +513,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -559,7 +533,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

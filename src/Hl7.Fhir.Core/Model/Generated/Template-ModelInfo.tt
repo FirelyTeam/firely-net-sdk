@@ -44,7 +44,7 @@
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical' and (not(fhir:derivation/@value) or (fhir:derivation/@value != 'constraint'))]", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)
@@ -338,29 +338,7 @@ namespace Hl7.Fhir.Model
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									return "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									return "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									return "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									return "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : return "Hl7.Fhir.Model.Quantity";
             }
 			return propType;
         }

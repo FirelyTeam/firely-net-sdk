@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance or medical plan or a payment agreement
     /// </summary>
-    [FhirType("Coverage", IsResource=true)]
+    [FhirType("Coverage")]
     [DataContract]
-    public partial class Coverage : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Coverage : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Coverage; } }
-        [NotMapped]
         public override string TypeName { get { return "Coverage"; } }
         
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
@@ -79,7 +75,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Group
             {
@@ -111,7 +106,6 @@ namespace Hl7.Fhir.Model
             /// Display text for an identifier for the group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string GroupDisplay
             {
@@ -143,7 +137,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the subsection of the group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubGroup
             {
@@ -175,7 +168,6 @@ namespace Hl7.Fhir.Model
             /// Display text for the subsection of the group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubGroupDisplay
             {
@@ -207,7 +199,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the plan
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Plan
             {
@@ -239,7 +230,6 @@ namespace Hl7.Fhir.Model
             /// Display text for the plan
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string PlanDisplay
             {
@@ -271,7 +261,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the subsection of the plan
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubPlan
             {
@@ -303,7 +292,6 @@ namespace Hl7.Fhir.Model
             /// Display text for the subsection of the plan
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubPlanDisplay
             {
@@ -335,7 +323,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the class
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Class
             {
@@ -367,7 +354,6 @@ namespace Hl7.Fhir.Model
             /// Display text for the class
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ClassDisplay
             {
@@ -399,7 +385,6 @@ namespace Hl7.Fhir.Model
             /// An identifier for the subsection of the class
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubClass
             {
@@ -431,7 +416,6 @@ namespace Hl7.Fhir.Model
             /// Display text for the subsection of the subclass
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SubClassDisplay
             {
@@ -521,7 +505,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -542,7 +525,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -598,7 +580,6 @@ namespace Hl7.Fhir.Model
         /// active | cancelled | draft | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
@@ -673,7 +654,6 @@ namespace Hl7.Fhir.Model
         /// ID assigned to the Subscriber
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string SubscriberId
         {
@@ -775,7 +755,6 @@ namespace Hl7.Fhir.Model
         /// Dependent number
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Dependent
         {
@@ -807,7 +786,6 @@ namespace Hl7.Fhir.Model
         /// The plan instance or sequence counter
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Sequence
         {
@@ -839,7 +817,6 @@ namespace Hl7.Fhir.Model
         /// Relative order of the coverage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Order
         {
@@ -871,7 +848,6 @@ namespace Hl7.Fhir.Model
         /// Insurer network
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Network
         {
@@ -902,13 +878,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coverage;
@@ -995,7 +964,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1020,7 +988,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

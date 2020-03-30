@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Group of multiple entities
     /// </summary>
-    [FhirType("Group", IsResource=true)]
+    [FhirType("Group")]
     [DataContract]
-    public partial class Group : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Group : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Group; } }
-        [NotMapped]
         public override string TypeName { get { return "Group"; } }
         
         /// <summary>
@@ -102,9 +99,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CharacteristicComponent")]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CharacteristicComponent"; } }
             
             /// <summary>
@@ -126,7 +122,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -155,7 +151,6 @@ namespace Hl7.Fhir.Model
             /// Group includes or excludes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Exclude
             {
@@ -234,7 +229,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -247,7 +241,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -266,9 +259,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MemberComponent")]
         [DataContract]
-        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MemberComponent"; } }
             
             /// <summary>
@@ -317,7 +309,6 @@ namespace Hl7.Fhir.Model
             /// If member is no longer in group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Inactive
             {
@@ -380,7 +371,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -392,7 +382,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -439,7 +428,6 @@ namespace Hl7.Fhir.Model
         /// Whether this group's record is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -472,7 +460,6 @@ namespace Hl7.Fhir.Model
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Group.GroupType? Type
         {
@@ -505,7 +492,6 @@ namespace Hl7.Fhir.Model
         /// Descriptive or actual
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Actual
         {
@@ -550,7 +536,6 @@ namespace Hl7.Fhir.Model
         /// Label for Group
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -582,7 +567,6 @@ namespace Hl7.Fhir.Model
         /// Number of members
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Quantity
         {
@@ -625,23 +609,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
-
-        public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "member.empty() or (actual = true)",
-            Key = "grp-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have members if group is \"actual\"",
-            Xpath = "f:actual/@value=true() or not(exists(f:member))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Group_GRP_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Group;
@@ -707,7 +674,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -725,7 +691,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

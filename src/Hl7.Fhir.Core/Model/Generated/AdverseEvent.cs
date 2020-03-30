@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medical care, research study or other healthcare event causing physical injury
     /// </summary>
-    [FhirType("AdverseEvent", IsResource=true)]
+    [FhirType("AdverseEvent")]
     [DataContract]
-    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AdverseEvent; } }
-        [NotMapped]
         public override string TypeName { get { return "AdverseEvent"; } }
         
         /// <summary>
@@ -99,9 +96,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("SuspectEntityComponent")]
         [DataContract]
-        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SuspectEntityComponent"; } }
             
             /// <summary>
@@ -137,7 +133,6 @@ namespace Hl7.Fhir.Model
             /// causality1 | causality2
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality? Causality
             {
@@ -182,7 +177,6 @@ namespace Hl7.Fhir.Model
             /// AdverseEvent.suspectEntity.causalityProductRelatedness
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string CausalityProductRelatedness
             {
@@ -298,7 +292,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -314,7 +307,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -366,7 +358,6 @@ namespace Hl7.Fhir.Model
         /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory? Category
         {
@@ -426,7 +417,6 @@ namespace Hl7.Fhir.Model
         /// When the event occurred
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -545,7 +535,6 @@ namespace Hl7.Fhir.Model
         /// Description of the adverse event
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -622,13 +611,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Study;
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AdverseEvent;
@@ -715,7 +697,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -740,7 +721,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An action that is being or was performed on a patient
     /// </summary>
-    [FhirType("Procedure", IsResource=true)]
+    [FhirType("Procedure")]
     [DataContract]
-    public partial class Procedure : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Procedure : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Procedure; } }
-        [NotMapped]
         public override string TypeName { get { return "Procedure"; } }
         
         [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
@@ -154,7 +150,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -166,7 +161,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -184,9 +178,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FocalDeviceComponent")]
         [DataContract]
-        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "FocalDeviceComponent"; } }
             
             /// <summary>
@@ -263,7 +256,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -274,7 +266,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -369,7 +360,6 @@ namespace Hl7.Fhir.Model
         /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EventStatus? Status
         {
@@ -401,7 +391,6 @@ namespace Hl7.Fhir.Model
         /// True if procedure was not performed as scheduled
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotDone
         {
@@ -705,23 +694,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
         
-
-        public static ElementDefinition.ConstraintComponent Procedure_PRO_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "notDoneReason.empty() or notDone = true",
-            Key = "pro-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not done is only permitted if notDone indicator is true",
-            Xpath = "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Procedure_PRO_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;
@@ -838,7 +810,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -873,7 +844,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

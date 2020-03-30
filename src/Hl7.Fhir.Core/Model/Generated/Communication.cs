@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A record of information transmitted from a sender to a receiver
     /// </summary>
-    [FhirType("Communication", IsResource=true)]
+    [FhirType("Communication")]
     [DataContract]
-    public partial class Communication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Communication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Communication; } }
-        [NotMapped]
         public override string TypeName { get { return "Communication"; } }
         
         [FhirType("PayloadComponent")]
         [DataContract]
-        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PayloadComponent"; } }
             
             /// <summary>
@@ -120,7 +116,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -130,7 +125,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -224,7 +218,6 @@ namespace Hl7.Fhir.Model
         /// preparation | in-progress | suspended | aborted | completed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EventStatus? Status
         {
@@ -256,7 +249,6 @@ namespace Hl7.Fhir.Model
         /// Communication did not occur
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotDone
         {
@@ -391,7 +383,6 @@ namespace Hl7.Fhir.Model
         /// When sent
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Sent
         {
@@ -423,7 +414,6 @@ namespace Hl7.Fhir.Model
         /// When received
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Received
         {
@@ -511,23 +501,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent Communication_COM_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "notDone or notDoneReason.exists().not()",
-            Key = "com-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Communication_COM_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Communication;
@@ -626,7 +599,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -655,7 +627,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

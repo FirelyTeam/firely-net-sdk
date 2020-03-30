@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A healthcare consumer's policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
-    [FhirType("Consent", IsResource=true)]
+    [FhirType("Consent")]
     [DataContract]
-    public partial class Consent : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Consent : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Consent; } }
-        [NotMapped]
         public override string TypeName { get { return "Consent"; } }
         
         /// <summary>
@@ -156,9 +153,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ActorComponent")]
         [DataContract]
-        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ActorComponent"; } }
             
             /// <summary>
@@ -236,7 +232,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -247,7 +242,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -264,9 +258,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PolicyComponent")]
         [DataContract]
-        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PolicyComponent"; } }
             
             /// <summary>
@@ -286,7 +279,6 @@ namespace Hl7.Fhir.Model
             /// Enforcement source for policy
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Authority
             {
@@ -318,7 +310,6 @@ namespace Hl7.Fhir.Model
             /// Specific policy covered by this consent
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Uri
             {
@@ -378,7 +369,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -389,7 +379,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -406,9 +395,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DataComponent")]
         [DataContract]
-        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DataComponent"; } }
             
             /// <summary>
@@ -429,7 +417,6 @@ namespace Hl7.Fhir.Model
             /// instance | related | dependents | authoredby
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
             {
@@ -505,7 +492,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -516,7 +502,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -533,9 +518,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptComponent")]
         [DataContract]
-        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExceptComponent"; } }
             
             /// <summary>
@@ -556,7 +540,6 @@ namespace Hl7.Fhir.Model
             /// deny | permit
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Consent.ConsentExceptType? Type
             {
@@ -764,7 +747,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -783,7 +765,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -808,9 +789,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptActorComponent")]
         [DataContract]
-        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExceptActorComponent"; } }
             
             /// <summary>
@@ -888,7 +868,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -899,7 +878,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -916,9 +894,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ExceptDataComponent")]
         [DataContract]
-        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ExceptDataComponent"; } }
             
             /// <summary>
@@ -939,7 +916,6 @@ namespace Hl7.Fhir.Model
             /// instance | related | dependents | authoredby
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
             {
@@ -1015,7 +991,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1026,7 +1001,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1072,7 +1046,6 @@ namespace Hl7.Fhir.Model
         /// draft | proposed | active | rejected | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Consent.ConsentState? Status
         {
@@ -1147,7 +1120,6 @@ namespace Hl7.Fhir.Model
         /// When this Consent was created or indexed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateTime
         {
@@ -1268,7 +1240,6 @@ namespace Hl7.Fhir.Model
         /// Policy that this consents to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string PolicyRule
         {
@@ -1352,23 +1323,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
         
-
-        public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "policy.exists() or policyRule.exists()",
-            Key = "ppc-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a Policy or PolicyRule",
-            Xpath = "exists(f:policy) or exists(f:policyRule)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Consent_PPC_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Consent;
@@ -1461,7 +1415,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1488,7 +1441,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

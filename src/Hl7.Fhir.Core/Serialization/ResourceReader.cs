@@ -9,23 +9,14 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
     internal class ResourceReader
     {
 #pragma warning disable 612, 618
-        private ITypedElement _reader;
-        private ModelInspector _inspector;
+        private readonly ITypedElement _reader;
+        private readonly ModelInspector _inspector;
 
         public ParserSettings Settings { get; private set; }
 
@@ -43,7 +34,7 @@ namespace Hl7.Fhir.Serialization
                 ComplexTypeReader.RaiseFormatError(
                     "Underlying data source was not able to provide the actual instance type of the resource.", _reader.Location);
 
-            var mapping = _inspector.FindClassMappingForResource(_reader.InstanceType);
+            var mapping = _inspector.FindClassMappingByName(_reader.InstanceType);
 
             if (mapping == null)
                 ComplexTypeReader.RaiseFormatError($"Asked to deserialize unknown resource '{_reader.InstanceType}'", _reader.Location);

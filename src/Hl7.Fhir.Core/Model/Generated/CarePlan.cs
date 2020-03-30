@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare plan for patient or group
     /// </summary>
-    [FhirType("CarePlan", IsResource=true)]
+    [FhirType("CarePlan")]
     [DataContract]
-    public partial class CarePlan : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class CarePlan : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.CarePlan; } }
-        [NotMapped]
         public override string TypeName { get { return "CarePlan"; } }
         
         /// <summary>
@@ -192,9 +189,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ActivityComponent")]
         [DataContract]
-        public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ActivityComponent"; } }
             
             /// <summary>
@@ -323,7 +319,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -337,7 +332,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -357,9 +351,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DetailComponent")]
         [DataContract]
-        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
@@ -467,7 +460,6 @@ namespace Hl7.Fhir.Model
             /// not-started | scheduled | in-progress | on-hold | completed | cancelled | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
             {
@@ -499,7 +491,6 @@ namespace Hl7.Fhir.Model
             /// Reason for current status
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string StatusReason
             {
@@ -531,7 +522,6 @@ namespace Hl7.Fhir.Model
             /// Do NOT do
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Prohibited
             {
@@ -612,26 +602,26 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dailyAmount", Order=170)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity DailyAmount
+            public Hl7.Fhir.Model.Quantity DailyAmount
             {
                 get { return _DailyAmount; }
                 set { _DailyAmount = value; OnPropertyChanged("DailyAmount"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _DailyAmount;
+            private Hl7.Fhir.Model.Quantity _DailyAmount;
             
             /// <summary>
             /// How much to administer/supply/consume
             /// </summary>
             [FhirElement("quantity", Order=180)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Extra info describing activity to perform
@@ -650,7 +640,6 @@ namespace Hl7.Fhir.Model
             /// Extra info describing activity to perform
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -685,8 +674,8 @@ namespace Hl7.Fhir.Model
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
-                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.SimpleQuantity)DailyAmount.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.Quantity)DailyAmount.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     return dest;
                 }
@@ -752,7 +741,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -777,7 +765,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -902,7 +889,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CarePlan.CarePlanStatus? Status
         {
@@ -935,7 +921,6 @@ namespace Hl7.Fhir.Model
         /// proposal | plan | order | option
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CarePlan.CarePlanIntent? Intent
         {
@@ -981,7 +966,6 @@ namespace Hl7.Fhir.Model
         /// Human-friendly name for the CarePlan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1013,7 +997,6 @@ namespace Hl7.Fhir.Model
         /// Summary of nature of plan
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -1180,23 +1163,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent CarePlan_CPL_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "activity.all(detail.empty() or reference.empty())",
-            Key = "cpl-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Provide a reference or detail, not both",
-            Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(CarePlan_CPL_3);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CarePlan;
@@ -1295,7 +1261,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1324,7 +1289,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information about conditions, problems or diagnoses
     /// </summary>
-    [FhirType("Condition", IsResource=true)]
+    [FhirType("Condition")]
     [DataContract]
-    public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Condition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Condition; } }
-        [NotMapped]
         public override string TypeName { get { return "Condition"; } }
         
         /// <summary>
@@ -141,9 +138,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StageComponent")]
         [DataContract]
-        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StageComponent"; } }
             
             /// <summary>
@@ -220,7 +216,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -231,7 +226,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -248,9 +242,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EvidenceComponent")]
         [DataContract]
-        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EvidenceComponent"; } }
             
             /// <summary>
@@ -328,7 +321,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -339,7 +331,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -385,7 +376,6 @@ namespace Hl7.Fhir.Model
         /// active | recurrence | inactive | remission | resolved
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes? ClinicalStatus
         {
@@ -417,7 +407,6 @@ namespace Hl7.Fhir.Model
         /// provisional | differential | confirmed | refuted | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Condition.ConditionVerificationStatus? VerificationStatus
         {
@@ -564,7 +553,6 @@ namespace Hl7.Fhir.Model
         /// Date record was believed accurate
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AssertedDate
         {
@@ -635,53 +623,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            Key = "con-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            Key = "con-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "stage.all(summary.exists() or assessment.exists())",
-            Key = "con-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "evidence.all(code.exists() or detail.exists())",
-            Key = "con-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Condition_CON_4);
-            InvariantConstraints.Add(Condition_CON_3);
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Condition;
@@ -768,7 +709,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -793,7 +733,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
