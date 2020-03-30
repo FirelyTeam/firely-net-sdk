@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An instance of a medical-related component of a medical device
     /// </summary>
-    [FhirType("DeviceDefinition", IsResource=true)]
+    [FhirType("DeviceDefinition")]
     [DataContract]
-    public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DeviceDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "DeviceDefinition"; } }
         
         [FhirType("UdiDeviceIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "UdiDeviceIdentifierComponent"; } }
             
             /// <summary>
@@ -80,7 +76,6 @@ namespace Hl7.Fhir.Model
             /// The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DeviceIdentifier
             {
@@ -113,7 +108,6 @@ namespace Hl7.Fhir.Model
             /// The organization that assigns the identifier algorithm
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Issuer
             {
@@ -146,7 +140,6 @@ namespace Hl7.Fhir.Model
             /// The jurisdiction to which the deviceIdentifier applies
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Jurisdiction
             {
@@ -209,7 +202,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -221,7 +213,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -239,9 +230,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DeviceNameComponent"; } }
             
             /// <summary>
@@ -262,7 +252,6 @@ namespace Hl7.Fhir.Model
             /// The name of the device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -295,7 +284,6 @@ namespace Hl7.Fhir.Model
             /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.DeviceNameType? Type
             {
@@ -355,7 +343,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -366,7 +353,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -383,9 +369,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SpecializationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SpecializationComponent"; } }
             
             /// <summary>
@@ -406,7 +391,6 @@ namespace Hl7.Fhir.Model
             /// The standard that is used to operate and communicate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SystemType
             {
@@ -438,7 +422,6 @@ namespace Hl7.Fhir.Model
             /// The version of the standard that is used to operate and communicate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Version
             {
@@ -498,7 +481,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -509,7 +491,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -526,9 +507,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CapabilityComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CapabilityComponent"; } }
             
             /// <summary>
@@ -604,7 +584,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -615,7 +594,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -632,9 +610,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PropertyComponent"; } }
             
             /// <summary>
@@ -657,13 +634,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("valueQuantity", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Quantity> ValueQuantity
+            public List<Hl7.Fhir.Model.Quantity> ValueQuantity
             {
-                get { if(_ValueQuantity==null) _ValueQuantity = new List<Quantity>(); return _ValueQuantity; }
+                get { if(_ValueQuantity==null) _ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(); return _ValueQuantity; }
                 set { _ValueQuantity = value; OnPropertyChanged("ValueQuantity"); }
             }
             
-            private List<Quantity> _ValueQuantity;
+            private List<Hl7.Fhir.Model.Quantity> _ValueQuantity;
             
             /// <summary>
             /// Property value as a code, e.g., NTP4 (synced to NTP)
@@ -687,7 +664,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(ValueQuantity != null) dest.ValueQuantity = new List<Quantity>(ValueQuantity.DeepCopy());
+                    if(ValueQuantity != null) dest.ValueQuantity = new List<Hl7.Fhir.Model.Quantity>(ValueQuantity.DeepCopy());
                     if(ValueCode != null) dest.ValueCode = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCode.DeepCopy());
                     return dest;
                 }
@@ -727,7 +704,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -739,7 +715,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -757,9 +732,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("MaterialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MaterialComponent"; } }
             
             /// <summary>
@@ -793,7 +767,6 @@ namespace Hl7.Fhir.Model
             /// Indicates an alternative material of the device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Alternate
             {
@@ -825,7 +798,6 @@ namespace Hl7.Fhir.Model
             /// Whether the substance is a known or suspected allergen
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? AllergenicIndicator
             {
@@ -888,7 +860,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -900,7 +871,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -990,7 +960,6 @@ namespace Hl7.Fhir.Model
         /// The model number for the device
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ModelNumber
         {
@@ -1050,7 +1019,6 @@ namespace Hl7.Fhir.Model
         /// Available versions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Version
         {
@@ -1194,7 +1162,6 @@ namespace Hl7.Fhir.Model
         /// Network address to contact device
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -1226,7 +1193,6 @@ namespace Hl7.Fhir.Model
         /// Access to on-line information
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string OnlineInformation
         {
@@ -1260,13 +1226,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=280)]
         [DataMember]
-        public Quantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Quantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// The parent device it can be part of
@@ -1298,11 +1264,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent> _Material;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1330,7 +1291,7 @@ namespace Hl7.Fhir.Model
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(OnlineInformationElement != null) dest.OnlineInformationElement = (Hl7.Fhir.Model.FhirUri)OnlineInformationElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(ParentDevice != null) dest.ParentDevice = (Hl7.Fhir.Model.ResourceReference)ParentDevice.DeepCopy();
                 if(Material != null) dest.Material = new List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>(Material.DeepCopy());
                 return dest;
@@ -1408,7 +1369,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1439,7 +1399,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

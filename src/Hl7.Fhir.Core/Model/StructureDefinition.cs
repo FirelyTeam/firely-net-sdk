@@ -50,16 +50,12 @@ namespace Hl7.Fhir.Model
 
         public partial class DifferentialComponent : IElementList { }
 
-        [NotMapped]
         public bool IsConstraint => Derivation == TypeDerivationRule.Constraint;
 
-        [NotMapped]
         public bool IsExtension => Type == "Extension";
 
-        [NotMapped]
         public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
 
-        [NotMapped]
         public bool IsCoreDefinition => Type == Id && Url == ModelInfo.CanonicalUriForFhirCoreType(Type).Value;
 
     }

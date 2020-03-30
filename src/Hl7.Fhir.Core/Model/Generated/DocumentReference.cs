@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A reference to a document
     /// </summary>
-    [FhirType("DocumentReference", IsResource=true)]
+    [FhirType("DocumentReference")]
     [DataContract]
-    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DocumentReference; } }
-        [NotMapped]
         public override string TypeName { get { return "DocumentReference"; } }
         
         [FhirType("RelatesToComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RelatesToComponent"; } }
             
             /// <summary>
@@ -80,7 +76,6 @@ namespace Hl7.Fhir.Model
             /// replaces | transforms | signs | appends
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.DocumentRelationshipType? Code
             {
@@ -156,7 +151,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -167,7 +161,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -184,9 +177,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ContentComponent"; } }
             
             /// <summary>
@@ -261,7 +253,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -272,7 +263,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -289,9 +279,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ContextComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ContextComponent"; } }
             
             /// <summary>
@@ -454,7 +443,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -470,7 +458,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -535,7 +522,6 @@ namespace Hl7.Fhir.Model
         /// current | superseded | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DocumentReferenceStatus? Status
         {
@@ -567,7 +553,6 @@ namespace Hl7.Fhir.Model
         /// preliminary | final | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.CompositionStatus? DocStatus
         {
@@ -641,7 +626,6 @@ namespace Hl7.Fhir.Model
         /// When this document reference was created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Date
         {
@@ -733,7 +717,6 @@ namespace Hl7.Fhir.Model
         /// Human-readable description
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -790,11 +773,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -882,7 +860,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -907,7 +884,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

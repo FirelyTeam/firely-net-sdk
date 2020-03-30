@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list is a curated collection of resources
     /// </summary>
-    [FhirType("List", IsResource=true)]
+    [FhirType("List")]
     [DataContract]
-    public partial class List : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class List : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.List; } }
-        [NotMapped]
         public override string TypeName { get { return "List"; } }
         
         /// <summary>
@@ -84,9 +81,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EntryComponent"; } }
             
             /// <summary>
@@ -119,7 +115,6 @@ namespace Hl7.Fhir.Model
             /// If this item is actually marked as deleted
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? Deleted
             {
@@ -151,7 +146,6 @@ namespace Hl7.Fhir.Model
             /// When item added to list
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -233,7 +227,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -246,7 +239,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -295,7 +287,6 @@ namespace Hl7.Fhir.Model
         /// current | retired | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.List.ListStatus? Status
         {
@@ -328,7 +319,6 @@ namespace Hl7.Fhir.Model
         /// working | snapshot | changes
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ListMode? Mode
         {
@@ -360,7 +350,6 @@ namespace Hl7.Fhir.Model
         /// Descriptive name for the list
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -435,7 +424,6 @@ namespace Hl7.Fhir.Model
         /// When the list was prepared
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -520,41 +508,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
         
 
-        public static ElementDefinition.ConstraintComponent List_LST_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "mode = 'working' or entry.date.empty()",
-            Key = "lst-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "An entry date can only be used if the mode of the list is \"working\"",
-            Xpath = "(f:mode/@value = 'working') or not(exists(f:entry/f:date))"
-        };
-
-        public static ElementDefinition.ConstraintComponent List_LST_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "mode = 'changes' or entry.deleted.empty()",
-            Key = "lst-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The deleted flag can only be used if the mode of the list is \"changes\"",
-            Xpath = "(f:mode/@value = 'changes') or not(exists(f:entry/f:deleted))"
-        };
-
-        public static ElementDefinition.ConstraintComponent List_LST_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "emptyReason.empty() or entry.empty()",
-            Key = "lst-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A list can only have an emptyReason if it is empty",
-            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(List_LST_3);
-            InvariantConstraints.Add(List_LST_2);
-            InvariantConstraints.Add(List_LST_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -633,7 +586,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -655,7 +607,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

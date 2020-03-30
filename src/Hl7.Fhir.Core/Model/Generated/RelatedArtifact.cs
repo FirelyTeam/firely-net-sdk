@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("RelatedArtifact")]
     [DataContract]
-    public partial class RelatedArtifact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class RelatedArtifact : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "RelatedArtifact"; } }
         
         /// <summary>
@@ -128,7 +127,6 @@ namespace Hl7.Fhir.Model
         /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
         {
@@ -160,7 +158,6 @@ namespace Hl7.Fhir.Model
         /// Short label
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Label
         {
@@ -192,7 +189,6 @@ namespace Hl7.Fhir.Model
         /// Brief description of the related artifact
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Display
         {
@@ -237,7 +233,6 @@ namespace Hl7.Fhir.Model
         /// Where the artifact can be accessed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -282,7 +277,6 @@ namespace Hl7.Fhir.Model
         /// What resource is being referenced
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Resource
         {
@@ -357,7 +351,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -373,7 +366,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dispensing a medication to a named patient
     /// </summary>
-    [FhirType("MedicationDispense", IsResource=true)]
+    [FhirType("MedicationDispense")]
     [DataContract]
-    public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationDispense; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationDispense"; } }
         
         /// <summary>
@@ -120,9 +117,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PerformerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
@@ -199,7 +195,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -210,7 +205,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -227,9 +221,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SubstitutionComponent"; } }
             
             /// <summary>
@@ -250,7 +243,6 @@ namespace Hl7.Fhir.Model
             /// Whether a substitution was or was not performed on the dispense
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? WasSubstituted
             {
@@ -359,7 +351,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -372,7 +363,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -437,7 +427,6 @@ namespace Hl7.Fhir.Model
         /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes? Status
         {
@@ -605,26 +594,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// Amount of medication expressed as a timing amount
         /// </summary>
         [FhirElement("daysSupply", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.SimpleQuantity DaysSupply
+        public Hl7.Fhir.Model.Quantity DaysSupply
         {
             get { return _DaysSupply; }
             set { _DaysSupply = value; OnPropertyChanged("DaysSupply"); }
         }
         
-        private Hl7.Fhir.Model.SimpleQuantity _DaysSupply;
+        private Hl7.Fhir.Model.Quantity _DaysSupply;
         
         /// <summary>
         /// When product was packaged and reviewed
@@ -643,7 +632,6 @@ namespace Hl7.Fhir.Model
         /// When product was packaged and reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string WhenPrepared
         {
@@ -675,7 +663,6 @@ namespace Hl7.Fhir.Model
         /// When product was given out
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string WhenHandedOver
         {
@@ -795,21 +782,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
         
 
-        public static ElementDefinition.ConstraintComponent MedicationDispense_MDD_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared",
-            Key = "mdd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "whenHandedOver cannot be before whenPrepared",
-            Xpath = "not(exists(f:whenHandedOver/@value)) or not(exists(f:whenPrepared/@value)) or ( f:whenHandedOver/@value >= f:whenPrepared/@value)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MedicationDispense_MDD_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -831,8 +803,8 @@ namespace Hl7.Fhir.Model
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.SimpleQuantity)DaysSupply.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
+                if(DaysSupply != null) dest.DaysSupply = (Hl7.Fhir.Model.Quantity)DaysSupply.DeepCopy();
                 if(WhenPreparedElement != null) dest.WhenPreparedElement = (Hl7.Fhir.Model.FhirDateTime)WhenPreparedElement.DeepCopy();
                 if(WhenHandedOverElement != null) dest.WhenHandedOverElement = (Hl7.Fhir.Model.FhirDateTime)WhenHandedOverElement.DeepCopy();
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
@@ -921,7 +893,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -954,7 +925,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

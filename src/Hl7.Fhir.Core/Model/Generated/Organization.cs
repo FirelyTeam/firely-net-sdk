@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A grouping of people or organizations with a common purpose
     /// </summary>
-    [FhirType("Organization", IsResource=true)]
+    [FhirType("Organization")]
     [DataContract]
-    public partial class Organization : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Organization : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Organization; } }
-        [NotMapped]
         public override string TypeName { get { return "Organization"; } }
         
         [FhirType("ContactComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
@@ -166,7 +162,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -179,7 +174,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -227,7 +221,6 @@ namespace Hl7.Fhir.Model
         /// Whether the organization's record is still in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -273,7 +266,6 @@ namespace Hl7.Fhir.Model
         /// Name used for the organization
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -306,7 +298,6 @@ namespace Hl7.Fhir.Model
         /// A list of alternate names that the organization is known as, or was known as in the past
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Alias
         {
@@ -395,41 +386,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
 
-        public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(identifier.count() + name.count()) > 0",
-            Key = "org-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The organization SHALL at least have a name or an identifier, and possibly more than one",
-            Xpath = "count(f:identifier | f:name) > 0"
-        };
-
-        public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "telecom.all(where(use = 'home').empty())",
-            Key = "org-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The telecom of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
-        };
-
-        public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "address.all(where(use = 'home').empty())",
-            Key = "org-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "An address of an organization can never be of use 'home'",
-            Xpath = "count(f:use[@value='home']) = 0"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Organization_ORG_1);
-            InvariantConstraints.Add(Organization_ORG_3);
-            InvariantConstraints.Add(Organization_ORG_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -499,7 +455,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -518,7 +473,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

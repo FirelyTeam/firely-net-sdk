@@ -46,21 +46,18 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes validation requirements, source(s), status and dates for one or more elements
     /// </summary>
-    [FhirType("VerificationResult", IsResource=true)]
+    [FhirType("VerificationResult")]
     [DataContract]
-    public partial class VerificationResult : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class VerificationResult : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.VerificationResult; } }
-        [NotMapped]
         public override string TypeName { get { return "VerificationResult"; } }
         
         /// <summary>
         /// The validation status of the target
         /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
         /// </summary>
-        [FhirEnumeration("status")]
-        public enum status
+        [FhirEnumeration("VerificationResultStatus")]
+        public enum VerificationResultStatus
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -102,9 +99,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PrimarySourceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PrimarySourceComponent"; } }
             
             /// <summary>
@@ -180,7 +176,6 @@ namespace Hl7.Fhir.Model
             /// When the target was validated against the primary source
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ValidationDate
             {
@@ -282,7 +277,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -298,7 +292,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -320,9 +313,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AttestationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AttestationComponent"; } }
             
             /// <summary>
@@ -385,7 +377,6 @@ namespace Hl7.Fhir.Model
             /// The date the information was attested to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Date
             {
@@ -417,7 +408,6 @@ namespace Hl7.Fhir.Model
             /// A digital identity certificate associated with the attestation source
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SourceIdentityCertificate
             {
@@ -449,7 +439,6 @@ namespace Hl7.Fhir.Model
             /// A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ProxyIdentityCertificate
             {
@@ -553,7 +542,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -570,7 +558,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -593,9 +580,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ValidatorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ValidatorComponent"; } }
             
             /// <summary>
@@ -631,7 +617,6 @@ namespace Hl7.Fhir.Model
             /// A digital identity certificate associated with the validator
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string IdentityCertificate
             {
@@ -707,7 +692,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -719,7 +703,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -769,7 +752,6 @@ namespace Hl7.Fhir.Model
         /// The fhirpath location(s) within the resource that was validated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> TargetLocation
         {
@@ -803,21 +785,20 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.VerificationResult.status> StatusElement
+        public Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.VerificationResult.status> _StatusElement;
+        private Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus> _StatusElement;
         
         /// <summary>
         /// attested | validated | in-process | req-revalid | val-fail | reval-fail
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.VerificationResult.status? Status
+        public Hl7.Fhir.Model.VerificationResult.VerificationResultStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -825,7 +806,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.status>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -847,7 +828,6 @@ namespace Hl7.Fhir.Model
         /// When the validation status was updated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string StatusDate
         {
@@ -919,7 +899,6 @@ namespace Hl7.Fhir.Model
         /// The date/time validation was last completed (including failed validations)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string LastPerformed
         {
@@ -951,7 +930,6 @@ namespace Hl7.Fhir.Model
         /// The date when target is next validated, if appropriate
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string NextScheduled
         {
@@ -1021,11 +999,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> _Validator;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1037,7 +1010,7 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
                 if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.status>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.VerificationResultStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
                 if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
                 if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
@@ -1107,7 +1080,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1130,7 +1102,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Record of medication being taken by a patient
     /// </summary>
-    [FhirType("MedicationStatement", IsResource=true)]
+    [FhirType("MedicationStatement")]
     [DataContract]
-    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationStatement; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationStatement"; } }
         
         /// <summary>
@@ -176,7 +173,6 @@ namespace Hl7.Fhir.Model
         /// active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes? Status
         {
@@ -297,7 +293,6 @@ namespace Hl7.Fhir.Model
         /// When the statement was asserted?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateAsserted
         {
@@ -402,11 +397,6 @@ namespace Hl7.Fhir.Model
         private List<Dosage> _Dosage;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -497,7 +487,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -523,7 +512,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

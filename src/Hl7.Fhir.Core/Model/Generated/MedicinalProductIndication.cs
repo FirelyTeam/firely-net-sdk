@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MedicinalProductIndication
     /// </summary>
-    [FhirType("MedicinalProductIndication", IsResource=true)]
+    [FhirType("MedicinalProductIndication")]
     [DataContract]
-    public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductIndication; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductIndication"; } }
         
         [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OtherTherapyComponent"; } }
             
             /// <summary>
@@ -137,7 +133,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -148,7 +143,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -237,13 +231,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("duration", InSummary=true, Order=140)]
         [DataMember]
-        public Quantity Duration
+        public Hl7.Fhir.Model.Quantity Duration
         {
             get { return _Duration; }
             set { _Duration = value; OnPropertyChanged("Duration"); }
         }
         
-        private Quantity _Duration;
+        private Hl7.Fhir.Model.Quantity _Duration;
         
         /// <summary>
         /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
@@ -290,11 +284,6 @@ namespace Hl7.Fhir.Model
         private List<Population> _Population;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -308,7 +297,7 @@ namespace Hl7.Fhir.Model
                 if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept)DiseaseStatus.DeepCopy();
                 if(Comorbidity != null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableConcept>(Comorbidity.DeepCopy());
                 if(IntendedEffect != null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableConcept)IntendedEffect.DeepCopy();
-                if(Duration != null) dest.Duration = (Quantity)Duration.DeepCopy();
+                if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopy();
                 if(OtherTherapy != null) dest.OtherTherapy = new List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>(OtherTherapy.DeepCopy());
                 if(UndesirableEffect != null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopy());
                 if(Population != null) dest.Population = new List<Population>(Population.DeepCopy());
@@ -361,7 +350,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -379,7 +367,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

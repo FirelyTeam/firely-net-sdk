@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An association of a Patient with an Organization and  Healthcare Provider(s) for a period of time that the Organization assumes some level of responsibility
     /// </summary>
-    [FhirType("EpisodeOfCare", IsResource=true)]
+    [FhirType("EpisodeOfCare")]
     [DataContract]
-    public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.EpisodeOfCare; } }
-        [NotMapped]
         public override string TypeName { get { return "EpisodeOfCare"; } }
         
         /// <summary>
@@ -108,9 +105,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("StatusHistoryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
@@ -131,7 +127,6 @@ namespace Hl7.Fhir.Model
             /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
             {
@@ -205,7 +200,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -216,7 +210,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -233,9 +226,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DiagnosisComponent"; } }
             
             /// <summary>
@@ -284,7 +276,6 @@ namespace Hl7.Fhir.Model
             /// Ranking of the diagnosis (for each role type)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Rank
             {
@@ -347,7 +338,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -359,7 +349,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -407,7 +396,6 @@ namespace Hl7.Fhir.Model
         /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
         {
@@ -572,11 +560,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Account;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -652,7 +635,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -673,7 +655,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

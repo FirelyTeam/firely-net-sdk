@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Invoice containing ChargeItems from an Account
     /// </summary>
-    [FhirType("Invoice", IsResource=true)]
+    [FhirType("Invoice")]
     [DataContract]
-    public partial class Invoice : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Invoice : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Invoice; } }
-        [NotMapped]
         public override string TypeName { get { return "Invoice"; } }
         
         /// <summary>
@@ -96,9 +93,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParticipantComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
@@ -175,7 +171,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -186,7 +181,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -203,9 +197,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LineItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "LineItemComponent"; } }
             
             /// <summary>
@@ -225,7 +218,6 @@ namespace Hl7.Fhir.Model
             /// Sequence number of line item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Sequence
             {
@@ -318,7 +310,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -330,7 +321,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -348,9 +338,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PriceComponentComponent"; } }
             
             /// <summary>
@@ -371,7 +360,6 @@ namespace Hl7.Fhir.Model
             /// base | surcharge | deduction | discount | tax | informational
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.InvoicePriceComponentType? Type
             {
@@ -416,7 +404,6 @@ namespace Hl7.Fhir.Model
             /// Factor used for calculating this component
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Factor
             {
@@ -495,7 +482,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -508,7 +494,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -557,7 +542,6 @@ namespace Hl7.Fhir.Model
         /// draft | issued | balanced | cancelled | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Invoice.InvoiceStatus? Status
         {
@@ -589,7 +573,6 @@ namespace Hl7.Fhir.Model
         /// Reason for cancellation of this Invoice
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string CancelledReason
         {
@@ -664,7 +647,6 @@ namespace Hl7.Fhir.Model
         /// Invoice date / posting date
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -805,11 +787,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -897,7 +874,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -922,7 +898,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of a graph of resources
     /// </summary>
-    [FhirType("GraphDefinition", IsResource=true)]
+    [FhirType("GraphDefinition")]
     [DataContract]
-    public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.GraphDefinition; } }
-        [NotMapped]
         public override string TypeName { get { return "GraphDefinition"; } }
         
         /// <summary>
@@ -111,9 +108,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
@@ -133,7 +129,6 @@ namespace Hl7.Fhir.Model
             /// Path in the resource that contains the link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Path
             {
@@ -165,7 +160,6 @@ namespace Hl7.Fhir.Model
             /// Which slice (if profiled)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SliceName
             {
@@ -197,7 +191,6 @@ namespace Hl7.Fhir.Model
             /// Minimum occurrences for this link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Min
             {
@@ -229,7 +222,6 @@ namespace Hl7.Fhir.Model
             /// Maximum occurrences for this link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Max
             {
@@ -261,7 +253,6 @@ namespace Hl7.Fhir.Model
             /// Why this link is specified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -347,7 +338,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -362,7 +352,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -383,9 +372,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TargetComponent"; } }
             
             /// <summary>
@@ -406,7 +394,6 @@ namespace Hl7.Fhir.Model
             /// Type of resource this link refers to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ResourceType? Type
             {
@@ -438,7 +425,6 @@ namespace Hl7.Fhir.Model
             /// Criteria for reverse lookup
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Params
             {
@@ -470,7 +456,6 @@ namespace Hl7.Fhir.Model
             /// Profile for the target resource
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Profile
             {
@@ -567,7 +552,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -581,7 +565,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -601,9 +584,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("CompartmentComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CompartmentComponent"; } }
             
             /// <summary>
@@ -624,7 +606,6 @@ namespace Hl7.Fhir.Model
             /// condition | requirement
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse? Use
             {
@@ -657,7 +638,6 @@ namespace Hl7.Fhir.Model
             /// Patient | Encounter | RelatedPerson | Practitioner | Device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.CompartmentType? Code
             {
@@ -690,7 +670,6 @@ namespace Hl7.Fhir.Model
             /// identical | matching | different | custom
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule? Rule
             {
@@ -722,7 +701,6 @@ namespace Hl7.Fhir.Model
             /// Custom rule, as a FHIRPath expression
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Expression
             {
@@ -754,7 +732,6 @@ namespace Hl7.Fhir.Model
             /// Documentation for FHIRPath expression
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -823,7 +800,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -837,7 +813,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -872,7 +847,6 @@ namespace Hl7.Fhir.Model
         /// Canonical identifier for this graph definition, represented as a URI (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -904,7 +878,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the graph definition
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -937,7 +910,6 @@ namespace Hl7.Fhir.Model
         /// Name for this graph definition (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -970,7 +942,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1002,7 +973,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1034,7 +1004,6 @@ namespace Hl7.Fhir.Model
         /// Date last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1066,7 +1035,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1167,7 +1135,6 @@ namespace Hl7.Fhir.Model
         /// Type of resource at which the graph starts
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ResourceType? Start
         {
@@ -1199,7 +1166,6 @@ namespace Hl7.Fhir.Model
         /// Profile on base resource
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Profile
         {
@@ -1229,21 +1195,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.GraphDefinition.LinkComponent> _Link;
         
 
-        public static ElementDefinition.ConstraintComponent GraphDefinition_GDF_0 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')",
-            Key = "gdf-0",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            Xpath = "not(exists(f:name/@value)) or matches(f:name/@value, '[A-Z]([A-Za-z0-9_]){0,254}')"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(GraphDefinition_GDF_0);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1328,7 +1279,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1352,7 +1302,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

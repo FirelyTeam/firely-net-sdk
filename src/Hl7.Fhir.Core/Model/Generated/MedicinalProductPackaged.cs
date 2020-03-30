@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A medicinal product in a container or package
     /// </summary>
-    [FhirType("MedicinalProductPackaged", IsResource=true)]
+    [FhirType("MedicinalProductPackaged")]
     [DataContract]
-    public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicinalProductPackaged; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
         [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "BatchIdentifierComponent"; } }
             
             /// <summary>
@@ -134,7 +130,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -145,7 +140,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -162,9 +156,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("PackageItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PackageItemComponent"; } }
             
             /// <summary>
@@ -201,13 +194,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("quantity", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Quantity Quantity
+            public Hl7.Fhir.Model.Quantity Quantity
             {
                 get { return _Quantity; }
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
-            private Quantity _Quantity;
+            private Hl7.Fhir.Model.Quantity _Quantity;
             
             /// <summary>
             /// Material type of the package item
@@ -349,7 +342,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Material != null) dest.Material = new List<Hl7.Fhir.Model.CodeableConcept>(Material.DeepCopy());
                     if(AlternateMaterial != null) dest.AlternateMaterial = new List<Hl7.Fhir.Model.CodeableConcept>(AlternateMaterial.DeepCopy());
                     if(Device != null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopy());
@@ -415,7 +408,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -436,7 +428,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -508,7 +499,6 @@ namespace Hl7.Fhir.Model
         /// Textual description
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -610,11 +600,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> _PackageItem;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -681,7 +666,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -699,7 +683,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

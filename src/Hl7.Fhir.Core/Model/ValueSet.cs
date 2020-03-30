@@ -21,7 +21,6 @@ namespace Hl7.Fhir.Model
         [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
         public string Define { get; set; }
 
-        [NotMapped]
         public bool HasExpansion => Expansion != null;
 
         public bool CodeInExpansion(String code, string system = null)

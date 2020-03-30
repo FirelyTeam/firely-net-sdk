@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details and position information for a physical place
     /// </summary>
-    [FhirType("Location", IsResource=true)]
+    [FhirType("Location")]
     [DataContract]
-    public partial class Location : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Location : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Location; } }
-        [NotMapped]
         public override string TypeName { get { return "Location"; } }
         
         /// <summary>
@@ -105,9 +102,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PositionComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PositionComponent"; } }
             
             /// <summary>
@@ -128,7 +124,6 @@ namespace Hl7.Fhir.Model
             /// Longitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Longitude
             {
@@ -161,7 +156,6 @@ namespace Hl7.Fhir.Model
             /// Latitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Latitude
             {
@@ -193,7 +187,6 @@ namespace Hl7.Fhir.Model
             /// Altitude with WGS84 datum
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Altitude
             {
@@ -256,7 +249,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -268,7 +260,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -286,9 +277,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("HoursOfOperationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "HoursOfOperationComponent"; } }
             
             /// <summary>
@@ -309,7 +299,6 @@ namespace Hl7.Fhir.Model
             /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
             {
@@ -341,7 +330,6 @@ namespace Hl7.Fhir.Model
             /// The Location is open all day
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? AllDay
             {
@@ -373,7 +361,6 @@ namespace Hl7.Fhir.Model
             /// Time that the Location opens
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string OpeningTime
             {
@@ -405,7 +392,6 @@ namespace Hl7.Fhir.Model
             /// Time that the Location closes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ClosingTime
             {
@@ -471,7 +457,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -484,7 +469,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -532,7 +516,6 @@ namespace Hl7.Fhir.Model
         /// active | suspended | inactive
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Location.LocationStatus? Status
         {
@@ -577,7 +560,6 @@ namespace Hl7.Fhir.Model
         /// Name of the location as used by humans
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -610,7 +592,6 @@ namespace Hl7.Fhir.Model
         /// A list of alternate names that the location is known as, or was known as, in the past
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Alias
         {
@@ -642,7 +623,6 @@ namespace Hl7.Fhir.Model
         /// Additional details about the location that could be displayed as further information to identify the location beyond its name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -674,7 +654,6 @@ namespace Hl7.Fhir.Model
         /// instance | kind
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Location.LocationMode? Mode
         {
@@ -817,7 +796,6 @@ namespace Hl7.Fhir.Model
         /// Description of availability exceptions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AvailabilityExceptions
         {
@@ -849,11 +827,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -944,7 +917,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -970,7 +942,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

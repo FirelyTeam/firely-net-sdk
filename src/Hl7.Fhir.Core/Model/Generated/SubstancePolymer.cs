@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer", IsResource=true)]
+    [FhirType("SubstancePolymer")]
     [DataContract]
-    public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SubstancePolymer; } }
-        [NotMapped]
         public override string TypeName { get { return "SubstancePolymer"; } }
         
         [FhirType("MonomerSetComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MonomerSetComponent"; } }
             
             /// <summary>
@@ -134,7 +130,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -145,7 +140,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -162,9 +156,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StartingMaterialComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StartingMaterialComponent"; } }
             
             /// <summary>
@@ -210,7 +203,6 @@ namespace Hl7.Fhir.Model
             /// Todo
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? IsDefining
             {
@@ -289,7 +281,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -302,7 +293,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -321,9 +311,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
             
             /// <summary>
@@ -343,7 +332,6 @@ namespace Hl7.Fhir.Model
             /// Todo
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? NumberOfUnits
             {
@@ -375,7 +363,6 @@ namespace Hl7.Fhir.Model
             /// Todo
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string AverageMolecularFormula
             {
@@ -468,7 +455,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -481,7 +467,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -500,9 +485,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepeatUnitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RepeatUnitComponent"; } }
             
             /// <summary>
@@ -535,7 +519,6 @@ namespace Hl7.Fhir.Model
             /// Todo
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string RepeatUnit
             {
@@ -645,7 +628,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -659,7 +641,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -679,9 +660,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DegreeOfPolymerisationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DegreeOfPolymerisationComponent"; } }
             
             /// <summary>
@@ -755,7 +735,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -766,7 +745,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -783,9 +761,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StructuralRepresentationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StructuralRepresentationComponent"; } }
             
             /// <summary>
@@ -818,7 +795,6 @@ namespace Hl7.Fhir.Model
             /// Todo
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Representation
             {
@@ -894,7 +870,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -906,7 +881,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -980,7 +954,6 @@ namespace Hl7.Fhir.Model
         /// Todo
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Modification
         {
@@ -1024,11 +997,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> _Repeat;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1086,7 +1054,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1101,7 +1068,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

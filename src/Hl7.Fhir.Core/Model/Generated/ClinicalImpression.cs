@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A clinical assessment performed when planning treatments and management strategies for a patient
     /// </summary>
-    [FhirType("ClinicalImpression", IsResource=true)]
+    [FhirType("ClinicalImpression")]
     [DataContract]
-    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ClinicalImpression; } }
-        [NotMapped]
         public override string TypeName { get { return "ClinicalImpression"; } }
         
         /// <summary>
@@ -84,9 +81,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("InvestigationComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "InvestigationComponent"; } }
             
             /// <summary>
@@ -164,7 +160,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -175,7 +170,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -192,9 +186,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("FindingComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "FindingComponent"; } }
             
             /// <summary>
@@ -242,7 +235,6 @@ namespace Hl7.Fhir.Model
             /// Which investigations support finding
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Basis
             {
@@ -305,7 +297,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -317,7 +308,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -365,7 +355,6 @@ namespace Hl7.Fhir.Model
         /// in-progress | completed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionStatus? Status
         {
@@ -423,7 +412,6 @@ namespace Hl7.Fhir.Model
         /// Why/how the assessment was performed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -501,7 +489,6 @@ namespace Hl7.Fhir.Model
         /// When the assessment was documented
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -594,7 +581,6 @@ namespace Hl7.Fhir.Model
         /// Clinical Protocol followed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Protocol
         {
@@ -626,7 +612,6 @@ namespace Hl7.Fhir.Model
         /// Summary of the assessment
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Summary
         {
@@ -716,11 +701,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -820,7 +800,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -849,7 +828,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

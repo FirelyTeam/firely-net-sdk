@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A Diagnostic report - a combination of request information, atomic results, images, interpretation, as well as formatted reports
     /// </summary>
-    [FhirType("DiagnosticReport", IsResource=true)]
+    [FhirType("DiagnosticReport")]
     [DataContract]
-    public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DiagnosticReport; } }
-        [NotMapped]
         public override string TypeName { get { return "DiagnosticReport"; } }
         
         /// <summary>
@@ -126,9 +123,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("MediaComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "MediaComponent"; } }
             
             /// <summary>
@@ -148,7 +144,6 @@ namespace Hl7.Fhir.Model
             /// Comment about the image (e.g. explanation)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
             {
@@ -224,7 +219,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -235,7 +229,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -298,7 +291,6 @@ namespace Hl7.Fhir.Model
         /// registered | partial | preliminary | final +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus? Status
         {
@@ -403,7 +395,6 @@ namespace Hl7.Fhir.Model
         /// DateTime this version was made
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Issued
         {
@@ -529,7 +520,6 @@ namespace Hl7.Fhir.Model
         /// Clinical conclusion (interpretation) of test results
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Conclusion
         {
@@ -573,11 +563,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -671,7 +656,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -698,7 +682,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

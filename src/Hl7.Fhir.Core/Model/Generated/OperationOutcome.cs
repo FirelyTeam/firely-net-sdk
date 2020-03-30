@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the success/failure of an action
     /// </summary>
-    [FhirType("OperationOutcome", IsResource=true)]
+    [FhirType("OperationOutcome")]
     [DataContract]
-    public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.OperationOutcome; } }
-        [NotMapped]
         public override string TypeName { get { return "OperationOutcome"; } }
         
         /// <summary>
@@ -285,9 +282,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("IssueComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "IssueComponent"; } }
             
             /// <summary>
@@ -308,7 +304,6 @@ namespace Hl7.Fhir.Model
             /// fatal | error | warning | information
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.OperationOutcome.IssueSeverity? Severity
             {
@@ -341,7 +336,6 @@ namespace Hl7.Fhir.Model
             /// Error or warning code
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.OperationOutcome.IssueType? Code
             {
@@ -386,7 +380,6 @@ namespace Hl7.Fhir.Model
             /// Additional diagnostic information about the issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Diagnostics
             {
@@ -419,7 +412,6 @@ namespace Hl7.Fhir.Model
             /// Deprecated: Path of element(s) related to issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Location
             {
@@ -452,7 +444,6 @@ namespace Hl7.Fhir.Model
             /// FHIRPath of element(s) related to issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> Expression
             {
@@ -524,7 +515,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -539,7 +529,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -573,11 +562,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -620,7 +604,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -630,7 +613,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

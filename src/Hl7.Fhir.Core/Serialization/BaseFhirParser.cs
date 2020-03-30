@@ -9,10 +9,9 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using System;
 using System.Reflection;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -25,18 +24,18 @@ namespace Hl7.Fhir.Serialization
             Settings = settings?.Clone() ?? new ParserSettings();
         }
 
-        private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
+        private static readonly Lazy<ModelInspector> _inspector = createDefaultModelInspector();
 
         private static Lazy<ModelInspector> createDefaultModelInspector()
         {
             return new Lazy<ModelInspector>(() =>
             {
-                var result = new ModelInspector();
+                var result = new ModelInspector(ModelInspector.R4_VERSION);
 
                 result.Import(typeof(Resource).GetTypeInfo().Assembly);
+                result.Import(typeof(Patient).GetTypeInfo().Assembly);
                 return result;
             });
-
         }
 
         public static ModelInspector Inspector

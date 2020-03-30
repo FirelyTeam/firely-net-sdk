@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contains a collection of resources
     /// </summary>
-    [FhirType("Bundle", IsResource=true)]
+    [FhirType("Bundle")]
     [DataContract]
-    public partial class Bundle : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Bundle : Hl7.Fhir.Model.Resource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Bundle; } }
-        [NotMapped]
         public override string TypeName { get { return "Bundle"; } }
         
         /// <summary>
@@ -192,9 +189,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("LinkComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
@@ -215,7 +211,6 @@ namespace Hl7.Fhir.Model
             /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Relation
             {
@@ -248,7 +243,6 @@ namespace Hl7.Fhir.Model
             /// Reference details for the link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Url
             {
@@ -308,7 +302,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -319,7 +312,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -336,9 +328,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EntryComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EntryComponent"; } }
             
             /// <summary>
@@ -372,7 +363,6 @@ namespace Hl7.Fhir.Model
             /// URI for resource (Absolute URL server address or URI for UUID/OID)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string FullUrl
             {
@@ -498,7 +488,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -513,7 +502,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -534,9 +522,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SearchComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SearchComponent"; } }
             
             /// <summary>
@@ -556,7 +543,6 @@ namespace Hl7.Fhir.Model
             /// match | include | outcome - why this is in the result set
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Bundle.SearchEntryMode? Mode
             {
@@ -588,7 +574,6 @@ namespace Hl7.Fhir.Model
             /// Search ranking (between 0 and 1)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Score
             {
@@ -648,7 +633,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -659,7 +643,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -676,9 +659,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RequestComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RequestComponent"; } }
             
             /// <summary>
@@ -699,7 +681,6 @@ namespace Hl7.Fhir.Model
             /// GET | HEAD | POST | PUT | DELETE | PATCH
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Bundle.HTTPVerb? Method
             {
@@ -732,7 +713,6 @@ namespace Hl7.Fhir.Model
             /// URL for HTTP equivalent of this entry
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Url
             {
@@ -764,7 +744,6 @@ namespace Hl7.Fhir.Model
             /// For managing cache currency
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string IfNoneMatch
             {
@@ -796,7 +775,6 @@ namespace Hl7.Fhir.Model
             /// For managing cache currency
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public DateTimeOffset? IfModifiedSince
             {
@@ -828,7 +806,6 @@ namespace Hl7.Fhir.Model
             /// For managing update contention
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string IfMatch
             {
@@ -860,7 +837,6 @@ namespace Hl7.Fhir.Model
             /// For conditional creates
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string IfNoneExist
             {
@@ -932,7 +908,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -947,7 +922,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -968,9 +942,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ResponseComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
@@ -991,7 +964,6 @@ namespace Hl7.Fhir.Model
             /// Status response code (text optional)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Status
             {
@@ -1023,7 +995,6 @@ namespace Hl7.Fhir.Model
             /// The location (if the operation returns a location)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Location
             {
@@ -1055,7 +1026,6 @@ namespace Hl7.Fhir.Model
             /// The Etag for the resource (if relevant)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Etag
             {
@@ -1087,7 +1057,6 @@ namespace Hl7.Fhir.Model
             /// Server's date time modified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public DateTimeOffset? LastModified
             {
@@ -1171,7 +1140,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1185,7 +1153,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1234,7 +1201,6 @@ namespace Hl7.Fhir.Model
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Bundle.BundleType? Type
         {
@@ -1266,7 +1232,6 @@ namespace Hl7.Fhir.Model
         /// When the bundle was assembled
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Timestamp
         {
@@ -1298,7 +1263,6 @@ namespace Hl7.Fhir.Model
         /// If search, the total number of matches
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Total
         {
@@ -1355,121 +1319,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Signature _Signature;
         
 
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_7 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "(type = 'history') or entry.where(fullUrl.exists()).select(fullUrl&resource.meta.versionId).isDistinct()",
-            Key = "bdl-7",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)",
-            Xpath = "(f:type/@value = 'history') or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_9 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
-            Key = "bdl-9",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A document must have an identifier with a system and a value",
-            Xpath = "not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_3 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "entry.all(request.exists() = (%resource.type = 'batch' or %resource.type = 'transaction' or %resource.type = 'history'))",
-            Key = "bdl-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.request mandatory for batch/transaction/history, otherwise prohibited",
-            Xpath = "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_4 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "entry.all(response.exists() = (%resource.type = 'batch-response' or %resource.type = 'transaction-response' or %resource.type = 'history'))",
-            Key = "bdl-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited",
-            Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response') or (f:type/@value = 'history')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_12 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "type = 'message' implies entry.first().resource.is(MessageHeader)",
-            Key = "bdl-12",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A message must have a MessageHeader as the first resource",
-            Xpath = "not(f:type/@value='message') or f:entry[1]/f:resource/f:MessageHeader"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "total.empty() or (type = 'searchset') or (type = 'history')",
-            Key = "bdl-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "total only when a search or history",
-            Xpath = "not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "entry.search.empty() or (type = 'searchset')",
-            Key = "bdl-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.search only when a search",
-            Xpath = "not(f:entry/f:search) or (f:type/@value = 'searchset')"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_11 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "type = 'document' implies entry.first().resource.is(Composition)",
-            Key = "bdl-11",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A document must have a Composition as the first resource",
-            Xpath = "not(f:type/@value='document') or f:entry[1]/f:resource/f:Composition"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_10 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "type = 'document' implies (timestamp.hasValue())",
-            Key = "bdl-10",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A document must have a date",
-            Xpath = "not(f:type/@value = 'document') or exists(f:timestamp/@value)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_8 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "entry.all(fullUrl.contains('/_history/').not())",
-            Key = "bdl-8",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "fullUrl cannot be a version specific reference",
-            Xpath = "not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "entry.all(resource.exists() or request.exists() or response.exists())",
-            Key = "bdl-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "must be a resource unless there's a request or response",
-            Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Bundle_BDL_7);
-            InvariantConstraints.Add(Bundle_BDL_9);
-            InvariantConstraints.Add(Bundle_BDL_3);
-            InvariantConstraints.Add(Bundle_BDL_4);
-            InvariantConstraints.Add(Bundle_BDL_12);
-            InvariantConstraints.Add(Bundle_BDL_1);
-            InvariantConstraints.Add(Bundle_BDL_2);
-            InvariantConstraints.Add(Bundle_BDL_11);
-            InvariantConstraints.Add(Bundle_BDL_10);
-            InvariantConstraints.Add(Bundle_BDL_8);
-            InvariantConstraints.Add(Bundle_BDL_5);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1530,7 +1379,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1546,7 +1394,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A structured set of questions and their answers
     /// </summary>
-    [FhirType("QuestionnaireResponse", IsResource=true)]
+    [FhirType("QuestionnaireResponse")]
     [DataContract]
-    public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.QuestionnaireResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "QuestionnaireResponse"; } }
         
         /// <summary>
@@ -96,9 +93,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ItemComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
@@ -119,7 +115,6 @@ namespace Hl7.Fhir.Model
             /// Pointer to specific item from Questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string LinkId
             {
@@ -151,7 +146,6 @@ namespace Hl7.Fhir.Model
             /// ElementDefinition - details for the item
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Definition
             {
@@ -183,7 +177,6 @@ namespace Hl7.Fhir.Model
             /// Name for group or question text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
             {
@@ -280,7 +273,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -294,7 +286,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -314,9 +305,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("AnswerComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "AnswerComponent"; } }
             
             /// <summary>
@@ -324,7 +314,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -393,7 +383,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -404,7 +393,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -481,7 +469,6 @@ namespace Hl7.Fhir.Model
         /// Form being answered
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Questionnaire
         {
@@ -514,7 +501,6 @@ namespace Hl7.Fhir.Model
         /// in-progress | completed | amended | entered-in-error | stopped
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus? Status
         {
@@ -576,7 +562,6 @@ namespace Hl7.Fhir.Model
         /// Date the answers were gathered
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Authored
         {
@@ -636,21 +621,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
         
 
-        public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "item.all((answer.exists() and item.exists()).not())",
-            Key = "qrs-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Nested item can't be beneath both item and answer",
-            Xpath = "not(exists(f:answer) and exists(f:item))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -723,7 +693,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -743,7 +712,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

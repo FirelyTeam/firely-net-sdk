@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information about conditions, problems or diagnoses
     /// </summary>
-    [FhirType("Condition", IsResource=true)]
+    [FhirType("Condition")]
     [DataContract]
-    public partial class Condition : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Condition : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Condition; } }
-        [NotMapped]
         public override string TypeName { get { return "Condition"; } }
         
         [FhirType("StageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "StageComponent"; } }
             
             /// <summary>
@@ -152,7 +148,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -164,7 +159,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -182,9 +176,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("EvidenceComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "EvidenceComponent"; } }
             
             /// <summary>
@@ -262,7 +255,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -273,7 +265,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -460,7 +451,6 @@ namespace Hl7.Fhir.Model
         /// Date record was first recorded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RecordedDate
         {
@@ -548,62 +538,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
-        public static ElementDefinition.ConstraintComponent Condition_CON_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code='entered-in-error').empty() or clinicalStatus.empty()",
-            Key = "con-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
-            Xpath = "not(exists(f:verificationStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-ver-status' and f:code/@value='entered-in-error'])) or not(exists(f:clinicalStatus))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "abatement.empty() or clinicalStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-clinical' and (code='resolved' or code='remission' or code='inactive')).exists()",
-            Key = "con-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "not(exists(*[starts-with(local-name(.), 'abatement')])) or exists(f:clinicalStatus/f:coding[f:system/@value='http://terminology.hl7.org/CodeSystem/condition-clinical' and f:code/@value=('resolved', 'remission', 'inactive')])"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
-        { 
-			Extension = new List<Extension>() { new Extension { Value = new FhirBoolean(true), Url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice"} },  
-            Expression = "clinicalStatus.exists() or verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.select($this='problem-list-item').empty()",
-            Key = "con-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item",
-            Xpath = "exists(f:clinicalStatus) or exists(f:verificationStatus/f:coding/f:code/@value='entered-in-error') or not(exists(category[@value='problem-list-item']))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "stage.all(summary.exists() or assessment.exists())",
-            Key = "con-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Stage SHALL have summary or assessment",
-            Xpath = "exists(f:summary) or exists(f:assessment)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "evidence.all(code.exists() or detail.exists())",
-            Key = "con-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "evidence SHALL have code or details",
-            Xpath = "exists(f:code) or exists(f:detail)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Condition_CON_5);
-            InvariantConstraints.Add(Condition_CON_4);
-            InvariantConstraints.Add(Condition_CON_3);
-            InvariantConstraints.Add(Condition_CON_1);
-            InvariantConstraints.Add(Condition_CON_2);
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -694,7 +628,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -720,7 +653,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

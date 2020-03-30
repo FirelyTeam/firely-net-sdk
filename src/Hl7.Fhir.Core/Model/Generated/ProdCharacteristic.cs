@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ProdCharacteristic")]
     [DataContract]
-    public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+    public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneElement
     {
-        [NotMapped]
         public override string TypeName { get { return "ProdCharacteristic"; } }
         
         /// <summary>
@@ -58,78 +57,78 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("height", InSummary=true, Order=90)]
         [DataMember]
-        public Quantity Height
+        public Hl7.Fhir.Model.Quantity Height
         {
             get { return _Height; }
             set { _Height = value; OnPropertyChanged("Height"); }
         }
         
-        private Quantity _Height;
+        private Hl7.Fhir.Model.Quantity _Height;
         
         /// <summary>
         /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
         [FhirElement("width", InSummary=true, Order=100)]
         [DataMember]
-        public Quantity Width
+        public Hl7.Fhir.Model.Quantity Width
         {
             get { return _Width; }
             set { _Width = value; OnPropertyChanged("Width"); }
         }
         
-        private Quantity _Width;
+        private Hl7.Fhir.Model.Quantity _Width;
         
         /// <summary>
         /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
         [FhirElement("depth", InSummary=true, Order=110)]
         [DataMember]
-        public Quantity Depth
+        public Hl7.Fhir.Model.Quantity Depth
         {
             get { return _Depth; }
             set { _Depth = value; OnPropertyChanged("Depth"); }
         }
         
-        private Quantity _Depth;
+        private Hl7.Fhir.Model.Quantity _Depth;
         
         /// <summary>
         /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
         [FhirElement("weight", InSummary=true, Order=120)]
         [DataMember]
-        public Quantity Weight
+        public Hl7.Fhir.Model.Quantity Weight
         {
             get { return _Weight; }
             set { _Weight = value; OnPropertyChanged("Weight"); }
         }
         
-        private Quantity _Weight;
+        private Hl7.Fhir.Model.Quantity _Weight;
         
         /// <summary>
         /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
         [FhirElement("nominalVolume", InSummary=true, Order=130)]
         [DataMember]
-        public Quantity NominalVolume
+        public Hl7.Fhir.Model.Quantity NominalVolume
         {
             get { return _NominalVolume; }
             set { _NominalVolume = value; OnPropertyChanged("NominalVolume"); }
         }
         
-        private Quantity _NominalVolume;
+        private Hl7.Fhir.Model.Quantity _NominalVolume;
         
         /// <summary>
         /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
         /// </summary>
         [FhirElement("externalDiameter", InSummary=true, Order=140)]
         [DataMember]
-        public Quantity ExternalDiameter
+        public Hl7.Fhir.Model.Quantity ExternalDiameter
         {
             get { return _ExternalDiameter; }
             set { _ExternalDiameter = value; OnPropertyChanged("ExternalDiameter"); }
         }
         
-        private Quantity _ExternalDiameter;
+        private Hl7.Fhir.Model.Quantity _ExternalDiameter;
         
         /// <summary>
         /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
@@ -148,7 +147,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Shape
         {
@@ -181,7 +179,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Color
         {
@@ -214,7 +211,6 @@ namespace Hl7.Fhir.Model
         /// Where applicable, the imprint can be specified as text
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Imprint
         {
@@ -264,12 +260,12 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Height != null) dest.Height = (Quantity)Height.DeepCopy();
-                if(Width != null) dest.Width = (Quantity)Width.DeepCopy();
-                if(Depth != null) dest.Depth = (Quantity)Depth.DeepCopy();
-                if(Weight != null) dest.Weight = (Quantity)Weight.DeepCopy();
-                if(NominalVolume != null) dest.NominalVolume = (Quantity)NominalVolume.DeepCopy();
-                if(ExternalDiameter != null) dest.ExternalDiameter = (Quantity)ExternalDiameter.DeepCopy();
+                if(Height != null) dest.Height = (Hl7.Fhir.Model.Quantity)Height.DeepCopy();
+                if(Width != null) dest.Width = (Hl7.Fhir.Model.Quantity)Width.DeepCopy();
+                if(Depth != null) dest.Depth = (Hl7.Fhir.Model.Quantity)Depth.DeepCopy();
+                if(Weight != null) dest.Weight = (Hl7.Fhir.Model.Quantity)Weight.DeepCopy();
+                if(NominalVolume != null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)NominalVolume.DeepCopy();
+                if(ExternalDiameter != null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)ExternalDiameter.DeepCopy();
                 if(ShapeElement != null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)ShapeElement.DeepCopy();
                 if(ColorElement != null) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopy());
                 if(ImprintElement != null) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopy());
@@ -328,7 +324,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -348,7 +343,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

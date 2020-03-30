@@ -46,20 +46,16 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction
     /// </summary>
-    [FhirType("SubstanceNucleicAcid", IsResource=true)]
+    [FhirType("SubstanceNucleicAcid")]
     [DataContract]
-    public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SubstanceNucleicAcid; } }
-        [NotMapped]
         public override string TypeName { get { return "SubstanceNucleicAcid"; } }
         
         [FhirType("SubunitComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SubunitComponent"; } }
             
             /// <summary>
@@ -79,7 +75,6 @@ namespace Hl7.Fhir.Model
             /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Subunit
             {
@@ -111,7 +106,6 @@ namespace Hl7.Fhir.Model
             /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Sequence
             {
@@ -143,7 +137,6 @@ namespace Hl7.Fhir.Model
             /// The length of the sequence shall be captured
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Length
             {
@@ -288,7 +281,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -305,7 +297,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -328,9 +319,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("LinkageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "LinkageComponent"; } }
             
             /// <summary>
@@ -350,7 +340,6 @@ namespace Hl7.Fhir.Model
             /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Connectivity
             {
@@ -395,7 +384,6 @@ namespace Hl7.Fhir.Model
             /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -427,7 +415,6 @@ namespace Hl7.Fhir.Model
             /// Residues shall be captured as described in 5.3.6.8.3
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ResidueSite
             {
@@ -493,7 +480,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -506,7 +492,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -525,9 +510,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SugarComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SugarComponent"; } }
             
             /// <summary>
@@ -560,7 +544,6 @@ namespace Hl7.Fhir.Model
             /// The name of the sugar or sugar-like component that make up the nucleotide
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -592,7 +575,6 @@ namespace Hl7.Fhir.Model
             /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ResidueSite
             {
@@ -655,7 +637,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -667,7 +648,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -713,7 +693,6 @@ namespace Hl7.Fhir.Model
         /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? NumberOfSubunits
         {
@@ -745,7 +724,6 @@ namespace Hl7.Fhir.Model
         /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AreaOfHybridisation
         {
@@ -788,11 +766,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> _Subunit;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -847,7 +820,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -861,7 +833,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

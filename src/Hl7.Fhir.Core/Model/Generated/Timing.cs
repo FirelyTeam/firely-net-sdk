@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Timing")]
     [DataContract]
-    public partial class Timing : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+    public partial class Timing : Hl7.Fhir.Model.BackboneElement
     {
-        [NotMapped]
         public override string TypeName { get { return "Timing"; } }
         
         /// <summary>
@@ -271,9 +270,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("RepeatComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RepeatComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RepeatComponent"; } }
             
             /// <summary>
@@ -308,7 +306,6 @@ namespace Hl7.Fhir.Model
             /// Number of times to repeat
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Count
             {
@@ -340,7 +337,6 @@ namespace Hl7.Fhir.Model
             /// Maximum number of times to repeat
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? CountMax
             {
@@ -372,7 +368,6 @@ namespace Hl7.Fhir.Model
             /// How long when it happens
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Duration
             {
@@ -404,7 +399,6 @@ namespace Hl7.Fhir.Model
             /// How long when it happens (Max)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? DurationMax
             {
@@ -436,7 +430,6 @@ namespace Hl7.Fhir.Model
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Timing.UnitsOfTime? DurationUnit
             {
@@ -468,7 +461,6 @@ namespace Hl7.Fhir.Model
             /// Event occurs frequency times per period
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Frequency
             {
@@ -500,7 +492,6 @@ namespace Hl7.Fhir.Model
             /// Event occurs up to frequencyMax times per period
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? FrequencyMax
             {
@@ -532,7 +523,6 @@ namespace Hl7.Fhir.Model
             /// Event occurs frequency times per period
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Period
             {
@@ -564,7 +554,6 @@ namespace Hl7.Fhir.Model
             /// Upper limit of period (3-4 hours)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? PeriodMax
             {
@@ -596,7 +585,6 @@ namespace Hl7.Fhir.Model
             /// s | min | h | d | wk | mo | a - unit of time (UCUM)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Timing.UnitsOfTime? PeriodUnit
             {
@@ -629,7 +617,6 @@ namespace Hl7.Fhir.Model
             /// mon | tue | wed | thu | fri | sat | sun
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DayOfWeek
             {
@@ -662,7 +649,6 @@ namespace Hl7.Fhir.Model
             /// Time of day for action
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> TimeOfDay
             {
@@ -695,7 +681,6 @@ namespace Hl7.Fhir.Model
             /// Code for time period of occurrence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<Hl7.Fhir.Model.Timing.EventTiming?> When
             {
@@ -727,7 +712,6 @@ namespace Hl7.Fhir.Model
             /// Minutes from event (before or after)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Offset
             {
@@ -825,7 +809,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -849,7 +832,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -893,7 +875,6 @@ namespace Hl7.Fhir.Model
         /// When the event occurs
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Event
         {
@@ -982,7 +963,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -994,7 +974,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

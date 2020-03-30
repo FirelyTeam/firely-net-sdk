@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Reference")]
     [DataContract]
-    public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class ResourceReference : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Reference"; } }
         
         /// <summary>
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
         /// Literal reference, Relative, internal or absolute URL
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Reference
         {
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Model
         /// Type the reference refers to (e.g. "Patient")
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Type
         {
@@ -147,7 +144,6 @@ namespace Hl7.Fhir.Model
         /// Text alternative for the resource
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Display
         {
@@ -213,7 +209,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -226,7 +221,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

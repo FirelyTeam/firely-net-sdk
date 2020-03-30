@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
-    [FhirType("ResearchStudy", IsResource=true)]
+    [FhirType("ResearchStudy")]
     [DataContract]
-    public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ResearchStudy; } }
-        [NotMapped]
         public override string TypeName { get { return "ResearchStudy"; } }
         
         /// <summary>
@@ -132,9 +129,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ArmComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ArmComponent"; } }
             
             /// <summary>
@@ -155,7 +151,6 @@ namespace Hl7.Fhir.Model
             /// Label for study arm
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -200,7 +195,6 @@ namespace Hl7.Fhir.Model
             /// Short explanation of study path
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Description
             {
@@ -263,7 +257,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -275,7 +268,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -293,9 +285,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ObjectiveComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ObjectiveComponent"; } }
             
             /// <summary>
@@ -315,7 +306,6 @@ namespace Hl7.Fhir.Model
             /// Label for the objective
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -388,7 +378,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -399,7 +388,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -445,7 +433,6 @@ namespace Hl7.Fhir.Model
         /// Name for this study
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -510,7 +497,6 @@ namespace Hl7.Fhir.Model
         /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus? Status
         {
@@ -793,11 +779,6 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> _Objective;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -909,7 +890,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -942,7 +922,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

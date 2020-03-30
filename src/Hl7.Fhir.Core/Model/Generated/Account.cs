@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Tracks balance, charges, for patient or cost center
     /// </summary>
-    [FhirType("Account", IsResource=true)]
+    [FhirType("Account")]
     [DataContract]
-    public partial class Account : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Account : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Account; } }
-        [NotMapped]
         public override string TypeName { get { return "Account"; } }
         
         /// <summary>
@@ -96,9 +93,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("CoverageComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CoverageComponent"; } }
             
             /// <summary>
@@ -134,7 +130,6 @@ namespace Hl7.Fhir.Model
             /// The priority of the coverage in the context of this account
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Priority
             {
@@ -194,7 +189,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -205,7 +199,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -222,9 +215,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("GuarantorComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GuarantorComponent"; } }
             
             /// <summary>
@@ -260,7 +252,6 @@ namespace Hl7.Fhir.Model
             /// Credit or other hold applied
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public bool? OnHold
             {
@@ -336,7 +327,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -348,7 +338,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -396,7 +385,6 @@ namespace Hl7.Fhir.Model
         /// active | inactive | entered-in-error | on-hold | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Account.AccountStatus? Status
         {
@@ -441,7 +429,6 @@ namespace Hl7.Fhir.Model
         /// Human-readable label
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -531,7 +518,6 @@ namespace Hl7.Fhir.Model
         /// Explanation of purpose/use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Description
         {
@@ -576,11 +562,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -653,7 +634,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -673,7 +653,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

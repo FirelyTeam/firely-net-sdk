@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request for a medication, substance or device
     /// </summary>
-    [FhirType("SupplyRequest", IsResource=true)]
+    [FhirType("SupplyRequest")]
     [DataContract]
-    public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.SupplyRequest; } }
-        [NotMapped]
         public override string TypeName { get { return "SupplyRequest"; } }
         
         /// <summary>
@@ -108,9 +105,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ParameterComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
@@ -131,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirBoolean))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirBoolean))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -186,7 +182,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -197,7 +192,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -243,7 +237,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | suspended +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus? Status
         {
@@ -288,7 +281,6 @@ namespace Hl7.Fhir.Model
         /// routine | urgent | asap | stat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.RequestPriority? Priority
         {
@@ -325,13 +317,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("quantity", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Quantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Quantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// Ordered item details
@@ -379,7 +371,6 @@ namespace Hl7.Fhir.Model
         /// When the request was made
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string AuthoredOn
         {
@@ -486,11 +477,6 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _DeliverTo;
         
 
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -504,7 +490,7 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                 if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent>(Parameter.DeepCopy());
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
@@ -575,7 +561,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -599,7 +584,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
