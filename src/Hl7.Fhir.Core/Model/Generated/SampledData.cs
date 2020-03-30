@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SampledData")]
     [DataContract]
-    public partial class SampledData : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class SampledData : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "SampledData"; } }
         
         /// <summary>
@@ -59,13 +58,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("origin", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Quantity Origin
+        public Hl7.Fhir.Model.Quantity Origin
         {
             get { return _Origin; }
             set { _Origin = value; OnPropertyChanged("Origin"); }
         }
         
-        private Quantity _Origin;
+        private Hl7.Fhir.Model.Quantity _Origin;
         
         /// <summary>
         /// Number of milliseconds between samples
@@ -85,7 +84,6 @@ namespace Hl7.Fhir.Model
         /// Number of milliseconds between samples
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Period
         {
@@ -117,7 +115,6 @@ namespace Hl7.Fhir.Model
         /// Multiply data by this before adding to origin
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? Factor
         {
@@ -149,7 +146,6 @@ namespace Hl7.Fhir.Model
         /// Lower limit of detection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? LowerLimit
         {
@@ -181,7 +177,6 @@ namespace Hl7.Fhir.Model
         /// Upper limit of detection
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public decimal? UpperLimit
         {
@@ -214,7 +209,6 @@ namespace Hl7.Fhir.Model
         /// Number of sample points at each time point
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Dimensions
         {
@@ -247,7 +241,6 @@ namespace Hl7.Fhir.Model
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Data
         {
@@ -270,7 +263,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Origin != null) dest.Origin = (Quantity)Origin.DeepCopy();
+                if(Origin != null) dest.Origin = (Hl7.Fhir.Model.Quantity)Origin.DeepCopy();
                 if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                 if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
                 if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();
@@ -322,7 +315,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -338,7 +330,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

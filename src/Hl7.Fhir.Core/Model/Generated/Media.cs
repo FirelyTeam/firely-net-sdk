@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A photo, video, or audio recording acquired or used in healthcare. The actual content may be inline or provided by direct reference
     /// </summary>
-    [FhirType("Media", IsResource=true)]
+    [FhirType("Media")]
     [DataContract]
-    public partial class Media : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Media : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Media; } }
-        [NotMapped]
         public override string TypeName { get { return "Media"; } }
         
         /// <summary>
@@ -130,7 +127,6 @@ namespace Hl7.Fhir.Model
         /// photo | video | audio
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.Media.DigitalMediaType? Type
         {
@@ -290,7 +286,6 @@ namespace Hl7.Fhir.Model
         /// Height of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Height
         {
@@ -322,7 +317,6 @@ namespace Hl7.Fhir.Model
         /// Width of the image in pixels (photo/video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Width
         {
@@ -354,7 +348,6 @@ namespace Hl7.Fhir.Model
         /// Number of frames if > 1 (photo)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Frames
         {
@@ -386,7 +379,6 @@ namespace Hl7.Fhir.Model
         /// Length in seconds (audio / video)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Duration
         {
@@ -429,53 +421,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
-
-        public static ElementDefinition.ConstraintComponent Media_MDA_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "height.empty() or type != 'audio'",
-            Key = "mda-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Height can only be used for a photo or video",
-            Xpath = "not(f:type/@value='audio') or not(f:height)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Media_MDA_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "width.empty() or type != 'audio'",
-            Key = "mda-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Width can only be used for a photo or video",
-            Xpath = "not(f:type/@value='audio') or not(f:width)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Media_MDA_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "frames.empty() or type = 'photo'",
-            Key = "mda-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Frames can only be used for a photo",
-            Xpath = "(f:type/@value='photo') or not(f:frames)"
-        };
-
-        public static ElementDefinition.ConstraintComponent Media_MDA_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "duration.empty() or type != 'photo'",
-            Key = "mda-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Duration can only be used for an audio or a video",
-            Xpath = "not(f:type/@value='photo') or not(f:duration)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Media_MDA_1);
-            InvariantConstraints.Add(Media_MDA_2);
-            InvariantConstraints.Add(Media_MDA_3);
-            InvariantConstraints.Add(Media_MDA_4);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Media;
@@ -568,7 +513,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -595,7 +539,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

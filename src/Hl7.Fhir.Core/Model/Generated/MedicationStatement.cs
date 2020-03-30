@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Record of medication being taken by a patient
     /// </summary>
-    [FhirType("MedicationStatement", IsResource=true)]
+    [FhirType("MedicationStatement")]
     [DataContract]
-    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationStatement; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationStatement"; } }
         
         /// <summary>
@@ -212,7 +209,6 @@ namespace Hl7.Fhir.Model
         /// active | completed | entered-in-error | intended | stopped | on-hold
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus? Status
         {
@@ -288,7 +284,6 @@ namespace Hl7.Fhir.Model
         /// When the statement was asserted?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string DateAsserted
         {
@@ -368,7 +363,6 @@ namespace Hl7.Fhir.Model
         /// y | n | unk | na
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationStatement.MedicationStatementTaken? Taken
         {
@@ -455,23 +449,6 @@ namespace Hl7.Fhir.Model
         
         private List<Dosage> _Dosage;
         
-
-        public static ElementDefinition.ConstraintComponent MedicationStatement_MST_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonNotTaken.exists().not() or (taken = 'n')",
-            Key = "mst-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not taken is only permitted if Taken is No",
-            Xpath = "not(exists(f:reasonNotTaken)) or f:taken/@value='n'"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MedicationStatement_MST_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationStatement;
@@ -564,7 +541,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -591,7 +567,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

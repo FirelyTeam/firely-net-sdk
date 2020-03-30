@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Dosage : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Dosage"; } }
         
         /// <summary>
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
         /// The order of the dosage instructions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? Sequence
         {
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Model
         /// Free text dosage instructions e.g. SIG
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Text
         {
@@ -148,7 +145,6 @@ namespace Hl7.Fhir.Model
         /// Patient or consumer oriented instructions
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string PatientInstruction
         {
@@ -235,7 +231,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("dose", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
         [DataMember]
         public Hl7.Fhir.Model.Element Dose
         {
@@ -263,33 +259,33 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("maxDosePerAdministration", InSummary=true, Order=140)]
         [DataMember]
-        public Quantity MaxDosePerAdministration
+        public Hl7.Fhir.Model.Quantity MaxDosePerAdministration
         {
             get { return _MaxDosePerAdministration; }
             set { _MaxDosePerAdministration = value; OnPropertyChanged("MaxDosePerAdministration"); }
         }
         
-        private Quantity _MaxDosePerAdministration;
+        private Hl7.Fhir.Model.Quantity _MaxDosePerAdministration;
         
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
         [FhirElement("maxDosePerLifetime", InSummary=true, Order=150)]
         [DataMember]
-        public Quantity MaxDosePerLifetime
+        public Hl7.Fhir.Model.Quantity MaxDosePerLifetime
         {
             get { return _MaxDosePerLifetime; }
             set { _MaxDosePerLifetime = value; OnPropertyChanged("MaxDosePerLifetime"); }
         }
         
-        private Quantity _MaxDosePerLifetime;
+        private Hl7.Fhir.Model.Quantity _MaxDosePerLifetime;
         
         /// <summary>
         /// Amount of medication per unit of time
         /// </summary>
         [FhirElement("rate", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
         [DataMember]
         public Hl7.Fhir.Model.Element Rate
         {
@@ -318,8 +314,8 @@ namespace Hl7.Fhir.Model
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
                 if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
-                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Quantity)MaxDosePerAdministration.DeepCopy();
-                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Quantity)MaxDosePerLifetime.DeepCopy();
+                if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)MaxDosePerAdministration.DeepCopy();
+                if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)MaxDosePerLifetime.DeepCopy();
                 if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                 return dest;
             }
@@ -380,7 +376,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -403,7 +398,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

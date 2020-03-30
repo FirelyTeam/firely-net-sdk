@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about a biological sequence
     /// </summary>
-    [FhirType("Sequence", IsResource=true)]
+    [FhirType("Sequence")]
     [DataContract]
-    public partial class Sequence : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Sequence : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Sequence; } }
-        [NotMapped]
         public override string TypeName { get { return "Sequence"; } }
         
         /// <summary>
@@ -123,9 +120,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ReferenceSeqComponent")]
         [DataContract]
-        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ReferenceSeqComponent"; } }
             
             /// <summary>
@@ -158,7 +154,6 @@ namespace Hl7.Fhir.Model
             /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string GenomeBuild
             {
@@ -218,7 +213,6 @@ namespace Hl7.Fhir.Model
             /// A string to represent reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReferenceSeqString
             {
@@ -250,7 +244,6 @@ namespace Hl7.Fhir.Model
             /// Directionality of DNA ( +1/-1)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Strand
             {
@@ -283,7 +276,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the window on the  reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? WindowStart
             {
@@ -316,7 +308,6 @@ namespace Hl7.Fhir.Model
             /// End position of the window on the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? WindowEnd
             {
@@ -394,7 +385,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -411,7 +401,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -434,9 +423,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("VariantComponent")]
         [DataContract]
-        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "VariantComponent"; } }
             
             /// <summary>
@@ -456,7 +444,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the variant on the  reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Start
             {
@@ -488,7 +475,6 @@ namespace Hl7.Fhir.Model
             /// End position of the variant on the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? End
             {
@@ -520,7 +506,6 @@ namespace Hl7.Fhir.Model
             /// Allele that was observed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ObservedAllele
             {
@@ -552,7 +537,6 @@ namespace Hl7.Fhir.Model
             /// Allele in the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReferenceAllele
             {
@@ -584,7 +568,6 @@ namespace Hl7.Fhir.Model
             /// Extended CIGAR string for aligning the sequence with reference bases
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Cigar
             {
@@ -671,7 +654,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -686,7 +668,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -707,9 +688,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("QualityComponent")]
         [DataContract]
-        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "QualityComponent"; } }
             
             /// <summary>
@@ -730,7 +710,6 @@ namespace Hl7.Fhir.Model
             /// indel | snp | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Sequence.qualityType? Type
             {
@@ -775,7 +754,6 @@ namespace Hl7.Fhir.Model
             /// Start position of the sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? Start
             {
@@ -807,7 +785,6 @@ namespace Hl7.Fhir.Model
             /// End position of the sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public int? End
             {
@@ -827,13 +804,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("score", InSummary=true, Order=80)]
             [DataMember]
-            public Quantity Score
+            public Hl7.Fhir.Model.Quantity Score
             {
                 get { return _Score; }
                 set { _Score = value; OnPropertyChanged("Score"); }
             }
             
-            private Quantity _Score;
+            private Hl7.Fhir.Model.Quantity _Score;
             
             /// <summary>
             /// Method to get quality
@@ -865,7 +842,6 @@ namespace Hl7.Fhir.Model
             /// True positives from the perspective of the truth data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? TruthTP
             {
@@ -897,7 +873,6 @@ namespace Hl7.Fhir.Model
             /// True positives from the perspective of the query data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? QueryTP
             {
@@ -929,7 +904,6 @@ namespace Hl7.Fhir.Model
             /// False negatives
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? TruthFN
             {
@@ -961,7 +935,6 @@ namespace Hl7.Fhir.Model
             /// False positives
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? QueryFP
             {
@@ -993,7 +966,6 @@ namespace Hl7.Fhir.Model
             /// False positives where the non-REF alleles in the Truth and Query Call Sets match
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? GtFP
             {
@@ -1025,7 +997,6 @@ namespace Hl7.Fhir.Model
             /// Precision of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Precision
             {
@@ -1057,7 +1028,6 @@ namespace Hl7.Fhir.Model
             /// Recall of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? Recall
             {
@@ -1089,7 +1059,6 @@ namespace Hl7.Fhir.Model
             /// F-score
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public decimal? FScore
             {
@@ -1115,7 +1084,7 @@ namespace Hl7.Fhir.Model
                     if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopy();
                     if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
                     if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
-                    if(Score != null) dest.Score = (Quantity)Score.DeepCopy();
+                    if(Score != null) dest.Score = (Hl7.Fhir.Model.Quantity)Score.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(TruthTPElement != null) dest.TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)TruthTPElement.DeepCopy();
                     if(QueryTPElement != null) dest.QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)QueryTPElement.DeepCopy();
@@ -1185,7 +1154,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1208,7 +1176,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1237,9 +1204,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("RepositoryComponent")]
         [DataContract]
-        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "RepositoryComponent"; } }
             
             /// <summary>
@@ -1260,7 +1226,6 @@ namespace Hl7.Fhir.Model
             /// directlink | openapi | login | oauth | other
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.Sequence.repositoryType? Type
             {
@@ -1292,7 +1257,6 @@ namespace Hl7.Fhir.Model
             /// URI of the repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Url
             {
@@ -1324,7 +1288,6 @@ namespace Hl7.Fhir.Model
             /// Repository's name
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Name
             {
@@ -1356,7 +1319,6 @@ namespace Hl7.Fhir.Model
             /// Id of the dataset that used to call for dataset in repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string DatasetId
             {
@@ -1388,7 +1350,6 @@ namespace Hl7.Fhir.Model
             /// Id of the variantset that used to call for variantset in repository
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string VariantsetId
             {
@@ -1420,7 +1381,6 @@ namespace Hl7.Fhir.Model
             /// Id of the read
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string ReadsetId
             {
@@ -1492,7 +1452,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1507,7 +1466,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1557,7 +1515,6 @@ namespace Hl7.Fhir.Model
         /// aa | dna | rna
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Type
         {
@@ -1590,7 +1547,6 @@ namespace Hl7.Fhir.Model
         /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? CoordinateSystem
         {
@@ -1670,13 +1626,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("quantity", InSummary=true, Order=160)]
         [DataMember]
-        public Quantity Quantity
+        public Hl7.Fhir.Model.Quantity Quantity
         {
             get { return _Quantity; }
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
-        private Quantity _Quantity;
+        private Hl7.Fhir.Model.Quantity _Quantity;
         
         /// <summary>
         /// A sequence used as reference
@@ -1722,7 +1678,6 @@ namespace Hl7.Fhir.Model
         /// Sequence that was observed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ObservedSeq
         {
@@ -1768,7 +1723,6 @@ namespace Hl7.Fhir.Model
         /// Average number of reads representing a given nucleotide in the reconstructed sequence
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public int? ReadCoverage
         {
@@ -1813,53 +1767,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
         
-
-        public static ElementDefinition.ConstraintComponent Sequence_SEQ_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "coordinateSystem = 1 or coordinateSystem = 0",
-            Key = "seq-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only 0 and 1 are valid for coordinateSystem",
-            Xpath = "count(f:coordinateSystem[@value=0 and @value=1]) = 1"
-        };
-
-        public static ElementDefinition.ConstraintComponent Sequence_SEQ_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "referenceSeq.all(strand.empty() or strand = 1 or strand = -1)",
-            Key = "seq-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Only +1 and -1 are valid for strand",
-            Xpath = "not(exists(f:strand)) or count(f:strand[@value=-1 and @value=1]) = 1"
-        };
-
-        public static ElementDefinition.ConstraintComponent Sequence_SEQ_5 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "referenceSeq.all((chromosome.empty() and genomeBuild.empty()) or (chromosome.exists() and genomeBuild.exists()))",
-            Key = "seq-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "GenomeBuild and chromosome must be both contained if either one of them is contained",
-            Xpath = "(exists(f:chromosome) and exists(f:genomeBuild)) or (not(exists(f:chromosome)) and not(exists(f:genomeBuild)))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Sequence_SEQ_6 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "referenceSeq.all((genomeBuild.count()+referenceSeqId.count()+ referenceSeqPointer.count()+ referenceSeqString.count()) = 1)",
-            Key = "seq-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Have and only have one of the following elements in referenceSeq : 1. genomeBuild ; 2 referenceSeqId; 3. referenceSeqPointer;  4. referenceSeqString;",
-            Xpath = "count(f:genomeBuild)+count(f:referenceSeqId)+count(f:referenceSeqPointer)+count(f:referenceSeqString)=1"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(Sequence_SEQ_3);
-            InvariantConstraints.Add(Sequence_SEQ_4);
-            InvariantConstraints.Add(Sequence_SEQ_5);
-            InvariantConstraints.Add(Sequence_SEQ_6);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Sequence;
@@ -1874,7 +1781,7 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
-                if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(ReferenceSeq != null) dest.ReferenceSeq = (Hl7.Fhir.Model.Sequence.ReferenceSeqComponent)ReferenceSeq.DeepCopy();
                 if(Variant != null) dest.Variant = new List<Hl7.Fhir.Model.Sequence.VariantComponent>(Variant.DeepCopy());
                 if(ObservedSeqElement != null) dest.ObservedSeqElement = (Hl7.Fhir.Model.FhirString)ObservedSeqElement.DeepCopy();
@@ -1943,7 +1850,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1967,7 +1873,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

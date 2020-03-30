@@ -48,16 +48,14 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataRequirement")]
     [DataContract]
-    public partial class DataRequirement : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class DataRequirement : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "DataRequirement"; } }
         
         [FhirType("CodeFilterComponent")]
         [DataContract]
-        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "CodeFilterComponent"; } }
             
             /// <summary>
@@ -78,7 +76,6 @@ namespace Hl7.Fhir.Model
             /// The code-valued attribute of the filter
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Path
             {
@@ -126,7 +123,6 @@ namespace Hl7.Fhir.Model
             /// What code is expected
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public IEnumerable<string> ValueCode
             {
@@ -222,7 +218,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -236,7 +231,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -254,9 +248,8 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("DateFilterComponent")]
         [DataContract]
-        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DateFilterComponent"; } }
             
             /// <summary>
@@ -277,7 +270,6 @@ namespace Hl7.Fhir.Model
             /// The date-valued attribute of the filter
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Path
             {
@@ -351,7 +343,6 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -362,7 +353,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
@@ -393,7 +383,6 @@ namespace Hl7.Fhir.Model
         /// The type of the required data
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FHIRAllTypes? Type
         {
@@ -426,7 +415,6 @@ namespace Hl7.Fhir.Model
         /// The profile of the required data
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Profile
         {
@@ -459,7 +447,6 @@ namespace Hl7.Fhir.Model
         /// Indicates that specific structure elements are referenced by the knowledge module
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> MustSupport
         {
@@ -556,7 +543,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -570,7 +556,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

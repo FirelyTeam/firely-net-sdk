@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource with narrative, extensions, and contained resources
     /// </summary>
-    [FhirType("DomainResource", IsResource=true)]
+    [FhirType("DomainResource")]
     [DataContract]
-    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+    public abstract partial class DomainResource : Hl7.Fhir.Model.Resource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.DomainResource; } }
-        [NotMapped]
         public override string TypeName { get { return "DomainResource"; } }
         
         /// <summary>
@@ -112,53 +109,6 @@ namespace Hl7.Fhir.Model
         
         private List<Extension> _ModifierExtension;
         
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contained.contained.empty()",
-            Key = "dom-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
-            Xpath = "not(parent::f:contained and f:contained)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contained.text.empty()",
-            Key = "dom-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
-            Xpath = "not(parent::f:contained and f:text)"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
-            Key = "dom-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
-            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
-        };
-
-        public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
-            Key = "dom-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
-            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(DomainResource_DOM_2);
-            InvariantConstraints.Add(DomainResource_DOM_1);
-            InvariantConstraints.Add(DomainResource_DOM_4);
-            InvariantConstraints.Add(DomainResource_DOM_3);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DomainResource;
@@ -204,7 +154,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -217,7 +166,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

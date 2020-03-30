@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A container for slots of time that may be available for booking appointments
     /// </summary>
-    [FhirType("Schedule", IsResource=true)]
+    [FhirType("Schedule")]
     [DataContract]
-    public partial class Schedule : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class Schedule : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.Schedule; } }
-        [NotMapped]
         public override string TypeName { get { return "Schedule"; } }
         
         /// <summary>
@@ -86,7 +83,6 @@ namespace Hl7.Fhir.Model
         /// Whether this schedule is in active use
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Active
         {
@@ -188,7 +184,6 @@ namespace Hl7.Fhir.Model
         /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -203,13 +198,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Schedule;
@@ -272,7 +260,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -289,7 +276,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -165,14 +165,11 @@ namespace Hl7.Fhir.Model
     /// </summary>
 <# }
 if(true) {
- #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+ #>    [FhirType("<#= resourceName #>")]
 <# }
 #>    [DataContract]
-    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
-<# } #>        [NotMapped]
         public override string TypeName { get { return "<#= resourceName #>"; } }
         
 <#
@@ -298,9 +295,8 @@ if(true) {
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
             
 <#
@@ -348,7 +344,6 @@ if(true) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
             {
@@ -436,7 +431,6 @@ if(true) {
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -448,7 +442,6 @@ if(true) {
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -520,7 +513,6 @@ if(true) {
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
 <# }
 #>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
         {
@@ -541,56 +533,7 @@ if(true) {
         }
     }
 
-#><# if (true) { #>
-
-<#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
-            {
-                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
-                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
-                if (parentPath.Contains("."))
-                {
-                    // This expression applied to a backbone element, so need to give it scope
-                    expression = parentPath.Replace("[x]", "").Replace(resourceName + ".", "") + ".all(" + expression + ")";
-                }
-                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
-                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
-                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
-                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "<#= expression.Replace("\"", "\\\"") #>",
-            Key = "<#= key #>",
-            Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
-            Human = "<#= human.Replace("\"", "\\\"") #>",
-            Xpath = "<#= xpath.Replace("\"", "\\\"") #>"
-        };
-
-<#            }
 #>
-<#}#>
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-<#
-            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint[fhir:expression/@value]", nsR))
-            {
-                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
-                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
-                if (parentPath.Contains("."))
-                {
-                    // This expression applied to a backbone element, so need to give it scope
-                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
-                }
-                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
-                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
-                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
-                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>            InvariantConstraints.Add(<#= resourceName + "_" + key.Replace("-", "_").ToUpper() #>);
-<#            }
-#>        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;
@@ -658,7 +601,6 @@ if(true) {
 <#
 		// [WMR 20160818] START - implement generic properties collection
 #>
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -670,7 +612,6 @@ if(true) {
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get
@@ -799,29 +740,7 @@ if(true) {
 				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
 //				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 //								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									return "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									return "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									return "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									return "Hl7.Fhir.Model.Duration";
-                                }
-								break;
+				case "Quantity" : return "Hl7.Fhir.Model.Quantity";
             }
 			return propType;
         }
@@ -992,28 +911,7 @@ if(true) {
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
 								break;
             }
 
@@ -1248,28 +1146,7 @@ if(true) {
 								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
-				case "Quantity" :
-								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
-								if (typeProfile == null)
-                                {
-									// result.PropType = "Hl7.Fhir.Model.FhirString";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
-                                {
-									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Money";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Age";
-                                }
-								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
-                                {
-									result.PropType = "Hl7.Fhir.Model.Duration";
-                                }
+				case "Quantity" : result.PropType = "Hl7.Fhir.Model.Quantity";
 								break;
             }
 

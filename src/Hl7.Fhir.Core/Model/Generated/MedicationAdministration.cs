@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Administration of medication to a patient
     /// </summary>
-    [FhirType("MedicationAdministration", IsResource=true)]
+    [FhirType("MedicationAdministration")]
     [DataContract]
-    public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.MedicationAdministration; } }
-        [NotMapped]
         public override string TypeName { get { return "MedicationAdministration"; } }
         
         /// <summary>
@@ -102,9 +99,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
@@ -183,7 +179,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -194,7 +189,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -211,9 +205,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("DosageComponent")]
         [DataContract]
-        public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "DosageComponent"; } }
             
             /// <summary>
@@ -233,7 +226,6 @@ namespace Hl7.Fhir.Model
             /// Free text dosage instructions e.g. SIG
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Text
             {
@@ -292,20 +284,20 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dose", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Dose
+            public Hl7.Fhir.Model.Quantity Dose
             {
                 get { return _Dose; }
                 set { _Dose = value; OnPropertyChanged("Dose"); }
             }
             
-            private Hl7.Fhir.Model.SimpleQuantity _Dose;
+            private Hl7.Fhir.Model.Quantity _Dose;
             
             /// <summary>
             /// Dose quantity per unit of time
             /// </summary>
             [FhirElement("rate", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Quantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -326,7 +318,7 @@ namespace Hl7.Fhir.Model
                     if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.SimpleQuantity)Dose.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Quantity)Dose.DeepCopy();
                     if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
                     return dest;
                 }
@@ -372,7 +364,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -387,7 +378,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -470,7 +460,6 @@ namespace Hl7.Fhir.Model
         /// in-progress | on-hold | completed | entered-in-error | stopped | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus? Status
         {
@@ -608,7 +597,6 @@ namespace Hl7.Fhir.Model
         /// True if medication not administered
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotGiven
         {
@@ -741,43 +729,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _EventHistory;
         
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonNotGiven.empty() or notGiven = true",
-            Key = "mad-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason not given is only permitted if NotGiven is true",
-            Xpath = "not(exists(f:reasonNotGiven) and f:notGiven/@value=false())"
-        };
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "reasonCode.empty() or notGiven.empty() or notGiven = 'false'",
-            Key = "mad-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Reason given is only permitted if NotGiven is false",
-            Xpath = "not(exists(f:reasonCode) and f:notGiven/@value=true())"
-        };
-
-        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "dosage.all(dose.exists() or rate.exists())",
-            Key = "mad-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "SHALL have at least one of dosage.dose or dosage.rate[x]",
-            Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(MedicationAdministration_MAD_2);
-            InvariantConstraints.Add(MedicationAdministration_MAD_3);
-            InvariantConstraints.Add(MedicationAdministration_MAD_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationAdministration;
@@ -876,7 +827,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -905,7 +855,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

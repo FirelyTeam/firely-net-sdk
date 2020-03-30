@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about patient's relatives, relevant for patient
     /// </summary>
-    [FhirType("FamilyMemberHistory", IsResource=true)]
+    [FhirType("FamilyMemberHistory")]
     [DataContract]
-    public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.FamilyMemberHistory; } }
-        [NotMapped]
         public override string TypeName { get { return "FamilyMemberHistory"; } }
         
         /// <summary>
@@ -90,9 +87,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("ConditionComponent")]
         [DataContract]
-        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "ConditionComponent"; } }
             
             /// <summary>
@@ -202,7 +198,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -215,7 +210,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -280,7 +274,6 @@ namespace Hl7.Fhir.Model
         /// partial | completed | entered-in-error | health-unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus? Status
         {
@@ -312,7 +305,6 @@ namespace Hl7.Fhir.Model
         /// The taking of a family member's history did not occur
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? NotDone
         {
@@ -373,7 +365,6 @@ namespace Hl7.Fhir.Model
         /// When history was captured/updated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -405,7 +396,6 @@ namespace Hl7.Fhir.Model
         /// The family member described
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -451,7 +441,6 @@ namespace Hl7.Fhir.Model
         /// male | female | other | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.AdministrativeGender? Gender
         {
@@ -513,7 +502,6 @@ namespace Hl7.Fhir.Model
         /// Age is estimated?
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? EstimatedAge
         {
@@ -601,43 +589,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "age.exists() or estimatedAge.empty()",
-            Key = "fhs-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have estimatedAge if age[x] is present",
-            Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
-        };
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "notDone or notDoneReason.exists().not()",
-            Key = "fhs-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
-        };
-
-        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "age.empty() or born.empty()",
-            Key = "fhs-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can have age[x] or born[x], but not both",
-            Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_2);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_3);
-            InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as FamilyMemberHistory;
@@ -730,7 +681,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -757,7 +707,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

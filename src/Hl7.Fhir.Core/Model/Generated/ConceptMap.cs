@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A map from one set of concepts to one or more other concepts
     /// </summary>
-    [FhirType("ConceptMap", IsResource=true)]
+    [FhirType("ConceptMap")]
     [DataContract]
-    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.ConceptMap; } }
-        [NotMapped]
         public override string TypeName { get { return "ConceptMap"; } }
         
         /// <summary>
@@ -153,9 +150,8 @@ namespace Hl7.Fhir.Model
 
         [FhirType("GroupComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
@@ -175,7 +171,6 @@ namespace Hl7.Fhir.Model
             /// Code System (if value set crosses code systems)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Source
             {
@@ -207,7 +202,6 @@ namespace Hl7.Fhir.Model
             /// Specific version of the  code system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string SourceVersion
             {
@@ -239,7 +233,6 @@ namespace Hl7.Fhir.Model
             /// System of the target (if necessary)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Target
             {
@@ -271,7 +264,6 @@ namespace Hl7.Fhir.Model
             /// Specific version of the  code system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string TargetVersion
             {
@@ -370,7 +362,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -385,7 +376,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -406,9 +396,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("SourceElementComponent")]
         [DataContract]
-        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "SourceElementComponent"; } }
             
             /// <summary>
@@ -428,7 +417,6 @@ namespace Hl7.Fhir.Model
             /// Identifies element being mapped
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
             {
@@ -460,7 +448,6 @@ namespace Hl7.Fhir.Model
             /// Display for the code
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
             {
@@ -537,7 +524,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -549,7 +535,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -567,9 +552,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("TargetElementComponent")]
         [DataContract]
-        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "TargetElementComponent"; } }
             
             /// <summary>
@@ -589,7 +573,6 @@ namespace Hl7.Fhir.Model
             /// Code that identifies the target element
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
             {
@@ -621,7 +604,6 @@ namespace Hl7.Fhir.Model
             /// Display for the code
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
             {
@@ -653,7 +635,6 @@ namespace Hl7.Fhir.Model
             /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence? Equivalence
             {
@@ -685,7 +666,6 @@ namespace Hl7.Fhir.Model
             /// Description of status/issues in mapping
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Comment
             {
@@ -785,7 +765,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -800,7 +779,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -821,9 +799,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("OtherElementComponent")]
         [DataContract]
-        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "OtherElementComponent"; } }
             
             /// <summary>
@@ -844,7 +821,6 @@ namespace Hl7.Fhir.Model
             /// Reference to property mapping depends on
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Property
             {
@@ -876,7 +852,6 @@ namespace Hl7.Fhir.Model
             /// Code System (if necessary)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string System
             {
@@ -909,7 +884,6 @@ namespace Hl7.Fhir.Model
             /// Value of the referenced element
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
             {
@@ -941,7 +915,6 @@ namespace Hl7.Fhir.Model
             /// Display for the code
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
             {
@@ -1007,7 +980,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1020,7 +992,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1039,9 +1010,8 @@ namespace Hl7.Fhir.Model
         
         [FhirType("UnmappedComponent")]
         [DataContract]
-        public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged, IBackboneElement
+        public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            [NotMapped]
             public override string TypeName { get { return "UnmappedComponent"; } }
             
             /// <summary>
@@ -1062,7 +1032,6 @@ namespace Hl7.Fhir.Model
             /// provided | fixed | other-map
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode? Mode
             {
@@ -1094,7 +1063,6 @@ namespace Hl7.Fhir.Model
             /// Fixed code when mode = fixed
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Code
             {
@@ -1126,7 +1094,6 @@ namespace Hl7.Fhir.Model
             /// Display for the code
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Display
             {
@@ -1158,7 +1125,6 @@ namespace Hl7.Fhir.Model
             /// Canonical URL for other concept map
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
             [IgnoreDataMemberAttribute]
             public string Url
             {
@@ -1224,7 +1190,6 @@ namespace Hl7.Fhir.Model
             }
 
 
-            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -1237,7 +1202,6 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            [NotMapped]
             public override IEnumerable<ElementValue> NamedChildren
             {
                 get
@@ -1271,7 +1235,6 @@ namespace Hl7.Fhir.Model
         /// Logical URI to reference this concept map (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Url
         {
@@ -1316,7 +1279,6 @@ namespace Hl7.Fhir.Model
         /// Business version of the concept map
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Version
         {
@@ -1348,7 +1310,6 @@ namespace Hl7.Fhir.Model
         /// Name for this concept map (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Name
         {
@@ -1380,7 +1341,6 @@ namespace Hl7.Fhir.Model
         /// Name for this concept map (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Title
         {
@@ -1413,7 +1373,6 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.PublicationStatus? Status
         {
@@ -1445,7 +1404,6 @@ namespace Hl7.Fhir.Model
         /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public bool? Experimental
         {
@@ -1477,7 +1435,6 @@ namespace Hl7.Fhir.Model
         /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Date
         {
@@ -1509,7 +1466,6 @@ namespace Hl7.Fhir.Model
         /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Publisher
         {
@@ -1649,43 +1605,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
         
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "group.element.target.all(comment.exists() or equivalence.empty() or ((equivalence != 'narrower') and (equivalence != 'inexact')))",
-            Key = "cmd-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the map is narrower or inexact, there SHALL be some comments",
-            Xpath = "exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
-        };
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
-            Key = "cmd-3",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the mode is 'other-map', a code must be provided",
-            Xpath = "(f:mode/@value != 'other-map') or exists(f:url)"
-        };
-
-        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_2 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "group.unmapped.all((mode = 'fixed') implies code.exists())",
-            Key = "cmd-2",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the mode is 'fixed', a code must be provided",
-            Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(ConceptMap_CMD_1);
-            InvariantConstraints.Add(ConceptMap_CMD_3);
-            InvariantConstraints.Add(ConceptMap_CMD_2);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ConceptMap;
@@ -1778,7 +1697,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -1805,7 +1723,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

@@ -49,7 +49,6 @@ namespace Hl7.Fhir.Model
         public partial class EntryComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get
@@ -80,56 +79,48 @@ namespace Hl7.Fhir.Model
         public const string ATOM_LINKREL_PREDVERSION = "predecessor-version";
         public const string ATOM_LINKREL_ALTERNATE = "alternate";
 
-        [NotMapped]
         public Uri SelfLink
         {
             get { return getLink(ATOM_LINKREL_SELF); }
             set { setLink(ATOM_LINKREL_SELF, value); }
         }
 
-        [NotMapped]
         public Uri FirstLink
         {
             get { return getLink(ATOM_LINKREL_FIRST); }
             set { setLink(ATOM_LINKREL_FIRST, value); }
         }
 
-        [NotMapped]
         public Uri PreviousLink
         {
             get { return getLink(ATOM_LINKREL_PREVIOUS) ?? getLink(ATOM_LINKREL_PREV); }
             set { setLink(ATOM_LINKREL_PREVIOUS, value); }
         }
 
-        [NotMapped]
         public Uri NextLink
         {
             get { return getLink(ATOM_LINKREL_NEXT); }
             set { setLink(ATOM_LINKREL_NEXT, value); }
         }
 
-        [NotMapped]
         public Uri LastLink
         {
             get { return getLink(ATOM_LINKREL_LAST); }
             set { setLink(ATOM_LINKREL_LAST, value); }
         }
 
-        [NotMapped]
         public Uri SearchLink
         {
             get { return getLink(ATOM_LINKREL_SEARCH); }
             set { setLink(ATOM_LINKREL_SEARCH, value); }
         }
 
-        [NotMapped]
         public Uri PredecessorVersionLink
         {
             get { return getLink(ATOM_LINKREL_PREDVERSION); }
             set { setLink(ATOM_LINKREL_PREDVERSION, value); }
         }
 
-        [NotMapped]
         public Uri Alternate
         {
             get { return getLink(ATOM_LINKREL_ALTERNATE); }

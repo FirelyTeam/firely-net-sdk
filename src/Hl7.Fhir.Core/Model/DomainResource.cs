@@ -35,6 +35,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {

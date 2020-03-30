@@ -46,13 +46,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection
     /// </summary>
-    [FhirType("AppointmentResponse", IsResource=true)]
+    [FhirType("AppointmentResponse")]
     [DataContract]
-    public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
     {
-        [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.AppointmentResponse; } }
-        [NotMapped]
         public override string TypeName { get { return "AppointmentResponse"; } }
         
         /// <summary>
@@ -102,7 +99,6 @@ namespace Hl7.Fhir.Model
         /// Time from appointment, or requested new start time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? Start
         {
@@ -134,7 +130,6 @@ namespace Hl7.Fhir.Model
         /// Time from appointment, or requested new end time
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? End
         {
@@ -196,7 +191,6 @@ namespace Hl7.Fhir.Model
         /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public Hl7.Fhir.Model.ParticipationStatus? ParticipantStatus
         {
@@ -228,7 +222,6 @@ namespace Hl7.Fhir.Model
         /// Additional comments
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string Comment
         {
@@ -243,23 +236,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-
-        public static ElementDefinition.ConstraintComponent AppointmentResponse_APR_1 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "participantType.exists() or actor.exists()",
-            Key = "apr-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either the participantType or actor must be specified",
-            Xpath = "(exists(f:participantType) or exists(f:actor))"
-        };
-
-        public override void AddDefaultConstraints()
-        {
-            base.AddDefaultConstraints();
-
-            InvariantConstraints.Add(AppointmentResponse_APR_1);
-        }
-
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;
@@ -322,7 +298,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -339,7 +314,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren
         {
             get

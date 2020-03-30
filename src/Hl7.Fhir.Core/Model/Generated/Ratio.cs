@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Ratio")]
     [DataContract]
-    public partial class Ratio : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Ratio : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Ratio"; } }
         
         /// <summary>
@@ -58,26 +57,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("numerator", InSummary=true, Order=30)]
         [DataMember]
-        public Quantity Numerator
+        public Hl7.Fhir.Model.Quantity Numerator
         {
             get { return _Numerator; }
             set { _Numerator = value; OnPropertyChanged("Numerator"); }
         }
         
-        private Quantity _Numerator;
+        private Hl7.Fhir.Model.Quantity _Numerator;
         
         /// <summary>
         /// Denominator value
         /// </summary>
         [FhirElement("denominator", InSummary=true, Order=40)]
         [DataMember]
-        public Quantity Denominator
+        public Hl7.Fhir.Model.Quantity Denominator
         {
             get { return _Denominator; }
             set { _Denominator = value; OnPropertyChanged("Denominator"); }
         }
         
-        private Quantity _Denominator;
+        private Hl7.Fhir.Model.Quantity _Denominator;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -87,8 +86,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Numerator != null) dest.Numerator = (Quantity)Numerator.DeepCopy();
-                if(Denominator != null) dest.Denominator = (Quantity)Denominator.DeepCopy();
+                if(Numerator != null) dest.Numerator = (Hl7.Fhir.Model.Quantity)Numerator.DeepCopy();
+                if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
                 return dest;
             }
             else
@@ -124,7 +123,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -135,7 +133,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 

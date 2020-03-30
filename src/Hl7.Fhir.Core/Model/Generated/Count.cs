@@ -47,7 +47,6 @@ namespace Hl7.Fhir.Model
     [FhirType("Count")]
     public partial class Count : Quantity
     {
-        [NotMapped]
         public override string TypeName { get { return "Count"; } }
         
         public override IDeepCopyable DeepCopy()

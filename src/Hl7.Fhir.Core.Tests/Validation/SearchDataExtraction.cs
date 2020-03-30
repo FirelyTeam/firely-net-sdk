@@ -113,11 +113,11 @@ namespace Hl7.Fhir.Test.Validation
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.TypeName && !String.IsNullOrEmpty(r.Expression));
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache
-                string key = resource.ResourceType.ToString() + "_" + index.Name;
+                string key = resource.TypeName + "_" + index.Name;
                 if (!exampleSearchValues.ContainsKey(key))
                     exampleSearchValues.Add(key, 0);
 

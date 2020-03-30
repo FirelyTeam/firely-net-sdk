@@ -48,9 +48,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
-    public partial class Signature : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public partial class Signature : Hl7.Fhir.Model.Element
     {
-        [NotMapped]
         public override string TypeName { get { return "Signature"; } }
         
         /// <summary>
@@ -85,7 +84,6 @@ namespace Hl7.Fhir.Model
         /// When the signature was created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public DateTimeOffset? When
         {
@@ -148,7 +146,6 @@ namespace Hl7.Fhir.Model
         /// The technical format of the signature
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public string ContentType
         {
@@ -180,7 +177,6 @@ namespace Hl7.Fhir.Model
         /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
         [IgnoreDataMemberAttribute]
         public byte[] Blob
         {
@@ -252,7 +248,6 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
@@ -267,7 +262,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
