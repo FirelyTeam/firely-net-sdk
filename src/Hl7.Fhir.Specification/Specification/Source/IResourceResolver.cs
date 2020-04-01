@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Source
         Resource ResolveByCanonicalUri(string uri); // IConformanceResource
     }
 
-    public interface IResourceResolverAsync : IResourceResolver
+    public interface IResourceResolverAsync
     {
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         Task<Resource> ResolveByUriAsync(string uri);

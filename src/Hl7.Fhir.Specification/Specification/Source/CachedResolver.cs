@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Source
 
     /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CachedResolver : IResourceResolverAsync
+    public class CachedResolver : IResourceResolverAsync, IResourceResolver
     {
         /// <summary>Default expiration time for cached entries.</summary>
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
@@ -37,10 +37,14 @@ namespace Hl7.Fhir.Specification.Source
         readonly Cache<Resource> _resourcesByUri;
         readonly Cache<Resource> _resourcesByCanonical;
 
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use a constructor using IResourceResolverAsync instead.")]
+        public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION) :
+            this((IResourceResolverAsync)new SyncToAsyncResolver(source), cacheDuration) { }
+
         /// <summary>Creates a new artifact resolver that caches loaded resources in memory.</summary>
         /// <param name="source">Internal resolver from which artifacts are initially resolved on a cache miss.</param>
         /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
-        public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
+        public CachedResolver(IResourceResolverAsync source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
             if (source is IResourceResolverAsync asyncResolver)
                 Source = asyncResolver ?? throw Error.ArgumentNull(nameof(source));

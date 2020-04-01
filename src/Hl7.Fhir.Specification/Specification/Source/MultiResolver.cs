@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from a list of other IArtifactSources
     /// </summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class MultiResolver : IResourceResolverAsync
+    public class MultiResolver : IResourceResolver
     {
         private readonly List<IResourceResolver> _sources = new List<IResourceResolver>();
 
@@ -117,9 +117,6 @@ namespace Hl7.Fhir.Specification.Source
             // None of the IArtifactSources succeeded in returning a result
             return null;
         }
-
-        public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
-        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

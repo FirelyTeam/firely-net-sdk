@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         SnapshotGenerator _generator;
-        IResourceResolverAsync _testResolver;
+        IResourceResolver _testResolver;
         TimingSource _source;
 
         readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()

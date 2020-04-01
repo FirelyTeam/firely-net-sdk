@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Ensures that resolved <see cref="StructureDefinition"/> resources have a snapshot component (re-generate on demand).
     /// </summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class SnapshotSource : IResourceResolverAsync
+    public class SnapshotSource : IResourceResolverAsync, IResourceResolver
     {
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified snapshot generator instance.</summary>
         /// <param name="generator">A <see cref="SnapshotGenerator"/> instance.</param>
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Returns a reference to the internal artifact source, as specified in the constructor.</summary>
         /// <remarks>Used by the snapshot <see cref="Generator"/> to resolve references to external profiles.</remarks>
-        public IResourceResolver Source { get; private set; }
+        public IResourceResolverAsync Source { get; private set; }
 
         /// <summary>Returns the internal <see cref="SnapshotGenerator"/> instance used by the source.</summary>
         public SnapshotGenerator Generator { get; }
@@ -71,11 +71,14 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public Resource ResolveByUri(string uri) => ensureSnapshot(Source.ResolveByUri(uri));
+        public Resource ResolveByUri(string uri) => Task.Run(() => ResolveByCanonicalUri(uri)).Result;
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public Resource ResolveByCanonicalUri(string uri) => ensureSnapshot(Source.ResolveByCanonicalUri(uri));
+        public Resource ResolveByCanonicalUri(string uri) => Task.Run(() => ResolveByCanonicalUriAsync(uri)).Result;
+
+        public async Task<Resource> ResolveByUriAsync(string uri) => ensureSnapshot(await Source.ResolveByUriAsync(uri));
+        public async Task<Resource> ResolveByCanonicalUriAsync(string uri) => ensureSnapshot(await Source.ResolveByCanonicalUriAsync(uri));
 
         #endregion
 
@@ -92,9 +95,6 @@ namespace Hl7.Fhir.Specification.Source
             }
             return res;
         }
-
-        public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
-        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

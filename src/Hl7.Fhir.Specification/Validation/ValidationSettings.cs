@@ -27,22 +27,8 @@ namespace Hl7.Fhir.Validation
         /// The resolver to use when references to other resources are encountered in the instance.
         /// </summary>
         
-        
-        [Obsolete("Using a synchronous resolver is not supported anymore. Please use the AsyncResourceResolver property instead or at least make " +
-            "sure you set this property to a resolver that also implements IAsyncResourceResolver.")]
-        public IResourceResolver ResourceResolver 
-        {
-            get => AsyncResourceResolver;
-            set
-            {
-                if (value is IResourceResolverAsync asyncResolver)
-                    AsyncResourceResolver = asyncResolver;
-                else
-                    throw new NotSupportedException("The resource resolver passed in to the settings should implement IResourceResolverAsync.");
-            }
-        }
-
-        public IResourceResolverAsync AsyncResourceResolver { get; set; }
+       
+        public IResourceResolver ResourceResolver { get; set; } 
 
         /// <summary>
         /// The terminology service to use to validate coded instance data.
@@ -125,7 +111,7 @@ namespace Hl7.Fhir.Validation
             other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
             other.EnableXsdValidation = EnableXsdValidation;
             other.ResolveExteralReferences = ResolveExteralReferences;
-            other.AsyncResourceResolver = AsyncResourceResolver;
+            other.ResourceResolver = ResourceResolver;
             other.SkipConstraintValidation = SkipConstraintValidation;
             other.TerminologyService = TerminologyService;
             other.Trace = Trace;

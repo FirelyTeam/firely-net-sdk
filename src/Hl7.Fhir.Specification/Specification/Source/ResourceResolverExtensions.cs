@@ -193,5 +193,18 @@ namespace Hl7.Fhir.Specification.Source
 
             return resolver.GetType().Name;
         }
+
+        internal static string DebuggerDisplayString(this IResourceResolverAsync resolver)
+        {
+            if (resolver is DirectorySource ds) { return ds.DebuggerDisplay; }
+            if (resolver is ZipSource zs) { return zs.DebuggerDisplay; }
+            // if (resolver is WebResolver wr) { return wr.DebuggerDisplay; }
+            if (resolver is MultiResolver mr) { return mr.DebuggerDisplay; }
+            if (resolver is CachedResolver cr) { return cr.DebuggerDisplay; }
+            if (resolver is SnapshotSource ss) { return ss.DebuggerDisplay; }
+
+            return resolver.GetType().Name;
+        }
+
     }
 }

@@ -48,13 +48,15 @@ namespace Hl7.Fhir.Validation
             {
                 if (_snapshotGenerator == null)
                 {
-                    var resolver = Settings.AsyncResourceResolver;
-                    if (resolver != null)
+                    if (Settings.ResourceResolver != null)
                     {
                         SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings
                             ?? SnapshotGeneratorSettings.CreateDefault();
 
-                        _snapshotGenerator = new SnapshotGenerator(resolver, settings);
+                        // Call into the new async resolvers, but since we're still sync, use
+                        // an adaptor to be able to use the async resolver synchronously
+                        var asyncResolver = new SyncToAsyncResolver(Settings.ResourceResolver);
+                        _snapshotGenerator = new SnapshotGenerator(asyncResolver, settings);
                     }
 
                 }
