@@ -282,8 +282,14 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns></returns>
         /// <remarks>A fully qualified path is the path of the ElementDefinition, prefixed by the canonical of 
         /// the StructureDefinition the ElementDefinition is part of.</remarks>
-        public static string CanonicalPath(this ElementDefinition def, StructureDefinition parent = null) =>
-                $"{(parent.Url ?? "")}#{(def?.Path ?? "(root)")}";
+        public static string CanonicalPath(this ElementDefinition def, StructureDefinition parent = null)
+        {
+            var path = parent.Url ?? "";
+            path += $"#{(def?.Path ?? "(root)")}";
+            if (def?.ElementId != null)
+                path += $" ({def.ElementId})";
+            return path;
+        }
 
 
         /// <summary>
