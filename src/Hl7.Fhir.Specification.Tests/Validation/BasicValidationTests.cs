@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestDuplicateOperationOutcomeIssues()
         {
-            var outcome = new OperationOutcome
+            var duplicateErrors = new OperationOutcome
             {
                 Issue = new List<OperationOutcome.IssueComponent>
                 {
@@ -210,10 +210,38 @@ namespace Hl7.Fhir.Specification.Tests
                         }
                     }                    
                 }
+            };           
+
+            var sameErrorOnDifferentElement = new OperationOutcome
+            {
+                Issue = new List<OperationOutcome.IssueComponent>
+                {
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.value"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ele-1: value or child"
+                        }
+                    },
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.extension"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ele-1: value or child"
+                        }
+                    }
+                }
             };
 
-            outcome = outcome.RemoveDuplicateMessages();
-            Assert.Single(outcome.Issue);
+            duplicateErrors = duplicateErrors.RemoveDuplicateMessages();
+            sameErrorOnDifferentElement = sameErrorOnDifferentElement.RemoveDuplicateMessages();
+
+            Assert.Single(duplicateErrors.Issue);
+            Assert.Equal(2, sameErrorOnDifferentElement.Issue.Count);
         }
 
         [Fact]
