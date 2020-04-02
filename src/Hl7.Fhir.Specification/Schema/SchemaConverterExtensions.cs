@@ -25,13 +25,15 @@ namespace Hl7.Fhir.Specification.Schema
             var elements = new List<IAssertion>()
                 .MaybeAdd(BuildMaxLength(def))
                 .MaybeAdd(BuildFixed(def))
+                .MaybeAdd(BuildPattern(def))
+                .MaybeAdd(BuildBinding(def))
                 .MaybeAdd(BuildMinValue(def))
                 .MaybeAdd(BuildMaxValue(def))
                 .MaybeAdd(BuildFp(def))
                 .MaybeAdd(BuildCardinality(def))
-                .MaybeAdd(BuildRegex(def))
-                //.MaybeAdd(BuildElementRegEx(def))
-                //.MaybeAdd(BuildTypeRefRegEx(def))
+                .MaybeAdd(BuildElementRegEx(def))
+                .MaybeAdd(BuildTypeRefRegEx(def))
+
                 //.MaybeAdd(BuildMinItems(def))
                 //.MaybeAdd(BuildMaxItems(def))
                 .MaybeAdd(BuildTypeRefValidation(def, resolver))
@@ -40,6 +42,33 @@ namespace Hl7.Fhir.Specification.Schema
             return new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), elements);
         }
 
+        private static IAssertion BuildBinding(ElementDefinition def) =>
+            def.Binding != null ? new Binding(def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
+
+        private static Binding.BindingStrength ConvertStrength(BindingStrength? strength)
+        {
+            // TODO Dirty cast
+            return (Binding.BindingStrength)strength;
+
+        }
+
+        private static IAssertion BuildTypeRefRegEx(ElementDefinition def)
+        {
+            var list = new List<IAssertion>();
+
+            foreach (var type in def.Type)
+            {
+                var assertion = BuildRegex(type);
+                if (assertion != null)
+                {
+                    list.Add(assertion);
+                }
+
+            }
+            return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+        }
+
+        private static IAssertion BuildElementRegEx(ElementDefinition def) => BuildRegex(def);
 
 
         private static IAssertion BuildMinValue(ElementDefinition def) =>
@@ -49,7 +78,10 @@ namespace Hl7.Fhir.Specification.Schema
             def.MaxValue != null ? new MinMaxValue("TODO", def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
         private static IAssertion BuildFixed(ElementDefinition def) =>
-            def.Fixed != null ? new Fixed("TODO", def.Fixed.ToTypedElement()) : null;
+            def.Fixed != null ? new Fixed(def.Path, def.Fixed.ToTypedElement()) : null;
+
+        private static IAssertion BuildPattern(ElementDefinition def) =>
+           def.Pattern != null ? new Pattern(def.Path, def.Pattern.ToTypedElement()) : null;
 
         private static IAssertion BuildMaxLength(ElementDefinition def) =>
             def.MaxLength.HasValue ? new MaxLength(def.ElementId ?? def.Path, def.MaxLength.Value) : null;
@@ -60,7 +92,7 @@ namespace Hl7.Fhir.Specification.Schema
             foreach (var constraint in def.Constraint)
             {
                 var bestPractice = constraint.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") ?? false;
-                list.Add(new FhirPathAssertion("TODO", constraint.Key, constraint.Expression, Convert(constraint.Severity), bestPractice));
+                list.Add(new FhirPathAssertion("TODO", constraint.Key, constraint.Expression, constraint.Human, Convert(constraint.Severity), bestPractice));
             }
 
             return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
@@ -83,20 +115,10 @@ namespace Hl7.Fhir.Specification.Schema
         private static IAssertion BuildCardinality(ElementDefinition def) =>
             def.Min != null || def.Max != null ? new CardinalityAssertion(def.Min, def.Max, def.Path) : null;
 
-        private static IAssertion BuildRegex(ElementDefinition def)
+        private static IAssertion BuildRegex(IExtendable elementDef)
         {
-            var list = new List<IAssertion>();
-
-            foreach (var type in def.Type)
-            {
-                var pattern = type?.GetStringExtension("http://hl7.org/fhir/StructureDefinition/regex");
-                if (pattern != null)
-                {
-                    list.Add(new RegExAssertion("TODO", pattern));
-                }
-
-            }
-            return list.Count > 0 ? new ElementSchema(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+            var pattern = elementDef?.GetStringExtension("http://hl7.org/fhir/StructureDefinition/regex");
+            return pattern != null ? new RegExAssertion("TODO", pattern) : null;
         }
 
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver)

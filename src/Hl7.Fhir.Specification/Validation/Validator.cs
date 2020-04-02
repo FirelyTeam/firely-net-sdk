@@ -127,19 +127,19 @@ namespace Hl7.Fhir.Validation
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages();
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages();
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages();
         }
         #endregion
 
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Validation
             foreach (var item in issues)
             {
                 var issue = Issue.Create(item.IssueNumber, ConvertToSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
-                outcome.AddIssue(item.Message, issue, (ITypedElement)null);
+                outcome.AddIssue(item.Message, issue, item.Location);
             }
 
             // TODO Refactor VALIDATION
