@@ -31,7 +31,8 @@ namespace Hl7.Fhir.Validation
             buildParametersWithBoundParams(),   
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
-            buildOrganizationWithRegexConstraintOnType()
+            buildOrganizationWithRegexConstraintOnType(),
+            buildValueDescriminatorWithPattern()
         };
 
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
@@ -231,6 +232,61 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Parameters").OfType(FHIRAllTypes.Parameters));
             cons.Add(new ElementDefinition("Parameters.parameter.value[x]")
                     .WithBinding("http://hl7.org/fhir/ValueSet/data-absent-reason", BindingStrength.Required));
+
+            return result;
+        }
+
+        private static StructureDefinition buildValueDescriminatorWithPattern()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ValueDiscriminatorWithPattern", "A value discriminator including pattern[x]",
+                    "Expresses a discriminator of type value, which expects pattern[x] to be considered part of it too.", FHIRAllTypes.Practitioner);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Practitioner").OfType(FHIRAllTypes.Practitioner));
+
+            var slicingIntro = new ElementDefinition("Practitioner.identifier")
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+                (ElementDefinition.DiscriminatorType.Pattern, "type"));
+
+            cons.Add(slicingIntro);
+
+            // Slice 1 - binds to FHIR's identifier-type (req) PLUS requires a local code translation
+            cons.Add(new ElementDefinition("Practitioner.identifier")
+            {
+                ElementId = "Practitioner.identifier:slice1",
+                SliceName = "slice1",
+                Max = "1"
+            });
+            cons.Add(new ElementDefinition("Practitioner.identifier.type")
+            {
+                ElementId = "Practitioner.identifier:slice1.type", 
+                Pattern = new CodeableConcept("http://local-codes.nl/identifier-types", "ID-TYPE-1")
+            }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
+
+            // Slice 2 - binds to FHIR's identifier-type (req) PLUS requires another local code translation
+            cons.Add(new ElementDefinition("Practitioner.identifier")
+            {
+                ElementId = "Practitioner.identifier:slice2",
+                SliceName = "slice2",
+                Max = "*"
+            });
+            cons.Add(new ElementDefinition("Practitioner.identifier.type")
+            {
+                ElementId = "Practitioner.identifier:slice2.type",
+                Pattern = new CodeableConcept("http://local-codes.nl/identifier-types", "ID-TYPE-2")
+            }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
+
+            // Slice 3 - binds to FHIR's identifier-type (req), no other requirements
+            cons.Add(new ElementDefinition("Practitioner.identifier")
+            {
+                ElementId = "Practitioner.identifier:slice3",
+                SliceName = "slice3",
+                Max = "*"
+            });
+            cons.Add(new ElementDefinition("Practitioner.identifier.type")
+            {
+                ElementId = "Practitioner.identifier:slice3.type",
+            }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
 
             return result;
         }

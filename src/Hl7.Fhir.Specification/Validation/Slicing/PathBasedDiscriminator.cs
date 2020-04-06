@@ -9,6 +9,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -33,9 +34,9 @@ namespace Hl7.Fhir.Validation
             else if (values.Length == 0)
                 return false;
             else
-                return matchInternal(values.Single());
+                return MatchInternal(values.Single());
         }
 
-        abstract protected bool matchInternal(ITypedElement candidate);
+        abstract protected bool MatchInternal(ITypedElement candidate);
     }
 }
