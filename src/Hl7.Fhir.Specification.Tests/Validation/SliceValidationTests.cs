@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 // STU3: http://hl7.org/fhir/v2/0203
                 // R4: http://terminology.hl7.org/CodeSystem/v2-0203
-                var data = new CodeableConcept("http://hl7.org/fhir/v2/0203", fhirCode);
+                var data = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v2-0203", fhirCode);
                 if (localCode != null)
                     data.Coding.Add(new Coding("http://local-codes.nl/identifier-types", localCode));
 
