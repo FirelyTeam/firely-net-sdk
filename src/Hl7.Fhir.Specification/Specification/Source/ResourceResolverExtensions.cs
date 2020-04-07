@@ -167,20 +167,6 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             return isValidTypeProfile(resolver, recursionStack, type, sdBase);
-        }
-
-        // Helper method to retrieve debugger display strings for well-known implementations
-        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        internal static string DebuggerDisplayString(this IResourceResolver resolver)
-        {
-            if (resolver is DirectorySource ds) { return ds.DebuggerDisplay; }
-            if (resolver is ZipSource zs) { return zs.DebuggerDisplay; }
-            // if (resolver is WebResolver wr) { return wr.DebuggerDisplay; }
-            if (resolver is MultiResolver mr) { return mr.DebuggerDisplay; }
-            if (resolver is CachedResolver cr) { return cr.DebuggerDisplay; }
-            if (resolver is SnapshotSource ss) { return ss.DebuggerDisplay; }
-
-            return resolver.GetType().Name;
-        }
+        }       
     }
 }
