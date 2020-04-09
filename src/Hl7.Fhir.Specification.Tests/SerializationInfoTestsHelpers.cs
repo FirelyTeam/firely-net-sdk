@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 
@@ -49,6 +50,23 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsNotNull(si);
                 Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
                 Assert.AreEqual(isAbstract, si.IsAbstract);
+            }
+        }
+
+        public static void TestRequiresSnapshot(IStructureDefinitionSummaryProvider provider)
+        {
+            // provide a structuredefinition from our test source, which does not contain snapshots
+            // this should fail. e.g.  // http://validationtest.org/fhir/StructureDefinition/DutchPatient
+            var sdWithoutSnapshot = "http://validationtest.org/fhir/StructureDefinition/DutchPatient";
+
+            try
+            {
+                _ = provider.Provide(sdWithoutSnapshot);
+                Assert.Fail();
+            }
+            catch(ArgumentException e) 
+            {
+                Assert.IsTrue(e.Message.Contains("has no snapshot component"));
             }
         }
 
