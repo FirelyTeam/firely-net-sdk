@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
             => FileSource.ListResourceUris(filter);
 
         /// <summary>

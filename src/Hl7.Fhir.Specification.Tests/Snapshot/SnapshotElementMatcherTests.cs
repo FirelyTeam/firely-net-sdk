@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
             var diffNav = ElementDefinitionNavigator.ForSnapshot(userProfile);
 
             // Recursively match all constraints and verify that all matches return action Merged
-            var matches = matchAndVerify(snapNav, diffNav);
+            _ = matchAndVerify(snapNav, diffNav);
         }
 
         [TestMethod]

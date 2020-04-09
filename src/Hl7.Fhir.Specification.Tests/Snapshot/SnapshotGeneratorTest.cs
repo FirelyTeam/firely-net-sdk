@@ -30,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -43,6 +44,7 @@ namespace Hl7.Fhir.Specification.Tests
         SnapshotGenerator _generator;
         ZipSource _zipSource;
         IResourceResolver _testResolver;
+        IAsyncResourceResolver _testResolverAsync;
         TimingSource _source;
 
         readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
@@ -67,6 +69,7 @@ namespace Hl7.Fhir.Specification.Tests
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
             _zipSource = new ZipSource("specification.zip");
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
+            _testResolverAsync = _testResolver.ToAsync();  // this line should go when all resolvers are async
         }
 
         private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
@@ -320,7 +323,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             generateSnapshot(sd);
             Assert.IsTrue(sd.HasSnapshot);
-            var elems = sd.Snapshot.Element;
+            _ = sd.Snapshot.Element;
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             var expanded = fullyExpand(sd.Snapshot.Element, issues);
@@ -426,8 +429,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(sd);
 
-            StructureDefinition snapshot = null;
-            generateSnapshotAndCompare(sd, out snapshot);
+            generateSnapshotAndCompare(sd, out StructureDefinition snapshot);
             Assert.IsNotNull(snapshot);
             Assert.IsTrue(snapshot.HasSnapshot);
 
@@ -934,11 +936,12 @@ namespace Hl7.Fhir.Specification.Tests
             dumpReferences(sd, true);
 
             // Explicitly disable expansion of external snapshots
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateSnapshotForExternalProfiles = false;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateSnapshotForExternalProfiles = false
+            };
             _generator = new SnapshotGenerator(_testResolver, settings);
-
-            generateSnapshotAndCompare(sd, out var expanded);
+            generateSnapshotAndCompare(sd, out _);
 
             var outcome = _generator.Outcome;
             dumpOutcome(outcome);
@@ -1020,7 +1023,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         bool generateSnapshotAndCompare(StructureDefinition original)
         {
-            return generateSnapshotAndCompare(original, out var expanded);
+            return generateSnapshotAndCompare(original, out var _);
         }
 
         bool generateSnapshotAndCompare(StructureDefinition original, out StructureDefinition expanded)
@@ -1092,14 +1095,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTree()
         {
-            var e = new List<ElementDefinition>();
-
-            e.Add(new ElementDefinition() { Path = "A.B.C1" });
-            e.Add(new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }); // First slice of A.B.C1
-            e.Add(new ElementDefinition() { Path = "A.B.C2" });
-            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "B-A" }); // First slice of A.B
-            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
-            e.Add(new ElementDefinition() { Path = "A.D.F" });
+            var e = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "A.B.C1" },
+                new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }, // First slice of A.B.C1
+                new ElementDefinition() { Path = "A.B.C2" },
+                new ElementDefinition() { Path = "A.B", SliceName = "B-A" }, // First slice of A.B
+                new ElementDefinition() { Path = "A.B.C1.D" },
+                new ElementDefinition() { Path = "A.D.F" }
+            };
 
             var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
@@ -1127,10 +1131,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTreeMultipleRoots()
         {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient" });
+            var elements = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "Patient.identifier" },
+                new ElementDefinition() { Path = "Patient" }
+            };
 
             bool exceptionRaised = false;
             try
@@ -1149,16 +1154,17 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTreeForReslice()
         {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" });
+            var elements = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "Patient.identifier" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" },
+                new ElementDefinition() { Path = "Patient.identifier.use" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" },
+                new ElementDefinition() { Path = "Patient.identifier.type" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" },
+                new ElementDefinition() { Path = "Patient.identifier.period.start" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" }
+            };
 
             var tree = DifferentialTreeConstructor.MakeTree(elements);
             Assert.IsNotNull(tree);
@@ -1472,17 +1478,15 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements)
-        {
-            return elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
-        }
+        static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements) 
+            => elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
 
-        static string formatElementPathName(ElementDefinition elem)
-        {
-            if (elem == null) { return null; }
-            if (!string.IsNullOrEmpty(elem.SliceName)) return $"{elem.Path}:{elem.SliceName}";
-            return elem.Path;
-        }
+        static string formatElementPathName(ElementDefinition elem) =>
+            elem == null
+                ? null
+                : !string.IsNullOrEmpty(elem.SliceName) ?
+                   $"{elem.Path}:{elem.SliceName}"
+                    : elem.Path;
 
         [Conditional("DEBUG")]
         static void dumpBaseElems(IEnumerable<ElementDefinition> elements)
@@ -1491,7 +1495,7 @@ namespace Hl7.Fhir.Specification.Tests
                 elements.Select(e =>
                 {
                     var bea = e.Annotation<BaseDefAnnotation>();
-                    var be = bea != null ? bea.BaseElementDefinition : null;
+                    var be = bea?.BaseElementDefinition;
                     //return "  #{0,-8} {1} '{2}' - {3} => #{4,-8} {5} '{6}' - {7}"
                     //    .FormatWith(
                     //        e.GetHashCode(),
@@ -1602,9 +1606,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            // settings.GenerateExtensionsOnConstraints = true;
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                // settings.GenerateExtensionsOnConstraints = true;
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1691,8 +1697,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(typeProfileUrl);
             Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1781,8 +1789,10 @@ namespace Hl7.Fhir.Specification.Tests
             var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(typeProfileUrl);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1887,8 +1897,10 @@ namespace Hl7.Fhir.Specification.Tests
             var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(extensionDefinitionUrl);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1998,8 +2010,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -2183,8 +2197,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         void constraintHandler(object sender, SnapshotConstraintEventArgs e)
         {
-            var elem = e.Element as ElementDefinition;
-            if (elem != null)
+            if (e.Element is ElementDefinition elem)
             {
                 var changed = elem.IsConstrainedByDiff();
                 //Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
@@ -2217,7 +2230,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Assert.IsTrue(!isConstraint || elem.Base != null);
 
                 var ann = elem.Annotation<BaseDefAnnotation>();
-                var baseDef = ann != null ? ann.BaseElementDefinition : null;
+                var baseDef = ann?.BaseElementDefinition;
                 Assert.AreNotEqual(elem, baseDef);
 
                 var hasChanges = SnapshotGeneratorTest2.hasChanges(elem);
@@ -2249,9 +2262,9 @@ namespace Hl7.Fhir.Specification.Tests
                     + (hasConstraintAnnotations.HasValue ? (hasConstraintAnnotations.Value ? " (+)" : " (-)") : null),
                     getChangeDescription(elem),
                     elem.Path,
-                    elem.Base != null ? elem.Base.Path : null,
-                    baseDef != null ? baseDef.Path : null,
-                    baseDef != null ? baseDef.GetHashCode().ToString() : null,
+                    elem.Base?.Path,
+                    baseDef?.Path,
+                    baseDef?.GetHashCode().ToString(),
                     // !isValid ? "!!!" : ""
                     isRedundant ? "(redundant)" : ""
                 );
@@ -2372,9 +2385,7 @@ namespace Hl7.Fhir.Specification.Tests
             //if (IsChanged(element.Slicing)) { return "Slicing"; }
             //if (HasChanges(element.Type)) { return "Type"; }
 
-            if (isChanged(element)) { return "Element"; }           // Moved to back
-
-            return string.Empty;
+            return isChanged(element) ? "Element" : string.Empty;           // Moved to back
         }
 
         static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
@@ -2493,8 +2504,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var bundle = parser.Parse<Bundle>(reader);
                 foreach (var entry in bundle.Entry)
                 {
-                    var res = entry.Resource as T;
-                    if (res != null) { yield return res; }
+                    if (entry.Resource is T res) { yield return res; }
                 }
             }
         }
@@ -2684,7 +2694,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static bool verifyBasePath(ElementDefinition elem, ElementDefinition orgElem, string path = "")
         {
-            bool result = false;
+            bool result;
             if (!string.IsNullOrEmpty(path))
             {
                 // Assert.IsNotNull(elem.Base);
@@ -2698,8 +2708,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLineIf(elem.Base == null, "EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(elem.Path));
                 Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(orgElem.Path));
 
-                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base?.Path, path));
+                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base?.Path, path));
             }
             else
             {
@@ -2709,8 +2719,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                 result = elem.Base == null;
 
-                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base?.Path, path));
+                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base?.Path, path));
 
             }
             return result;
@@ -3257,13 +3267,12 @@ namespace Hl7.Fhir.Specification.Tests
             var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation3");
             Assert.IsNotNull(obs);
 
-            StructureDefinition expanded;
             _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.PrepareElement += elementHandler;
             List<ElementDefinition> elems;
             try
             {
-                generateSnapshotAndCompare(obs, out expanded);
+                generateSnapshotAndCompare(obs, out StructureDefinition expanded);
 
                 dumpOutcome(_generator.Outcome);
 
@@ -4129,8 +4138,10 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(profile);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateElementIds = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateElementIds = true
+            };
             _generator = new SnapshotGenerator(multiResolver, settings);
             StructureDefinition expanded = null;
 
@@ -4944,7 +4955,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
         [TestMethod]
-        public void TestPatientWithAddress()
+        public async T.Task TestPatientWithAddress()
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
             Assert.IsNotNull(sd);
@@ -4977,7 +4988,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = sd.Snapshot.Element.FirstOrDefault(e => e.SliceName == "patientExtension");
             Assert.IsNotNull(elem);
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientExtension", elem.Type[0]?.Profile);
-            var sdExt = _testResolver.FindExtensionDefinition(elem.Type[0].Profile);
+            var sdExt = await _testResolverAsync.FindExtensionDefinitionAsync(elem.Type[0].Profile);
             Assert.IsNotNull(sdExt);
             var extRootshort = sdExt.Differential.Element[0].Short; // Explicit constraint on ext root
             Assert.IsNotNull(extRootshort);
@@ -6397,8 +6408,10 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             // Enable annotations on snapshot elements with diff constraints
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(_testResolver, settings);
 
             generateSnapshotAndCompare(sd, out StructureDefinition expanded);

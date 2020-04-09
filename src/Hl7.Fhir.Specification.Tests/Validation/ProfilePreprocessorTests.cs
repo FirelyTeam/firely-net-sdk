@@ -2,14 +2,11 @@
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests.Validation
 {
@@ -20,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
-        public async void RunSnapshotMultiThreaded()
+        public async T.Task RunSnapshotMultiThreaded()
         {
             // Arrange
             var source = new CachedResolver(new ZipSource("specification.zip"));
@@ -49,7 +46,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
                 });
             buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
 
-            var patientSD = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient") as StructureDefinition;
+            var patientSD = await source.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Patient") as StructureDefinition;
             // Clear snapshots after initial load
             // This will force the validator to regenerate all snapshots
             if (patientSD.HasSnapshot)

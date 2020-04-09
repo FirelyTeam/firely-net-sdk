@@ -43,6 +43,7 @@ using Hl7.Fhir.Specification.Source;
 using System.Diagnostics;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -975,7 +976,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     // The element type profile constraint must match one of the base types
-                    var isCompatible = snap.Current.Type.Any(t => _resolver.IsValidTypeProfile(t.Code, typeStructure));
+                    var isCompatible = snap.Current.Type.Any(t => isValidTypeProfile(_resolver, t.Code, typeStructure));
                     if (!isCompatible)
                     {
                         addIssueInvalidProfileType(diff.Current, typeStructure);
@@ -1678,7 +1679,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        StructureDefinition getStructureForElementType(ElementDefinition elementDef, bool ensureSnapshot)
+        private StructureDefinition getStructureForElementType(ElementDefinition elementDef, bool ensureSnapshot)
         {
             Debug.Assert(elementDef != null);
             // Debug.Assert(elementDef.Type.Count > 0);
@@ -1688,7 +1689,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Resolve StructureDefinition for the specified typeRef component
         // Expand snapshot and generate ElementDefinition.Base components if necessary
-        StructureDefinition getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
+        private StructureDefinition getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
         {
             var location = elementDef.Path;
             StructureDefinition baseStructure = null;
@@ -1712,12 +1713,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
             var typeCodeElem = typeRef.CodeElement;
-            string typeName;
-            if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName)
             {
-                baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
+                baseStructure = getStructureDefinitionForTypeCode(_resolver, typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
-                isValidProfile = (IsEqualPath(typeName, location)) ||
+                _ = (IsEqualPath(typeName, location)) ||
                     (
                         ensureSnapshot
                         ? this.ensureSnapshot(baseStructure, typeName, location)
@@ -1728,6 +1728,31 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return baseStructure;
         }
+
+        /// <summary>Resolve a <see cref="StructureDefinition"/> from a TypeRef.Code element, handle unknown/custom core types.</summary>
+        /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
+        /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
+        /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
+        private static StructureDefinition getStructureDefinitionForTypeCode(IResourceResolver resolver, FhirUri typeCodeElement)
+        {
+            StructureDefinition sd = null;
+            var typeCode = typeCodeElement.Value;
+            if (!string.IsNullOrEmpty(typeCode))
+            {
+                sd = resolver.FindStructureDefinitionForCoreType(typeCode);
+            }
+            else
+            {
+                // Unknown/custom core type; try to resolve from raw object value
+                var typeName = typeCodeElement.ObjectValue as string;
+                if (!string.IsNullOrEmpty(typeName))
+                {
+                    sd = resolver.FindStructureDefinitionForCoreType(typeName);
+                }
+            }
+            return sd;
+        }
+
 
 #if FIX_CONTENTREFERENCE
         // [WMR 20180410] Resolve the defining target structure of a contentReference
@@ -1749,7 +1774,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // Try to resolve the custom element type profile reference
                 var coreSd = _resolver.FindStructureDefinitionForCoreType(coreType);
-                var isValidProfile = ensureSnapshot
+                _ = ensureSnapshot
                     ? this.ensureSnapshot(coreSd, coreType, location)
                     : this.verifyStructure(coreSd, coreType, location);
                 return coreSd;
@@ -1991,5 +2016,52 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
+
+        // [WMR 20170227] NEW
+        // TODO:
+        // - Analyze possible re-use by Validator
+        // - Maybe move this method to another (public) class?
+
+        /// <summary>
+        /// Determines if the specified <see cref="StructureDefinition"/> is compatible with <paramref name="type"/>.
+        /// Walks up the profile hierarchy by resolving base profiles from the current <see cref="IResourceResolver"/> instance.
+        /// </summary>
+        /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
+        private static async T.Task<bool> isValidTypeProfileAsync(IAsyncResourceResolver resolver, string type, StructureDefinition profile)
+        {
+            if (resolver == null) throw new ArgumentNullException(nameof(resolver));
+
+            return await isValidTypeProfile(resolver, new HashSet<string>(), type, profile);
+        }
+
+        /// <inheritdoc cref="isValidTypeProfileAsync(IAsyncResourceResolver, string, StructureDefinition)" />
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use IsValidTypeProfileAsync() instead.")]
+        private static bool isValidTypeProfile(IResourceResolver resolver, string type, StructureDefinition profile)
+            => TaskHelper.Await(() => isValidTypeProfileAsync(resolver.ToAsync(), type, profile));
+
+        private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
+        {
+            // Recursively walk up the base profile hierarchy until we find a profile on baseType
+            if (type == null) { return true; }
+            if (profile == null) { return true; }
+
+            var sdType = profile.Type;
+
+            if (sdType == type) { return true; }
+            if (profile.BaseDefinition == null) { return false; }
+            var sdBase = await resolver.FindStructureDefinitionAsync(profile.BaseDefinition);
+            if (sdBase == null) { return false; }
+            if (sdBase.Url == null) { return false; } // Shouldn't happen...
+
+            // Detect/prevent endless recursion... e.g. X.Base = Y and Y.Base = X
+            if (!recursionStack.Add(sdBase.Url))
+            {
+                throw Error.InvalidOperation(
+                    $"Recursive profile dependency detected. Base profile hierarchy:\r\n{string.Join("\r\n", recursionStack)}"
+                );
+            }
+
+            return await isValidTypeProfile(resolver, recursionStack, type, sdBase);
+        }
     }
 }

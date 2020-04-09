@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {

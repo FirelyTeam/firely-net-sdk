@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = _resolver.FindStructureDefinition(mappedCanonical, requireSnapshot: true);
+            var sd = _resolver.FindStructureDefinition(mappedCanonical);
             if (sd == null) return null;
 
             return new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
@@ -168,13 +168,7 @@ namespace Hl7.Fhir.Specification
             _definition = nav.Current;
             Order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
 
-            string noChoiceSuffix(string n)
-            {
-                if (n.EndsWith("[x]"))
-                    return n.Substring(0, n.Length - 3);
-                else
-                    return n;
-            }
+            string noChoiceSuffix(string n) => n.EndsWith("[x]") ? n.Substring(0, n.Length - 3) : n;
         }
 
         private static ITypeSerializationInfo[] buildTypes(ElementDefinitionNavigator nav)
