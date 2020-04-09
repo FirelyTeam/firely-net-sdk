@@ -22,8 +22,8 @@ namespace Hl7.Fhir.Rest
         bool UseFormatParam { get; set; }
         bool VerifyFhirVersion { get; set; }
 
-        event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-        event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
+        //event EventHandler<AfterResponseEventArgs> OnAfterResponse;
+        //event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         CapabilityStatement CapabilityStatement(SummaryType? summary = default(SummaryType?));
         Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next);

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                request.ContentType = ContentType.BuildContentType(format, forBundle: false);
             }
         }
     }

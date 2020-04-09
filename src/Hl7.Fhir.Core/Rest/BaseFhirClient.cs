@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient
+    public abstract partial class BaseFhirClient : IDisposable
     {
         protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null)
         {
@@ -989,5 +989,30 @@ namespace Hl7.Fhir.Rest
                 throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
             }
         }
+
+        #region IDisposable Support
+        protected bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (Requester is IDisposable disposableRequester)
+                    {
+                        disposableRequester.Dispose();
+                    }
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }
