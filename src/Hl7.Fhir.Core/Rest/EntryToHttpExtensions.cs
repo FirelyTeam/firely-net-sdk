@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Rest
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
-            if (data is Binary)
+            /*if (data is Binary)
             {
                 var bin = (Binary)data;
                 body = bin.Content;
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Rest
                 // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
             }
-            else if (searchUsingPost)
+            else*/ if (searchUsingPost)
             {
                 var bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
