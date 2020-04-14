@@ -13,12 +13,14 @@ namespace Hl7.Fhir.Specification.Tests
 {
     public class ValidationFixture
     {
-        public IResourceResolver Resolver { get; }
+        public IResourceResolver Resolver => AsyncResolver as CachedResolver; // works, this is a CachedResolver
+
+        public IAsyncResourceResolver AsyncResolver { get; }
 
         public Validator Validator { get; }
         public ValidationFixture()
         {
-            Resolver = new CachedResolver(
+            AsyncResolver = new CachedResolver(
                     new MultiResolver(
                         new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
                         new DirectorySource(Path.Combine("TestData", "validation")),

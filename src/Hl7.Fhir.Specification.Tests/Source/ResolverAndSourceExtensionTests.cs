@@ -74,35 +74,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(some);
         }
 
-
-        //[TestMethod]
-        //public void ReduceFiles()
-        //{
-        //    var fhirns = XNamespace.Get("http://hl7.org/fhir");
-        //    var xmlns = XNamespace.Get("http://www.w3.org/1999/xhtml");
-
-        //    var files = Directory.EnumerateFiles(@"C:\Git\fhir-net-api\src\Hl7.Fhir.Specification\data", "*.xml");
-
-        //    foreach (var file in files)
-        //    {
-        //        var xdoc = XDocument.Load(file);
-        //        var sizeBefore = xdoc.ToString().Length;
-
-        //        var narrative = xdoc.Elements(fhirns + "Bundle").Elements(fhirns + "entry").Elements(fhirns + "resource")
-        //                .Elements().Elements(fhirns + "text").Elements(xmlns + "div");
-        //        foreach (var narrativeElement in narrative)
-        //        {
-        //            narrativeElement.RemoveNodes();
-        //            narrativeElement.Add(new XElement(xmlns + "p",
-        //                new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
-        //        }
-
-        //        var sizeAfter = xdoc.ToString().Length;
-        //        xdoc.Save(file);
-        //    }
-
-        //}
-
         [TestMethod]
         public void FindValueSet()
         {

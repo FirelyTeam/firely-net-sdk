@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using T = System.Threading.Tasks;
 using ssac = System.Security.AccessControl;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -177,7 +178,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void FileSourceSkipsInvalidXml()
+        public async T.Task FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
             fa.Mask = "*.xml";
@@ -192,7 +193,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
-            var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
+            var sd = await fa.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
