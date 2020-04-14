@@ -540,9 +540,7 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
 
-            if (match?.Origin is null) { return null; }
-
-            return File.OpenRead(match.Origin);
+            return match?.Origin is null ? null : File.OpenRead(match.Origin);
         }
 
         #endregion

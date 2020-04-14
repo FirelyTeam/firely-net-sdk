@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Specification.Tests
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
             _zipSource = new ZipSource("specification.zip");
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
-            _testResolverAsync = _testResolver.ToAsync();  // this line should go when all resolvers are async
+            _testResolverAsync = _testResolver.AsAsync();  // this line should go when all resolvers are async
         }
 
         private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
@@ -5021,14 +5021,14 @@ namespace Hl7.Fhir.Specification.Tests
         static void dumpBaseDefId(StructureDefinition sd)
         {
             Debug.Print("===== " + sd.Name);
-            Debug.Print($"{"Path".PadRight(50)}| {"Base Path".PadRight(49)}| {"Base StructureDefinition".PadRight(69)}| {"Element Id".PadRight(49)}| {"Base Element Id".PadRight(49)}");
+            Debug.Print($"{"Path",50}| {"Base Path",49}| {"Base StructureDefinition",69}| {"Element Id",49}| {"Base Element Id",49}");
             foreach (var elem in sd.Snapshot.Element)
             {
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 Assert.IsNotNull(ann);
                 var s49 = new string(' ', 49);
                 var s69 = new string(' ', 69);
-                Debug.Print($"{elem.Path.PadRight(50)}| {ann?.BaseElementDefinition?.Path?.PadRight(49) ?? s49}| {ann?.BaseStructureDefinition?.Url?.PadRight(69) ?? s69}| {elem?.ElementId?.PadRight(49) ?? s49}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49) ?? s49}");
+                Debug.Print($"{elem.Path,50}| {ann?.BaseElementDefinition?.Path?.PadRight(49) ?? s49}| {ann?.BaseStructureDefinition?.Url?.PadRight(69) ?? s69}| {elem?.ElementId?.PadRight(49) ?? s49}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49) ?? s49}");
                 var elemId = elem.ElementId;
                 Assert.IsNotNull(elemId);
                 Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));

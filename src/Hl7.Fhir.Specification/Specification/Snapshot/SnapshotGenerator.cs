@@ -2037,7 +2037,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <inheritdoc cref="isValidTypeProfileAsync(IAsyncResourceResolver, string, StructureDefinition)" />
         [Obsolete("Using synchronous resolvers is not recommended anymore, use IsValidTypeProfileAsync() instead.")]
         private static bool isValidTypeProfile(IResourceResolver resolver, string type, StructureDefinition profile)
-            => TaskHelper.Await(() => isValidTypeProfileAsync(resolver.ToAsync(), type, profile));
+            => TaskHelper.Await(() => isValidTypeProfileAsync(resolver.AsAsync(), type, profile));
 
         private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
         {
