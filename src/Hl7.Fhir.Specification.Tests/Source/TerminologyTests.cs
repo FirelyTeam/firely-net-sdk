@@ -11,16 +11,14 @@ namespace Hl7.Fhir.Specification.Tests
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
-        private IAsyncResourceResolver _resolver;
-        private IResourceResolver _syncResolver;
-        private readonly Xunit.Abstractions.ITestOutputHelper output;
+        private readonly IAsyncResourceResolver _resolver;
+        private readonly IResourceResolver _syncResolver;
 
 
-        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
+        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
             _resolver = fixture.AsyncResolver;
             _syncResolver = fixture.Resolver;
-            this.output = output;
         }
 
         [Fact]

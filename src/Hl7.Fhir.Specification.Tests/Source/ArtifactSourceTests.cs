@@ -27,9 +27,9 @@ namespace Hl7.Fhir.Specification.Tests
         private static string _testPath;
 
         [ClassInitialize]
-        public static void SetupExampleDir(TestContext context)
+        public static void SetupExampleDir(TestContext _)
         {
-            _testPath = prepareExampleDirectory(out int numFiles);
+            _testPath = prepareExampleDirectory(out int _);
         }
 
         private static string prepareExampleDirectory(out int numFiles)
@@ -123,8 +123,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UseFileArtifactSource()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Mask = "*.xml|*.xsd";
+            var fa = new DirectorySource(_testPath)
+            {
+                Mask = "*.xml|*.xsd"
+            };
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(5, names.Count());
@@ -145,9 +147,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UseIncludeExcludeFilter()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Includes = new[] { "*.xml", "pa*.sch" };
-            fa.Excludes = new[] { "nonfhir*.*" };
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.xml", "pa*.sch" },
+                Excludes = new[] { "nonfhir*.*" }
+            };
 
             var names = fa.ListArtifactNames();
 
@@ -180,8 +184,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task FileSourceSkipsInvalidXml()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Mask = "*.xml";
+            var fa = new DirectorySource(_testPath)
+            {
+                Mask = "*.xml"
+            };
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(4, names.Count());
@@ -248,8 +254,10 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
-            var za = new ZipSource(zipFile);
-            za.Mask = "profiles-types.xml";
+            var za = new ZipSource(zipFile)
+            {
+                Mask = "profiles-types.xml"
+            };
 
             var artifacts = za.ListArtifactNames().ToArray();
             Assert.AreEqual(1, artifacts.Length);
@@ -420,7 +428,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void OpenDuplicateFileNames()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
+            var testPath = prepareExampleDirectory(out int _);
 
             // Additional temporary folder without read permissions
             const string subFolderName = "sub";
@@ -454,7 +462,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            var xml = new FhirXmlSerializer().SerializeToString(res);
+            _ = new FhirXmlSerializer().SerializeToString(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));

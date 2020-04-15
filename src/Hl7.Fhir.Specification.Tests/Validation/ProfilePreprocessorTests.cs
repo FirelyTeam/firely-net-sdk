@@ -25,7 +25,10 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             OperationOutcome GenerateSnapshot(StructureDefinition sd)
             {
+// We don't want to update ProfilePreprocessor right now
+#pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(sd);
+#pragma warning restore CS0618 // Type or member is obsolete
                 System.Diagnostics.Debug.WriteLine(sd.HasSnapshot);
                 return generator.Outcome ?? new OperationOutcome();
             }

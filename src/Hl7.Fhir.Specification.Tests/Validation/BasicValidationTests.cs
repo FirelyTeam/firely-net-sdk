@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Start();
             for (var i = 0; i < 10000; i++)
             {
-                var x = (Questionnaire)questionnaire.DeepCopy();
+                _ = (Questionnaire)questionnaire.DeepCopy();
             }
             sw.Stop();
 
@@ -1046,15 +1046,16 @@ namespace Hl7.Fhir.Specification.Tests
         {           
             var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
 
-            var instance = new Observation();
-
-            // this should not trigger rng-2
-            instance.Value = new Range()
+            var instance = new Observation
             {
-                Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
-                High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
+                // this should not trigger rng-2
+                Value = new Range()
+                {
+                    Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
+                    High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
+                }
             };
-          
+
             var report = _validator.Validate(instance, def);
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
@@ -1117,7 +1118,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class ClearSnapshotResolver : IResourceResolver
         {
-            private IResourceResolver _resolver;
+            private readonly IResourceResolver _resolver;
             public ClearSnapshotResolver(IResourceResolver resolver)
             {
                 _resolver = resolver;

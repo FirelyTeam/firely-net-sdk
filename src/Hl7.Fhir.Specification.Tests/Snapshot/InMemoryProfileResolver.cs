@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
         public NamingSystem FindNamingSystem(string uniqueid)
             => throw new NotImplementedException();
 
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
             => _resources.Select(g => g.Key);
         #endregion
     }

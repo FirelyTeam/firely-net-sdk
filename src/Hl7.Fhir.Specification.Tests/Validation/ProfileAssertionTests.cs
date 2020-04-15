@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using T=System.Threading.Tasks;
 using Xunit;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -44,17 +44,19 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class ProfileAssertionTests : IClassFixture<ValidationFixture>
     {
-        private IResourceResolver _resolver;
+        private readonly IAsyncResourceResolver _asyncResolver;
+        private readonly IResourceResolver _resolver;
 
         public ProfileAssertionTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
+            _asyncResolver = fixture.AsyncResolver;
         }
 
         [Fact]
-        public void InitializationAndResolution()
+        public async T.Task InitializationAndResolution()
         {
-            var sd = _resolver.FindStructureDefinitionForCoreType(FHIRAllTypes.ValueSet);
+            var sd = await _asyncResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.ValueSet);
 
             var assertion = new ProfileAssertion("Patient.name[0]", resolve);
             assertion.SetInstanceType(FHIRAllTypes.ValueSet);
@@ -89,7 +91,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+// We don't want to rewrite ProfileAssertion right now...
+#pragma warning disable CS0618 // Type or member is obsolete
         private StructureDefinition resolve(string uri) => _resolver.FindStructureDefinition(uri);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         [Fact]
         public void NormalElement()

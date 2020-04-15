@@ -193,12 +193,13 @@ namespace Hl7.Fhir.Specification.Terminology
     {
         public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, IEnumerable<ValueSet.ContainsComponent> children = null)
         {
-            var newContains = new ValueSet.ContainsComponent();
-
-            newContains.System = system;
-            newContains.Code = code;
-            newContains.Display = display;
-            newContains.Version = version;
+            var newContains = new ValueSet.ContainsComponent
+            {
+                System = system,
+                Code = code,
+                Display = display,
+                Version = version
+            };
 
             if (children != null)
                 newContains.Contains = new List<ValueSet.ContainsComponent>(children);
@@ -229,12 +230,13 @@ namespace Hl7.Fhir.Specification.Terminology
 
         internal static ValueSet.ContainsComponent ToContainsComponent(this CodeSystem.ConceptDefinitionComponent source, CodeSystem system)
         {
-            var newContains = new ValueSet.ContainsComponent();
-
-            newContains.System = system.Url;
-            newContains.Version = system.Version;
-            newContains.Code = source.Code;
-            newContains.Display = source.Display;
+            var newContains = new ValueSet.ContainsComponent
+            {
+                System = system.Url,
+                Version = system.Version,
+                Code = source.Code,
+                Display = source.Display
+            };
 
             var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
             if (abstractProperty?.Value is FhirBoolean isAbstract)

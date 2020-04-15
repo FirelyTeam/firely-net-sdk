@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [ClassInitialize]
-        public static void SetupSource(TestContext t)
+        public static void SetupSource(TestContext _)
         {
             _source = CreateTestResolver();
         }

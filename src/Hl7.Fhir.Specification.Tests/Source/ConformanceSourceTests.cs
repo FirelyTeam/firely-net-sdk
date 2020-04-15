@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class ConformanceSourceTests
     {
         [ClassInitialize]
-        public static void SetupSource(TestContext t)
+        public static void SetupSource(TestContext _)
         {
             source = ZipSource.CreateValidationSource();
         }
@@ -442,13 +442,13 @@ namespace Hl7.Fhir.Specification.Tests
             var first = results[0];
             for (int i = 0; i < threadCount; i++)
             {
-                var result = results[i];
-                var duration = result.stop.Subtract(result.start);
-                Debug.WriteLine($"{i:0#} Thread: {result.threadId:00#} | Start: {result.start.TotalMilliseconds:0000.00} | Stop: {result.stop.TotalMilliseconds:0000.00} | Duration: {duration.TotalMilliseconds:0000.00}");
-                Assert.IsNotNull(result.resource);
-                Assert.IsNotNull(result.summary);
+                var (resource, summary, threadId, start, stop) = results[i];
+                var duration = stop.Subtract(start);
+                Debug.WriteLine($"{i:0#} Thread: {threadId:00#} | Start: {start.TotalMilliseconds:0000.00} | Stop: {stop.TotalMilliseconds:0000.00} | Duration: {duration.TotalMilliseconds:0000.00}");
+                Assert.IsNotNull(resource);
+                Assert.IsNotNull(summary);
                 // Verify that all threads return the same summary instances
-                Assert.AreSame(first.summary, result.summary);
+                Assert.AreSame(first.summary, summary);
             }
         }
 
