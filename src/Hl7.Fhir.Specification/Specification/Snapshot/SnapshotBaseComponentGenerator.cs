@@ -23,17 +23,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
-        /// <summary>Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.</summary>
-        /// <param name="structureDef">A <see cref="StructureDefinition"/> instance with a valid snapshot component.</param>
-        /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        public void GenerateSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
-        {
-            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
-            clearIssues();
-            ensureSnapshotBaseComponents(structureDef, force);
-        }
-
         private T.Task ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false) =>
             ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force);
 

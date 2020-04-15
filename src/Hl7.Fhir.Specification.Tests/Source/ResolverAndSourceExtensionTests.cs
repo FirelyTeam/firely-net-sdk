@@ -26,11 +26,13 @@ namespace Hl7.Fhir.Specification.Tests
             source = ZipSource.CreateValidationSource();
         }
 
-        static IConformanceSource source = null;
+        private static ZipSource source = null;
 
+#pragma warning disable CS0618 // Type or member is obsolete
         [TestMethod]
         public void ResolveExtensions()
         {
+
             var extDefn = source.FindExtensionDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
             Assert.IsNotNull(extDefn);
 
@@ -45,41 +47,49 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+// Let's keep a few of the obsolete calls in, so we test those too
+#pragma warning restore CS0618 // Type or member is obsolete
 
         [TestMethod]
-        public void ResolveStructureDefs()
+        public async T.Task ResolveStructureDefs()
         {
-            var extDefn = source.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = await source.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
             Assert.IsNotNull(extDefn);
 
-            extDefn = source.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = await source.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(extDefn);
         }
 
         [TestMethod]
-        public void ResolveCoreStructureDefs()
+        public async T.Task ResolveCoreStructureDefs()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var patDefn = source.FindStructureDefinitionForCoreType("Patient");
             Assert.IsNotNull(patDefn);
 
             var patDefn2 = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
             Assert.IsNotNull(patDefn2);
-
             Assert.AreEqual(patDefn.Url, patDefn2.Url);
+#pragma warning restore CS0618 // Type or member is obsolete
 
-            var some = source.FindStructureDefinitionForCoreType(FHIRAllTypes.HumanName);
+            var some = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.HumanName);
             Assert.IsNotNull(some);
 
-            some = source.FindStructureDefinitionForCoreType(FHIRAllTypes.String);
+            some = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.String);
             Assert.IsNotNull(some);
         }
 
         [TestMethod]
-        public void FindValueSet()
+        public async T.Task FindValueSet()
         {
             // As defined in the spec here: http://hl7.org/fhir/2016Sep/valueset-contact-point-system.html
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
+#pragma warning restore CS0618 // Type or member is obsolete
+            Assert.IsNotNull(vs);
+
+            vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
 
             // STU3: Relationship between ValueSet and CodingSystem changed, so we need to make some fundamental changes here
@@ -100,23 +110,25 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void GetCoreModelTypeByName()
+        public async T.Task GetCoreModelTypeByName()
         {
-            var pat = source.FindStructureDefinitionForCoreType("Patient");
+            var pat = await source.FindStructureDefinitionForCoreTypeAsync("Patient");
             Assert.IsNotNull(pat);
             Assert.AreEqual("Patient", pat.Snapshot.Element[0].Path);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var boolean = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.IsNotNull(boolean);
             Assert.AreEqual("boolean", boolean.Snapshot.Element[0].Path);
         }
 
         [TestMethod]
-        public void FindStructureDefinitionForCoreTypeLogicalModel()
+        public async T.Task FindStructureDefinitionForCoreTypeLogicalModel()
         {
             var ccdaAnyCanonical = "http://hl7.org/fhir/cda/StructureDefinition/ANY";
             var resolver = new MultiResolver(source, new LogicalModelTypeResourceResolver());
-            var logicalModel = resolver.FindStructureDefinitionForCoreType(ccdaAnyCanonical);
+            var logicalModel = await resolver.FindStructureDefinitionForCoreTypeAsync(ccdaAnyCanonical);
             Assert.IsNotNull(logicalModel);
             Assert.AreEqual(ccdaAnyCanonical, logicalModel.Type);
         }
