@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
         {
             var i = new Model.Quantity(3.14m, "kg", "http://mysystsem.org");
             var node = i.ToTypedElement();
-            var p = node.ParseQuantity();
+            var p = PocoBuilderExtensions.ParseQuantity(node);
             Assert.True(p.IsExactly(i));
         }
 
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Validation
         {
             var i = new Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1");
             var node = i.ToTypedElement();
-            var p = node.ParseCoding();
+            var p = PocoBuilderExtensions.ParseCoding(node);
             Assert.True(p.IsExactly(i));
         }
 
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Validation
         {
             var ic = new Code("code");
             var node = ic.ToTypedElement();
-            var c = node.ParseBindable() as Code;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Code;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
         }
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Validation
         {
             var ic = new Coding("system", "code");
             var node = ic.ToTypedElement();
-            var c = node.ParseBindable() as Coding;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
         }
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Validation
         {
             var iq = new Model.Quantity(4.0m, "kg", system: null);
             var node = iq.ToTypedElement();
-            var c = node.ParseBindable() as Coding;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.NotNull(c);
             Assert.Equal(iq.Code, c.Code);
             Assert.Equal("http://unitsofmeasure.org", c.System);  // auto filled out by parsebinding()
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Validation
         {
             var ist = new Model.FhirString("Ewout");
             var node = ist.ToTypedElement();
-            var c = node.ParseBindable() as Code;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Code;
             Assert.NotNull(c);
             Assert.Equal(ist.Value, c.Value);
         }
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Validation
         {
             var iu = new Model.FhirUri("http://somewhere.org");
             var node = iu.ToTypedElement();
-            var c = node.ParseBindable() as Code;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Code;
             Assert.NotNull(c);
             Assert.Equal(iu.Value, c.Value);
         }
@@ -116,18 +116,18 @@ namespace Hl7.Fhir.Validation
             var ic = new Coding("system", "code");
             var ext = new Extension { Value = ic };
             var node = ext.ToTypedElement();
-            var c = node.ParseBindable() as Coding;
+            var c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
 
             ext.Value = new HumanName();
             node = ext.ToTypedElement();
-            c = node.ParseBindable() as Coding;
+            c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.Null(c);  // HumanName is not bindable
 
             ext.Value = null;
             node = ext.ToTypedElement();
-            c = node.ParseBindable() as Coding;
+            c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.Null(c);  // nothing to bind to
         }
 
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Validation
             // Now, something non-bindable
             var x = new HumanName().WithGiven("Ewout");
             var node = x.ToTypedElement();
-            var xe = node.ParseBindable();
+            var xe = PocoBuilderExtensions.ParseBindable(node);
             Assert.Null(xe);
         }
     }

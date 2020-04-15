@@ -18,6 +18,7 @@ using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -222,6 +223,7 @@ namespace Hl7.Fhir.Validation
                 {
                     FhirPathCompiler = new FhirPathCompiler(symbolTable),
                     ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
+                    TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver))
                 };
 
                 var result = Assertions.Empty;
@@ -231,7 +233,7 @@ namespace Hl7.Fhir.Validation
                     resolver.DumpCache();
                     result += schema.Validate(new[] { node }, validationContext);
                 }
-                outcome.Add(ConvertToOutcome(result));
+                outcome.Add(result.ToOperationOutcome());
             }
 
             return outcome;
@@ -240,38 +242,6 @@ namespace Hl7.Fhir.Validation
             StructureDefinition profileResolutionNeeded(string canonical) =>
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 
-        }
-
-        private OperationOutcome ConvertToOutcome(Assertions assertions)
-        {
-            var outcome = new OperationOutcome();
-
-            var issues = assertions.OfType<IssueAssertion>();
-
-            foreach (var item in issues)
-            {
-                var issue = Issue.Create(item.IssueNumber, ConvertToSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
-                outcome.AddIssue(item.Message, issue, item.Location);
-            }
-
-            // TODO Refactor VALIDATION
-            return outcome;
-        }
-
-        private OperationOutcome.IssueSeverity ConvertToSeverity(IssueSeverity? severity)
-        {
-            switch (severity)
-            {
-                case IssueSeverity.Fatal:
-                    return OperationOutcome.IssueSeverity.Fatal;
-                case IssueSeverity.Error:
-                    return OperationOutcome.IssueSeverity.Error;
-                case IssueSeverity.Warning:
-                    return OperationOutcome.IssueSeverity.Warning;
-                case IssueSeverity.Information:
-                default:
-                    return OperationOutcome.IssueSeverity.Information;
-            }
         }
         #endregion
 

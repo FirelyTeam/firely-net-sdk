@@ -9,7 +9,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +80,7 @@ namespace Hl7.Fhir.ElementModel
                 case FHIRAllTypes.Code:
                     return instance.ParsePrimitive<Code>();
                 case FHIRAllTypes.Coding:
-                    return instance.ParseCoding();
+                    return ParseCoding(instance);
                 case FHIRAllTypes.CodeableConcept:
                     return instance.ParseCodeableConcept();
                 case FHIRAllTypes.Quantity:
@@ -99,7 +98,7 @@ namespace Hl7.Fhir.ElementModel
             Coding parseQuantity(ITypedElement nav)
             {
                 var newCoding = new Coding();
-                var q = instance.ParseQuantity();
+                var q = ParseQuantity(instance);
                 newCoding.Code = q.Code;
                 newCoding.System = q.System ?? "http://unitsofmeasure.org";
                 return newCoding;
@@ -108,7 +107,7 @@ namespace Hl7.Fhir.ElementModel
             Element parseExtension(ITypedElement nav)
             {
                 var valueChild = instance.Children("value").FirstOrDefault();
-                return valueChild?.ParseBindable();
+                return PocoBuilderExtensions.ParseBindable(valueChild);
             }
         }
 
@@ -142,12 +141,11 @@ namespace Hl7.Fhir.ElementModel
             return new CodeableConcept()
             {
                 Coding =
-                    instance.Children("coding").Select(codingNav => codingNav.ParseCoding()).ToList(),
+                    instance.Children("coding").Select(coding => PocoBuilderExtensions.ParseCoding(coding)).ToList(),
                 Text = instance.Children("text").GetString()
             };
         }
 
-        public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
 
         [Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)

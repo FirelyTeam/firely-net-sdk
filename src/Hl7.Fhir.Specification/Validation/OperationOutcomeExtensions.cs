@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation.Schema;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,13 +24,13 @@ namespace Hl7.Fhir.Validation
             var result = outcome;
 
             foreach (var issue in result.Issue)
-                if(!issue.Success) 
+                if (!issue.Success)
                     issue.Severity = OperationOutcome.IssueSeverity.Information;
         }
 
         public static void Flatten(this OperationOutcome outcome)
         {
-            foreach(var issue in outcome.Issue)
+            foreach (var issue in outcome.Issue)
             {
                 issue.RemoveExtension(ValidationOutcomeExtensions.OPERATIONOUTCOME_ISSUE_HIERARCHY);
             }
@@ -41,28 +42,91 @@ namespace Hl7.Fhir.Validation
             outcome.Issue = outcome.Issue.Distinct(comparer).ToList();
             return outcome;
         }
-    }
 
-    internal class IssueComparer : IEqualityComparer<OperationOutcome.IssueComponent>
-    {        
-        public bool Equals(OperationOutcome.IssueComponent x, OperationOutcome.IssueComponent y)
+        public static OperationOutcome ToOperationOutcome(this Assertions assertions)
         {
-            if (x is null && y is null)
-                return true;
-            else if (x is null || y is null)
-                return false;
-            else if (x.Location?.FirstOrDefault() == x.Location?.FirstOrDefault() && x.Details?.Text == y.Details?.Text)
-                return true;
-            else
-                return false;
+            var outcome = new OperationOutcome();
+
+            var issues = assertions.OfType<IssueAssertion>();
+
+            foreach (var item in issues)
+            {
+                var issue = Issue.Create(item.IssueNumber, ConvertToSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
+                outcome.AddIssue(item.Message, issue, item.Location);
+            }
+
+            // TODO Refactor VALIDATION
+            return outcome;
         }
 
-        public int GetHashCode(OperationOutcome.IssueComponent issue)
+        private static OperationOutcome.IssueSeverity ConvertToSeverity(IssueSeverity? severity)
         {
-            var hash = unchecked(issue?.Location?.FirstOrDefault()?.GetHashCode() ^ issue?.Details?.Text?.GetHashCode());
-            return (hash is null) ? 0 : hash.Value;
+            switch (severity)
+            {
+                case IssueSeverity.Fatal:
+                    return OperationOutcome.IssueSeverity.Fatal;
+                case IssueSeverity.Error:
+                    return OperationOutcome.IssueSeverity.Error;
+                case IssueSeverity.Warning:
+                    return OperationOutcome.IssueSeverity.Warning;
+                case IssueSeverity.Information:
+                default:
+                    return OperationOutcome.IssueSeverity.Information;
+            }
         }
-        
-    }
 
+        private static IssueSeverity? ConvertToSeverity(OperationOutcome.IssueSeverity? severity)
+        {
+            switch (severity)
+            {
+                case OperationOutcome.IssueSeverity.Fatal:
+                    return IssueSeverity.Fatal;
+                case OperationOutcome.IssueSeverity.Error:
+                    return IssueSeverity.Error;
+                case OperationOutcome.IssueSeverity.Warning:
+                    return IssueSeverity.Warning;
+                case OperationOutcome.IssueSeverity.Information:
+                default:
+                    return IssueSeverity.Information;
+            }
+        }
+
+        public static Assertions ToAssertions(this OperationOutcome outcome)
+        {
+            var assertions = outcome?.Issue?.Select(i => new IssueAssertion(GetIssueNumber(i.Details), i.Location.FirstOrDefault(), i.Details.Text, ConvertToSeverity(i.Severity)));
+            return new Assertions(assertions);
+
+            int GetIssueNumber(CodeableConcept concept)
+            {
+                var issueCode = concept.Coding.FirstOrDefault(cd => cd.System == Issue.API_OPERATION_OUTCOME_SYSTEM)?.Code;
+
+                if (int.TryParse(issueCode, out var issueNumber))
+                    return issueNumber;
+                return -1;
+            }
+        }
+
+        internal class IssueComparer : IEqualityComparer<OperationOutcome.IssueComponent>
+        {
+            public bool Equals(OperationOutcome.IssueComponent x, OperationOutcome.IssueComponent y)
+            {
+                if (x is null && y is null)
+                    return true;
+                else if (x is null || y is null)
+                    return false;
+                else if (x.Location?.FirstOrDefault() == x.Location?.FirstOrDefault() && x.Details?.Text == y.Details?.Text)
+                    return true;
+                else
+                    return false;
+            }
+
+            public int GetHashCode(OperationOutcome.IssueComponent issue)
+            {
+                var hash = unchecked(issue?.Location?.FirstOrDefault()?.GetHashCode() ^ issue?.Details?.Text?.GetHashCode());
+                return (hash is null) ? 0 : hash.Value;
+            }
+
+        }
+
+    }
 }

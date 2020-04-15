@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Schema
 
         private static Element parseBindable(ITypedElement input)
         {
-            var bindable = input.ParseBindable();
+            var bindable = PocoBuilderExtensions.ParseBindable(input);
             if (bindable == null)    // should never happen, since we already checked IsBindable
                 throw Error.NotSupported($"Type '{input.InstanceType}' is bindable, but could not be parsed by ParseBindable().");
 

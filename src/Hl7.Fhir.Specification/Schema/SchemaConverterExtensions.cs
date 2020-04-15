@@ -43,12 +43,12 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         private static IAssertion BuildBinding(ElementDefinition def) =>
-            def.Binding != null ? new Binding(def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
+            def.Binding != null ? new BindingAssertion(def.Path, def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
 
-        private static Binding.BindingStrength ConvertStrength(BindingStrength? strength)
+        private static BindingAssertion.BindingStrength ConvertStrength(BindingStrength? strength)
         {
             // TODO Dirty cast
-            return (Binding.BindingStrength)strength;
+            return (BindingAssertion.BindingStrength)strength;
 
         }
 
