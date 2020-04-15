@@ -244,7 +244,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 if (_cache.TryGetValue(uri, out sd))
                     return sd;
 
-                sd = (StructureDefinition)_coreResolver.ResolveByCanonicalUri(uri);
+                sd = _coreResolver.FindStructureDefinition(uri);
                 if (!sd.HasSnapshot)
                 {
                     var snapShotGenerator = new SnapshotGenerator(_coreResolver);

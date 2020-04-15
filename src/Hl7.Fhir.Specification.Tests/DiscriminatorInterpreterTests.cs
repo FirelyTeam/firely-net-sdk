@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using System.Linq;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -10,7 +11,7 @@ namespace Hl7.Fhir.Specification.Tests
 
     public class DiscriminatorInterpreterTests
     {
-        public static IResourceResolver CreateTestResolver()
+        public static CachedResolver CreateTestResolver()
         {
             return new CachedResolver(
                 new SnapshotSource(
@@ -25,12 +26,13 @@ namespace Hl7.Fhir.Specification.Tests
             _source = CreateTestResolver();
         }
 
-        private static IResourceResolver _source = null;
+        private static CachedResolver _source = null;
 
         [TestMethod]
-        public void WalkIntoTypeMembers()
+        public async T.Task WalkIntoTypeMembers()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             // Walk to a primivite type
             var elem = walker.Walk("status").Single();
@@ -53,9 +55,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkIntoChoice()
+        public async T.Task WalkIntoChoice()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             // If you filter on the type of a non-choice member, you'll arrive at that type.
             var elem = walker.Walk("value.ofType('Quantity').system").Single();
@@ -67,18 +70,20 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkAcrossReference()
+        public async T.Task WalkAcrossReference()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             var elem = walker.Walk("performer.resolve().ofType('Practitioner').name").Single();
             Assert.AreEqual("Practitioner.name", elem.Current.Path);
         }
 
         [TestMethod]
-        public void WalkToThis()
+        public async T.Task WalkToThis()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             var elem = walker.Walk("performer").Single();
             var elem2 = elem.Walk("$this").Single();
@@ -86,18 +91,20 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkToExtension()
+        public async T.Task WalkToExtension()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             var elem = walker.Walk("status.extension('http://hl7.org/fhir/StructureDefinition/data-absent-reason').value.ofType('code')").Single();
             Assert.AreEqual("code", elem.Current.Path);   // 'code' in STU3+
         }
 
         [TestMethod]
-        public void WalkToExtensionSingleChoice()
+        public async T.Task WalkToExtensionSingleChoice()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation), _source);
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             // The data-absent-reason limits its value to a type slice of one choice - we should be able to handle that,
             // although we don't handle slicing along a discriminator path in general
@@ -106,9 +113,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkToInlineExtensionConstraints()
+        public async T.Task WalkToInlineExtensionConstraints()
         {
-            var walker = new StructureDefinitionWalker(_source.FindStructureDefinition("http://example.org/fhir/StructureDefinition/observation-profile-for-discriminator-test"), _source);
+            var sd = await _source.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/observation-profile-for-discriminator-test");
+            var walker = new StructureDefinitionWalker(sd, _source);
 
             var elem = walker.Walk("identifier.extension('http://example.org/fhir/StructureDefinition/string-extension-for-discriminator-test').value").Single();
             var fixedString = elem.Current.Current.Fixed;
@@ -118,9 +126,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void ParseInvalidDiscriminatorExpressions()
+        public async T.Task ParseInvalidDiscriminatorExpressions()
         {
-            var patientDef = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            var patientDef = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
             var schemas = new StructureDefinitionWalker(new ElementDefinitionNavigator(patientDef), _source);
 
             eval("45");

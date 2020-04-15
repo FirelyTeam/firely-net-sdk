@@ -13,12 +13,10 @@ using System.Diagnostics;
 using Hl7.Fhir.Specification.Source;
 using System.Net;
 using Hl7.Fhir.Support;
-using System.Xml.Linq;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
-using Hl7.Fhir.Utility;
-using T=System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -135,15 +133,15 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod,TestCategory("IntegrationTest")]
-        public void RetrieveArtifactMulti()
+        public async T.Task RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
-            var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            var vs = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Patient");
+            var artifact = await resolver.ResolveByUriAsync("http://test.fhir.org/r3/StructureDefinition/Patient");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);

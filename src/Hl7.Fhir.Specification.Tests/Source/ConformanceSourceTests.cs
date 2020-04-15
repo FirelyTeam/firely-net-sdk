@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 // Use alias to avoid conflict with Hl7.Fhir.Model.Task
-using Tasks = System.Threading.Tasks;
+using T = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
             source = ZipSource.CreateValidationSource();
         }
 
-        static IConformanceSource source = null;
+        static ZipSource source = null;
 
 
         [TestMethod]
@@ -53,54 +53,54 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void FindCodeSystem()
+        public async T.Task FindCodeSystem()
         {
             // A Fhir codesystem
-            var vs = source.FindCodeSystem("http://hl7.org/fhir/contact-point-system");
+            var vs = await source.FindCodeSystemAsync("http://hl7.org/fhir/contact-point-system");
             Assert.IsNotNull(vs);
             Assert.IsNotNull(vs.GetOrigin());
 
             // A non-HL7 valueset
-            vs = source.FindCodeSystem("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
+            vs = await source.FindCodeSystemAsync("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
             Assert.IsNotNull(vs);
 
             // One from v2-tables
-            vs = source.FindCodeSystem("http://hl7.org/fhir/v2/0145");
+            vs = await source.FindCodeSystemAsync("http://hl7.org/fhir/v2/0145");
             Assert.IsNotNull(vs);
 
             // One from v3-codesystems
-            vs = source.FindCodeSystem("http://hl7.org/fhir/v3/ActCode");
+            vs = await source.FindCodeSystemAsync("http://hl7.org/fhir/v3/ActCode");
             Assert.IsNotNull(vs);
 
             // Something non-existent
-            vs = source.FindCodeSystem("http://nema.org/dicom/dicmQQQQ");
+            vs = await source.FindCodeSystemAsync("http://nema.org/dicom/dicmQQQQ");
             Assert.IsNull(vs);
         }
 
 
         [TestMethod]
-        public void FindValueSets()
+        public async T.Task FindValueSets()
         {
             // A Fhir valueset
-            var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
+            var vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
             Assert.IsNotNull(vs.GetOrigin());
 
             //EK: These seem to be no longer part of the spec
             //// A non-HL7 valueset
-            //vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/dicom-dcim");
+            //vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/dicom-dcim");
             //Assert.IsNotNull(vs);
 
             // One from v2-tables
-            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v2-0145");
+            vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/v2-0145");
             Assert.IsNotNull(vs);
 
             // One from v3-codesystems
-            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v3-ActCode");
+            vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/v3-ActCode");
             Assert.IsNotNull(vs);
 
             // Something non-existent
-            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/crapQQQQ");
+            vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/crapQQQQ");
             Assert.IsNull(vs);
         }
 
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public void TestJsonBundleRetrieval()
+        public async T.Task TestJsonBundleRetrieval()
         {
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Specification.Tests
                     IncludeSubDirectories = false
                 });
 
-            var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRAllTypes.HumanName);
+            var humanName = await jsonSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.HumanName);
             Assert.IsNotNull(humanName);
         }
 
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
         [TestMethod]
-        public async Tasks.Task TestThreadSafety()
+        public async T.Task TestThreadSafety()
         {
             // Verify thread safety by resolving same uri simultaneously from different threads
             // DirectorySource should synchronize access and only call prepare once.
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
-            var tasks = new Tasks.Task[threadCount];
+            var tasks = new T.Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 0; i < threadCount; i++)
             {
                 var idx = i;
-                tasks[i] = Tasks.Task.Run(
+                tasks[i] = T.Task.Run(
                     () =>
                     {
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Specification.Tests
                 );
             }
 
-            await Tasks.Task.WhenAll(tasks);
+            await T.Task.WhenAll(tasks);
             sw.Stop();
 
             var first = results[0];
