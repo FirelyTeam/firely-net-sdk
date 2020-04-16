@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -22,6 +22,7 @@ using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -223,7 +224,8 @@ namespace Hl7.Fhir.Validation
                 {
                     FhirPathCompiler = new FhirPathCompiler(symbolTable),
                     ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
-                    TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver))
+                    TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
+                    IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null
                 };
 
                 var result = Assertions.Empty;
