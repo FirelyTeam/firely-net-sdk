@@ -6,6 +6,8 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
+using Hl7.FhirPath;
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -1083,6 +1085,23 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
             Assert.Equal(0, report.Warnings);
+        }
+
+
+        /// <summary>
+        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1140
+        /// </summary>
+        [Fact]
+        public void ValidatePrimitiveWithEmptyTypeElement()
+        {
+            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Code);
+            var elem = def.Snapshot.Element.Where(e => e.Path == "code.value").Single();
+            var data = elem.ToTypedElement();
+
+            Assert.True(data.IsBoolean("type.select(code&profile&targetProfile).isDistinct()", true));
+
+            var result = _validator.Validate(def);
+            Assert.True(result.Success, result.ToString());
         }
 
 
