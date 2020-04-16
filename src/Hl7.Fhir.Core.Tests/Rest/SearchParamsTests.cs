@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Test.Rest
             //Commit: 7a61694eb476619b65387341644c83200ef4d3dd
             var sp = ModelInfo.SearchParameters.Where(s => s.Resource == "DiagnosticReport" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp);
-            Assert.IsTrue(sp.Path.Contains("DiagnosticReport.encounter"));           
+            Assert.IsTrue(sp.Path.Contains("DiagnosticReport.context"));           
             Assert.IsFalse(sp.Target.Contains(ResourceType.EpisodeOfCare));
         }
     }
