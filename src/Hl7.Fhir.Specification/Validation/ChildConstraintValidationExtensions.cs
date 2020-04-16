@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class ChildConstraintValidationExtensions
     {
-        internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, 
+        internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition,
             ScopedNode instance, bool allowAdditionalChildren)
         {
             var outcome = new OperationOutcome();
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Validation
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
-            if (matchResult.UnmatchedInstanceElements.Any() && !allowAdditionalChildren )
+            if (matchResult.UnmatchedInstanceElements.Any() && !allowAdditionalChildren)
             {
                 var elementList = String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"));
                 validator.Trace(outcome, $"Encountered unknown child elements {elementList} for definition '{definition.Path}'",
@@ -69,10 +69,15 @@ namespace Hl7.Fhir.Validation
             {
                 bucket = BucketFactory.CreateRoot(match.Definition, resolver, validator);
             }
-            catch(NotImplementedException ni)
+            catch (NotImplementedException ni)
             {
                 // Will throw if a non-supported slice type is encountered
                 validator.Trace(outcome, ni.Message, Issue.UNSUPPORTED_SLICING_NOT_SUPPORTED, parent);
+                return outcome;
+            }
+            catch (IncorrectElementDefinitionException iede)
+            {
+                validator.Trace(outcome, iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, parent);
                 return outcome;
             }
 
