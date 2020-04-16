@@ -98,7 +98,9 @@ namespace Hl7.Fhir.Specification.Summary
             }
             if (values.Count > 0)
             {
-                properties[key] = values.ToArray();
+                // [WMR 20181218] Ensure summary is immutable
+                //properties[key] = values.ToArray();
+                properties[key] = values.AsReadOnly();
                 return true;
             }
             return false;
@@ -122,7 +124,9 @@ namespace Hl7.Fhir.Specification.Summary
             }
             if (values.Count > 0)
             {
-                properties[key] = values.ToArray();
+                // [WMR 20181218] Ensure summary is immutable
+                //properties[key] = values.ToArray();
+                properties[key] = values.AsReadOnly();
                 return true;
             }
             return false;

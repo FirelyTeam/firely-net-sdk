@@ -10,27 +10,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     internal class FilePatternFilter
     {
-        private string[] _filters = new string[0];
-        private bool _negate;
+        private readonly bool _negate;
 
-        private string _regex;
-        private Regex _compiledRegex;
+        private readonly string _regex;
+        private readonly Regex _compiledRegex;
 
         public FilePatternFilter(string filter, bool negate = false) : this(new[] { filter }, negate)
         {
         }
 
-        public FilePatternFilter(string[] filters, bool negate = false)
+        public FilePatternFilter(IEnumerable<string> filters, bool negate = false)
         {
-            _filters = filters;
             _regex = filterToRegex(filters);
             _compiledRegex = new Regex(_regex, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
             _negate = negate;
@@ -38,7 +34,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private const string REGEX_ESCAPED_CHARS = @".^$+?()[{\|/";
 
-        private static string filterToRegex(string[] filters)
+        private static string filterToRegex(IEnumerable<string> filters)
         {
             var patterns = filters
                 .Select(i => convertPathSuffix(convertPathPrefix(i)))

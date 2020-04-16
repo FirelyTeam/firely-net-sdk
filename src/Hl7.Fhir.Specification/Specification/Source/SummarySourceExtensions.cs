@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="source">A <see cref="ISummarySource"/> instance.</param>
         /// <param name="resourceType">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> ListSummaries(this ISummarySource source, ResourceType resourceType)
+        public static IEnumerable<ArtifactSummary> ListSummaries(this ISummarySource source, string resourceType)
             => source.ListSummaries().OfResourceType(resourceType);
     }
 }

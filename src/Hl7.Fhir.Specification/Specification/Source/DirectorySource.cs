@@ -554,7 +554,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
             // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
+            var typeName = filter?.GetLiteral();
+
+            return GetSummaries().OfResourceType(typeName).Select(dsi => dsi.ResourceUri);
         }
 
         /// <summary>
@@ -656,143 +658,6 @@ namespace Hl7.Fhir.Specification.Source
 
         #region Private members
 
-        /// <summary>
-        /// List all files present in the directory (matching the mask, if given)
-        /// </summary>
-        private List<string> discoverFiles()
-        {
-            var masks = _settings.Masks ?? DirectorySourceSettings.DefaultMasks; // (new[] { "*.*" });
-
-            var contentDirectory = ContentDirectory;
-
-            // Add files present in the content directory
-            var filePaths = new List<string>();
-
-            // [WMR 20170817] NEW
-            // Safely enumerate files in specified path and subfolders, recursively
-            filePaths.AddRange(safeGetFiles(contentDirectory, masks, _settings.IncludeSubDirectories));
-
-            var includes = Includes;
-            if (includes?.Length > 0)
-            {
-                var includeFilter = new FilePatternFilter(includes);
-                filePaths = includeFilter.Filter(contentDirectory, filePaths).ToList();
-            }
-
-            var excludes = Excludes;
-            if (excludes?.Length > 0)
-            {
-                var excludeFilter = new FilePatternFilter(excludes, negate: true);
-                filePaths = excludeFilter.Filter(contentDirectory, filePaths).ToList();
-            }
-
-            return filePaths;
-        }
-
-        // [WMR 20170817]
-        // Safely enumerate files in specified path and subfolders, recursively
-        // Ignore files & folders with Hidden and/or System attributes
-        // Ignore subfolders with insufficient access permissions
-        // https://stackoverflow.com/a/38959208
-        // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-enumerate-directories-and-files
-
-        private static IEnumerable<string> safeGetFiles(string path, IEnumerable<string> masks, bool searchSubfolders)
-        {
-            if (File.Exists(path))
-            {
-                return new string[] { path };
-            }
-
-            if (!Directory.Exists(path))
-            {
-                return Enumerable.Empty<string>();
-            }
-
-            // Not necessary; caller prepareFiles() validates the mask
-            //if (!masks.Any())
-            //{
-            //    return Enumerable.Empty<string>();
-            //}
-
-            Queue<string> folders = new Queue<string>();
-            // Use HashSet to remove duplicates; different masks could match same file(s)
-            HashSet<string> files = new HashSet<string>();
-            folders.Enqueue(path);
-
-            while (folders.Count != 0)
-            {
-                string currentFolder = folders.Dequeue();
-                var currentDirInfo = new DirectoryInfo(currentFolder);
-
-                // local helper function to validate file/folder attributes, exclude system and/or hidden
-                bool isValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
-                
-                // local helper function to filter executables (*.exe, *.dll)
-                bool isExtensionSafe(string extension) => !ExecutableExtensions.Contains(extension, PathComparer);
-
-                foreach (var mask in masks)
-                {
-                    try
-                    {
-                        // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-enumerate-directories-and-files
-                        // "Although you can immediately enumerate all the files in the subdirectories of a
-                        // parent directory by using the AllDirectories search option provided by the SearchOption
-                        // enumeration, unauthorized access exceptions (UnauthorizedAccessException) may cause the
-                        // enumeration to be incomplete. If these exceptions are possible, you can catch them and
-                        // continue by first enumerating directories and then enumerating files."
-
-                        // Explicitly ignore system & hidden files
-                        var curFiles = currentDirInfo.EnumerateFiles(mask, SearchOption.TopDirectoryOnly);
-                        foreach (var file in curFiles)
-                        {
-                            // Skip system & hidden files
-                            // Exclude executables (*.exe, *.dll)
-                            if (isValid(file.Attributes) && isExtensionSafe(file.Extension))
-                            {
-                                files.Add(file.FullName);
-                            }
-                        }
-                    }
-#if DEBUG
-                    catch (Exception ex)
-                    {
-                        // Do Nothing
-                        Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(harvestSummaries)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
-                    }
-#else
-                    catch { }
-#endif
-                }
-
-                if (searchSubfolders)
-                {
-                    try
-                    {
-                        var subFolders = currentDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
-                        foreach (var subFolder in subFolders)
-                        {
-                            // Skip system & hidden folders
-                            if (isValid(subFolder.Attributes))
-                            {
-                                folders.Enqueue(subFolder.FullName);
-                            }
-                        }
-                    }
-#if DEBUG
-                    catch (Exception ex)
-                    {
-                        // Do Nothing
-                        Debug.WriteLine($"Error enumerating subfolders of '{currentFolder}': {ex.Message}");
-                    }
-#else
-                    catch { }
-#endif
-
-                }
-            }
-
-            return files.AsEnumerable();
-        }
 
         // Internal for unit testing purposes
         internal static List<string> ResolveDuplicateFilenames(List<string> allFilenames, DuplicateFilenameResolution preference)
@@ -840,34 +705,10 @@ namespace Hl7.Fhir.Specification.Source
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(files, settings.FormatPreference);
-            var summaries = harvestSummaries(uniqueArtifacts);
-
-#if false
-            // [WMR 20180914] OBSOLETE
-            // Conflict will prevent clients from retrieving list of summaries...
-            // Instead, throw in Resolve methods
-
-            // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
-            // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
-            var duplicates =
-                from cr in summaries.ConformanceResources()
-                let canonical = cr.GetConformanceCanonicalUrl()
-                where canonical != null
-                group cr by canonical into g
-                where g.Count() > 1 // g.Skip(1).Any()
-                select g;
-
-            if (duplicates.Any())
-            {
-                // [WMR 20171023] TODO: Allow configuration, e.g. optional callback delegate
-                throw new CanonicalUrlConflictException(duplicates.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
-            }
-#endif
-
-            return summaries;
+            return harvestSummaries(uniqueArtifacts);
         }
 
-        List<ArtifactSummary> harvestSummaries(List<string> paths)
+        private List<ArtifactSummary> harvestSummaries(List<string> paths)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -961,7 +802,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             // Always use the current Xml/Json parser settings
-            var factory = GetNavigatorStreamFactory();
+            var factory = getNavigatorStreamFactory();
 
             // Also use the current PoCo parser settings
             var pocoSettings = PocoBuilderSettings.CreateDefault();
@@ -995,7 +836,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Return <see cref="ConfigurableNavigatorStreamFactory"/> instance, updated with current Xml/Json parser settings.</summary>
-        ConfigurableNavigatorStreamFactory GetNavigatorStreamFactory()
+        private ConfigurableNavigatorStreamFactory getNavigatorStreamFactory()
         {
             var settings = _settings;
             var factory = _navigatorFactory;
