@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -555,6 +555,18 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("http://example.org/fhir/StructureDefinition/Patient")));
             Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("/StructureDefinition/Patient", UriKind.Relative)));
             Assert.IsFalse(ModelInfo.IsCoreModelTypeUri(new Uri("Patient", UriKind.Relative)));
+        }
+
+        [TestMethod]
+        public void TestCheckMinorVersionCompatibiliy()
+        {
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility(""));
         }
 
     }
