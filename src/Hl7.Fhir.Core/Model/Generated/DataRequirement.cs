@@ -48,13 +48,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataRequirement")]
     [DataContract]
-    public partial class DataRequirement : Hl7.Fhir.Model.Element
+    public partial class DataRequirement : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "DataRequirement"; } }
         
         [FhirType("CodeFilterComponent")]
         [DataContract]
-        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "CodeFilterComponent"; } }
             
@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element ValueSet
+            public Hl7.Fhir.Model.DataType ValueSet
             {
                 get { return _ValueSet; }
                 set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
             }
             
-            private Hl7.Fhir.Model.Element _ValueSet;
+            private Hl7.Fhir.Model.DataType _ValueSet;
             
             /// <summary>
             /// What code is expected
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
+                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.DataType)ValueSet.DeepCopy();
                     if(ValueCodeElement != null) dest.ValueCodeElement = new List<Hl7.Fhir.Model.Code>(ValueCodeElement.DeepCopy());
                     if(ValueCoding != null) dest.ValueCoding = new List<Hl7.Fhir.Model.Coding>(ValueCoding.DeepCopy());
                     if(ValueCodeableConcept != null) dest.ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCodeableConcept.DeepCopy());
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
         }                
         [FhirType("DateFilterComponent")]
         [DataContract]
-        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class DateFilterComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "DateFilterComponent"; } }
             
@@ -291,13 +291,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else

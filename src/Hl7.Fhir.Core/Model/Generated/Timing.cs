@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Timing")]
     [DataContract]
-    public partial class Timing : Hl7.Fhir.Model.Element
+    public partial class Timing : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Timing"; } }
         
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
 
         [FhirType("RepeatComponent")]
         [DataContract]
-        public partial class RepeatComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class RepeatComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "RepeatComponent"; } }
             
@@ -239,13 +239,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Bounds
+            public Hl7.Fhir.Model.DataType Bounds
             {
                 get { return _Bounds; }
                 set { _Bounds = value; OnPropertyChanged("Bounds"); }
             }
             
-            private Hl7.Fhir.Model.Element _Bounds;
+            private Hl7.Fhir.Model.DataType _Bounds;
             
             /// <summary>
             /// Number of times to repeat
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.Element)Bounds.DeepCopy();
+                    if(Bounds != null) dest.Bounds = (Hl7.Fhir.Model.DataType)Bounds.DeepCopy();
                     if(CountElement != null) dest.CountElement = (Hl7.Fhir.Model.Integer)CountElement.DeepCopy();
                     if(CountMaxElement != null) dest.CountMaxElement = (Hl7.Fhir.Model.Integer)CountMaxElement.DeepCopy();
                     if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.FhirDecimal)DurationElement.DeepCopy();

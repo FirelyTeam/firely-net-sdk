@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Reference")]
     [DataContract]
-    public partial class ResourceReference : Hl7.Fhir.Model.Element
+    public partial class ResourceReference : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Reference"; } }
         

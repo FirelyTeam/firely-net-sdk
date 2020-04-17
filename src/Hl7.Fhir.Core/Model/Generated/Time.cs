@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("time")]
     [DataContract]
-    public partial class Time : Hl7.Fhir.Model.Primitive<string>
+    public partial class Time : Hl7.Fhir.Model.PrimitiveType<string>
     {
         public override string TypeName { get { return "time"; } }
         

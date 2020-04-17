@@ -65,12 +65,10 @@ namespace Hl7.Fhir.Specification
             _classMapping = classMapping;
         }
 
-        public string TypeName => !_classMapping.IsBackbone ? substituteQuantity(_classMapping.Name) :
-            (_classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
-            "BackboneElement" : "Element");
-
-        private string substituteQuantity(string name) =>
-            ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
+        public string TypeName => !_classMapping.NativeType.RepresentsComplexElementType() ? 
+                _classMapping.Name 
+                : _classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
+                    "BackboneElement" : "Element";
 
         public bool IsAbstract => _classMapping.NativeType.GetTypeInfo().IsAbstract;
         public bool IsResource => _classMapping.IsResource;
@@ -124,7 +122,7 @@ namespace Hl7.Fhir.Specification
         {
             var pm = _pm;
 
-            if (pm.IsBackboneElement)
+            if (pm.ElementType.RepresentsComplexElementType())
             {
                 var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
                 return new ITypeSerializationInfo[] { info };

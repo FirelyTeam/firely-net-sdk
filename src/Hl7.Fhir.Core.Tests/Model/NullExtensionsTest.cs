@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
         [TestMethod]
         public void TestIsNullOrEmpty_FhirUri() => testIsNullOrEmpty_StringPrimitive<FhirUri>("http://example.org");
 
-        void testIsNullOrEmpty_Primitive<T, V>(V testValue, V emptyValue) where T : Primitive<V>, IValue<V>, new()
+        void testIsNullOrEmpty_Primitive<T, V>(V testValue, V emptyValue) where T : PrimitiveType<V>, IValue<V>, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
             Assert.IsTrue(elem.IsNullOrEmpty());
         }
 
-        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : Primitive<string>, IStringValue, new()
+        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType<string>, IStringValue, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());

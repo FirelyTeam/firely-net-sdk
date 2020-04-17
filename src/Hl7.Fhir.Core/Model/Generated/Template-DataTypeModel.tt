@@ -175,18 +175,18 @@
                 {
 					if (rawResourceName.Substring(0,1).ToLower() == rawResourceName.Substring(0,1))
                     {
-						resourceBaseType = "Hl7.Fhir.Model.Primitive<" + primitiveTypeName + ">";
+						resourceBaseType = "Hl7.Fhir.Model.PrimitiveType<" + primitiveTypeName + ">";
 						// isPrimitive = true;
                     }
 					else
-						resourceBaseType = "Hl7.Fhir.Model.Element";
+						resourceBaseType = "Hl7.Fhir.Model.DataType";
                 }
 				else
-					resourceBaseType = "Hl7.Fhir.Model.Primitive<" + primitiveTypeName + ">";
+					resourceBaseType = "Hl7.Fhir.Model.PrimitiveType<" + primitiveTypeName + ">";
 				if (resourceBaseType == "Hl7.Fhir.Model.Quantity")
 					continue;
             }
-			if (resourceBaseType.Contains("Primitive<"))
+			if (resourceBaseType.Contains("PrimitiveType<"))
 				isPrimitive = true;
 
 			bool abstractType = false;
@@ -250,12 +250,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
 <# }
 if (!abstractType){
-#>    [FhirType("<#= rawResourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
+#>    [FhirType("<#= rawResourceName #>")]
 <#}
 #>    [DataContract]
     public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>
     {
-<# if (resourceBaseType != "Hl7.Fhir.Model.Element" && !isPrimitive) { #>
+<# if (resourceBaseType != "Hl7.Fhir.Model.DataType" && !isPrimitive) { #>
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
 <# } #>
         public override string TypeName { get { return "<#= rawResourceName #>"; } }
@@ -422,7 +422,7 @@ if (!abstractType){
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class <#= componentName #> : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "<#= componentName #>"; } }
             
@@ -435,7 +435,7 @@ if (!abstractType){
             /// <summary>
             /// <#= pd.Summary.Replace("&", "&amp;") #>
             /// </summary>
-            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
             [CLSCompliant(false)]
 			[References(<#= pd.ReferenceTargets #>)]
@@ -589,7 +589,7 @@ if (!abstractType){
 	int nPropNum = 80;
 	if (resourceBaseType == "Hl7.Fhir.Model.Resource")
 		nPropNum = 40;
-	if (resourceBaseType == "Hl7.Fhir.Model.Element" || isPrimitive)
+	if (resourceBaseType == "Hl7.Fhir.Model.DataType" || isPrimitive)
 		nPropNum = 20;
 
 	foreach (PropertyDetails pd in props)
@@ -601,7 +601,7 @@ if (!abstractType){
         /// <summary>
         /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;") #>
         /// </summary>
-        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [CLSCompliant(false)]
 		[References(<#= pd.ReferenceTargets #>)]
@@ -1065,7 +1065,7 @@ if (!abstractType){
 
 			if (result.Name.Contains("[x]"))
             {
-				result.PropType = "Hl7.Fhir.Model.Element";
+				result.PropType = "Hl7.Fhir.Model.DataType";
 				result.Name = result.Name.Substring(0, result.Name.IndexOf("["));
 				result.IsChoice = true;
 				result.FhirName = result.FhirName.Substring(0, result.FhirName.IndexOf("["));
@@ -1132,7 +1132,7 @@ if (!abstractType){
 				result.NativeType = null;
             }
 
-			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.DataType";
 			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;
@@ -1342,7 +1342,7 @@ if (!abstractType){
                 }
             }
 
-			result.IsChoice = result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsChoice = result.PropType == "Hl7.Fhir.Model.DataType";
 			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 			return result;
         }

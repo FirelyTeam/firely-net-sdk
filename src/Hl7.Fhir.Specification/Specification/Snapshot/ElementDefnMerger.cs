@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <param name="diff"></param>
             /// <param name="allowAppend"></param>
             /// <returns></returns>
-            T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
+            T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : PrimitiveType
             {
                 // [WMR 20160718] Handle snap == null
                 // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
