@@ -165,13 +165,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Detail
+            public Hl7.Fhir.Model.DataType Detail
             {
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private Hl7.Fhir.Model.Element _Detail;
+            private Hl7.Fhir.Model.DataType _Detail;
             
             /// <summary>
             /// Reach goal on or before
@@ -180,13 +180,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Duration))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Due
+            public Hl7.Fhir.Model.DataType Due
             {
                 get { return _Due; }
                 set { _Due = value; OnPropertyChanged("Due"); }
             }
             
-            private Hl7.Fhir.Model.Element _Due;
+            private Hl7.Fhir.Model.DataType _Due;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Measure != null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)Measure.DeepCopy();
-                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.Element)Detail.DeepCopy();
-                    if(Due != null) dest.Due = (Hl7.Fhir.Model.Element)Due.DeepCopy();
+                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.DataType)Detail.DeepCopy();
+                    if(Due != null) dest.Due = (Hl7.Fhir.Model.DataType)Due.DeepCopy();
                     return dest;
                 }
                 else
@@ -371,13 +371,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Start
+        public Hl7.Fhir.Model.DataType Start
         {
             get { return _Start; }
             set { _Start = value; OnPropertyChanged("Start"); }
         }
         
-        private Hl7.Fhir.Model.Element _Start;
+        private Hl7.Fhir.Model.DataType _Start;
         
         /// <summary>
         /// Target outcome for the goal
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Start != null) dest.Start = (Hl7.Fhir.Model.Element)Start.DeepCopy();
+                if(Start != null) dest.Start = (Hl7.Fhir.Model.DataType)Start.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.Goal.TargetComponent)Target.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
                 if(StatusReasonElement != null) dest.StatusReasonElement = (Hl7.Fhir.Model.FhirString)StatusReasonElement.DeepCopy();

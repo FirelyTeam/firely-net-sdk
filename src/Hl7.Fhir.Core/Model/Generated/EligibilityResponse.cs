@@ -486,13 +486,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Allowed
+            public Hl7.Fhir.Model.DataType Allowed
             {
                 get { return _Allowed; }
                 set { _Allowed = value; OnPropertyChanged("Allowed"); }
             }
             
-            private Hl7.Fhir.Model.Element _Allowed;
+            private Hl7.Fhir.Model.DataType _Allowed;
             
             /// <summary>
             /// Benefits used
@@ -501,13 +501,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Used
+            public Hl7.Fhir.Model.DataType Used
             {
                 get { return _Used; }
                 set { _Used = value; OnPropertyChanged("Used"); }
             }
             
-            private Hl7.Fhir.Model.Element _Used;
+            private Hl7.Fhir.Model.DataType _Used;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -517,8 +517,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.Element)Allowed.DeepCopy();
-                    if(Used != null) dest.Used = (Hl7.Fhir.Model.Element)Used.DeepCopy();
+                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.DataType)Allowed.DeepCopy();
+                    if(Used != null) dest.Used = (Hl7.Fhir.Model.DataType)Used.DeepCopy();
                     return dest;
                 }
                 else

@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Tests
             test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
             test("fdt:f", FhirDateTime.Now(), false, "not one of the allowed choices");
 
-            void test(string title, Element v, bool success, string fragment = null)
+            void test(string title, DataType v, bool success, string fragment = null)
             {
                 var t = new Observation()
                 {

@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Onset
+            public Hl7.Fhir.Model.DataType Onset
             {
                 get { return _Onset; }
                 set { _Onset = value; OnPropertyChanged("Onset"); }
             }
             
-            private Hl7.Fhir.Model.Element _Onset;
+            private Hl7.Fhir.Model.DataType _Onset;
             
             /// <summary>
             /// Extra information about condition
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
-                    if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
+                    if(Onset != null) dest.Onset = (Hl7.Fhir.Model.DataType)Onset.DeepCopy();
                     if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     return dest;
                 }
@@ -462,13 +462,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Born
+        public Hl7.Fhir.Model.DataType Born
         {
             get { return _Born; }
             set { _Born = value; OnPropertyChanged("Born"); }
         }
         
-        private Hl7.Fhir.Model.Element _Born;
+        private Hl7.Fhir.Model.DataType _Born;
         
         /// <summary>
         /// (approximate) age
@@ -477,13 +477,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Age
+        public Hl7.Fhir.Model.DataType Age
         {
             get { return _Age; }
             set { _Age = value; OnPropertyChanged("Age"); }
         }
         
-        private Hl7.Fhir.Model.Element _Age;
+        private Hl7.Fhir.Model.DataType _Age;
         
         /// <summary>
         /// Age is estimated?
@@ -523,13 +523,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Deceased
+        public Hl7.Fhir.Model.DataType Deceased
         {
             get { return _Deceased; }
             set { _Deceased = value; OnPropertyChanged("Deceased"); }
         }
         
-        private Hl7.Fhir.Model.Element _Deceased;
+        private Hl7.Fhir.Model.DataType _Deceased;
         
         /// <summary>
         /// Why was family member history performed?
@@ -606,10 +606,10 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
-                if(Born != null) dest.Born = (Hl7.Fhir.Model.Element)Born.DeepCopy();
-                if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
+                if(Born != null) dest.Born = (Hl7.Fhir.Model.DataType)Born.DeepCopy();
+                if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopy();
                 if(EstimatedAgeElement != null) dest.EstimatedAgeElement = (Hl7.Fhir.Model.FhirBoolean)EstimatedAgeElement.DeepCopy();
-                if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
+                if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.DataType)Deceased.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());

@@ -102,7 +102,7 @@
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Resource")
 					resourceBaseType = "Hl7.Fhir.Model.Resource";
 				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
-					resourceBaseType = "Hl7.Fhir.Model.Element";
+					resourceBaseType = "Hl7.Fhir.Model.DataType";
 				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Quantity")
 					resourceBaseType = "Hl7.Fhir.Model.Quantity";
 				else
@@ -310,7 +310,7 @@ if(true) {
             /// <summary>
             /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n            /// ") #>
             /// </summary>
-            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
             [CLSCompliant(false)]
 			[References(<#= pd.ReferenceTargets #>)]
@@ -469,7 +469,7 @@ if(true) {
 	int nPropNum = 80;
 	if (resourceBaseType == "Hl7.Fhir.Model.Resource")
 		nPropNum = 40;
-	if (resourceBaseType == "Hl7.Fhir.Model.Element")
+	if (resourceBaseType == "Hl7.Fhir.Model.Element" || resourceBaseType == "Hl7.Fhir.Model.DataType")
 		nPropNum = 20;
 
 	foreach (PropertyDetails pd in props)
@@ -479,7 +479,7 @@ if(true) {
         /// <summary>
         /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
-        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [CLSCompliant(false)]
 		[References(<#= pd.ReferenceTargets #>)]
@@ -919,7 +919,7 @@ if(true) {
 
 			if (result.Name.Contains("[x]"))
             {
-				result.PropType = "Hl7.Fhir.Model.Element";
+				result.PropType = "Hl7.Fhir.Model.DataType";
 				result.Name = result.Name.Substring(0, result.Name.IndexOf("["));
 				result.FhirName = result.FhirName.Substring(0, result.FhirName.IndexOf("["));
 				result.AllowedTypes = "";
@@ -986,7 +986,7 @@ if(true) {
 				result.NativeType = null;
             }
 
-			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.DataType";
 			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;
@@ -1195,7 +1195,7 @@ if(true) {
                 }
             }
 
-			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.Element";
+			result.IsChoice =  result.PropType == "Hl7.Fhir.Model.DataType";
 			result.IsContained = result.PropType == "Hl7.Fhir.Model.Resource";
 
 			return result;

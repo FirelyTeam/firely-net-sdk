@@ -273,13 +273,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Detail
+            public Hl7.Fhir.Model.DataType Detail
             {
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private Hl7.Fhir.Model.Element _Detail;
+            private Hl7.Fhir.Model.DataType _Detail;
             
             /// <summary>
             /// Reach goal within
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Measure != null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)Measure.DeepCopy();
-                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.Element)Detail.DeepCopy();
+                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.DataType)Detail.DeepCopy();
                     if(Due != null) dest.Due = (Duration)Due.DeepCopy();
                     return dest;
                 }
@@ -649,13 +649,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Timing
+            public Hl7.Fhir.Model.DataType Timing
             {
                 get { return _Timing; }
                 set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
-            private Hl7.Fhir.Model.Element _Timing;
+            private Hl7.Fhir.Model.DataType _Timing;
             
             /// <summary>
             /// Who should participate in the action
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
                     if(Input != null) dest.Input = new List<DataRequirement>(Input.DeepCopy());
                     if(Output != null) dest.Output = new List<DataRequirement>(Output.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent>(RelatedAction.DeepCopy());
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent>(Participant.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
@@ -1368,13 +1368,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Offset
+            public Hl7.Fhir.Model.DataType Offset
             {
                 get { return _Offset; }
                 set { _Offset = value; OnPropertyChanged("Offset"); }
             }
             
-            private Hl7.Fhir.Model.Element _Offset;
+            private Hl7.Fhir.Model.DataType _Offset;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1385,7 +1385,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(ActionIdElement != null) dest.ActionIdElement = (Hl7.Fhir.Model.Id)ActionIdElement.DeepCopy();
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
-                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
+                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.DataType)Offset.DeepCopy();
                     return dest;
                 }
                 else

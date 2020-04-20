@@ -1026,13 +1026,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Rate
+            public Hl7.Fhir.Model.DataType Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Element _Rate;
+            private Hl7.Fhir.Model.DataType _Rate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopy();
                     return dest;
                 }
                 else

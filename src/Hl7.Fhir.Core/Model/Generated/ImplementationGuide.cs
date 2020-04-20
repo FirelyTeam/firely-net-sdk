@@ -565,13 +565,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Source
+            public Hl7.Fhir.Model.DataType Source
             {
                 get { return _Source; }
                 set { _Source = value; OnPropertyChanged("Source"); }
             }
             
-            private Hl7.Fhir.Model.Element _Source;
+            private Hl7.Fhir.Model.DataType _Source;
             
             /// <summary>
             /// Resource this is an example of (if applicable)
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(AcronymElement != null) dest.AcronymElement = (Hl7.Fhir.Model.FhirString)AcronymElement.DeepCopy();
-                    if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
+                    if(Source != null) dest.Source = (Hl7.Fhir.Model.DataType)Source.DeepCopy();
                     if(ExampleFor != null) dest.ExampleFor = (Hl7.Fhir.Model.ResourceReference)ExampleFor.DeepCopy();
                     return dest;
                 }
