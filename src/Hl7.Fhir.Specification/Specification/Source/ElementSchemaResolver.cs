@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
@@ -19,19 +20,21 @@ namespace Hl7.Fhir.Specification.Specification.Source
 {
     internal class ElementSchemaResolver : IResourceResolver, ISchemaResolver
     {
+        private readonly IAssertionFactory _assertionFactory;
         private readonly IResourceResolver _wrapped;
-        private readonly IDictionary<Uri, ElementSchema> _cache = new Dictionary<Uri, ElementSchema>();
+        private readonly IDictionary<Uri, IElementSchema> _cache = new Dictionary<Uri, IElementSchema>();
 
-        public ElementSchemaResolver(IResourceResolver wrapped)
+        public ElementSchemaResolver(IResourceResolver wrapped, IAssertionFactory assertionFactory = null)
         {
             _wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
+            _assertionFactory = assertionFactory ?? new ValidationAssertionFactory();
         }
 
-        public ElementSchema GetSchema(ElementDefinitionNavigator nav)
+        public IElementSchema GetSchema(ElementDefinitionNavigator nav)
         {
             var schemaUri = new Uri(nav.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
 
-            if (_cache.TryGetValue(schemaUri, out ElementSchema schema))
+            if (_cache.TryGetValue(schemaUri, out IElementSchema schema))
             {
                 return schema;
             }
@@ -41,15 +44,15 @@ namespace Hl7.Fhir.Specification.Specification.Source
                 schema = new ElementSchema(schemaUri);
             }
 
-            schema = new SchemaConverter(this).Convert(nav);
+            schema = new SchemaConverter(this, _assertionFactory).Convert(nav);
 
             _cache.Add(schemaUri, schema);
             return schema;
         }
 
-        public ElementSchema GetSchema(Uri schemaUri)
+        public IElementSchema GetSchema(Uri schemaUri)
         {
-            if (_cache.TryGetValue(schemaUri, out ElementSchema schema))
+            if (_cache.TryGetValue(schemaUri, out IElementSchema schema))
             {
                 return schema;
             }
@@ -63,7 +66,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
             var sd = this.FindStructureDefinition(schemaUri.OriginalString);
             if (sd != null)
             {
-                schema = new SchemaConverter(this).Convert(sd);
+                schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
             }
 
             _cache.Add(schemaUri, schema);
