@@ -110,7 +110,7 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is Primitive p && p.ObjectValue != null)
+                if (Current is PrimitiveType p && p.ObjectValue != null)
                 {
                     if (p.ObjectValue != _objectValue)
                     {
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.ElementModel
                             return (int)unsint.Value;
                         case Hl7.Fhir.Model.Base64Binary b64:
                             return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
-                        case Primitive prim:
+                        case PrimitiveType prim:
                             return prim.ObjectValue;
                         default:
                             return null;
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.ElementModel
                 catch (FormatException)
                 {
                     // If it fails, just return the unparsed contents
-                    return (Current as Primitive)?.ObjectValue;
+                    return (Current as PrimitiveType)?.ObjectValue;
                 }
             }
         }

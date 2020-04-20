@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition Value(this ElementDefinition ed, Element fix=null, Element pattern=null )
+        public static ElementDefinition Value(this ElementDefinition ed, DataType fix=null, DataType pattern=null )
         {
             ed.Fixed = fix;
             ed.Pattern = pattern;

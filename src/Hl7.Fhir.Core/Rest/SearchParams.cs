@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Rest
                 var name = parameter.Name;
                 var value = parameter.Value;
                 
-                if(value != null && value is Primitive)
+                if(value != null && value is PrimitiveType)
                 {
                     result.Add(parameter.Name, PrimitiveTypeConverter.ConvertTo<string>(value));
                 }

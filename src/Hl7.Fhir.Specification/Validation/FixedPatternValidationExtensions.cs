@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Validation
 
         private static string toReadable(Base value)
         {
-            if (value is Primitive)
+            if (value is PrimitiveType)
                 return value.ToString();
             else
                 return new FhirJsonSerializer().SerializeToString(value);
