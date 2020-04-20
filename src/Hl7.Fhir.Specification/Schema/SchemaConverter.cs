@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 var childNav = nav.ShallowCopy();   // make sure closure is to a clone, not the original argument
                 var childAssertion = _assertionFactory.CreateChildren(() => harvestChildren(childNav));
-                return schema.With(childAssertion);
+                return schema.With(_assertionFactory, childAssertion);
             }
             else
                 return schema;
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Schema
                 // Don't add empty schemas (i.e. empty ElementDefs in a differential)
                 if (!childSchema.IsEmpty())
                 {
-                    var schemaWithOrder = childSchema.With(new XmlOrder(xmlOrder, childNav.PathName));
+                    var schemaWithOrder = childSchema.With(_assertionFactory, new XmlOrder(xmlOrder, childNav.PathName));
                     children.Add(childNav.PathName, schemaWithOrder);
                 }
             }
