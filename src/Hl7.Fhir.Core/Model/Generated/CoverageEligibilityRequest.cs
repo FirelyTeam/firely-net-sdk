@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Validation,
         }
 
-        [FhirType("SupportingInformationComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityRequest#CoverageEligibilityRequest.supportingInfo", IsNestedType=true)]
         [DataContract]
         public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InsuranceComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityRequest#CoverageEligibilityRequest.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailsComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityRequest#CoverageEligibilityRequest.item", IsNestedType=true)]
         [DataContract]
         public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityRequest#CoverageEligibilityRequest.item.diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -688,13 +688,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Diagnosis
+            public Hl7.Fhir.Model.DataType Diagnosis
             {
                 get { return _Diagnosis; }
                 set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
             }
             
-            private Hl7.Fhir.Model.Element _Diagnosis;
+            private Hl7.Fhir.Model.DataType _Diagnosis;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.Element)Diagnosis.DeepCopy();
+                    if(Diagnosis != null) dest.Diagnosis = (Hl7.Fhir.Model.DataType)Diagnosis.DeepCopy();
                     return dest;
                 }
                 else
@@ -874,13 +874,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Serviced
+        public Hl7.Fhir.Model.DataType Serviced
         {
             get { return _Serviced; }
             set { _Serviced = value; OnPropertyChanged("Serviced"); }
         }
         
-        private Hl7.Fhir.Model.Element _Serviced;
+        private Hl7.Fhir.Model.DataType _Serviced;
         
         /// <summary>
         /// Creation date
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>(PurposeElement.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
+                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();

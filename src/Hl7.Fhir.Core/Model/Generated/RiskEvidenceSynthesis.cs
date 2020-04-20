@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RiskEvidenceSynthesis"; } }
         
-        [FhirType("SampleSizeComponent", NamedBackboneElement=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.sampleSize", IsNestedType=true)]
         [DataContract]
         public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RiskEstimateComponent", NamedBackboneElement=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.riskEstimate", IsNestedType=true)]
         [DataContract]
         public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PrecisionEstimateComponent", NamedBackboneElement=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.riskEstimate.precisionEstimate", IsNestedType=true)]
         [DataContract]
         public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CertaintyComponent", NamedBackboneElement=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.certainty", IsNestedType=true)]
         [DataContract]
         public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CertaintySubcomponentComponent", NamedBackboneElement=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.certainty.certaintySubcomponent", IsNestedType=true)]
         [DataContract]
         public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
         {

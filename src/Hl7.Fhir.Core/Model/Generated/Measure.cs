@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Measure"; } }
         
-        [FhirType("GroupComponent", NamedBackboneElement=true)]
+        [FhirType("Measure#Measure.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent", NamedBackboneElement=true)]
+        [FhirType("Measure#Measure.group.population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent", NamedBackboneElement=true)]
+        [FhirType("Measure#Measure.group.stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent", NamedBackboneElement=true)]
+        [FhirType("Measure#Measure.group.stratifier.component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementalDataComponent", NamedBackboneElement=true)]
+        [FhirType("Measure#Measure.supplementalData", IsNestedType=true)]
         [DataContract]
         public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1037,13 +1037,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Subject
+        public Hl7.Fhir.Model.DataType Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.Element _Subject;
+        private Hl7.Fhir.Model.DataType _Subject;
         
         /// <summary>
         /// Date last changed
@@ -1636,7 +1636,7 @@ namespace Hl7.Fhir.Model
                 if(SubtitleElement != null) dest.SubtitleElement = (Hl7.Fhir.Model.FhirString)SubtitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());

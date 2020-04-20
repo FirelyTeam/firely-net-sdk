@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
             N5,
         }
 
-        [FhirType("AgentComponent", NamedBackboneElement=true)]
+        [FhirType("AuditEvent#AuditEvent.agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NetworkComponent", NamedBackboneElement=true)]
+        [FhirType("AuditEvent#AuditEvent.agent.network", IsNestedType=true)]
         [DataContract]
         public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceComponent", NamedBackboneElement=true)]
+        [FhirType("AuditEvent#AuditEvent.source", IsNestedType=true)]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent", NamedBackboneElement=true)]
+        [FhirType("AuditEvent#AuditEvent.entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent", NamedBackboneElement=true)]
+        [FhirType("AuditEvent#AuditEvent.entity.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1115,13 +1115,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Base64Binary))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else

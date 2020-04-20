@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Merge a collection of primitive values
-            List<T> mergePrimitiveCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : Primitive
+            List<T> mergePrimitiveCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : PrimitiveType
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// then append differential text to snapshot text.
             /// Merge differential extensions with snapshot extensions.
             /// </summary>
-            T mergePrimitiveElement<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
+            T mergePrimitiveElement<T>(T snap, T diff, bool allowAppend = false) where T : PrimitiveType
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             static bool matchCanonicals(Canonical x, Canonical y) => matchStringValues(x, y);
 
-            static bool matchStringValues<T>(T x, T y) where T : Primitive<string>, IStringValue
+            static bool matchStringValues<T>(T x, T y) where T : PrimitiveType<string>, IStringValue
                 => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
 
             static bool IsEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);

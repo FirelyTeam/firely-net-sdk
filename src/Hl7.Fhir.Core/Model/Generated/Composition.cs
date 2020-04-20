@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             Official,
         }
 
-        [FhirType("AttesterComponent", NamedBackboneElement=true)]
+        [FhirType("Composition#Composition.attester", IsNestedType=true)]
         [DataContract]
         public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatesToComponent", NamedBackboneElement=true)]
+        [FhirType("Composition#Composition.relatesTo", IsNestedType=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -334,13 +334,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Target
+            public Hl7.Fhir.Model.DataType Target
             {
                 get { return _Target; }
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
-            private Hl7.Fhir.Model.Element _Target;
+            private Hl7.Fhir.Model.DataType _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DocumentRelationshipType>)CodeElement.DeepCopy();
-                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.DataType)Target.DeepCopy();
                     return dest;
                 }
                 else
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EventComponent", NamedBackboneElement=true)]
+        [FhirType("Composition#Composition.event", IsNestedType=true)]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SectionComponent", NamedBackboneElement=true)]
+        [FhirType("Composition#Composition.section", IsNestedType=true)]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
         {

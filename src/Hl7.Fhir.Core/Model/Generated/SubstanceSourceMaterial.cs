@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceSourceMaterial"; } }
         
-        [FhirType("FractionDescriptionComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.fractionDescription", IsNestedType=true)]
         [DataContract]
         public partial class FractionDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OrganismComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism", IsNestedType=true)]
         [DataContract]
         public partial class OrganismComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuthorComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.author", IsNestedType=true)]
         [DataContract]
         public partial class AuthorComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HybridComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.hybrid", IsNestedType=true)]
         [DataContract]
         public partial class HybridComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OrganismGeneralComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.organismGeneral", IsNestedType=true)]
         [DataContract]
         public partial class OrganismGeneralComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PartDescriptionComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.partDescription", IsNestedType=true)]
         [DataContract]
         public partial class PartDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {

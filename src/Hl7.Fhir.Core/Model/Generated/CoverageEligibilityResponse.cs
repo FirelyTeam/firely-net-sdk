@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Validation,
         }
 
-        [FhirType("InsuranceComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemsComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance.item.benefit", IsNestedType=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -683,13 +683,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Allowed
+            public Hl7.Fhir.Model.DataType Allowed
             {
                 get { return _Allowed; }
                 set { _Allowed = value; OnPropertyChanged("Allowed"); }
             }
             
-            private Hl7.Fhir.Model.Element _Allowed;
+            private Hl7.Fhir.Model.DataType _Allowed;
             
             /// <summary>
             /// Benefits used
@@ -698,13 +698,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Used
+            public Hl7.Fhir.Model.DataType Used
             {
                 get { return _Used; }
                 set { _Used = value; OnPropertyChanged("Used"); }
             }
             
-            private Hl7.Fhir.Model.Element _Used;
+            private Hl7.Fhir.Model.DataType _Used;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -714,8 +714,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.Element)Allowed.DeepCopy();
-                    if(Used != null) dest.Used = (Hl7.Fhir.Model.Element)Used.DeepCopy();
+                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.DataType)Allowed.DeepCopy();
+                    if(Used != null) dest.Used = (Hl7.Fhir.Model.DataType)Used.DeepCopy();
                     return dest;
                 }
                 else
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ErrorsComponent", NamedBackboneElement=true)]
+        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.error", IsNestedType=true)]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -965,13 +965,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Serviced
+        public Hl7.Fhir.Model.DataType Serviced
         {
             get { return _Serviced; }
             set { _Serviced = value; OnPropertyChanged("Serviced"); }
         }
         
-        private Hl7.Fhir.Model.Element _Serviced;
+        private Hl7.Fhir.Model.DataType _Serviced;
         
         /// <summary>
         /// Response creation date
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>(PurposeElement.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
+                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Requestor != null) dest.Requestor = (Hl7.Fhir.Model.ResourceReference)Requestor.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();

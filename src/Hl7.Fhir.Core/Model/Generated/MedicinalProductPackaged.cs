@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
-        [FhirType("BatchIdentifierComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPackaged#MedicinalProductPackaged.batchIdentifier", IsNestedType=true)]
         [DataContract]
         public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackageItemComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPackaged#MedicinalProductPackaged.packageItem", IsNestedType=true)]
         [DataContract]
         public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
         {

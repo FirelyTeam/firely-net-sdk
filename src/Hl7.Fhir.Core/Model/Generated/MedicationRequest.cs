@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("DispenseRequestComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationRequest#MedicationRequest.dispenseRequest", IsNestedType=true)]
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InitialFillComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationRequest#MedicationRequest.dispenseRequest.initialFill", IsNestedType=true)]
         [DataContract]
         public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationRequest#MedicationRequest.substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -492,13 +492,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Allowed
+            public Hl7.Fhir.Model.DataType Allowed
             {
                 get { return _Allowed; }
                 set { _Allowed = value; OnPropertyChanged("Allowed"); }
             }
             
-            private Hl7.Fhir.Model.Element _Allowed;
+            private Hl7.Fhir.Model.DataType _Allowed;
             
             /// <summary>
             /// Why should (not) substitution be made
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.Element)Allowed.DeepCopy();
+                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.DataType)Allowed.DeepCopy();
                     if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
                     return dest;
                 }
@@ -756,13 +756,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Reported
+        public Hl7.Fhir.Model.DataType Reported
         {
             get { return _Reported; }
             set { _Reported = value; OnPropertyChanged("Reported"); }
         }
         
-        private Hl7.Fhir.Model.Element _Reported;
+        private Hl7.Fhir.Model.DataType _Reported;
         
         /// <summary>
         /// Medication to be taken
@@ -772,13 +772,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Medication
+        public Hl7.Fhir.Model.DataType Medication
         {
             get { return _Medication; }
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
         
-        private Hl7.Fhir.Model.Element _Medication;
+        private Hl7.Fhir.Model.DataType _Medication;
         
         /// <summary>
         /// Who or group medication request is for
@@ -1185,8 +1185,8 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
                 if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
-                if(Reported != null) dest.Reported = (Hl7.Fhir.Model.Element)Reported.DeepCopy();
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
+                if(Reported != null) dest.Reported = (Hl7.Fhir.Model.DataType)Reported.DeepCopy();
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.DataType)Medication.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductAuthorization"; } }
         
-        [FhirType("JurisdictionalAuthorizationComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductAuthorization#MedicinalProductAuthorization.jurisdictionalAuthorization", IsNestedType=true)]
         [DataContract]
         public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcedureComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductAuthorization#MedicinalProductAuthorization.procedure", IsNestedType=true)]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -249,13 +249,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Date
+            public Hl7.Fhir.Model.DataType Date
             {
                 get { return _Date; }
                 set { _Date = value; OnPropertyChanged("Date"); }
             }
             
-            private Hl7.Fhir.Model.Element _Date;
+            private Hl7.Fhir.Model.DataType _Date;
             
             /// <summary>
             /// Applcations submitted to obtain a marketing authorization
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Date != null) dest.Date = (Hl7.Fhir.Model.Element)Date.DeepCopy();
+                    if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopy();
                     if(Application != null) dest.Application = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>(Application.DeepCopy());
                     return dest;
                 }

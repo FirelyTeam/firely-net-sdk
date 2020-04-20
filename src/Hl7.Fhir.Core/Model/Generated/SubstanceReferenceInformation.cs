@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceReferenceInformation"; } }
         
-        [FhirType("GeneComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.gene", IsNestedType=true)]
         [DataContract]
         public partial class GeneComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GeneElementComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.geneElement", IsNestedType=true)]
         [DataContract]
         public partial class GeneElementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClassificationComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.classification", IsNestedType=true)]
         [DataContract]
         public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -515,13 +515,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Amount
+            public Hl7.Fhir.Model.DataType Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Element _Amount;
+            private Hl7.Fhir.Model.DataType _Amount;
             
             /// <summary>
             /// Todo
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
                     if(Interaction != null) dest.Interaction = (Hl7.Fhir.Model.CodeableConcept)Interaction.DeepCopy();
                     if(Organism != null) dest.Organism = (Hl7.Fhir.Model.CodeableConcept)Organism.DeepCopy();
                     if(OrganismType != null) dest.OrganismType = (Hl7.Fhir.Model.CodeableConcept)OrganismType.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
                     if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
                     return dest;

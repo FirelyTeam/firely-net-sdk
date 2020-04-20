@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DeviceDefinition"; } }
         
-        [FhirType("UdiDeviceIdentifierComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.udiDeviceIdentifier", IsNestedType=true)]
         [DataContract]
         public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.deviceName", IsNestedType=true)]
         [DataContract]
         public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecializationComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.specialization", IsNestedType=true)]
         [DataContract]
         public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.capability", IsNestedType=true)]
         [DataContract]
         public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MaterialComponent", NamedBackboneElement=true)]
+        [FhirType("DeviceDefinition#DeviceDefinition.material", IsNestedType=true)]
         [DataContract]
         public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -921,13 +921,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Manufacturer
+        public Hl7.Fhir.Model.DataType Manufacturer
         {
             get { return _Manufacturer; }
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
-        private Hl7.Fhir.Model.Element _Manufacturer;
+        private Hl7.Fhir.Model.DataType _Manufacturer;
         
         /// <summary>
         /// A name given to the device to identify it
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(UdiDeviceIdentifier != null) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
-                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.Element)Manufacturer.DeepCopy();
+                if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.DataType)Manufacturer.DeepCopy();
                 if(DeviceName != null) dest.DeviceName = new List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>(DeviceName.DeepCopy());
                 if(ModelNumberElement != null) dest.ModelNumberElement = (Hl7.Fhir.Model.FhirString)ModelNumberElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();

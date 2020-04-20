@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
             Terminated,
         }
 
-        [FhirType("ContentDefinitionComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.contentDefinition", IsNestedType=true)]
         [DataContract]
         public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TermComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term", IsNestedType=true)]
         [DataContract]
         public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -533,13 +533,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Topic
+            public Hl7.Fhir.Model.DataType Topic
             {
                 get { return _Topic; }
                 set { _Topic = value; OnPropertyChanged("Topic"); }
             }
             
-            private Hl7.Fhir.Model.Element _Topic;
+            private Hl7.Fhir.Model.DataType _Topic;
             
             /// <summary>
             /// Contract Term Type or Form
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
                     if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Period)Applies.DeepCopy();
-                    if(Topic != null) dest.Topic = (Hl7.Fhir.Model.Element)Topic.DeepCopy();
+                    if(Topic != null) dest.Topic = (Hl7.Fhir.Model.DataType)Topic.DeepCopy();
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(SubType != null) dest.SubType = (Hl7.Fhir.Model.CodeableConcept)SubType.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SecurityLabelComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.securityLabel", IsNestedType=true)]
         [DataContract]
         public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractOfferComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.offer", IsNestedType=true)]
         [DataContract]
         public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractPartyComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.offer.party", IsNestedType=true)]
         [DataContract]
         public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1358,7 +1358,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.offer.answer", IsNestedType=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1372,13 +1372,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1387,7 +1387,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1444,7 +1444,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContractAssetComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.asset", IsNestedType=true)]
         [DataContract]
         public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1864,7 +1864,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AssetContextComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.asset.context", IsNestedType=true)]
         [DataContract]
         public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2004,7 +2004,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValuedItemComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.asset.valuedItem", IsNestedType=true)]
         [DataContract]
         public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2017,13 +2017,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Entity
+            public Hl7.Fhir.Model.DataType Entity
             {
                 get { return _Entity; }
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
-            private Hl7.Fhir.Model.Element _Entity;
+            private Hl7.Fhir.Model.DataType _Entity;
             
             /// <summary>
             /// Contract Valued Item Number
@@ -2333,7 +2333,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.Element)Entity.DeepCopy();
+                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.DataType)Entity.DeepCopy();
                     if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                     if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
@@ -2455,7 +2455,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2634,13 +2634,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Occurrence
+            public Hl7.Fhir.Model.DataType Occurrence
             {
                 get { return _Occurrence; }
                 set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
             }
             
-            private Hl7.Fhir.Model.Element _Occurrence;
+            private Hl7.Fhir.Model.DataType _Occurrence;
             
             /// <summary>
             /// Who asked for action
@@ -2919,7 +2919,7 @@ namespace Hl7.Fhir.Model
                     if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                     if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                     if(ContextLinkIdElement != null) dest.ContextLinkIdElement = new List<Hl7.Fhir.Model.FhirString>(ContextLinkIdElement.DeepCopy());
-                    if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
+                    if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
                     if(Requester != null) dest.Requester = new List<Hl7.Fhir.Model.ResourceReference>(Requester.DeepCopy());
                     if(RequesterLinkIdElement != null) dest.RequesterLinkIdElement = new List<Hl7.Fhir.Model.FhirString>(RequesterLinkIdElement.DeepCopy());
                     if(PerformerType != null) dest.PerformerType = new List<Hl7.Fhir.Model.CodeableConcept>(PerformerType.DeepCopy());
@@ -3068,7 +3068,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionSubjectComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.term.action.subject", IsNestedType=true)]
         [DataContract]
         public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3172,7 +3172,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SignatoryComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.signer", IsNestedType=true)]
         [DataContract]
         public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3296,7 +3296,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FriendlyLanguageComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.friendly", IsNestedType=true)]
         [DataContract]
         public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3310,13 +3310,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Content
+            public Hl7.Fhir.Model.DataType Content
             {
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.Element _Content;
+            private Hl7.Fhir.Model.DataType _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -3325,7 +3325,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
                     return dest;
                 }
                 else
@@ -3382,7 +3382,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LegalLanguageComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.legal", IsNestedType=true)]
         [DataContract]
         public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3396,13 +3396,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Content
+            public Hl7.Fhir.Model.DataType Content
             {
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.Element _Content;
+            private Hl7.Fhir.Model.DataType _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -3411,7 +3411,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
                     return dest;
                 }
                 else
@@ -3468,7 +3468,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComputableLanguageComponent", NamedBackboneElement=true)]
+        [FhirType("Contract#Contract.rule", IsNestedType=true)]
         [DataContract]
         public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3482,13 +3482,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Content
+            public Hl7.Fhir.Model.DataType Content
             {
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.Element _Content;
+            private Hl7.Fhir.Model.DataType _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -3497,7 +3497,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
                     return dest;
                 }
                 else
@@ -4014,13 +4014,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Topic
+        public Hl7.Fhir.Model.DataType Topic
         {
             get { return _Topic; }
             set { _Topic = value; OnPropertyChanged("Topic"); }
         }
         
-        private Hl7.Fhir.Model.Element _Topic;
+        private Hl7.Fhir.Model.DataType _Topic;
         
         /// <summary>
         /// Legal instrument category
@@ -4171,13 +4171,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element LegallyBinding
+        public Hl7.Fhir.Model.DataType LegallyBinding
         {
             get { return _LegallyBinding; }
             set { _LegallyBinding = value; OnPropertyChanged("LegallyBinding"); }
         }
         
-        private Hl7.Fhir.Model.Element _LegallyBinding;
+        private Hl7.Fhir.Model.DataType _LegallyBinding;
         
 
 
@@ -4209,7 +4209,7 @@ namespace Hl7.Fhir.Model
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Scope != null) dest.Scope = (Hl7.Fhir.Model.CodeableConcept)Scope.DeepCopy();
-                if(Topic != null) dest.Topic = (Hl7.Fhir.Model.Element)Topic.DeepCopy();
+                if(Topic != null) dest.Topic = (Hl7.Fhir.Model.DataType)Topic.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(SubType != null) dest.SubType = new List<Hl7.Fhir.Model.CodeableConcept>(SubType.DeepCopy());
                 if(ContentDefinition != null) dest.ContentDefinition = (Hl7.Fhir.Model.Contract.ContentDefinitionComponent)ContentDefinition.DeepCopy();
@@ -4220,7 +4220,7 @@ namespace Hl7.Fhir.Model
                 if(Friendly != null) dest.Friendly = new List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent>(Friendly.DeepCopy());
                 if(Legal != null) dest.Legal = new List<Hl7.Fhir.Model.Contract.LegalLanguageComponent>(Legal.DeepCopy());
                 if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent>(Rule.DeepCopy());
-                if(LegallyBinding != null) dest.LegallyBinding = (Hl7.Fhir.Model.Element)LegallyBinding.DeepCopy();
+                if(LegallyBinding != null) dest.LegallyBinding = (Hl7.Fhir.Model.DataType)LegallyBinding.DeepCopy();
                 return dest;
             }
             else

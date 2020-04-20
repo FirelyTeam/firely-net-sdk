@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Tests.Model
             // Verify that ModelInfo.IsPrimitive overloads returns true for all types derived from Primitive
             foreach (var type in FhirCsTypes)
             {
-                var isPrimitive = type.CanBeTreatedAsType(typeof(Primitive));
+                var isPrimitive = type.CanBeTreatedAsType(typeof(PrimitiveType));
                 var typeName = ModelInfo.GetFhirTypeNameForType(type);
                 Assert.IsNotNull(typeName);
                 var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Tests.Model
                 var isDataType =
                     type == typeof(Resource)
                     || type == typeof(DomainResource)
-                    || (type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(Primitive)));
+                    || (type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(PrimitiveType)));
                 var typeName = ModelInfo.GetFhirTypeNameForType(type);
                 Assert.IsNotNull(typeName);
                 var typeFlag = ModelInfo.FhirTypeNameToFhirType(typeName);

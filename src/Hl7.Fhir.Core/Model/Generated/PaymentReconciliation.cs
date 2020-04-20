@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "PaymentReconciliation"; } }
         
-        [FhirType("DetailsComponent", NamedBackboneElement=true)]
+        [FhirType("PaymentReconciliation#PaymentReconciliation.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NotesComponent", NamedBackboneElement=true)]
+        [FhirType("PaymentReconciliation#PaymentReconciliation.processNote", IsNestedType=true)]
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
         {

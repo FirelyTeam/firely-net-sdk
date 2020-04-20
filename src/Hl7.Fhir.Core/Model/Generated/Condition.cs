@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Condition"; } }
         
-        [FhirType("StageComponent", NamedBackboneElement=true)]
+        [FhirType("Condition#Condition.stage", IsNestedType=true)]
         [DataContract]
         public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EvidenceComponent", NamedBackboneElement=true)]
+        [FhirType("Condition#Condition.evidence", IsNestedType=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -411,13 +411,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Onset
+        public Hl7.Fhir.Model.DataType Onset
         {
             get { return _Onset; }
             set { _Onset = value; OnPropertyChanged("Onset"); }
         }
         
-        private Hl7.Fhir.Model.Element _Onset;
+        private Hl7.Fhir.Model.DataType _Onset;
         
         /// <summary>
         /// When in resolution/remission
@@ -426,13 +426,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Abatement
+        public Hl7.Fhir.Model.DataType Abatement
         {
             get { return _Abatement; }
             set { _Abatement = value; OnPropertyChanged("Abatement"); }
         }
         
-        private Hl7.Fhir.Model.Element _Abatement;
+        private Hl7.Fhir.Model.DataType _Abatement;
         
         /// <summary>
         /// Date record was first recorded
@@ -555,8 +555,8 @@ namespace Hl7.Fhir.Model
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
-                if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.Element)Abatement.DeepCopy();
+                if(Onset != null) dest.Onset = (Hl7.Fhir.Model.DataType)Onset.DeepCopy();
+                if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.DataType)Abatement.DeepCopy();
                 if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
                 if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();

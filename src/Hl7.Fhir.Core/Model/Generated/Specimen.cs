@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CollectionComponent", NamedBackboneElement=true)]
+        [FhirType("Specimen#Specimen.collection", IsNestedType=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Collected
+            public Hl7.Fhir.Model.DataType Collected
             {
                 get { return _Collected; }
                 set { _Collected = value; OnPropertyChanged("Collected"); }
             }
             
-            private Hl7.Fhir.Model.Element _Collected;
+            private Hl7.Fhir.Model.DataType _Collected;
             
             /// <summary>
             /// How long it took to collect specimen
@@ -180,13 +180,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Duration))]
             [DataMember]
-            public Hl7.Fhir.Model.Element FastingStatus
+            public Hl7.Fhir.Model.DataType FastingStatus
             {
                 get { return _FastingStatus; }
                 set { _FastingStatus = value; OnPropertyChanged("FastingStatus"); }
             }
             
-            private Hl7.Fhir.Model.Element _FastingStatus;
+            private Hl7.Fhir.Model.DataType _FastingStatus;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -196,12 +196,12 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
-                    if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
+                    if(Collected != null) dest.Collected = (Hl7.Fhir.Model.DataType)Collected.DeepCopy();
                     if(Duration != null) dest.Duration = (Duration)Duration.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
-                    if(FastingStatus != null) dest.FastingStatus = (Hl7.Fhir.Model.Element)FastingStatus.DeepCopy();
+                    if(FastingStatus != null) dest.FastingStatus = (Hl7.Fhir.Model.DataType)FastingStatus.DeepCopy();
                     return dest;
                 }
                 else
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent", NamedBackboneElement=true)]
+        [FhirType("Specimen#Specimen.processing", IsNestedType=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -355,13 +355,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Time
+            public Hl7.Fhir.Model.DataType Time
             {
                 get { return _Time; }
                 set { _Time = value; OnPropertyChanged("Time"); }
             }
             
-            private Hl7.Fhir.Model.Element _Time;
+            private Hl7.Fhir.Model.DataType _Time;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
                     if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.ResourceReference>(Additive.DeepCopy());
-                    if(Time != null) dest.Time = (Hl7.Fhir.Model.Element)Time.DeepCopy();
+                    if(Time != null) dest.Time = (Hl7.Fhir.Model.DataType)Time.DeepCopy();
                     return dest;
                 }
                 else
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerComponent", NamedBackboneElement=true)]
+        [FhirType("Specimen#Specimen.container", IsNestedType=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -539,13 +539,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Additive
+            public Hl7.Fhir.Model.DataType Additive
             {
                 get { return _Additive; }
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
-            private Hl7.Fhir.Model.Element _Additive;
+            private Hl7.Fhir.Model.DataType _Additive;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.Quantity)Capacity.DeepCopy();
                     if(SpecimenQuantity != null) dest.SpecimenQuantity = (Hl7.Fhir.Model.Quantity)SpecimenQuantity.DeepCopy();
-                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.Element)Additive.DeepCopy();
+                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.DataType)Additive.DeepCopy();
                     return dest;
                 }
                 else

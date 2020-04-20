@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             Withdrawn,
         }
 
-        [FhirType("ArmComponent", NamedBackboneElement=true)]
+        [FhirType("ResearchStudy#ResearchStudy.arm", IsNestedType=true)]
         [DataContract]
         public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObjectiveComponent", NamedBackboneElement=true)]
+        [FhirType("ResearchStudy#ResearchStudy.objective", IsNestedType=true)]
         [DataContract]
         public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
         {

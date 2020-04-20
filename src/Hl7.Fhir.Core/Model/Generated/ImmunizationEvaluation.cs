@@ -308,13 +308,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element DoseNumber
+        public Hl7.Fhir.Model.DataType DoseNumber
         {
             get { return _DoseNumber; }
             set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
         }
         
-        private Hl7.Fhir.Model.Element _DoseNumber;
+        private Hl7.Fhir.Model.DataType _DoseNumber;
         
         /// <summary>
         /// Recommended number of doses for immunity
@@ -323,13 +323,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element SeriesDoses
+        public Hl7.Fhir.Model.DataType SeriesDoses
         {
             get { return _SeriesDoses; }
             set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
         }
         
-        private Hl7.Fhir.Model.Element _SeriesDoses;
+        private Hl7.Fhir.Model.DataType _SeriesDoses;
         
 
 
@@ -351,8 +351,8 @@ namespace Hl7.Fhir.Model
                 if(DoseStatusReason != null) dest.DoseStatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(DoseStatusReason.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-                if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
-                if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
+                if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.DataType)DoseNumber.DeepCopy();
+                if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.DataType)SeriesDoses.DeepCopy();
                 return dest;
             }
             else

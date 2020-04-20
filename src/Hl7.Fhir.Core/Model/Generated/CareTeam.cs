@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
+        [FhirType("CareTeam#CareTeam.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
