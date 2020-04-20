@@ -8,8 +8,8 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class FallbackTerminologyService : ITerminologyService
     {
-        private LocalTerminologyService _localService;
-        private ITerminologyService _fallbackService;
+        private readonly LocalTerminologyService _localService;
+        private readonly ITerminologyService _fallbackService;
 
         public FallbackTerminologyService(LocalTerminologyService local, ITerminologyService fallback)
         {
@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Terminology
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
             string code = null, string system = null, string version = null, string display = null, 
             Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
-            bool? @abstract = default(bool?), string displayLanguage = null)
+            bool? @abstract = default, string displayLanguage = null)
         {
 
             try

@@ -21,6 +21,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type. (these are not Canonical Uris)</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
+        /// <remarks>The returned uris are the physical uris for the resources, not the canonical uris.</remarks>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
         /// <summary>

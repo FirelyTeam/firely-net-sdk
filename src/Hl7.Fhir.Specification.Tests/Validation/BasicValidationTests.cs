@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
+using T = System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
 
@@ -22,13 +23,16 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
     {
-        private IResourceResolver _source;
+        private readonly IResourceResolver _source;
+        private readonly IAsyncResourceResolver _asyncSource;
+
         private Validator _validator;
         private readonly Xunit.Abstractions.ITestOutputHelper output;
 
         public BasicValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
         {
             _source = fixture.Resolver;
+            _asyncSource = fixture.AsyncResolver;
             _validator = fixture.Validator;
             this.output = output;
 
@@ -37,7 +41,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         //[TestInitialize]
-        //public void SetupSource()
+        //public async T.Task SetupSource()
         //{
         //    // Ensure the FHIR extensions are registered
         //    FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
@@ -63,9 +67,9 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void TestEmptyElement()
+        public async T.Task TestEmptyElement()
         {
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var data = SourceNode.Node("active").ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
             var result = _validator.Validate(data, boolSd);
@@ -88,9 +92,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void PrimitiveChildMatching()
+        public async T.Task PrimitiveChildMatching()
         {
-            var boolean = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var boolean = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
@@ -115,9 +119,9 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void ValidatePrimitiveValue()
+        public async T.Task ValidatePrimitiveValue()
         {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
+            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Oid);
 
             var instance = new Oid("urn:oid:1.2.3.4.q");
             var report = _validator.Validate(instance, def);
@@ -136,9 +140,9 @@ namespace Hl7.Fhir.Specification.Tests
         /// This unit test proves issue 552: https://github.com/FirelyTeam/fhir-net-api/issues/552
         /// </summary>
         [Fact]
-        public void ValidateOidType()
+        public async T.Task ValidateOidType()
         {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
+            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Oid);
 
             var instance = new Oid("urn:oid:213.2.840.113674.514.212.200");
             var report = _validator.Validate(instance, def);
@@ -153,10 +157,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Warnings);
         }
 
-        [Fact(Skip = "After TC 4.0.1, this unit test fails (2 x ext-1 errors). I have no clue why. [MV 20191217]")]
-        public void ValidateCardinality()
+        //[Fact(Skip = "After TC 4.0.1, this unit test fails (2 x ext-1 errors). I have no clue why. [MV 20191217]")]
+        [Fact]
+        public async T.Task ValidateCardinality()
         {
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var data = SourceNode.Valued("active", "true",
                         SourceNode.Valued("id", "myId1"),
                         SourceNode.Valued("id", "myId2"),
@@ -174,9 +179,9 @@ namespace Hl7.Fhir.Specification.Tests
 
         //We've had issues where both boolean.extension and extension throw the same error of an invariant. This checks if all errors are reported just once
         [Fact]
-        public void TestDuplicateValidationMessages()
+        public async T.Task TestDuplicateValidationMessages()
         {
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var data = SourceNode.Valued("active", "true",
                           SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor")))
                        .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
@@ -221,13 +226,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ValidateCardinalityFromXml()
+        public async T.Task ValidateCardinalityFromXml()
         {
             var xml = "<active xmlns=\"http://hl7.org/fhir\" value=\"true\"><id value=\"myId1\"/><id value=\"myId2\"/><extension><valueInteger value=\"1\"/></extension></active>";
             var node = FhirXmlNode.Parse(xml);
             var data = node.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
+            var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
 
             var report = _validator.Validate(data, boolSd);
             output.WriteLine(report.ToString());
@@ -237,9 +242,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ValidateChoiceElement()
+        public async T.Task ValidateChoiceElement()
         {
-            var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension).DeepCopy();
+            var extensionSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Extension)).DeepCopy();
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
 
@@ -266,9 +271,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void AutoGeneratesDifferential()
+        public async T.Task AutoGeneratesDifferential()
         {
-            var identifierBsn = (StructureDefinition)_source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN").DeepCopy();
+            var identifierBsn = (StructureDefinition)(await _asyncSource.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")).DeepCopy();
             Assert.NotNull(identifierBsn);
             identifierBsn.Snapshot = null;
 
@@ -300,9 +305,9 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void ValidatesFixedValue()
+        public async T.Task ValidatesFixedValue()
         {
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
+            var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
             {
@@ -338,12 +343,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ValidatesPatternValue()
+        public async T.Task ValidatesPatternValue()
         {
             // [WMR 20170727] Fixed
             // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
             // Instead, clone the core def and modify the clone
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
+            var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
 
             var instance1 = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "U");
 
@@ -598,13 +603,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ValidateContained()
+        public async T.Task ValidateContained()
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
-            var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
+            var careplanSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
             if (!report.Success)
             {
@@ -629,7 +634,7 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Start();
             for (var i = 0; i < 10000; i++)
             {
-                var x = (Questionnaire)questionnaire.DeepCopy();
+                _ = (Questionnaire)questionnaire.DeepCopy();
             }
             sw.Stop();
 
@@ -923,11 +928,27 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.DoesNotContain("Encountered unknown child elements 'timestamp'", report.ToString());
         }
 
+        [Fact]
+        public async T.Task ValidateAStructureDefinition()
+        {
+            var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            var result = _validator.Validate(sd);
+            Assert.True(result.Success);
+        }
 
         [Fact]
-        public void ValidateAStructureDefinition()
+        public async T.Task TriggerEscapingValidationError()
         {
-            var sd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
+            // This unit-test is here to trigger because of an escaping mistake in the FHIR spec 3.0.1.
+            // The cause is the escaped \\_ character in eld-16. I have manually corrected profiles-types.xml
+            // in the /data directory for this invariant, so this unit-test will normally pass.
+            // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
+            // still contains this mistake.
+            // [MV 20191217] Still with the FHIR spec 3.0.2 this problem arises. I have manually corrected profiles-types.xml
+            // again.
+            var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            sd.Snapshot.Element[0].SliceName = "dummy";
+
             var result = _validator.Validate(sd);
             Assert.True(result.Success);
         }
@@ -937,7 +958,7 @@ namespace Hl7.Fhir.Specification.Tests
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
         // Example: Organization.partOf => Organization
         [Fact(Skip = "Don't handle recursion yet")]
-        public void TestPatientWithOrganization()
+        public async T.Task TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...
             // var source = new DirectorySource(Path.Combine("TestData", "validation"));
@@ -992,7 +1013,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // To check for ele-1 constraints on expanded Patient snapshot:
             // source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).Snapshot.Element.Select(e=>e.Path + " : " + e.Constraint.FirstOrDefault()?.Key ?? "").ToArray()
-            var patientStructDef = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            var patientStructDef = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
             Assert.NotNull(patientStructDef);
             Assert.True(patientStructDef.HasSnapshot);
             assertElementConstraints(patientStructDef.Snapshot.Element);
@@ -1078,17 +1099,18 @@ namespace Hl7.Fhir.Specification.Tests
         /// incorrect in DSTU2 and STU3), but others are not.
         /// </summary>
         [Fact]
-        public void IgnoreRng2FPConstraint()
-        {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+        public async T.Task IgnoreRng2FPConstraint()
+        {           
+            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
 
-            var instance = new Observation();
-
-            // this should not trigger rng-2
-            instance.Value = new Range()
+            var instance = new Observation
             {
-                Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
-                High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
+                // this should not trigger rng-2
+                Value = new Range()
+                {
+                    Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
+                    High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
+                }
             };
 
             var report = _validator.Validate(instance, def);
@@ -1129,7 +1151,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ValidateContainedPatient()
+        public async T.Task ValidateContainedPatient()
         {
             var content = "<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"3b405ba5f8ce411fa7f285beb20de018\" /><text><status value=\"generated\" /><div xmlns=\"http://www.w3.org/1999/xhtml\"><b>Cococinski, Ms Natalia</b><hr /><span style=\"color: gray;\">address home:</span> 121 Cadles Road, CARRUM DOWNS, 3201<br /><span style=\"color: gray;\">dob:</span> 30/04/1930<br /><span style=\"color: gray;\">gender:</span> Female<br /><span style=\"color: gray;\">home phone:</span> 9782 9999<br /><span style=\"color: gray;\">urno:</span> 88365<br /><span style=\"color: gray;\">managing organisation:</span> Banksia Respite Centre <i style=\"color:blue;\">(TCM)</i></div></text><identifier><use value=\"usual\" /><value value=\"88365\" /></identifier><active value=\"true\" /><name><text value=\"Cococinski, Ms Natalia\" /><family value=\"Cococinski\" /><given value=\"Natalia\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><gender value=\"female\" /><birthDate value=\"1930-04-30\" /><address><use value=\"home\" /><text value=\"99 Cadles Road, CARRUM DOWNS, 3201\" /><line value=\"99 Cadles Road\" /><city value=\"CARRUM DOWNS\" /><state value=\"Victoria\" /><postalCode value=\"3201\" /><period><start value=\"2006-06-16\" /></period></address><contact><name><text value=\"Sutcliffe, Ms Pat\" /><family value=\"Sutcliffe\" /><given value=\"Pat\" /></name><telecom><system value=\"phone\" /><value value=\"9784 8800\" /><use value=\"home\" /></telecom></contact><contact><name><text value=\"Cococinski, Ms Erica\" /><family value=\"Cococinski\" /><given value=\"Erica\" /></name><telecom><system value=\"phone\" /><value value=\"9782 9999\" /><use value=\"home\" /></telecom><telecom><system value=\"phone\" /><value value=\"9609 9999\" /><use value=\"work\" /></telecom></contact><managingOrganization id=\"5d3eb74c957411d2b2740020182a459e\"><reference value=\"Organization/54d83d08e01d43738d1eab06d2223629\" /><display value=\"tcmdemo fhir (Brian - CTH)\" /></managingOrganization></Patient>";
 
@@ -1147,7 +1169,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
             p.MaritalStatus.Coding.Add(new Coding() { Code = "c", Display = "display", System = "http://example.org/system" });
 
-            var patientSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            var patientSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
             var report = _validator.Validate(p, patientSd);
             Assert.True(report.Success);
             Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
@@ -1178,7 +1200,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class ClearSnapshotResolver : IResourceResolver
         {
-            private IResourceResolver _resolver;
+            private readonly IResourceResolver _resolver;
             public ClearSnapshotResolver(IResourceResolver resolver)
             {
                 _resolver = resolver;

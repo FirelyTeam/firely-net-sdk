@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -363,7 +364,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <summary>Run all tests</summary>
         [Ignore]
         [TestMethod]
-        public void TestManifest()
+        public async T.Task TestManifest()
         {
             var tests = _manifest.Test;
             Console.WriteLine($"Executing #{tests.Length} tests:");
@@ -371,28 +372,28 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var test = tests[i];
                 Console.WriteLine($"Executing test {i + 1} of {tests.Length}: {test.Id}");
-                ExecuteTest(test);
+                await ExecuteTest(test);
             }
         }
 
         // Individual test methods per test
 
-        [TestMethod] public void Test_t01() => ExecuteTest("t1");
-        [TestMethod] public void Test_t02() => ExecuteTest("t2");
-        [TestMethod] public void Test_t03() => ExecuteTest("t3");
-        [TestMethod] public void Test_t04() => ExecuteTest("t4");
-        [TestMethod] public void Test_t04a() => ExecuteTest("t4a");
-        [TestMethod] public void Test_t05() => ExecuteTest("t5");
-        [TestMethod] public void Test_t06() => ExecuteTest("t6");
-        [TestMethod] public void Test_t07() => ExecuteTest("t7");
-        [TestMethod] public void Test_t08() => ExecuteTest("t8");
-        [TestMethod] public void Test_t09() => ExecuteTest("t9");
-        [TestMethod] public void Test_t10() => ExecuteTest("t10");
-        [TestMethod] public void Test_t11() => ExecuteTest("t11");
-        [TestMethod] public void Test_t12() => ExecuteTest("t12");
-        [TestMethod] public void Test_t12a() => ExecuteTest("t12a");
-        [TestMethod] public void Test_t13() => ExecuteTest("t13");
-        [TestMethod] public void Test_t14() => ExecuteTest("t14");
+        [TestMethod] public async T.Task Test_t01() => await ExecuteTest("t1");
+        [TestMethod] public async T.Task Test_t02() => await ExecuteTest("t2");
+        [TestMethod] public async T.Task Test_t03() => await ExecuteTest("t3");
+        [TestMethod] public async T.Task Test_t04() => await ExecuteTest("t4");
+        [TestMethod] public async T.Task Test_t04a() => await ExecuteTest("t4a");
+        [TestMethod] public async T.Task Test_t05() => await ExecuteTest("t5");
+        [TestMethod] public async T.Task Test_t06() => await ExecuteTest("t6");
+        [TestMethod] public async T.Task Test_t07() => await ExecuteTest("t7");
+        [TestMethod] public async T.Task Test_t08() => await ExecuteTest("t8");
+        [TestMethod] public async T.Task Test_t09() => await ExecuteTest("t9");
+        [TestMethod] public async T.Task Test_t10() => await ExecuteTest("t10");
+        [TestMethod] public async T.Task Test_t11() => await ExecuteTest("t11");
+        [TestMethod] public async T.Task Test_t12() => await ExecuteTest("t12");
+        [TestMethod] public async T.Task Test_t12a() => await ExecuteTest("t12a");
+        [TestMethod] public async T.Task Test_t13() => await ExecuteTest("t13");
+        [TestMethod] public async T.Task Test_t14() => await ExecuteTest("t14");
 
         // FAILS - FIXED
         // Input specifies:
@@ -405,7 +406,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Note: generated is correct, expected is incorrect
         // SnapGen SHOULD emit [x] element
         // TODO: SnapGen should also emit <slicing> node on type sliced [x] element
-        [TestMethod] public void Test_t15() => ExecuteTest("t15");
+        [TestMethod] public async T.Task Test_t15() => await ExecuteTest("t15");
 
         // FAILS - FIXED
         // Input specifies:
@@ -422,123 +423,123 @@ namespace Hl7.Fhir.Specification.Tests
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.value[x]
         // - (2x) Patient.address.extension.extension.valueDecimal.extension.valueString
         // -      Patient.address.extension 'ISO-AddressUse'
-        [TestMethod] public void Test_t16() => ExecuteTest("t16");
+        [TestMethod] public async T.Task Test_t16() => await ExecuteTest("t16");
 
-        [TestMethod] public void Test_t17() => ExecuteTest("t17");
-        [TestMethod] public void Test_t18() => ExecuteTest("t18");
-        [TestMethod] public void Test_t19() => ExecuteTest("t19");
-        //[TestMethod] public void Test_t20() => ExecuteTest("t20");
-        [TestMethod] public void Test_t21() => ExecuteTest("t21");
+        [TestMethod] public async T.Task Test_t17() => await ExecuteTest("t17");
+        [TestMethod] public async T.Task Test_t18() => await ExecuteTest("t18");
+        [TestMethod] public async T.Task Test_t19() => await ExecuteTest("t19");
+        //[TestMethod] public async T.Task Test_t20() => await ExecuteTest("t20");
+        [TestMethod] public async T.Task Test_t21() => await ExecuteTest("t21");
 
         // FAILS - FIXED
         // Expected output expands 'validDate' extensions
         // 3 x 4 = 12 elements (.id, .extension, .url, .valueDateTime)
         // Generated output does NOT expand extension children
         // Note: profile does not constrain extension child elements, so why expand?
-        [TestMethod] public void Test_t22() => ExecuteTest("t22");
+        [TestMethod] public async T.Task Test_t22() => await ExecuteTest("t22");
 
         // FAILS - FIXED
-        [TestMethod] public void Test_t23() => ExecuteTest("t23");
-        //[TestMethod] public void Test_t23a() => ExecuteTest("t23a");
+        [TestMethod] public async T.Task Test_t23() => await ExecuteTest("t23");
+        //[TestMethod] public async T.Task Test_t23a() => await ExecuteTest("t23a");
 
-        //[TestMethod] public void Test_t24() => ExecuteTest("t24");
-        [TestMethod] public void Test_t24a() => ExecuteTest("t24a");
-        [TestMethod] public void Test_t24b() => ExecuteTest("t24b");
+        //[TestMethod] public async T.Task Test_t24() => await ExecuteTest("t24");
+        [TestMethod] public async T.Task Test_t24a() => await ExecuteTest("t24a");
+        [TestMethod] public async T.Task Test_t24b() => await ExecuteTest("t24b");
 
-        //[TestMethod] public void Test_t25() => ExecuteTest("t25");
+        //[TestMethod] public async T.Task Test_t25() => await ExecuteTest("t25");
 
         // FAILS!
         // [WMR 20190814] t26-input and t26-expected are exactly equal, only specify differential...?
-        [TestMethod, Ignore] public void Test_t26() => ExecuteTest("t26");
+        [TestMethod, Ignore] public async T.Task Test_t26() => await ExecuteTest("t26");
 
-        [TestMethod] public void Test_t27() => ExecuteTest("t27");
+        [TestMethod] public async T.Task Test_t27() => await ExecuteTest("t27");
 
         // [WMR 20190814] Fix invalid snapshot, esp. nested extension 'language'
         // Differential: OperationOutcome.issue.details.text.extension.valueString.extension
         // Snapshot:     OperationOutcome.issue.details.text.extension.extension - WRONG!!!
         // [WMR 20190819] Fixed, SnapGen now auto-generates slice name for implicit type slice "valueString"
-        [TestMethod] public void Test_t28() => ExecuteTest("t28");
+        [TestMethod] public async T.Task Test_t28() => await ExecuteTest("t28");
 
         // FAILS - FIXED
         // Fix StructureDefinition.type = "OperationOutcome" ?! => Should be "Parameters"
-        [TestMethod] public void Test_t29() => ExecuteTest("t29");
+        [TestMethod] public async T.Task Test_t29() => await ExecuteTest("t29");
 
-        [TestMethod] public void Test_t29a() => ExecuteTest("t29a");
-        //[TestMethod] public void Test_t30() => ExecuteTest("t30");
-        [TestMethod] public void Test_t30b() => ExecuteTest("t30b");
-        [TestMethod] public void Test_t31() => ExecuteTest("t31");
-        [TestMethod] public void Test_t32() => ExecuteTest("t32");
-        [TestMethod] public void Test_t33() => ExecuteTest("t33");
-        [TestMethod] public void Test_t34() => ExecuteTest("t34");
-        [TestMethod] public void Test_t35() => ExecuteTest("t35");
-        [TestMethod] public void Test_t36() => ExecuteTest("t36");
+        [TestMethod] public async T.Task Test_t29a() => await ExecuteTest("t29a");
+        //[TestMethod] public async T.Task Test_t30() => await ExecuteTest("t30");
+        [TestMethod] public async T.Task Test_t30b() => await ExecuteTest("t30b");
+        [TestMethod] public async T.Task Test_t31() => await ExecuteTest("t31");
+        [TestMethod] public async T.Task Test_t32() => await ExecuteTest("t32");
+        [TestMethod] public async T.Task Test_t33() => await ExecuteTest("t33");
+        [TestMethod] public async T.Task Test_t34() => await ExecuteTest("t34");
+        [TestMethod] public async T.Task Test_t35() => await ExecuteTest("t35");
+        [TestMethod] public async T.Task Test_t36() => await ExecuteTest("t36");
 
         // FAILS! TODO
         // Typo in element path: "MedicationRequiest.dosageInstruction.timing.event"
         // Note: "MedicationRequiest" should be "MedicationRequest"
         // SnapGen throws exception WRONG! should report OperationOutcome issue
-        [TestMethod] public void Test_t37() => ExecuteTest("t37");
+        [TestMethod] public async T.Task Test_t37() => await ExecuteTest("t37");
 
-        [TestMethod] public void Test_t38() => ExecuteTest("t38");
-        //[TestMethod] public void Test_t39() => ExecuteTest("t39");
-        [TestMethod] public void Test_t40() => ExecuteTest("t40");
-        [TestMethod] public void Test_t41() => ExecuteTest("t41");
-        [TestMethod] public void Test_t42() => ExecuteTest("t42");
+        [TestMethod] public async T.Task Test_t38() => await ExecuteTest("t38");
+        //[TestMethod] public async T.Task Test_t39() => await ExecuteTest("t39");
+        [TestMethod] public async T.Task Test_t40() => await ExecuteTest("t40");
+        [TestMethod] public async T.Task Test_t41() => await ExecuteTest("t41");
+        [TestMethod] public async T.Task Test_t42() => await ExecuteTest("t42");
 
         // FAILS! TODO
-        [TestMethod] public void Test_t43() => ExecuteTest("t43");
+        [TestMethod] public async T.Task Test_t43() => await ExecuteTest("t43");
 
 
-        //[TestMethod] public void Test_t43a() => ExecuteTest("t43a");
+        //[TestMethod] public async T.Task Test_t43a() => await ExecuteTest("t43a");
 
         // Rename element implies type constraint
         // e.g. "valueQuantity" w/o type constraints implies type = Quantity
-        [TestMethod] public void Test_t44() => ExecuteTest("t44");
+        [TestMethod] public async T.Task Test_t44() => await ExecuteTest("t44");
 
-        [TestMethod] public void Test_t45() => ExecuteTest("t45");
-        [TestMethod] public void Test_samply1() => ExecuteTest("samply1");
-        //[TestMethod] public void Test_au1() => ExecuteTest("au1");
-        [TestMethod] public void Test_au2() => ExecuteTest("au2");
+        [TestMethod] public async T.Task Test_t45() => await ExecuteTest("t45");
+        [TestMethod] public async T.Task Test_samply1() => await ExecuteTest("samply1");
+        //[TestMethod] public async T.Task Test_au1() => await ExecuteTest("au1");
+        [TestMethod] public async T.Task Test_au2() => await ExecuteTest("au2");
 
         // FAILS: System.FormatException
         // Type checking the data: Encountered unknown element 'valueSetReference' at location
         // 'StructureDefinition.differential[0].element[2].binding[0].valueSetReference[0]' while parsing
         // STU3: ElementDefinition.binding.valueSet[x] : { Uri, Reference }
         // R4:   ElementDefinition.binding.valueSet    : Canonical
-        [TestMethod] public void Test_au3() => ExecuteTest("au3");
+        [TestMethod] public async T.Task Test_au3() => await ExecuteTest("au3");
 
 
-        [TestMethod] public void Test_obs1_0() => ExecuteTest("obs-1");
-        [TestMethod] public void Test_obs1_1() => ExecuteTest("obs-1-1");
+        [TestMethod] public async T.Task Test_obs1_0() => await ExecuteTest("obs-1");
+        [TestMethod] public async T.Task Test_obs1_1() => await ExecuteTest("obs-1-1");
 
         [Ignore("snapshot generation should fail: issue #1252")]
-        [TestMethod] public void Test_obs1_2() => ExecuteTest("obs-1-2");
+        [TestMethod] public async T.Task Test_obs1_2() => await ExecuteTest("obs-1-2");
 
         [Ignore("issue #1253")]
-        [TestMethod] public void Test_obs2_0() => ExecuteTest("obs-2");
+        [TestMethod] public async T.Task Test_obs2_0() => await ExecuteTest("obs-2");
         [Ignore("issue #1253")]
-        [TestMethod] public void Test_obs2_0a() => ExecuteTest("obs-2a");
+        [TestMethod] public async T.Task Test_obs2_0a() => await ExecuteTest("obs-2a");
         [Ignore("issue #1253")]
-        [TestMethod] public void Test_obs2_0b() => ExecuteTest("obs-2b");
+        [TestMethod] public async T.Task Test_obs2_0b() => await ExecuteTest("obs-2b");
         
-        [TestMethod] public void Test_obs2_1() => ExecuteTest("obs-2-1");
-        [TestMethod] public void Test_obs2_2() => ExecuteTest("obs-2-2");
+        [TestMethod] public async T.Task Test_obs2_1() => await ExecuteTest("obs-2-1");
+        [TestMethod] public async T.Task Test_obs2_2() => await ExecuteTest("obs-2-2");
 
         [Ignore("issue #1254")]
-        [TestMethod] public void Test_obs2_3() => ExecuteTest("obs-2-3");
+        [TestMethod] public async T.Task Test_obs2_3() => await ExecuteTest("obs-2-3");
         [Ignore("issue #1254")]
-        [TestMethod] public void Test_obs3_0() => ExecuteTest("obs-3");
+        [TestMethod] public async T.Task Test_obs3_0() => await ExecuteTest("obs-3");
        
         [Ignore("issue #1255")]
-        [TestMethod] public void Test_obs4_0() => ExecuteTest("obs-4");
+        [TestMethod] public async T.Task Test_obs4_0() => await ExecuteTest("obs-4");
         
         [Ignore("issue #1256")]
-        [TestMethod] public void Test_obs5_0() => ExecuteTest("obs-5");
+        [TestMethod] public async T.Task Test_obs5_0() => await ExecuteTest("obs-5");
 
 
-        void ExecuteTest(string id) => ExecuteTest(_manifest.Test.FirstOrDefault(t => t.Id == id));
+        async T.Task ExecuteTest(string id) => await ExecuteTest(_manifest.Test.FirstOrDefault(t => t.Id == id));
 
-        void ExecuteTest(SnapshotGenerationManifestTest test)
+        async T.Task ExecuteTest(SnapshotGenerationManifestTest test)
         {
             Console.WriteLine($"Executing test: {test.Id}");
 
@@ -556,7 +557,7 @@ namespace Hl7.Fhir.Specification.Tests
             Exception exception = null;
             try
             {
-                _snapGen.Update(output);
+                await _snapGen.UpdateAsync(output);
             }
             catch (Exception ex)
             {
@@ -754,24 +755,24 @@ namespace Hl7.Fhir.Specification.Tests
                 rule.FhirPath = fixedExpression;
             }
 
-            void UpdateElementIndices(string id, int startIndex, int delta = 1)
-            {
-                var test = manifest.Test.FirstOrDefault(t => t.Id == id);
-                Assert.IsNotNull(test);
-                foreach (var rule in test.Rule)
-                {
-                    var expression = rule.FhirPath;
-                    const string subexpression = ".snapshot.element[";
-                    var start = expression.IndexOf(subexpression) + subexpression.Length - 1;
-                    var end = expression.IndexOf("]", start + 1);
-                    var param = expression.Substring(start + 1, end - start - 1);
-                    if (int.TryParse(param, out var index) && index >= startIndex)
-                    {
-                        var newIndex = (index + delta).ToString();
-                        rule.FhirPath = expression.Substring(0, start + 1) + newIndex + expression.Substring(end);
-                    }
-                }
-            }
+            //void UpdateElementIndices(string id, int startIndex, int delta = 1)
+            //{
+            //    var test = manifest.Test.FirstOrDefault(t => t.Id == id);
+            //    Assert.IsNotNull(test);
+            //    foreach (var rule in test.Rule)
+            //    {
+            //        var expression = rule.FhirPath;
+            //        const string subexpression = ".snapshot.element[";
+            //        var start = expression.IndexOf(subexpression) + subexpression.Length - 1;
+            //        var end = expression.IndexOf("]", start + 1);
+            //        var param = expression.Substring(start + 1, end - start - 1);
+            //        if (int.TryParse(param, out var index) && index >= startIndex)
+            //        {
+            //            var newIndex = (index + delta).ToString();
+            //            rule.FhirPath = expression.Substring(0, start + 1) + newIndex + expression.Substring(end);
+            //        }
+            //    }
+            //}
 
         }
 
@@ -843,7 +844,9 @@ namespace Hl7.Fhir.Specification.Tests
                 var typeName = ModelInfo.FhirTypeToCsType.Keys.FirstOrDefault(key => StringComparer.OrdinalIgnoreCase.Equals(name, key));
                 if (!(typeName is null))
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     return TestResolver.FindStructureDefinitionForCoreType(typeName).ToTypedElement();
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
 
                 Console.WriteLine($"WARNING! Unresolved fixture: '{name}'");

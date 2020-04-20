@@ -4,6 +4,7 @@ using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -11,7 +12,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotSourceTest
     {
         [TestMethod]
-        public void TestElementSnapshot()
+        public async T.Task TestElementSnapshot()
         {
             // Request core Element snapshot; verify recursion handling
 
@@ -19,7 +20,7 @@ namespace Hl7.Fhir.Specification.Tests
             var cachedSource = new CachedResolver(orgSource);
 
             // Assumption: source provides Element structure
-            var sdCached = cachedSource.FindStructureDefinitionForCoreType(FHIRAllTypes.Element);
+            var sdCached = await cachedSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
             Assert.IsNotNull(sdCached);
             Assert.IsNotNull(sdCached.Differential);
             var elemCnt = sdCached.Differential.Element.Count;
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Important! Specify flag to force re-generation (don't trust existing core snapshots...)
             var snapSource = new SnapshotSource(cachedSource, true);
 
-            var sd = snapSource.FindStructureDefinitionForCoreType(FHIRAllTypes.Element);
+            var sd = await snapSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
             Assert.IsNotNull(sd);
             Assert.AreEqual(sdCached, sd);   // Expecting same (cached) object reference, with updated Snapshot component
             Assert.IsTrue(sd.HasSnapshot);
