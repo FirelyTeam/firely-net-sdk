@@ -935,24 +935,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = _validator.Validate(sd);
             Assert.True(result.Success);
         }
-
-        [Fact]
-        public async T.Task TriggerEscapingValidationError()
-        {
-            // This unit-test is here to trigger because of an escaping mistake in the FHIR spec 3.0.1.
-            // The cause is the escaped \\_ character in eld-16. I have manually corrected profiles-types.xml
-            // in the /data directory for this invariant, so this unit-test will normally pass.
-            // If it does not, the profiles-types.xml will have been updated/overwritten with a version that
-            // still contains this mistake.
-            // [MV 20191217] Still with the FHIR spec 3.0.2 this problem arises. I have manually corrected profiles-types.xml
-            // again.
-            var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
-            sd.Snapshot.Element[0].SliceName = "dummy";
-
-            var result = _validator.Validate(sd);
-            Assert.True(result.Success);
-        }
-
+     
         // [WMR 20161220] Example by Christiaan Knaap
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
