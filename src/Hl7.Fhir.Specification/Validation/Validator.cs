@@ -163,24 +163,6 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal class GroupedValidator : IValidatable
-        {
-            List<IValidatable> _validatables = new List<IValidatable>();
-
-            public void Add(IValidatable item)
-            {
-                _validatables.Add(item);
-            }
-
-            public Assertions Validate(ITypedElement input, ValidationContext vc)
-            {
-                //var outcome = new OperationOutcome();
-                //_validatables.ForEach(v => outcome.Add(v.Validate(input, vc)));
-                //return outcome;
-                return null;
-            }
-        }
-
         class InstanceTypeValidator
         {
             public string ExpectedInstanceName;
@@ -233,7 +215,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var schema = resolver.GetSchema(profile);
                     resolver.DumpCache();
-                    result += schema.Validate(new[] { node }, validationContext);
+                    result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
                 }
                 outcome.Add(result.ToOperationOutcome());
             }
@@ -357,52 +339,13 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            outcome.Add(this.ValidateFixed(elementConstraints, instance));
-            outcome.Add(this.ValidatePattern(elementConstraints, instance));
+            //outcome.Add(this.ValidateFixed(elementConstraints, instance));
+            //outcome.Add(this.ValidatePattern(elementConstraints, instance));
             //outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
             //outcome.Add(ValidateMaxLength(elementConstraints, instance));
-            outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
-            outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
-            outcome.Add(this.ValidateBinding(elementConstraints, instance));
-
-            // new style validator - has a configure and then execute step.
-            // will be separated when all logic has been converted.
-            var ts = Settings.TerminologyService;
-            if (ts == null)
-            {
-                if (Settings.ResourceResolver == null)
-                {
-                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
-                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
-                    return outcome;
-                }
-
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
-            }
-
-            // TODO MV: validation
-            ValidationContext vc = new ValidationContext(); // { TerminologyService = ts };
-
-            var validator = new ValidatorBuilder(vc);
-
-            if (elementConstraints.Binding != null)
-                validator.Add(elementConstraints.Binding.ToValidatable());
-            // TODO MV 20190801 Validation: this has to go to ElementSchema
-            /*
-            if (elementConstraints.MinValue != null)
-                validator.Add(elementConstraints.MinValue.ToValidatable(MinMax.MinValue));
-
-            if (elementConstraints.MaxValue != null)
-                validator.Add(elementConstraints.MaxValue.ToValidatable(MinMax.MaxValue));
-
-            if (elementConstraints.MaxLength.HasValue)
-                validator.Add(elementConstraints.ToValidatable());
-
-            if (elementConstraints.Fixed != null)
-                validator.Add(elementConstraints.ToValidatable());
-
-            outcome.Add(validator.Validate(instance));
-            */
+            //outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
+            //outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+            //outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
@@ -452,9 +395,6 @@ namespace Hl7.Fhir.Validation
                 return _fpCompiler;
             }
         }
-
-        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance) =>
-            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path) : new OperationOutcome();
 
         internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath)
         {

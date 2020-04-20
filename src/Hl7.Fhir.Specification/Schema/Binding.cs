@@ -15,6 +15,7 @@ using Hl7.Fhir.Validation.Schema;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -191,7 +192,7 @@ namespace Hl7.Fhir.Specification.Schema
             return new JProperty("binding", props);
         }
 
-        Assertions IValidatable.Validate(ITypedElement input, ValidationContext vc)
+        Task<Assertions> IValidatable.Validate(ITypedElement input, ValidationContext vc)
         {
             throw new NotImplementedException();
         }
