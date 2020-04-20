@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification
 
             var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical);
             
-            return sd == null ? 
+            return sd is null ? 
                 null 
                 : (IStructureDefinitionSummary)new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
         }
