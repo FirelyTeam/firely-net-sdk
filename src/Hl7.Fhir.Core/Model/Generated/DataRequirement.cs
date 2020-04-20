@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DataRequirement"; } }
         
-        [FhirType("CodeFilterComponent")]
+        [FhirType("DataRequirement#DataRequirement.codeFilter", IsNestedType=true)]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
         {
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DateFilterComponent")]
+        [FhirType("DataRequirement#DataRequirement.dateFilter", IsNestedType=true)]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element
         {

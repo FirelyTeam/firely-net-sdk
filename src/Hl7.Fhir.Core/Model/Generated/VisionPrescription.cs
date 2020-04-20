@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("DispenseComponent")]
+        [FhirType("VisionPrescription#VisionPrescription.dispense", IsNestedType=true)]
         [DataContract]
         public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
         {

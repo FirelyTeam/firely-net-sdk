@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ActivityComponent")]
+        [FhirType("CarePlan#CarePlan.activity", IsNestedType=true)]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("CarePlan#CarePlan.activity.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {

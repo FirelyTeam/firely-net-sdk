@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ActivityDefinition"; } }
         
-        [FhirType("ParticipantComponent")]
+        [FhirType("ActivityDefinition#ActivityDefinition.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent")]
+        [FhirType("ActivityDefinition#ActivityDefinition.dynamicValue", IsNestedType=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CoverageComponent")]
+        [FhirType("Account#Account.coverage", IsNestedType=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GuarantorComponent")]
+        [FhirType("Account#Account.guarantor", IsNestedType=true)]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             HealthUnknown,
         }
 
-        [FhirType("ConditionComponent")]
+        [FhirType("FamilyMemberHistory#FamilyMemberHistory.condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {

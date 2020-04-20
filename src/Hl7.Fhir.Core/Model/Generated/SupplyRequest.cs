@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("OrderedItemComponent")]
+        [FhirType("SupplyRequest#SupplyRequest.orderedItem", IsNestedType=true)]
         [DataContract]
         public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequesterComponent")]
+        [FhirType("SupplyRequest#SupplyRequest.requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {

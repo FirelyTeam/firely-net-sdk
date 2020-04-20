@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             Asap,
         }
 
-        [FhirType("RequesterComponent")]
+        [FhirType("MedicationRequest#MedicationRequest.requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DispenseRequestComponent")]
+        [FhirType("MedicationRequest#MedicationRequest.dispenseRequest", IsNestedType=true)]
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("MedicationRequest#MedicationRequest.substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {

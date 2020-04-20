@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Measure"; } }
         
-        [FhirType("GroupComponent")]
+        [FhirType("Measure#Measure.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent")]
+        [FhirType("Measure#Measure.group.population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent")]
+        [FhirType("Measure#Measure.group.stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementalDataComponent")]
+        [FhirType("Measure#Measure.supplementalData", IsNestedType=true)]
         [DataContract]
         public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
         {

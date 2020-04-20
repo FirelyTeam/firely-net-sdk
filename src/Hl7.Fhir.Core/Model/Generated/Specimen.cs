@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CollectionComponent")]
+        [FhirType("Specimen#Specimen.collection", IsNestedType=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent")]
+        [FhirType("Specimen#Specimen.processing", IsNestedType=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerComponent")]
+        [FhirType("Specimen#Specimen.container", IsNestedType=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {

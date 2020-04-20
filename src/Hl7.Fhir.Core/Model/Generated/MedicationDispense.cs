@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("MedicationDispense#MedicationDispense.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent")]
+        [FhirType("MedicationDispense#MedicationDispense.substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {

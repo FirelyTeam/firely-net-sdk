@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("InstanceComponent")]
+        [FhirType("Substance#Substance.instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IngredientComponent")]
+        [FhirType("Substance#Substance.ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {

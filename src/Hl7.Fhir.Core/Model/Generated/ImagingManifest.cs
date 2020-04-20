@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ImagingManifest"; } }
         
-        [FhirType("StudyComponent")]
+        [FhirType("ImagingManifest#ImagingManifest.study", IsNestedType=true)]
         [DataContract]
         public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SeriesComponent")]
+        [FhirType("ImagingManifest#ImagingManifest.study.series", IsNestedType=true)]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InstanceComponent")]
+        [FhirType("ImagingManifest#ImagingManifest.study.series.instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {

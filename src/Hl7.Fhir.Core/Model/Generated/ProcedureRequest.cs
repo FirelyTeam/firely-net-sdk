@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ProcedureRequest"; } }
         
-        [FhirType("RequesterComponent")]
+        [FhirType("ProcedureRequest#ProcedureRequest.requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {

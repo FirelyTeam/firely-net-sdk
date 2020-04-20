@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
             Cp,
         }
 
-        [FhirType("StructureComponent")]
+        [FhirType("StructureMap#StructureMap.structure", IsNestedType=true)]
         [DataContract]
         public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GroupComponent")]
+        [FhirType("StructureMap#StructureMap.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InputComponent")]
+        [FhirType("StructureMap#StructureMap.group.input", IsNestedType=true)]
         [DataContract]
         public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RuleComponent")]
+        [FhirType("StructureMap#StructureMap.group.rule", IsNestedType=true)]
         [DataContract]
         public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceComponent")]
+        [FhirType("StructureMap#StructureMap.group.rule.source", IsNestedType=true)]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1632,7 +1632,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent")]
+        [FhirType("StructureMap#StructureMap.group.rule.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1969,7 +1969,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("StructureMap#StructureMap.group.rule.target.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2055,7 +2055,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DependentComponent")]
+        [FhirType("StructureMap#StructureMap.group.rule.dependent", IsNestedType=true)]
         [DataContract]
         public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
         {

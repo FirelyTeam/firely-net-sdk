@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("IngredientComponent")]
+        [FhirType("Medication#Medication.ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackageComponent")]
+        [FhirType("Medication#Medication.package", IsNestedType=true)]
         [DataContract]
         public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContentComponent")]
+        [FhirType("Medication#Medication.package.content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BatchComponent")]
+        [FhirType("Medication#Medication.package.batch", IsNestedType=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
         {

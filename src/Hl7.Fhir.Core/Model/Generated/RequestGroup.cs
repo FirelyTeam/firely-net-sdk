@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RequestGroup"; } }
         
-        [FhirType("ActionComponent")]
+        [FhirType("RequestGroup#RequestGroup.action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionComponent")]
+        [FhirType("RequestGroup#RequestGroup.action.condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedActionComponent")]
+        [FhirType("RequestGroup#RequestGroup.action.relatedAction", IsNestedType=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {

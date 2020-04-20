@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             Substance,
         }
 
-        [FhirType("CharacteristicComponent")]
+        [FhirType("Group#Group.characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MemberComponent")]
+        [FhirType("Group#Group.member", IsNestedType=true)]
         [DataContract]
         public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
         {

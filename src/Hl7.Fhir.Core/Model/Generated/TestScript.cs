@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
 
-        [FhirType("OriginComponent")]
+        [FhirType("TestScript#TestScript.origin", IsNestedType=true)]
         [DataContract]
         public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1475,7 +1475,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DestinationComponent")]
+        [FhirType("TestScript#TestScript.destination", IsNestedType=true)]
         [DataContract]
         public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1596,7 +1596,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MetadataComponent")]
+        [FhirType("TestScript#TestScript.metadata", IsNestedType=true)]
         [DataContract]
         public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1699,7 +1699,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkComponent")]
+        [FhirType("TestScript#TestScript.metadata.link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1837,7 +1837,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityComponent")]
+        [FhirType("TestScript#TestScript.metadata.capability", IsNestedType=true)]
         [DataContract]
         public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2141,7 +2141,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FixtureComponent")]
+        [FhirType("TestScript#TestScript.fixture", IsNestedType=true)]
         [DataContract]
         public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2298,7 +2298,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VariableComponent")]
+        [FhirType("TestScript#TestScript.variable", IsNestedType=true)]
         [DataContract]
         public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2652,7 +2652,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RuleComponent")]
+        [FhirType("TestScript#TestScript.rule", IsNestedType=true)]
         [DataContract]
         public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2757,7 +2757,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RuleParamComponent")]
+        [FhirType("TestScript#TestScript.rule.param", IsNestedType=true)]
         [DataContract]
         public partial class RuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2895,7 +2895,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RulesetComponent")]
+        [FhirType("TestScript#TestScript.ruleset", IsNestedType=true)]
         [DataContract]
         public partial class RulesetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3000,7 +3000,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RulesetRuleComponent")]
+        [FhirType("TestScript#TestScript.ruleset.rule", IsNestedType=true)]
         [DataContract]
         public partial class RulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3121,7 +3121,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RulesetRuleParamComponent")]
+        [FhirType("TestScript#TestScript.ruleset.rule.param", IsNestedType=true)]
         [DataContract]
         public partial class RulesetRuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3259,7 +3259,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SetupComponent")]
+        [FhirType("TestScript#TestScript.setup", IsNestedType=true)]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3343,7 +3343,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SetupActionComponent")]
+        [FhirType("TestScript#TestScript.setup.action", IsNestedType=true)]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3444,7 +3444,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationComponent")]
+        [FhirType("TestScript#TestScript.setup.action.operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -4050,7 +4050,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestHeaderComponent")]
+        [FhirType("TestScript#TestScript.setup.action.operation.requestHeader", IsNestedType=true)]
         [DataContract]
         public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -4189,7 +4189,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AssertComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert", IsNestedType=true)]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5082,7 +5082,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionAssertRuleComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert.rule", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5203,7 +5203,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionAssertRuleParamComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert.rule.param", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5342,7 +5342,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionAssertRulesetComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert.ruleset", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRulesetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5463,7 +5463,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionAssertRulesetRuleComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert.ruleset.rule", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5584,7 +5584,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParamComponent")]
+        [FhirType("TestScript#TestScript.setup.action.assert.ruleset.rule.param", IsNestedType=true)]
         [DataContract]
         public partial class ParamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5723,7 +5723,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestComponent")]
+        [FhirType("TestScript#TestScript.test", IsNestedType=true)]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5879,7 +5879,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestActionComponent")]
+        [FhirType("TestScript#TestScript.test.action", IsNestedType=true)]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -5980,7 +5980,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownComponent")]
+        [FhirType("TestScript#TestScript.teardown", IsNestedType=true)]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -6064,7 +6064,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownActionComponent")]
+        [FhirType("TestScript#TestScript.teardown.action", IsNestedType=true)]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {

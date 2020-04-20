@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             UNAVAILABLE,
         }
 
-        [FhirType("SeriesComponent")]
+        [FhirType("ImagingStudy#ImagingStudy.series", IsNestedType=true)]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InstanceComponent")]
+        [FhirType("ImagingStudy#ImagingStudy.series.instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {

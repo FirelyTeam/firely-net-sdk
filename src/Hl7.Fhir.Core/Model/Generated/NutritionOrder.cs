@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("OralDietComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet", IsNestedType=true)]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutrientComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet.nutrient", IsNestedType=true)]
         [DataContract]
         public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TextureComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet.texture", IsNestedType=true)]
         [DataContract]
         public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.supplement", IsNestedType=true)]
         [DataContract]
         public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnteralFormulaComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.enteralFormula", IsNestedType=true)]
         [DataContract]
         public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.enteralFormula.administration", IsNestedType=true)]
         [DataContract]
         public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {

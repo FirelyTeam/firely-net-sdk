@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             Official,
         }
 
-        [FhirType("AttesterComponent")]
+        [FhirType("Composition#Composition.attester", IsNestedType=true)]
         [DataContract]
         public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatesToComponent")]
+        [FhirType("Composition#Composition.relatesTo", IsNestedType=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EventComponent")]
+        [FhirType("Composition#Composition.event", IsNestedType=true)]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SectionComponent")]
+        [FhirType("Composition#Composition.section", IsNestedType=true)]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("MedicationAdministration#MedicationAdministration.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent")]
+        [FhirType("MedicationAdministration#MedicationAdministration.dosage", IsNestedType=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
         {

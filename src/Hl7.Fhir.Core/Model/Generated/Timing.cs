@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
             PCV,
         }
 
-        [FhirType("RepeatComponent")]
+        [FhirType("Timing#Timing.repeat", IsNestedType=true)]
         [DataContract]
         public partial class RepeatComponent : Hl7.Fhir.Model.Element
         {

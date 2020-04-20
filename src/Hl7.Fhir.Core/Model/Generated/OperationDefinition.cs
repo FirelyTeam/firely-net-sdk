@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             Query,
         }
 
-        [FhirType("ParameterComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BindingComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.parameter.binding", IsNestedType=true)]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OverloadComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.overload", IsNestedType=true)]
         [DataContract]
         public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
         {

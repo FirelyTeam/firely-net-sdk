@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("StageComponent")]
+        [FhirType("Condition#Condition.stage", IsNestedType=true)]
         [DataContract]
         public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EvidenceComponent")]
+        [FhirType("Condition#Condition.evidence", IsNestedType=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             DELETE,
         }
 
-        [FhirType("LinkComponent")]
+        [FhirType("Bundle#Bundle.link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntryComponent")]
+        [FhirType("Bundle#Bundle.entry", IsNestedType=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SearchComponent")]
+        [FhirType("Bundle#Bundle.entry.search", IsNestedType=true)]
         [DataContract]
         public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestComponent")]
+        [FhirType("Bundle#Bundle.entry.request", IsNestedType=true)]
         [DataContract]
         public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent")]
+        [FhirType("Bundle#Bundle.entry.response", IsNestedType=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {

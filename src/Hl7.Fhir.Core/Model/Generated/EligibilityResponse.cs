@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "EligibilityResponse"; } }
         
-        [FhirType("InsuranceComponent")]
+        [FhirType("EligibilityResponse#EligibilityResponse.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitsComponent")]
+        [FhirType("EligibilityResponse#EligibilityResponse.insurance.benefitBalance", IsNestedType=true)]
         [DataContract]
         public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitComponent")]
+        [FhirType("EligibilityResponse#EligibilityResponse.insurance.benefitBalance.financial", IsNestedType=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ErrorsComponent")]
+        [FhirType("EligibilityResponse#EligibilityResponse.error", IsNestedType=true)]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {

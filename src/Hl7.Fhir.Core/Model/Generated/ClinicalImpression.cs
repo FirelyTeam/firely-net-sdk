@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("InvestigationComponent")]
+        [FhirType("ClinicalImpression#ClinicalImpression.investigation", IsNestedType=true)]
         [DataContract]
         public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FindingComponent")]
+        [FhirType("ClinicalImpression#ClinicalImpression.finding", IsNestedType=true)]
         [DataContract]
         public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
         {

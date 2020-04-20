@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("SuppliedItemComponent")]
+        [FhirType("SupplyDelivery#SupplyDelivery.suppliedItem", IsNestedType=true)]
         [DataContract]
         public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
         {

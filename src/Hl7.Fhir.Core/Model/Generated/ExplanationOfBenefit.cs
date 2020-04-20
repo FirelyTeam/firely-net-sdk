@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("RelatedClaimComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PayeeComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.payee", IsNestedType=true)]
         [DataContract]
         public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupportingInformationComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.information", IsNestedType=true)]
         [DataContract]
         public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CareTeamComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.careTeam", IsNestedType=true)]
         [DataContract]
         public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -879,7 +879,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcedureComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.procedure", IsNestedType=true)]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InsuranceComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AccidentComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.accident", IsNestedType=true)]
         [DataContract]
         public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1299,7 +1299,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1925,7 +1925,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdjudicationComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.item.adjudication", IsNestedType=true)]
         [DataContract]
         public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2081,7 +2081,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.item.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2480,7 +2480,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubDetailComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.item.detail.subDetail", IsNestedType=true)]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2860,7 +2860,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.addItem", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3128,7 +3128,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemsDetailComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.addItem.detail", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3340,7 +3340,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PaymentComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.payment", IsNestedType=true)]
         [DataContract]
         public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3531,7 +3531,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NoteComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.processNote", IsNestedType=true)]
         [DataContract]
         public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3704,7 +3704,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitBalanceComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.benefitBalance", IsNestedType=true)]
         [DataContract]
         public partial class BenefitBalanceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3987,7 +3987,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BenefitComponent")]
+        [FhirType("ExplanationOfBenefit#ExplanationOfBenefit.benefitBalance.financial", IsNestedType=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {

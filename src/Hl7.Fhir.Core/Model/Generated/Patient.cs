@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Seealso,
         }
 
-        [FhirType("ContactComponent")]
+        [FhirType("Patient#Patient.contact", IsNestedType=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnimalComponent")]
+        [FhirType("Patient#Patient.animal", IsNestedType=true)]
         [DataContract]
         public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CommunicationComponent")]
+        [FhirType("Patient#Patient.communication", IsNestedType=true)]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkComponent")]
+        [FhirType("Patient#Patient.link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("RelatedClaimComponent")]
+        [FhirType("Claim#Claim.related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PayeeComponent")]
+        [FhirType("Claim#Claim.payee", IsNestedType=true)]
         [DataContract]
         public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CareTeamComponent")]
+        [FhirType("Claim#Claim.careTeam", IsNestedType=true)]
         [DataContract]
         public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecialConditionComponent")]
+        [FhirType("Claim#Claim.information", IsNestedType=true)]
         [DataContract]
         public partial class SpecialConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent")]
+        [FhirType("Claim#Claim.diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcedureComponent")]
+        [FhirType("Claim#Claim.procedure", IsNestedType=true)]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InsuranceComponent")]
+        [FhirType("Claim#Claim.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AccidentComponent")]
+        [FhirType("Claim#Claim.accident", IsNestedType=true)]
         [DataContract]
         public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemComponent")]
+        [FhirType("Claim#Claim.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2006,7 +2006,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("Claim#Claim.item.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2330,7 +2330,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubDetailComponent")]
+        [FhirType("Claim#Claim.item.detail.subDetail", IsNestedType=true)]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
         {

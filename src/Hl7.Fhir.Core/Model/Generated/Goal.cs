@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             Rejected,
         }
 
-        [FhirType("TargetComponent")]
+        [FhirType("Goal#Goal.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {

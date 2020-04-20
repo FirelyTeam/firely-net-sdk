@@ -13,21 +13,26 @@ namespace Hl7.Fhir.Tests.Rest
     public class TypeExtensionTests
     {
         [TestMethod]
-        public void VerifyComplexElementDeterminiation()
+        public void VerifyNestedTypeDeterminiation()
         {
-            Assert.IsFalse(typeof(Patient).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(Timing).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(FhirBoolean).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(Element).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(BackboneElement).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(Base).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(DataType).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(Meta).RepresentsComplexElementType());
-            Assert.IsFalse(typeof(Narrative).RepresentsComplexElementType());
+            Assert.IsFalse(isNested(typeof(Patient)));
+            Assert.IsFalse(isNested(typeof(Timing)));
+            Assert.IsFalse(isNested(typeof(FhirBoolean)));
+            Assert.IsFalse(isNested(typeof(Element)));
+            Assert.IsFalse(isNested(typeof(BackboneElement)));
+            Assert.IsFalse(isNested(typeof(Base)));
+            Assert.IsFalse(isNested(typeof(DataType)));
+            Assert.IsFalse(isNested(typeof(Meta)));
+            Assert.IsFalse(isNested(typeof(Narrative)));
 
-            Assert.IsTrue(typeof(Patient.ContactComponent).RepresentsComplexElementType());
-            Assert.IsTrue(typeof(DataRequirement.CodeFilterComponent).RepresentsComplexElementType());
+            Assert.IsTrue(isNested(typeof(Patient.ContactComponent)));
+            Assert.IsTrue(isNested(typeof(DataRequirement.CodeFilterComponent)));
 
+            bool isNested(Type testee)
+            {
+                _ = ClassMapping.TryCreate(testee, out var cm);
+                return cm.IsNestedType;
+            }
         }
     }
 }

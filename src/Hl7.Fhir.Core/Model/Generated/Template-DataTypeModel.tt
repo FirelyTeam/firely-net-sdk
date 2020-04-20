@@ -1,4 +1,4 @@
-﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
 <#@ include file="TemplateFileManagerV2.1.ttinclude" #>
 <#@ include file="Template-Children.ttinclude" #>
@@ -396,6 +396,7 @@ if (!abstractType){
     {
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
 		string v = componentElement.Value;
+		string definingPath = componentElement.Value;
 		if (v.Contains("."))
         {
 			int index = v.LastIndexOf(".");
@@ -420,7 +421,7 @@ if (!abstractType){
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= componentName #>")]
+        [FhirType("<#= resourceName + '#' + definingPath #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element
         {

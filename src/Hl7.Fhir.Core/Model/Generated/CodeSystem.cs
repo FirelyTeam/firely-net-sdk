@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
             DateTime,
         }
 
-        [FhirType("FilterComponent")]
+        [FhirType("CodeSystem#CodeSystem.filter", IsNestedType=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent")]
+        [FhirType("CodeSystem#CodeSystem.property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptDefinitionComponent")]
+        [FhirType("CodeSystem#CodeSystem.concept", IsNestedType=true)]
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DesignationComponent")]
+        [FhirType("CodeSystem#CodeSystem.concept.designation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -973,7 +973,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptPropertyComponent")]
+        [FhirType("CodeSystem#CodeSystem.concept.property", IsNestedType=true)]
         [DataContract]
         public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
         {

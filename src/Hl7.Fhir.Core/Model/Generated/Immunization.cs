@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("PractitionerComponent")]
+        [FhirType("Immunization#Immunization.practitioner", IsNestedType=true)]
         [DataContract]
         public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExplanationComponent")]
+        [FhirType("Immunization#Immunization.explanation", IsNestedType=true)]
         [DataContract]
         public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReactionComponent")]
+        [FhirType("Immunization#Immunization.reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VaccinationProtocolComponent")]
+        [FhirType("Immunization#Immunization.vaccinationProtocol", IsNestedType=true)]
         [DataContract]
         public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {

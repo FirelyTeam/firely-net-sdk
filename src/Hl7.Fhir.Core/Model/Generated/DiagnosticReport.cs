@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("DiagnosticReport#DiagnosticReport.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImageComponent")]
+        [FhirType("DiagnosticReport#DiagnosticReport.image", IsNestedType=true)]
         [DataContract]
         public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
         {

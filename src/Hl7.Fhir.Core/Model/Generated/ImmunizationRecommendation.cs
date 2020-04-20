@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("RecommendationComponent")]
+        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation", IsNestedType=true)]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DateCriterionComponent")]
+        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation.dateCriterion", IsNestedType=true)]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProtocolComponent")]
+        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation.protocol", IsNestedType=true)]
         [DataContract]
         public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {

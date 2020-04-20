@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "PlanDefinition"; } }
         
-        [FhirType("GoalComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.goal", IsNestedType=true)]
         [DataContract]
         public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.goal.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1081,7 +1081,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.action.condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1291,7 +1291,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedActionComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.action.relatedAction", IsNestedType=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1450,7 +1450,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.action.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1570,7 +1570,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent")]
+        [FhirType("PlanDefinition#PlanDefinition.action.dynamicValue", IsNestedType=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {

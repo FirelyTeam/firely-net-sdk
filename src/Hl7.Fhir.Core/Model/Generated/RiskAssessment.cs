@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RiskAssessment"; } }
         
-        [FhirType("PredictionComponent")]
+        [FhirType("RiskAssessment#RiskAssessment.prediction", IsNestedType=true)]
         [DataContract]
         public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
         {

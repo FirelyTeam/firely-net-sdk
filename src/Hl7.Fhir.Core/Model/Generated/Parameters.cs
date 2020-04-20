@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Parameters"; } }
         
-        [FhirType("ParameterComponent")]
+        [FhirType("Parameters#Parameters.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {

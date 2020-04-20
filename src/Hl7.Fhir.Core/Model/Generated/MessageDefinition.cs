@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MessageDefinition"; } }
         
-        [FhirType("FocusComponent")]
+        [FhirType("MessageDefinition#MessageDefinition.focus", IsNestedType=true)]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AllowedResponseComponent")]
+        [FhirType("MessageDefinition#MessageDefinition.allowedResponse", IsNestedType=true)]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
         {

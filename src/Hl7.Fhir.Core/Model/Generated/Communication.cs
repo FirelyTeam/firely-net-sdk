@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Communication"; } }
         
-        [FhirType("PayloadComponent")]
+        [FhirType("Communication#Communication.payload", IsNestedType=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {

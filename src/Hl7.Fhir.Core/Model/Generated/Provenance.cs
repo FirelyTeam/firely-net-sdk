@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             Removal,
         }
 
-        [FhirType("AgentComponent")]
+        [FhirType("Provenance#Provenance.agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent")]
+        [FhirType("Provenance#Provenance.entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {

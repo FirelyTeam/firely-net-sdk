@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Procedure"; } }
         
-        [FhirType("PerformerComponent")]
+        [FhirType("Procedure#Procedure.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FocalDeviceComponent")]
+        [FhirType("Procedure#Procedure.focalDevice", IsNestedType=true)]
         [DataContract]
         public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
         {

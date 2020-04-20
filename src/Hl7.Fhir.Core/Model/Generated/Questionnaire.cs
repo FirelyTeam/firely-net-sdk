@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
             Quantity,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("Questionnaire#Questionnaire.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnableWhenComponent")]
+        [FhirType("Questionnaire#Questionnaire.item.enableWhen", IsNestedType=true)]
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OptionComponent")]
+        [FhirType("Questionnaire#Questionnaire.item.option", IsNestedType=true)]
         [DataContract]
         public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
         {

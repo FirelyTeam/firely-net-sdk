@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
             Warning,
         }
 
-        [FhirType("SlicingComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.slicing", IsNestedType=true)]
         [DataContract]
         public partial class SlicingComponent : Hl7.Fhir.Model.Element
         {
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DiscriminatorComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.slicing.discriminator", IsNestedType=true)]
         [DataContract]
         public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
         {
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("BaseComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.base", IsNestedType=true)]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element
         {
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("TypeRefComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.type", IsNestedType=true)]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element
         {
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ExampleComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.example", IsNestedType=true)]
         [DataContract]
         public partial class ExampleComponent : Hl7.Fhir.Model.Element
         {
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ConstraintComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.constraint", IsNestedType=true)]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element
         {
@@ -1413,7 +1413,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinitionBindingComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.binding", IsNestedType=true)]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
         {
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("MappingComponent")]
+        [FhirType("ElementDefinition#ElementDefinition.mapping", IsNestedType=true)]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element
         {

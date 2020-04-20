@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerComponent")]
+        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item.answer", IsNestedType=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
