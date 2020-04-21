@@ -4,6 +4,7 @@ using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Schema;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Specification.Terminology
 {
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
             new Model.CodeableConcept() { Coding = concept?.Codes.Select(cd => ToFhirPrimitive(cd)).ToList(), Text = concept?.Display };
 
 
-        public Assertions ValidateCode(string canonical = null, string context = null, string code = null, string system = null, string version = null, string display = null, ICoding coding = null, IConcept codeableConcept = null, PartialDateTime? date = null, bool? @abstract = null, string displayLanguage = null)
+        public T.Task<Assertions> ValidateCode(string canonical = null, string context = null, string code = null, string system = null, string version = null, string display = null, ICoding coding = null, IConcept codeableConcept = null, PartialDateTime? date = null, bool? @abstract = null, string displayLanguage = null)
         {
             var outcome = _service.ValidateCode(canonical: canonical, context: context, code: code, system: system, version: version, display: display,
 
@@ -33,7 +34,7 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
                     @abstract: @abstract, displayLanguage: displayLanguage);
 
 
-            return outcome.ToAssertions();
+            return T.Task.FromResult(outcome.ToAssertions());
         }
     }
 }
