@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Specification.Schema
 {
     internal class SchemaConverter
     {
-        private readonly IAssertionFactory _assertionFactory;
+        private readonly IElementDefinitionAssertionFactory _assertionFactory;
         public readonly ISchemaResolver Source;
 
-        public SchemaConverter(ISchemaResolver source, IAssertionFactory assertionFactory)
+        public SchemaConverter(ISchemaResolver source, IElementDefinitionAssertionFactory assertionFactory)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
             _assertionFactory = assertionFactory;

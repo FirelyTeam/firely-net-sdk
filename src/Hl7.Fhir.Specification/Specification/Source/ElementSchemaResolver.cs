@@ -20,14 +20,14 @@ namespace Hl7.Fhir.Specification.Specification.Source
 {
     internal class ElementSchemaResolver : IResourceResolver, ISchemaResolver
     {
-        private readonly IAssertionFactory _assertionFactory;
+        private readonly IElementDefinitionAssertionFactory _assertionFactory;
         private readonly IResourceResolver _wrapped;
         private readonly IDictionary<Uri, IElementSchema> _cache = new Dictionary<Uri, IElementSchema>();
 
-        public ElementSchemaResolver(IResourceResolver wrapped, IAssertionFactory assertionFactory = null)
+        public ElementSchemaResolver(IResourceResolver wrapped, IElementDefinitionAssertionFactory assertionFactory = null)
         {
             _wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
-            _assertionFactory = assertionFactory ?? new ValidationAssertionFactory();
+            _assertionFactory = assertionFactory ?? new ValidationElementDefinitionAssertionFactory();
         }
 
         public IElementSchema GetSchema(ElementDefinitionNavigator nav)
