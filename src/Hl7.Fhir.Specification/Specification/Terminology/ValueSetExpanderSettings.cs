@@ -22,9 +22,12 @@ namespace Hl7.Fhir.Specification.Terminology
         public static ValueSetExpanderSettings Default = new ValueSetExpanderSettings();
 
         /// <summary>
-        /// The <see cref="IResourceResolver"/> to use when a reference to another valueset is encountered />
+        /// The <see cref="IResourceResolver"/> or <see cref="IAsyncResourceResolver" /> to use when a reference 
+        /// to another valueset is encountered.
         /// </summary>
-        public IResourceResolver ValueSetSource { get; set; }
+#pragma warning disable CS0618 // Type or member is obsolete
+        public ISyncOrAsyncResourceResolver ValueSetSource { get; set; }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// The maximum number of concepts to include in an expansion before the expander raises an error.

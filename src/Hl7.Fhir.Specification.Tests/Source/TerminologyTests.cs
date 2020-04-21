@@ -2,29 +2,29 @@
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Validation;
 using System;
 using System.Linq;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
-        private IResourceResolver _resolver;
-        private readonly Xunit.Abstractions.ITestOutputHelper output;
+        private readonly IAsyncResourceResolver _resolver;
+        private readonly IResourceResolver _syncResolver;
 
 
-        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
+        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
-            _resolver = fixture.Resolver;
-            this.output = output;
+            _resolver = fixture.AsyncResolver;
+            _syncResolver = fixture.Resolver;
         }
 
         [Fact]
-        public void ExpansionOfWholeSystem()
+        public async T.Task ExpansionOfWholeSystem()
         {
-            var issueTypeVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/issue-type").DeepCopy() as ValueSet;
+            var issueTypeVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
-            expander.Expand(issueTypeVs);
+            await expander.ExpandAsync(issueTypeVs);
 
             Assert.True(issueTypeVs.HasExpansion);
             var id = issueTypeVs.Expansion.Identifier;
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now, make this a versioned system
             issueTypeVs.Version = "3.14";
-            expander.Expand(issueTypeVs);
+            await expander.ExpandAsync(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
             Assert.Equal(31, issueTypeVs.Expansion.Total);
 
@@ -62,37 +62,37 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void ExpansionOfComposeInclude()
+        public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/marital-status").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.Equal(11, testVs.Expansion.Total);
         }
 
 
         [Fact]
-        public void ExpansionOfComposeImport()
+        public async T.Task ExpansionOfComposeImport()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/FHIR-version").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             expander.Settings.MaxExpansionSize = 2;
 
-            Assert.Throws<ValueSetExpansionTooBigException>(() => expander.Expand(testVs));
+            await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
 
             expander.Settings.MaxExpansionSize = 50;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.Equal(22, testVs.Expansion.Total);
         }
 
         [Fact]
-        public void TestPropertyRetrieval()
+        public async T.Task TestPropertyRetrieval()
         {
-            var testCs = _resolver.FindCodeSystem("http://hl7.org/fhir/item-type");
+            var testCs = await _resolver.FindCodeSystemAsync("http://hl7.org/fhir/item-type");
 
             var conceptGroup = testCs.Concept.Single(c => c.Code == "group");
             var conceptQuestion = testCs.Concept.Single(c => c.Code == "question");
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void LocalTSDisplayIncorrectAsWarning()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_syncResolver);
 
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
             var result = svc.ValidateCode(vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void LocalTermServiceValidateCodeTest()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_syncResolver);
 
             // Do common tests for service
             testService(svc); 
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var external = new ExternalTerminologyService(client);
-            var local = new LocalTerminologyService(_resolver);
+            var local = new LocalTerminologyService(_syncResolver);
             var svc = new FallbackTerminologyService(local, external);
 
             testService(svc);
@@ -223,12 +223,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeTestWithVSWebClient()
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async T.Task FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var service = new ExternalTerminologyService(client);
-            var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
+            var vs = await _resolver.FindValueSetAsync("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);
 
             // Override the canonical with something the remote server cannot know
