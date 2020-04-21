@@ -154,7 +154,10 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
+//TODO: Need to make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
@@ -517,7 +520,10 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
+//TODO: make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 #if DEBUG
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);

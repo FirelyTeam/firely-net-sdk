@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 merger.merge(snap, diff, mergeElementId);
             }
 
-            SnapshotGenerator _generator;
+            readonly SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)
             {
@@ -224,14 +224,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // [WMR 20160719] Handle snap == null
                             // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
                             var prefix = snap != null ? snap.ObjectValue as string : null;
-                            if (string.IsNullOrEmpty(prefix))
-                            {
-                                diffText = diffText.Substring(3);
-                            }
-                            else
-                            {
-                                diffText = prefix + "\r\n" + diffText.Substring(3);
-                            }
+                            diffText = string.IsNullOrEmpty(prefix) ? 
+                                diffText.Substring(3) 
+                                : prefix + "\r\n" + diffText.Substring(3);
                         }
 
                         result.ObjectValue = diffText;

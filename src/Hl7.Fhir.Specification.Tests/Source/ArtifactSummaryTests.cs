@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestErrorSummaries()
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\grahame-validation-examples");
-            var dirSource = new DirectorySource(path, false);
+            var dirSource = new DirectorySource(path, new DirectorySourceSettings(includeSubdirectories: false));
             var summaries = dirSource.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
 

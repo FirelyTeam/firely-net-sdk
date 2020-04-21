@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -10,7 +11,7 @@ namespace Hl7.Fhir.Specification.Tests
 
     public class StructureDefinitionWalkerTests
     {
-        public static IResourceResolver CreateTestResolver()
+        public static IAsyncResourceResolver CreateTestResolver()
         {
             return new CachedResolver(
                 new SnapshotSource(
@@ -20,17 +21,18 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [ClassInitialize]
-        public static void SetupSource(TestContext t)
+        public static void SetupSource(TestContext _)
         {
             _source = CreateTestResolver();
         }
 
-        private static IResourceResolver _source = null;
+        private static IAsyncResourceResolver _source = null;
 
         [TestMethod]
-        public void WalkIntoTypeMembers()
+        public async T.Task WalkIntoTypeMembers()
         {
-            var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation));
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
             var walker = new StructureDefinitionWalker(nav, _source);
 
             // A primivite type
@@ -79,9 +81,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkIntoChoice()
+        public async T.Task WalkIntoChoice()
         {
-            var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation));
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
             var walker = new StructureDefinitionWalker(nav, _source);
 
             // If you filter on the type of a non-choice member, you'll arrive at that type.
@@ -100,9 +103,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void WalkAcrossReference()
+        public async T.Task WalkAcrossReference()
         {
-            var nav = ElementDefinitionNavigator.ForSnapshot(_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation));
+            var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
             var walker = new StructureDefinitionWalker(nav, _source);
 
             var elem = walker.Child("performer").Resolve().OfType("Practitioner").Child("name").Single();
