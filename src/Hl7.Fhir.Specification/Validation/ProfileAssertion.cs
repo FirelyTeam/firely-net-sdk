@@ -20,11 +20,11 @@ namespace Hl7.Fhir.Validation
 
     internal class ProfileAssertion
     {
-        private string _path;
-        private Func<string, StructureDefinition> _resolver;
-        private StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
+        private readonly string _path;
+        private readonly Func<string, StructureDefinition> _resolver;
+        private readonly StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
 
-        private List<ProfileEntry> _allEntries = new List<ProfileEntry>();
+        private readonly List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
         public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
             StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Validation
 
 
 
-        private List<ProfileEntry> _statedProfiles = new List<ProfileEntry>();
+        private readonly List<ProfileEntry> _statedProfiles = new List<ProfileEntry>();
 
         public IEnumerable<StructureDefinition> StatedProfiles
         {

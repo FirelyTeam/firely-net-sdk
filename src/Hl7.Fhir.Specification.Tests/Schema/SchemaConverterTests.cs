@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public void MyTestMethod2()
+        public async void MyTestMethod2()
         {
             var poco = new HumanName() { Family = BigString() };
             poco.GivenElement.Add(new FhirString(BigString()));
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             //var json = schemaElement.ToJson().ToString();
 
-            var results = schemaElement.Validate(new[] { element }, new ValidationContext());
+            var results = await schemaElement.Validate(new[] { element }, new ValidationContext());
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
             Assert.IsFalse(results.Result.IsSuccessful, "HumanName is not valid");
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             */
         }
         [TestMethod]
-        public void TestInstance()
+        public async void TestInstance()
         {
             var instantSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/instant", UriKind.Absolute));
 
@@ -163,19 +163,19 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             var element = instantPoco.ToTypedElement();
 
-            var result = instantSchema.Validate(new[] { element }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+            var result = await instantSchema.Validate(new[] { element }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsTrue(result.Result.IsSuccessful);
         }
 
         [TestMethod]
-        public void ValidateMaxStringonFhirString()
+        public async void ValidateMaxStringonFhirString()
         {
             var fhirString = new FhirString(BigString()).ToTypedElement();
 
             var stringSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/string", UriKind.Absolute));
 
-            var results = stringSchema.Validate(new[] { fhirString }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+            var results = await stringSchema.Validate(new[] { fhirString }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsNotNull(results);
 
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public void ValidateOwnProfile()
+        public async void ValidateOwnProfile()
         {
 
 
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             poco.GivenElement.Add(new FhirString(BigString()));
             poco.GivenElement.Add(new FhirString("Maria"));
 
-            var results = stringSchema.Validate(new[] { poco.ToTypedElement() }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+            var results = await stringSchema.Validate(new[] { poco.ToTypedElement() }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count > 0);

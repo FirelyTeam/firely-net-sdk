@@ -17,8 +17,8 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class LocalTerminologyService : ITerminologyService //, ITerminologyServiceNEW
     {
-        private IResourceResolver _resolver;
-        private ValueSetExpander _expander;
+        private readonly IResourceResolver _resolver;
+        private readonly ValueSetExpander _expander;
 
         public LocalTerminologyService(IResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
@@ -32,7 +32,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
         internal ValueSet FindValueset(string canonical)
         {
+// Don't want to redo ITerminologyService yet
+#pragma warning disable CS0618 // Type or member is obsolete
             return _resolver.FindValueSet(canonical);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
@@ -47,7 +50,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
                 try
                 {
+// Don't want to redo ITerminologyService yet
+#pragma warning disable CS0618 // Type or member is obsolete
                     valueSet = _resolver.FindValueSet(canonical);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
                 catch
                 {
@@ -57,8 +63,6 @@ namespace Hl7.Fhir.Specification.Terminology
                 if (valueSet == null)
                     throw new ValueSetUnknownException($"Cannot retrieve valueset '{canonical}'");
             }
-
-            var outcome = new OperationOutcome();
 
             if (codeableConcept != null)
                 return validateCodeVS(valueSet, codeableConcept, @abstract);
@@ -119,7 +123,10 @@ namespace Hl7.Fhir.Specification.Terminology
                 {
                     // This will expand te vs - since we do not deepcopy() it, it will change the instance
                     // as it was passed to us from the source
+// Don't want to redo ITerminologyService yet
+#pragma warning disable CS0618 // Type or member is obsolete
                     _expander.Expand(vs);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 

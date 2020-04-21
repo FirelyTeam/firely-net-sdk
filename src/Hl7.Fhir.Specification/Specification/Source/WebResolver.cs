@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Net;
+using T=System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -18,7 +19,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Fetches FHIR artifacts (Profiles, ValueSets, ...) from a FHIR server.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class WebResolver : IResourceResolver
+    public class WebResolver : IResourceResolver, IAsyncResourceResolver
     {
         /// <summary>Default request timeout in milliseconds.</summary>
         public const int DefaultTimeOut = 5000;
@@ -89,6 +90,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             return ResolveByUri(uri);
         }
+
+        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
