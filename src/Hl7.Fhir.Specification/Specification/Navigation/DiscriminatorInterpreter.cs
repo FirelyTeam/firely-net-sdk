@@ -72,7 +72,8 @@ namespace Hl7.Fhir.Specification.Navigation
             {
                 if (call.Arguments.Single() is ConstantExpression ce)
                 {
-                    if (ce.ExpressionType == TypeSpecifier.String)
+                    if (ce.ExpressionType as NamedTypeSpecifier == TypeSpecifier.String)
+                        of moet ik een Equals voor TypeSpecifier schrijven?
                     {
                         return (string)ce.Value;
                     }
