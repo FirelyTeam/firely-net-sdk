@@ -17,45 +17,47 @@ namespace Hl7.Fhir.Specification.Schema
 {
     internal class SchemaConverter
     {
+        private readonly IElementDefinitionAssertionFactory _assertionFactory;
         public readonly ISchemaResolver Source;
 
-        public SchemaConverter(ISchemaResolver source)
+        public SchemaConverter(ISchemaResolver source, IElementDefinitionAssertionFactory assertionFactory)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
+            _assertionFactory = assertionFactory;
         }
 
-        public ElementSchema Convert(StructureDefinition definition)
+        public IElementSchema Convert(StructureDefinition definition)
         {
             var nav = ElementDefinitionNavigator.ForSnapshot(definition);
             return Convert(nav);
         }
 
-        public ElementSchema Convert(ElementDefinitionNavigator nav)
+        public IElementSchema Convert(ElementDefinitionNavigator nav)
         {
             bool hasContent = nav.MoveToFirstChild();
 
             var id = new Uri(nav.StructureDefinition.Url, UriKind.Absolute);
 
             if (!hasContent)
-                return new ElementSchema(id);
+                return _assertionFactory.CreateElementSchemaAssertion(id);
             else
             {
                 // Note how the root element (first element of an SD) is integrated within
                 // the schema representing the SD as a whole by including just the members
                 // of the schema generated from the first ElementDefinition.
-                return new ElementSchema(id, harvest(nav).Members);
+                return _assertionFactory.CreateElementSchemaAssertion(id, harvest(nav).Members);
             }
         }
 
-        private ElementSchema harvest(ElementDefinitionNavigator nav)
+        private IElementSchema harvest(ElementDefinitionNavigator nav)
         {
-            var schema = nav.Current.Convert(Source);
+            var schema = nav.Current.Convert(Source, _assertionFactory);
 
             if (nav.HasChildren)
             {
                 var childNav = nav.ShallowCopy();   // make sure closure is to a clone, not the original argument
-                var childAssertion = new Children(() => harvestChildren(childNav));
-                return schema.With(childAssertion);
+                var childAssertion = _assertionFactory.CreateChildren(() => harvestChildren(childNav));
+                return schema.With(_assertionFactory, childAssertion);
             }
             else
                 return schema;
@@ -74,9 +76,9 @@ namespace Hl7.Fhir.Specification.Schema
                 var childSchema = harvest(childNav);
 
                 // Don't add empty schemas (i.e. empty ElementDefs in a differential)
-                if (!childSchema.IsEmpty)
+                if (!childSchema.IsEmpty())
                 {
-                    var schemaWithOrder = childSchema.With(new XmlOrder(xmlOrder, childNav.PathName));
+                    var schemaWithOrder = childSchema.With(_assertionFactory, new XmlOrder(xmlOrder, childNav.PathName));
                     children.Add(childNav.PathName, schemaWithOrder);
                 }
             }
